@@ -1,0 +1,21 @@
+diff --git a/google/cloud/bigtable/row_key_sample.h b/google/cloud/bigtable/row_key_sample.h
+index f0ec6c47..e0c6ceb8 100644
+--- a/google/cloud/bigtable/row_key_sample.h
++++ b/google/cloud/bigtable/row_key_sample.h
+@@ -16,6 +16,7 @@
+ #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_KEY_SAMPLE_H_
+ 
+ #include "third_party/cloud_cpp/google/cloud/bigtable/version.h"
++#include "third_party/absl/strings/cord.h"
+ #include <cstdint>
+ #include <string>
+ 
+@@ -35,7 +36,7 @@ struct RowKeySample {
+    * is expected to produce an efficient sharding of the `Table::ReadRows()`
+    * operation.
+    */
+-  std::string row_key;
++  absl::Cord row_key;
+ 
+   /// An estimate of the table size for all the rows smaller than `row_key`.
+   std::int64_t offset_bytes;

@@ -1,0 +1,47 @@
+diff --git a/google/cloud/bigtable/internal/async_row_reader.h b/google/cloud/bigtable/internal/async_row_reader.h
+index e300d6e..de34165 100644
+--- a/google/cloud/bigtable/internal/async_row_reader.h
++++ b/google/cloud/bigtable/internal/async_row_reader.h
+@@ -16,12 +16,13 @@
+ #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_ROW_READER_H_
+ 
+ #include "third_party/cloud_cpp/google/cloud/bigtable/bigtable_strong_types.h"
++#include "third_party/cloud_cpp/google/cloud/bigtable/completion_queue.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/data_client.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/filters.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/internal/readrowsparser.h"
+-#include "third_party/cloud_cpp/google/cloud/bigtable/internal/table.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/metadata_update_policy.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/row.h"
++#include "third_party/cloud_cpp/google/cloud/bigtable/row_range.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/row_set.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/rpc_backoff_policy.h"
+ #include "third_party/cloud_cpp/google/cloud/bigtable/rpc_retry_policy.h"
+@@ -99,7 +107,7 @@ class AsyncRowReader {
+           return;
+         }
+         ++rows_count_;
+-        last_read_row_key_ = std::string(parsed_row.row_key());
++        last_read_row_key_ = parsed_row.row_key();
+         read_row_callback_(cq, std::move(parsed_row), status_);
+       }
+       ++processed_chunks_count_;
+@@ -121,7 +129,8 @@ class AsyncRowReader {
+     if (!last_read_row_key_.empty()) {
+       // We've returned some rows and need to make sure we don't
+       // request them again.
+-      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
++      row_set_ = row_set_.Intersect(
++          RowRange::Open(last_read_row_key_, absl::Cord("")));
+     }
+     auto row_set_proto = row_set_.as_proto();
+     request.mutable_rows()->Swap(&row_set_proto);
+@@ -192,7 +201,7 @@ class AsyncRowReader {
+   /// Number of rows read so far, used to set row_limit in retries.
+   std::int64_t rows_count_;
+   /// Holds the last read row key, for retries.
+-  std::string last_read_row_key_;
++  absl::Cord last_read_row_key_;
+ 
+   grpc::Status status_;
+   ReadRowCallback read_row_callback_;

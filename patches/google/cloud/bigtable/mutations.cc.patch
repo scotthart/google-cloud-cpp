@@ -1,0 +1,42 @@
+diff --git a/google/cloud/bigtable/mutations.cc b/google/cloud/bigtable/mutations.cc
+index 27bf1ea..5f83c6d 100644
+--- a/google/cloud/bigtable/mutations.cc
++++ b/google/cloud/bigtable/mutations.cc
+@@ -19,8 +19,8 @@ namespace google {
+ namespace cloud {
+ namespace bigtable {
+ inline namespace BIGTABLE_CLIENT_NS {
+-Mutation SetCell(std::string family, std::string column,
+-                 std::chrono::milliseconds timestamp, std::string value) {
++Mutation SetCell(std::string family, absl::Cord column,
++                 std::chrono::milliseconds timestamp, absl::Cord value) {
+   Mutation m;
+   auto& set_cell = *m.op.mutable_set_cell();
+   set_cell.set_family_name(std::move(family));
+@@ -31,7 +31,7 @@ Mutation SetCell(std::string family, std::string column,
+   return m;
+ }
+ 
+-Mutation SetCell(std::string family, std::string column, std::string value) {
++Mutation SetCell(std::string family, absl::Cord column, absl::Cord value) {
+   Mutation m;
+   auto& set_cell = *m.op.mutable_set_cell();
+   set_cell.set_family_name(std::move(family));
+@@ -41,7 +41,7 @@ Mutation SetCell(std::string family, std::string column, std::string value) {
+   return m;
+ }
+ 
+-Mutation DeleteFromColumn(std::string family, std::string column) {
++Mutation DeleteFromColumn(std::string family, absl::Cord column) {
+   Mutation m;
+   auto& d = *m.op.mutable_delete_from_column();
+   d.set_family_name(std::move(family));
+@@ -63,7 +63,7 @@ Mutation DeleteFromRow() {
+ }
+ 
+ grpc::Status FailedMutation::ToGrpcStatus(google::rpc::Status const& status) {
+-  std::string details;
++  ::string details;
+   if (!proto2::TextFormat::PrintToString(status, &details)) {
+     details = "error [could not print details as string]";
+   }

@@ -1,0 +1,181 @@
+diff --git a/google/cloud/bigtable/mutations.h b/google/cloud/bigtable/mutations.h
+index 6c97f436..625df81f 100644
+--- a/google/cloud/bigtable/mutations.h
++++ b/google/cloud/bigtable/mutations.h
+@@ -40,15 +40,36 @@ struct Mutation {
+ };
+ 
+ /// Create a mutation to set a cell value.
+-Mutation SetCell(std::string family, std::string column,
+-                 std::chrono::milliseconds timestamp, std::string value);
++Mutation SetCell(std::string family, absl::Cord column,
++                 std::chrono::milliseconds timestamp, absl::Cord value);
++inline Mutation SetCell(std::string family, std::string column,
++                        std::chrono::milliseconds timestamp,
++                        std::string value) {
++  return SetCell(std::move(family), absl::Cord(std::move(column)), timestamp,
++                 absl::Cord(std::move(value)));
++}
++inline Mutation SetCell(std::string family, std::string column,
++                        std::chrono::milliseconds timestamp, absl::Cord value) {
++  return SetCell(std::move(family), absl::Cord(std::move(column)), timestamp,
++                 std::move(value));
++}
+ 
+ /**
+  * Create a mutation to set a cell value where the server sets the time.
+  *
+  * These mutations are not idempotent and not retried by default.
+  */
+-Mutation SetCell(std::string family, std::string column, std::string value);
++Mutation SetCell(std::string family, absl::Cord column, absl::Cord value);
++inline Mutation SetCell(std::string family, std::string column,
++                        std::string value) {
++  return SetCell(std::move(family), absl::Cord(std::move(column)),
++                 absl::Cord(std::move(value)));
++}
++inline Mutation SetCell(std::string family, std::string column,
++                        absl::Cord value) {
++  return SetCell(std::move(family), absl::Cord(std::move(column)),
++                 std::move(value));
++}
+ 
+ /**
+  * A magic value where the server sets the timestamp.
+@@ -98,7 +119,7 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
+  * @tparam Period2 similar formal parameter for the type of @p timestamp_end.
+  */
+ template <typename Rep1, typename Period1, typename Rep2, typename Period2>
+-Mutation DeleteFromColumn(std::string family, std::string column,
++Mutation DeleteFromColumn(std::string family, absl::Cord column,
+                           std::chrono::duration<Rep1, Period1> timestamp_begin,
+                           std::chrono::duration<Rep2, Period2> timestamp_end) {
+   Mutation m;
+@@ -113,6 +134,14 @@ Mutation DeleteFromColumn(std::string family, std::string column,
+   return m;
+ }
+ 
++template <typename Rep1, typename Period1, typename Rep2, typename Period2>
++Mutation DeleteFromColumn(std::string family, std::string column,
++                          std::chrono::duration<Rep1, Period1> timestamp_begin,
++                          std::chrono::duration<Rep2, Period2> timestamp_end) {
++  return DeleteFromColumn(std::move(family), absl::Cord(std::move(column)),
++                          timestamp_begin, timestamp_end);
++}
++
+ //@{
+ /**
+  * @name The following functions create a mutation that deletes all the
+@@ -141,7 +170,7 @@ Mutation DeleteFromColumn(std::string family, std::string column,
+  */
+ template <typename Rep1, typename Period1>
+ Mutation DeleteFromColumnStartingFrom(
+-    std::string family, std::string column,
++    std::string family, absl::Cord column,
+     std::chrono::duration<Rep1, Period1> timestamp_begin) {
+   Mutation m;
+   using namespace std::chrono;
+@@ -153,6 +182,14 @@ Mutation DeleteFromColumnStartingFrom(
+   return m;
+ }
+ 
++template <typename Rep1, typename Period1>
++Mutation DeleteFromColumnStartingFrom(
++    std::string family, std::string column,
++    std::chrono::duration<Rep1, Period1> timestamp_begin) {
++  return DeleteFromColumnStartingFrom(
++      std::move(family), absl::Cord(std::move(column)), timestamp_begin);
++}
++
+ //@{
+ /**
+  * @name The following functions create a mutation that deletes all the
+@@ -181,7 +218,7 @@ Mutation DeleteFromColumnStartingFrom(
+  */
+ template <typename Rep2, typename Period2>
+ Mutation DeleteFromColumnEndingAt(
+-    std::string family, std::string column,
++    std::string family, absl::Cord column,
+     std::chrono::duration<Rep2, Period2> timestamp_end) {
+   Mutation m;
+   using namespace std::chrono;
+@@ -193,8 +230,19 @@ Mutation DeleteFromColumnEndingAt(
+   return m;
+ }
+ 
++template <typename Rep2, typename Period2>
++Mutation DeleteFromColumnEndingAt(
++    std::string family, std::string column,
++    std::chrono::duration<Rep2, Period2> timestamp_end) {
++  return DeleteFromColumnEndingAt(std::move(family),
++                                  absl::Cord(std::move(column)), timestamp_end);
++}
++
+ /// Delete all the values for the column.
+-Mutation DeleteFromColumn(std::string family, std::string column);
++Mutation DeleteFromColumn(std::string family, absl::Cord column);
++inline Mutation DeleteFromColumn(std::string family, std::string column) {
++  return DeleteFromColumn(std::move(family), absl::Cord(std::move(column)));
++}
+ //@}
+ 
+ /// Create a mutation to delete all the cells in a column family.
+@@ -214,20 +262,24 @@ Mutation DeleteFromRow();
+ class SingleRowMutation {
+  public:
+   /// Create an empty mutation.
+-  explicit SingleRowMutation(std::string row_key)
++  explicit SingleRowMutation(absl::Cord row_key)
+       : row_key_(std::move(row_key)) {}
++  explicit SingleRowMutation(std::string row_key)
++      : SingleRowMutation(absl::Cord(std::move(row_key))) {}
+ 
+   /// Create a row mutation from a initializer list.
+-  SingleRowMutation(std::string row_key, std::initializer_list<Mutation> list)
++  SingleRowMutation(absl::Cord row_key, std::initializer_list<Mutation> list)
+       : row_key_(std::move(row_key)) {
+     for (auto&& i : list) {
+       *ops_.Add() = i.op;
+     }
+   }
++  SingleRowMutation(std::string row_key, std::initializer_list<Mutation> list)
++      : SingleRowMutation(absl::Cord(std::move(row_key)), std::move(list)) {}
+ 
+   /// Create a single-row multiple-cell mutation from a variadic list.
+   template <typename... M>
+-  explicit SingleRowMutation(std::string row_key, M&&... m)
++  explicit SingleRowMutation(absl::Cord row_key, M&&... m)
+       : row_key_(std::move(row_key)) {
+     static_assert(
+         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
+@@ -235,6 +287,10 @@ class SingleRowMutation {
+         "convertible to Mutation");
+     emplace_many(std::forward<M>(m)...);
+   }
++  template <typename... M>
++  explicit SingleRowMutation(std::string row_key, M&&... m)
++      : SingleRowMutation(absl::Cord(std::move(row_key)),
++                          std::forward<M>(m)...) {}
+ 
+   /// Create a row mutation from gRPC proto
+   explicit SingleRowMutation(
+@@ -256,7 +312,7 @@ class SingleRowMutation {
+   }
+ 
+   // Get the row key.
+-  std::string const& row_key() const { return row_key_; }
++  absl::Cord const& row_key() const { return row_key_; }
+ 
+   friend class Table;
+ 
+@@ -294,8 +350,8 @@ class SingleRowMutation {
+   void emplace_many(Mutation m) { emplace_back(std::move(m)); }
+ 
+  private:
+-  std::string row_key_;
+-  google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> ops_;
++  absl::Cord row_key_;
++  proto2::RepeatedPtrField<google::bigtable::v2::Mutation> ops_;
+ };
+ 
+ /**

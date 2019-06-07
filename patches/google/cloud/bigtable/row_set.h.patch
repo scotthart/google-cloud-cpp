@@ -1,0 +1,39 @@
+diff --git a/google/cloud/bigtable/row_set.h b/google/cloud/bigtable/row_set.h
+index a30fa10..22bd4bf 100644
+--- a/google/cloud/bigtable/row_set.h
++++ b/google/cloud/bigtable/row_set.h
+@@ -43,7 +43,7 @@ class RowSet {
+     // Generate a better error message when the parameters do not match.
+     static_assert(internal::conjunction<IsValidAppendAllArg<Arg>...>::value,
+                   "RowSet variadic constructor arguments must be convertible "
+-                  "to bigtable::RowRange or std::string");
++                  "to bigtable::RowRange, absl::Cord, or std::string");
+     AppendAll(std::forward<Arg&&>(a)...);
+   }
+ 
+@@ -55,9 +55,12 @@ class RowSet {
+   /**
+    * Add @p row_key to the set, minimize copies when possible.
+    */
+-  void Append(std::string row_key) {
++  void Append(absl::Cord row_key) {
+     *row_set_.add_row_keys() = std::move(row_key);
+   }
++  void Append(std::string row_key) {
++    Append(absl::Cord(std::move(row_key)));
++  }
+ 
+   /**
+    * Modify this object to contain the ranges and keys inside @p range.
+@@ -89,8 +92,9 @@ class RowSet {
+     using value_type = T;
+     using type =
+         std::integral_constant<bool,
+-                               std::is_convertible<T, std::string>::value ||
+-                                   std::is_convertible<T, RowRange>::value>;
++                               std::is_convertible<T, absl::Cord>::value ||
++                                   std::is_convertible<T, RowRange>::value ||
++                                   std::is_convertible<T, std::string>::value>;
+     static constexpr bool value = type::value;
+   };
+ 

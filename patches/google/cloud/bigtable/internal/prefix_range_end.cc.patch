@@ -1,0 +1,16 @@
+diff --git a/google/cloud/bigtable/internal/prefix_range_end.cc b/google/cloud/bigtable/internal/prefix_range_end.cc
+index da5871c..ce574e5 100644
+--- a/google/cloud/bigtable/internal/prefix_range_end.cc
++++ b/google/cloud/bigtable/internal/prefix_range_end.cc
+@@ -37,6 +37,11 @@ std::string PrefixRangeEnd(std::string const& key) {
+   return result;
+ }
+ 
++absl::Cord PrefixRangeEnd(absl::Cord const& key) {
++  return absl::Cord(PrefixRangeEnd(static_cast<string>(key)));
++}
++
++
+ }  // namespace internal
+ }  // namespace BIGTABLE_CLIENT_NS
+ }  // namespace bigtable

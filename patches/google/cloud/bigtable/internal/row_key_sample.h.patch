@@ -1,0 +1,21 @@
+diff --git a/google/cloud/bigtable/internal/row_key_sample.h b/google/cloud/bigtable/internal/row_key_sample.h
+index cc5f74c..77a5752 100644
+--- a/google/cloud/bigtable/internal/row_key_sample.h
++++ b/google/cloud/bigtable/internal/row_key_sample.h
+@@ -16,6 +16,7 @@
+ #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ROW_KEY_SAMPLE_H_
+ 
+ #include "third_party/cloud_cpp/google/cloud/bigtable/version.h"
++#include "third_party/absl/strings/cord.h"
+ #include <cstdint>
+ #include <string>
+ 
+@@ -25,7 +26,7 @@ namespace bigtable {
+ inline namespace BIGTABLE_CLIENT_NS {
+ /// A simple wrapper to represent the response from `Table::SampleRowKeys()`.
+ struct RowKeySample {
+-  std::string row_key;
++  absl::Cord row_key;
+   std::int64_t offset_bytes;
+ };
+ 

@@ -1,0 +1,21 @@
+diff --git a/google/cloud/bigtable/internal/prefix_range_end.h b/google/cloud/bigtable/internal/prefix_range_end.h
+index 0909f09..982b121 100644
+--- a/google/cloud/bigtable/internal/prefix_range_end.h
++++ b/google/cloud/bigtable/internal/prefix_range_end.h
+@@ -16,6 +16,7 @@
+ #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_PREFIX_RANGE_END_H_
+ 
+ #include "third_party/cloud_cpp/google/cloud/bigtable/version.h"
++#include "third_party/absl/strings/cord.h"
+ #include <string>
+ 
+ namespace google {
+@@ -32,7 +33,7 @@ namespace internal {
+  * prefix.
+  */
+ std::string PrefixRangeEnd(std::string const& key);
+-
++absl::Cord PrefixRangeEnd(absl::Cord const& key);
+ }  // namespace internal
+ }  // namespace BIGTABLE_CLIENT_NS
+ }  // namespace bigtable

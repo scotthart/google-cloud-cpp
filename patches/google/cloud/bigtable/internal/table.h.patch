@@ -1,0 +1,66 @@
+diff --git a/google/cloud/bigtable/internal/table.h b/google/cloud/bigtable/internal/table.h
+index 9f71fae3..1da0381b 100644
+--- a/google/cloud/bigtable/internal/table.h
++++ b/google/cloud/bigtable/internal/table.h
+@@ -314,9 +314,14 @@ class Table {
+ 
+   RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
+ 
+-  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
++  std::pair<bool, Row> ReadRow(absl::Cord row_key, Filter filter,
+                                Status& status);
+ 
++  std::pair<bool, Row> ReadRow(std::string row_key, Filter filter,
++                               Status& status) {
++    return ReadRow(absl::Cord(std::move(row_key)), std::move(filter), status);
++  }
++
+   /**
+    * Reads a limited set of rows from the table asynchronously.
+    *
+@@ -413,11 +418,20 @@ class Table {
+                          raise_on_error);
+   }
+ 
+-  bool CheckAndMutateRow(std::string row_key, Filter filter,
++  bool CheckAndMutateRow(absl::Cord row_key, Filter filter,
+                          std::vector<Mutation> true_mutations,
+                          std::vector<Mutation> false_mutations,
+                          grpc::Status& status);
+ 
++  bool CheckAndMutateRow(std::string row_key, Filter filter,
++                         std::vector<Mutation> true_mutations,
++                         std::vector<Mutation> false_mutations,
++                         grpc::Status& status) {
++    return CheckAndMutateRow(absl::Cord(std::move(row_key)), std::move(filter),
++                             std::move(true_mutations),
++                             std::move(false_mutations), status);
++  }
++
+   /**
+    * Make an asynchronous request to conditionally mutate a row.
+    *
+@@ -490,7 +504,7 @@ class Table {
+   }
+ 
+   template <typename... Args>
+-  Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
++  Row ReadModifyWriteRow(absl::Cord row_key, grpc::Status& status,
+                          bigtable::ReadModifyWriteRule rule, Args&&... rules) {
+     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
+     request.set_row_key(std::move(row_key));
+@@ -512,6 +526,14 @@ class Table {
+     return CallReadModifyWriteRowRequest(request, status);
+   }
+ 
++  template <typename... Args>
++  Row ReadModifyWriteRow(std::string row_key, grpc::Status& status,
++                         bigtable::ReadModifyWriteRule rule, Args&&... rules) {
++    return ReadModifyWriteRow(absl::Cord(row_key), status,
++                              std::forward<bigtable::ReadModifyWriteRule>(rule),
++                              std::forward<Args>(rules)...);
++  }
++
+   /**
+    * Make an asynchronous request to atomically read and modify a row.
+    *

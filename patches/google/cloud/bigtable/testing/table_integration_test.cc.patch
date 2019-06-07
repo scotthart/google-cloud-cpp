@@ -1,0 +1,88 @@
+diff --git a/google/cloud/bigtable/testing/table_integration_test.cc b/google/cloud/bigtable/testing/table_integration_test.cc
+index 61ab97b9..c8f5d2a5 100644
+--- a/google/cloud/bigtable/testing/table_integration_test.cc
++++ b/google/cloud/bigtable/testing/table_integration_test.cc
+@@ -155,15 +155,15 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
+ /// A helper function to create a list of cells.
+ void TableIntegrationTest::CreateCells(
+     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
+-  std::map<std::string, bigtable::SingleRowMutation> mutations;
++  std::map<absl::Cord, bigtable::SingleRowMutation> mutations;
+   for (auto const& cell : cells) {
+     using namespace std::chrono;
+-    std::string key = cell.row_key();
++    absl::Cord key = cell.row_key();
+     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
+     inserted.first->second.emplace_back(bigtable::SetCell(
+-        cell.family_name(), cell.column_qualifier(),
++        cell.family_name(), absl::Cord(cell.column_qualifier()),
+         duration_cast<milliseconds>(microseconds(cell.timestamp())),
+-        cell.value()));
++        absl::Cord(cell.value())));
+   }
+   bigtable::BulkMutation bulk;
+   for (auto& kv : mutations) {
+@@ -202,7 +202,7 @@ std::string TableIntegrationTest::RandomTableId() {
+ }  // namespace testing
+ 
+ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
+-  auto compare_row_key = lhs.row_key().compare(rhs.row_key());
++  auto compare_row_key = lhs.row_key().CompareTo(rhs.row_key());
+   if (compare_row_key != 0) {
+     return compare_row_key;
+   }
+@@ -211,7 +211,7 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
+     return compare_family_name;
+   }
+   auto compare_column_qualifier =
+-      lhs.column_qualifier().compare(rhs.column_qualifier());
++      lhs.column_qualifier().CompareTo(rhs.column_qualifier());
+   if (compare_column_qualifier != 0) {
+     return compare_column_qualifier;
+   }
+@@ -221,7 +221,7 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
+   if (lhs.timestamp() > rhs.timestamp()) {
+     return 1;
+   }
+-  auto compare_value = lhs.value().compare(rhs.value());
++  auto compare_value = lhs.value().CompareTo(rhs.value());
+   if (compare_value != 0) {
+     return compare_value;
+   }
+@@ -252,35 +252,8 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
+   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
+       << ", column=" << cell.column_qualifier()
+       << ", timestamp=" << cell.timestamp().count() << ", value=<";
+-  // Replace non-printable values with '.' to make the output more readable.
+-  bool has_non_printable = false;
+-  for (char c : cell.value()) {
+-    if (std::isprint(c)) {
+-      *os << c;
+-    } else {
+-      *os << '.';
+-      has_non_printable = true;
+-    }
+-  }
++  *os << cell.value();
+   *os << ">";
+-  if (has_non_printable) {
+-    *os << "(hex:";
+-    // Also print the buffer has hex values.
+-    for (char c : cell.value()) {
+-      char buf[8];
+-      std::snprintf(buf, sizeof(buf), "\\x%02x", static_cast<unsigned char>(c));
+-      *os << buf;
+-    }
+-    *os << ")";
+-  }
+-  if (cell.value().size() == 8) {
+-    // Sometimes the value represents a big-endian 64-bit integer, print it as
+-    // such because it makes debugging much easier ...
+-    static_assert(std::numeric_limits<unsigned char>::digits == 8,
+-                  "This code assumes char is an 8-bit number");
+-    *os << "[int64:" << cell.decode_big_endian_integer<std::int64_t>().value()
+-        << "]";
+-  }
+   *os << ", labels={";
+   char const* del = "";
+   for (auto const& label : cell.labels()) {

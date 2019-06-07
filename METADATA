@@ -1,0 +1,48 @@
+name: "Google Cloud Platform C++ Client Libraries"
+description: "C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services."
+
+third_party {
+  url {
+    type: HOMEPAGE
+    value: "https://GoogleCloudPlatform.githhub.io/google-cloud-cpp/"
+  }
+  url {
+    type: GIT
+    value: "https://github.com/GoogleCloudPlatform/google-cloud-cpp/"
+  }
+  version: "ec468fbc06cca36802323c50d32180a149ec467a"
+  last_upgrade_date {
+    year: 2019
+    month: 6
+    day: 7
+  }
+}
+
+tricorder: {
+  options: {
+    clang_tidy: {
+      inherit_parent_configuration: false
+      config: {
+        # In addition to the warnings disabled by third_party/METADATA, disable
+        # misc-unused-* and bugprone-use-after-move until those problems are
+        # fixed in GitHub.
+        checks: "-google*,-modernize-*,-misc-unused-*,-bugprone-use-after-move"
+      }
+    }
+  }
+}
+
+presubmit: {
+  review_notify: "cloud-bigtable-cpp-client"
+  review_notify: "cloud-cxx-team+cls"
+
+  check_tests: {
+    failure_status: ERROR
+    project: "cloud_cpp.fastbuild"
+    project: "cloud_cpp.opt"
+    review_execute: true
+    review_results_age_limit: 43200  # 12 hours
+    submit_results_age_limit: 14400  # 4 hours
+    ignore_existing_failures: true
+  }
+}

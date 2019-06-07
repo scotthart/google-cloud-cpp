@@ -1,0 +1,248 @@
+destination_excludes = [
+    "google3/third_party/cloud_cpp/cloud_cpp.blueprint",
+    "google3/third_party/cloud_cpp/copy.bara.sky",
+    "google3/third_party/cloud_cpp/OWNERS",
+    "google3/third_party/cloud_cpp/METADATA",
+    "google3/third_party/cloud_cpp/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/bigtable/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/bigtable/examples/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/bigtable/examples/bigtable_hello_google3.cc",
+    "google3/third_party/cloud_cpp/google/cloud/bigtable/tests/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/storage/BUILD",
+    "google3/third_party/cloud_cpp/google/cloud/storage/tests/BUILD",
+    "google3/third_party/cloud_cpp/patches/**",
+    "google3/third_party/cloud_cpp/g3doc/**",
+]
+
+origin_files = glob(
+    include = ["**"],
+    exclude = [
+        "third_party/**/*",
+        "third_party/BUILD",
+        "**/BUILD",
+        "WORKSPACE",
+        "BUILD",
+        ".appveyor.yml",
+        ".codecov.yml",
+        ".dockerignore",
+        ".editorconfig",
+        ".gitignore",
+        ".gitmodules",
+        ".travis.yml",
+    ],
+)
+
+destination_files = glob(
+    include = ["google3/third_party/cloud_cpp/**"],
+    exclude = destination_excludes,
+)
+
+transformations = [
+    # List of transformations common to all workflows
+]
+
+core.workflow(
+    name = "default",
+    origin = git.github_origin(
+        url = "https://github.com/googleapis/google-cloud-cpp",
+        ref = "master",
+    ),
+    origin_files = origin_files,
+    destination = piper.destination(),
+    destination_files = destination_files,
+    mode = "SQUASH",
+    authoring = authoring.pass_thru("Carlos O'Ryan <coryan@google.com>"),
+    transformations = transformations + [
+        metadata.squash_notes(
+            prefix = "Import of google-cloud-cpp from Github.\n\n",
+        ),
+        core.replace(
+            before = "<gmock/gmock.h>",
+            after = '"testing/base/public/gmock.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "<gtest/gtest.h>",
+            after = '"testing/base/public/gmock.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "<gtest/gtest-spi.h>",
+            after = '"testing/base/public/gunit-spi.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "<grpcpp/grpcpp.h>",
+            after = '"grpcpp/grpcpp.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "<curl/curl.h>",
+            after = '"third_party/curl/curl.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "<curl/multi.h>",
+            after = '"third_party/curl/multi.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        # The GitHub code employs a wrapper around nlohmann/json so that users
+        # can build against a version different from that used by the library.
+        # We don't need the wrapper in google3 though, as everyone just builds
+        # against //third_party/json.  So, undo it by ...
+        #   (1) redirecting inclusions to the standard location,
+        core.replace(
+            before = '"google/cloud/storage/internal/nljson.h"',
+            after = '"third_party/json/src/json.hpp"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        #   (2) changing namespaces to the standard "nlohmann", and
+        core.replace(
+            before = "${namespace}",
+            after = "nlohmann",
+            regex_groups = {
+                "namespace" : "((google::cloud::)?storage::)?internal::nl",
+            },
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "${namespace}",
+            after = "nlohmann::",
+            regex_groups = {
+                "namespace" : "nl::",
+            },
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        #   (3) filtering out the tests that check the wrapping.
+        core.replace(
+            before = "${nljson_file}",
+            after = "",
+            regex_groups = {
+                "nljson_file" : '^ *"?internal/nljson.*\.(h|cc)(",)?\n',
+            },
+            paths = glob(["google/cloud/storage/CMakeLists.txt",
+                          "google/cloud/storage/storage_client*.bzl"]),
+            multiline = True,
+        ),
+        core.replace(
+            before = "${include}<openssl/${path}>",
+            after = '#include "third_party/openssl/${path}"',
+            regex_groups = {
+                "include": "^#include ",
+                "path": ".*",
+            },
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "${include}<google/protobuf/util/message_differencer.h>",
+            after = '#include "net/proto2/util/public/message_differencer.h"',
+            regex_groups = {
+                "include": "^#include ",
+            },
+            paths = glob(
+                include = ["**/*.h", "**/*.cc"],
+            ),
+        ),
+        core.replace(
+            before = "${include}<google/protobuf/text_format.h>",
+            after = '#include "net/proto2/public/text_format.h"',
+            regex_groups = {
+                "include": "^#include ",
+            },
+            paths = glob(
+                include = ["**/*.h", "**/*.cc"],
+            ),
+        ),
+        core.replace(
+            before = "${include}<google/protobuf/${path}>",
+            after = '#include "google/protobuf/${path}"',
+            regex_groups = {
+                "include": "^#include ",
+                "path": ".*",
+            },
+            paths = glob(
+                include = ["**/*.h", "**/*.cc"],
+            ),
+        ),
+        core.replace(
+            before = "${include}<google/${path}>",
+            after = '#include "google/${path}"',
+            regex_groups = {
+                "include": "^#include ",
+                "path": ".*",
+            },
+            paths = glob(
+                include = ["**/*.h", "**/*.cc"],
+            ),
+        ),
+        core.replace(
+            before = '${include}"google/cloud/${path}"',
+            after = '#include "third_party/cloud_cpp/google/cloud/${path}"',
+            regex_groups = {
+                "include": "^#include ",
+                "path": ".*",
+            },
+            paths = glob(
+                include = ["**/*.h", "**/*.cc", "**/*.cc.in"],
+            ),
+        ),
+        core.replace(
+            before = "<crc32c/crc32c.h>",
+            after = '"util/hash/crc32c.h"',
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "crc32c::Extend",
+            after = "CRC32C::Extend",
+            paths = glob(["**.h", "**.cc"]),
+        ),
+        core.replace(
+            before = "google::protobuf::util",
+            after = "proto2::util",
+            paths = glob(include = ["**/*.h", "**/*.cc"]),
+        ),
+        core.replace(
+            before = "google::protobuf::TextFormat",
+            after = "proto2::TextFormat",
+            paths = glob(include = ["**/*.h", "**/*.cc"]),
+        ),
+        core.replace(
+            before = "::Bigtable",
+            after = "::grpc::Bigtable",
+            paths = glob(include = ["**/*.h", "**/*.cc"]),
+        ),
+        core.replace(
+            before = "google::longrunning::Operations",
+            after = "google::longrunning::grpc::Operations",
+            paths = glob(include = ["**/*.h", "**/*.cc"]),
+        ),
+        patch.apply(
+            patches = [
+                "patches/google/cloud/bigtable/cell.h.patch",
+                "patches/google/cloud/bigtable/internal/async_row_reader.h.patch",
+                "patches/google/cloud/bigtable/internal/prefix_range_end.cc.patch",
+                "patches/google/cloud/bigtable/internal/prefix_range_end.h.patch",
+                "patches/google/cloud/bigtable/internal/readrowsparser.cc.patch",
+                "patches/google/cloud/bigtable/internal/readrowsparser.h.patch",
+                "patches/google/cloud/bigtable/internal/table.cc.patch",
+                "patches/google/cloud/bigtable/internal/table.h.patch",
+                "patches/google/cloud/bigtable/mutations.cc.patch",
+                "patches/google/cloud/bigtable/mutations.h.patch",
+                "patches/google/cloud/bigtable/mutations_test.cc.patch",
+                "patches/google/cloud/bigtable/row.h.patch",
+                "patches/google/cloud/bigtable/row_key_sample.h.patch",
+                "patches/google/cloud/bigtable/row_range.cc.patch",
+                "patches/google/cloud/bigtable/row_range.h.patch",
+                "patches/google/cloud/bigtable/row_reader.cc.patch",
+                "patches/google/cloud/bigtable/row_reader.h.patch",
+                "patches/google/cloud/bigtable/row_set.h.patch",
+                "patches/google/cloud/bigtable/testing/table_integration_test.cc.patch",
+                "patches/google/cloud/bigtable/tests/data_integration_test.cc.patch",
+                "patches/google/cloud/bigtable/tests/filters_integration_test.cc.patch",
+                "patches/google/cloud/bigtable/tests/mutations_integration_test.cc.patch",
+            ],
+        ),
+        core.move("", "google3/third_party/cloud_cpp"),
+    ],
+)

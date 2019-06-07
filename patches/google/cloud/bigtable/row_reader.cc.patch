@@ -1,0 +1,23 @@
+diff --git a/google/cloud/bigtable/row_reader.cc b/google/cloud/bigtable/row_reader.cc
+index 042fded..a4eb8cf 100644
+--- a/google/cloud/bigtable/row_reader.cc
++++ b/google/cloud/bigtable/row_reader.cc
+@@ -198,7 +198,8 @@ void RowReader::Advance(internal::OptionalRow& row) {
+     if (!last_read_row_key_.empty()) {
+       // We've returned some rows and need to make sure we don't
+       // request them again.
+-      row_set_ = row_set_.Intersect(RowRange::Open(last_read_row_key_, ""));
++      row_set_ = row_set_.Intersect(RowRange::Open(
++          last_read_row_key_, absl::Cord("")));
+     }
+ 
+     // If we receive an error, but the retriable set is empty, stop.
+@@ -256,7 +257,7 @@ grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
+   }
+   row.emplace(std::move(parsed_row));
+   ++rows_count_;
+-  last_read_row_key_ = std::string(row.value().row_key());
++  last_read_row_key_ = absl::Cord(row.value().row_key());
+ 
+   return status;
+ }

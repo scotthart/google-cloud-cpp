@@ -1,0 +1,49 @@
+diff --git a/google/cloud/bigtable/internal/table.cc b/google/cloud/bigtable/internal/table.cc
+index 4b4b8697..e4f73400 100644
+--- a/google/cloud/bigtable/internal/table.cc
++++ b/google/cloud/bigtable/internal/table.cc
+@@ -140,7 +140,7 @@ RowReader Table::ReadRows(RowSet row_set, std::int64_t rows_limit,
+                        bigtable::internal::ReadRowsParserFactory>());
+ }
+ 
+-std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
++std::pair<bool, Row> Table::ReadRow(absl::Cord row_key, Filter filter,
+                                     Status& status) {
+   RowSet row_set(std::move(row_key));
+   std::int64_t const rows_limit = 1;
+@@ -149,22 +149,22 @@ std::pair<bool, Row> Table::ReadRow(std::string row_key, Filter filter,
+   auto it = reader.begin();
+   if (it == reader.end()) {
+     status = Status();
+-    return std::make_pair(false, Row("", {}));
++    return std::make_pair(false, Row(absl::Cord(""), {}));
+   }
+   if (!*it) {
+     status = it->status();
+-    return std::make_pair(false, Row("", {}));
++    return std::make_pair(false, Row(absl::Cord(""), {}));
+   }
+   auto result = std::make_pair(true, std::move(**it));
+   if (++it != reader.end()) {
+     status = Status(StatusCode::kInternal,
+                     "internal error - RowReader returned 2 rows in ReadRow()");
+-    return std::make_pair(false, Row("", {}));
++    return std::make_pair(false, Row(absl::Cord(""), {}));
+   }
+   return result;
+ }
+ 
+-bool Table::CheckAndMutateRow(std::string row_key, Filter filter,
++bool Table::CheckAndMutateRow(absl::Cord row_key, Filter filter,
+                               std::vector<Mutation> true_mutations,
+                               std::vector<Mutation> false_mutations,
+                               grpc::Status& status) {
+@@ -197,7 +197,7 @@ Row Table::CallReadModifyWriteRowRequest(
+       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
+       status);
+   if (!status.ok()) {
+-    return Row("", {});
++    return Row(absl::Cord(""), {});
+   }
+   return internal::TransformReadModifyWriteRowResponse<
+       btproto::ReadModifyWriteRowResponse>(response);

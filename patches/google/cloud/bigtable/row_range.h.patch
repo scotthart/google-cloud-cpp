@@ -1,0 +1,138 @@
+diff --git a/google/cloud/bigtable/row_range.h b/google/cloud/bigtable/row_range.h
+index 29d5799..a291c5b 100644
+--- a/google/cloud/bigtable/row_range.h
++++ b/google/cloud/bigtable/row_range.h
+@@ -46,18 +46,24 @@ class RowRange {
+   static RowRange InfiniteRange() { return RowRange(); }
+ 
+   /// Return the range starting at @p begin (included), with no upper limit.
+-  static RowRange StartingAt(std::string begin) {
++  static RowRange StartingAt(absl::Cord begin) {
+     RowRange result;
+     result.row_range_.set_start_key_closed(std::move(begin));
+     return result;
+   }
++  static RowRange StartingAt(std::string begin) {
++    return StartingAt(absl::Cord(std::move(begin)));
++  }
+ 
+   /// Return the range ending at @p end (included), with no lower limit.
+-  static RowRange EndingAt(std::string end) {
++  static RowRange EndingAt(absl::Cord end) {
+     RowRange result;
+     result.row_range_.set_end_key_closed(std::move(end));
+     return result;
+   }
++  static RowRange EndingAt(std::string end) {
++    return EndingAt(absl::Cord(std::move(end)));
++  }
+ 
+   /// Return an empty range.
+   static RowRange Empty() {
+@@ -70,20 +76,26 @@ class RowRange {
+   }
+ 
+   /// Return the range representing the interval [@p begin, @p end).
+-  static RowRange Range(std::string begin, std::string end) {
++  static RowRange Range(absl::Cord begin, absl::Cord end) {
+     return RightOpen(std::move(begin), std::move(end));
+   }
++  static RowRange Range(std::string begin, std::string end) {
++    return RightOpen(absl::Cord(std::move(begin)), absl::Cord(std::move(end)));
++  }
+ 
+   /// Return a range that contains all the keys starting with @p prefix.
+-  static RowRange Prefix(std::string prefix) {
++  static RowRange Prefix(absl::Cord prefix) {
+     auto end = internal::PrefixRangeEnd(prefix);
+     return RightOpen(std::move(prefix), std::move(end));
+   }
++  static RowRange Prefix(std::string prefix) {
++    return Prefix(absl::Cord(std::move(prefix)));
++  }
+ 
+   //@{
+   /// @name Less common, yet sometimes useful, ranges.
+   /// Return a range representing the interval [@p begin, @p end).
+-  static RowRange RightOpen(std::string begin, std::string end) {
++  static RowRange RightOpen(absl::Cord begin, absl::Cord end) {
+     RowRange result;
+     result.row_range_.set_start_key_closed(std::move(begin));
+     if (!end.empty()) {
+@@ -91,9 +103,12 @@ class RowRange {
+     }
+     return result;
+   }
++  static RowRange RightOpen(std::string begin, std::string end) {
++    return RightOpen(absl::Cord(std::move(begin)), absl::Cord(std::move(end)));
++  }
+ 
+   /// Return a range representing the interval (@p begin, @p end].
+-  static RowRange LeftOpen(std::string begin, std::string end) {
++  static RowRange LeftOpen(absl::Cord begin, absl::Cord end) {
+     RowRange result;
+     result.row_range_.set_start_key_open(std::move(begin));
+     if (!end.empty()) {
+@@ -101,9 +116,12 @@ class RowRange {
+     }
+     return result;
+   }
++  static RowRange LeftOpen(std::string begin, std::string end) {
++    return LeftOpen(absl::Cord(std::move(begin)), absl::Cord(std::move(end)));
++  }
+ 
+   /// Return a range representing the interval (@p begin, @p end).
+-  static RowRange Open(std::string begin, std::string end) {
++  static RowRange Open(absl::Cord begin, absl::Cord end) {
+     RowRange result;
+     result.row_range_.set_start_key_open(std::move(begin));
+     if (!end.empty()) {
+@@ -111,9 +129,12 @@ class RowRange {
+     }
+     return result;
+   }
++  static RowRange Open(std::string begin, std::string end) {
++    return Open(absl::Cord(std::move(begin)), absl::Cord(std::move(end)));
++  }
+ 
+   /// Return a range representing the interval [@p begin, @p end].
+-  static RowRange Closed(std::string begin, std::string end) {
++  static RowRange Closed(absl::Cord begin, absl::Cord end) {
+     RowRange result;
+     result.row_range_.set_start_key_closed(std::move(begin));
+     if (!end.empty()) {
+@@ -121,6 +142,9 @@ class RowRange {
+     }
+     return result;
+   }
++  static RowRange Closed(std::string begin, std::string end) {
++    return Closed(absl::Cord(std::move(begin)), absl::Cord(std::move(end)));
++  }
+   //@}
+ 
+   /**
+@@ -132,7 +156,10 @@ class RowRange {
+   bool IsEmpty() const;
+ 
+   /// Return true if @p key is in the range.
+-  bool Contains(std::string const& key) const;
++  bool Contains(absl::Cord const& key) const;
++  bool Contains(std::string const& key) const {
++    return Contains(absl::Cord(key));
++  }
+ 
+   /**
+    * Compute the intersection against another RowRange.
+@@ -162,10 +189,10 @@ class RowRange {
+   RowRange() {}
+ 
+   /// Return true if @p key is below the start.
+-  bool BelowStart(std::string const& key) const;
++  bool BelowStart(absl::Cord const& key) const;
+ 
+   /// Return true if @p key is above the end.
+-  bool AboveEnd(std::string const& key) const;
++  bool AboveEnd(absl::Cord const& key) const;
+ 
+  private:
+   ::google::bigtable::v2::RowRange row_range_;

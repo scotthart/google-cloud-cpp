@@ -1,0 +1,38 @@
+diff --git a/google/cloud/bigtable/internal/readrowsparser.h b/google/cloud/bigtable/internal/readrowsparser.h
+index 932dbfb..784980e 100644
+--- a/google/cloud/bigtable/internal/readrowsparser.h
++++ b/google/cloud/bigtable/internal/readrowsparser.h
+@@ -100,11 +100,11 @@ class ReadRowsParser {
+  private:
+   /// Holds partially formed data until a full Row is ready.
+   struct ParseCell {
+-    std::string row;
+-    std::string family;
+-    std::string column;
++    absl::Cord row;
++    string family;
++    absl::Cord column;
+     int64_t timestamp;
+-    std::string value;
++    absl::Cord value;
+     std::vector<std::string> labels;
+   };
+ 
+@@ -118,7 +118,7 @@ class ReadRowsParser {
+   Cell MovePartialToCell();
+ 
+   /// Row key for the current row.
+-  std::string row_key_;
++  absl::Cord row_key_;
+ 
+   /// Parsed cells of a yet unfinished row.
+   std::vector<Cell> cells_;
+@@ -130,7 +130,7 @@ class ReadRowsParser {
+   ParseCell cell_;
+ 
+   /// Set when a row is ready.
+-  std::string last_seen_row_key_;
++  absl::Cord last_seen_row_key_;
+ 
+   /// True iff cells_ make up a complete row.
+   bool row_ready_;

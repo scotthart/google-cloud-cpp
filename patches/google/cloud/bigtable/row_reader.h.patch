@@ -1,0 +1,13 @@
+diff --git a/google/cloud/bigtable/row_reader.h b/google/cloud/bigtable/row_reader.h
+index cefae494..2de27fd0 100644
+--- a/google/cloud/bigtable/row_reader.h
++++ b/google/cloud/bigtable/row_reader.h
+@@ -157,7 +157,7 @@ class RowReader {
+   /// Number of rows read so far, used to set row_limit in retries.
+   std::int64_t rows_count_;
+   /// Holds the last read row key, for retries.
+-  std::string last_read_row_key_;
++  absl::Cord last_read_row_key_;
+ };
+ 
+ }  // namespace BIGTABLE_CLIENT_NS
