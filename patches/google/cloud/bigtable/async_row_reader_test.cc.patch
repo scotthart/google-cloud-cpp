@@ -1,0 +1,22 @@
+diff --git a/google/cloud/bigtable/async_row_reader_test.cc b/google/cloud/bigtable/async_row_reader_test.cc
+index 17cd839..d0a0211 100644
+--- a/google/cloud/bigtable/async_row_reader_test.cc
++++ b/google/cloud/bigtable/async_row_reader_test.cc
+@@ -94,7 +94,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
+                          [this](Row row) {
+                            EXPECT_EQ(expected_rows_.front(), row.row_key());
+                            expected_rows_.pop();
+-                           row_promises_.front().set_value(row.row_key());
++                           row_promises_.front().set_value(row.row_key().ToString());
+                            row_promises_.pop();
+                            auto ret = std::move(futures_from_user_cb_.front());
+                            futures_from_user_cb_.pop();
+@@ -917,7 +917,7 @@ TEST_F(TableAsyncReadRowsTest, DeepStack) {
+     std::stringstream s_idx;
+     s_idx << std::setfill('0') << std::setw(3) << i;
+     chunk.set_row_key(s_idx.str());
+-    ExpectRow(chunk.row_key());
++    ExpectRow(chunk.row_key().ToString());
+     *large_response.add_chunks() = std::move(chunk);
+   }
+ 
