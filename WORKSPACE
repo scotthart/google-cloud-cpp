@@ -34,3 +34,9 @@ grpc_deps()
 load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
 
 grpc_extra_deps()
+
+new_local_repository(
+    name = "generator_testdata",
+    build_file = "generator/testdata/BUILD.bazel",
+    path = "generator/testdata",
+)

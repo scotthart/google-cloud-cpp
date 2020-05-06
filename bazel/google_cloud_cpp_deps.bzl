@@ -161,3 +161,25 @@ def google_cloud_cpp_deps():
             sha256 = "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )
+
+    # Load abseil
+    if "com_github_abseil_abseil_cpp" not in native.existing_rules():
+        http_archive(
+            name = "com_github_abseil_abseil_cpp",
+            strip_prefix = "abseil-cpp-20200225.2",
+            urls = [
+                "https://github.com/abseil/abseil-cpp/archive/20200225.2.tar.gz",
+            ],
+            sha256 = "f41868f7a938605c92936230081175d1eae87f6ea2c248f41077c8f88316f111",
+        )
+
+    # Load gapic generator
+    if "com_google_api_codegen" not in native.existing_rules():
+        http_archive(
+            name = "com_google_api_codegen",
+            strip_prefix = "gapic-generator-cded7f07406c0e5fb3bbb2c42fcee0024cc8f9d9",
+            urls = [
+                "https://github.com/googleapis/gapic-generator/archive/cded7f07406c0e5fb3bbb2c42fcee0024cc8f9d9.tar.gz",
+            ],
+            sha256 = "a772f2e42803e19fa82e8095d0a9557d405d7e685c6f3cdbc57a95b032af4531",
+        )

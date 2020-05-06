@@ -1,0 +1,34 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@com_google_googleapis_imports//:imports.bzl", "proto_library_with_info")
+
+proto_library(
+    name = "library_proto",
+    srcs = [
+        "library.proto",
+    ],
+    deps = ["@com_google_googleapis//google/api:client_proto"],
+)
+
+proto_library_with_info(
+    name = "library_proto_with_info",
+    deps = [
+        ":library_proto",
+    ],
+)
+
+cc_library(
+    name = "library_cc_codegen",
+    srcs = [
+        "library_stub.gcpcxx.pb.cc",
+    ],
+    hdrs = ["library_stub.gcpcxx.pb.h"],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_github_grpc_grpc//:grpc++",
+        "@generator_testdata//:library_cc_grpc",
+        "@generator_testdata//:library_cc_proto",
+    ],
+)
