@@ -25,8 +25,8 @@ cc_library(
     ],
     hdrs = ["library_stub.gcpcxx.pb.h"],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_github_grpc_grpc//:grpc++",
         "@generator_testdata//:library_cc_grpc",
         "@generator_testdata//:library_cc_proto",
