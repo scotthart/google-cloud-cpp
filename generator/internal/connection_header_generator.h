@@ -26,12 +26,6 @@ namespace google {
 namespace codegen {
 namespace internal {
 
-std::vector<std::string> BuildClientHeaderIncludes(
-    pb::ServiceDescriptor const* /* service */);
-
-std::vector<std::string> BuildClientHeaderNamespaces(
-    pb::ServiceDescriptor const* /* service */);
-
 bool GenerateClientHeader(pb::ServiceDescriptor const* service,
                           std::map<std::string, std::string> const& vars,
                           Printer& p, std::string* /* error */);

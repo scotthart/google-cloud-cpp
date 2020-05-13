@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/internal/client_cc_generator.h"
+#include "generator/internal/connection_cc_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/internal/client_header_generator.h"
+#include "generator/internal/connection_header_generator.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"
@@ -34,6 +34,7 @@ std::vector<std::string> BuildClientHeaderIncludes(
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_stub" + GeneratedFileSuffix() + " .h")),
+      // TODO(sdhart): change this to system once build issues are resolved
       LocalInclude(absl::StrCat(
           absl::StripSuffix(service->file()->name(), ".proto"), ".pb.h")),
 
