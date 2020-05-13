@@ -71,9 +71,8 @@ std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy() {
 
 std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
   auto constexpr kBackoffScaling = 2.0;
-  return google::cloud::spanner::ExponentialBackoffPolicy(
-             std::chrono::milliseconds(100), std::chrono::minutes(1),
-             kBackoffScaling)
+  return ExponentialBackoffPolicy(std::chrono::milliseconds(100),
+                                  std::chrono::minutes(1), kBackoffScaling)
       .clone();
 }
 
