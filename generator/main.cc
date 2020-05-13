@@ -16,7 +16,6 @@
 #include "generator/standalone.h"
 #include <google/protobuf/compiler/plugin.h>
 
-
 int main(int argc, char** argv) {
   google::codegen::Generator generator;
   if (argc > 1) {

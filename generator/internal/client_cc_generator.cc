@@ -12,15 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "generator/internal/client_cc_generator.h"
+#include "generator/internal/codegen_utils.h"
+#include "generator/internal/data_model.h"
+#include "generator/internal/printer.h"
+#include <google/protobuf/descriptor.h>
 #include <memory>
 #include <sstream>
 #include <string>
-
-#include "generator/internal/client_cc_generator.h"
-#include "generator/internal/data_model.h"
-#include "generator/internal/codegen_utils.h"
-#include "generator/internal/printer.h"
-#include <google/protobuf/descriptor.h>
 
 namespace pb = google::protobuf;
 
@@ -31,12 +30,14 @@ namespace internal {
 std::vector<std::string> BuildClientCCIncludes(
     pb::ServiceDescriptor const* service) {
   return {
-      LocalInclude(absl::StrCat(
-          internal::ServiceNameToFilePath(service->full_name()), GeneratedFileSuffix() + ".h")),
+      LocalInclude(
+          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+                       GeneratedFileSuffix() + ".h")),
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
-      LocalInclude("gax/call_context.h"), LocalInclude("gax/status.h"),
+      LocalInclude("gax/call_context.h"),
+      LocalInclude("gax/status.h"),
       LocalInclude("gax/status_or.h"),
   };
 }

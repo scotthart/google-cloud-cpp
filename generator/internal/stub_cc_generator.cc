@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/stub_cc_generator.h"
-#include "generator/internal/data_model.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
 
@@ -30,21 +30,26 @@ std::vector<std::string> BuildClientStubCCIncludes(
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
-      LocalInclude(absl::StrCat(
-          absl::StripSuffix(service->file()->name(), ".proto"), ".grpc.pb.h")),
+      LocalInclude("google/cloud/internal/compiler_info.h"),
+      LocalInclude("google/cloud/internal/getenv.h"),
       LocalInclude("google/cloud/status_or.h"),
       LocalInclude("google/cloud/grpc_error_delegate.h"),
-      LocalInclude("grpcpp/client_context.h"),
-      LocalInclude("grpcpp/channel.h"),
-      LocalInclude("grpcpp/create_channel.h")};
+      LocalInclude("grpcpp/client_context.h"), LocalInclude("grpcpp/channel.h"),
+      LocalInclude("grpcpp/create_channel.h"),
+      // TODO(sdhart): change this to system once build issues are resolved
+      LocalInclude(absl::StrCat(
+          absl::StripSuffix(service->file()->name(), ".proto"), ".grpc.pb.h")),
+      SystemInclude("google/longrunning/operations.grpc.pb.h")};
 }
 
 std::vector<std::string> BuildClientStubCCNamespaces(
     pb::ServiceDescriptor const* service) {
   std::vector<std::string> v = absl::StrSplit(service->file()->name(), '/');
   auto name = *--v.end();
-  std::string inline_ns = absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
-  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")), inline_ns, "internal"};
+  std::string inline_ns =
+      absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
+  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")),
+          inline_ns};
 }
 
 bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
@@ -59,11 +64,13 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
            "// source: $proto_file_name$\n"
            "\n");
 
+  // includes
   for (auto const& include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
   p->Print("\n");
 
+  // namespace opener
   for (auto const& nspace : namespaces) {
     if (absl::EndsWith(nspace, "_CLIENT_NS")) {
       p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
@@ -73,6 +80,113 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
   }
   p->Print("\n");
 
+  // TODO(sdhart): get correct label for env var
+  // ConnectionOptions implementation
+  p->Print(vars,
+           "std::string ConnectionOptionsTraits::default_endpoint() {\n"
+           "  auto default_endpoint = google::cloud::internal::GetEnv(\n"
+           "    \"GOOGLE_CLOUD_CPP_$class_name$_DEFAULT_ENDPOINT\");\n"
+           "  return default_endpoint.has_value() ? *default_endpoint\n"
+           "                           : \"$service_endpoint$\";\n"
+           "}\n");
+  p->Print(
+      vars,
+      "std::string ConnectionOptionsTraits::user_agent_prefix() {\n"
+      "  return \"gcloud-cpp/\" + google::cloud::version_string() + \" (\" +\n"
+      "    google::cloud::internal::CompilerId() + \"-\" + "
+      "google::cloud::internal::CompilerVersion() + \"; \" +\n"
+      "    google::cloud::internal::CompilerFeatures() + \")\";\n"
+      "}\n");
+  p->Print(
+      vars,
+      "int ConnectionOptionsTraits::default_num_channels() { return 4; }\n\n");
+
+  // open internal namespace
+  p->Print(vars, "namespace internal {\n");
+
+  // default destructor for interface
+  p->Print(vars, "$stub_class_name$::~$stub_class_name$() = default;\n\n");
+
+  // define default stub class and constructor
+  p->Print(vars,
+           "class Default$stub_class_name$ : public $stub_class_name$ {\n"
+           " public:\n"
+           "  Default$stub_class_name$(\n"
+           "      std::unique_ptr<$grpc_stub_fqn$::Stub> grpc_stub,\n"
+           "      std::unique_ptr<google::longrunning::Operations::Stub> "
+           "operations)\n"
+           "      : grpc_stub_(std::move(grpc_stub)),\n"
+           "        operations_(std::move(operations)) {}\n\n");
+
+  // emit methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      "StatusOr<$response_object$>\n"
+      "$method_name$(\n"
+      "  grpc::ClientContext& client_context,\n"
+      "  $request_object$ const& request) override {\n"
+      "    $response_object$ response;\n"
+      "    auto status =\n"
+      "        grpc_stub_->$method_name$(&client_context, request, "
+      "&response);\n"
+      "    if (!status.ok()) {\n"
+      "      return google::cloud::MakeStatusFromRpcError(status);\n"
+      "    }\n"
+      "    return response;"
+      "}\n"
+      "\n",
+      NoStreamingPredicate);
+
+  // private members and close class defintion
+  p->Print(
+      vars,
+      " private:\n"
+      "  std::unique_ptr<$grpc_stub_fqn$::Stub> grpc_stub_;\n"
+      "  std::unique_ptr<google::longrunning::Operations::Stub> operations_;\n"
+      "};\n\n");
+
+  // implement factory function
+  p->Print(
+      vars,
+      "std::shared_ptr<$stub_class_name$> CreateDefault$stub_class_name$(\n"
+      "    ConnectionOptions options) {\n"
+      "  auto channel =\n"
+      "      grpc::CreateCustomChannel(options.endpoint(), "
+      "options.credentials(),\n"
+      "                                options.CreateChannelArguments());\n"
+      "  auto service_grpc_stub = $grpc_stub_fqn$::NewStub(channel);\n"
+      "  auto longrunning_grpc_stub =\n"
+      "      google::longrunning::Operations::NewStub(channel);\n"
+      "\n"
+      "  std::shared_ptr<$stub_class_name$> stub =\n"
+      "      std::make_shared<Default$stub_class_name$>(\n"
+      "          std::move(service_grpc_stub), "
+      "std::move(longrunning_grpc_stub));\n"
+      "\n"
+      "#if 0\n"
+      "  // TODO(sdhart): add metadata support\n"
+      "  stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));\n"
+      "\n"
+      "  // TODO(sdhart): add logging support\n"
+      "  if (options.tracing_enabled(\"rpc\")) {\n"
+      "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
+      "    stub = std::make_shared<DatabaseAdminLogging>(std::move(stub),\n"
+      "                                                  "
+      "options.tracing_options());\n"
+      "  }\n"
+      "#endif\n"
+      "  return stub;\n"
+      "}\n");
+
+  p->Print(vars, "}  // namespace internal\n");
+  std::reverse(namespaces.begin(), namespaces.end());
+  for (auto const& nspace : namespaces) {
+    p->Print("}  // namespace $namespace$\n", "namespace", nspace);
+  }
+
+  return true;
+
+#if 0
   // Abstract stub method definitions
   DataModel::PrintMethods(
       service, vars, p,
@@ -85,12 +199,9 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
       "}\n"
       "\n",
       NoStreamingPredicate);
+#endif
 
-  p->Print(vars,
-           "$stub_class_name$::~$stub_class_name$() {}"
-           "\n"
-           "\n");
-
+#if 0
   // gRPC aware stub class declaration and method definition
   p->Print(vars,
            "namespace {\n"
@@ -105,7 +216,9 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
            "  Default$stub_class_name$& operator=(Default$stub_class_name$ "
            "const&) = delete;\n"
            "\n");
+#endif
 
+#if 0
   // todo(sdhart): handle return of respone type Empty correctly.
   DataModel::PrintMethods(
       service, vars, p,
@@ -113,7 +226,8 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
       "  $method_name$(grpc::ClientContext& context,\n"
       "    $request_object$ const& request) override {\n"
       "    $response_object$ response;\n"
-      "    auto status = grpc_stub_->$method_name$(&context, request, &response);\n"
+      "    auto status = grpc_stub_->$method_name$(&context, request, "
+      "&response);\n"
       "    if (!status.ok()) {\n"
       "      return google::cloud::MakeStatusFromRpcError(status);\n"
       "    }\n"
@@ -127,15 +241,58 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
            "  std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub_;\n"
            "};  // Default$stub_class_name$\n"
            "\n");
+
+  // TODO(sdhart): determine a mechanism to inject transient status codes during generation.
+  p->Print(vars,
+           "namespace internal {\n"
+           "struct SafeGrpcRetry {\n"
+           "  static inline bool IsOk(google::cloud::Status const& status) {\n"
+           "    return status.ok();\n"
+           "  }\n"
+           "  static inline bool IsTransientFailure(google::cloud::Status const& status) {\n"
+           "    return status.code() == StatusCode::kUnavailable ||\n"
+           "      status.code() == StatusCode::kResourceExhausted;\n"
+           "  }\n"
+           "  static inline bool IsPermanentFailure(google::cloud::Status const& status) {\n"
+           "    return !IsOk(status) && !IsTransientFailure(status);\n"
+           "  }\n"
+           "};\n"
+           "}  // namespace internal\n"
+           "\n");
+
+  p->Print(vars,
+           "/// The base class for retry policies.\n"
+           "using RetryPolicy =\n"
+           "  google::cloud::internal::RetryPolicy<google::cloud::Status,\n"
+           "                                       internal::SafeGrpcRetry>;\n"
+           "/// A retry policy that limits based on time.\n"
+           "using LimitedTimeRetryPolicy =\n"
+           "  google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,\n"
+           "                                                  internal::SafeGrpcRetry>;\n"
+           "/// A retry policy that limits the number of times a request can fail.\n"
+           "using LimitedErrorCountRetryPolicy =\n"
+           "  google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
+           "      google::cloud::Status, internal::SafeGrpcRetry>;\n"
+           "\n");
+
+
+  p->Print(vars,
+      "class $stub_class_name$Impl : public $stub_class_name$ {\n"
+      " public:\n"
+      "  explicit $stub_class_name$Impl(\n"
+      "      std::shared_ptr<internal::"
+
+      )
+#endif
 #if 0
   // Retrying stub that decorates another stub
   p->Print(vars,
            "class Retry$stub_class_name$ : public $stub_class_name$ {\n"
            " public:\n"
            "  Retry$stub_class_name$(std::unique_ptr<$stub_class_name$> stub,\n"
-           "                          google::gax::RetryPolicy const& "
+           "                          RetryPolicy const& "
            "retry_policy,\n"
-           "                          google::gax::BackoffPolicy const& "
+           "                          google::cloud::BackoffPolicy const& "
            "backoff_policy) :\n"
            "            next_stub_(std::move(stub)),\n"
            "            default_retry_policy_(retry_policy.clone()),\n"
@@ -144,7 +301,7 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
 
   DataModel::PrintMethods(
       service, vars, p,
-      "  google::gax::Status\n"
+      "  google::cloud::Status\n"
       "  $method_name$(google::gax::CallContext& context,\n"
       "             $request_object$ const& request,\n"
       "             $response_object$* response) override {\n"
@@ -165,14 +322,14 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
   p->Print(
       vars,
       " private:\n"
-      "  std::unique_ptr<google::gax::RetryPolicy>\n"
+      "  std::unique_ptr<google::cloud::RetryPolicy>\n"
       "  clone_retry(google::gax::CallContext const &context) const {\n"
       "    auto context_retry = context.RetryPolicy();\n"
       "    return context_retry ? std::move(context_retry)\n"
       "                         : std::move(default_retry_policy_->clone());\n"
       "  }\n"
       "\n"
-      "  std::unique_ptr<google::gax::BackoffPolicy>\n"
+      "  std::unique_ptr<google::cloud::BackoffPolicy>\n"
       "  clone_backoff(google::gax::CallContext const &context) const {\n"
       "    auto context_backoff = context.BackoffPolicy();\n"
       "    return context_backoff ? std::move(context_backoff)\n"
@@ -181,13 +338,13 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
       "  }\n"
       "\n"
       "  std::unique_ptr<$stub_class_name$> next_stub_;\n"
-      "  const std::unique_ptr<google::gax::RetryPolicy const> "
+      "  const std::unique_ptr<RetryPolicy const> "
       "default_retry_policy_;\n"
-      "  const std::unique_ptr<google::gax::BackoffPolicy const>  "
+      "  const std::unique_ptr<google::cloud::BackoffPolicy const>  "
       "default_backoff_policy_;\n"
       "};  // Retry$stub_class_name$\n");
 #endif
-
+#if 0
   // todo(sdhart): fix this
   p->Print(vars,
            "}  // namespace\n"
@@ -196,7 +353,7 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
            "  auto credentials = grpc::GoogleDefaultCredentials();\n"
            "  return Create$stub_class_name$(std::move(credentials));\n"
            "}\n");
-#if 0
+
   p->Print(vars,
            "\n"
            "std::unique_ptr<$stub_class_name$>\n"
@@ -210,25 +367,18 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
            "  using ms = std::chrono::milliseconds;\n"
            "  // Note: these retry and backoff times are dummy stand ins.\n"
            "  // More appopriate default values will be chosen later.\n"
-           "  google::gax::LimitedDurationRetryPolicy<> retry_policy(ms(500), "
+           "  LimitedDurationRetryPolicy<> retry_policy(ms(500), "
            "ms(500));\n"
-           "  google::gax::ExponentialBackoffPolicy backoff_policy(ms(20), "
+           "  google::cloud::ExponentialBackoffPolicy backoff_policy(ms(20), "
            "ms(100));\n"
            "  return std::unique_ptr<$stub_class_name$>(new "
            "Retry$stub_class_name$(\n"
            "                       std::move(default_stub),\n"
            "                       retry_policy,\n"
-           "                       backoff_policy));\n");
+           "                       backoff_policy));\n"
            "}\n"
            "\n");
 #endif
-
-  std::reverse(namespaces.begin(), namespaces.end());
-  for (auto const& nspace : namespaces) {
-    p->Print("}  // namespace $namespace$\n", "namespace", nspace);
-  }
-
-  return true;
 }
 
 }  // namespace internal

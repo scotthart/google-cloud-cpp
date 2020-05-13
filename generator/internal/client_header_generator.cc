@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/client_header_generator.h"
-#include "generator/internal/data_model.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
 #include <memory>
@@ -31,12 +31,14 @@ std::vector<std::string> BuildClientHeaderIncludes(
     pb::ServiceDescriptor const* service) {
   return {
       SystemInclude("memory"),
-      LocalInclude(absl::StrCat(
-          internal::ServiceNameToFilePath(service->name()), "_stub" + GeneratedFileSuffix() + " .h")),
+      LocalInclude(
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
+                       "_stub" + GeneratedFileSuffix() + " .h")),
       LocalInclude(absl::StrCat(
           absl::StripSuffix(service->file()->name(), ".proto"), ".pb.h")),
 
-      LocalInclude("gax/status_or.h"), LocalInclude("gax/retry_policy.h"),
+      LocalInclude("gax/status_or.h"),
+      LocalInclude("gax/retry_policy.h"),
       LocalInclude("gax/backoff_policy.h"),
   };
 }

@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "generator/standalone.h"
-#include "generator/generator.h"
-
 #include "absl/strings/str_split.h"
+#include "generator/generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 //#include <google/protobuf/stubs/io_win32.h>
 #include <fstream>
@@ -142,7 +141,8 @@ int StandaloneMain(int argc, char const* const argv[],
   }
 
   pb::compiler::CommandLineInterface cli;
-  cli.RegisterGenerator("--cpp_codegen_out", generator, "Codegen C++ Generator");
+  cli.RegisterGenerator("--cpp_codegen_out", generator,
+                        "Codegen C++ Generator");
 
   std::vector<char const*> c_args;
   c_args.reserve(args.size());

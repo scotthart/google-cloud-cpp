@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/codegen_utils.h"
-#include <string>
 #include <iostream>
+#include <string>
 
 namespace google {
 namespace codegen {
@@ -24,10 +24,7 @@ namespace {
 const char generator_file_suffix[] = ".gcpcxx.pb";
 }  // namespace
 
-std::string GeneratedFileSuffix() {
-  return {generator_file_suffix};
-}
-
+std::string GeneratedFileSuffix() { return {generator_file_suffix}; }
 
 std::string LocalInclude(std::string header) {
   return absl::StrCat("\"", header, "\"");

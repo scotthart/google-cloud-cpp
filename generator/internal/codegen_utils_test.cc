@@ -39,7 +39,8 @@ TEST(CodegenUtils, CamelCaseToSnakeCase) {
 }
 
 TEST(CodegenUtils, ServiceNameToFilePath) {
-  auto result = ServiceNameToFilePath("google.example.library.v1.LibraryService");
+  auto result =
+      ServiceNameToFilePath("google.example.library.v1.LibraryService");
   EXPECT_EQ(result, "google/example/library/v1/library");
 }
 

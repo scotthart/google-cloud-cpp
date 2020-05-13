@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "generator/internal/stub_header_generator.h"
-#include "generator/internal/data_model.h"
 #include "generator/internal/codegen_utils.h"
+#include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
 #include <map>
@@ -28,18 +28,24 @@ namespace internal {
 
 std::vector<std::string> BuildClientStubHeaderIncludes(
     pb::ServiceDescriptor const* service) {
-  return {LocalInclude("google/cloud/status_or.h"),
-          LocalInclude(absl::StrCat(
-              absl::StripSuffix(service->file()->name(), ".proto"), ".grpc.pb.h")),
-          SystemInclude("memory")};
+  return {
+      LocalInclude("google/cloud/connection_options.h"),
+      LocalInclude("google/cloud/status_or.h"),
+      LocalInclude("grpcpp/security/credentials.h"),
+      // TODO(sdhart): change this to system once build issues are resolved
+      LocalInclude(absl::StrCat(
+          absl::StripSuffix(service->file()->name(), ".proto"), ".grpc.pb.h")),
+      SystemInclude("memory")};
 }
 
 std::vector<std::string> BuildClientStubHeaderNamespaces(
     pb::ServiceDescriptor const* service) {
   std::vector<std::string> v = absl::StrSplit(service->file()->name(), '/');
   auto name = *--v.end();
-  std::string inline_ns = absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
-  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")), inline_ns, "internal"};
+  std::string inline_ns =
+      absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
+  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")),
+          inline_ns};
 }
 
 bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
@@ -56,11 +62,13 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
            "#define $stub_header_include_guard_const$\n"
            "\n");
 
+  // includes
   for (auto const& include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
   p->Print("\n");
 
+  // namespace openers
   for (auto const& nspace : namespaces) {
     if (absl::EndsWith(nspace, "_CLIENT_NS")) {
       p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
@@ -70,10 +78,26 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
   }
   p->Print("\n");
 
+  // connection options
+  p->Print(vars,
+           "struct ConnectionOptionsTraits {\n"
+           "  static std::string default_endpoint();\n"
+           "  static std::string user_agent_prefix();\n"
+           "  static int default_num_channels();\n"
+           "};\n\n");
+  p->Print(vars,
+           "using ConnectionOptions =\n"
+           "  google::cloud::ConnectionOptions<ConnectionOptionsTraits>;\n\n");
+
+  // open internal namespace
+  p->Print(vars, "namespace internal {\n");
+
   // Abstract interface Stub base class
   p->Print(vars,
            "class $stub_class_name$ {\n"
-           " public:\n");
+           " public:\n"
+           "  virtual ~$stub_class_name$() = 0;\n"
+           "\n");
 
   DataModel::PrintMethods(service, vars, p,
                           "  virtual StatusOr<$response_object$> $method_name$("
@@ -83,28 +107,23 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
                           NoStreamingPredicate);
 
   p->Print(vars,
-           "  virtual ~$stub_class_name$() = 0;\n"
-           "\n"
            "};  // $stub_class_name$\n"
-           "\n"
-           "std::unique_ptr<$stub_class_name$>\n"
-           "Create$stub_class_name$();\n"
            "\n");
-#if 0
+
+  // factory method
   p->Print(vars,
-           "std::unique_ptr<$stub_class_name$>\n"
-           "Create$stub_class_name$(std::shared_ptr<grpc::ChannelCredentials> "
-           "creds);\n"
+           "std::shared_ptr<$stub_class_name$>\n"
+           "CreateDefault$stub_class_name$(ConnectionOptions options);\n"
            "\n");
-#endif
+
+  p->Print(vars, "}  // namespace internal\n");
 
   std::reverse(namespaces.begin(), namespaces.end());
   for (auto const& nspace : namespaces) {
     p->Print("}  // namespace $namespace$\n", "namespace", nspace);
   }
 
-  p->Print(vars,
-           "#endif  // $stub_header_include_guard_const$\n");
+  p->Print(vars, "#endif  // $stub_header_include_guard_const$\n");
 
   return true;
 }

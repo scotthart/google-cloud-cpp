@@ -18,9 +18,9 @@
 #include "absl/strings/str_join.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/str_split.h"
-#include "google/api/client.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
+#include "google/api/client.pb.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>

@@ -14,11 +14,11 @@
 // TODO: pull in comments
 class LibraryService final {
  public:
-  LibraryService(std::shared_ptr<LibraryServiceStub> stub) : 
+  LibraryService(std::shared_ptr<LibraryServiceStub> stub) :
     stub_(std::move(stub)) {}
 
   template<typename... Policies>
-  LibraryService(std::shared_ptr<LibraryServiceStub> stub, 
+  LibraryService(std::shared_ptr<LibraryServiceStub> stub,
     Policies&&... policies) : LibraryService(std::move(stub)) {
     ChangePolicies(std::forward<policies>...);
   }
@@ -28,22 +28,22 @@ class LibraryService final {
 
   std::shared_ptr<LibraryServiceStub> Stub() { return stub_; }
 
-  google::gax::StatusOr<::google::example::library::v1::Book> 
+  google::gax::StatusOr<::google::example::library::v1::Book>
   CreateBook(::google::example::library::v1::CreateBookRequest const& request);
 
-  google::gax::StatusOr<::google::example::library::v1::Book> 
+  google::gax::StatusOr<::google::example::library::v1::Book>
   GetBook(::google::example::library::v1::GetBookRequest const& request);
 
-  google::gax::StatusOr<::google::example::library::v1::ListBooksResponse> 
+  google::gax::StatusOr<::google::example::library::v1::ListBooksResponse>
   ListBooks(::google::example::library::v1::ListBooksRequest const& request);
 
-  google::gax::StatusOr<::google::example::library::v1::Empty> 
+  google::gax::StatusOr<::google::example::library::v1::Empty>
   DeleteBook(::google::example::library::v1::DeleteBookRequest const& request);
 
-  google::gax::StatusOr<::google::example::library::v1::Book> 
+  google::gax::StatusOr<::google::example::library::v1::Book>
   UpdateBook(::google::example::library::v1::UpdateBookRequest const& request);
 
-  google::gax::StatusOr<::google::example::library::v1::Book> 
+  google::gax::StatusOr<::google::example::library::v1::Book>
   GetBigBook(::google::example::library::v1::GetBookRequest const& request);
 
 
