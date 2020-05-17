@@ -21,9 +21,13 @@ proto_library_with_info(
 cc_library(
     name = "library_cc_codegen",
     srcs = [
+        "library_connection.gcpcxx.pb.cc",
         "library_stub.gcpcxx.pb.cc",
     ],
-    hdrs = ["library_stub.gcpcxx.pb.h"],
+    hdrs = [
+        "library_connection.gcpcxx.pb.h",
+        "library_stub.gcpcxx.pb.h",
+    ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_grpc_utils",

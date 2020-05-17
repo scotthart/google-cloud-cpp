@@ -142,6 +142,7 @@ add_library(
     internal/port_platform.h
     internal/random.cc
     internal/random.h
+    internal/retry_loop.h
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
@@ -155,7 +156,7 @@ add_library(
     log.cc
     log.h
     optional.h
-    retry_policy.h
+    polling_policy.h
     status.cc
     status.h
     status_or.h
@@ -240,7 +241,6 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         log_test.cc
         optional_test.cc
-        retry_policy_test.cc
         status_or_test.cc
         status_test.cc
         terminate_handler_test.cc

@@ -21,35 +21,38 @@
 #include <sstream>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {
 
 std::vector<std::string> BuildClientCCIncludes(
-    pb::ServiceDescriptor const* service) {
+    google::protobuf::ServiceDescriptor const* service) {
   return {
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
-                       GeneratedFileSuffix() + ".h")),
+                       "_connection" + GeneratedFileSuffix() + ".h")),
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
-      LocalInclude("gax/call_context.h"),
-      LocalInclude("gax/status.h"),
-      LocalInclude("gax/status_or.h"),
+      LocalInclude("google/cloud/internal/retry_loop.h"),
+      LocalInclude("google/cloud/status_or.h"),
   };
 }
 
 std::vector<std::string> BuildClientCCNamespaces(
-    pb::ServiceDescriptor const* /* service */) {
-  return std::vector<std::string>();
+    google::protobuf::ServiceDescriptor const* service) {
+  std::vector<std::string> v = absl::StrSplit(service->file()->name(), '/');
+  auto name = *--v.end();
+  std::string inline_ns =
+      absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
+  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")),
+          inline_ns};
 }
 
-bool GenerateClientCC(pb::ServiceDescriptor const* service,
-                      std::map<std::string, std::string> const& vars,
-                      Printer& p, std::string* /* error */) {
+bool GenerateClientConnectionCC(
+    google::protobuf::ServiceDescriptor const* service,
+    std::map<std::string, std::string> const& vars, Printer& p,
+    std::string* /* error */) {
   auto includes = BuildClientCCIncludes(service);
   auto namespaces = BuildClientCCNamespaces(service);
 
@@ -61,43 +64,149 @@ bool GenerateClientCC(pb::ServiceDescriptor const* service,
   for (auto include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
-  for (auto nspace : namespaces) {
-    p->Print("namespace $namespace$ {\n", "namespace", nspace);
-  }
-
   p->Print("\n");
 
+  for (auto nspace : namespaces) {
+    if (absl::EndsWith(nspace, "_CLIENT_NS")) {
+      p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
+    } else {
+      p->Print("namespace $namespace$ {\n", "namespace", nspace);
+    }
+  }
+  p->Print("\n");
+
+  p->Print(vars,
+           "$class_name$Connection::~$class_name$Connection() = default;\n\n");
+
+  // default not implemented returning methods
   DataModel::PrintMethods(
       service, vars, p,
-      "google::gax::StatusOr<$response_object$>\n"
-      "$class_name$::$method_name$(\n"
-      "$request_object$ const& request) {\n"
-      "  google::gax::CallContext context($method_name_snake$_info);\n"
-      "  if (retry_policy_) {\n"
-      "    context.SetRetryPolicy(*retry_policy_);\n"
-      "  }\n"
-      "  if (backoff_policy_) {\n"
-      "    context.SetBackoffPolicy(*backoff_policy_);\n"
-      "  }\n"
-      "  $response_object$ response;\n"
-      "  google::gax::Status status = stub_->$method_name$(context, request, "
-      "&response);\n"
-      "  if (status.IsOk()) {\n"
-      "    return response;\n"
-      "  } else {\n"
-      "    return status;\n"
-      "  }\n"
+      "StatusOr<$response_object$>\n"
+      "$class_name$Connection::$method_name$(\n"
+      "    $request_object$ const& request) {\n"
+      "  return Status(StatusCode::kUnimplemented, \"not implemented\");\n"
       "}\n"
       "\n",
       NoStreamingPredicate);
 
-  DataModel::PrintMethods(service, vars, p,
-                          "constexpr google::gax::MethodInfo "
-                          "$class_name$::$method_name_snake$_info;\n",
-                          NoStreamingPredicate);
+  p->Print(vars, "namespace {\n\n");
 
-  for (auto nspace : namespaces) {
-    p->Print("\n}  // namespace $namespace$", "namespace", nspace);
+  // default policies
+  p->Print(
+      vars,
+      "std::unique_ptr<RetryPolicy> DefaultRetryPolicy() {\n"
+      "  return LimitedTimeRetryPolicy(std::chrono::minutes(30)).clone();\n"
+      "}\n\n");
+  p->Print(vars,
+           "std::unique_ptr<BackoffPolicy> DefaultBackoffPolicy() {\n"
+           "  auto constexpr kBackoffScaling = 2.0;\n"
+           "  return ExponentialBackoffPolicy(std::chrono::seconds(1),\n"
+           "                                  std::chrono::minutes(5), "
+           "kBackoffScaling)\n"
+           "      .clone();\n"
+           "}\n\n");
+  p->Print(vars,
+           "std::unique_ptr<PollingPolicy> DefaultPollingPolicy() {\n"
+           "  auto constexpr kBackoffScaling = 2.0;\n"
+           "  return GenericPollingPolicy<>(\n"
+           "             LimitedTimeRetryPolicy(std::chrono::minutes(30)),\n"
+           "             ExponentialBackoffPolicy(std::chrono::seconds(10),\n"
+           "                                      std::chrono::minutes(5), "
+           "kBackoffScaling))\n"
+           "      .clone();\n"
+           "}\n\n");
+
+  // default connection implementation class
+  p->Print(
+      vars,
+      "class $class_name$ConnectionImpl : public $class_name$Connection {\n"
+      " public:\n"
+      "  explicit $class_name$ConnectionImpl(\n"
+      "      std::shared_ptr<internal::$class_name$Stub> stub,\n"
+      "      std::unique_ptr<RetryPolicy> retry_policy,\n"
+      "      std::unique_ptr<BackoffPolicy> backoff_policy,\n"
+      "      std::unique_ptr<PollingPolicy> polling_policy)\n"
+      "      : stub_(std::move(stub)),\n"
+      "        retry_policy_prototype_(std::move(retry_policy)),\n"
+      "        backoff_policy_prototype_(std::move(backoff_policy)),\n"
+      "        polling_policy_prototype_(std::move(polling_policy)) {}\n"
+      "\n"
+      "  explicit $class_name$ConnectionImpl(\n"
+      "      std::shared_ptr<internal::$class_name$Stub> stub)\n"
+      "      : $class_name$ConnectionImpl(std::move(stub), "
+      "DefaultRetryPolicy(),\n"
+      "                                    DefaultBackoffPolicy(),\n"
+      "                                    DefaultPollingPolicy()) {}\n"
+      "\n"
+      "  ~$class_name$ConnectionImpl() override = default;\n\n");
+
+  DataModel::PrintMethods(
+      service, vars, p,
+      "StatusOr<$response_object$>\n"
+      "$method_name$(\n"
+      "    $request_object$ const& request) override {\n"
+      "  return google::cloud::internal::RetryLoop(\n"
+      "     retry_policy_prototype_->clone(), "
+      "backoff_policy_prototype_->clone(),\n"
+      "     false,\n"
+      "     [this](grpc::ClientContext& context,\n"
+      "            $request_object$ const& request) {\n"
+      "       return stub_->$method_name$(context, request);\n"
+      "     },\n"
+      "     request, __func__);\n"
+      "}\n"
+      "\n",
+      NoStreamingPredicate);
+
+  p->Print(vars,
+           " private:\n"
+           "  std::shared_ptr<internal::$class_name$Stub> stub_;\n"
+           "  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;\n"
+           "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"
+           "  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;\n"
+           "};\n");
+
+  p->Print(vars, "}  // namespace\n\n");
+
+  p->Print(
+      vars,
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    ConnectionOptions const& options) {\n"
+      "  return std::make_shared<$class_name$ConnectionImpl>(\n"
+      "      internal::CreateDefault$class_name$Stub(options));\n"
+      "}\n\n");
+
+  p->Print(
+      vars,
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> "
+      "retry_policy,\n"
+      "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
+      "    std::unique_ptr<PollingPolicy> polling_policy) {\n"
+      "  return std::make_shared<$class_name$ConnectionImpl>(\n"
+      "      internal::CreateDefault$class_name$Stub(options),\n"
+      "      std::move(retry_policy), std::move(backoff_policy),\n"
+      "      std::move(polling_policy));\n"
+      "}\n\n");
+
+  p->Print(
+      vars,
+      "namespace internal {\n"
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    std::shared_ptr<internal::$class_name$Stub> stub,\n"
+      "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+      "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
+      "    std::unique_ptr<PollingPolicy> polling_policy) {\n"
+      "  return std::make_shared<$class_name$ConnectionImpl>(\n"
+      "      std::move(stub), std::move(retry_policy), "
+      "std::move(backoff_policy),\n"
+      "      std::move(polling_policy));\n"
+      "}\n"
+      "}  // namespace internal\n");
+
+  std::reverse(namespaces.begin(), namespaces.end());
+  for (auto const& nspace : namespaces) {
+    p->Print("}  // namespace $namespace$\n", "namespace", nspace);
   }
 
   return true;

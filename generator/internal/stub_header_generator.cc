@@ -29,7 +29,10 @@ namespace internal {
 std::vector<std::string> BuildClientStubHeaderIncludes(
     pb::ServiceDescriptor const* service) {
   return {
+      LocalInclude("google/cloud/backoff_policy.h"),
       LocalInclude("google/cloud/connection_options.h"),
+      LocalInclude("google/cloud/internal/retry_policy.h"),
+      LocalInclude("google/cloud/polling_policy.h"),
       LocalInclude("google/cloud/status_or.h"),
       LocalInclude("grpcpp/security/credentials.h"),
       // TODO(sdhart): change this to system once build issues are resolved
@@ -92,6 +95,25 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
   // open internal namespace
   p->Print(vars, "namespace internal {\n");
 
+  // retry policy
+  // TODO(sdhart): figure out how to inject transient failure codes.
+  p->Print(
+      vars,
+      "struct SafeGrpcRetry {\n"
+      "  static inline bool IsOk(google::cloud::Status const& status) {\n"
+      "    return status.ok();\n"
+      "  }\n"
+      "// TODO(sdhart): figure out how to inject transient failure codes.\n"
+      "  static inline bool IsTransientFailure(google::cloud::Status const&) "
+      "{\n"
+      "    return false;\n"
+      "  }\n"
+      "  static inline bool IsPermanentFailure(google::cloud::Status const& "
+      "status) {\n"
+      "    return !IsOk(status) && !IsTransientFailure(status);\n"
+      "  }\n"
+      "};\n\n");
+
   // Abstract interface Stub base class
   p->Print(vars,
            "class $stub_class_name$ {\n"
@@ -116,7 +138,51 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
            "CreateDefault$stub_class_name$(ConnectionOptions options);\n"
            "\n");
 
-  p->Print(vars, "}  // namespace internal\n");
+  p->Print(vars, "}  // namespace internal\n\n");
+
+  // retry policy aliases
+  p->Print(
+      vars,
+      "using RetryPolicy =\n"
+      "    google::cloud::internal::RetryPolicy<google::cloud::Status,\n"
+      "                                         internal::SafeGrpcRetry>;\n"
+      "\n"
+      "using LimitedTimeRetryPolicy =\n"
+      "    "
+      "google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,\n"
+      "                                                    "
+      "internal::SafeGrpcRetry>;\n"
+      "\n"
+      "using LimitedErrorCountRetryPolicy =\n"
+      "    google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
+      "        google::cloud::Status, internal::SafeGrpcRetry>;\n\n");
+
+  // polling policy
+  p->Print(vars,
+           "template<typename Retry = LimitedTimeRetryPolicy,\n"
+           "    typename Backoff = ExponentialBackoffPolicy>\n"
+           "class GenericPollingPolicy : public PollingPolicy {\n"
+           " public:\n"
+           "  GenericPollingPolicy(Retry retry_policy, Backoff backoff_policy)\n"
+           "      : retry_policy_(std::move(retry_policy)),\n"
+           "        backoff_policy_(std::move(backoff_policy)) {}\n"
+           "\n"
+           "  std::unique_ptr<PollingPolicy> clone() const override {\n"
+           "    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));\n"
+           "  }\n"
+           "\n"
+           "  bool OnFailure(google::cloud::Status const& status) override {\n"
+           "    return retry_policy_.OnFailure(status);\n"
+           "  }\n"
+           "\n"
+           "  std::chrono::milliseconds WaitPeriod() override {\n"
+           "    return backoff_policy_.OnCompletion();\n"
+           "  }\n"
+           "\n"
+           " private:\n"
+           "  Retry retry_policy_;\n"
+           "  Backoff backoff_policy_;\n"
+           "};\n\n");
 
   std::reverse(namespaces.begin(), namespaces.end());
   for (auto const& nspace : namespaces) {

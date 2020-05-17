@@ -20,15 +20,14 @@
 #include <map>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {
 
-bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
-                              std::map<std::string, std::string> const& vars,
-                              Printer& p, std::string* /* error */);
+bool GenerateClientStubHeader(
+    google::protobuf::ServiceDescriptor const* service,
+    std::map<std::string, std::string> const& vars, Printer& p,
+    std::string* /* error */);
 
 }  // namespace internal
 }  // namespace codegen

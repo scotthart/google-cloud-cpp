@@ -16,9 +16,9 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_replace.h"
 #include "absl/strings/string_view.h"
+#include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_cc_generator.h"
 #include "generator/internal/connection_header_generator.h"
-#include "generator/internal/codegen_utils.h"
 #include "generator/internal/data_model.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/stub_cc_generator.h"
@@ -56,10 +56,13 @@ bool Generator::Generate(pb::FileDescriptor const* file,
     std::string service_file_path =
         internal::ServiceNameToFilePath(service->full_name());
 
-    std::string header_file_path =
-        absl::StrCat(service_file_path, internal::GeneratedFileSuffix(), ".h");
-    internal::Printer header_printer(generator_context, header_file_path);
-    if (!internal::GenerateClientHeader(service, vars, header_printer, error)) {
+    std::string header_connection_file_path =
+        absl::StrCat(service_file_path, "_connection",
+                     internal::GeneratedFileSuffix(), ".h");
+    internal::Printer header_printer(generator_context,
+                                     header_connection_file_path);
+    if (!internal::GenerateClientConnectionHeader(service, vars, header_printer,
+                                                  error)) {
       return false;
     }
 
@@ -72,10 +75,12 @@ bool Generator::Generate(pb::FileDescriptor const* file,
       return false;
     }
 
-    std::string cc_file_path =
-        absl::StrCat(service_file_path, internal::GeneratedFileSuffix(), ".cc");
-    internal::Printer cc_printer(generator_context, cc_file_path);
-    if (!internal::GenerateClientCC(service, vars, cc_printer, error)) {
+    std::string cc_connection_file_path =
+        absl::StrCat(service_file_path, "_connection",
+                     internal::GeneratedFileSuffix(), ".cc");
+    internal::Printer cc_printer(generator_context, cc_connection_file_path);
+    if (!internal::GenerateClientConnectionCC(service, vars, cc_printer,
+                                              error)) {
       return false;
     }
 

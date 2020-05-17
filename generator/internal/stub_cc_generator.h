@@ -20,13 +20,11 @@
 #include <map>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {
 
-bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
+bool GenerateClientStubCC(google::protobuf::ServiceDescriptor const* service,
                           std::map<std::string, std::string> const& vars,
                           Printer& p, std::string* /* error */);
 

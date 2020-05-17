@@ -21,37 +21,40 @@
 #include <sstream>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {
 
 std::vector<std::string> BuildClientHeaderIncludes(
-    pb::ServiceDescriptor const* service) {
+    google::protobuf::ServiceDescriptor const* service) {
   return {
-      SystemInclude("memory"),
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
-                       "_stub" + GeneratedFileSuffix() + " .h")),
+          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+                       "_stub" + GeneratedFileSuffix() + ".h")),
       // TODO(sdhart): change this to system once build issues are resolved
       LocalInclude(absl::StrCat(
           absl::StripSuffix(service->file()->name(), ".proto"), ".pb.h")),
-
-      LocalInclude("gax/status_or.h"),
-      LocalInclude("gax/retry_policy.h"),
-      LocalInclude("gax/backoff_policy.h"),
+      LocalInclude("google/cloud/status_or.h"),
+      LocalInclude("google/cloud/backoff_policy.h"),
+      LocalInclude("google/cloud/polling_policy.h"),
+      SystemInclude("memory"),
   };
 }
 
 std::vector<std::string> BuildClientHeaderNamespaces(
-    pb::ServiceDescriptor const* /* service */) {
-  return std::vector<std::string>();
+    google::protobuf::ServiceDescriptor const* service) {
+  std::vector<std::string> v = absl::StrSplit(service->file()->name(), '/');
+  auto name = *--v.end();
+  std::string inline_ns =
+      absl::AsciiStrToUpper(absl::StripSuffix(name, ".proto")) + "_CLIENT_NS";
+  return {"google", "cloud", std::string(absl::StripSuffix(name, ".proto")),
+          inline_ns};
 }
 
-bool GenerateClientHeader(pb::ServiceDescriptor const* service,
-                          std::map<std::string, std::string> const& vars,
-                          Printer& p, std::string* /* error */) {
+bool GenerateClientConnectionHeader(
+    google::protobuf::ServiceDescriptor const* service,
+    std::map<std::string, std::string> const& vars, Printer& p,
+    std::string* /* error */) {
   auto includes = BuildClientHeaderIncludes(service);
   auto namespaces = BuildClientHeaderNamespaces(service);
 
@@ -66,75 +69,58 @@ bool GenerateClientHeader(pb::ServiceDescriptor const* service,
   for (auto include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
+  p->Print(vars, "\n");
 
   for (auto nspace : namespaces) {
-    p->Print("namespace $namespace$ {\n", "namespace", nspace);
+    if (absl::EndsWith(nspace, "_CLIENT_NS")) {
+      p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
+    } else {
+      p->Print("namespace $namespace$ {\n", "namespace", nspace);
+    }
   }
 
   p->Print(vars,
            "\n"
            "$class_comment_block$\n"
-           "class $class_name$ final {\n"
+           "class $class_name$Connection {\n"
            " public:\n"
-           "  $class_name$(std::shared_ptr<$stub_class_name$> stub) : \n"
-           "    stub_(std::move(stub)) {}\n"
-           "\n"
-           "  template<typename... Policies>\n"
-           "  $class_name$(std::shared_ptr<$stub_class_name$> stub, \n"
-           "    Policies&&... policies) : $class_name$(std::move(stub)) {\n"
-           "    ChangePolicies(std::forward<policies>...);\n"
-           "  }\n"
-           "\n"
-           "  $class_name$($class_name$ const&) = delete;\n"
-           "  $class_name$& operator=($class_name$ const&) = delete;\n"
-           "\n"
-           "  std::shared_ptr<$stub_class_name$> Stub() { return stub_; }\n"
-           "\n");
-
-  DataModel::PrintMethods(service, vars, p,
-                          "  google::gax::StatusOr<$response_object$> \n"
-                          "  $method_name$($request_object$ const& request);\n"
-                          "\n",
-                          NoStreamingPredicate);
-
-  p->Print(vars,
-           "\n"
-           " private:\n"
-           "  void ChangePolicy(google::gax::RetryPolicy const& policy) {\n"
-           "    retry_policy_ = policy.clone();\n"
-           "  }\n"
-           "  void ChangePolicy(google::gax::BackoffPolicy const& policy) {\n"
-           "    backoff_policy_ = policy.clone();\n"
-           "  }\n"
-           "  void ChangePolicies() {}\n"
-           "\n"
-           "  template <typename Policy, typename... Policies>\n"
-           "  void ChangePolicies(Policy&& policy, Policies&&... policies) {\n"
-           "    ChangePolicy(policy);\n"
-           "    ChangePolicies(std::forward<Policies>(policies)...);\n"
-           "  }\n"
-           "\n"
-           "  std::shared_ptr<$stub_class_name$> stub_;\n"
-           "  std::unique_ptr<google::gax::RetryPolicy> retry_policy_;\n"
-           "  std::unique_ptr<google::gax::BackoffPolicy> backoff_policy_;\n"
-           "\n"
-           "  // Note: conservatively assume no methods are idempotent.\n"
-           "  //       This will eventually be set from annotations.\n");
+           "  virtual ~$class_name$Connection() = 0;\n\n");
 
   DataModel::PrintMethods(
       service, vars, p,
-      "  static constexpr google::gax::MethodInfo $method_name_snake$_info = {"
-      "\n"
-      "      \"$method_name$\", google::gax::MethodInfo::RpcType::NORMAL_RPC,\n"
-      "      google::gax::MethodInfo::Idempotency::NON_IDEMPOTENT};\n",
+      "  virtual google::cloud::StatusOr<$response_object$> \n"
+      "  $method_name$($request_object$ const& request) = 0;\n"
+      "\n",
       NoStreamingPredicate);
 
-  p->Print(vars,
-           "}; // $class_name$\n"
-           "\n");
+  p->Print(vars, "};\n\n");
 
-  for (auto nspace : namespaces) {
-    p->Print("} // namespace $namespace$\n", "namespace", nspace);
+  p->Print(
+      vars,
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    ConnectionOptions const& options = ConnectionOptions());\n\n");
+
+  p->Print(
+      vars,
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    ConnectionOptions const& options,\n"
+      "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+      "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
+      "    std::unique_ptr<PollingPolicy> polling_policy);\n\n");
+
+  p->Print(
+      vars,
+      "namespace internal {\n"
+      "std::shared_ptr<$class_name$Connection> Make$class_name$Connection(\n"
+      "    std::shared_ptr<internal::$class_name$Stub> stub,\n"
+      "    std::unique_ptr<RetryPolicy> retry_policy,\n"
+      "    std::unique_ptr<BackoffPolicy> backoff_policy,\n"
+      "    std::unique_ptr<PollingPolicy> polling_policy);\n"
+      "}  // namespace internal\n\n");
+
+  std::reverse(namespaces.begin(), namespaces.end());
+  for (auto const& nspace : namespaces) {
+    p->Print("}  // namespace $namespace$\n", "namespace", nspace);
   }
 
   p->Print(vars, "#endif // $header_include_guard_const$\n");

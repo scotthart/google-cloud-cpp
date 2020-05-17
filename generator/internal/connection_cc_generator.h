@@ -11,8 +11,8 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#ifndef GENERATOR_INTERNAL_CLIENT_CC_GENERATOR_H_
-#define GENERATOR_INTERNAL_CLIENT_CC_GENERATOR_H_
+#ifndef GENERATOR_INTERNAL_CONNECTION_CC_GENERATOR_H_
+#define GENERATOR_INTERNAL_CONNECTION_CC_GENERATOR_H_
 
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
@@ -20,18 +20,17 @@
 #include <sstream>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {
 
-bool GenerateClientCC(pb::ServiceDescriptor const* service,
-                      std::map<std::string, std::string> const& vars,
-                      Printer& p, std::string* /* error */);
+bool GenerateClientConnectionCC(
+    google::protobuf::ServiceDescriptor const* service,
+    std::map<std::string, std::string> const& vars, Printer& p,
+    std::string* /* error */);
 
 }  // namespace internal
 }  // namespace codegen
 }  // namespace google
 
-#endif  // GENERATOR_INTERNAL_CLIENT_CC_GENERATOR_H_
+#endif  // GENERATOR_INTERNAL_CONNECTION_CC_GENERATOR_H_
