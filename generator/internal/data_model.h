@@ -40,10 +40,16 @@ struct DataModel {
                              std::map<std::string, std::string>& vars) {
     vars["class_name"] = service->name();
     vars["stub_class_name"] = absl::StrCat(service->name(), "Stub");
+    vars["metadata_class_name"] = absl::StrCat(service->name(), "Metadata");
+    vars["logging_class_name"] = absl::StrCat(service->name(), "Logging");
     vars["proto_file_name"] = service->file()->name();
     vars["header_include_guard_const"] = absl::StrCat(service->name(), "_H_");
     vars["stub_header_include_guard_const"] =
-        absl::StrCat(service->name(), "_Stub", "_H_");
+        absl::StrCat(service->name(), "_STUB", "_H_");
+    vars["metadata_header_include_guard_const"] =
+        absl::StrCat(service->name(), "_METADATA", "_H_");
+    vars["logging_header_include_guard_const"] =
+        absl::StrCat(service->name(), "_LOGGING", "_H_");
     vars["class_comment_block"] = "// TODO: pull in comments";
     vars["grpc_stub_fqn"] = internal::ProtoNameToCppName(service->full_name());
     vars["service_endpoint"] =
@@ -58,6 +64,11 @@ struct DataModel {
         internal::ProtoNameToCppName(method->input_type()->full_name());
     vars["response_object"] =
         internal::ProtoNameToCppName(method->output_type()->full_name());
+    auto method_signature =
+        method->options().GetRepeatedExtension(google::api::method_signature);
+    if (!method_signature.empty()) {
+      vars["method_request_param"] = method_signature[0];
+    }
   }
 
   static void PrintMethods(

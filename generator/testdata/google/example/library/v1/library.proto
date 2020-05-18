@@ -29,46 +29,55 @@ service LibraryService {
 
   // Creates a book.
   rpc CreateBook(CreateBookRequest) returns (Book) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { post: "/v1/{name=bookShelves/*}/books" body: "book" };
   }
 
   // Gets a book.
   rpc GetBook(GetBookRequest) returns (Book) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { get: "/v1/{name=bookShelves/*/books/*}" };
   }
 
   // Lists books in a shelf.
   rpc ListBooks(ListBooksRequest) returns (ListBooksResponse) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { get: "/v1/{name=bookShelves/*}/books" };
   }
 
   // Deletes a book.
   rpc DeleteBook(DeleteBookRequest) returns (Empty) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { delete: "/v1/{name=bookShelves/*/books/*}" };
   }
 
   // Updates a book.
   rpc UpdateBook(UpdateBookRequest) returns (Book) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { put: "/v1/{name=bookShelves/*/books/*}" body: "book" };
   }
 
   // Test server streaming
   rpc StreamShelves(StreamShelvesRequest) returns (stream StreamShelvesResponse) {
+    option (google.api.method_signature) = "name";
     // gRPC streaming methods don't have an HTTP equivalent and don't need to have the google.api.http option.
   }
 
   // Test bidi-streaming.
   rpc DiscussBook(stream DiscussBookRequest) returns (stream Comment) {
+    option (google.api.method_signature) = "name";
     // gRPC streaming methods don't have an HTTP equivalent and don't need to have the google.api.http option.
   }
 
   // Test client streaming.
   rpc MonologAboutBook(stream DiscussBookRequest) returns (Comment) {
+    option (google.api.method_signature) = "name";
     // gRPC streaming methods don't have an HTTP equivalent and don't need to have the google.api.http option.
   }
 
   // Test long-running operations
   rpc GetBigBook(GetBookRequest) returns (/*google.longrunning.Operation*/Book) {
+    option (google.api.method_signature) = "name";
     //option (google.api.http) = { get: "/v1/{name=bookShelves/*/books/*}:big" };
   }
 }

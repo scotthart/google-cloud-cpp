@@ -20,6 +20,10 @@
 #include "generator/internal/connection_cc_generator.h"
 #include "generator/internal/connection_header_generator.h"
 #include "generator/internal/data_model.h"
+#include "generator/internal/logging_cc_generator.h"
+#include "generator/internal/logging_header_generator.h"
+#include "generator/internal/metadata_cc_generator.h"
+#include "generator/internal/metadata_header_generator.h"
 #include "generator/internal/printer.h"
 #include "generator/internal/stub_cc_generator.h"
 #include "generator/internal/stub_header_generator.h"
@@ -56,6 +60,56 @@ bool Generator::Generate(pb::FileDescriptor const* file,
     std::string service_file_path =
         internal::ServiceNameToFilePath(service->full_name());
 
+    std::string header_stub_file_path = absl::StrCat(
+        service_file_path, "_stub", internal::GeneratedFileSuffix(), ".h");
+    internal::Printer header_stub_printer(generator_context,
+                                          header_stub_file_path);
+    if (!internal::GenerateClientStubHeader(service, vars, header_stub_printer,
+                                            error)) {
+      return false;
+    }
+    std::string cc_stub_file_path = absl::StrCat(
+        service_file_path, "_stub", internal::GeneratedFileSuffix(), ".cc");
+    internal::Printer cc_stub_printer(generator_context, cc_stub_file_path);
+    if (!internal::GenerateClientStubCC(service, vars, cc_stub_printer,
+                                        error)) {
+      return false;
+    }
+
+    std::string header_metadata_file_path = absl::StrCat(
+        service_file_path, "_metadata", internal::GeneratedFileSuffix(), ".h");
+    internal::Printer header_metadata_printer(generator_context,
+                                              header_metadata_file_path);
+    if (!internal::GenerateClientMetadataHeader(
+            service, vars, header_metadata_printer, error)) {
+      return false;
+    }
+    std::string cc_metadata_file_path = absl::StrCat(
+        service_file_path, "_metadata", internal::GeneratedFileSuffix(), ".cc");
+    internal::Printer cc_metadata_printer(generator_context,
+                                          cc_metadata_file_path);
+    if (!internal::GenerateClientMetadataCC(service, vars, cc_metadata_printer,
+                                            error)) {
+      return false;
+    }
+
+    std::string header_logging_file_path = absl::StrCat(
+        service_file_path, "_logging", internal::GeneratedFileSuffix(), ".h");
+    internal::Printer header_logging_printer(generator_context,
+                                             header_logging_file_path);
+    if (!internal::GenerateClientLoggingHeader(service, vars,
+                                               header_logging_printer, error)) {
+      return false;
+    }
+    std::string cc_logging_file_path = absl::StrCat(
+        service_file_path, "_logging", internal::GeneratedFileSuffix(), ".cc");
+    internal::Printer cc_logging_printer(generator_context,
+                                         cc_logging_file_path);
+    if (!internal::GenerateClientLoggingCC(service, vars, cc_logging_printer,
+                                           error)) {
+      return false;
+    }
+
     std::string header_connection_file_path =
         absl::StrCat(service_file_path, "_connection",
                      internal::GeneratedFileSuffix(), ".h");
@@ -65,30 +119,12 @@ bool Generator::Generate(pb::FileDescriptor const* file,
                                                   error)) {
       return false;
     }
-
-    std::string header_stub_file_path = absl::StrCat(
-        service_file_path, "_stub", internal::GeneratedFileSuffix(), ".h");
-    internal::Printer header_stub_printer(generator_context,
-                                          header_stub_file_path);
-    if (!internal::GenerateClientStubHeader(service, vars, header_stub_printer,
-                                            error)) {
-      return false;
-    }
-
     std::string cc_connection_file_path =
         absl::StrCat(service_file_path, "_connection",
                      internal::GeneratedFileSuffix(), ".cc");
     internal::Printer cc_printer(generator_context, cc_connection_file_path);
     if (!internal::GenerateClientConnectionCC(service, vars, cc_printer,
                                               error)) {
-      return false;
-    }
-
-    std::string cc_stub_file_path = absl::StrCat(
-        service_file_path, "_stub", internal::GeneratedFileSuffix(), ".cc");
-    internal::Printer cc_stub_printer(generator_context, cc_stub_file_path);
-    if (!internal::GenerateClientStubCC(service, vars, cc_stub_printer,
-                                        error)) {
       return false;
     }
   }

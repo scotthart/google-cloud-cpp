@@ -40,7 +40,7 @@ Status GetResultStatus(StatusOr<T> result) {
 /// Generate an error Status for `RetryLoop()`
 template <typename RetryStatus>
 RetryStatus RetryLoopError(char const* loop_message, char const* location,
-                      RetryStatus const& last_status) {
+                           RetryStatus const& last_status) {
   std::ostringstream os;
   os << loop_message << " " << location << ": " << last_status;
   return RetryStatus(last_status.code(), std::move(os).str());
@@ -70,16 +70,17 @@ RetryStatus RetryLoopError(char const* loop_message, char const* location,
  *     `google::cloud::Status` that indicates the final error for this request.
  */
 template <typename Functor, typename Request, typename Sleeper,
-    typename StatusTypePolicy, typename RetryableTraitsPolicy,
+          typename StatusTypePolicy, typename RetryableTraitsPolicy,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&, Request const&>::value,
               int>::type = 0>
-auto RetryLoopImpl(std::unique_ptr<RetryPolicy<StatusTypePolicy, RetryableTraitsPolicy>> retry_policy,
-                   std::unique_ptr<BackoffPolicy> backoff_policy,
-                   bool is_idempotent, Functor&& functor,
-                   Request const& request, char const* location,
-                   Sleeper sleeper)
+auto RetryLoopImpl(
+    std::unique_ptr<RetryPolicy<StatusTypePolicy, RetryableTraitsPolicy>>
+        retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool is_idempotent,
+    Functor&& functor, Request const& request, char const* location,
+    Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
   Status last_status;
@@ -112,16 +113,17 @@ auto RetryLoopImpl(std::unique_ptr<RetryPolicy<StatusTypePolicy, RetryableTraits
 }
 
 /// @copydoc RetryLoopImpl
-template <typename Functor, typename Request,
-typename StatusTypePolicy, typename RetryableTraitsPolicy,
-typename std::enable_if<
+template <typename Functor, typename Request, typename StatusTypePolicy,
+          typename RetryableTraitsPolicy,
+          typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&, Request const&>::value,
               int>::type = 0>
-auto RetryLoop(std::unique_ptr<RetryPolicy<StatusTypePolicy, RetryableTraitsPolicy>> retry_policy,
-               std::unique_ptr<BackoffPolicy> backoff_policy,
-               bool is_idempotent, Functor&& functor, Request const& request,
-               char const* location)
+auto RetryLoop(
+    std::unique_ptr<RetryPolicy<StatusTypePolicy, RetryableTraitsPolicy>>
+        retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy, bool is_idempotent,
+    Functor&& functor, Request const& request, char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
   return RetryLoopImpl(

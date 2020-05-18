@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_POLLING_POLICY_H
 
-#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
 
 namespace google {

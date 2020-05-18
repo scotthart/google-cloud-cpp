@@ -158,31 +158,33 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
       "        google::cloud::Status, internal::SafeGrpcRetry>;\n\n");
 
   // polling policy
-  p->Print(vars,
-           "template<typename Retry = LimitedTimeRetryPolicy,\n"
-           "    typename Backoff = ExponentialBackoffPolicy>\n"
-           "class GenericPollingPolicy : public PollingPolicy {\n"
-           " public:\n"
-           "  GenericPollingPolicy(Retry retry_policy, Backoff backoff_policy)\n"
-           "      : retry_policy_(std::move(retry_policy)),\n"
-           "        backoff_policy_(std::move(backoff_policy)) {}\n"
-           "\n"
-           "  std::unique_ptr<PollingPolicy> clone() const override {\n"
-           "    return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));\n"
-           "  }\n"
-           "\n"
-           "  bool OnFailure(google::cloud::Status const& status) override {\n"
-           "    return retry_policy_.OnFailure(status);\n"
-           "  }\n"
-           "\n"
-           "  std::chrono::milliseconds WaitPeriod() override {\n"
-           "    return backoff_policy_.OnCompletion();\n"
-           "  }\n"
-           "\n"
-           " private:\n"
-           "  Retry retry_policy_;\n"
-           "  Backoff backoff_policy_;\n"
-           "};\n\n");
+  p->Print(
+      vars,
+      "template<typename Retry = LimitedTimeRetryPolicy,\n"
+      "    typename Backoff = ExponentialBackoffPolicy>\n"
+      "class GenericPollingPolicy : public PollingPolicy {\n"
+      " public:\n"
+      "  GenericPollingPolicy(Retry retry_policy, Backoff backoff_policy)\n"
+      "      : retry_policy_(std::move(retry_policy)),\n"
+      "        backoff_policy_(std::move(backoff_policy)) {}\n"
+      "\n"
+      "  std::unique_ptr<PollingPolicy> clone() const override {\n"
+      "    return std::unique_ptr<PollingPolicy>(new "
+      "GenericPollingPolicy(*this));\n"
+      "  }\n"
+      "\n"
+      "  bool OnFailure(google::cloud::Status const& status) override {\n"
+      "    return retry_policy_.OnFailure(status);\n"
+      "  }\n"
+      "\n"
+      "  std::chrono::milliseconds WaitPeriod() override {\n"
+      "    return backoff_policy_.OnCompletion();\n"
+      "  }\n"
+      "\n"
+      " private:\n"
+      "  Retry retry_policy_;\n"
+      "  Backoff backoff_policy_;\n"
+      "};\n\n");
 
   std::reverse(namespaces.begin(), namespaces.end());
   for (auto const& nspace : namespaces) {

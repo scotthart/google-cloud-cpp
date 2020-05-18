@@ -22,10 +22,14 @@ cc_library(
     name = "library_cc_codegen",
     srcs = [
         "library_connection.gcpcxx.pb.cc",
+        "library_logging.gcpcxx.pb.cc",
+        "library_metadata.gcpcxx.pb.cc",
         "library_stub.gcpcxx.pb.cc",
     ],
     hdrs = [
         "library_connection.gcpcxx.pb.h",
+        "library_logging.gcpcxx.pb.h",
+        "library_metadata.gcpcxx.pb.h",
         "library_stub.gcpcxx.pb.h",
     ],
     deps = [

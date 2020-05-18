@@ -232,6 +232,7 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/log_wrapper_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
