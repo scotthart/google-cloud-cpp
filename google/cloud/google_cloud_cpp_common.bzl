@@ -46,7 +46,6 @@ google_cloud_cpp_common_hdrs = [
     "internal/parse_rfc3339.h",
     "internal/port_platform.h",
     "internal/random.h",
-    "internal/retry_loop.h",
     "internal/retry_policy.h",
     "internal/setenv.h",
     "internal/strerror.h",

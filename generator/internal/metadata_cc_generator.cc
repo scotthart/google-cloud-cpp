@@ -71,20 +71,19 @@ bool GenerateClientMetadataCC(
   // open internal namespace
   p->Print(vars, "namespace internal {\n");
 
-  p->Print(
-      vars,
-      "namespace {\n"
-      "std::string ApiClientHeader() {\n"
-      "  return \"gl-cpp/\" + google::cloud::internal::CompilerId() + "
-      "\"-\" +\n"
-      "         google::cloud::internal::CompilerVersion() + \"-\" +\n"
-      "         google::cloud::internal::CompilerFeatures() + \"-\" "
-      "+\n"
-      "         google::cloud::internal::LanguageVersion() + \" "
-      "gccl/\" +\n"
-      "         google::cloud::version_string();\n"
-      "}\n"
-      "}  // namespace\n\n");
+  p->Print(vars,
+           "namespace {\n"
+           "std::string ApiClientHeader() {\n"
+           "  return \"gl-cpp/\" + google::cloud::internal::CompilerId() + "
+           "\"-\" +\n"
+           "         google::cloud::internal::CompilerVersion() + \"-\" +\n"
+           "         google::cloud::internal::CompilerFeatures() + \"-\" "
+           "+\n"
+           "         google::cloud::internal::LanguageVersion() + \" "
+           "gccl/\" +\n"
+           "         google::cloud::version_string();\n"
+           "}\n"
+           "}  // namespace\n\n");
 
   // constructor
   p->Print(vars,

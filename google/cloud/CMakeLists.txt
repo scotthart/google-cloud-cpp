@@ -142,7 +142,6 @@ add_library(
     internal/port_platform.h
     internal/random.cc
     internal/random.h
-    internal/retry_loop.h
     internal/retry_policy.h
     internal/setenv.cc
     internal/setenv.h
@@ -349,6 +348,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         internal/log_wrapper.cc
         internal/log_wrapper.h
         internal/pagination_range.h
+        internal/retry_loop.h
         internal/time_utils.cc
         internal/time_utils.h)
     target_link_libraries(
