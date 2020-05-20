@@ -30,6 +30,12 @@ std::vector<std::string> BuildClientStubCCIncludes(
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
+      LocalInclude(
+          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+                       "_logging" + GeneratedFileSuffix() + ".h")),
+      LocalInclude(
+          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+                       "_metadata" + GeneratedFileSuffix() + ".h")),
       LocalInclude("google/cloud/internal/compiler_info.h"),
       LocalInclude("google/cloud/internal/getenv.h"),
       LocalInclude("google/cloud/status_or.h"),
@@ -121,21 +127,55 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
   // emit methods
   DataModel::PrintMethods(
       service, vars, p,
-      "StatusOr<$response_object$>\n"
-      "$method_name$(\n"
-      "  grpc::ClientContext& client_context,\n"
-      "  $request_object$ const& request) override {\n"
-      "    $response_object$ response;\n"
-      "    auto status =\n"
-      "        grpc_stub_->$method_name$(&client_context, request, "
-      "&response);\n"
+      {{IsResponseTypeEmpty,
+        // clang-format off
+        "  Status\n",
+        "  StatusOr<$response_type$>\n"},
+       {"  $method_name$(\n"
+        "    grpc::ClientContext& client_context,\n"
+        "    $request_type$ const& request) override {\n"
+        "      $response_type$ response;\n"
+        "      auto status =\n"
+        "          grpc_stub_->$method_name$(&client_context, request, "
+        "  &response);\n"
+        "      if (!status.ok()) {\n"
+        "        return google::cloud::MakeStatusFromRpcError(status);\n"
+        "      }\n"},
+       {IsResponseTypeEmpty,
+        "      return google::cloud::Status();\n",
+        "      return response;\n"},
+       {"  }\n"
+        "\n"}},
+      // clang-format on
+      IsNonStreaming);
+
+  p->Print(
+      vars,
+      "  StatusOr<google::longrunning::Operation> GetOperation(\n"
+      "      grpc::ClientContext& client_context,\n"
+      "      google::longrunning::GetOperationRequest const& request) override {\n"
+      "    google::longrunning::Operation response;\n"
+      "    grpc::Status status =\n"
+      "        operations_->GetOperation(&client_context, request, &response);\n"
       "    if (!status.ok()) {\n"
       "      return google::cloud::MakeStatusFromRpcError(status);\n"
       "    }\n"
-      "    return response;"
-      "}\n"
-      "\n",
-      NoStreamingPredicate);
+      "    return response;\n"
+      "  }\n"
+      "\n"
+      "  Status CancelOperation(\n"
+      "      grpc::ClientContext& client_context,\n"
+      "      google::longrunning::CancelOperationRequest const& request) override {\n"
+      "    google::protobuf::Empty response;\n"
+      "    grpc::Status status =\n"
+      "        operations_->CancelOperation(&client_context, request, &response);\n"
+      "    if (!status.ok()) {\n"
+      "      return google::cloud::MakeStatusFromRpcError(status);\n"
+      "    }\n"
+      "    return google::cloud::Status();\n"
+      "  }\n"
+      "\n"
+      );
 
   // private members and close class defintion
   p->Print(
@@ -163,18 +203,14 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
       "          std::move(service_grpc_stub), "
       "std::move(longrunning_grpc_stub));\n"
       "\n"
-      "#if 0\n"
-      "  // TODO(sdhart): add metadata support\n"
-      "  stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));\n"
+      "  stub = std::make_shared<$metadata_class_name$>(std::move(stub));\n"
       "\n"
-      "  // TODO(sdhart): add logging support\n"
       "  if (options.tracing_enabled(\"rpc\")) {\n"
-      "    GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
-      "    stub = std::make_shared<DatabaseAdminLogging>(std::move(stub),\n"
+      "    // GCP_LOG(INFO) << \"Enabled logging for gRPC calls\";\n"
+      "    stub = std::make_shared<$logging_class_name$>(std::move(stub),\n"
       "                                                  "
       "options.tracing_options());\n"
       "  }\n"
-      "#endif\n"
       "  return stub;\n"
       "}\n");
 
@@ -185,200 +221,6 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
   }
 
   return true;
-
-#if 0
-  // Abstract stub method definitions
-  DataModel::PrintMethods(
-      service, vars, p,
-      "StatusOr<$response_object$>\n"
-      "$stub_class_name$::$method_name$(\n"
-      "  grpc::ClientContext&,\n"
-      "  $request_object$ const&) {\n"
-      "  return Status(google::cloud::StatusCode::kUnimplemented,\n"
-      "    \"$method_name$ not implemented\");\n"
-      "}\n"
-      "\n",
-      NoStreamingPredicate);
-#endif
-
-#if 0
-  // gRPC aware stub class declaration and method definition
-  p->Print(vars,
-           "namespace {\n"
-           "class Default$stub_class_name$ : public $stub_class_name$ {\n"
-           " public:\n"
-           "  Default$stub_class_name$(std::unique_ptr<$grpc_stub_fqn$::"
-           "StubInterface> grpc_stub)\n"
-           "    : grpc_stub_(std::move(grpc_stub)) {}\n"
-           "\n"
-           "  Default$stub_class_name$(Default$stub_class_name$ const&) = "
-           "delete;\n"
-           "  Default$stub_class_name$& operator=(Default$stub_class_name$ "
-           "const&) = delete;\n"
-           "\n");
-#endif
-
-#if 0
-  // todo(sdhart): handle return of respone type Empty correctly.
-  DataModel::PrintMethods(
-      service, vars, p,
-      "  StatusOr<$response_object$>\n"
-      "  $method_name$(grpc::ClientContext& context,\n"
-      "    $request_object$ const& request) override {\n"
-      "    $response_object$ response;\n"
-      "    auto status = grpc_stub_->$method_name$(&context, request, "
-      "&response);\n"
-      "    if (!status.ok()) {\n"
-      "      return google::cloud::MakeStatusFromRpcError(status);\n"
-      "    }\n"
-      "    return response;\n"
-      "  }\n"
-      "\n",
-      NoStreamingPredicate);
-
-  p->Print(vars,
-           " private:\n"
-           "  std::unique_ptr<$grpc_stub_fqn$::StubInterface> grpc_stub_;\n"
-           "};  // Default$stub_class_name$\n"
-           "\n");
-
-  // TODO(sdhart): determine a mechanism to inject transient status codes during generation.
-  p->Print(vars,
-           "namespace internal {\n"
-           "struct SafeGrpcRetry {\n"
-           "  static inline bool IsOk(google::cloud::Status const& status) {\n"
-           "    return status.ok();\n"
-           "  }\n"
-           "  static inline bool IsTransientFailure(google::cloud::Status const& status) {\n"
-           "    return status.code() == StatusCode::kUnavailable ||\n"
-           "      status.code() == StatusCode::kResourceExhausted;\n"
-           "  }\n"
-           "  static inline bool IsPermanentFailure(google::cloud::Status const& status) {\n"
-           "    return !IsOk(status) && !IsTransientFailure(status);\n"
-           "  }\n"
-           "};\n"
-           "}  // namespace internal\n"
-           "\n");
-
-  p->Print(vars,
-           "/// The base class for retry policies.\n"
-           "using RetryPolicy =\n"
-           "  google::cloud::internal::RetryPolicy<google::cloud::Status,\n"
-           "                                       internal::SafeGrpcRetry>;\n"
-           "/// A retry policy that limits based on time.\n"
-           "using LimitedTimeRetryPolicy =\n"
-           "  google::cloud::internal::LimitedTimeRetryPolicy<google::cloud::Status,\n"
-           "                                                  internal::SafeGrpcRetry>;\n"
-           "/// A retry policy that limits the number of times a request can fail.\n"
-           "using LimitedErrorCountRetryPolicy =\n"
-           "  google::cloud::internal::LimitedErrorCountRetryPolicy<\n"
-           "      google::cloud::Status, internal::SafeGrpcRetry>;\n"
-           "\n");
-
-
-  p->Print(vars,
-      "class $stub_class_name$Impl : public $stub_class_name$ {\n"
-      " public:\n"
-      "  explicit $stub_class_name$Impl(\n"
-      "      std::shared_ptr<internal::"
-
-      )
-#endif
-#if 0
-  // Retrying stub that decorates another stub
-  p->Print(vars,
-           "class Retry$stub_class_name$ : public $stub_class_name$ {\n"
-           " public:\n"
-           "  Retry$stub_class_name$(std::unique_ptr<$stub_class_name$> stub,\n"
-           "                          RetryPolicy const& "
-           "retry_policy,\n"
-           "                          google::cloud::BackoffPolicy const& "
-           "backoff_policy) :\n"
-           "            next_stub_(std::move(stub)),\n"
-           "            default_retry_policy_(retry_policy.clone()),\n"
-           "            default_backoff_policy_(backoff_policy.clone()) {}\n"
-           "\n");
-
-  DataModel::PrintMethods(
-      service, vars, p,
-      "  google::cloud::Status\n"
-      "  $method_name$(google::gax::CallContext& context,\n"
-      "             $request_object$ const& request,\n"
-      "             $response_object$* response) override {\n"
-      "    auto invoke_stub = [this](google::gax::CallContext& c,\n"
-      "                $request_object$ const& req,\n"
-      "                $response_object$* resp) {\n"
-      "              return this->next_stub_->$method_name$(c, req, resp);\n"
-      "            };\n"
-      "    return google::gax::MakeRetryCall<$request_object$,\n"
-      "                                      $response_object$,\n"
-      "                                      decltype(invoke_stub)>(\n"
-      "        context, request, response, std::move(invoke_stub),\n"
-      "        clone_retry(context), clone_backoff(context));\n"
-      "  }\n"
-      "\n",
-      NoStreamingPredicate);
-
-  p->Print(
-      vars,
-      " private:\n"
-      "  std::unique_ptr<google::cloud::RetryPolicy>\n"
-      "  clone_retry(google::gax::CallContext const &context) const {\n"
-      "    auto context_retry = context.RetryPolicy();\n"
-      "    return context_retry ? std::move(context_retry)\n"
-      "                         : std::move(default_retry_policy_->clone());\n"
-      "  }\n"
-      "\n"
-      "  std::unique_ptr<google::cloud::BackoffPolicy>\n"
-      "  clone_backoff(google::gax::CallContext const &context) const {\n"
-      "    auto context_backoff = context.BackoffPolicy();\n"
-      "    return context_backoff ? std::move(context_backoff)\n"
-      "                           : "
-      "std::move(default_backoff_policy_->clone());\n"
-      "  }\n"
-      "\n"
-      "  std::unique_ptr<$stub_class_name$> next_stub_;\n"
-      "  const std::unique_ptr<RetryPolicy const> "
-      "default_retry_policy_;\n"
-      "  const std::unique_ptr<google::cloud::BackoffPolicy const>  "
-      "default_backoff_policy_;\n"
-      "};  // Retry$stub_class_name$\n");
-#endif
-#if 0
-  // todo(sdhart): fix this
-  p->Print(vars,
-           "}  // namespace\n"
-           "\n"
-           "std::unique_ptr<$stub_class_name$> Create$stub_class_name$() {\n"
-           "  auto credentials = grpc::GoogleDefaultCredentials();\n"
-           "  return Create$stub_class_name$(std::move(credentials));\n"
-           "}\n");
-
-  p->Print(vars,
-           "\n"
-           "std::unique_ptr<$stub_class_name$>\n"
-           "Create$stub_class_name$(std::shared_ptr<grpc::ChannelCredentials> "
-           "creds) {\n"
-           "  auto channel = grpc::CreateChannel(\"$service_endpoint$\",\n"
-           "    std::move(creds));\n"
-           "  auto grpc_stub = $grpc_stub_fqn$::NewStub(std::move(channel));\n"
-           "  auto default_stub = std::unique_ptr<$stub_class_name$>(new\n"
-           "    Default$stub_class_name$(std::move(grpc_stub)));\n"
-           "  using ms = std::chrono::milliseconds;\n"
-           "  // Note: these retry and backoff times are dummy stand ins.\n"
-           "  // More appopriate default values will be chosen later.\n"
-           "  LimitedDurationRetryPolicy<> retry_policy(ms(500), "
-           "ms(500));\n"
-           "  google::cloud::ExponentialBackoffPolicy backoff_policy(ms(20), "
-           "ms(100));\n"
-           "  return std::unique_ptr<$stub_class_name$>(new "
-           "Retry$stub_class_name$(\n"
-           "                       std::move(default_stub),\n"
-           "                       retry_policy,\n"
-           "                       backoff_policy));\n"
-           "}\n"
-           "\n");
-#endif
 }
 
 }  // namespace internal

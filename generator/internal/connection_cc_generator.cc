@@ -34,6 +34,7 @@ std::vector<std::string> BuildClientCCIncludes(
       LocalInclude(
           absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
+      LocalInclude("google/cloud/internal/polling_loop.h"),
       LocalInclude("google/cloud/internal/retry_loop.h"),
       LocalInclude("google/cloud/status_or.h"),
   };
@@ -78,17 +79,18 @@ bool GenerateClientConnectionCC(
   p->Print(vars,
            "$class_name$Connection::~$class_name$Connection() = default;\n\n");
 
+#if 0
   // default not implemented returning methods
   DataModel::PrintMethods(
       service, vars, p,
-      "StatusOr<$response_object$>\n"
+      "StatusOr<$response_type$>\n"
       "$class_name$Connection::$method_name$(\n"
-      "    $request_object$ const& request) {\n"
+      "    $request_type$ const& request) {\n"
       "  return Status(StatusCode::kUnimplemented, \"not implemented\");\n"
       "}\n"
       "\n",
-      NoStreamingPredicate);
-
+      IsNonStreaming);
+#endif
   p->Print(vars, "namespace {\n\n");
 
   // default policies
@@ -142,24 +144,105 @@ bool GenerateClientConnectionCC(
 
   DataModel::PrintMethods(
       service, vars, p,
-      "StatusOr<$response_object$>\n"
-      "$method_name$(\n"
-      "    $request_object$ const& request) override {\n"
-      "  return google::cloud::internal::RetryLoop(\n"
-      "     retry_policy_prototype_->clone(), "
-      "backoff_policy_prototype_->clone(),\n"
-      "     false,\n"
-      "     [this](grpc::ClientContext& context,\n"
-      "            $request_object$ const& request) {\n"
-      "       return stub_->$method_name$(context, request);\n"
-      "     },\n"
-      "     request, __func__);\n"
-      "}\n"
-      "\n",
-      NoStreamingPredicate);
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  Status\n",
+        "  StatusOr<$response_type$>\n"},
+       {"  $method_name$(\n"
+        "      $request_type$ const& request) override {\n"
+        "    return google::cloud::internal::RetryLoop(\n"
+        "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
+        "        false,\n"
+        "        [this](grpc::ClientContext& context,\n"
+        "            $request_type$ const& request) {\n"
+        "          return stub_->$method_name$(context, request);\n"
+        "        },\n"
+        "        request, __func__);\n"
+        "}\n"
+        "\n",}
+          // clang-format on
+      },
+      And(IsNonStreaming, Not(IsLongrunningOperation)));
+
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  future<Status>\n",
+        "  future<StatusOr<$longrunning_deduced_response_type$>> \n"},
+       {"  $method_name$(\n"
+        "      $request_type$ const& request) override {\n"
+        "    auto operation = google::cloud::internal::RetryLoop(\n"
+        "        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),\n"
+        "        false,\n"
+        "        [this](grpc::ClientContext& context,\n"
+        "               $request_type$ const& request) {\n"
+        "          return stub_->$method_name$(context, request);\n"
+        "        },\n"
+        "        request, __func__);\n"
+        "    if (!operation) {\n"
+        "      return google::cloud::make_ready_future(\n"
+        "          StatusOr<$longrunning_deduced_response_type$>(operation.status()));\n"
+        "    }\n"
+        "\n"
+        "    return Await$method_name$(*std::move(operation));\n"
+        "}\n"
+        "\n",}
+          // clang-format on
+      },
+      And(IsNonStreaming, IsLongrunningOperation));
+
+  p->Print(vars, " private:\n");
+
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  future<Status>\n",
+        "  future<StatusOr<$longrunning_deduced_response_type$>> \n"},
+       {"  Await$method_name$(\n"
+        "      google::longrunning::Operation operation) {\n"
+        "    using ValueExtractor = google::cloud::internal::PollingLoopValueExtractor<\n"
+        "        $longrunning_response_type$,\n"
+        "        $longrunning_metadata_type$>;\n"
+        "    promise<ValueExtractor::ReturnType> pr;\n"
+        "    auto f = pr.get_future();\n"
+        "\n"
+        "    // TODO(#127) - use the (implicit) completion queue to run this loop.\n"
+        "    std::thread t(\n"
+        "        [](std::shared_ptr<internal::$stub_class_name$> stub,\n"
+        "           google::longrunning::Operation operation,\n"
+        "           std::unique_ptr<PollingPolicy> polling_policy,\n"
+        "           google::cloud::promise<ValueExtractor::ReturnType> promise,\n"
+        "           char const* location) mutable {\n"
+        "          auto result = google::cloud::internal::PollingLoop<ValueExtractor>(\n"
+        "              std::move(polling_policy),\n"
+        "              [stub](grpc::ClientContext& context,\n"
+        "                     google::longrunning::GetOperationRequest const& request) {\n"
+        "                return stub->GetOperation(context, request);\n"
+        "              },\n"
+        "              std::move(operation), location);\n"
+        "\n"
+        "          // Drop our reference to stub; ideally we'd have std::moved into the\n"
+        "          // lambda. Doing this also prevents a false leak from being reported\n"
+        "          // when using googlemock.\n"
+        "          stub.reset();\n"
+        "          promise.set_value(std::move(result));\n"
+        "        },\n"
+        "        stub_, std::move(operation), polling_policy_prototype_->clone(),\n"
+        "        std::move(pr), __func__);\n"
+        "    t.detach();\n"
+        "\n"
+        "    return f;\n"
+        "  }\n",}
+          // clang-format on
+      },
+      And(IsNonStreaming, IsLongrunningOperation));
 
   p->Print(vars,
-           " private:\n"
            "  std::shared_ptr<internal::$class_name$Stub> stub_;\n"
            "  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;\n"
            "  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;\n"

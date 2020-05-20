@@ -88,10 +88,29 @@ bool GenerateClientConnectionHeader(
 
   DataModel::PrintMethods(
       service, vars, p,
-      "  virtual google::cloud::StatusOr<$response_object$> \n"
-      "  $method_name$($request_object$ const& request) = 0;\n"
-      "\n",
-      NoStreamingPredicate);
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  virtual Status\n",
+        "  virtual StatusOr<$response_type$>\n"},
+       {"  $method_name$($request_type$ const& request) = 0;\n"
+        "\n",}
+          // clang-format on
+      },
+      And(IsNonStreaming, Not(IsLongrunningOperation)));
+
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  virtual future<Status>\n",
+        "  virtual future<StatusOr<$longrunning_deduced_response_type$>> \n"},
+       {"  $method_name$($request_type$ const& request) = 0;\n"
+        "\n",}
+          // clang-format on
+      },
+      And(IsNonStreaming, IsLongrunningOperation));
 
   p->Print(vars, "};\n\n");
 

@@ -34,8 +34,16 @@ std::string SystemInclude(std::string header) {
   return absl::StrCat("<", header, ">");
 }
 
-bool NoStreamingPredicate(pb::MethodDescriptor const* m) {
+bool IsNonStreaming(pb::MethodDescriptor const* m) {
   return !m->client_streaming() && !m->server_streaming();
+}
+
+bool IsLongrunningOperation(google::protobuf::MethodDescriptor const* m) {
+  return m->output_type()->full_name() == "google.longrunning.Operation";
+}
+
+bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* m) {
+  return m->output_type()->full_name() == "google.protobuf.Empty";
 }
 
 std::string CamelCaseToSnakeCase(std::string const& input) {

@@ -82,19 +82,54 @@ bool GenerateClientLoggingCC(google::protobuf::ServiceDescriptor const* service,
   // emit methods
   DataModel::PrintMethods(
       service, vars, p,
-      "StatusOr<$response_object$>\n"
-      "$logging_class_name$::$method_name$(\n"
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "Status\n",
+        "StatusOr<$response_type$>\n"},
+       {
+        "$logging_class_name$::$method_name$(\n"
+        "    grpc::ClientContext& context,\n"
+        "    $request_type$ const& request) {\n"
+        "  return google::cloud::internal::LogWrapper(\n"
+        "      [this](grpc::ClientContext& context,\n"
+        "             $request_type$ const& request) {\n"
+        "        return child_->$method_name$(context, request);\n"
+        "      },\n"
+        "      context, request, __func__, tracing_options_);\n"
+        "}\n"
+        "\n",}
+          // clang-format on
+      },
+      IsNonStreaming);
+
+  p->Print(
+      vars,
+      // clang-format off
+      "StatusOr<google::longrunning::Operation> $logging_class_name$::GetOperation(\n"
       "    grpc::ClientContext& context,\n"
-      "    $request_object$ const& request) {\n"
+      "    google::longrunning::GetOperationRequest const& request) {\n"
       "  return google::cloud::internal::LogWrapper(\n"
       "      [this](grpc::ClientContext& context,\n"
-      "             $request_object$ const& request) {\n"
-      "        return child_->$method_name$(context, request);\n"
+      "             google::longrunning::GetOperationRequest const& request) {\n"
+      "        return child_->GetOperation(context, request);\n"
       "      },\n"
       "      context, request, __func__, tracing_options_);\n"
       "}\n"
-      "\n",
-      NoStreamingPredicate);
+      "\n"
+      "Status $logging_class_name$::CancelOperation(\n"
+      "    grpc::ClientContext& context,\n"
+      "    google::longrunning::CancelOperationRequest const& request) {\n"
+      "  return google::cloud::internal::LogWrapper(\n"
+      "      [this](grpc::ClientContext& context,\n"
+      "             google::longrunning::CancelOperationRequest const& request) {\n"
+      "        return child_->CancelOperation(context, request);\n"
+      "      },\n"
+      "      context, request, __func__, tracing_options_);\n"
+      "}\n"
+      "\n"
+      // clang-format on
+      );
 
   p->Print(vars, "}  // namespace internal\n");
   std::reverse(namespaces.begin(), namespaces.end());

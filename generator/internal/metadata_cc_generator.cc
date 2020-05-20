@@ -94,17 +94,43 @@ bool GenerateClientMetadataCC(
            "\n");
 
   // emit methods
-  DataModel::PrintMethods(service, vars, p,
-                          "StatusOr<$response_object$>\n"
-                          "$metadata_class_name$::$method_name$(\n"
-                          "    grpc::ClientContext& context,\n"
-                          "    $request_object$ const& request) {\n"
-                          "  SetMetadata(context, \"$method_request_param$=\" "
-                          "+ request.$method_request_param$());\n"
-                          "  return child_->$method_name$(context, request);\n"
-                          "}\n"
-                          "\n",
-                          NoStreamingPredicate);
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "Status\n",
+        "StatusOr<$response_type$>\n"},
+       {"$metadata_class_name$::$method_name$(\n"
+        "    grpc::ClientContext& context,\n"
+        "    $request_type$ const& request) {\n"
+        "  SetMetadata(context, \"$method_request_param$=\" + request.$method_request_param$());\n"
+        "  return child_->$method_name$(context, request);\n"
+        "}\n"
+        "\n",}
+          // clang-format on
+      },
+      IsNonStreaming);
+
+    p->Print(
+      vars,
+      // clang-format off
+      "StatusOr<google::longrunning::Operation> $metadata_class_name$::GetOperation(\n"
+      "    grpc::ClientContext& context,\n"
+      "    google::longrunning::GetOperationRequest const& request) {\n"
+      "  SetMetadata(context, \"name=\" + request.name());\n"
+      "  return child_->GetOperation(context, request);\n"
+      "}\n"
+      "\n"
+      "Status $metadata_class_name$::CancelOperation(\n"
+      "    grpc::ClientContext& context,\n"
+      "    google::longrunning::CancelOperationRequest const& request) {\n"
+      "  SetMetadata(context, \"name=\" + request.name());\n"
+      "  return child_->CancelOperation(context, request);\n"
+      "}\n"
+      "\n"
+      // clang-format on
+      );
 
   p->Print(
       vars,

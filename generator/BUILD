@@ -49,6 +49,7 @@ cc_library(
         "@com_github_abseil_abseil_cpp//absl/base",
         "@com_github_abseil_abseil_cpp//absl/strings",
         "@com_google_googleapis//google/api:client_cc_proto",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_proto",
         "@com_google_protobuf//:protoc_lib",
     ],
 )

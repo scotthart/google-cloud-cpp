@@ -85,11 +85,27 @@ bool GenerateClientMetadataHeader(
            "\n");
 
   DataModel::PrintMethods(service, vars, p,
-                          "  StatusOr<$response_object$> $method_name$("
-                          "grpc::ClientContext& context,\n"
-                          "    $request_object$ const& request) override;\n"
-                          "\n",
-                          NoStreamingPredicate);
+                          {{IsResponseTypeEmpty,
+                            // clang-format off
+        "  Status $method_name$(\n",
+        "  StatusOr<$response_type$> $method_name$(\n"},
+       {"    grpc::ClientContext& context,\n"
+        "    $request_type$ const& request) override;\n"
+        "\n"}},
+                          // clang-format on
+                          IsNonStreaming);
+
+  p->Print(vars,
+           "  /// Poll a long-running operation.\n"
+           "  StatusOr<google::longrunning::Operation> GetOperation(\n"
+           "      grpc::ClientContext& context,\n"
+           "      google::longrunning::GetOperationRequest const& request) override;\n"
+           "\n"
+           "  /// Cancel a long-running operation.\n"
+           "  Status CancelOperation(\n"
+           "      grpc::ClientContext& context,\n"
+           "      google::longrunning::CancelOperationRequest const& request) override;\n"
+           "\n");
 
   p->Print(vars,
            " private:\n"

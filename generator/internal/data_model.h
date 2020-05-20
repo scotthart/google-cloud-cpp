@@ -21,6 +21,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
 #include "google/api/client.pb.h"
+#include "google/longrunning/operations.pb.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -60,10 +61,30 @@ struct DataModel {
                             std::map<std::string, std::string>& vars) {
     vars["method_name"] = method->name();
     vars["method_name_snake"] = CamelCaseToSnakeCase(method->name());
-    vars["request_object"] =
+    vars["request_type"] =
         internal::ProtoNameToCppName(method->input_type()->full_name());
-    vars["response_object"] =
+    vars["response_type"] =
         internal::ProtoNameToCppName(method->output_type()->full_name());
+    //    vars["return_type"] = method->output_type()->full_name() ==
+    //    "google.protobuf.Empty" ?
+    //        "Status" :
+    //        "StatusOr<" +
+    //        internal::ProtoNameToCppName(method->output_type()->full_name()) +
+    //        ">";
+    if (method->output_type()->full_name() == "google.longrunning.Operation") {
+      auto operation_info =
+          method->options().GetExtension(google::longrunning::operation_info);
+      vars["longrunning_metadata_type"] =
+          internal::ProtoNameToCppName(operation_info.metadata_type());
+      vars["longrunning_response_type"] =
+          internal::ProtoNameToCppName(operation_info.response_type());
+      // TODO(sdhart): determine if this is the correct behavior for
+      // response_type Empty.
+      vars["longrunning_deduced_response_type"] =
+          operation_info.response_type() == "google.protobuf.Empty"
+              ? internal::ProtoNameToCppName(operation_info.metadata_type())
+              : internal::ProtoNameToCppName(operation_info.response_type());
+    }
     auto method_signature =
         method->options().GetRepeatedExtension(google::api::method_signature);
     if (!method_signature.empty()) {
@@ -81,6 +102,24 @@ struct DataModel {
       if (predicate(method)) {
         SetMethodVars(method, vars);
         p->Print(vars, tmplt);
+      }
+    }
+  }
+
+  static void PrintMethods(
+      pb::ServiceDescriptor const* service,
+      std::map<std::string, std::string> vars, Printer& p,
+      std::vector<PredicatedFragment<google::protobuf::MethodDescriptor>>
+          fragments,
+      std::function<bool(pb::MethodDescriptor const*)> predicate =
+          [](pb::MethodDescriptor const*) { return true; }) {
+    for (int i = 0; i < service->method_count(); i++) {
+      const pb::MethodDescriptor* method = service->method(i);
+      if (predicate(method)) {
+        SetMethodVars(method, vars);
+        for (auto const& f : fragments) {
+          p->Print(vars, f(method).c_str());
+        }
       }
     }
   }

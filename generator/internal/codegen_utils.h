@@ -21,6 +21,7 @@
 #include <google/protobuf/descriptor.h>
 #include <algorithm>
 #include <cctype>
+#include <functional>
 #include <string>
 
 namespace google {
@@ -31,7 +32,78 @@ namespace pb = google::protobuf;
 
 std::string GeneratedFileSuffix();
 
-bool NoStreamingPredicate(pb::MethodDescriptor const* m);
+bool IsNonStreaming(google::protobuf::MethodDescriptor const* m);
+bool IsLongrunningOperation(google::protobuf::MethodDescriptor const* m);
+bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* m);
+
+class And {
+ public:
+  And(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs,
+      std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs)
+      : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
+  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+    return lhs_(m) && rhs_(m);
+  }
+
+ private:
+  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
+  std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs_;
+};
+
+class Or {
+ public:
+  Or(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs,
+     std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs)
+      : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
+  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+    return lhs_(m) || rhs_(m);
+  }
+
+ private:
+  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
+  std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs_;
+};
+
+class Not {
+ public:
+  Not(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs)
+      : lhs_(std::move(lhs)) {}
+  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+    return !lhs_(m);
+  }
+
+ private:
+  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
+};
+
+template <typename T>
+class PredicatedFragment {
+ public:
+  using PredicateFn = std::function<bool(T const*)>;
+
+  PredicatedFragment(PredicateFn predicate, std::string fragment_if_true,
+                     std::string fragment_if_false)
+      : predicate_(predicate),
+        fragment_if_true_(std::move(fragment_if_true)),
+        fragment_if_false_(std::move(fragment_if_false)) {}
+
+  PredicatedFragment(std::string fragment_always_true)
+      : predicate_([](T const*) { return true; }),
+        fragment_if_true_(std::move(fragment_always_true)),
+        fragment_if_false_({}) {}
+
+  std::string operator()(T const* descriptor) const {
+    if (predicate_(descriptor)) {
+      return fragment_if_true_;
+    }
+    return fragment_if_false_;
+  }
+
+ private:
+  PredicateFn predicate_;
+  std::string fragment_if_true_;
+  std::string fragment_if_false_;
+};
 
 // Convenience functions for wrapping include headers with the correct
 // delimiting characters (either <> or "")

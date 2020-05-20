@@ -121,12 +121,29 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
            "  virtual ~$stub_class_name$() = 0;\n"
            "\n");
 
-  DataModel::PrintMethods(service, vars, p,
-                          "  virtual StatusOr<$response_object$> $method_name$("
-                          "grpc::ClientContext& context,\n"
-                          "    $request_object$ const& request);\n"
-                          "\n",
-                          NoStreamingPredicate);
+  DataModel::PrintMethods(
+      service, vars, p,
+      {{IsResponseTypeEmpty,
+        // clang-format off
+        "  virtual Status $method_name$(\n",
+        "  virtual StatusOr<$response_type$> $method_name$(\n"},
+       {"    grpc::ClientContext& context,\n"
+        "    $request_type$ const& request) = 0;\n"
+        "\n"}},
+      // clang-format on
+      IsNonStreaming);
+
+  p->Print(vars,
+           "  /// Poll a long-running operation.\n"
+           "  virtual StatusOr<google::longrunning::Operation> GetOperation(\n"
+           "      grpc::ClientContext& client_context,\n"
+           "      google::longrunning::GetOperationRequest const& request) = 0;\n"
+           "\n"
+           "  /// Cancel a long-running operation.\n"
+           "  virtual Status CancelOperation(\n"
+           "      grpc::ClientContext& client_context,\n"
+           "      google::longrunning::CancelOperationRequest const& request) = 0;\n"
+           "\n");
 
   p->Print(vars,
            "};  // $stub_class_name$\n"

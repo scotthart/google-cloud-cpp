@@ -3,6 +3,9 @@ syntax = "proto3";
 package google.example.library.v1;
 
 import "google/api/client.proto";
+import "google/api/resource.proto";
+import "google/longrunning/operations.proto";
+import "google/protobuf/empty.proto";
 
 option java_multiple_files = true;
 option java_outer_classname = "LibraryProto";
@@ -46,7 +49,7 @@ service LibraryService {
   }
 
   // Deletes a book.
-  rpc DeleteBook(DeleteBookRequest) returns (Empty) {
+  rpc DeleteBook(DeleteBookRequest) returns (google.protobuf.Empty) {
     option (google.api.method_signature) = "name";
     //option (google.api.http) = { delete: "/v1/{name=bookShelves/*/books/*}" };
   }
@@ -76,10 +79,22 @@ service LibraryService {
   }
 
   // Test long-running operations
-  rpc GetBigBook(GetBookRequest) returns (/*google.longrunning.Operation*/Book) {
+  rpc GetBigBook(GetBookRequest) returns (google.longrunning.Operation) {
     option (google.api.method_signature) = "name";
     //option (google.api.http) = { get: "/v1/{name=bookShelves/*/books/*}:big" };
+    option (google.longrunning.operation_info) = {
+      response_type: "google.example.library.v1.Book"
+      metadata_type: "google.example.library.v1.GetBigBookMetadata"
+    };
   }
+}
+
+message GetBigBookMetadata {
+  // The database being created.
+  string book = 1 [(google.api.resource_reference) = {
+                         type: "library.googleapis.com/Book"
+                       }];
+  int32 progress_percent = 2;
 }
 
 // A single book in the library.
@@ -190,11 +205,11 @@ message DiscussBookRequest {
   Comment comment = 2;
 }
 
-// Metadata for a longrunning operation.
-message GetBigBookMetadata {
-  // Approximate percentage of the book processed thus far.
-  int32 progress_percent = 1;
-}
+//// Metadata for a longrunning operation.
+//message GetBigBookMetadata {
+//  // Approximate percentage of the book processed thus far.
+//  int32 progress_percent = 1;
+//}
 
 message Comment {
   // won't be filled in by the sample generator
@@ -236,6 +251,4 @@ message StreamShelvesResponse {
   // The list of shelves.
   repeated Shelf shelves = 1;
 }
-
-message Empty {}
 
