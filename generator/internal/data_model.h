@@ -28,6 +28,7 @@
 #include <algorithm>
 #include <cctype>
 #include <functional>
+#include <map>
 #include <string>
 
 namespace pb = google::protobuf;
