@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_POLLING_LOOP_H
 
-#include "google/cloud/polling_policy.h"
 #include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include <google/longrunning/operations.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -28,11 +28,12 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
-template<typename ResponseType, typename MetadataType,
-    typename Tag = typename std::is_same<ResponseType, google::protobuf::Empty>::type>
+template <typename ResponseType, typename MetadataType,
+          typename Tag = typename std::is_same<ResponseType,
+                                               google::protobuf::Empty>::type>
 struct PollingLoopValueExtractor;
 
-template<typename ResponseType, typename MetadataType>
+template <typename ResponseType, typename MetadataType>
 struct PollingLoopValueExtractor<ResponseType, MetadataType, std::false_type> {
   using ResultType = ResponseType;
   using ReturnType = StatusOr<ResponseType>;
@@ -60,12 +61,12 @@ struct PollingLoopValueExtractor<ResponseType, MetadataType, std::false_type> {
   }
 };
 
-template<typename ResponseType, typename MetadataType>
+template <typename ResponseType, typename MetadataType>
 struct PollingLoopValueExtractor<ResponseType, MetadataType, std::true_type> {
   using ResultType = MetadataType;
   using ReturnType = StatusOr<ResultType>;
 
-    static ReturnType Extract(google::longrunning::Operation const& operation,
+  static ReturnType Extract(google::longrunning::Operation const& operation,
                             char const* location) {
     if (!operation.has_metadata()) {
       return Status(StatusCode::kInternal,
@@ -172,12 +173,12 @@ struct PollingLoopMetadataExtractor {
  * @return the result of the first successful call to @p functor, or a
  *     `google::cloud::Status` that indicates the final error for this request.
  */
-template<typename ValueExtractor, typename Functor, typename Sleeper,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<
-            Functor, grpc::ClientContext&,
-            google::longrunning::GetOperationRequest const&>::value,
-        int>::type = 0>
+template <typename ValueExtractor, typename Functor, typename Sleeper,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, grpc::ClientContext&,
+                  google::longrunning::GetOperationRequest const&>::value,
+              int>::type = 0>
 typename ValueExtractor::ReturnType PollingLoopImpl(
     std::unique_ptr<PollingPolicy> polling_policy, Functor&& functor,
     google::longrunning::Operation operation, char const* location,
@@ -221,12 +222,12 @@ typename ValueExtractor::ReturnType PollingLoopImpl(
 }
 
 /// @copydoc RetryLoopImpl
-template<typename ValueExtractor, typename Functor,
-    typename std::enable_if<
-        google::cloud::internal::is_invocable<
-            Functor, grpc::ClientContext&,
-            google::longrunning::GetOperationRequest const&>::value,
-        int>::type = 0>
+template <typename ValueExtractor, typename Functor,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, grpc::ClientContext&,
+                  google::longrunning::GetOperationRequest const&>::value,
+              int>::type = 0>
 typename ValueExtractor::ReturnType PollingLoop(
     std::unique_ptr<PollingPolicy> polling_policy, Functor&& functor,
     google::longrunning::Operation operation, char const* location) {

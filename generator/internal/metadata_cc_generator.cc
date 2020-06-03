@@ -112,9 +112,8 @@ bool GenerateClientMetadataCC(
       },
       IsNonStreaming);
 
-    p->Print(
-      vars,
-      // clang-format off
+  p->Print(vars,
+           // clang-format off
       "StatusOr<google::longrunning::Operation> $metadata_class_name$::GetOperation(\n"
       "    grpc::ClientContext& context,\n"
       "    google::longrunning::GetOperationRequest const& request) {\n"
@@ -129,8 +128,8 @@ bool GenerateClientMetadataCC(
       "  return child_->CancelOperation(context, request);\n"
       "}\n"
       "\n"
-      // clang-format on
-      );
+           // clang-format on
+  );
 
   p->Print(
       vars,

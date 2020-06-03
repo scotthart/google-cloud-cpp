@@ -133,17 +133,18 @@ bool GenerateClientStubHeader(pb::ServiceDescriptor const* service,
       // clang-format on
       IsNonStreaming);
 
-  p->Print(vars,
-           "  /// Poll a long-running operation.\n"
-           "  virtual StatusOr<google::longrunning::Operation> GetOperation(\n"
-           "      grpc::ClientContext& client_context,\n"
-           "      google::longrunning::GetOperationRequest const& request) = 0;\n"
-           "\n"
-           "  /// Cancel a long-running operation.\n"
-           "  virtual Status CancelOperation(\n"
-           "      grpc::ClientContext& client_context,\n"
-           "      google::longrunning::CancelOperationRequest const& request) = 0;\n"
-           "\n");
+  p->Print(
+      vars,
+      "  /// Poll a long-running operation.\n"
+      "  virtual StatusOr<google::longrunning::Operation> GetOperation(\n"
+      "      grpc::ClientContext& client_context,\n"
+      "      google::longrunning::GetOperationRequest const& request) = 0;\n"
+      "\n"
+      "  /// Cancel a long-running operation.\n"
+      "  virtual Status CancelOperation(\n"
+      "      grpc::ClientContext& client_context,\n"
+      "      google::longrunning::CancelOperationRequest const& request) = 0;\n"
+      "\n");
 
   p->Print(vars,
            "};  // $stub_class_name$\n"

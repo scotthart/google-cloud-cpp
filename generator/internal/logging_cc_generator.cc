@@ -103,9 +103,8 @@ bool GenerateClientLoggingCC(google::protobuf::ServiceDescriptor const* service,
       },
       IsNonStreaming);
 
-  p->Print(
-      vars,
-      // clang-format off
+  p->Print(vars,
+           // clang-format off
       "StatusOr<google::longrunning::Operation> $logging_class_name$::GetOperation(\n"
       "    grpc::ClientContext& context,\n"
       "    google::longrunning::GetOperationRequest const& request) {\n"
@@ -128,8 +127,8 @@ bool GenerateClientLoggingCC(google::protobuf::ServiceDescriptor const* service,
       "      context, request, __func__, tracing_options_);\n"
       "}\n"
       "\n"
-      // clang-format on
-      );
+           // clang-format on
+  );
 
   p->Print(vars, "}  // namespace internal\n");
   std::reverse(namespaces.begin(), namespaces.end());

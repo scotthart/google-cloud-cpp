@@ -151,6 +151,7 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
 
   p->Print(
       vars,
+      // clang-format off
       "  StatusOr<google::longrunning::Operation> GetOperation(\n"
       "      grpc::ClientContext& client_context,\n"
       "      google::longrunning::GetOperationRequest const& request) override {\n"
@@ -175,6 +176,7 @@ bool GenerateClientStubCC(pb::ServiceDescriptor const* service,
       "    return google::cloud::Status();\n"
       "  }\n"
       "\n"
+      // clang-format on
       );
 
   // private members and close class defintion

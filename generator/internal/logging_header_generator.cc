@@ -102,12 +102,14 @@ bool GenerateClientLoggingHeader(
            "  /// Poll a long-running operation.\n"
            "  StatusOr<google::longrunning::Operation> GetOperation(\n"
            "      grpc::ClientContext& context,\n"
-           "      google::longrunning::GetOperationRequest const& request) override;\n"
+           "      google::longrunning::GetOperationRequest const& request) "
+           "override;\n"
            "\n"
            "  /// Cancel a long-running operation.\n"
            "  Status CancelOperation(\n"
            "      grpc::ClientContext& context,\n"
-           "      google::longrunning::CancelOperationRequest const& request) override;\n"
+           "      google::longrunning::CancelOperationRequest const& request) "
+           "override;\n"
            "\n");
 
   p->Print(vars,
