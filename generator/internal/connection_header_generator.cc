@@ -29,7 +29,7 @@ std::vector<std::string> BuildClientHeaderIncludes(
     google::protobuf::ServiceDescriptor const* service) {
   return {
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
       // TODO(sdhart): change this to system once build issues are resolved
       LocalInclude(absl::StrCat(
@@ -97,7 +97,7 @@ bool GenerateClientConnectionHeader(
         "\n",}
           // clang-format on
       },
-      And(IsNonStreaming, Not(IsLongrunningOperation)));
+      All(IsNonStreaming, Not(IsLongrunningOperation), Not(IsPaginated)));
 
   DataModel::PrintMethods(
       service, vars, p,
@@ -110,7 +110,7 @@ bool GenerateClientConnectionHeader(
         "\n",}
           // clang-format on
       },
-      And(IsNonStreaming, IsLongrunningOperation));
+      All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
 
   p->Print(vars, "};\n\n");
 

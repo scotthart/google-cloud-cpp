@@ -29,10 +29,10 @@ std::vector<std::string> BuildClientCCIncludes(
     google::protobuf::ServiceDescriptor const* service) {
   return {
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_connection" + GeneratedFileSuffix() + ".h")),
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
       LocalInclude("google/cloud/internal/polling_loop.h"),
       LocalInclude("google/cloud/internal/retry_loop.h"),
@@ -163,7 +163,7 @@ bool GenerateClientConnectionCC(
         "\n",}
           // clang-format on
       },
-      And(IsNonStreaming, Not(IsLongrunningOperation)));
+      All(IsNonStreaming, Not(IsLongrunningOperation), Not(IsPaginated)));
 
   DataModel::PrintMethods(
       service, vars, p,
@@ -192,7 +192,7 @@ bool GenerateClientConnectionCC(
         "\n",}
           // clang-format on
       },
-      And(IsNonStreaming, IsLongrunningOperation));
+      All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
 
   p->Print(vars, " private:\n");
 
@@ -240,7 +240,7 @@ bool GenerateClientConnectionCC(
         "  }\n",}
           // clang-format on
       },
-      And(IsNonStreaming, IsLongrunningOperation));
+      All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
 
   p->Print(vars,
            "  std::shared_ptr<internal::$class_name$Stub> stub_;\n"

@@ -24,9 +24,9 @@ namespace internal {
 
 std::vector<std::string> BuildClientMetadataCCIncludes(
     google::protobuf::ServiceDescriptor const* service) {
-  return {LocalInclude(absl::StrCat(
-              internal::ServiceNameToFilePath(service->full_name()),
-              "_metadata" + GeneratedFileSuffix() + ".h")),
+  return {LocalInclude(
+              absl::StrCat(internal::ServiceNameToFilePath(service->name()),
+                           "_metadata" + GeneratedFileSuffix() + ".h")),
           LocalInclude("google/cloud/internal/compiler_info.h")};
 }
 
@@ -104,7 +104,7 @@ bool GenerateClientMetadataCC(
        {"$metadata_class_name$::$method_name$(\n"
         "    grpc::ClientContext& context,\n"
         "    $request_type$ const& request) {\n"
-        "  SetMetadata(context, \"$method_request_param$=\" + request.$method_request_param$());\n"
+        "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n"
         "  return child_->$method_name$(context, request);\n"
         "}\n"
         "\n",}

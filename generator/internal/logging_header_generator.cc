@@ -26,9 +26,9 @@ namespace internal {
 
 std::vector<std::string> BuildClientLoggingHeaderIncludes(
     google::protobuf::ServiceDescriptor const* service) {
-  return {LocalInclude(absl::StrCat(
-              internal::ServiceNameToFilePath(service->full_name()),
-              "_stub" + GeneratedFileSuffix() + ".h")),
+  return {LocalInclude(
+              absl::StrCat(internal::ServiceNameToFilePath(service->name()),
+                           "_stub" + GeneratedFileSuffix() + ".h")),
           LocalInclude("google/cloud/tracing_options.h"),
           SystemInclude("memory"), SystemInclude("string")};
 }

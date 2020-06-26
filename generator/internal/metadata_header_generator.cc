@@ -26,9 +26,9 @@ namespace internal {
 
 std::vector<std::string> BuildClientMetadataHeaderIncludes(
     google::protobuf::ServiceDescriptor const* service) {
-  return {LocalInclude(absl::StrCat(
-              internal::ServiceNameToFilePath(service->full_name()),
-              "_stub" + GeneratedFileSuffix() + ".h")),
+  return {LocalInclude(
+              absl::StrCat(internal::ServiceNameToFilePath(service->name()),
+                           "_stub" + GeneratedFileSuffix() + ".h")),
           SystemInclude("memory"), SystemInclude("string")};
 }
 

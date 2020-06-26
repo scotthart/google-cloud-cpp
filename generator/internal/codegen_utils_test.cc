@@ -44,6 +44,61 @@ TEST(CodegenUtils, ServiceNameToFilePath) {
   EXPECT_EQ(result, "google/example/library/v1/library");
 }
 
+bool PredicateTrue(int const*) { return true;}
+bool PredicateFalse(int const*) { return false;}
+
+TEST(CodegenUtils, GenericNot) {
+    int bar;
+    EXPECT_TRUE(GenericNot<int>(PredicateFalse)(&bar));
+    EXPECT_FALSE(GenericNot<int>(PredicateTrue)(&bar));
+}
+
+TEST(CodegenUtils, GenericAnd) {
+    int bar;
+    EXPECT_TRUE(GenericAnd<int>(PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAnd<int>(PredicateTrue, PredicateFalse)(&bar));
+    EXPECT_FALSE(GenericAnd<int>(PredicateFalse, PredicateFalse)(&bar));
+
+    EXPECT_TRUE(GenericAnd<int>(PredicateTrue, GenericNot<int>(PredicateFalse))(&bar));
+    EXPECT_TRUE(GenericAnd<int>(GenericNot<int>(PredicateFalse), PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericNot<int>(GenericAnd<int>(PredicateTrue, PredicateFalse))(&bar));
+}
+
+TEST(CodegenUtils, GenericOr) {
+    int bar;
+    EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericOr<int>(PredicateFalse, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericOr<int>(PredicateTrue, PredicateFalse)(&bar));
+    EXPECT_FALSE(GenericOr<int>(PredicateFalse, PredicateFalse)(&bar));
+}
+
+TEST(CodegenUtils, GenericAll) {
+    int bar;
+    EXPECT_TRUE(GenericAll<int>(PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAll<int>(PredicateFalse)(&bar));
+    EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse)(&bar));
+    EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericAll<int>(PredicateTrue, PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAll<int>(PredicateTrue, PredicateFalse, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAll<int>(PredicateFalse, PredicateFalse, PredicateFalse)(&bar));
+
+    EXPECT_FALSE(GenericAll<int>(PredicateFalse, GenericOr<int>(PredicateFalse, PredicateTrue))(&bar));
+}
+
+TEST(CodegenUtils, GenericAny) {
+    int bar;
+    EXPECT_TRUE(GenericAny<int>(PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAny<int>(PredicateFalse)(&bar));
+    EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse)(&bar));
+    EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericAny<int>(PredicateFalse, PredicateTrue, PredicateTrue)(&bar));
+    EXPECT_TRUE(GenericAny<int>(PredicateTrue, PredicateFalse, PredicateTrue)(&bar));
+    EXPECT_FALSE(GenericAny<int>(PredicateFalse, PredicateFalse, PredicateFalse)(&bar));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace codegen

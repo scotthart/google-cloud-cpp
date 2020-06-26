@@ -28,13 +28,13 @@ std::vector<std::string> BuildClientStubCCIncludes(
     pb::ServiceDescriptor const* service) {
   return {
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_stub" + GeneratedFileSuffix() + ".h")),
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_logging" + GeneratedFileSuffix() + ".h")),
       LocalInclude(
-          absl::StrCat(internal::ServiceNameToFilePath(service->full_name()),
+          absl::StrCat(internal::ServiceNameToFilePath(service->name()),
                        "_metadata" + GeneratedFileSuffix() + ".h")),
       LocalInclude("google/cloud/internal/compiler_info.h"),
       LocalInclude("google/cloud/internal/getenv.h"),

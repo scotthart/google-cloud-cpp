@@ -32,49 +32,97 @@ namespace pb = google::protobuf;
 
 std::string GeneratedFileSuffix();
 
+bool IsPaginated(google::protobuf::MethodDescriptor const* m);
 bool IsNonStreaming(google::protobuf::MethodDescriptor const* m);
 bool IsLongrunningOperation(google::protobuf::MethodDescriptor const* m);
 bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* m);
 
-class And {
+template <typename T>
+class GenericAll {
  public:
-  And(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs,
-      std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs)
+    template<typename... Predicates>
+    GenericAll(Predicates... p) : predicates_({p...}) {}
+
+    bool operator()(T const* m) const {
+        for (auto const& p : predicates_) {
+            if (!p(m)) return false;
+        }
+        return true;
+    }
+
+ private:
+    std::vector<std::function<bool(T const* m)>> predicates_;
+};
+
+using All = GenericAll<google::protobuf::MethodDescriptor>;
+
+template <typename T>
+class GenericAny {
+ public:
+    template<typename... Predicates>
+    GenericAny(Predicates... p) : predicates_({p...}) {}
+
+    bool operator()(T const* m) const {
+        for (auto const& p : predicates_) {
+            if (p(m)) return true;
+        }
+        return false;
+    }
+
+ private:
+    std::vector<std::function<bool(T const* m)>> predicates_;
+};
+
+using Any = GenericAny<google::protobuf::MethodDescriptor>;
+
+template <typename T>
+class GenericAnd {
+ public:
+  GenericAnd(std::function<bool(T const* m)> lhs,
+      std::function<bool(T const* m)> rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+  bool operator()(T const* m) const {
     return lhs_(m) && rhs_(m);
   }
 
  private:
-  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
-  std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs_;
+  std::function<bool(T const* m)> lhs_;
+  std::function<bool(T const* m)> rhs_;
 };
 
-class Or {
+using And = GenericAnd<google::protobuf::MethodDescriptor>;
+
+template <typename T>
+class GenericOr {
  public:
-  Or(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs,
-     std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs)
+  GenericOr(std::function<bool(T const* m)> lhs,
+     std::function<bool(T const* m)> rhs)
       : lhs_(std::move(lhs)), rhs_(std::move(rhs)) {}
-  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+  bool operator()(T const* m) const {
     return lhs_(m) || rhs_(m);
   }
 
  private:
-  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
-  std::function<bool(google::protobuf::MethodDescriptor const* m)> rhs_;
+  std::function<bool(T const* m)> lhs_;
+  std::function<bool(T const* m)> rhs_;
 };
 
-class Not {
+using Or = GenericOr<google::protobuf::MethodDescriptor>;
+
+template<typename T>
+class GenericNot {
  public:
-  Not(std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs)
+  GenericNot(std::function<bool(T const* m)> lhs)
       : lhs_(std::move(lhs)) {}
-  bool operator()(google::protobuf::MethodDescriptor const* m) const {
+  bool operator()(T const* m) const {
     return !lhs_(m);
   }
 
  private:
-  std::function<bool(google::protobuf::MethodDescriptor const* m)> lhs_;
+  std::function<bool(T const* m)> lhs_;
 };
+
+using Not = GenericNot<google::protobuf::MethodDescriptor>;
 
 template <typename T>
 class PredicatedFragment {

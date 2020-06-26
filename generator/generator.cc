@@ -38,7 +38,7 @@ namespace google {
 namespace codegen {
 
 bool Generator::Generate(pb::FileDescriptor const* file,
-                         std::string const& /* parameter */,
+                         std::string const& parameter,
                          pb::compiler::GeneratorContext* generator_context,
                          std::string* error) const {
   if (file->options().cc_generic_services()) {
@@ -49,16 +49,26 @@ bool Generator::Generate(pb::FileDescriptor const* file,
     return false;
   }
 
+  std::vector<std::pair<std::string, std::string>> parameters;
+  google::protobuf::compiler::ParseGeneratorParameter(parameter, &parameters);
+
+  std::cerr << "Parameters:\n";
+  for (auto const& p : parameters) {
+    std::cerr << p.first << ", " << p.second << "\n";
+  }
+  std::cerr << std::endl;
+
   for (int i = 0; i < file->service_count(); i++) {
     pb::ServiceDescriptor const* service = file->service(i);
 
     // TODO(michaelbausor): initialize Vars with cross-file-descriptor
     // configuration, e.g. metadata annotation.
+    // TODO(sdhart): vars and the DataModel methods should probably be a class
     std::map<std::string, std::string> vars;
     internal::DataModel::SetServiceVars(service, vars);
 
     std::string service_file_path =
-        internal::ServiceNameToFilePath(service->full_name());
+        internal::ServiceNameToFilePath(service->name());
 
     std::string header_stub_file_path = absl::StrCat(
         service_file_path, "_stub", internal::GeneratedFileSuffix(), ".h");
