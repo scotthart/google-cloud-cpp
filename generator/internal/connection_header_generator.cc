@@ -37,6 +37,7 @@ std::vector<std::string> BuildClientHeaderIncludes(
       LocalInclude("google/cloud/status_or.h"),
       LocalInclude("google/cloud/backoff_policy.h"),
       LocalInclude("google/cloud/polling_policy.h"),
+      LocalInclude("google/cloud/internal/pagination_range.h"),
       SystemInclude("memory"),
   };
 }
@@ -78,14 +79,27 @@ bool GenerateClientConnectionHeader(
       p->Print("namespace $namespace$ {\n", "namespace", nspace);
     }
   }
+  p->Print(vars, "\n");
+
+  // emit any Range types for paginated methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {"using $method_name$Range = "
+           "google::cloud::internal::PaginationRange<\n"
+           "  $range_output_type$,\n"
+           "  $request_type$,\n"
+           "  $response_type$>;\n\n"},
+      },
+      All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated));
 
   p->Print(vars,
-           "\n"
            "$class_comment_block$\n"
            "class $class_name$Connection {\n"
            " public:\n"
            "  virtual ~$class_name$Connection() = 0;\n\n");
 
+  // most methods
   DataModel::PrintMethods(
       service, vars, p,
       {
@@ -99,6 +113,7 @@ bool GenerateClientConnectionHeader(
       },
       All(IsNonStreaming, Not(IsLongrunningOperation), Not(IsPaginated)));
 
+  // longrunning operation methods
   DataModel::PrintMethods(
       service, vars, p,
       {
@@ -111,6 +126,15 @@ bool GenerateClientConnectionHeader(
           // clang-format on
       },
       All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
+
+  // paginated methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {"  virtual $method_name$Range\n"
+           "    $method_name$($request_type$ const request) = 0;\n\n"},
+      },
+      All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated));
 
   p->Print(vars, "};\n\n");
 

@@ -194,6 +194,45 @@ bool GenerateClientConnectionCC(
       },
       All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
 
+  // paginated methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          // clang-format off
+       {"  $method_name$Range $method_name$($request_type$ request) override {\n"
+        "    request.clear_page_token();\n"
+        "    auto stub = stub_;\n"
+        "    auto retry =\n"
+        "        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());\n"
+        "    auto backoff = std::shared_ptr<BackoffPolicy const>(\n"
+        "        backoff_policy_prototype_->clone());\n"
+        "\n"
+        "    char const* function_name = __func__;\n"
+        "    return $method_name$Range(\n"
+        "        std::move(request),\n"
+        "        [stub, retry, backoff, function_name]\n"
+        "          ($request_type$ const& r) {\n"
+        "          return google::cloud::internal::RetryLoop(\n"
+        "              retry->clone(), backoff->clone(), true,\n"
+        "              [stub](grpc::ClientContext& context,\n"
+        "                     $request_type$ const& request) {\n"
+        "                return stub->$method_name$(context, request);\n"
+        "              },\n"
+        "              r, function_name);\n"
+        "        },\n"
+        "        []($response_type$ r) {\n"
+        "          std::vector<$range_output_type$> result(r.$range_output_field_name$().size());\n"
+        "          auto& messages = *r.mutable_$range_output_field_name$();\n"
+        "          std::move(messages.begin(), messages.end(), result.begin());\n"
+        "          return result;\n"
+        "        });\n"
+        "  }\n\n"
+              // clang-format on
+
+          },
+      },
+      All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated));
+
   p->Print(vars, " private:\n");
 
   DataModel::PrintMethods(

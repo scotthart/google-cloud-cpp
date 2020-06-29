@@ -46,6 +46,7 @@ cc_library(
     ],
     includes = ["."],
     deps = [
+        "//google/cloud:google_cloud_cpp_common",
         "@com_github_abseil_abseil_cpp//absl/base",
         "@com_github_abseil_abseil_cpp//absl/strings",
         "@com_google_googleapis//google/api:client_cc_proto",

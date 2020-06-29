@@ -98,6 +98,12 @@ struct DataModel {
       }
     }
 
+    if (IsPaginated(method)) {
+      vars["range_output_field_name"] = DeterminePagination(method)->first;
+      vars["range_output_type"] =
+          internal::ProtoNameToCppName(DeterminePagination(method)->second);
+    }
+
     auto method_signature =
         method->options().GetRepeatedExtension(google::api::method_signature);
     if (!method_signature.empty()) {
@@ -133,7 +139,7 @@ struct DataModel {
     std::smatch match;
     std::regex_match(url_pattern, match, url_pattern_regex);
     std::string param = match[1];
-    std::cerr << param << "\n";
+    //    std::cerr << param << "\n";
     vars["method_request_param_key"] = param;
     std::vector<std::string> chunks = absl::StrSplit(param, std::string("."));
     if (chunks.size() > 1) {

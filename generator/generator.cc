@@ -48,16 +48,7 @@ bool Generator::Generate(pb::FileDescriptor const* file,
         "cc_generic_service = false\".";
     return false;
   }
-
-  std::vector<std::pair<std::string, std::string>> parameters;
-  google::protobuf::compiler::ParseGeneratorParameter(parameter, &parameters);
-
-  std::cerr << "Parameters:\n";
-  for (auto const& p : parameters) {
-    std::cerr << p.first << ", " << p.second << "\n";
-  }
-  std::cerr << std::endl;
-
+  
   for (int i = 0; i < file->service_count(); i++) {
     pb::ServiceDescriptor const* service = file->service(i);
 
