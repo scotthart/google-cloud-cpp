@@ -38,6 +38,26 @@ namespace pb = google::protobuf;
 namespace google {
 namespace codegen {
 namespace internal {
+using google::protobuf::FieldDescriptor;
+
+inline std::string CppTypeToString(
+    google::protobuf::FieldDescriptor const* field) {
+  switch (field->cpp_type()) {
+    case FieldDescriptor::CPPTYPE_INT32:
+    case FieldDescriptor::CPPTYPE_INT64:
+    case FieldDescriptor::CPPTYPE_UINT32:
+    case FieldDescriptor::CPPTYPE_UINT64:
+    case FieldDescriptor::CPPTYPE_DOUBLE:
+    case FieldDescriptor::CPPTYPE_FLOAT:
+    case FieldDescriptor::CPPTYPE_BOOL:
+    case FieldDescriptor::CPPTYPE_ENUM:
+    case FieldDescriptor::CPPTYPE_STRING:
+      return std::string("std::") + std::string(field->cpp_type_name());
+    case FieldDescriptor::CPPTYPE_MESSAGE:
+      return internal::ProtoNameToCppName(field->message_type()->full_name());
+  }
+  return "oops";
+}
 
 struct DataModel {
   static void SetServiceVars(pb::ServiceDescriptor const* service,
@@ -107,7 +127,25 @@ struct DataModel {
     auto method_signature =
         method->options().GetRepeatedExtension(google::api::method_signature);
     if (!method_signature.empty()) {
-      vars["method_signature"] = method_signature[0];
+      google::protobuf::Descriptor const* input_type = method->input_type();
+      std::vector<std::string> parameters =
+          absl::StrSplit(method_signature[0], ",");
+      std::string method_signature;
+      for (unsigned int i = 0; i < parameters.size() - 1; ++i) {
+        google::protobuf::FieldDescriptor const* parameter =
+            input_type->FindFieldByName(parameters[i]);
+        method_signature += CppTypeToString(parameter);
+        method_signature += " const& ";
+        method_signature += parameters[i];
+        method_signature += ", ";
+      }
+      google::protobuf::FieldDescriptor const* parameter =
+          input_type->FindFieldByName(parameters[parameters.size() - 1]);
+      method_signature += CppTypeToString(parameter);
+      method_signature += " const& ";
+      method_signature += parameters[parameters.size() - 1];
+
+      vars["method_signature"] = method_signature;
     }
 
     google::api::HttpRule http_rule =
@@ -155,6 +193,14 @@ struct DataModel {
     }
   }
 
+  // PrintMethods should only iterate over service methods once.
+  // Currently, each different template is passed to a call of PrintMethods,
+  // which attempts to generate each methods regardless if it has already been
+  // generated.
+  // Furthermore, we need to be able to determine if there are multiple matches
+  // for a method (an error) or no matches for a method (also an error).
+  // All the different tmplt+predicate need to be put in a container in an
+  // class along with having vars as a member.
   static void PrintMethods(
       pb::ServiceDescriptor const* service,
       std::map<std::string, std::string> vars, Printer& p, char const* tmplt,

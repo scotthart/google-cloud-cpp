@@ -94,6 +94,54 @@ bool GenerateClientConnectionHeader(
       All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated));
 
   p->Print(vars,
+           // clang-format off
+       "$class_comment_block$\n"
+       "class $class_name$Client {\n"
+       " public:\n"
+       "  explicit $class_name$Client(ConnectionOptions const& options = \n"
+       "      ConnectionOptions());\n\n"
+           // clang-format on
+  );
+
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  Status\n",
+        "  StatusOr<$response_type$>\n"},
+       {"  $method_name$($method_signature$);\n"
+        "\n",}
+          // clang-format on
+      },
+      All(IsNonStreaming, Not(IsLongrunningOperation), Not(IsPaginated)));
+
+  // longrunning operation methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {IsResponseTypeEmpty,
+           // clang-format off
+        "  future<Status>\n",
+        "  future<StatusOr<$longrunning_deduced_response_type$>> \n"},
+       {"  $method_name$($method_signature$);\n"
+        "\n",}
+          // clang-format on
+      },
+      All(IsNonStreaming, IsLongrunningOperation, Not(IsPaginated)));
+
+  // paginated methods
+  DataModel::PrintMethods(
+      service, vars, p,
+      {
+          {"  $method_name$Range\n"
+           "    $method_name$($method_signature$);\n\n"},
+      },
+      All(IsNonStreaming, Not(IsLongrunningOperation), IsPaginated));
+
+  p->Print(vars, "};\n\n");
+
+  p->Print(vars,
            "$class_comment_block$\n"
            "class $class_name$Connection {\n"
            " public:\n"

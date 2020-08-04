@@ -48,7 +48,7 @@ bool Generator::Generate(pb::FileDescriptor const* file,
         "cc_generic_service = false\".";
     return false;
   }
-  
+
   for (int i = 0; i < file->service_count(); i++) {
     pb::ServiceDescriptor const* service = file->service(i);
 
