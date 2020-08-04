@@ -25,6 +25,5 @@ google_cloud_cpp_grpc_utils_unit_tests = [
     "internal/log_wrapper_test.cc",
     "internal/pagination_range_test.cc",
     "internal/polling_loop_test.cc",
-    "internal/slow_iota_test.cc",
     "internal/time_utils_test.cc",
 ]

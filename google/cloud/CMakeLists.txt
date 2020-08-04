@@ -231,7 +231,6 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
-        internal/log_wrapper_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
@@ -383,7 +382,6 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
             internal/log_wrapper_test.cc
             internal/pagination_range_test.cc
             internal/polling_loop_test.cc
-            internal/slow_iota_test.cc
             internal/time_utils_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
