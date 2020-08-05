@@ -20,8 +20,6 @@
 #include <map>
 #include <string>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {

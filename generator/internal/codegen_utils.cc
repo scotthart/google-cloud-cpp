@@ -25,16 +25,16 @@ using google::protobuf::FieldDescriptor;
 using google::protobuf::MethodDescriptor;
 
 namespace {
-const char generator_file_suffix[] = ".gcpcxx.pb";
+const char kGeneratorFileSuffix[] = ".gcpcxx.pb";
 }  // namespace
 
-std::string GeneratedFileSuffix() { return {generator_file_suffix}; }
+std::string GeneratedFileSuffix() { return {kGeneratorFileSuffix}; }
 
-std::string LocalInclude(std::string header) {
+std::string LocalInclude(std::string const& header) {
   return absl::StrCat("\"", header, "\"");
 }
 
-std::string SystemInclude(std::string header) {
+std::string SystemInclude(std::string const& header) {
   return absl::StrCat("<", header, ">");
 }
 
@@ -65,7 +65,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const* m) {
     if (field->is_repeated() &&
         field->type() == FieldDescriptor::TYPE_MESSAGE) {
       // field_name, message_type, field_number
-      repeated_message_fields.push_back(std::make_tuple(
+      repeated_message_fields.emplace_back(std::make_tuple(
           field->name(), field->message_type(), field->number()));
       break;
     }
@@ -93,8 +93,7 @@ DeterminePagination(google::protobuf::MethodDescriptor const* m) {
 }
 
 bool IsPaginated(google::protobuf::MethodDescriptor const* m) {
-  if (DeterminePagination(m)) return true;
-  return false;
+  return DeterminePagination(m).has_value();
 }
 
 bool IsNonStreaming(pb::MethodDescriptor const* m) {
@@ -111,7 +110,7 @@ bool IsResponseTypeEmpty(google::protobuf::MethodDescriptor const* m) {
 
 std::string CamelCaseToSnakeCase(std::string const& input) {
   std::string output;
-  for (auto i = 0u; i < input.size(); ++i) {
+  for (auto i = 0U; i < input.size(); ++i) {
     if (i + 2 < input.size()) {
       if (std::isupper(input[i + 1]) && std::islower(input[i + 2])) {
         absl::StrAppend(&output, std::string(1, std::tolower(input[i])), "_");

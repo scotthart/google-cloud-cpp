@@ -62,12 +62,12 @@ bool GenerateClientConnectionCC(
            "// If you make any local changes, they will be lost.\n"
            "// source: $proto_file_name$\n");
 
-  for (auto include : includes) {
+  for (auto const& include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
   p->Print("\n");
 
-  for (auto nspace : namespaces) {
+  for (auto const& nspace : namespaces) {
     if (absl::EndsWith(nspace, "_CLIENT_NS")) {
       p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
     } else {

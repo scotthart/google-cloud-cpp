@@ -18,8 +18,6 @@
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
 
-namespace pb = google::protobuf;
-
 namespace google {
 namespace codegen {
 namespace internal {

@@ -37,8 +37,7 @@ namespace pb = google::protobuf;
 namespace google {
 namespace codegen {
 
-bool Generator::Generate(pb::FileDescriptor const* file,
-                         std::string const& parameter,
+bool Generator::Generate(pb::FileDescriptor const* file, std::string const&,
                          pb::compiler::GeneratorContext* generator_context,
                          std::string* error) const {
   if (file->options().cc_generic_services()) {

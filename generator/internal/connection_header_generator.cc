@@ -67,12 +67,12 @@ bool GenerateClientConnectionHeader(
            "#define $header_include_guard_const$\n"
            "\n");
 
-  for (auto include : includes) {
+  for (auto const& include : includes) {
     p->Print("#include $include$\n", "include", include);
   }
   p->Print(vars, "\n");
 
-  for (auto nspace : namespaces) {
+  for (auto const& nspace : namespaces) {
     if (absl::EndsWith(nspace, "_CLIENT_NS")) {
       p->Print("inline namespace $namespace$ {\n", "namespace", nspace);
     } else {
