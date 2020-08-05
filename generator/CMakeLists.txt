@@ -31,8 +31,11 @@ add_library(
     internal/predicate_utils.cc
     internal/predicate_utils.h
     internal/printer.h
+    internal/stub_factory_generator.cc
+    internal/stub_factory_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h)
+
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
@@ -51,6 +54,11 @@ add_library(googleapis-c++::google_cloud_cpp_generator ALIAS
 # file.
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_generator YEAR "2020")
+
+# Build protoc plugin executable
+add_executable(protoc-gen-cpp_codegen main.cc)
+target_link_libraries(protoc-gen-cpp_codegen LINK_PUBLIC
+                      google_cloud_cpp_generator protobuf::libprotoc)
 
 # Define the tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_generator_define_tests)

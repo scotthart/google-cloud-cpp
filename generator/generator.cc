@@ -14,6 +14,7 @@
 
 #include "generator/generator.h"
 #include "google/cloud/status_or.h"
+#include "generator/internal/class_generator_interface.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include <google/api/client.pb.h>
@@ -68,3 +69,4 @@ bool Generator::Generate(google::protobuf::FileDescriptor const* file,
 }  // namespace generator
 }  // namespace cloud
 }  // namespace google
+

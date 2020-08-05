@@ -27,6 +27,7 @@
 // TODO(#4501) - end
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/predicate_utils.h"
+#include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include <google/api/client.pb.h>
 #include <google/longrunning/operations.pb.h>
@@ -193,6 +194,14 @@ std::map<std::string, std::string> CreateServiceVars(
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub",
                    GeneratedFileSuffix(), ".h");
+  vars["stub_factory_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".cc");
+  vars["stub_factory_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_stub_factory",
+                   GeneratedFileSuffix(), ".h");
   return vars;
 }
 
@@ -229,8 +238,38 @@ std::vector<std::unique_ptr<ClassGeneratorInterface>> MakeGenerators(
     std::vector<std::pair<std::string, std::string>> const& vars) {
   std::vector<std::unique_ptr<ClassGeneratorInterface>> class_generators;
   class_generators.push_back(absl::make_unique<StubGenerator>(
-      service, CreateServiceVars(*service, vars), context));
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
+  class_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+      service, CreateServiceVars(*service, vars), CreateMethodVars(*service),
+      context));
   return class_generators;
+}
+
+Status PrintMethod(google::protobuf::MethodDescriptor const& method,
+                   Printer& printer, std::map<std::string, std::string> vars,
+                   std::vector<MethodPattern> patterns, char const* file,
+                   int line) {
+  std::vector<MethodPattern> matching_patterns;
+  for (auto const& p : patterns) {
+    if (p(method)) {
+      matching_patterns.push_back(p);
+    }
+  }
+
+  if (matching_patterns.empty())
+    return Status(StatusCode::kNotFound,
+                  absl::StrCat(file, ":", line, ": no matching patterns for: ",
+                               method.full_name()));
+  if (matching_patterns.size() > 1)
+    return Status(
+        StatusCode::kInternal,
+        absl::StrCat(file, ":", line, ": more than one pattern found for: ",
+                     method.full_name()));
+  for (auto const& f : matching_patterns[0].fragments()) {
+    printer.Print(line, file, vars, f(method));
+  }
+  return {};
 }
 
 }  // namespace generator_internal

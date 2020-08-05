@@ -15,6 +15,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_PRINTER_H
 
 #include "absl/memory/memory.h"
+#include "absl/strings/str_format.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream.h>
@@ -55,12 +56,34 @@ class Printer {
     printer_->Print(variables, text.c_str());
   }
 
+  void Print(int line, char const* file,
+             const std::map<std::string, std::string>& variables,
+             std::string const& text) {
+    try {
+      printer_->Print(variables, text.c_str());
+    } catch (std::exception& e) {
+      auto message = absl::StrFormat("%s at %s:%d", e.what(), file, line);
+      throw std::runtime_error(message);
+    }
+  }
+
   /**
    * Like the first Print(), except the substitutions are given as parameters.
    */
   template <typename... Args>
   void Print(std::string const& text, Args&&... args) {
     printer_->Print(text.c_str(), std::forward<Args>(args)...);
+  }
+
+  template <typename... Args>
+  void Print(int line, char const* file, std::string const& text,
+             Args&&... args) {
+    try {
+      printer_->Print(text.c_str(), std::forward<Args>(args)...);
+    } catch (std::exception& e) {
+      auto message = absl::StrFormat("%s at %s:%d", e.what(), file, line);
+      throw std::runtime_error(message);
+    }
   }
 
  private:

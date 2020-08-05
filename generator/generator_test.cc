@@ -24,9 +24,9 @@ namespace cloud {
 namespace generator {
 namespace {
 
-using google::protobuf::DescriptorPool;
-using google::protobuf::FileDescriptor;
-using google::protobuf::FileDescriptorProto;
+using ::google::protobuf::DescriptorPool;
+using ::google::protobuf::FileDescriptor;
+using ::google::protobuf::FileDescriptorProto;
 using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -97,6 +97,7 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
   EXPECT_EQ(actual_error, expected_error);
 }
 
+#if 0
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
   DescriptorPool pool;
   FileDescriptorProto service_file;
@@ -142,6 +143,7 @@ TEST_F(GeneratorTest, GenerateServicesFailure) {
   EXPECT_FALSE(result);
   EXPECT_EQ(actual_error, expected_error);
 }
+#endif
 
 }  // namespace
 }  // namespace generator
