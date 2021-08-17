@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,32 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/version.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/build_info.h"
-#include <sstream>
+#include "google/cloud/internal/const_buffer.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-std::string version_string() {
-  static auto const* const kVersion = new auto([] {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
-    auto metadata = google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }());
-  return *kVersion;
+namespace internal {
+
+void PopFrontBytes(ConstBufferSequence& s, std::size_t count) {
+  auto i = s.begin();
+  for (; i != s.end() && i->size() <= count; ++i) {
+    count -= i->size();
+  }
+  if (i == s.end()) {
+    s.clear();
+    return;
+  }
+  // In practice this is expected to be cheap, most vectors will contain 1
+  // or 2 elements. And, if you are really lucky, your compiler turns this
+  // into a memmove():
+  //     https://godbolt.org/z/jw5VDd
+  s.erase(s.begin(), i);
+  if (count > 0 && !s.empty()) {
+    s.front() = ConstBuffer(s.front().data() + count, s.front().size() - count);
+  }
 }
 
-std::string x_goog_api_client() {
-  return google::cloud::internal::ApiClientHeader();
-}
-
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

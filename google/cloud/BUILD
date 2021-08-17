@@ -157,3 +157,19 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
         "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc",
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
+
+load(":google_cloud_cpp_rest_utils.bzl", "google_cloud_cpp_rest_utils_hdrs", "google_cloud_cpp_rest_utils_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_rest_utils",
+    srcs = google_cloud_cpp_rest_utils_srcs,
+    # TODO(#3932) - remove the filtering comprehension.
+    hdrs = google_cloud_cpp_rest_utils_hdrs,
+    deps = [
+        ":google_cloud_cpp_common",
+        "@com_github_curl_curl//:curl",
+        "@com_github_nlohmann_json//:nlohmann_json",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/types:optional",
+    ],
+)

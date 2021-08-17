@@ -655,3 +655,164 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC)
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils"
         COMPONENT google_cloud_cpp_development)
 endif ()
+
+if (GOOGLE_CLOUD_CPP_ENABLE_REST)
+    # find_package(gRPC)
+
+    # the library
+    add_library(
+        google_cloud_cpp_rest_utils # cmake-format: sort
+        internal/access_token_credentials.cc
+        internal/access_token_credentials.h
+        internal/binary_data_as_debug_string.cc
+        internal/binary_data_as_debug_string.h
+        internal/complex_option.h
+        internal/compute_engine_util.cc
+        internal/compute_engine_util.h
+        internal/const_buffer.cc
+        internal/const_buffer.h
+        internal/curl_download_request.cc
+        internal/curl_download_request.h
+        internal/curl_handle.cc
+        internal/curl_handle.h
+        internal/curl_handle_factory.cc
+        internal/curl_handle_factory.h
+        internal/curl_request.cc
+        internal/curl_request.h
+        internal/curl_request_builder.cc
+        internal/curl_request_builder.h
+        internal/curl_wrappers.cc
+        internal/curl_wrappers.h
+        internal/error_credentials.cc
+        internal/error_credentials.h
+        internal/generic_request.h
+        internal/http_headers.cc
+        internal/http_headers.h
+        internal/http_parameters.cc
+        internal/http_parameters.h
+        internal/http_response.cc
+        internal/http_response.h
+        internal/impersonate_service_account_credentials.cc
+        internal/impersonate_service_account_credentials.h
+        internal/make_jwt_assertion.cc
+        internal/make_jwt_assertion.h
+        internal/minimal_iam_credentials_rest.cc
+        internal/minimal_iam_credentials_rest.h
+        internal/oauth2/anonymous_credentials.cc
+        internal/oauth2/anonymous_credentials.h
+        internal/oauth2/authorized_user_credentials.cc
+        internal/oauth2/authorized_user_credentials.h
+        internal/oauth2/compute_engine_credentials.cc
+        internal/oauth2/compute_engine_credentials.h
+        internal/oauth2/credential_constants.h
+        internal/oauth2/credentials.cc
+        internal/oauth2/credentials.h
+        internal/oauth2/google_application_default_credentials_file.cc
+        internal/oauth2/google_application_default_credentials_file.h
+        internal/oauth2/google_credentials.cc
+        internal/oauth2/google_credentials.h
+        internal/oauth2/refreshing_credentials_wrapper.cc
+        internal/oauth2/refreshing_credentials_wrapper.h
+        internal/oauth2/service_account_credentials.cc
+        internal/oauth2/service_account_credentials.h
+        internal/object_read_source.h
+        internal/openssl_util.cc
+        internal/openssl_util.h
+        internal/rest_client.cc
+        internal/rest_client.h
+        internal/rest_options.cc
+        internal/rest_options.h
+        internal/sha256_hash.cc
+        internal/sha256_hash.h
+        internal/signed_url_options.h
+        internal/unified_rest_credentials.cc
+        internal/unified_rest_credentials.h)
+    target_link_libraries(google_cloud_cpp_rest_utils
+                          PUBLIC absl::memory google-cloud-cpp::common)
+    google_cloud_cpp_add_common_options(google_cloud_cpp_rest_utils)
+    target_include_directories(
+        google_cloud_cpp_rest_utils
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_rest_utils
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    set_target_properties(
+        google_cloud_cpp_rest_utils
+        PROPERTIES EXPORT_NAME "google-cloud-cpp::rest_utils"
+                   VERSION ${PROJECT_VERSION} SOVERSION
+                                              ${PROJECT_VERSION_MAJOR})
+    add_library(google-cloud-cpp::rest_utils ALIAS google_cloud_cpp_rest_utils)
+
+    include(CreateBazelConfig)
+    create_bazel_config(google_cloud_cpp_rest_utils YEAR 2021)
+
+    # Install the libraries and headers in the locations determined by
+    # GNUInstallDirs
+    install(
+        TARGETS
+        EXPORT rest_utils-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
+    # Export the CMake targets to make it easy to create configuration files.
+    install(
+        EXPORT rest_utils-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_rest_utils"
+        COMPONENT google_cloud_cpp_development)
+
+    install(
+        TARGETS google_cloud_cpp_rest_utils
+        EXPORT rest_utils-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_runtime
+                NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+    # With CMake-3.12 and higher we could avoid this separate command (and the
+    # duplication).
+    install(
+        TARGETS google_cloud_cpp_rest_utils
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
+    google_cloud_cpp_install_headers(google_cloud_cpp_rest_utils
+                                     include/google/cloud)
+
+    # Setup global variables used in the following *.in files.
+    set(GOOGLE_CLOUD_CPP_PC_NAME
+        "REST Utilities for the Google Cloud C++ Client Library")
+    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+        "Provides REST Utilities for the Google Cloud C++ Client Library.")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
+    string(CONCAT GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_rest_utils")
+
+    # Create and install the pkg-config files.
+    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+                   "google_cloud_cpp_rest_utils.pc" @ONLY)
+    install(
+        FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_rest_utils.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_development)
+
+    # Create and install the CMake configuration files.
+    configure_file("rest_utils_config.cmake.in"
+                   "google_cloud_cpp_rest_utils-config.cmake" @ONLY)
+    write_basic_package_version_file(
+        "google_cloud_cpp_rest_utils-config-version.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY ExactVersion)
+
+    install(
+        FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_rest_utils-config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_rest_utils-config-version.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_rest_utils"
+        COMPONENT google_cloud_cpp_development)
+endif ()

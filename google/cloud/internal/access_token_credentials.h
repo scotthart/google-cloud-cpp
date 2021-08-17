@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,32 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H
+
+#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/oauth2/credentials.h"
 #include "google/cloud/version.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/build_info.h"
-#include <sstream>
+#include <string>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-std::string version_string() {
-  static auto const* const kVersion = new auto([] {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
-    auto metadata = google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }());
-  return *kVersion;
-}
+namespace internal {
 
-std::string x_goog_api_client() {
-  return google::cloud::internal::ApiClientHeader();
-}
+class AccessTokenCredentials : public oauth2::Credentials {
+ public:
+  explicit AccessTokenCredentials(
+      google::cloud::internal::AccessToken const& access_token);
 
+  StatusOr<std::string> AuthorizationHeader() override;
+
+ private:
+  std::string header_;
+};
+
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ACCESS_TOKEN_CREDENTIALS_H

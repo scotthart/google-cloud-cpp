@@ -242,6 +242,7 @@ StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
   if (!status.ok()) {
     return status;
   }
+
   builder.AddQueryParameter("project", request.project_id());
   return ParseFromHttpResponse<ListBucketsResponse>(
       builder.BuildRequest().MakeRequest(std::string{}));

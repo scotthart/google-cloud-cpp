@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,32 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/version.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/build_info.h"
-#include <sstream>
+#include "google/cloud/internal/oauth2/refreshing_credentials_wrapper.h"
+#include "google/cloud/internal/oauth2/credential_constants.h"
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-std::string version_string() {
-  static auto const* const kVersion = new auto([] {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
-    auto metadata = google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }());
-  return *kVersion;
+namespace oauth2 {
+
+bool RefreshingCredentialsWrapper::IsExpired(
+    std::chrono::system_clock::time_point now) const {
+  return now > (temporary_token_.expiration_time -
+                GoogleOAuthAccessTokenExpirationSlack());
 }
 
-std::string x_goog_api_client() {
-  return google::cloud::internal::ApiClientHeader();
+bool RefreshingCredentialsWrapper::IsValid(
+    std::chrono::system_clock::time_point now) const {
+  return !temporary_token_.token.empty() && !IsExpired(now);
 }
 
+}  // namespace oauth2
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

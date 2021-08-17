@@ -98,6 +98,9 @@ int constexpr version() {
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
 std::string version_string();
 
+/// Returns the value for `x-goog-api-client` header.
+std::string x_goog_api_client();
+
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

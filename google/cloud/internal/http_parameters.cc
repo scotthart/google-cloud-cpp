@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,32 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/version.h"
-#include "google/cloud/internal/api_client_header.h"
-#include "google/cloud/internal/build_info.h"
-#include <sstream>
+#include "google/cloud/internal/http_parameters.h"
+#include <map>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-std::string version_string() {
-  static auto const* const kVersion = new auto([] {
-    std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
-    auto metadata = google::cloud::internal::build_metadata();
-    if (!metadata.empty()) {
-      os << "+" << metadata;
-    }
-    return os.str();
-  }());
-  return *kVersion;
+namespace internal {
+#if 0
+std::string PredefinedAcl::HeaderName() const {
+  static auto const* const kMapping = new std::map<std::string, std::string>({
+      {"authenticatedRead", "authenticated-read"},
+      {"bucketOwnerFullControl", "bucket-owner-full-control"},
+      {"bucketOwnerRead", "bucket-owner-read"},
+      {"private", "private"},
+      {"projectPrivate", "project-private"},
+      {"publicRead", "public-read"},
+  });
+  auto loc = kMapping->find(value());
+  if (loc == kMapping->end()) {
+    return value();
+  }
+  return loc->second;
 }
-
-std::string x_goog_api_client() {
-  return google::cloud::internal::ApiClientHeader();
-}
-
+#endif
+}  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
