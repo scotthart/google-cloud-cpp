@@ -225,6 +225,24 @@ std::unique_ptr<RestClient> GetPooledRestClient(std::string endpoint_address,
       std::move(endpoint_address), std::move(factory), std::move(options)));
 }
 
+std::unique_ptr<RestClient> DefaultRestClient::GetRestClient(
+    std::string endpoint_address, Options options) {
+  auto factory = GetDefaultCurlHandleFactory(options);
+  return std::unique_ptr<RestClient>(new CurlRestClient(
+      std::move(endpoint_address), std::move(factory), std::move(options)));
+}
+
+std::unique_ptr<RestClient> PooledRestClient::GetRestClient(
+    std::string endpoint_address, Options options) {
+  std::size_t pool_size = kDefaultPooledCurlHandleFactorySize;
+  if (options.has<ConnectionPoolSizeOption>()) {
+    pool_size = options.get<ConnectionPoolSizeOption>();
+  }
+  auto factory = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
+  return std::unique_ptr<RestClient>(new CurlRestClient(
+      std::move(endpoint_address), std::move(factory), std::move(options)));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
 }  // namespace cloud
