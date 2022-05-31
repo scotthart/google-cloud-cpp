@@ -37,7 +37,7 @@ class RestObjectReadSource : public ObjectReadSource {
   explicit RestObjectReadSource(
       std::unique_ptr<google::cloud::rest_internal::RestResponse> response);
 
-  ~RestObjectReadSource() override = default;
+  ~RestObjectReadSource() override;
 
   bool IsOpen() const override { return payload_ && payload_->HasUnreadData(); }
 

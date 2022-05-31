@@ -114,7 +114,10 @@ StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
+  std::cout << __func__ << " ReadObjectImpl" << std::endl;
   auto source = raw_client_->ReadObject(request);
+  std::cout << __func__ << " source.status() = " << source.status()
+            << std::endl;
   if (!source) {
     ObjectReadStream error_stream(
         absl::make_unique<internal::ObjectReadStreambuf>(
@@ -122,11 +125,16 @@ ObjectReadStream Client::ReadObjectImpl(
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
+  std::cout << __func__ << " create ObjectReadStream." << std::endl;
   auto stream =
       ObjectReadStream(absl::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source),
           request.GetOption<ReadFromOffset>().value_or(0)));
+  std::cout << __func__ << " pre-peek stream.status() = " << stream.status()
+            << std::endl;
   (void)stream.peek();
+  std::cout << __func__ << " post-peek stream.status() = " << stream.status()
+            << std::endl;
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Without exceptions the streambuf cannot report errors, so we have to
   // manually update the status bits.
@@ -139,17 +147,30 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto response = internal::CreateOrResume(*raw_client_, request);
+  std::cout << __PRETTY_FUNCTION__ << " response.status = " << response.status()
+            << std::endl;
   if (!response) {
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
             std::move(response).status()));
+    std::cout << __PRETTY_FUNCTION__
+              << " error_stream.setstate(std::ios::badbit | std::ios::eofbit)"
+              << std::endl;
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
   }
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       raw_client_->client_options().upload_buffer_size());
+  std::cout << __PRETTY_FUNCTION__
+            << " response->upload_id=" << response->upload_id
+            << " response->committed_size="
+            << response->committed_size
+            //            << " response->metadata->crc32c=" <<
+            //            response->metadata->crc32c()
+            << std::endl;
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
       raw_client_, request, std::move(response->upload_id),
       response->committed_size, std::move(response->metadata), buffer_size,

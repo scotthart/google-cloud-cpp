@@ -67,6 +67,8 @@ RestRequest& RestRequest::AddHeader(
 
 RestRequest& RestRequest::AddQueryParameter(std::string parameter,
                                             std::string value) & {
+  std::cout << __func__ << " param: " << parameter << " value: '" << value
+            << "'\n";
   parameters_.emplace_back(std::move(parameter), std::move(value));
   return *this;
 }

@@ -89,7 +89,13 @@ bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
     auto function = std::move(hash_function_);
     hash_values_ = std::move(*function).Finish();
   }
-  if (!hash_validator_) return !hash_validator_result_.is_mismatch;
+  if (!hash_validator_) {
+    std::cout << __PRETTY_FUNCTION__
+              << " hash_validator_ = " << (hash_validator_ ? "true" : "false")
+              << std::endl;
+    return !hash_validator_result_.is_mismatch;
+  }
+
   auto validator = std::move(hash_validator_);
   validator->ProcessMetadata(meta);
   hash_validator_result_ = std::move(*validator).Finish(hash_values_);

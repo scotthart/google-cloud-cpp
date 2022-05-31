@@ -190,11 +190,14 @@ CurlImpl::CurlImpl(CurlHandle handle,
       multi_(factory_->CreateMultiHandle()),
       buffer_({nullptr, 0}),
       options_(std::move(options)) {
+  std::cout << __PRETTY_FUNCTION__
+            << " handle.handle_.get() = " << handle_.handle_.get() << std::endl;
   CurlInitializeOnce(options_);
   ApplyOptions(options_);
 }
 
 void CurlImpl::CleanupHandles() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (!multi_ != !handle_.handle_) {
     GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
                    << ", handle_.handle_=" << handle_.handle_.get();
@@ -202,12 +205,20 @@ void CurlImpl::CleanupHandles() {
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   if (in_multi_) {
+    std::cout << __PRETTY_FUNCTION__
+              << " curl_multi_remove_handle handle = " << handle_.handle_.get()
+              << std::endl;
     (void)curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
     in_multi_ = false;
     TRACE_STATE() << "\n";
   }
 
-  if (curl_closed_ || !multi_) return;
+  if (curl_closed_ || !multi_) {
+    std::cout << __PRETTY_FUNCTION__
+              << " curl_closed_ = " << (curl_closed_ ? "true" : "false")
+              << " multi_ = " << (multi_ ? "true" : "false") << std::endl;
+    return;
+  }
 
   if (paused_) {
     paused_ = false;
@@ -217,6 +228,7 @@ void CurlImpl::CleanupHandles() {
 }
 
 CurlImpl::~CurlImpl() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (!curl_closed_) {
     // Set the closing_ flag to trigger a return 0 from the next read callback,
     // see the comments in the header file for more details.
@@ -360,6 +372,7 @@ void CurlImpl::SetHeader(std::string const& header) {
     return;
   }
   if (header.empty()) return;
+  std::cout << __func__ << " '" << header << "'\n";
   auto* new_headers = curl_slist_append(request_headers_.get(), header.c_str());
   (void)request_headers_.release();
   request_headers_.reset(new_headers);
@@ -412,6 +425,7 @@ void CurlImpl::SetUrl(
   };
   append_params(request.parameters());
   append_params(additional_parameters);
+  std::cout << __func__ << " url_ = " << url_ << "\n";
 }
 
 void CurlImpl::OnTransferDone() {
@@ -431,6 +445,7 @@ void CurlImpl::OnTransferDone() {
 }
 
 Status CurlImpl::OnTransferError(Status status) {
+  std::cout << __PRETTY_FUNCTION__ << " status = " << status << std::endl;
   // When there is a transfer error the handle is suspect. It could be pointing
   // to an invalid host, a host that is slow and trickling data, or otherwise in
   // a bad state. Release the handle, but do not return it to the pool.
@@ -526,6 +541,9 @@ StatusOr<int> CurlImpl::PerformWork() {
       if (in_multi_) {
         // In the extremely unlikely case that removing the handle from CURLM*
         // was an error, return that as a status.
+        std::cout << __PRETTY_FUNCTION__
+                  << " curl_multi_remove_handle handle = "
+                  << handle_.handle_.get() << std::endl;
         multi_remove_status = AsStatus(
             curl_multi_remove_handle(multi_.get(), handle_.handle_.get()),
             __func__);
@@ -587,6 +605,7 @@ StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
 }
 
 StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   TRACE_STATE() << "begin\n";
   buffer_ = output;
   // Before calling `Wait()` copy any data from the spill buffer into the
@@ -595,7 +614,11 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   // connection, but if there is any data left in the spill buffer we need
   // to return it.
   auto bytes_read = DrainSpillBuffer();
-  if (curl_closed_) return bytes_read;
+  if (curl_closed_) {
+    std::cout << __PRETTY_FUNCTION__ << " if(curl_closed_) == true"
+              << std::endl;
+    return bytes_read;
+  }
 
   Status status;
   status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &RestCurlRequestWrite);
@@ -627,11 +650,15 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   }
 
   TRACE_STATE() << ", status=" << status << "\n";
+  std::cout << __PRETTY_FUNCTION__ << " Wait(PWU) status = " << status
+            << std::endl;
   if (!status.ok()) return OnTransferError(std::move(status));
   bytes_read = output.size() - buffer_.size();
 
   if (curl_closed_) {
     OnTransferDone();
+    std::cout << __PRETTY_FUNCTION__
+              << " curl_closed_ http_code_ = " << http_code_ << std::endl;
     status = google::cloud::rest_internal::AsStatus(
         static_cast<HttpStatusCode>(http_code_), {});
     TRACE_STATE() << ", status=" << status << ", http code=" << http_code_
@@ -645,10 +672,13 @@ StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
   }
   TRACE_STATE() << ", http code=" << http_code_ << "\n";
   received_headers_.emplace(":curl-peer", handle_.GetPeer());
+  std::cout << __PRETTY_FUNCTION__ << " bytes_read = " << bytes_read
+            << " http_code = " << handle_.GetResponseCode() << std::endl;
   return bytes_read;
 }
 
 Status CurlImpl::MakeRequestImpl() {
+  std::cout << __PRETTY_FUNCTION__ << " url " << url_ << std::endl;
   TRACE_STATE() << "url_ " << url_ << "\n";
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
@@ -669,15 +699,16 @@ Status CurlImpl::MakeRequestImpl() {
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
                              VersionToCurlCode(http_version_));
 
+  std::cout << __PRETTY_FUNCTION__
+            << " curl_multi_add_handle handle = " << handle_.handle_.get()
+            << std::endl;
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-
   // This indicates that we are using the API incorrectly, the application
   // can not recover from these problems, terminating is the "Right Thing"[tm]
   // here.
   if (error != CURLM_OK) {
     GCP_LOG(FATAL) << AsStatus(error, __func__) << "\n";
   }
-
   in_multi_ = true;
 
   // This call to Read should send the request, get the response, and thus make
@@ -701,6 +732,7 @@ Status CurlImpl::MakeRequest(CurlImpl::HttpMethod method,
   if (!status.ok()) return OnTransferError(std::move(status));
 
   if (method == HttpMethod::kGet) {
+    std::cout << __PRETTY_FUNCTION__ << " kGet" << std::endl;
     status = handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
     if (!status.ok()) return OnTransferError(std::move(status));
     if (download_stall_timeout_.count() != 0) {

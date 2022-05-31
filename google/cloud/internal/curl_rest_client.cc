@@ -149,10 +149,14 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
     RestRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto impl = CreateCurlImpl(request);
   if (!impl.ok()) return impl.status();
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet);
+  std::cout << __PRETTY_FUNCTION__
+            << " after MakeRequest response = " << response << std::endl;
   if (!response.ok()) return response;
+  std::cout << __PRETTY_FUNCTION__ << " after !response.ok()" << std::endl;
   return {std::unique_ptr<CurlRestResponse>(
       new CurlRestResponse(options_, std::move(*impl)))};
 }

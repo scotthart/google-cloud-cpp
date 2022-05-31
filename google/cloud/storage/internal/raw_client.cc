@@ -22,6 +22,7 @@ namespace internal {
 
 StatusOr<CreateOrResumeResponse> CreateOrResume(
     RawClient& client, ResumableUploadRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
   if (session_id.empty()) {
     auto create = client.CreateResumableUpload(request);

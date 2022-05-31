@@ -28,6 +28,7 @@ CurlHttpPayload::CurlHttpPayload(std::unique_ptr<CurlImpl> impl,
 bool CurlHttpPayload::HasUnreadData() const { return impl_->HasUnreadData(); }
 
 StatusOr<std::size_t> CurlHttpPayload::Read(absl::Span<char> buffer) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return impl_->Read(buffer);
 }
 

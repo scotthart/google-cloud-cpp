@@ -128,6 +128,8 @@ Status AddAuthorizationHeader(Options const& options,
   if (!auth_header.ok()) {
     return std::move(auth_header).status();
   }
+  std::cout << __PRETTY_FUNCTION__ << "auth_header = " << *auth_header
+            << std::endl;
   builder.AddHeader("Authorization", std::string(absl::StripPrefix(
                                          *auth_header, "Authorization: ")));
   return {};
@@ -349,6 +351,7 @@ std::string RestClient::PickBoundary(std::string const& text_to_avoid) {
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
+  std::cout << __func__ << "\n";
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
                                           current.get<TargetApiVersionOption>(),
@@ -360,6 +363,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
   request.ForEachOption(no_content_type);
 
   if (request.HasOption<UserIp>()) {
+    std::cout << __func__ << " has option UserIP\n";
     builder.AddQueryParameter(UserIp::name(),
                               request.GetOption<UserIp>().value());
   }
@@ -424,6 +428,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
 
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
     InsertObjectMediaRequest const& request) {
+  std::cout << __func__ << "\n";
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
       request.bucket_name(), "/", UrlEscapeString(request.object_name())));
@@ -783,6 +788,8 @@ StatusOr<RewriteObjectResponse> RestClient::RewriteObject(
 
 StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
     ResumableUploadRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //  return curl_client_->CreateResumableUpload(request);
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
                                           current.get<TargetApiVersionOption>(),
@@ -828,6 +835,8 @@ StatusOr<CreateResumableUploadResponse> RestClient::CreateResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  //    return curl_client_->QueryResumableUpload(request);
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(current, builder);
@@ -848,6 +857,7 @@ StatusOr<QueryResumableUploadResponse> RestClient::QueryResumableUpload(
 
 StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
+  //  return curl_client_->DeleteResumableUpload(request);
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(current, builder);
@@ -866,6 +876,10 @@ StatusOr<EmptyResponse> RestClient::DeleteResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> RestClient::UploadChunk(
     UploadChunkRequest const& request) {
+  //  return curl_client_->UploadChunk(request);
+  std::cout << __PRETTY_FUNCTION__
+            << " upload_session_url = " << request.upload_session_url()
+            << std::endl;
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(current, builder);

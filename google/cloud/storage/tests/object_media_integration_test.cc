@@ -360,6 +360,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
 
   // Read most of the data, but leave some in the spill buffer, this `is testing
   // for a regression of #3051.
+  std::cout << __func__ << " Read the most of the data.\n";
   std::vector<char> buffer(contents.size() - kUnreadBytes);
   stream.read(buffer.data(), buffer.size());
   std::string actual{buffer.begin(), buffer.end()};
@@ -369,6 +370,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
   EXPECT_TRUE(stream.IsOpen());
 
   // Read the remaining data.
+  std::cout << __func__ << " Read the remaining data.\n";
   buffer.resize(contents.size());
   stream.read(buffer.data(), buffer.size());
   actual.append(buffer.data(), kUnreadBytes);
@@ -622,6 +624,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
   // Construct an object large enough to not be downloaded in the first chunk.
   auto constexpr kObjectSize = 512 * 1024L;
   auto large_text = MakeRandomData(kObjectSize);
+  //  std::string partial_expected{large_text.data(), 131072};
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client.InsertObject(
@@ -635,6 +638,9 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 
   std::vector<char> buffer(kObjectSize);
   stream.read(buffer.data(), kObjectSize);
+  //  std::string partial_actual{buffer.data(), 131072};
+  //  EXPECT_EQ(partial_expected, partial_actual);
+  //  EXPECT_TRUE(buffer.empty());
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.status().ok());
 }
@@ -677,6 +683,9 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   if (!UsingEmulator()) GTEST_SKIP();
+  //  if (google::cloud::internal::GetEnv(
+  //          "GOOGLE_CLOUD_CPP_STORAGE_HAVE_REST_CLIENT")
+  //          .has_value()) GTEST_SKIP();
 
   Client client(
       Options{}
@@ -701,6 +710,8 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
   }});
   ASSERT_STATUS_OK(retry_response);
 
+  std::cout << __PRETTY_FUNCTION__ << __func__ << " client.ReadObject"
+            << std::endl;
   auto stream =
       client.ReadObject(bucket_name_, object_name,
                         CustomHeader("x-retry-test-id", retry_response->id));

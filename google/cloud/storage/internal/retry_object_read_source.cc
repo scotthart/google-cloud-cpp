@@ -51,13 +51,19 @@ RetryObjectReadSource::RetryObjectReadSource(
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
 
   // Read some data, if successful return immediately, saving some allocations.
   auto result = child_->Read(buf, n);
-  if (HandleResult(result)) return result;
+  std::cout << __PRETTY_FUNCTION__ << " result.status() = " << result.status()
+            << std::endl;
+  if (HandleResult(result)) {
+    std::cout << __PRETTY_FUNCTION__ << " successfully read data" << std::endl;
+    return result;
+  }
   bool has_emulator_instructions = false;
   std::string instructions;
   if (request_.HasOption<CustomHeader>()) {
@@ -66,6 +72,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     instructions = request_.GetOption<CustomHeader>().value();
   }
 
+  std::cout << __PRETTY_FUNCTION__ << " start a new retry loop" << std::endl;
   // Start a new retry loop to get the data.
   auto backoff_policy = backoff_policy_prototype_->clone();
   auto retry_policy = retry_policy_prototype_->clone();
@@ -73,10 +80,13 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   for (; !result && retry_policy->OnFailure(result.status());
        std::this_thread::sleep_for(backoff_policy->OnCompletion()),
        result = child_->Read(buf, n)) {
+    std::cout << __PRETTY_FUNCTION__ << " result.status() = " << result.status()
+              << std::endl;
     // A Read() request failed, most likely that means the connection failed or
     // stalled. The current child might no longer be usable, so we will try to
     // create a new one and replace it. Should that fail, the retry policy would
     // already be exhausted, so we should fail this operation too.
+    std::cout << __PRETTY_FUNCTION__ << " child_.reset()" << std::endl;
     child_.reset();
 
     if (has_emulator_instructions) {
@@ -137,7 +147,8 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
                                         BackoffPolicy& backoff_policy) {
   GCP_LOG(INFO) << "current_offset=" << current_offset_
                 << ", is_gunzipped=" << is_gunzipped_;
-
+  std::cout << __PRETTY_FUNCTION__ << " current_offset=" << current_offset_
+            << ", is_gunzipped=" << is_gunzipped_ << std::endl;
   auto on_success = [this](std::unique_ptr<ObjectReadSource> child) {
     child_ = std::move(child);
     return Status{};
@@ -153,17 +164,26 @@ Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
   // header. Restarting the download effectively restarts the read from the
   // first byte.
   child = ReadDiscard(*std::move(child), current_offset_);
-  if (child) return on_success(*std::move(child));
+  if (child) {
+    std::cout << __PRETTY_FUNCTION__ << " ReadDiscard success" << std::endl;
+    return on_success(*std::move(child));
+  }
 
   // Try again, eventually the retry policy will expire and this will fail.
-  if (!retry_policy.OnFailure(child.status())) return std::move(child).status();
+  if (!retry_policy.OnFailure(child.status())) {
+    std::cout << __PRETTY_FUNCTION__ << " retry_policy expired" << std::endl;
+    return std::move(child).status();
+  }
   std::this_thread::sleep_for(backoff_policy.OnCompletion());
 
+  std::cout << __PRETTY_FUNCTION__ << " call ourself" << std::endl;
   return MakeChild(retry_policy, backoff_policy);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
     std::unique_ptr<ObjectReadSource> child, std::int64_t count) const {
+  std::cout << __PRETTY_FUNCTION__ << " discarding " << count
+            << " bytes to reach previous offset" << std::endl;
   GCP_LOG(INFO) << "discarding " << count << " bytes to reach previous offset";
   // Discard data until we are at the same offset as before.
   std::vector<char> buffer(128 * 1024);
@@ -176,11 +196,15 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
     count -= result->bytes_received;
     if (result->response.status_code != HttpStatusCode::kContinue &&
         count != 0) {
+      std::cout << __PRETTY_FUNCTION__ << " can't read back to previous offset"
+                << " status_code = " << result->response.status_code
+                << " count = " << count << std::endl;
       return Status{StatusCode::kInternal,
                     "could not read back to previous offset (" +
                         std::to_string(current_offset_) + ")"};
     }
   }
+  std::cout << __PRETTY_FUNCTION__ << " (count <= 0)" << std::endl;
   return child;
 }
 

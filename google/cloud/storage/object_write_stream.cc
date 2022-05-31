@@ -33,7 +33,10 @@ static_assert(std::is_move_constructible<ObjectWriteStream>::value,
               "storage::ObjectWriteStream must be move constructible.");
 
 ObjectWriteStream::ObjectWriteStream()
-    : ObjectWriteStream(MakeErrorStreambuf()) {}
+    : ObjectWriteStream(MakeErrorStreambuf()) {
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
+}
 
 ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)
@@ -41,6 +44,8 @@ ObjectWriteStream::ObjectWriteStream(
   // If buf_ is already closed, update internal state to represent
   // the fact that no more bytes can be uploaded to this object.
   if (buf_ && !buf_->IsOpen()) CloseBuf();
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
@@ -68,19 +73,35 @@ ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
     if (!buf_->last_status().ok()) setstate(std::ios::badbit);
     if (!buf_->IsOpen()) setstate(std::ios::eofbit);
   }
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 ObjectWriteStream::~ObjectWriteStream() {
-  if (!IsOpen()) return;
+  if (!IsOpen()) {
+    std::cout << __PRETTY_FUNCTION__
+              << " good() = " << (this->good() ? "true" : "false") << std::endl;
+
+    return;
+  }
   // Disable exceptions, even if the application had enabled exceptions the
   // destructor is supposed to mask them.
   exceptions(std::ios_base::goodbit);
   buf_->AutoFlushFinal();
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 void ObjectWriteStream::Close() {
-  if (!buf_) return;
+  if (!buf_) {
+    std::cout << __PRETTY_FUNCTION__
+              << " good() = " << (this->good() ? "true" : "false") << std::endl;
+
+    return;
+  }
   CloseBuf();
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 void ObjectWriteStream::CloseBuf() {
@@ -88,21 +109,35 @@ void ObjectWriteStream::CloseBuf() {
   if (!response.ok()) {
     metadata_ = std::move(response).status();
     setstate(std::ios_base::badbit);
+    std::cout << __PRETTY_FUNCTION__ << " !response.ok() good() = "
+              << (this->good() ? "true" : "false") << std::endl;
     return;
   }
   headers_ = {};
   if (response->payload.has_value()) {
     metadata_ = *std::move(response->payload);
   }
-  if (metadata_ && !buf_->ValidateHash(*metadata_)) {
+  bool validated = buf_->ValidateHash(*metadata_);
+  //  if (metadata_ && !buf_->ValidateHash(*metadata_)) {
+  if (metadata_ && !validated) {
     setstate(std::ios_base::badbit);
+    std::cout << __PRETTY_FUNCTION__
+              << " metadata_ && !buf_->ValidateHash(*metadata_) "
+              << " metadata_ = " << (metadata_ ? "true" : "false")
+              << " buf_->ValidateHash(*metadata_) = "
+              << (validated ? " true" : "false")
+              << " good() = " << (this->good() ? "true" : "false") << std::endl;
   }
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 void ObjectWriteStream::Suspend() && {
   ObjectWriteStream tmp;
   swap(tmp);
   tmp.buf_.reset();
+  std::cout << __PRETTY_FUNCTION__
+            << " good() = " << (this->good() ? "true" : "false") << std::endl;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

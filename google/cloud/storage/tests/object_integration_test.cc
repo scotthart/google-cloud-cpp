@@ -341,6 +341,7 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
   ASSERT_STATUS_OK(client);
 
   auto object_name = MakeRandomObjectName();
+  std::cout << " object_name " << object_name << std::endl;
 
   // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name_, object_name);

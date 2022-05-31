@@ -21,7 +21,7 @@ ARG NCPU=4
 RUN dnf makecache && \
     dnf install -y abi-compliance-checker autoconf automake \
         ccache clang clang-analyzer clang-tools-extra \
-        cmake diffutils doxygen findutils gcc-c++ git \
+        cmake diffutils doxygen findutils gcc-c++ gdb git \
         lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
         openssl-devel patch python python3.8 \

@@ -217,10 +217,14 @@ TEST_F(DecompressiveTranscodingIntegrationTest, ResumeGunzippedDownloadJson) {
                         CustomHeader("x-retry-test-id", retry_response->id));
   std::vector<char> buffer(128 * 1024);
   std::string actual;
+  std::cout << "START READING" << std::endl;
   while (!reader.read(buffer.data(), buffer.size()).bad()) {
     actual +=
         std::string{buffer.data(), static_cast<std::size_t>(reader.gcount())};
-    if (reader.eof()) break;
+    if (reader.eof()) {
+      std::cout << __func__ << " reader.eof()\n" << std::endl;
+      break;
+    }
   }
   ASSERT_STATUS_OK(reader.status());
 
@@ -229,6 +233,7 @@ TEST_F(DecompressiveTranscodingIntegrationTest, ResumeGunzippedDownloadJson) {
   std::vector<std::string> decompressed_lines =
       absl::StrSplit(decompressed, '\n');
   EXPECT_THAT(actual_lines, ElementsAreArray(decompressed_lines));
+  //  EXPECT_EQ(true, false);
 }
 
 }  // anonymous namespace

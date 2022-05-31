@@ -416,6 +416,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
       !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
     return ReadObjectXml(request);
   }
+  std::cout << __PRETTY_FUNCTION__ << " bucket: " << request.bucket_name()
+            << "; object: " << request.object_name()
+            << "; RangeHeader: " << request.RangeHeader() << std::endl;
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
@@ -630,9 +633,14 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
 
 StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
     UploadChunkRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__
+            << " upload_session_url = " << request.upload_session_url()
+            << std::endl;
   CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
   auto status = SetupBuilder(builder, request, "PUT");
   if (!status.ok()) return status;
+  std::cout << __PRETTY_FUNCTION__ << " RangeHeader " << request.RangeHeader()
+            << std::endl;
   builder.AddHeader(request.RangeHeader());
   builder.AddHeader("Content-Type: application/octet-stream");
   builder.AddHeader("Content-Length: " +
@@ -1187,6 +1195,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
     ReadObjectRangeRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << " bucket: " << request.bucket_name()
+            << "; object: " << request.object_name() << std::endl;
+
   CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
                                  UrlEscapeString(request.object_name()),
                              xml_download_factory_);
@@ -1224,6 +1235,8 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
   }
 
   auto download = std::move(builder).BuildDownloadRequest();
+  std::cout << __PRETTY_FUNCTION__
+            << " download.status() = " << download.status() << std::endl;
   if (!download) return std::move(download).status();
   return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
@@ -1295,6 +1308,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   // 6. Return the results as usual.
   auto contents = std::move(writer).str();
   builder.AddHeader("Content-Length: " + std::to_string(contents.size()));
+
+  //  std::cout << __func__ << ": contents = \n'" << contents << "'\n";
+
   return CheckedFromString<ObjectMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(contents));
 }

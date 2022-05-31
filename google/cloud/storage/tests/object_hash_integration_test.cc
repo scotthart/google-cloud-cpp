@@ -289,6 +289,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
   auto stream = client->ReadObject(bucket_name_, object_name,
                                    RestApiFlags(GetParam()).for_streaming_read);
   auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
+  EXPECT_FALSE(actual.empty());
   ASSERT_FALSE(stream.IsOpen());
 
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());

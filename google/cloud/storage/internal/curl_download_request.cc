@@ -42,6 +42,8 @@ std::string ExtractHashValue(std::string const& hash_header,
 
 ReadSourceResult MakeReadResult(std::size_t bytes_received,
                                 HttpResponse response) {
+  std::cout << __PRETTY_FUNCTION__ << " bytes_read " << bytes_received
+            << "; status = " << response.status_code << std::endl;
   auto r = ReadSourceResult{bytes_received, std::move(response)};
   auto const end = r.response.headers.end();
   auto f = r.response.headers.find("x-goog-generation");
@@ -112,6 +114,7 @@ CurlDownloadRequest::CurlDownloadRequest(CurlHeaders headers, CurlHandle handle,
       spill_(CURL_MAX_WRITE_SIZE) {}
 
 CurlDownloadRequest::~CurlDownloadRequest() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   CleanupHandles();
   if (factory_) {
     factory_->CleanupHandle(std::move(handle_));
@@ -149,10 +152,12 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
 }
 
 StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   buffer_ = buf;
   buffer_offset_ = 0;
   buffer_size_ = n;
   if (n == 0) {
+    std::cout << __PRETTY_FUNCTION__ << " empty buffer" << std::endl;
     return Status(StatusCode::kInvalidArgument, "Empty buffer for Read()");
   }
   // Before calling `Wait()` copy any data from the spill buffer into the
@@ -162,6 +167,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   // to return it.
   DrainSpillBuffer();
   if (curl_closed_) {
+    std::cout << __PRETTY_FUNCTION__ << " MakeReadResult early" << std::endl;
     return MakeReadResult(
         buffer_offset_,
         HttpResponse{http_code_, std::string{}, std::move(received_headers_)});
@@ -178,6 +184,8 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   status = handle_.SetOption(CURLOPT_HEADERDATA, this);
   if (!status.ok()) return OnTransferError(std::move(status));
 
+  std::cout << __PRETTY_FUNCTION__ << " all CURLOPT set" << std::endl;
+
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
@@ -185,6 +193,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     paused_ = false;
     status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     TRACE_STATE() << ", status=" << status;
+    std::cout << __PRETTY_FUNCTION__ << " !curl_closed_ && paused" << std::endl;
     if (!status.ok()) return OnTransferError(std::move(status));
   }
 
@@ -192,6 +201,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
   TRACE_STATE() << ", status=" << status;
+  std::cout << __PRETTY_FUNCTION__ << " Wait status = " << status << std::endl;
   if (!status.ok()) return OnTransferError(std::move(status));
   auto bytes_read = buffer_offset_;
   buffer_ = nullptr;
@@ -204,10 +214,16 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     status = google::cloud::storage::internal::AsStatus(response);
     TRACE_STATE() << ", status=" << status
                   << ", http code=" << response.status_code;
+    std::cout << __PRETTY_FUNCTION__ << " curl_closed_ status = " << status
+              << std::endl;
     if (!status.ok()) return status;
+    std::cout << __PRETTY_FUNCTION__ << " MakeReadResult late" << std::endl;
     return MakeReadResult(bytes_read, std::move(response));
   }
   TRACE_STATE() << ", code=100";
+  std::cout << __PRETTY_FUNCTION__ << " MakeReadResult latest" << std::endl;
+  std::cout << __PRETTY_FUNCTION__ << " bytes_read = " << bytes_read
+            << " http_code = " << *handle_.GetResponseCode() << std::endl;
   return MakeReadResult(bytes_read, HttpResponse{HttpStatusCode::kContinue,
                                                  {},
                                                  std::move(received_headers_)});
@@ -235,6 +251,7 @@ void CurlDownloadRequest::CleanupHandles() {
 }
 
 Status CurlDownloadRequest::SetOptions() {
+  std::cout << __PRETTY_FUNCTION__ << " url = " << url_ << std::endl;
   auto status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(std::move(status));
   status = handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());

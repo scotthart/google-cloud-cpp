@@ -52,6 +52,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     Idempotency idempotency, RawClient& client, MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
     char const* error_message) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
   auto error = [&last_status](std::string const& msg) {
@@ -59,8 +60,14 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
   };
 
   while (!retry_policy.IsExhausted()) {
+    std::cout << __PRETTY_FUNCTION__ << " while (!retry_policy.IsExhausted())"
+              << std::endl;
     auto result = (client.*function)(request);
+    std::cout << __PRETTY_FUNCTION__ << " result.status() = " << result.status()
+              << std::endl;
+
     if (result.ok()) {
+      std::cout << __PRETTY_FUNCTION__ << " if (result.ok())" << std::endl;
       return result;
     }
     last_status = std::move(result).status();
@@ -78,6 +85,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
         std::ostringstream os;
         os << "Permanent error in " << error_message << ": "
            << last_status.message();
+        std::cout << __PRETTY_FUNCTION__ << " Permanent error" << std::endl;
         return error(std::move(os).str());
       }
       // Exit the loop immediately instead of sleeping before trying again.
@@ -86,6 +94,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     auto delay = backoff_policy.OnCompletion();
     std::this_thread::sleep_for(delay);
   }
+  std::cout << __PRETTY_FUNCTION__ << " retry_policy.IsExhausted()"
+            << std::endl;
   std::ostringstream os;
   os << "Retry policy exhausted in " << error_message << ": "
      << last_status.message();
@@ -97,6 +107,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
 std::shared_ptr<RetryClient> RetryClient::Create(
     std::shared_ptr<RawClient> client, Options options) {
   // Cannot use `std::make_shared<>` because the constructor is private.
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return std::shared_ptr<RetryClient>(
       new RetryClient(std::move(client), std::move(options)));
 }
@@ -258,6 +269,8 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
     ReadObjectRangeRequest const& request, RetryPolicy& retry_policy,
     BackoffPolicy& backoff_policy) {
+  std::cout << __PRETTY_FUNCTION__ << " bucket: " << request.bucket_name()
+            << "; object: " << request.object_name() << std::endl;
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
@@ -267,13 +280,18 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
     ReadObjectRangeRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << " bucket: " << request.bucket_name()
+            << "; object: " << request.object_name() << std::endl;
   auto retry_policy = current_retry_policy();
   auto backoff_policy = current_backoff_policy();
   auto child = ReadObjectNotWrapped(request, *retry_policy, *backoff_policy);
   if (!child) {
+    std::cout << __PRETTY_FUNCTION__ << " return child" << std::endl;
     return child;
   }
   auto self = shared_from_this();
+  std::cout << __PRETTY_FUNCTION__ << " make RetryObjectReadSource"
+            << std::endl;
   return std::unique_ptr<ObjectReadSource>(new RetryObjectReadSource(
       self, request, *std::move(child), std::move(retry_policy),
       std::move(backoff_policy)));

@@ -48,6 +48,7 @@ CurlRequestBuilder::CurlRequestBuilder(
 CurlRequest CurlRequestBuilder::BuildRequest() && {
   ValidateBuilderState(__func__);
   CurlRequest request;
+  std::cout << __func__ << " url_ = " << url_ << "\n";
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();
@@ -63,6 +64,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() && {
 StatusOr<std::unique_ptr<CurlDownloadRequest>>
 CurlRequestBuilder::BuildDownloadRequest() && {
   ValidateBuilderState(__func__);
+  std::cout << __func__ << " url_ = " << url_ << std::endl;
   auto agent = user_agent_prefix_ + UserAgentSuffix();
   auto request = absl::make_unique<CurlDownloadRequest>(
       std::move(headers_), std::move(handle_), factory_->CreateMultiHandle());
@@ -99,6 +101,7 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
 
 CurlRequestBuilder& CurlRequestBuilder::AddHeader(std::string const& header) {
   ValidateBuilderState(__func__);
+  std::cout << __func__ << " " << header << "\n";
   auto* new_header = curl_slist_append(headers_.get(), header.c_str());
   (void)headers_.release();
   headers_.reset(new_header);

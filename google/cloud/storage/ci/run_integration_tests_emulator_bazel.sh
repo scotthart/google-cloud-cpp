@@ -43,6 +43,8 @@ for arg in "$@"; do
   fi
 done
 
+echo "${bazel_test_args[@]}"
+
 # These can only run against production
 production_only_targets=(
   "//google/cloud/storage/examples:storage_policy_doc_samples"
@@ -54,9 +56,9 @@ production_only_targets=(
   "//google/cloud/storage/tests:signed_url_integration_test"
   "//google/cloud/storage/tests:unified_credentials_integration_test"
 )
-"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
-  --test_tag_filters="integration-test" -- \
-  "${production_only_targets[@]}" "${excluded_targets[@]}"
+#"${BAZEL_BIN}" "${BAZEL_VERB}" "${bazel_test_args[@]}" \
+#  --test_tag_filters="integration-test" -- \
+#  "${production_only_targets[@]}" "${excluded_targets[@]}"
 
 # `start_emulator` creates unsightly *.log files in the current directory
 # (which is ${PROJECT_ROOT}) and we cannot use a subshell because we want the

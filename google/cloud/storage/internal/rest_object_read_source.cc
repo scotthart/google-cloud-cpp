@@ -84,7 +84,13 @@ RestObjectReadSource::RestObjectReadSource(
     std::unique_ptr<google::cloud::rest_internal::RestResponse> response)
     : status_code_(response->StatusCode()),
       headers_(response->Headers()),
-      payload_(std::move(*response).ExtractPayload()) {}
+      payload_(std::move(*response).ExtractPayload()) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
+
+RestObjectReadSource::~RestObjectReadSource() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 StatusOr<HttpResponse> RestObjectReadSource::Close() {
   if (!payload_) {
@@ -96,6 +102,7 @@ StatusOr<HttpResponse> RestObjectReadSource::Close() {
 
 StatusOr<ReadSourceResult> RestObjectReadSource::Read(char* buf,
                                                       std::size_t n) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (!payload_) {
     return Status(StatusCode::kFailedPrecondition, "Connection not open.");
   }
@@ -105,7 +112,11 @@ StatusOr<ReadSourceResult> RestObjectReadSource::Read(char* buf,
   }
 
   auto read = payload_->Read(absl::MakeSpan(buf, n));
-  if (!read.ok()) return read.status();
+  if (!read.ok()) {
+    std::cout << __PRETTY_FUNCTION__ << " read.status() = " << read.status()
+              << std::endl;
+    return read.status();
+  }
 
   HttpResponse h;
   if (payload_->HasUnreadData()) {
