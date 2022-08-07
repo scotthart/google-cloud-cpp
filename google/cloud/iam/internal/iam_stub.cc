@@ -17,15 +17,224 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/internal/iam_stub.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
+#include "google/protobuf/util/json_util.h"
 #include <google/iam/admin/v1/iam.grpc.pb.h>
 #include <memory>
+
+#include "google/cloud/internal/getenv.h"
+#include <fstream>
+#include <nlohmann/json.hpp>
+
 
 namespace google {
 namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+DefaultIAMRestStub::DefaultIAMRestStub(Options options)
+    : rest_client_(rest_internal::MakePooledRestClient(
+          "https://iam.googleapis.com",
+          options.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials())
+)),
+      options_(std::move(options)) {}
+
+DefaultIAMRestStub::DefaultIAMRestStub(
+    std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
+    : rest_client_(std::move(rest_client)), options_(std::move(options)) {}
+
+StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
+DefaultIAMRestStub::ListServiceAccounts(
+    google::iam::admin::v1::ListServiceAccountsRequest const& request) {
+  //  rpc ListServiceAccounts(ListServiceAccountsRequest) returns
+  //  (ListServiceAccountsResponse) {
+  //    option (google.api.http) = {
+  //      get: "/v1/{name=projects/*}/serviceAccounts"
+  //    };
+  //    option (google.api.method_signature) = "name";
+  //  }
+
+  rest_internal::RestRequest rest_request;
+  rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
+  auto response = rest_client_->Get(rest_request);
+  Status get_status = response.status();
+  if (!get_status.ok()) return get_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  google::iam::admin::v1::ListServiceAccountsResponse proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccount>
+DefaultIAMRestStub::GetServiceAccount(
+    google::iam::admin::v1::GetServiceAccountRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccount>
+DefaultIAMRestStub::CreateServiceAccount(
+    google::iam::admin::v1::CreateServiceAccountRequest const& request) {
+//  rpc CreateServiceAccount(CreateServiceAccountRequest) returns (ServiceAccount) {
+//    option (google.api.http) = {
+//      post: "/v1/{name=projects/*}/serviceAccounts"
+//      body: "*"
+//    };
+//    option (google.api.method_signature) = "name,account_id,service_account";
+//  }
+
+  rest_internal::RestRequest rest_request;
+  rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
+  std::string json_payload;
+  auto proto_to_json_status = protobuf::util::MessageToJsonString(request, &json_payload);
+//  assert(proto_to_json_status.ok());
+  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
+  rest_request.AddHeader("content-type", "application/json");
+  auto response = rest_client_->Post(rest_request, {span});
+  Status post_status = response.status();
+  if (!post_status.ok()) return post_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  google::iam::admin::v1::ServiceAccount proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccount>
+DefaultIAMRestStub::PatchServiceAccount(
+    google::iam::admin::v1::PatchServiceAccountRequest const& request) {
+  return {};
+}
+
+Status DefaultIAMRestStub::DeleteServiceAccount(
+    google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
+DefaultIAMRestStub::UndeleteServiceAccount(
+    google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
+  return {};
+}
+
+Status DefaultIAMRestStub::EnableServiceAccount(
+    google::iam::admin::v1::EnableServiceAccountRequest const& request) {
+  return {};
+}
+
+Status DefaultIAMRestStub::DisableServiceAccount(
+    google::iam::admin::v1::DisableServiceAccountRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
+DefaultIAMRestStub::ListServiceAccountKeys(
+    google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+DefaultIAMRestStub::GetServiceAccountKey(
+    google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+DefaultIAMRestStub::CreateServiceAccountKey(
+    google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ServiceAccountKey>
+DefaultIAMRestStub::UploadServiceAccountKey(
+    google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
+  return {};
+}
+
+Status DefaultIAMRestStub::DeleteServiceAccountKey(
+    google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::v1::Policy> DefaultIAMRestStub::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::v1::Policy> DefaultIAMRestStub::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultIAMRestStub::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
+DefaultIAMRestStub::QueryGrantableRoles(
+    google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::ListRolesResponse>
+DefaultIAMRestStub::ListRoles(
+    google::iam::admin::v1::ListRolesRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::GetRole(
+    google::iam::admin::v1::GetRoleRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::CreateRole(
+    google::iam::admin::v1::CreateRoleRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::UpdateRole(
+    google::iam::admin::v1::UpdateRoleRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::DeleteRole(
+    google::iam::admin::v1::DeleteRoleRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::UndeleteRole(
+    google::iam::admin::v1::UndeleteRoleRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
+DefaultIAMRestStub::QueryTestablePermissions(
+    google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
+DefaultIAMRestStub::QueryAuditableServices(
+    google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
+  return {};
+}
+
+StatusOr<google::iam::admin::v1::LintPolicyResponse>
+DefaultIAMRestStub::LintPolicy(
+    google::iam::admin::v1::LintPolicyRequest const& request) {
+  return {};
+}
 
 IAMStub::~IAMStub() = default;
 
@@ -33,13 +242,14 @@ StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMStub::ListServiceAccounts(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  google::iam::admin::v1::ListServiceAccountsResponse response;
-  auto status =
-      grpc_stub_->ListServiceAccounts(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return rest_stub_->ListServiceAccounts(request);
+//  google::iam::admin::v1::ListServiceAccountsResponse response;
+//  auto status =
+//      grpc_stub_->ListServiceAccounts(&client_context, request, &response);
+//  if (!status.ok()) {
+//    return google::cloud::MakeStatusFromRpcError(status);
+//  }
+//  return response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -59,13 +269,14 @@ StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::CreateServiceAccount(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  google::iam::admin::v1::ServiceAccount response;
-  auto status =
-      grpc_stub_->CreateServiceAccount(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  return rest_stub_->CreateServiceAccount(request);
+//  google::iam::admin::v1::ServiceAccount response;
+//  auto status =
+//      grpc_stub_->CreateServiceAccount(&client_context, request, &response);
+//  if (!status.ok()) {
+//    return google::cloud::MakeStatusFromRpcError(status);
+//  }
+//  return response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
