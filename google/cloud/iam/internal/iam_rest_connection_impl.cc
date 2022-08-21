@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,13 +16,13 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/admin/v1/iam.proto
 
-#include "google/cloud/iam/internal/iam_connection_impl.h"
+#include "google/cloud/iam/internal/iam_rest_connection_impl.h"
 #include "google/cloud/iam/internal/iam_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/grpc_options.h"
+//#include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/rest_retry_loop.h"
 #include <memory>
 
 namespace google {
@@ -30,30 +30,19 @@ namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-IAMConnectionImpl::IAMConnectionImpl(
+IAMRestConnectionImpl::IAMRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_internal::IAMStub> stub, Options options)
+    std::shared_ptr<iam_internal::IAMRestStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(std::move(options),
-                                      IAMConnection::options())) {}
-
-IAMConnectionImpl::IAMConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_internal::IAMStub> stub,
-    std::shared_ptr<iam_internal::IAMRestStub> rest_stub, Options options)
-    : background_(std::move(background)),
-      stub_(std::move(stub)),
-      rest_stub_(std::move(rest_stub)),
       options_(internal::MergeOptions(std::move(options),
                                       IAMConnection::options())) {}
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
-IAMConnectionImpl::ListServiceAccounts(
+IAMRestConnectionImpl::ListServiceAccounts(
     google::iam::admin::v1::ListServiceAccountsRequest request) {
-#if 0
   request.clear_page_token();
-  auto& stub = rest_stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServiceAccounts(request);
@@ -68,7 +57,6 @@ IAMConnectionImpl::ListServiceAccounts(
             [stub](rest_internal::RestRequest& rest_request,
                    google::iam::admin::v1::ListServiceAccountsRequest const&
                        request) {
-              assert(stub != nullptr);
               return stub->ListServiceAccounts(rest_request, request);
             },
             r, function_name);
@@ -80,264 +68,210 @@ IAMConnectionImpl::ListServiceAccounts(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
-#endif
-  request.clear_page_token();
-  auto& stub = stub_;
-  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
-  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-  auto idempotency = idempotency_policy()->ListServiceAccounts(request);
-  char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<
-      StreamRange<google::iam::admin::v1::ServiceAccount>>(
-      std::move(request),
-      [stub, retry, backoff, idempotency, function_name](
-          google::iam::admin::v1::ListServiceAccountsRequest const& r) {
-        return google::cloud::internal::RetryLoop(
-            retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
-                   google::iam::admin::v1::ListServiceAccountsRequest const&
-                       request) {
-              return stub->ListServiceAccounts(context, request);
-            },
-            r, function_name);
-      },
-      [](google::iam::admin::v1::ListServiceAccountsResponse r) {
-        std::vector<google::iam::admin::v1::ServiceAccount> result(
-            r.accounts().size());
-        auto& messages = *r.mutable_accounts();
-        std::move(messages.begin(), messages.end(), result.begin());
-        return result;
-      });
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
-IAMConnectionImpl::GetServiceAccount(
+IAMRestConnectionImpl::GetServiceAccount(
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetServiceAccount(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::GetServiceAccountRequest const& request) {
-        return stub_->GetServiceAccount(context, request);
+        return stub_->GetServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
-IAMConnectionImpl::CreateServiceAccount(
+IAMRestConnectionImpl::CreateServiceAccount(
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateServiceAccount(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-        return stub_->CreateServiceAccount(context, request);
+        return stub_->CreateServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
-IAMConnectionImpl::PatchServiceAccount(
+IAMRestConnectionImpl::PatchServiceAccount(
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->PatchServiceAccount(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-        return stub_->PatchServiceAccount(context, request);
+        return stub_->PatchServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
-Status IAMConnectionImpl::DeleteServiceAccount(
+Status IAMRestConnectionImpl::DeleteServiceAccount(
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteServiceAccount(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-        return stub_->DeleteServiceAccount(context, request);
+        return stub_->DeleteServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-IAMConnectionImpl::UndeleteServiceAccount(
+IAMRestConnectionImpl::UndeleteServiceAccount(
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UndeleteServiceAccount(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::UndeleteServiceAccountRequest const&
                  request) {
-        return stub_->UndeleteServiceAccount(context, request);
+        return stub_->UndeleteServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
-Status IAMConnectionImpl::EnableServiceAccount(
+Status IAMRestConnectionImpl::EnableServiceAccount(
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->EnableServiceAccount(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-        return stub_->EnableServiceAccount(context, request);
+        return stub_->EnableServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
-Status IAMConnectionImpl::DisableServiceAccount(
+Status IAMRestConnectionImpl::DisableServiceAccount(
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DisableServiceAccount(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-        return stub_->DisableServiceAccount(context, request);
+        return stub_->DisableServiceAccount(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-IAMConnectionImpl::ListServiceAccountKeys(
+IAMRestConnectionImpl::ListServiceAccountKeys(
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->ListServiceAccountKeys(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::ListServiceAccountKeysRequest const&
                  request) {
-        return stub_->ListServiceAccountKeys(context, request);
+        return stub_->ListServiceAccountKeys(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
-IAMConnectionImpl::GetServiceAccountKey(
+IAMRestConnectionImpl::GetServiceAccountKey(
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetServiceAccountKey(request),
       [this](
-          grpc::ClientContext& context,
+          rest_internal::RestRequest& rest_request,
           google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-        return stub_->GetServiceAccountKey(context, request);
+        return stub_->GetServiceAccountKey(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
-IAMConnectionImpl::CreateServiceAccountKey(
+IAMRestConnectionImpl::CreateServiceAccountKey(
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateServiceAccountKey(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::CreateServiceAccountKeyRequest const&
                  request) {
-        return stub_->CreateServiceAccountKey(context, request);
+        return stub_->CreateServiceAccountKey(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
-IAMConnectionImpl::UploadServiceAccountKey(
+IAMRestConnectionImpl::UploadServiceAccountKey(
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UploadServiceAccountKey(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::UploadServiceAccountKeyRequest const&
                  request) {
-        return stub_->UploadServiceAccountKey(context, request);
+        return stub_->UploadServiceAccountKey(rest_request, request);
       },
       request, __func__);
 }
 
-Status IAMConnectionImpl::DeleteServiceAccountKey(
+Status IAMRestConnectionImpl::DeleteServiceAccountKey(
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteServiceAccountKey(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
                  request) {
-        return stub_->DeleteServiceAccountKey(context, request);
+        return stub_->DeleteServiceAccountKey(rest_request, request);
       },
       request, __func__);
 }
 
-Status IAMConnectionImpl::DisableServiceAccountKey(
-    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->DisableServiceAccountKey(request),
-      [this](grpc::ClientContext& context,
-             google::iam::admin::v1::DisableServiceAccountKeyRequest const&
-                 request) {
-        return stub_->DisableServiceAccountKey(context, request);
-      },
-      request, __func__);
-}
-
-Status IAMConnectionImpl::EnableServiceAccountKey(
-    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
-      retry_policy(), backoff_policy(),
-      idempotency_policy()->EnableServiceAccountKey(request),
-      [this](grpc::ClientContext& context,
-             google::iam::admin::v1::EnableServiceAccountKeyRequest const&
-                 request) {
-        return stub_->EnableServiceAccountKey(context, request);
-      },
-      request, __func__);
-}
-
-StatusOr<google::iam::v1::Policy> IAMConnectionImpl::GetIamPolicy(
+StatusOr<google::iam::v1::Policy> IAMRestConnectionImpl::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->GetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::v1::GetIamPolicyRequest const& request) {
-        return stub_->GetIamPolicy(context, request);
+        return stub_->GetIamPolicy(rest_request, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::v1::Policy> IAMConnectionImpl::SetIamPolicy(
+StatusOr<google::iam::v1::Policy> IAMRestConnectionImpl::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->SetIamPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::v1::SetIamPolicyRequest const& request) {
-        return stub_->SetIamPolicy(context, request);
+        return stub_->SetIamPolicy(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-IAMConnectionImpl::TestIamPermissions(
+IAMRestConnectionImpl::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->TestIamPermissions(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::v1::TestIamPermissionsRequest const& request) {
-        return stub_->TestIamPermissions(context, request);
+        return stub_->TestIamPermissions(rest_request, request);
       },
       request, __func__);
 }
 
 StreamRange<google::iam::admin::v1::Role>
-IAMConnectionImpl::QueryGrantableRoles(
+IAMRestConnectionImpl::QueryGrantableRoles(
     google::iam::admin::v1::QueryGrantableRolesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
@@ -350,12 +284,12 @@ IAMConnectionImpl::QueryGrantableRoles(
       std::move(request),
       [stub, retry, backoff, idempotency, function_name](
           google::iam::admin::v1::QueryGrantableRolesRequest const& r) {
-        return google::cloud::internal::RetryLoop(
+        return google::cloud::internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](rest_internal::RestRequest& rest_request,
                    google::iam::admin::v1::QueryGrantableRolesRequest const&
                        request) {
-              return stub->QueryGrantableRoles(context, request);
+              return stub->QueryGrantableRoles(rest_request, request);
             },
             r, function_name);
       },
@@ -367,7 +301,7 @@ IAMConnectionImpl::QueryGrantableRoles(
       });
 }
 
-StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
+StreamRange<google::iam::admin::v1::Role> IAMRestConnectionImpl::ListRoles(
     google::iam::admin::v1::ListRolesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
@@ -380,11 +314,11 @@ StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
       std::move(request),
       [stub, retry, backoff, idempotency,
        function_name](google::iam::admin::v1::ListRolesRequest const& r) {
-        return google::cloud::internal::RetryLoop(
+        return google::cloud::internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context,
+            [stub](rest_internal::RestRequest& rest_request,
                    google::iam::admin::v1::ListRolesRequest const& request) {
-              return stub->ListRoles(context, request);
+              return stub->ListRoles(rest_request, request);
             },
             r, function_name);
       },
@@ -396,67 +330,67 @@ StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
       });
 }
 
-StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::GetRole(
+StatusOr<google::iam::admin::v1::Role> IAMRestConnectionImpl::GetRole(
     google::iam::admin::v1::GetRoleRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(), idempotency_policy()->GetRole(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::GetRoleRequest const& request) {
-        return stub_->GetRole(context, request);
+        return stub_->GetRole(rest_request, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::CreateRole(
+StatusOr<google::iam::admin::v1::Role> IAMRestConnectionImpl::CreateRole(
     google::iam::admin::v1::CreateRoleRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->CreateRole(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::CreateRoleRequest const& request) {
-        return stub_->CreateRole(context, request);
+        return stub_->CreateRole(rest_request, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::UpdateRole(
+StatusOr<google::iam::admin::v1::Role> IAMRestConnectionImpl::UpdateRole(
     google::iam::admin::v1::UpdateRoleRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UpdateRole(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::UpdateRoleRequest const& request) {
-        return stub_->UpdateRole(context, request);
+        return stub_->UpdateRole(rest_request, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::DeleteRole(
+StatusOr<google::iam::admin::v1::Role> IAMRestConnectionImpl::DeleteRole(
     google::iam::admin::v1::DeleteRoleRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteRole(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::DeleteRoleRequest const& request) {
-        return stub_->DeleteRole(context, request);
+        return stub_->DeleteRole(rest_request, request);
       },
       request, __func__);
 }
 
-StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::UndeleteRole(
+StatusOr<google::iam::admin::v1::Role> IAMRestConnectionImpl::UndeleteRole(
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->UndeleteRole(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::UndeleteRoleRequest const& request) {
-        return stub_->UndeleteRole(context, request);
+        return stub_->UndeleteRole(rest_request, request);
       },
       request, __func__);
 }
 
 StreamRange<google::iam::admin::v1::Permission>
-IAMConnectionImpl::QueryTestablePermissions(
+IAMRestConnectionImpl::QueryTestablePermissions(
     google::iam::admin::v1::QueryTestablePermissionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
@@ -469,13 +403,13 @@ IAMConnectionImpl::QueryTestablePermissions(
       std::move(request),
       [stub, retry, backoff, idempotency, function_name](
           google::iam::admin::v1::QueryTestablePermissionsRequest const& r) {
-        return google::cloud::internal::RetryLoop(
+        return google::cloud::internal::RestRetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](
-                grpc::ClientContext& context,
+                rest_internal::RestRequest& rest_request,
                 google::iam::admin::v1::QueryTestablePermissionsRequest const&
                     request) {
-              return stub->QueryTestablePermissions(context, request);
+              return stub->QueryTestablePermissions(rest_request, request);
             },
             r, function_name);
       },
@@ -489,28 +423,28 @@ IAMConnectionImpl::QueryTestablePermissions(
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-IAMConnectionImpl::QueryAuditableServices(
+IAMRestConnectionImpl::QueryAuditableServices(
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->QueryAuditableServices(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::QueryAuditableServicesRequest const&
                  request) {
-        return stub_->QueryAuditableServices(context, request);
+        return stub_->QueryAuditableServices(rest_request, request);
       },
       request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse>
-IAMConnectionImpl::LintPolicy(
+IAMRestConnectionImpl::LintPolicy(
     google::iam::admin::v1::LintPolicyRequest const& request) {
-  return google::cloud::internal::RetryLoop(
+  return google::cloud::internal::RestRetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->LintPolicy(request),
-      [this](grpc::ClientContext& context,
+      [this](rest_internal::RestRequest& rest_request,
              google::iam::admin::v1::LintPolicyRequest const& request) {
-        return stub_->LintPolicy(context, request);
+        return stub_->LintPolicy(rest_request, request);
       },
       request, __func__);
 }

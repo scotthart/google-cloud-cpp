@@ -90,6 +90,16 @@ add_library(
     internal/iam_policy_stub.h
     internal/iam_policy_stub_factory.cc
     internal/iam_policy_stub_factory.h
+    internal/iam_rest_connection_impl.cc
+    internal/iam_rest_connection_impl.h
+    internal/iam_rest_logging_decorator.cc
+    internal/iam_rest_logging_decorator.h
+    internal/iam_rest_metadata_decorator.cc
+    internal/iam_rest_metadata_decorator.h
+    internal/iam_rest_stub.cc
+    internal/iam_rest_stub.h
+    internal/iam_rest_stub_factory.cc
+    internal/iam_rest_stub_factory.h
     internal/iam_retry_traits.h
     internal/iam_stub.cc
     internal/iam_stub.h

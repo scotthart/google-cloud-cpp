@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,15 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: google/iam/admin/v1/iam.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_REST_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_REST_CONNECTION_IMPL_H
 
 #include "google/cloud/iam/iam_connection.h"
 #include "google/cloud/iam/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/iam/internal/iam_rest_stub.h"
 #include "google/cloud/iam/internal/iam_retry_traits.h"
-#include "google/cloud/iam/internal/iam_stub.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -38,18 +37,13 @@ namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class IAMConnectionImpl : public iam::IAMConnection {
+class IAMRestConnectionImpl : public iam::IAMConnection {
  public:
-  ~IAMConnectionImpl() override = default;
+  ~IAMRestConnectionImpl() override = default;
 
-  IAMConnectionImpl(
+  IAMRestConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_internal::IAMStub> stub, Options options);
-
-  IAMConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_internal::IAMStub> stub,
-      std::shared_ptr<iam_internal::IAMRestStub> rest_stub, Options options);
+      std::shared_ptr<iam_internal::IAMRestStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -103,14 +97,6 @@ class IAMConnectionImpl : public iam::IAMConnection {
 
   Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
-      override;
-
-  Status DisableServiceAccountKey(
-      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request)
-      override;
-
-  Status EnableServiceAccountKey(
-      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -180,8 +166,7 @@ class IAMConnectionImpl : public iam::IAMConnection {
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<iam_internal::IAMStub> stub_;
-  std::shared_ptr<iam_internal::IAMRestStub> rest_stub_;
+  std::shared_ptr<iam_internal::IAMRestStub> stub_;
   Options options_;
 };
 
@@ -191,4 +176,4 @@ namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_REST_CONNECTION_IMPL_H

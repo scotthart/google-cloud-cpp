@@ -60,6 +60,7 @@ struct UserAgentProductsOption {
  * enable tracing for the component that interests you. Valid components are
  * currently:
  *
+ * - http
  * - rpc
  * - rpc-streams
  */
@@ -99,11 +100,26 @@ struct AuthorityOption {
 };
 
 /**
+ * Override the default rpc transport. All libraries default to their optimal
+ * transport. This option is typically used to switch from gRPC to HTTP when
+ * the host network configuration is incompatible with gRPC.
+ *
+ * Note: Not all gRPC services support HTTP transport.
+ */
+struct TransportOption {
+  enum class Transport {
+    kGrpc,
+    kHttp,
+  };
+  using Type = Transport;
+};
+
+/**
  * A list of all the common options.
  */
 using CommonOptionList =
     OptionList<EndpointOption, UserAgentProductsOption, TracingComponentsOption,
-               UserProjectOption, AuthorityOption>;
+               UserProjectOption, AuthorityOption, TransportOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

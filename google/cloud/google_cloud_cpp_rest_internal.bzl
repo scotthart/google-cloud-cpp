@@ -43,11 +43,14 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/oauth2_service_account_credentials.h",
     "internal/openssl_util.h",
     "internal/rest_client.h",
+    "internal/rest_log_wrapper.h",
     "internal/rest_options.h",
     "internal/rest_parse_json_error.h",
     "internal/rest_request.h",
     "internal/rest_response.h",
+    "internal/rest_retry_loop.h",
     "internal/unified_rest_credentials.h",
+    "rest_options.h",
 ]
 
 google_cloud_cpp_rest_internal_srcs = [

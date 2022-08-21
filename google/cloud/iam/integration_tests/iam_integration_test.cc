@@ -197,7 +197,7 @@ Options TestFailureOptions() {
   auto const expiration =
       std::chrono::system_clock::now() + std::chrono::minutes(15);
   return Options{}
-      .set<TracingComponentsOption>({"rpc"})
+      .set<TracingComponentsOption>({"rpc", "http"})
       .set<UnifiedCredentialsOption>(
           MakeAccessTokenCredentials("invalid-access-token", expiration))
       .set<IAMRetryPolicyOption>(IAMLimitedErrorCountRetryPolicy(1).clone())

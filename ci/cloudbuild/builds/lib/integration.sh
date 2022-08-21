@@ -168,6 +168,8 @@ function integration::bazel_with_emulators() {
   fi
 
   io::log_h2 "Running integration tests that require production access"
+  #  echo "bazel ${verb} ${args[@]} --test_tag_filters=${tag_filters} ${production_integration_tests[@]}"
+
   bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
     "${production_integration_tests[@]}"
 

@@ -32,7 +32,11 @@ IAMLogging::IAMLogging(std::shared_ptr<IAMStub> child,
                        std::set<std::string> components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {}
+      components_(std::move(components)) {
+  for (auto const& c : components_) {
+    std::cout << __PRETTY_FUNCTION__ << " component = " << c << std::endl;
+  }
+}
 
 StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 IAMLogging::ListServiceAccounts(

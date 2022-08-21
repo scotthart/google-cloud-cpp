@@ -1,6 +1,4 @@
-#!/bin/bash
-#
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -euo pipefail
+include(CMakeFindDependencyMacro)
+find_dependency(google_cloud_cpp_common)
+find_dependency(absl)
+find_dependency(protobuf)
 
-source "$(dirname "$0")/../../lib/init.sh"
-source module ci/cloudbuild/builds/lib/bazel.sh
-source module ci/cloudbuild/builds/lib/integration.sh
-
-export CC=clang
-export CXX=clang++
-
-mapfile -t args < <(bazel::common_args)
-args+=("--config=asan")
-bazel test -c dbg "${args[@]}" --test_tag_filters=-integration-test ...
-
-mapfile -t integration_args < <(integration::bazel_args)
-integration::bazel_with_emulators test -c dbg "${args[@]}" "${integration_args[@]}"
+include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_protobuf_internal-targets.cmake")

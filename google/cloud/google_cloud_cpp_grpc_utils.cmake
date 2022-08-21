@@ -103,6 +103,7 @@ target_link_libraries(
            google-cloud-cpp::longrunning_operations_protos
            google-cloud-cpp::rpc_error_details_protos
            google-cloud-cpp::rpc_status_protos
+           google-cloud-cpp::protobuf_utils
            google-cloud-cpp::common
            gRPC::grpc++
            gRPC::grpc)

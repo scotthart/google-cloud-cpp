@@ -69,6 +69,7 @@ add_library(
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/rest_client.h
+    internal/rest_log_wrapper.h
     internal/rest_options.h
     internal/rest_parse_json_error.cc
     internal/rest_parse_json_error.h
@@ -76,8 +77,10 @@ add_library(
     internal/rest_request.h
     internal/rest_response.cc
     internal/rest_response.h
+    internal/rest_retry_loop.h
     internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.h)
+    internal/unified_rest_credentials.h
+    rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
