@@ -38,6 +38,8 @@ extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size,
 extern "C" std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
                                              std::size_t nitems,
                                              void* userdata);
+extern "C" std::size_t RestCurlUploadRequestWrite(char* ptr, size_t size,
+                                            size_t nmemb, void* userdata);
 
 // This class encapsulates use of libcurl and manages all the necessary state
 // of a request and its associated response.
@@ -90,6 +92,8 @@ class CurlImpl {
                                           void* userdata);
   friend std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
                                            std::size_t nitems, void* userdata);
+  friend std::size_t RestCurlUploadRequestWrite(char* ptr, size_t size,
+                                            size_t nmemb, void* userdata);
 
   // Called by libcurl to show that more data is available in the request.
   std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);
@@ -103,6 +107,7 @@ class CurlImpl {
   void ApplyOptions(Options const& options);
   StatusOr<std::size_t> ReadImpl(absl::Span<char> output);
   Status MakeRequestImpl();
+  Status MakeUploadRequestImpl();
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
@@ -172,6 +177,11 @@ class CurlImpl {
   std::array<char, CURL_MAX_WRITE_SIZE> spill_;
   std::size_t spill_offset_ = 0;
 
+  bool is_upload_;
+  std::size_t OnWriteData(char* contents, std::size_t size, std::size_t nmemb);
+
+  std::string upload_response_payload_;
+  std::size_t upload_response_read_offset_;
   Options options_;
 };
 

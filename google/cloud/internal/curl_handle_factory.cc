@@ -96,6 +96,7 @@ PooledCurlHandleFactory::~PooledCurlHandleFactory() {
 CurlPtr PooledCurlHandleFactory::CreateHandle() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!handles_.empty()) {
+//    std::cout << __PRETTY_FUNCTION__ << " NOT handles_.empty()" << std::endl;
     auto* handle = handles_.back();
     // Clear all the options in the handle so we do not leak its previous state.
     (void)curl_easy_reset(handle);
@@ -104,6 +105,7 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
     SetCurlOptions(curl.get());
     return curl;
   }
+//  std::cout << __PRETTY_FUNCTION__ << " handles_.empty()" << std::endl;
   auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;

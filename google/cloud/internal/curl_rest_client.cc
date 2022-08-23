@@ -96,20 +96,58 @@ std::string CurlRestClient::HostHeader(Options const& options,
   return {};
 }
 
+//CurlRestClient::CurlRestClient(std::string endpoint_address,
+//                               std::shared_ptr<CurlHandleFactory> factory,
+//                               Options options)
+//    : endpoint_address_(std::move(endpoint_address)),
+//      handle_factory_(std::move(factory)),
+//      x_goog_api_client_header_("x-goog-api-client: " +
+//                                google::cloud::internal::ApiClientHeader()),
+//      options_(std::move(options)) {}
+
 CurlRestClient::CurlRestClient(std::string endpoint_address,
                                std::shared_ptr<CurlHandleFactory> factory,
+                               std::shared_ptr<CurlHandleFactory> upload_factory,
                                Options options)
     : endpoint_address_(std::move(endpoint_address)),
       handle_factory_(std::move(factory)),
+      upload_handle_factory_(std::move(upload_factory)),
       x_goog_api_client_header_("x-goog-api-client: " +
                                 google::cloud::internal::ApiClientHeader()),
       options_(std::move(options)) {}
+
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestRequest const& request) {
   auto handle = GetCurlHandle(handle_factory_);
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
+  if (options_.has<UnifiedCredentialsOption>()) {
+    auto credentials = MapCredentials(options_.get<UnifiedCredentialsOption>());
+    auto auth_header = credentials->AuthorizationHeader();
+    if (!auth_header.ok()) return std::move(auth_header).status();
+    impl->SetHeader(auth_header.value());
+  }
+  impl->SetHeader(HostHeader(options_, endpoint_address_));
+  impl->SetHeader(x_goog_api_client_header_);
+  impl->SetHeaders(request);
+  RestRequest::HttpParameters additional_parameters;
+  // The UserIp option has been deprecated in favor of quotaUser. Only add the
+  // parameter if the option has been set.
+  if (options_.has<UserIpOption>()) {
+    auto user_ip = options_.get<UserIpOption>();
+    if (user_ip.empty()) user_ip = impl->LastClientIpAddress();
+    if (!user_ip.empty()) additional_parameters.emplace_back("userIp", user_ip);
+  }
+  impl->SetUrl(endpoint_address_, request, additional_parameters);
+  return impl;
+}
+
+StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlUploadImpl(
+    RestRequest const& request) {
+  auto handle = GetCurlHandle(upload_handle_factory_);
+  auto impl =
+      absl::make_unique<CurlImpl>(std::move(handle), upload_handle_factory_, options_);
   if (options_.has<UnifiedCredentialsOption>()) {
     auto credentials = MapCredentials(options_.get<UnifiedCredentialsOption>());
     auto auth_header = credentials->AuthorizationHeader();
@@ -160,7 +198,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
     RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto impl = CreateCurlImpl(request);
+  auto impl = CreateCurlUploadImpl(request);
   if (!impl.ok()) return impl.status();
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPatch,
                                            request, **impl, payload);
@@ -203,7 +241,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
     RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
-  auto impl = CreateCurlImpl(request);
+  auto impl = CreateCurlUploadImpl(request);
   if (!impl.ok()) return impl.status();
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPut, request,
                                            **impl, payload);
@@ -215,8 +253,9 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
 std::unique_ptr<RestClient> MakeDefaultRestClient(std::string endpoint_address,
                                                   Options options) {
   auto factory = GetDefaultCurlHandleFactory(options);
+  auto upload_factory = GetDefaultCurlHandleFactory(options);
   return std::unique_ptr<RestClient>(new CurlRestClient(
-      std::move(endpoint_address), std::move(factory), std::move(options)));
+      std::move(endpoint_address), std::move(factory), std::move(upload_factory), std::move(options)));
 }
 
 std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
@@ -225,17 +264,21 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
   if (options.has<ConnectionPoolSizeOption>()) {
     pool_size = options.get<ConnectionPoolSizeOption>();
   }
+//  std::cout << __PRETTY_FUNCTION__ << " pool_size = " << pool_size << std::endl;
 
   if (pool_size > 0) {
     return std::unique_ptr<RestClient>(new CurlRestClient(
         std::move(endpoint_address),
+        std::make_shared<PooledCurlHandleFactory>(pool_size, options),
         std::make_shared<PooledCurlHandleFactory>(pool_size, options),
         std::move(options)));
   }
 
   return std::unique_ptr<RestClient>(new CurlRestClient(
       std::move(endpoint_address),
-      std::make_shared<DefaultCurlHandleFactory>(options), std::move(options)));
+      std::make_shared<DefaultCurlHandleFactory>(options),
+      std::make_shared<DefaultCurlHandleFactory>(options),
+      std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

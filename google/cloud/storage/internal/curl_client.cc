@@ -43,6 +43,7 @@ namespace {
 
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(Options const& options) {
   auto const pool_size = options.get<ConnectionPoolSizeOption>();
+//  std::cout << __PRETTY_FUNCTION__ << " pool_size = " << pool_size << std::endl;
   if (pool_size == 0) {
     return std::make_shared<DefaultCurlHandleFactory>(options);
   }

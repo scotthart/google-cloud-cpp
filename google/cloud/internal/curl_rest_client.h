@@ -74,13 +74,20 @@ class CurlRestClient : public RestClient {
   friend class std::unique_ptr<RestClient> MakePooledRestClient(
       std::string endpoint_address, Options options);
 
+//  CurlRestClient(std::string endpoint_address,
+//                 std::shared_ptr<CurlHandleFactory> factory, Options options);
   CurlRestClient(std::string endpoint_address,
-                 std::shared_ptr<CurlHandleFactory> factory, Options options);
+                 std::shared_ptr<CurlHandleFactory> factory,
+                 std::shared_ptr<CurlHandleFactory> upload_factory, Options options);
+
   StatusOr<std::unique_ptr<CurlImpl>> CreateCurlImpl(
+      RestRequest const& request);
+  StatusOr<std::unique_ptr<CurlImpl>> CreateCurlUploadImpl(
       RestRequest const& request);
 
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;
+  std::shared_ptr<CurlHandleFactory> upload_handle_factory_;
   std::string x_goog_api_client_header_;
   Options options_;
 };
