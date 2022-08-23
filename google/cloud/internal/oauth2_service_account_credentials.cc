@@ -32,13 +32,6 @@ namespace {
 
 auto constexpr kP12PrivateKeyIdMarker = "--unknown--";
 
-bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
-  if (info.private_key_id == kP12PrivateKeyIdMarker) return true;
-  auto disable_jwt = google::cloud::internal::GetEnv(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
-  return disable_jwt.has_value();
-}
-
 }  // namespace
 
 using ::google::cloud::internal::MakeJWTAssertionNoThrow;
