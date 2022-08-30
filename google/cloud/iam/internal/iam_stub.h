@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_STUB_H
 
+#include "google/cloud/iam/internal/iam_rest_stub.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -375,9 +377,10 @@ class DefaultIAMStub : public IAMStub {
  public:
   explicit DefaultIAMStub(
       std::unique_ptr<google::iam::admin::v1::IAM::StubInterface> grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)) {}
-  //        ,
-  //        rest_stub_(std::make_shared<DefaultIAMRestStub>(Options{})) {}
+      : grpc_stub_(std::move(grpc_stub)),
+        rest_stub_(std::make_shared<DefaultIAMRestStub>(
+            Options{}.set<UnifiedCredentialsOption>(
+                MakeGoogleDefaultCredentials()))) {}
 
   StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
   ListServiceAccounts(grpc::ClientContext& client_context,
@@ -514,7 +517,7 @@ class DefaultIAMStub : public IAMStub {
 
  private:
   std::unique_ptr<google::iam::admin::v1::IAM::StubInterface> grpc_stub_;
-  //  std::shared_ptr<IAMRestStub> rest_stub_;
+  std::shared_ptr<IAMRestStub> rest_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

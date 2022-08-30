@@ -146,8 +146,8 @@ if (BUILD_TESTING)
     # export_list_to_bazel("google_cloud_cpp_grpc_utils_benchmarks.bzl"
     # "google_cloud_cpp_grpc_utils_benchmarks" YEAR "2020")
 
-    # Generate a target for each benchmark.
-    # foreach (fname ${google_cloud_cpp_grpc_utils_benchmarks})
+    # Generate a target for each benchmark. foreach (fname
+    # ${google_cloud_cpp_grpc_utils_benchmarks})
     # google_cloud_cpp_add_executable(target "common" "${fname}") add_test(NAME
     # ${target} COMMAND ${target}) target_link_libraries( ${target} PRIVATE
     # google-cloud-cpp::grpc_utils google-cloud-cpp::common

@@ -21,6 +21,7 @@
 //#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/status_or.h"
+#include "google/protobuf/stubs/status.h"
 #include "google/protobuf/util/json_util.h"
 //#include <google/iam/admin/v1/iam.grpc.pb.h>
 #include "google/cloud/internal/getenv.h"
@@ -42,6 +43,86 @@ DefaultIAMRestStub::DefaultIAMRestStub(
     std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
     : rest_client_(std::move(rest_client)), options_(std::move(options)) {}
 
+template <typename Request>
+Status Delete(rest_internal::RestClient& client,
+                       rest_internal::RestRequest& rest_request,
+                       Request const& request, std::string path) {
+  rest_request.SetPath(std::move(path));
+  auto response = client.Delete(rest_request);
+  return response.status();
+}
+
+template <typename Response, typename Request>
+StatusOr<Response> Get(rest_internal::RestClient& client,
+                       rest_internal::RestRequest& rest_request,
+                       Request const& request, std::string path) {
+  rest_request.SetPath(std::move(path));
+  auto response = client.Get(rest_request);
+  Status get_status = response.status();
+  if (!get_status.ok()) return get_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  Response proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
+}
+
+template <typename Response, typename Request>
+StatusOr<Response> Post(rest_internal::RestClient& client,
+                        rest_internal::RestRequest& rest_request,
+                        Request const& request, std::string path) {
+  rest_request.SetPath(std::move(path));
+  std::string json_payload;
+  auto proto_to_json_status =
+      protobuf::util::MessageToJsonString(request, &json_payload);
+  if (!proto_to_json_status.ok())
+    return Status{
+        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
+  rest_request.AddHeader("content-type", "application/json");
+  auto response = client.Post(rest_request, {span});
+  Status post_status = response.status();
+  if (!post_status.ok()) return post_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  Response proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
+}
+
+template <typename Response, typename Request>
+StatusOr<Response> Patch(rest_internal::RestClient& client,
+                        rest_internal::RestRequest& rest_request,
+                        Request const& request, std::string path) {
+  rest_request.SetPath(std::move(path));
+  std::string json_payload;
+  auto proto_to_json_status =
+      protobuf::util::MessageToJsonString(request, &json_payload);
+  if (!proto_to_json_status.ok())
+    return Status{
+        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
+  rest_request.AddHeader("content-type", "application/json");
+  auto response = client.Patch(rest_request, {span});
+  Status post_status = response.status();
+  if (!post_status.ok()) return post_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  Response proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
+}
+
+
 StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMRestStub::ListServiceAccounts(
     rest_internal::RestRequest& rest_request,
@@ -53,26 +134,37 @@ DefaultIAMRestStub::ListServiceAccounts(
   //    };
   //    option (google.api.method_signature) = "name";
   //  }
-
-  rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
-  auto response = rest_client_->Get(rest_request);
-  Status get_status = response.status();
-  if (!get_status.ok()) return get_status;
-  auto rest_response = std::move(response.value());
-  auto response_payload = std::move(*rest_response).ExtractPayload();
-  auto json_response = rest_internal::ReadAll(std::move(response_payload));
-  if (!json_response.ok()) return json_response.status();
-  google::iam::admin::v1::ListServiceAccountsResponse proto_response;
-  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
-      *json_response, &proto_response);
-  return proto_response;
+  return Get<google::iam::admin::v1::ListServiceAccountsResponse>(
+      *rest_client_, rest_request, request,
+      absl::StrCat("v1/", request.name(), "/serviceAccounts"));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMRestStub::GetServiceAccount(
     rest_internal::RestRequest& rest_request,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  return {};
+  //  rpc GetServiceAccount(GetServiceAccountRequest) returns (ServiceAccount) {
+  //    option (google.api.http) = {
+  //      get: "/v1/{name=projects/*/serviceAccounts/*}"
+  //    };
+  //    option (google.api.method_signature) = "name";
+  //  }
+  return Get<google::iam::admin::v1::ServiceAccount>(
+      *rest_client_, rest_request, request,
+      absl::StrCat("v1/", request.name()));
+  //
+  //  rest_request.SetPath(absl::StrCat("v1/", request.name()));
+  //  auto response = rest_client_->Get(rest_request);
+  //  Status get_status = response.status();
+  //  if (!get_status.ok()) return get_status;
+  //  auto rest_response = std::move(response.value());
+  //  auto response_payload = std::move(*rest_response).ExtractPayload();
+  //  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  //  if (!json_response.ok()) return json_response.status();
+  //  google::iam::admin::v1::ServiceAccount proto_response;
+  //  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+  //      *json_response, &proto_response);
+  //  return proto_response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -88,39 +180,57 @@ DefaultIAMRestStub::CreateServiceAccount(
   //    option (google.api.method_signature) =
   //    "name,account_id,service_account";
   //  }
-
-  rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
-  std::string json_payload;
-  auto proto_to_json_status =
-      protobuf::util::MessageToJsonString(request, &json_payload);
-  //  assert(proto_to_json_status.ok());
-  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
-  rest_request.AddHeader("content-type", "application/json");
-  auto response = rest_client_->Post(rest_request, {span});
-  Status post_status = response.status();
-  if (!post_status.ok()) return post_status;
-  auto rest_response = std::move(response.value());
-  auto response_payload = std::move(*rest_response).ExtractPayload();
-  auto json_response = rest_internal::ReadAll(std::move(response_payload));
-  if (!json_response.ok()) return json_response.status();
-  google::iam::admin::v1::ServiceAccount proto_response;
-  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
-      *json_response, &proto_response);
-  return proto_response;
+  return Post<google::iam::admin::v1::ServiceAccount>(
+      *rest_client_, rest_request, request,
+      absl::StrCat("v1/", request.name(), "/serviceAccounts"));
+  //  rest_request.SetPath(absl::StrCat("v1/", request.name(),
+  //  "/serviceAccounts")); std::string json_payload; auto proto_to_json_status
+  //  =
+  //      protobuf::util::MessageToJsonString(request, &json_payload);
+  //  //  assert(proto_to_json_status.ok());
+  //  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
+  //  rest_request.AddHeader("content-type", "application/json");
+  //  auto response = rest_client_->Post(rest_request, {span});
+  //  Status post_status = response.status();
+  //  if (!post_status.ok()) return post_status;
+  //  auto rest_response = std::move(response.value());
+  //  auto response_payload = std::move(*rest_response).ExtractPayload();
+  //  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  //  if (!json_response.ok()) return json_response.status();
+  //  google::iam::admin::v1::ServiceAccount proto_response;
+  //  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+  //      *json_response, &proto_response);
+  //  return proto_response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMRestStub::PatchServiceAccount(
     rest_internal::RestRequest& rest_request,
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  return {};
+//  rpc PatchServiceAccount(PatchServiceAccountRequest) returns (ServiceAccount) {
+//    option (google.api.http) = {
+//      patch: "/v1/{service_account.name=projects/*/serviceAccounts/*}"
+//      body: "*"
+//    };
+//  }
+  return Patch<google::iam::admin::v1::ServiceAccount>(
+      *rest_client_, rest_request, request,
+      absl::StrCat("v1/", request.service_account().name()));
 }
 
 Status DefaultIAMRestStub::DeleteServiceAccount(
     rest_internal::RestRequest& rest_request,
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  return {};
-}
+//  rpc DeleteServiceAccount(DeleteServiceAccountRequest) returns (google.protobuf.Empty) {
+//    option (google.api.http) = {
+//      delete: "/v1/{name=projects/*/serviceAccounts/*}"
+//    };
+//    option (google.api.method_signature) = "name";
+//  }
+  return Delete(
+      *rest_client_, rest_request, request,
+      absl::StrCat("v1/", request.name()));
+  }
 
 StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 DefaultIAMRestStub::UndeleteServiceAccount(

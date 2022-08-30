@@ -243,41 +243,45 @@ StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMStub::ListServiceAccounts(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  //  return rest_stub_->ListServiceAccounts(request);
-  google::iam::admin::v1::ListServiceAccountsResponse response;
-  auto status =
-      grpc_stub_->ListServiceAccounts(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  rest_internal::RestRequest rest_request;
+  return rest_stub_->ListServiceAccounts(rest_request, request);
+  //  google::iam::admin::v1::ListServiceAccountsResponse response;
+  //  auto status =
+  //      grpc_stub_->ListServiceAccounts(&client_context, request, &response);
+  //  if (!status.ok()) {
+  //    return google::cloud::MakeStatusFromRpcError(status);
+  //  }
+  //  return response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::GetServiceAccount(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  google::iam::admin::v1::ServiceAccount response;
-  auto status =
-      grpc_stub_->GetServiceAccount(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  rest_internal::RestRequest rest_request;
+  return rest_stub_->GetServiceAccount(rest_request, request);
+  //  google::iam::admin::v1::ServiceAccount response;
+  //  auto status =
+  //      grpc_stub_->GetServiceAccount(&client_context, request, &response);
+  //  if (!status.ok()) {
+  //    return google::cloud::MakeStatusFromRpcError(status);
+  //  }
+  //  return response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::CreateServiceAccount(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  //  return rest_stub_->CreateServiceAccount(request);
-  google::iam::admin::v1::ServiceAccount response;
-  auto status =
-      grpc_stub_->CreateServiceAccount(&client_context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  rest_internal::RestRequest rest_request;
+  return rest_stub_->CreateServiceAccount(rest_request, request);
+  //  google::iam::admin::v1::ServiceAccount response;
+  //  auto status =
+  //      grpc_stub_->CreateServiceAccount(&client_context, request, &response);
+  //  if (!status.ok()) {
+  //    return google::cloud::MakeStatusFromRpcError(status);
+  //  }
+  //  return response;
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
