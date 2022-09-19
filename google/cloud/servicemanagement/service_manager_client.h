@@ -282,8 +282,8 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.UndeleteServiceResponse]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
-  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(std::string const& service_name, Options opts = {});
+//  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+//  UndeleteService(std::string const& service_name, Options opts = {});
 
   ///
   /// Revives a previously deleted managed service. The method restores the
@@ -305,10 +305,10 @@ class ServiceManagerClient {
   /// [google.api.servicemanagement.v1.UndeleteServiceResponse]:
   /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
-  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-  UndeleteService(
-      google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
-      Options opts = {});
+//  future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+//  UndeleteService(
+//      google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
+//      Options opts = {});
 
   ///
   /// Lists the history of the service configuration for a managed service,

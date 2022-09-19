@@ -91,22 +91,22 @@ ServiceManagerClient::DeleteService(
   return connection_->DeleteService(request);
 }
 
-future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-ServiceManagerClient::UndeleteService(std::string const& service_name,
-                                      Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::api::servicemanagement::v1::UndeleteServiceRequest request;
-  request.set_service_name(service_name);
-  return connection_->UndeleteService(request);
-}
+//future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+//ServiceManagerClient::UndeleteService(std::string const& service_name,
+//                                      Options opts) {
+//  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+//  google::api::servicemanagement::v1::UndeleteServiceRequest request;
+//  request.set_service_name(service_name);
+//  return connection_->UndeleteService(request);
+//}
 
-future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
-ServiceManagerClient::UndeleteService(
-    google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->UndeleteService(request);
-}
+//future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
+//ServiceManagerClient::UndeleteService(
+//    google::api::servicemanagement::v1::UndeleteServiceRequest const& request,
+//    Options opts) {
+//  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+//  return connection_->UndeleteService(request);
+//}
 
 StreamRange<google::api::Service> ServiceManagerClient::ListServiceConfigs(
     std::string const& service_name, Options opts) {

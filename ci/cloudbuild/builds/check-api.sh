@@ -59,8 +59,8 @@ function dump_abi() {
 }
 export -f dump_abi # enables this function to be called from a subshell
 
-mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
-
+#mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
+mapfile -t libraries < <(printf "google_cloud_cpp_servicemanagement\n")
 # Run the dump_abi function for each library in parallel since its slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
   bash -c "dump_abi \$0 ${INSTALL_PREFIX}"
@@ -96,8 +96,8 @@ for lib in "${libraries[@]}"; do
     fi
   fi
   # Replaces the (old) expected dump file with the (new) actual one.
-  gzip -n "cmake-out/${actual_dump_file}"
-  mv -f "cmake-out/${actual_dump_file}.gz" "${expected_dump_path}"
+#  gzip -n "cmake-out/${actual_dump_file}"
+#  mv -f "cmake-out/${actual_dump_file}.gz" "${expected_dump_path}"
 done
 echo
 exit "${errors}"
