@@ -207,7 +207,7 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
       options.get<TransportOption>() == TransportOption::Transport::kHttp) {
     auto rest_stub = iam_internal::CreateDefaultIAMRestStub(options);
     return std::make_shared<iam_internal::IAMRestConnectionImpl>(
-        std::move(background), std::move(rest_stub), std::move(options));
+         std::move(rest_stub), std::move(options));
   }
 
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);

@@ -24,7 +24,6 @@
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/iam/internal/iam_rest_stub.h"
 #include "google/cloud/iam/internal/iam_retry_traits.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -42,7 +41,6 @@ class IAMRestConnectionImpl : public iam::IAMConnection {
   ~IAMRestConnectionImpl() override = default;
 
   IAMRestConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<iam_internal::IAMRestStub> stub, Options options);
 
   Options options() override { return options_; }
@@ -165,7 +163,6 @@ class IAMRestConnectionImpl : public iam::IAMConnection {
     return options_.get<iam::IAMConnectionIdempotencyPolicyOption>()->clone();
   }
 
-  std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMRestStub> stub_;
   Options options_;
 };

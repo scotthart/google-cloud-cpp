@@ -55,7 +55,7 @@ DefaultIAMRestStub::ListServiceAccounts(
   //    option (google.api.method_signature) = "name";
   //  }
 
-  rest_internal::RestRequest rest_request;
+  rest_internal::RestContext rest_context;
   rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
   auto response = rest_client_->Get(rest_request);
   Status get_status = response.status();
@@ -89,7 +89,7 @@ DefaultIAMRestStub::CreateServiceAccount(
   //    "name,account_id,service_account";
   //  }
 
-  rest_internal::RestRequest rest_request;
+  rest_internal::RestContext rest_context;
   rest_request.SetPath(absl::StrCat("v1/", request.name(), "/serviceAccounts"));
   std::string json_payload;
   auto proto_to_json_status =
@@ -243,8 +243,8 @@ StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMStub::ListServiceAccounts(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
-  rest_internal::RestRequest rest_request;
-  return rest_stub_->ListServiceAccounts(rest_request, request);
+  rest_internal::RestContext rest_context;
+  return rest_stub_->ListServiceAccounts(rest_context, request);
   //  google::iam::admin::v1::ListServiceAccountsResponse response;
   //  auto status =
   //      grpc_stub_->ListServiceAccounts(&client_context, request, &response);
@@ -258,8 +258,8 @@ StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::GetServiceAccount(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  rest_internal::RestRequest rest_request;
-  return rest_stub_->GetServiceAccount(rest_request, request);
+  rest_internal::RestContext rest_context;
+  return rest_stub_->GetServiceAccount(rest_context, request);
   //  google::iam::admin::v1::ServiceAccount response;
   //  auto status =
   //      grpc_stub_->GetServiceAccount(&client_context, request, &response);
@@ -273,8 +273,8 @@ StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMStub::CreateServiceAccount(
     grpc::ClientContext& client_context,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  rest_internal::RestRequest rest_request;
-  return rest_stub_->CreateServiceAccount(rest_request, request);
+  rest_internal::RestContext rest_context;
+  return rest_stub_->CreateServiceAccount(rest_context, request);
   //  google::iam::admin::v1::ServiceAccount response;
   //  auto status =
   //      grpc_stub_->CreateServiceAccount(&client_context, request, &response);

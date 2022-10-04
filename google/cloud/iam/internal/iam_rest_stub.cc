@@ -45,8 +45,9 @@ DefaultIAMRestStub::DefaultIAMRestStub(
 
 template <typename Request>
 Status Delete(rest_internal::RestClient& client,
-                       rest_internal::RestRequest& rest_request,
-                       Request const& request, std::string path) {
+              rest_internal::RestContext& rest_context, Request const& request,
+              std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   auto response = client.Delete(rest_request);
   return response.status();
@@ -54,8 +55,9 @@ Status Delete(rest_internal::RestClient& client,
 
 template <typename Response, typename Request>
 StatusOr<Response> Get(rest_internal::RestClient& client,
-                       rest_internal::RestRequest& rest_request,
+                       rest_internal::RestContext& rest_context,
                        Request const& request, std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   auto response = client.Get(rest_request);
   Status get_status = response.status();
@@ -72,8 +74,9 @@ StatusOr<Response> Get(rest_internal::RestClient& client,
 
 template <typename Response, typename Request>
 StatusOr<Response> Post(rest_internal::RestClient& client,
-                        rest_internal::RestRequest& rest_request,
+                        rest_internal::RestContext& rest_context,
                         Request const& request, std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   std::string json_payload;
   auto proto_to_json_status =
@@ -98,8 +101,9 @@ StatusOr<Response> Post(rest_internal::RestClient& client,
 
 template <typename Response, typename Request>
 StatusOr<Response> Patch(rest_internal::RestClient& client,
-                        rest_internal::RestRequest& rest_request,
-                        Request const& request, std::string path) {
+                         rest_internal::RestContext& rest_context,
+                         Request const& request, std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   std::string json_payload;
   auto proto_to_json_status =
@@ -122,10 +126,9 @@ StatusOr<Response> Patch(rest_internal::RestClient& client,
   return proto_response;
 }
 
-
 StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 DefaultIAMRestStub::ListServiceAccounts(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::ListServiceAccountsRequest const& request) {
   //  rpc ListServiceAccounts(ListServiceAccountsRequest) returns
   //  (ListServiceAccountsResponse) {
@@ -135,13 +138,13 @@ DefaultIAMRestStub::ListServiceAccounts(
   //    option (google.api.method_signature) = "name";
   //  }
   return Get<google::iam::admin::v1::ListServiceAccountsResponse>(
-      *rest_client_, rest_request, request,
+      *rest_client_, rest_context, request,
       absl::StrCat("v1/", request.name(), "/serviceAccounts"));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMRestStub::GetServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
   //  rpc GetServiceAccount(GetServiceAccountRequest) returns (ServiceAccount) {
   //    option (google.api.http) = {
@@ -150,7 +153,7 @@ DefaultIAMRestStub::GetServiceAccount(
   //    option (google.api.method_signature) = "name";
   //  }
   return Get<google::iam::admin::v1::ServiceAccount>(
-      *rest_client_, rest_request, request,
+      *rest_client_, rest_context, request,
       absl::StrCat("v1/", request.name()));
   //
   //  rest_request.SetPath(absl::StrCat("v1/", request.name()));
@@ -169,7 +172,7 @@ DefaultIAMRestStub::GetServiceAccount(
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMRestStub::CreateServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
   //  rpc CreateServiceAccount(CreateServiceAccountRequest) returns
   //  (ServiceAccount) {
@@ -181,7 +184,7 @@ DefaultIAMRestStub::CreateServiceAccount(
   //    "name,account_id,service_account";
   //  }
   return Post<google::iam::admin::v1::ServiceAccount>(
-      *rest_client_, rest_request, request,
+      *rest_client_, rest_context, request,
       absl::StrCat("v1/", request.name(), "/serviceAccounts"));
   //  rest_request.SetPath(absl::StrCat("v1/", request.name(),
   //  "/serviceAccounts")); std::string json_payload; auto proto_to_json_status
@@ -205,166 +208,167 @@ DefaultIAMRestStub::CreateServiceAccount(
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 DefaultIAMRestStub::PatchServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-//  rpc PatchServiceAccount(PatchServiceAccountRequest) returns (ServiceAccount) {
-//    option (google.api.http) = {
-//      patch: "/v1/{service_account.name=projects/*/serviceAccounts/*}"
-//      body: "*"
-//    };
-//  }
+  //  rpc PatchServiceAccount(PatchServiceAccountRequest) returns
+  //  (ServiceAccount) {
+  //    option (google.api.http) = {
+  //      patch: "/v1/{service_account.name=projects/*/serviceAccounts/*}"
+  //      body: "*"
+  //    };
+  //  }
   return Patch<google::iam::admin::v1::ServiceAccount>(
-      *rest_client_, rest_request, request,
+      *rest_client_, rest_context, request,
       absl::StrCat("v1/", request.service_account().name()));
 }
 
 Status DefaultIAMRestStub::DeleteServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-//  rpc DeleteServiceAccount(DeleteServiceAccountRequest) returns (google.protobuf.Empty) {
-//    option (google.api.http) = {
-//      delete: "/v1/{name=projects/*/serviceAccounts/*}"
-//    };
-//    option (google.api.method_signature) = "name";
-//  }
-  return Delete(
-      *rest_client_, rest_request, request,
-      absl::StrCat("v1/", request.name()));
-  }
+  //  rpc DeleteServiceAccount(DeleteServiceAccountRequest) returns
+  //  (google.protobuf.Empty) {
+  //    option (google.api.http) = {
+  //      delete: "/v1/{name=projects/*/serviceAccounts/*}"
+  //    };
+  //    option (google.api.method_signature) = "name";
+  //  }
+  return Delete(*rest_client_, rest_context, request,
+                absl::StrCat("v1/", request.name()));
+}
 
 StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 DefaultIAMRestStub::UndeleteServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
   return {};
 }
 
 Status DefaultIAMRestStub::EnableServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
   return {};
 }
 
 Status DefaultIAMRestStub::DisableServiceAccount(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 DefaultIAMRestStub::ListServiceAccountKeys(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMRestStub::GetServiceAccountKey(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMRestStub::CreateServiceAccountKey(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 DefaultIAMRestStub::UploadServiceAccountKey(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
   return {};
 }
 
 Status DefaultIAMRestStub::DeleteServiceAccountKey(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::v1::Policy> DefaultIAMRestStub::GetIamPolicy(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::v1::Policy> DefaultIAMRestStub::SetIamPolicy(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultIAMRestStub::TestIamPermissions(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
 DefaultIAMRestStub::QueryGrantableRoles(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse>
 DefaultIAMRestStub::ListRoles(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::ListRolesRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::GetRole(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::GetRoleRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::CreateRole(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::CreateRoleRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::UpdateRole(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::UpdateRoleRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::DeleteRole(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::DeleteRoleRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::UndeleteRole(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
 DefaultIAMRestStub::QueryTestablePermissions(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 DefaultIAMRestStub::QueryAuditableServices(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
   return {};
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse>
 DefaultIAMRestStub::LintPolicy(
-    rest_internal::RestRequest& rest_request,
+    rest_internal::RestContext& rest_context,
     google::iam::admin::v1::LintPolicyRequest const& request) {
   return {};
 }

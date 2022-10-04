@@ -19,7 +19,7 @@
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/log_wrapper_helpers.h"
-#include "google/cloud/internal/rest_request.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/tracing_options.h"
@@ -56,11 +56,11 @@ struct IsFutureStatus<future<Status>> : public std::true_type {};
 template <
     typename Functor, typename Request,
     typename Result = google::cloud::internal::invoke_result_t<
-        Functor, rest_internal::RestRequest&, Request const&>,
+        Functor, rest_internal::RestContext&, Request const&>,
     typename std::enable_if<std::is_same<Result, google::cloud::Status>::value,
                             int>::type = 0>
 Result RestLogWrapper(Functor&& functor,
-                      rest_internal::RestRequest& rest_request,
+                      rest_internal::RestContext& rest_request,
                       Request const& request, char const* where,
                       TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
@@ -71,10 +71,10 @@ Result RestLogWrapper(Functor&& functor,
 
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, rest_internal::RestRequest&, Request const&>,
+              Functor, rest_internal::RestContext&, Request const&>,
           typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
 Result RestLogWrapper(Functor&& functor,
-                      rest_internal::RestRequest& rest_request,
+                      rest_internal::RestContext& rest_request,
                       Request const& request, char const* where,
                       TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
@@ -91,10 +91,10 @@ Result RestLogWrapper(Functor&& functor,
 
 template <typename Functor, typename Request,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, rest_internal::RestRequest&, Request const&>,
+              Functor, rest_internal::RestContext&, Request const&>,
           typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
 Result RestLogWrapper(Functor&& functor,
-                      rest_internal::RestRequest& rest_request,
+                      rest_internal::RestContext& rest_request,
                       Request const& request, char const* where,
                       TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
@@ -107,10 +107,10 @@ Result RestLogWrapper(Functor&& functor,
 template <
     typename Functor, typename Request,
     typename Result = google::cloud::internal::invoke_result_t<
-        Functor, std::unique_ptr<rest_internal::RestRequest>, Request const&>,
+        Functor, std::unique_ptr<rest_internal::RestContext>, Request const&>,
     typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
 Result RestLogWrapper(Functor&& functor,
-                      std::unique_ptr<rest_internal::RestRequest> rest_request,
+                      std::unique_ptr<rest_internal::RestContext> rest_request,
                       Request const& request, char const* where,
                       TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);

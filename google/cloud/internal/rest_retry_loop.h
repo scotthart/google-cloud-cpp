@@ -83,7 +83,7 @@ auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
 template <typename Functor, typename Request, typename Sleeper,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
-                  Functor, rest_internal::RestRequest&, Request const&>::value,
+                  Functor, rest_internal::RestContext&, Request const&>::value,
               int>::type = 0>
 auto RestRetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                        std::unique_ptr<BackoffPolicy> backoff_policy,
@@ -91,15 +91,12 @@ auto RestRetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                        Request const& request, char const* location,
                        Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<
-        Functor, rest_internal::RestRequest&, Request const&> {
+        Functor, rest_internal::RestContext&, Request const&> {
   Status last_status;
   while (!retry_policy->IsExhausted()) {
-    // Do we need to create a new rest_request for each retry? Perhaps not, but
-    // this is the most likely place in the call chain to create an instance of
-    // RestRequest that the stub and decorators require.
-    rest_internal::RestRequest rest_request;
+    rest_internal::RestContext rest_context;
     //    ConfigureContext(context, CurrentOptions());
-    auto result = functor(rest_request, request);
+    auto result = functor(rest_context, request);
     if (result.ok()) {
       return result;
     }
@@ -128,14 +125,14 @@ auto RestRetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
 template <typename Functor, typename Request,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
-                  Functor, rest_internal::RestRequest&, Request const&>::value,
+                  Functor, rest_internal::RestContext&, Request const&>::value,
               int>::type = 0>
 auto RestRetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    Idempotency idempotency, Functor&& functor,
                    Request const& request, char const* location)
     -> google::cloud::internal::invoke_result_t<
-        Functor, rest_internal::RestRequest&, Request const&> {
+        Functor, rest_internal::RestContext&, Request const&> {
   return RestRetryLoopImpl(
       std::move(retry_policy), std::move(backoff_policy), idempotency,
       std::forward<Functor>(functor), request, location,

@@ -69,6 +69,8 @@ add_library(
     internal/openssl_util.cc
     internal/openssl_util.h
     internal/rest_client.h
+    internal/rest_context.cc
+    internal/rest_context.h
     internal/rest_log_wrapper.h
     internal/rest_options.h
     internal/rest_parse_json_error.cc
