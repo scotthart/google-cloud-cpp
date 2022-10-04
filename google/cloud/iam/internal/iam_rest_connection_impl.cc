@@ -17,13 +17,13 @@
 // source: google/iam/admin/v1/iam.proto
 
 #include "google/cloud/iam/internal/iam_rest_connection_impl.h"
-#include "google/cloud/iam/internal/iam_rest_stub_factory.h"
 #include "google/cloud/iam/internal/iam_option_defaults.h"
+#include "google/cloud/iam/internal/iam_rest_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/rest_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/rest_options.h"
 #include <memory>
 
 namespace google {
@@ -39,7 +39,7 @@ std::shared_ptr<IAMConnection> MakeIAMConnectionRest(Options options) {
       std::move(rest_stub), std::move(options));
 }
 
-}
+}  // namespace iam
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

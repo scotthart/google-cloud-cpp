@@ -40,8 +40,8 @@ class IAMRestConnectionImpl : public iam::IAMConnection {
  public:
   ~IAMRestConnectionImpl() override = default;
 
-  IAMRestConnectionImpl(
-      std::shared_ptr<iam_internal::IAMRestStub> stub, Options options);
+  IAMRestConnectionImpl(std::shared_ptr<iam_internal::IAMRestStub> stub,
+                        Options options);
 
   Options options() override { return options_; }
 

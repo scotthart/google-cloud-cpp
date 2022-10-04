@@ -80,6 +80,7 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/rest_retry_loop.h
+    internal/rest_stub_helpers.h
     internal/unified_rest_credentials.cc
     internal/unified_rest_credentials.h
     rest_options.h)
