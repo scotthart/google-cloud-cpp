@@ -146,18 +146,18 @@ function integration::bazel_with_emulators() {
   local args=("${@:2}")
 
   production_integration_tests=(
-    # gRPC Utils integration tests
-    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
+    #    # gRPC Utils integration tests
+    #    "google/cloud:internal_grpc_impersonate_service_account_integration_test"
     # Generator integration tests
     "generator/..."
-    # BigQuery integration tests
-    "google/cloud/bigquery/..."
+    #    # BigQuery integration tests
+    #    "google/cloud/bigquery/..."
     # IAM and IAM Credentials integration tests
     "google/cloud/iam/..."
-    # Logging integration tests
-    "google/cloud/logging/..."
-    # Pub/Sub Lite integration tests
-    "google/cloud/pubsublite/..."
+    #    # Logging integration tests
+    #    "google/cloud/logging/..."
+    #    # Pub/Sub Lite integration tests
+    #    "google/cloud/pubsublite/..."
     # Unified Rest Credentials test
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
@@ -173,21 +173,21 @@ function integration::bazel_with_emulators() {
   bazel "${verb}" "${args[@]}" --test_tag_filters="${tag_filters}" \
     "${production_integration_tests[@]}"
 
-  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
-  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
-
-  io::log_h2 "Running Storage integration tests (with emulator)"
-  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
-
-  io::log_h2 "Running Spanner integration tests (with emulator)"
-  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
-
-  io::log_h2 "Running Bigtable integration tests (with emulator)"
-  "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-    bazel "${verb}" "${args[@]}"
+  #  io::log_h2 "Running Pub/Sub integration tests (with emulator)"
+  #  "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}"
+  #
+  #  io::log_h2 "Running Storage integration tests (with emulator)"
+  #  "google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}"
+  #
+  #  io::log_h2 "Running Spanner integration tests (with emulator)"
+  #  "google/cloud/spanner/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}"
+  #
+  #  io::log_h2 "Running Bigtable integration tests (with emulator)"
+  #  "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+  #    bazel "${verb}" "${args[@]}"
 
   io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
@@ -195,32 +195,32 @@ function integration::bazel_with_emulators() {
 
   # This test is run separately because the access token changes every time and
   # that would mess up bazel's test cache for all the other tests.
-  io::log_h2 "Running Bigtable gRPC credential examples"
-  access_token="$(gcloud auth print-access-token)"
-  bazel "${verb}" "${args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
-    //google/cloud/bigtable/examples:bigtable_grpc_credentials
-
-  # This test is run separately because the URL may change and that would mess
-  # up Bazel's test cache for all the other tests.
-  io::log_h2 "Running combined examples using multiple services"
-  hello_world_http="$(gcloud run services describe \
-    hello-world-http \
-    --project="${GOOGLE_CLOUD_PROJECT}" \
-    --region="us-central1" --platform="managed" \
-    --format='value(status.url)')"
-
-  hello_world_grpc="$(gcloud run services describe \
-    hello-world-grpc \
-    --project="${GOOGLE_CLOUD_PROJECT}" \
-    --region="us-central1" --platform="managed" \
-    --format='value(status.url)')"
-
-  bazel "${verb}" "${args[@]}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
-    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
-    //examples/...
+  #  io::log_h2 "Running Bigtable gRPC credential examples"
+  #  access_token="$(gcloud auth print-access-token)"
+  #  bazel "${verb}" "${args[@]}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${access_token}" \
+  #    //google/cloud/bigtable/examples:bigtable_grpc_credentials
+  #
+  #  # This test is run separately because the URL may change and that would mess
+  #  # up Bazel's test cache for all the other tests.
+  #  io::log_h2 "Running combined examples using multiple services"
+  #  hello_world_http="$(gcloud run services describe \
+  #    hello-world-http \
+  #    --project="${GOOGLE_CLOUD_PROJECT}" \
+  #    --region="us-central1" --platform="managed" \
+  #    --format='value(status.url)')"
+  #
+  #  hello_world_grpc="$(gcloud run services describe \
+  #    hello-world-grpc \
+  #    --project="${GOOGLE_CLOUD_PROJECT}" \
+  #    --region="us-central1" --platform="managed" \
+  #    --format='value(status.url)')"
+  #
+  #  bazel "${verb}" "${args[@]}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
+  #    "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
+  #    //examples/...
 
   local bazel_output_base
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then

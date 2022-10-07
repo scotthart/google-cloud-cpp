@@ -27,6 +27,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/generator_interface.h",
     "internal/idempotency_policy_generator.h",
     "internal/logging_decorator_generator.h",
+    "internal/logging_decorator_rest_generator.h",
     "internal/metadata_decorator_generator.h",
     "internal/mock_connection_generator.h",
     "internal/option_defaults_generator.h",
@@ -38,6 +39,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/service_code_generator.h",
     "internal/stub_factory_generator.h",
     "internal/stub_generator.h",
+    "internal/stub_rest_generator.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
@@ -50,6 +52,7 @@ google_cloud_cpp_generator_srcs = [
     "internal/descriptor_utils.cc",
     "internal/idempotency_policy_generator.cc",
     "internal/logging_decorator_generator.cc",
+    "internal/logging_decorator_rest_generator.cc",
     "internal/metadata_decorator_generator.cc",
     "internal/mock_connection_generator.cc",
     "internal/option_defaults_generator.cc",
@@ -60,4 +63,5 @@ google_cloud_cpp_generator_srcs = [
     "internal/service_code_generator.cc",
     "internal/stub_factory_generator.cc",
     "internal/stub_generator.cc",
+    "internal/stub_rest_generator.cc",
 ]

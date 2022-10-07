@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 #include "google/cloud/iam/internal/iam_rest_logging_decorator.h"
 #include "google/cloud/internal/rest_log_wrapper.h"
 #include "google/cloud/status_or.h"
-//#include <google/iam/admin/v1/iam.grpc.pb.h>
+#include <google/iam/admin/v1/iam.pb.h>
 #include <memory>
 
 namespace google {
@@ -32,11 +32,7 @@ IAMRestLogging::IAMRestLogging(std::shared_ptr<IAMRestStub> child,
                                std::set<std::string> components)
     : child_(std::move(child)),
       tracing_options_(std::move(tracing_options)),
-      components_(std::move(components)) {
-  for (auto const& c : components_) {
-    std::cout << __PRETTY_FUNCTION__ << " component = " << c << std::endl;
-  }
-}
+      components_(std::move(components)) {}
 
 StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
 IAMRestLogging::ListServiceAccounts(

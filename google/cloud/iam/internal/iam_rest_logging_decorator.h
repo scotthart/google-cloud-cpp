@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_INTERNAL_IAM_REST_LOGGING_DECORATOR_H
 
 #include "google/cloud/iam/internal/iam_rest_stub.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -165,7 +166,7 @@ class IAMRestLogging : public IAMRestStub {
   std::shared_ptr<IAMRestStub> child_;
   TracingOptions tracing_options_;
   std::set<std::string> components_;
-};  // IAMLogging
+};  // IAMRestLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)

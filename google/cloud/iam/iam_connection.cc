@@ -20,9 +20,8 @@
 #include "google/cloud/iam/iam_options.h"
 #include "google/cloud/iam/internal/iam_connection_impl.h"
 #include "google/cloud/iam/internal/iam_option_defaults.h"
-#include "google/cloud/iam/internal/iam_rest_connection_impl.h"
-#include "google/cloud/iam/internal/iam_rest_stub_factory.h"
 #include "google/cloud/iam/internal/iam_stub_factory.h"
+#include "google/cloud/iam/internal/iam_rest_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -203,16 +202,10 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
                                  IAMPolicyOptionList>(options, __func__);
   options = iam_internal::IAMDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  if (options.has<TransportOption>() &&
-      options.get<TransportOption>() == TransportOption::Transport::kHttp) {
-    auto rest_stub = iam_internal::CreateDefaultIAMRestStub(options);
-    return std::make_shared<iam_internal::IAMRestConnectionImpl>(
-        std::move(rest_stub), std::move(options));
-  }
-
   auto stub = iam_internal::CreateDefaultIAMStub(background->cq(), options);
+  auto rest_stub = iam_internal::CreateDefaultIAMRestStub(options);
   return std::make_shared<iam_internal::IAMConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+      std::move(background), std::move(stub), std::move(rest_stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -247,6 +247,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
+  //  ProcessArgGenerateRestTransport(command_line_args);
   return command_line_args;
 }
 

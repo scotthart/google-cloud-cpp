@@ -831,6 +831,7 @@ service {
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: false
 }
 
 service {
@@ -840,6 +841,7 @@ service {
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: true
 }
 
 service {
@@ -847,6 +849,7 @@ service {
   product_path: "google/cloud/iam"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: false
 }
 
 # Identity-Aware Proxy (IAP)
@@ -1309,6 +1312,7 @@ service {
   emulator_endpoint_env_var: "SPANNER_EMULATOR_HOST"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  generate_rest_transport: false
 }
 
 # Speech

@@ -24,7 +24,6 @@
 #include "google/protobuf/util/json_util.h"
 #include <string>
 
-
 namespace google {
 namespace cloud {
 namespace rest_internal {
@@ -38,6 +37,25 @@ Status Delete(rest_internal::RestClient& client,
   rest_request.SetPath(std::move(path));
   auto response = client.Delete(rest_request);
   return response.status();
+}
+
+template <typename Response, typename Request>
+StatusOr<Response> Delete(rest_internal::RestClient& client,
+                          rest_internal::RestContext& rest_context,
+                          Request const& request, std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
+  rest_request.SetPath(std::move(path));
+  auto response = client.Delete(rest_request);
+  Status delete_status = response.status();
+  if (!delete_status.ok()) return delete_status;
+  auto rest_response = std::move(response.value());
+  auto response_payload = std::move(*rest_response).ExtractPayload();
+  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  if (!json_response.ok()) return json_response.status();
+  Response proto_response;
+  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+      *json_response, &proto_response);
+  return proto_response;
 }
 
 template <typename Response, typename Request>
@@ -113,10 +131,38 @@ StatusOr<Response> Post(rest_internal::RestClient& client,
   return proto_response;
 }
 
+template <typename Request>
+Status Post(rest_internal::RestClient& client,
+            rest_internal::RestContext& rest_context, Request const& request,
+            std::string path) {
+  rest_internal::RestRequest rest_request(rest_context);
+  rest_request.SetPath(std::move(path));
+  std::string json_payload;
+  protobuf::util::Status proto_to_json_status =
+      protobuf::util::MessageToJsonString(request, &json_payload);
+  if (!proto_to_json_status.ok())
+    return Status{
+        StatusCode::kInternal, std::string{proto_to_json_status.message()}, {}};
+  absl::Span<char const> span = absl::MakeConstSpan(json_payload);
+  rest_request.AddHeader("content-type", "application/json");
+  auto response = client.Post(rest_request, {span});
+  return response.status();
+  //  Status post_status = response.status();
+  //  if (!post_status.ok()) return post_status;
+  //  auto rest_response = std::move(response.value());
+  //  auto response_payload = std::move(*rest_response).ExtractPayload();
+  //  auto json_response = rest_internal::ReadAll(std::move(response_payload));
+  //  if (!json_response.ok()) return json_response.status();
+  //  Response proto_response;
+  //  auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+  //      *json_response, &proto_response);
+  //  return proto_response;
+}
+
 template <typename Response, typename Request>
 StatusOr<Response> Put(rest_internal::RestClient& client,
-                         rest_internal::RestContext& rest_context,
-                         Request const& request, std::string path) {
+                       rest_internal::RestContext& rest_context,
+                       Request const& request, std::string path) {
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   std::string json_payload;

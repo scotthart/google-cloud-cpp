@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-//#include <google/iam/admin/v1/iam.grpc.pb.h>
 #include <google/iam/admin/v1/iam.pb.h>
 #include <memory>
 
@@ -158,6 +157,7 @@ class IAMRestStub {
 class DefaultIAMRestStub : public IAMRestStub {
  public:
   ~DefaultIAMRestStub() override = default;
+
   explicit DefaultIAMRestStub(Options options);
   DefaultIAMRestStub(std::shared_ptr<rest_internal::RestClient> rest_client,
                      Options options);
@@ -286,269 +286,10 @@ class DefaultIAMRestStub : public IAMRestStub {
       google::iam::admin::v1::LintPolicyRequest const& request) override;
 
  private:
-  std::shared_ptr<google::cloud::rest_internal::RestClient> rest_client_;
+  std::shared_ptr<rest_internal::RestClient> rest_client_;
   Options options_;
 };
 
-#if 0
-class IAMStub {
- public:
-  virtual ~IAMStub() = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
-  ListServiceAccounts(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::ListServiceAccountsRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::GetServiceAccountRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::CreateServiceAccountRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::PatchServiceAccountRequest const& request) = 0;
-
-  virtual Status DeleteServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::DeleteServiceAccountRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-  UndeleteServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::UndeleteServiceAccountRequest const& request) = 0;
-
-  virtual Status EnableServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::EnableServiceAccountRequest const& request) = 0;
-
-  virtual Status DisableServiceAccount(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::DisableServiceAccountRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::ListServiceAccountKeysRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  GetServiceAccountKey(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::GetServiceAccountKeyRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  CreateServiceAccountKey(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const&
-          request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ServiceAccountKey>
-  UploadServiceAccountKey(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const&
-          request) = 0;
-
-  virtual Status DeleteServiceAccountKey(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
-          request) = 0;
-
-  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(
-      grpc::ClientContext& context,
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
-  QueryGrantableRoles(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::QueryGrantableRolesRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::ListRolesResponse> ListRoles(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::ListRolesRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::Role> GetRole(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::GetRoleRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::Role> CreateRole(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::CreateRoleRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::Role> UpdateRole(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::UpdateRoleRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::Role> DeleteRole(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::DeleteRoleRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::Role> UndeleteRole(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::UndeleteRoleRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
-  QueryTestablePermissions(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::QueryTestablePermissionsRequest const&
-          request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-  QueryAuditableServices(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::QueryAuditableServicesRequest const& request) = 0;
-
-  virtual StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      grpc::ClientContext& context,
-      google::iam::admin::v1::LintPolicyRequest const& request) = 0;
-};
-
-class DefaultIAMStub : public IAMStub {
- public:
-  explicit DefaultIAMStub(
-      std::unique_ptr<google::iam::admin::v1::IAM::StubInterface> grpc_stub)
-      : grpc_stub_(std::move(grpc_stub)),
-        rest_stub_(std::make_shared<DefaultIAMRestStub>(Options{})) {}
-
-  StatusOr<google::iam::admin::v1::ListServiceAccountsResponse>
-  ListServiceAccounts(grpc::ClientContext& client_context,
-                      google::iam::admin::v1::ListServiceAccountsRequest const&
-                          request) override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccount> GetServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::GetServiceAccountRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccount> CreateServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::CreateServiceAccountRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccount> PatchServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::PatchServiceAccountRequest const& request)
-      override;
-
-  Status DeleteServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::DeleteServiceAccountRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
-  UndeleteServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::UndeleteServiceAccountRequest const& request)
-      override;
-
-  Status EnableServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::EnableServiceAccountRequest const& request)
-      override;
-
-  Status DisableServiceAccount(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::DisableServiceAccountRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::ListServiceAccountKeysRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> GetServiceAccountKey(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::GetServiceAccountKeyRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> CreateServiceAccountKey(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::CreateServiceAccountKeyRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::ServiceAccountKey> UploadServiceAccountKey(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::UploadServiceAccountKeyRequest const& request)
-      override;
-
-  Status DeleteServiceAccountKey(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
-      override;
-
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& client_context,
-      google::iam::v1::GetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& client_context,
-      google::iam::v1::SetIamPolicyRequest const& request) override;
-
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& client_context,
-      google::iam::v1::TestIamPermissionsRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
-  QueryGrantableRoles(grpc::ClientContext& client_context,
-                      google::iam::admin::v1::QueryGrantableRolesRequest const&
-                          request) override;
-
-  StatusOr<google::iam::admin::v1::ListRolesResponse> ListRoles(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::ListRolesRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::Role> GetRole(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::GetRoleRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::Role> CreateRole(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::CreateRoleRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::Role> UpdateRole(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::UpdateRoleRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::Role> DeleteRole(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::DeleteRoleRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::Role> UndeleteRole(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::UndeleteRoleRequest const& request) override;
-
-  StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
-  QueryTestablePermissions(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::QueryTestablePermissionsRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
-  QueryAuditableServices(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::QueryAuditableServicesRequest const& request)
-      override;
-
-  StatusOr<google::iam::admin::v1::LintPolicyResponse> LintPolicy(
-      grpc::ClientContext& client_context,
-      google::iam::admin::v1::LintPolicyRequest const& request) override;
-
- private:
-  std::unique_ptr<google::iam::admin::v1::IAM::StubInterface> grpc_stub_;
-  std::shared_ptr<IAMRestStub> rest_stub_;
-};
-#endif
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_internal

@@ -27,6 +27,7 @@
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
+#include "generator/internal/logging_decorator_rest_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
@@ -35,6 +36,7 @@
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
+#include "generator/internal/stub_rest_generator.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -243,27 +245,54 @@ void SetMethodSignatureMethodVars(
   }
 }
 
-void SetResourceRoutingMethodVars(
+void SetHttpResourceRoutingMethodVars(
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
-  auto result = ParseResourceRoutingHeader(method);
-  if (result.has_value()) {
-    method_vars["method_request_url_path"] = result->url_path;
-    method_vars["method_request_url_substitution"] = result->url_substitution;
-    std::string param = result->param_key;
-    method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks;
-    auto const* input_type = method.input_type();
-    for (auto const& sv : absl::StrSplit(param, '.')) {
-      auto const chunk = std::string(sv);
-      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
-      chunks.push_back(FieldName(chunk_descriptor));
-      input_type = chunk_descriptor->message_type();
+  struct HttpInfoVisitor {
+    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
+                    VarsDictionary& method_vars)
+        : method(method), method_vars(method_vars) {}
+
+    void operator()(HttpExtensionInfo const& info) {
+      method_vars["method_request_url_path"] = info.url_path;
+      method_vars["method_request_url_substitution"] = info.url_substitution;
+      std::string param = info.request_field_name;
+      method_vars["method_request_param_key"] = param;
+      std::vector<std::string> chunks;
+      auto const* input_type = method.input_type();
+      for (auto const& sv : absl::StrSplit(param, '.')) {
+        auto const chunk = std::string(sv);
+        auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+        chunks.push_back(FieldName(chunk_descriptor));
+        input_type = chunk_descriptor->message_type();
+      }
+      method_vars["method_request_param_value"] =
+          absl::StrJoin(chunks, "().") + "()";
+      method_vars["method_request_body"] = info.body;
+      method_vars["method_http_verb"] = info.http_verb;
+      method_vars["method_rest_path"] =
+          absl::StrCat("absl::StrCat(\"", info.path_prefix, "\",request.",
+                       method_vars["method_request_param_value"], ",\"",
+                       info.path_suffix, "\")");
     }
-    method_vars["method_request_param_value"] =
-        absl::StrJoin(chunks, "().") + "()";
-    method_vars["method_request_body"] = result->body;
-  }
+
+    void operator()(HttpSimpleInfo const& info) {
+      method_vars["method_http_verb"] = info.http_verb;
+      method_vars["method_request_param_value"] = method.full_name();
+      method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
+    }
+
+    void operator()(absl::monostate) {
+      method_vars["method_http_verb"] = method.full_name();
+      method_vars["method_request_param_value"] = method.full_name();
+      method_vars["method_rest_path"] = method.full_name();
+    }
+    google::protobuf::MethodDescriptor const& method;
+    VarsDictionary& method_vars;
+  };
+
+  auto info = ParseHttpExtension(method);
+  absl::visit(HttpInfoVisitor(method, method_vars), info);
 }
 
 std::string DefaultIdempotencyFromHttpOperation(
@@ -519,27 +548,33 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 
 }  // namespace
 
-absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
-    google::protobuf::MethodDescriptor const& method) {
+absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
+  HttpExtensionInfo info;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
 
   std::string url_pattern;
   switch (http_rule.pattern_case()) {
     case google::api::HttpRule::kGet:
+      info.http_verb = "Get";
       url_pattern = http_rule.get();
       break;
     case google::api::HttpRule::kPut:
+      info.http_verb = "Put";
       url_pattern = http_rule.put();
       break;
     case google::api::HttpRule::kPost:
+      info.http_verb = "Post";
       url_pattern = http_rule.post();
       break;
     case google::api::HttpRule::kDelete:
+      info.http_verb = "Delete";
       url_pattern = http_rule.delete_();
       break;
     case google::api::HttpRule::kPatch:
+      info.http_verb = "Patch";
       url_pattern = http_rule.patch();
       break;
     default:
@@ -547,10 +582,18 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
                      << ": google::api::HttpRule not handled";
   }
 
-  static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
+  static std::regex const kUrlPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
   std::smatch match;
-  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) return {};
-  return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
+  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) {
+    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
+  }
+  info.url_path = match[0];
+  info.request_field_name = match[2];
+  info.url_substitution = match[3];
+  info.body = http_rule.body();
+  info.path_prefix = match[1];
+  info.path_suffix = match[4];
+  return info;
 }
 
 ExplicitRoutingInfo ParseExplicitRoutingHeader(
@@ -739,6 +782,14 @@ VarsDictionary CreateServiceVars(
   vars["logging_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_logging_decorator.h");
+  vars["logging_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestLogging");
+  vars["logging_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.cc");
+  vars["logging_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.h");
   vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
   vars["metadata_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
@@ -746,6 +797,14 @@ VarsDictionary CreateServiceVars(
   vars["metadata_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.h");
+  vars["metadata_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestMetadata");
+  vars["metadata_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.cc");
+  vars["metadata_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.h");
   vars["mock_connection_class_name"] =
       absl::StrCat("Mock", descriptor.name(), "Connection");
   vars["mock_connection_header_path"] =
@@ -766,6 +825,8 @@ VarsDictionary CreateServiceVars(
   vars["proto_file_name"] = descriptor.file()->name();
   vars["proto_grpc_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
+  vars["proto_header_path"] = absl::StrCat(
+      absl::StripSuffix(descriptor.file()->name(), ".proto"), ".pb.h");
   vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
@@ -799,12 +860,25 @@ VarsDictionary CreateServiceVars(
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub.h");
+  vars["stub_rest_class_name"] = absl::StrCat(descriptor.name(), "RestStub");
+  vars["stub_rest_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.cc");
+  vars["stub_rest_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.h");
   vars["stub_factory_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_stub_factory.cc");
   vars["stub_factory_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub_factory.h");
+  vars["stub_factory_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.cc");
+  vars["stub_factory_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.h");
   SetRetryStatusCodeExpression(vars);
   return vars;
 }
@@ -844,7 +918,7 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       }
     }
     SetMethodSignatureMethodVars(method, method_vars);
-    SetResourceRoutingMethodVars(method, method_vars);
+    SetHttpResourceRoutingMethodVars(method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
@@ -897,6 +971,17 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, method_vars, context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, method_vars, context));
+
+  auto const generate_rest_transport =
+      service_vars.find("generate_rest_transport");
+  if (generate_rest_transport != service_vars.end() &&
+      generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<StubRestGenerator>(
+        service, service_vars, method_vars, context));
+  }
+
   return code_generators;
 }
 

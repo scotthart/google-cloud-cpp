@@ -106,6 +106,8 @@ message ServiceConfiguration {
     bool grpc_http_transcoding = 3;
   }
   optional SupportedTransport supported_transports = 16;
+
+  bool generate_rest_transport = 17;
 }
 
 message GeneratorConfiguration {
