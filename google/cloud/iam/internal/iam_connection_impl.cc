@@ -81,33 +81,32 @@ IAMConnectionImpl::ListServiceAccounts(
         return result;
       });
 
-
-//  auto& stub = stub_;
-//  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
-//  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
-//  auto idempotency = idempotency_policy()->ListServiceAccounts(request);
-//  char const* function_name = __func__;
-//  return google::cloud::internal::MakePaginationRange<
-//      StreamRange<google::iam::admin::v1::ServiceAccount>>(
-//      std::move(request),
-//      [stub, retry, backoff, idempotency, function_name](
-//          google::iam::admin::v1::ListServiceAccountsRequest const& r) {
-//        return google::cloud::internal::RetryLoop(
-//            retry->clone(), backoff->clone(), idempotency,
-//            [stub](grpc::ClientContext& context,
-//                   google::iam::admin::v1::ListServiceAccountsRequest const&
-//                       request) {
-//              return stub->ListServiceAccounts(context, request);
-//            },
-//            r, function_name);
-//      },
-//      [](google::iam::admin::v1::ListServiceAccountsResponse r) {
-//        std::vector<google::iam::admin::v1::ServiceAccount> result(
-//            r.accounts().size());
-//        auto& messages = *r.mutable_accounts();
-//        std::move(messages.begin(), messages.end(), result.begin());
-//        return result;
-//      });
+  //  auto& stub = stub_;
+  //  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  //  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  //  auto idempotency = idempotency_policy()->ListServiceAccounts(request);
+  //  char const* function_name = __func__;
+  //  return google::cloud::internal::MakePaginationRange<
+  //      StreamRange<google::iam::admin::v1::ServiceAccount>>(
+  //      std::move(request),
+  //      [stub, retry, backoff, idempotency, function_name](
+  //          google::iam::admin::v1::ListServiceAccountsRequest const& r) {
+  //        return google::cloud::internal::RetryLoop(
+  //            retry->clone(), backoff->clone(), idempotency,
+  //            [stub](grpc::ClientContext& context,
+  //                   google::iam::admin::v1::ListServiceAccountsRequest const&
+  //                       request) {
+  //              return stub->ListServiceAccounts(context, request);
+  //            },
+  //            r, function_name);
+  //      },
+  //      [](google::iam::admin::v1::ListServiceAccountsResponse r) {
+  //        std::vector<google::iam::admin::v1::ServiceAccount> result(
+  //            r.accounts().size());
+  //        auto& messages = *r.mutable_accounts();
+  //        std::move(messages.begin(), messages.end(), result.begin());
+  //        return result;
+  //      });
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -121,15 +120,15 @@ IAMConnectionImpl::GetServiceAccount(
         return rest_stub_->GetServiceAccount(rest_context, request);
       },
       request, __func__);
-  //  return google::cloud::internal::RetryLoop(
-  //      retry_policy(), backoff_policy(),
-  //      idempotency_policy()->GetServiceAccount(request),
-  //      [this](grpc::ClientContext& context,
-  //             google::iam::admin::v1::GetServiceAccountRequest const&
-  //             request) {
-  //        return stub_->GetServiceAccount(context, request);
-  //      },
-  //      request, __func__);
+  //    return google::cloud::internal::RetryLoop(
+  //        retry_policy(), backoff_policy(),
+  //        idempotency_policy()->GetServiceAccount(request),
+  //        [this](grpc::ClientContext& context,
+  //               google::iam::admin::v1::GetServiceAccountRequest const&
+  //               request) {
+  //          return stub_->GetServiceAccount(context, request);
+  //        },
+  //        request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -144,15 +143,16 @@ IAMConnectionImpl::CreateServiceAccount(
         return rest_stub_->CreateServiceAccount(rest_context, request);
       },
       request, __func__);
-//  return google::cloud::internal::RetryLoop(
-//      retry_policy(), backoff_policy(),
-//      idempotency_policy()->CreateServiceAccount(request),
-//      [this](
-//          grpc::ClientContext& context,
-//          google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-//        return stub_->CreateServiceAccount(context, request);
-//      },
-//      request, __func__);
+  //  return google::cloud::internal::RetryLoop(
+  //      retry_policy(), backoff_policy(),
+  //      idempotency_policy()->CreateServiceAccount(request),
+  //      [this](
+  //          grpc::ClientContext& context,
+  //          google::iam::admin::v1::CreateServiceAccountRequest const&
+  //          request) {
+  //        return stub_->CreateServiceAccount(context, request);
+  //      },
+  //      request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -383,6 +383,32 @@ IAMConnectionImpl::QueryGrantableRoles(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+  //  auto& stub = stub_;
+  //  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  //  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  //  auto idempotency = idempotency_policy()->QueryGrantableRoles(request);
+  //  char const* function_name = __func__;
+  //  return google::cloud::internal::MakePaginationRange<
+  //      StreamRange<google::iam::admin::v1::Role>>(
+  //      std::move(request),
+  //      [stub, retry, backoff, idempotency, function_name](
+  //          google::iam::admin::v1::QueryGrantableRolesRequest const& r) {
+  //        return google::cloud::internal::RetryLoop(
+  //            retry->clone(), backoff->clone(), idempotency,
+  //            [stub](grpc::ClientContext& context,
+  //                   google::iam::admin::v1::QueryGrantableRolesRequest const&
+  //                       request) {
+  //              return stub->QueryGrantableRoles(context, request);
+  //            },
+  //            r, function_name);
+  //      },
+  //      [](google::iam::admin::v1::QueryGrantableRolesResponse r) {
+  //        std::vector<google::iam::admin::v1::Role> result(r.roles().size());
+  //        auto& messages = *r.mutable_roles();
+  //        std::move(messages.begin(), messages.end(), result.begin());
+  //        return result;
+  //      });
+  //
 }
 
 StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
@@ -412,6 +438,32 @@ StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+
+  //  auto& stub = stub_;
+  //  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  //  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  //  auto idempotency = idempotency_policy()->ListRoles(request);
+  //  char const* function_name = __func__;
+  //  return google::cloud::internal::MakePaginationRange<
+  //      StreamRange<google::iam::admin::v1::Role>>(
+  //      std::move(request),
+  //      [stub, retry, backoff, idempotency,
+  //       function_name](google::iam::admin::v1::ListRolesRequest const& r) {
+  //        return google::cloud::internal::RetryLoop(
+  //            retry->clone(), backoff->clone(), idempotency,
+  //            [stub](grpc::ClientContext& context,
+  //                   google::iam::admin::v1::ListRolesRequest const& request)
+  //                   {
+  //              return stub->ListRoles(context, request);
+  //            },
+  //            r, function_name);
+  //      },
+  //      [](google::iam::admin::v1::ListRolesResponse r) {
+  //        std::vector<google::iam::admin::v1::Role> result(r.roles().size());
+  //        auto& messages = *r.mutable_roles();
+  //        std::move(messages.begin(), messages.end(), result.begin());
+  //        return result;
+  //      });
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::GetRole(
@@ -460,14 +512,14 @@ StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::DeleteRole(
       },
       request, __func__);
 
-  //  return google::cloud::internal::RetryLoop(
-//      retry_policy(), backoff_policy(),
-//      idempotency_policy()->DeleteRole(request),
-//      [this](grpc::ClientContext& context,
-//             google::iam::admin::v1::DeleteRoleRequest const& request) {
-//        return stub_->DeleteRole(context, request);
-//      },
-//      request, __func__);
+  //    return google::cloud::internal::RetryLoop(
+  //      retry_policy(), backoff_policy(),
+  //      idempotency_policy()->DeleteRole(request),
+  //      [this](grpc::ClientContext& context,
+  //             google::iam::admin::v1::DeleteRoleRequest const& request) {
+  //        return stub_->DeleteRole(context, request);
+  //      },
+  //      request, __func__);
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMConnectionImpl::UndeleteRole(

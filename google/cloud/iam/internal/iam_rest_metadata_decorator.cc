@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
-//#include <google/iam/admin/v1/iam.grpc.pb.h>
+#include <google/iam/admin/v1/iam.pb.h>
 #include <memory>
 
 namespace google {
@@ -233,6 +233,7 @@ IAMRestMetadata::LintPolicy(
 void IAMRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
                                   std::string const& request_params) {
   rest_context.AddHeader("x-goog-request-params", request_params);
+  SetMetadata(rest_context);
 }
 
 void IAMRestMetadata::SetMetadata(rest_internal::RestContext& rest_context) {
@@ -242,9 +243,6 @@ void IAMRestMetadata::SetMetadata(rest_internal::RestContext& rest_context) {
     rest_context.AddHeader("x-goog-user-project",
                            options.get<UserProjectOption>());
   }
-  // TODO(sdhart): Does REST need this?
-  //  auto const& authority = options.get<AuthorityOption>();
-  //  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

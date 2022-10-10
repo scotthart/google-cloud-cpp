@@ -29,6 +29,7 @@
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
+#include "generator/internal/metadata_decorator_rest_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
@@ -977,6 +978,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubRestGenerator>(
         service, service_vars, method_vars, context));

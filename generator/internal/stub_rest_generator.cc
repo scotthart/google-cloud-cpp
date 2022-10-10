@@ -468,9 +468,8 @@ Status StubRestGenerator::GenerateCc() {
         method,
         {
             MethodPattern(
-                {
-                    {IsResponseTypeEmpty,
-                     // clang-format off
+                {{IsResponseTypeEmpty,
+                  // clang-format off
     "\nStatus\n",
     "\nStatusOr<$response_type$>\n"},
    {"Default$stub_rest_class_name$::$method_name$(\n"
@@ -479,13 +478,12 @@ Status StubRestGenerator::GenerateCc() {
     {IsResponseTypeEmpty,
     "  return rest_internal::$method_http_verb$(\n",
     "  return rest_internal::$method_http_verb$<$response_type$>(\n"},
-   {"      *rest_client_, rest_context, request,\n"
-    "      $method_rest_path$);\n"
-    "}\n"},
-//   {IsResponseTypeEmpty,
-//    "    return google::cloud::Status();\n",
-//    "    return response;\n"},
-//   {"}\n"}
+   {"      *rest_client_, rest_context, request,\n"},
+   {IsPaginated,
+    "      $method_rest_path$,\n"
+    "      {std::make_pair(\"page_token\", request.page_token())});\n",
+    "      $method_rest_path$);\n"},
+   {"}\n"}
    },
                 // clang-format on
                 IsNonStreaming),

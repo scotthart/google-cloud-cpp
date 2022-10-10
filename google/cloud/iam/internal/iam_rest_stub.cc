@@ -44,7 +44,8 @@ DefaultIAMRestStub::ListServiceAccounts(
   return rest_internal::Get<
       google::iam::admin::v1::ListServiceAccountsResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/", request.name(), "/serviceAccounts"));
+      absl::StrCat("/v1/", request.name(), "/serviceAccounts"),
+      {std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
@@ -180,45 +181,22 @@ DefaultIAMRestStub::QueryGrantableRoles(
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
   return rest_internal::Post<
       google::iam::admin::v1::QueryGrantableRolesResponse>(
-      *rest_client_, rest_context, request, "/v1/roles:queryGrantableRoles");
+      *rest_client_, rest_context, request, "/v1/roles:queryGrantableRoles",
+      {std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse>
 DefaultIAMRestStub::ListRoles(
     rest_internal::RestContext& rest_context,
     google::iam::admin::v1::ListRolesRequest const& request) {
-//    option (google.api.http) = {
-//      get: "/v1/roles"
-//      additional_bindings {
-//        get: "/v1/{parent=organizations/*}/roles"
-//      }
-//      additional_bindings {
-//        get: "/v1/{parent=projects/*}/roles"
-//      }
-//    };
-  if (request.parent().empty()) {
-    return rest_internal::Get<google::iam::admin::v1::ListRolesResponse>(
-        *rest_client_, rest_context, request, "/v1/roles");
-  } else {
-    return rest_internal::Get<google::iam::admin::v1::ListRolesResponse>(
-        *rest_client_, rest_context, request,
-        absl::StrCat("/v1/", request.parent(), "/roles"));
-  }
+  return rest_internal::Get<google::iam::admin::v1::ListRolesResponse>(
+      *rest_client_, rest_context, request, "/v1/roles",
+      {std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::iam::admin::v1::Role> DefaultIAMRestStub::GetRole(
     rest_internal::RestContext& rest_context,
     google::iam::admin::v1::GetRoleRequest const& request) {
-//    option (google.api.http) = {
-//      get: "/v1/{name=roles/*}"
-//      additional_bindings {
-//        get: "/v1/{name=organizations/*/roles/*}"
-//      }
-//      additional_bindings {
-//        get: "/v1/{name=projects/*/roles/*}"
-//      }
-//    };
-
   return rest_internal::Get<google::iam::admin::v1::Role>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/", request.name(), ""));
@@ -263,7 +241,8 @@ DefaultIAMRestStub::QueryTestablePermissions(
   return rest_internal::Post<
       google::iam::admin::v1::QueryTestablePermissionsResponse>(
       *rest_client_, rest_context, request,
-      "/v1/permissions:queryTestablePermissions");
+      "/v1/permissions:queryTestablePermissions",
+      {std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
