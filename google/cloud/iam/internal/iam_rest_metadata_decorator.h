@@ -100,6 +100,16 @@ class IAMRestMetadata : public IAMRestStub {
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
       override;
 
+  Status DisableServiceAccountKey(
+      rest_internal::RestContext& rest_context,
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request)
+      override;
+
+  Status EnableServiceAccountKey(
+      rest_internal::RestContext& rest_context,
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request)
+      override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) override;

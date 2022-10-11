@@ -185,6 +185,59 @@ Status ConnectionImplRestGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces(NamespaceType::kNormal);
   if (!result.ok()) return result;
+  auto endpoint_location_style = EndpointLocationStyle();
+
+  CcPrint(R"""(
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
+)""");
+  CcPrint("    ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("std::string const& location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("Options options) {");
+  CcPrint(R"""(
+  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
+      UnifiedCredentialsOptionList,
+      $service_name$PolicyOptionList>(options, __func__);
+  options = $product_internal_namespace$::$service_name$DefaultOptions(
+)""");
+  CcPrint("      ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("std::move(options));");
+  CcPrint(R"""(
+  auto stub = $product_internal_namespace$::CreateDefault$stub_rest_class_name$(
+    options);
+  return std::make_shared<$product_internal_namespace$::$connection_impl_rest_class_name$>(
+      std::move(stub), std::move(options));
+}
+)""");
+
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint(R"""(
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$Rest(
+    Options options) {
+  return Make$connection_class_name$(std::string{}, std::move(options));
+}
+)""");
+      break;
+    default:
+      break;
+  }
+
+#if 0
   CcPrint(  // clang-format off)
       "std::shared_ptr<$connection_class_name$> "
       "Make$connection_class_name$Rest(Options options) {\n"
@@ -203,6 +256,7 @@ Status ConnectionImplRestGenerator::GenerateCc() {
       "class_name$>(\n"
       "      std::move(rest_stub), std::move(options));\n"
       "}");
+#endif
   // clang-format on
   CcCloseNamespaces();
 

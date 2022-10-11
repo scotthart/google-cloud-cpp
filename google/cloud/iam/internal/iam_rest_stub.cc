@@ -150,6 +150,20 @@ Status DefaultIAMRestStub::DeleteServiceAccountKey(
                                absl::StrCat("/v1/", request.name(), ""));
 }
 
+Status DefaultIAMRestStub::DisableServiceAccountKey(
+    rest_internal::RestContext& rest_context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  return rest_internal::Post(*rest_client_, rest_context, request,
+                             absl::StrCat("/v1/", request.name(), ":disable"));
+}
+
+Status DefaultIAMRestStub::EnableServiceAccountKey(
+    rest_internal::RestContext& rest_context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  return rest_internal::Post(*rest_client_, rest_context, request,
+                             absl::StrCat("/v1/", request.name(), ":enable"));
+}
+
 StatusOr<google::iam::v1::Policy> DefaultIAMRestStub::GetIamPolicy(
     rest_internal::RestContext& rest_context,
     google::iam::v1::GetIamPolicyRequest const& request) {

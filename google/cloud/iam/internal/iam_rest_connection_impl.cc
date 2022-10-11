@@ -29,15 +29,17 @@ namespace google {
 namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::shared_ptr<IAMConnection> MakeIAMConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
                                  IAMPolicyOptionList>(options, __func__);
   options = iam_internal::IAMDefaultOptions(std::move(options));
-  auto rest_stub = iam_internal::CreateDefaultIAMRestStub(options);
+  auto stub = iam_internal::CreateDefaultIAMRestStub(options);
   return std::make_shared<iam_internal::IAMRestConnectionImpl>(
-      std::move(rest_stub), std::move(options));
+      std::move(stub), std::move(options));
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
@@ -246,6 +248,32 @@ Status IAMRestConnectionImpl::DeleteServiceAccountKey(
              google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
                  request) {
         return stub_->DeleteServiceAccountKey(rest_context, request);
+      },
+      request, __func__);
+}
+
+Status IAMRestConnectionImpl::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DisableServiceAccountKey(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::iam::admin::v1::DisableServiceAccountKeyRequest const&
+                 request) {
+        return stub_->DisableServiceAccountKey(rest_context, request);
+      },
+      request, __func__);
+}
+
+Status IAMRestConnectionImpl::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  return google::cloud::internal::RestRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->EnableServiceAccountKey(request),
+      [this](rest_internal::RestContext& rest_context,
+             google::iam::admin::v1::EnableServiceAccountKeyRequest const&
+                 request) {
+        return stub_->EnableServiceAccountKey(rest_context, request);
       },
       request, __func__);
 }

@@ -28,8 +28,6 @@ RUN dnf makecache && \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
-RUN dnf debuginfo-install -y glibc-2.35-4.fc36.x86_64 libgcc-12.1.1-1.fc36.x86_64 libstdc++-12.1.1-1.fc36.x86_64
-
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
 # we run these containers as the invoking user's uid, which does not exist in
