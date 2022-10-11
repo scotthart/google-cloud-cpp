@@ -213,7 +213,7 @@ Options TestSuccessOptions() {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto expected_service_account = absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_);
   auto response = client.ListServiceAccounts("projects/" + iam_project_);
@@ -226,7 +226,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsSuccess) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.ListServiceAccounts("projects/invalid");
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
@@ -236,7 +236,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto response = client.GetServiceAccount("projects/-/serviceAccounts/" +
                                            iam_service_account_);
   ASSERT_STATUS_OK(response);
@@ -244,7 +244,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.GetServiceAccount("projects/-/serviceAccounts/" +
                                            invalid_iam_service_account_);
   EXPECT_THAT(response, Not(IsOk()));
@@ -254,7 +254,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountFailure) {
 
 TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.CreateServiceAccount("", "", service_account);
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -263,7 +263,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountFailure) {
 
 TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   std::string account_id = "sa-crud-test";
   auto service_account_inferred_name =
       absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
@@ -293,7 +293,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudSuccess) {
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountFailure) {
   ::google::iam::admin::v1::ServiceAccount service_account;
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.DeleteServiceAccount("");
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -301,7 +301,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountKeysFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.ListServiceAccountKeys(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {});
   EXPECT_THAT(response, Not(IsOk()));
@@ -310,7 +310,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountKeysFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.GetServiceAccountKey(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_, {});
   EXPECT_THAT(response, Not(IsOk()));
@@ -319,7 +319,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountKeyFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.CreateServiceAccountKey(
       "projects/-/serviceAccounts/" + invalid_iam_service_account_,
       ::google::iam::admin::v1::ServiceAccountPrivateKeyType::
@@ -331,7 +331,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountKeyFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountKeyFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.DeleteServiceAccountKey("projects/-/serviceAccounts/" +
                                                  invalid_iam_service_account_);
   EXPECT_THAT(response, Not(IsOk()));
@@ -341,7 +341,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountKeyFailure) {
 
 TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto create_response = client.CreateServiceAccountKey(
       "projects/-/serviceAccounts/" + iam_service_account_,
       ::google::iam::admin::v1::ServiceAccountPrivateKeyType::
@@ -382,14 +382,14 @@ TEST_F(IamIntegrationTest, ServiceAccountKeyCrudSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicySuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto response = client.GetIamPolicy(absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_));
   EXPECT_STATUS_OK(response);
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.GetIamPolicy("");
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -398,7 +398,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyFailure) {
 
 TEST_F(IamIntegrationTest, SetIamPolicySuccessOrAborted) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnectionRest());
   ::google::iam::v1::Policy policy;
   auto response = client.SetIamPolicy(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
@@ -408,7 +408,7 @@ TEST_F(IamIntegrationTest, SetIamPolicySuccessOrAborted) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.SetIamPolicy("", ::google::iam::v1::Policy{});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -417,7 +417,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyFailure) {
 
 TEST_F(IamIntegrationTest, SetIamPolicyUpdaterSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto response = client.SetIamPolicy(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
@@ -426,7 +426,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyUpdaterSuccess) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyUpdaterCancelled) {
-  auto client = IAMClient(MakeIAMConnection());
+  auto client = IAMClient(MakeIAMConnectionRest());
   auto response = client.SetIamPolicy(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
@@ -435,7 +435,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyUpdaterCancelled) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto response = client.TestIamPermissions(
       absl::StrCat("projects/", iam_project_, "/serviceAccounts/",
                    iam_service_account_),
@@ -444,7 +444,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsSuccess) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.TestIamPermissions("", {});
   EXPECT_THAT(response, Not(IsOk()));
   auto const log_lines = ClearLogLines();
@@ -452,7 +452,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto response = client.QueryGrantableRoles(
       absl::StrCat("//iam.googleapis.com/projects/", iam_project_,
                    "/serviceAccounts/", iam_service_account_));
@@ -462,7 +462,7 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   auto response = client.QueryGrantableRoles("");
   auto begin = response.begin();
   ASSERT_NE(begin, response.end());
@@ -472,7 +472,7 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto expected_service_account = absl::StrCat(
       "projects/", iam_project_, "/serviceAccounts/", iam_service_account_);
   ::google::iam::admin::v1::ListServiceAccountsRequest request;
@@ -487,7 +487,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountsProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::ListServiceAccountsRequest request;
   auto response = client.ListServiceAccounts(request);
   auto begin = response.begin();
@@ -498,7 +498,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::admin::v1::GetServiceAccountRequest request;
   request.set_name("projects/-/serviceAccounts/" + iam_service_account_);
   auto response = client.GetServiceAccount(request);
@@ -507,7 +507,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::GetServiceAccountRequest request;
   auto response = client.GetServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -530,7 +530,7 @@ google::cloud::internal::invoke_result_t<Functor> StatusRetryLoop(
 
 TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   std::string account_id = "sa-crud-proto-test";
   auto service_account_inferred_name =
       absl::StrCat("projects/-/serviceAccounts/", account_id, "@", iam_project_,
@@ -599,7 +599,7 @@ TEST_F(IamIntegrationTest, ServiceAccountCrudProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, EnableServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::EnableServiceAccountRequest request;
   auto response = client.EnableServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -608,7 +608,7 @@ TEST_F(IamIntegrationTest, EnableServiceAccountProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DisableServiceAccountProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::DisableServiceAccountRequest request;
   auto response = client.DisableServiceAccount(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -617,7 +617,7 @@ TEST_F(IamIntegrationTest, DisableServiceAccountProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListServiceAccountKeysProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::ListServiceAccountKeysRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -628,7 +628,7 @@ TEST_F(IamIntegrationTest, ListServiceAccountKeysProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::GetServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -639,7 +639,7 @@ TEST_F(IamIntegrationTest, GetServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::CreateServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -650,7 +650,7 @@ TEST_F(IamIntegrationTest, CreateServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UploadServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::UploadServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -661,7 +661,7 @@ TEST_F(IamIntegrationTest, UploadServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteServiceAccountKeyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::DeleteServiceAccountKeyRequest request;
   request.set_name("projects/-/serviceAccounts/" +
                    invalid_iam_service_account_);
@@ -672,7 +672,7 @@ TEST_F(IamIntegrationTest, DeleteServiceAccountKeyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -681,7 +681,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, GetIamPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::v1::GetIamPolicyRequest request;
   auto response = client.GetIamPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -691,7 +691,7 @@ TEST_F(IamIntegrationTest, GetIamPolicyProtoFailure) {
 
 TEST_F(IamIntegrationTest, SetIamPolicyProtoSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -701,7 +701,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, SetIamPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::v1::SetIamPolicyRequest request;
   auto response = client.SetIamPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -710,7 +710,7 @@ TEST_F(IamIntegrationTest, SetIamPolicyProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(absl::StrCat("projects/", iam_project_,
                                     "/serviceAccounts/", iam_service_account_));
@@ -720,7 +720,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, TestIamPermissionsProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::v1::TestIamPermissionsRequest request;
   auto response = client.TestIamPermissions(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -729,7 +729,7 @@ TEST_F(IamIntegrationTest, TestIamPermissionsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryGrantableRolesRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -741,7 +741,7 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryGrantableRolesProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::QueryGrantableRolesRequest request;
   auto response = client.QueryGrantableRoles(request);
   auto begin = response.begin();
@@ -752,7 +752,7 @@ TEST_F(IamIntegrationTest, QueryGrantableRolesProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, ListRolesProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::ListRolesRequest request;
   request.set_parent("projects/*");
   auto response = client.ListRoles(request);
@@ -764,7 +764,7 @@ TEST_F(IamIntegrationTest, ListRolesProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, GetRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::GetRoleRequest request;
   request.set_name("projects/*");
   auto response = client.GetRole(request);
@@ -774,7 +774,7 @@ TEST_F(IamIntegrationTest, GetRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, CreateRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::CreateRoleRequest request;
   auto response = client.CreateRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -783,7 +783,7 @@ TEST_F(IamIntegrationTest, CreateRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UpdateRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::UpdateRoleRequest request;
   auto response = client.UpdateRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -792,7 +792,7 @@ TEST_F(IamIntegrationTest, UpdateRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, DeleteRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::DeleteRoleRequest request;
   auto response = client.DeleteRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -801,7 +801,7 @@ TEST_F(IamIntegrationTest, DeleteRoleProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, UndeleteRoleProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::UndeleteRoleRequest request;
   auto response = client.UndeleteRole(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -811,7 +811,7 @@ TEST_F(IamIntegrationTest, UndeleteRoleProtoFailure) {
 
 TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
   if (!RunQuotaLimitedTests()) GTEST_SKIP();
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   auto const parent_project = "projects/" + iam_project_;
   // Clean up any roles leaked in previous executions.
   ::google::iam::admin::v1::ListRolesRequest list_request;
@@ -882,7 +882,7 @@ TEST_F(IamIntegrationTest, RoleProtoCrudSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryTestablePermissionsRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -894,7 +894,7 @@ TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::QueryTestablePermissionsRequest request;
   auto response = client.QueryTestablePermissions(request);
   auto begin = response.begin();
@@ -905,7 +905,7 @@ TEST_F(IamIntegrationTest, QueryTestablePermissionsProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, QueryAuditableServicesProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::admin::v1::QueryAuditableServicesRequest request;
   request.set_full_resource_name(absl::StrCat("//iam.googleapis.com/projects/",
                                               iam_project_, "/serviceAccounts/",
@@ -915,7 +915,7 @@ TEST_F(IamIntegrationTest, QueryAuditableServicesProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, QueryAuditableServicesProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::QueryAuditableServicesRequest request;
   auto response = client.QueryAuditableServices(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -924,7 +924,7 @@ TEST_F(IamIntegrationTest, QueryAuditableServicesProtoFailure) {
 }
 
 TEST_F(IamIntegrationTest, LintPolicyProtoSuccess) {
-  auto client = IAMClient(MakeIAMConnection(TestSuccessOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestSuccessOptions()));
   ::google::iam::admin::v1::LintPolicyRequest request;
   ::google::type::Expr condition;
   condition.set_expression("request.time < timestamp('2000-01-01T00:00:00Z')");
@@ -938,7 +938,7 @@ TEST_F(IamIntegrationTest, LintPolicyProtoSuccess) {
 }
 
 TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {
-  auto client = IAMClient(MakeIAMConnection(TestFailureOptions()));
+  auto client = IAMClient(MakeIAMConnectionRest(TestFailureOptions()));
   ::google::iam::admin::v1::LintPolicyRequest request;
   auto response = client.LintPolicy(request);
   EXPECT_THAT(response, Not(IsOk()));
@@ -948,7 +948,7 @@ TEST_F(IamIntegrationTest, LintPolicyProtoFailure) {
 
 /// @test Verify the backwards compatibility `gcpcxxV1` namespace still exists.
 TEST_F(IamIntegrationTest, BackwardsCompatibility) {
-  auto connection = ::google::cloud::iam::gcpcxxV1::MakeIAMConnection();
+  auto connection = ::google::cloud::iam::gcpcxxV1::MakeIAMConnectionRest();
   EXPECT_THAT(connection, NotNull());
   ASSERT_NO_FATAL_FAILURE(IAMClient(std::move(connection)));
 }

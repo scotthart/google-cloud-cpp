@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2021 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
 #include "google/cloud/iam/internal/iam_rest_connection_impl.h"
 #include "google/cloud/iam/internal/iam_option_defaults.h"
 #include "google/cloud/iam/internal/iam_rest_stub_factory.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_retry_loop.h"
@@ -29,6 +28,7 @@
 namespace google {
 namespace cloud {
 namespace iam {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<IAMConnection> MakeIAMConnectionRest(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
                                  UnifiedCredentialsOptionList,
@@ -38,8 +38,14 @@ std::shared_ptr<IAMConnection> MakeIAMConnectionRest(Options options) {
   return std::make_shared<iam_internal::IAMRestConnectionImpl>(
       std::move(rest_stub), std::move(options));
 }
-
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
+}  // namespace cloud
+}  // namespace google
+
+namespace google {
+namespace cloud {
 namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

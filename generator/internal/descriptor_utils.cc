@@ -25,6 +25,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
+#include "generator/internal/connection_impl_rest_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
@@ -731,6 +732,13 @@ VarsDictionary CreateServiceVars(
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
+  vars["auth_class_name"] = absl::StrCat(descriptor.name(), "Auth");
+  vars["auth_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
+                                      ServiceNameToFilePath(descriptor.name()),
+                                      "_auth_decorator.cc");
+  vars["auth_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_auth_decorator.h");
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);
   vars["client_class_name"] = absl::StrCat(descriptor.name(), "Client");
@@ -753,6 +761,14 @@ VarsDictionary CreateServiceVars(
   vars["connection_impl_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_connection_impl.h");
+  vars["connection_impl_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestConnectionImpl");
+  vars["connection_impl_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_connection_impl.cc");
+  vars["connection_impl_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_connection_impl.h");
   vars["connection_options_name"] =
       absl::StrCat(descriptor.name(), "ConnectionOptions");
   vars["connection_options_traits_name"] =
@@ -770,13 +786,6 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(descriptor.name(), "LimitedErrorCountRetryPolicy");
   vars["limited_time_retry_policy_name"] =
       absl::StrCat(descriptor.name(), "LimitedTimeRetryPolicy");
-  vars["auth_class_name"] = absl::StrCat(descriptor.name(), "Auth");
-  vars["auth_cc_path"] = absl::StrCat(vars["product_path"], "internal/",
-                                      ServiceNameToFilePath(descriptor.name()),
-                                      "_auth_decorator.cc");
-  vars["auth_header_path"] = absl::StrCat(
-      vars["product_path"], "internal/",
-      ServiceNameToFilePath(descriptor.name()), "_auth_decorator.h");
   vars["logging_class_name"] = absl::StrCat(descriptor.name(), "Logging");
   vars["logging_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
@@ -978,6 +987,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service_vars.find("generate_rest_transport");
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<ConnectionImplRestGenerator>(
+        service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(

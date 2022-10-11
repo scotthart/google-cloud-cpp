@@ -22,7 +22,6 @@
 #include "google/cloud/iam/iam_connection.h"
 #include "google/cloud/iam/iam_connection_idempotency_policy.h"
 #include "google/cloud/iam/iam_options.h"
-#include "google/cloud/iam/internal/iam_rest_stub.h"
 #include "google/cloud/iam/internal/iam_retry_traits.h"
 #include "google/cloud/iam/internal/iam_stub.h"
 #include "google/cloud/background_threads.h"
@@ -45,11 +44,6 @@ class IAMConnectionImpl : public iam::IAMConnection {
   IAMConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
       std::shared_ptr<iam_internal::IAMStub> stub, Options options);
-
-  IAMConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iam_internal::IAMStub> stub,
-      std::shared_ptr<iam_internal::IAMRestStub> rest_stub, Options options);
 
   Options options() override { return options_; }
 
@@ -181,7 +175,6 @@ class IAMConnectionImpl : public iam::IAMConnection {
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
   std::shared_ptr<iam_internal::IAMStub> stub_;
-  std::shared_ptr<iam_internal::IAMRestStub> rest_stub_;
   Options options_;
 };
 

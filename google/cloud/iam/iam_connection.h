@@ -179,6 +179,8 @@ class IAMConnection {
  */
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
+std::shared_ptr<IAMConnection> MakeIAMConnectionRest(Options options = {});
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
