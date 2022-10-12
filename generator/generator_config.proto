@@ -92,8 +92,32 @@ message ServiceConfiguration {
     LOCATION_DEPENDENT_COMPAT = 2;
   }
   EndpointLocationStyle endpoint_location_style = 15;
+
+}
+
+message LibraryConfiguration {
+  string product_path = 1;
+
+  string name = 2;
+
+  // Indicates the service library development status.
+  enum LaunchStage {
+    LAUNCH_STAGE_UNSPECIFIED = 0;
+    ALPHA = 1;
+    BETA = 2;
+    DEPRECATED = 3;
+    EAP = 4;
+    GA = 5;
+    IN_DEVELOPMENT = 6;
+    PREVIEW = 7;
+    SUBCOMPONENT = 8;
+  }
+  LaunchStage launch_stage = 3;
+
+  repeated ServiceConfiguration service = 4;
 }
 
 message GeneratorConfiguration {
   repeated ServiceConfiguration service = 1;
+  repeated LibraryConfiguration library = 2;
 }
