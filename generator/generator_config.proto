@@ -93,21 +93,10 @@ message ServiceConfiguration {
   }
   EndpointLocationStyle endpoint_location_style = 15;
 
-  // While most services default to GRPC, a handful are REST only. Additionally,
-  // most GRPC services can also support REST via GRPC/HTTP transcoding
-  // https://cloud.google.com/endpoints/docs/grpc/transcoding
-  message SupportedTransport {
-    enum Transport {
-      GRPC = 0;
-      REST = 1;
-    }
-    repeated Transport transports = 1;
-    optional Transport default_transport = 2;
-    bool grpc_http_transcoding = 3;
-  }
-  optional SupportedTransport supported_transports = 16;
-
-  bool generate_rest_transport = 17;
+  // While most services default to gRPC, a handful are REST only. Additionally,
+  // most GRPC services can also support REST via gRPC/HTTP transcoding
+  // https://cloud.google.com/endpoints/docs/grpc/transcoding.
+  bool generate_rest_transport = 16;
 }
 
 message GeneratorConfiguration {
