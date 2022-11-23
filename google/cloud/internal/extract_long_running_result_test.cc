@@ -88,7 +88,9 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithSuccess) {
   op.set_done(true);
   op.mutable_response()->PackFrom(expected);
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Instance,
+                                       google::longrunning::Operation>(
+          op, "test-function");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, IsProtoEqual(expected));
 }
@@ -99,7 +101,9 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithError) {
   op.mutable_error()->set_code(grpc::StatusCode::PERMISSION_DENIED);
   op.mutable_error()->set_message("uh-oh");
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Instance,
+                                       google::longrunning::Operation>(
+          op, "test-function");
   EXPECT_THAT(actual,
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
 }
@@ -108,7 +112,9 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithoutResult) {
   google::longrunning::Operation op;
   op.set_done(true);
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Instance,
+                                       google::longrunning::Operation>(
+          op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal));
 }
 
@@ -117,7 +123,9 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
   op.set_done(true);
   op.mutable_response()->PackFrom(google::protobuf::Empty{});
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(op, "test-function");
+      ExtractLongRunningResultResponse<Instance,
+                                       google::longrunning::Operation>(
+          op, "test-function");
   EXPECT_THAT(actual, StatusIs(StatusCode::kInternal,
                                AllOf(HasSubstr("test-function"),
                                      HasSubstr("invalid response type"))));
@@ -126,7 +134,9 @@ TEST(ExtractLongRunningResultTest, ResponseDoneWithInvalidContent) {
 TEST(ExtractLongRunningResultTest, ResponseError) {
   auto const expected = Status{StatusCode::kPermissionDenied, "uh-oh"};
   auto const actual =
-      ExtractLongRunningResultResponse<Instance>(expected, "test-function");
+      ExtractLongRunningResultResponse<Instance,
+                                       google::longrunning::Operation>(
+          expected, "test-function");
   ASSERT_THAT(actual, Not(IsOk()));
   EXPECT_EQ(expected, actual.status());
 }

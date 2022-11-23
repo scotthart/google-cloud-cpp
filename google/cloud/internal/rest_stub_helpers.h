@@ -63,6 +63,8 @@ StatusOr<Response> Delete(rest_internal::RestClient& client,
   rest_request.SetPath(std::move(path));
   auto response = client.Delete(rest_context, rest_request);
   if (!response.ok()) return response.status();
+  // Custom status formatting from error proto would need an additional
+  // function passed to RestResponseToProto.
   return RestResponseToProto<Response>(std::move(**response));
 }
 
@@ -111,6 +113,7 @@ StatusOr<Response> Post(
     rest_request.AddQueryParameter(std::move(p));
   }
   rest_request.AddHeader("content-type", "application/json");
+  std::cerr << __func__ << " json_payload=" << json_payload << std::endl;
   auto response = client.Post(rest_context, rest_request,
                               {absl::MakeConstSpan(json_payload)});
   if (!response.ok()) return response.status();
@@ -131,6 +134,7 @@ Status Post(
     rest_request.AddQueryParameter(std::move(p));
   }
   rest_request.AddHeader("content-type", "application/json");
+  std::cerr << __func__ << " json_payload=" << json_payload << std::endl;
   auto response = client.Post(rest_context, rest_request,
                               {absl::MakeConstSpan(json_payload)});
   if (!response.ok()) return response.status();

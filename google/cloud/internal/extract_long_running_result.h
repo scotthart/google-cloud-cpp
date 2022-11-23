@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXTRACT_LONG_RUNNING_RESULT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXTRACT_LONG_RUNNING_RESULT_H
 
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
@@ -59,17 +60,44 @@ StatusOr<ReturnType> ExtractLongRunningResultMetadata(
   return result;
 }
 
+template <typename OperationType>
+Status ExtractOperationResultResponseImpl(
+    StatusOr<OperationType> op, google::protobuf::Message& result,
+    absl::FunctionRef<bool(google::protobuf::Any const&)> validate_any,
+    std::string const& location) {
+  if (!op) return std::move(op).status();
+  if (op->has_error()) return MakeStatusFromRpcError(op->error());
+  if (!op->has_response()) {
+    return Status(StatusCode::kInternal,
+                  location +
+                      "() cannot extract value from operation without error or "
+                      "response, name=" +
+                      op->name());
+  }
+  google::protobuf::Any const& any = op->response();
+  if (!validate_any(any)) {
+    return Status(
+        StatusCode::kInternal,
+        location +
+            "() operation completed with an invalid response type, name=" +
+            op->name());
+  }
+  any.UnpackTo(&result);
+  return Status{};
+}
+
 /**
  * Extracts the value from a completed long-running operation.
  *
  * This helper is used in `AsyncLongRunningOperation()` to extract the value (or
  * error) from a completed long-running operation.
  */
-template <typename ReturnType>
+template <typename ReturnType,
+          typename OperationType = google::longrunning::Operation>
 StatusOr<ReturnType> ExtractLongRunningResultResponse(
-    StatusOr<google::longrunning::Operation> op, std::string const& location) {
+    StatusOr<OperationType> op, std::string const& location) {
   ReturnType result;
-  auto status = ExtractOperationResultResponseImpl(
+  auto status = ExtractOperationResultResponseImpl<OperationType>(
       std::move(op), result,
       [](google::protobuf::Any const& any) { return any.Is<ReturnType>(); },
       location);

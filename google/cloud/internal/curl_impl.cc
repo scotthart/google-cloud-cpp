@@ -468,7 +468,7 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
 
 Status CurlImpl::MakeRequestImpl(RestContext& context) {
   TRACE_STATE() << ", url_=" << url_;
-
+  std::cout << __func__ << "url=" << url_ << std::endl;
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(context, std::move(status));

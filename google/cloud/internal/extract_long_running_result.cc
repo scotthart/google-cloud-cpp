@@ -46,6 +46,7 @@ Status ExtractOperationResultMetadataImpl(
   return Status{};
 }
 
+#if 0
 Status ExtractOperationResultResponseImpl(
     StatusOr<google::longrunning::Operation> op,
     google::protobuf::Message& result,
@@ -71,6 +72,7 @@ Status ExtractOperationResultResponseImpl(
   any.UnpackTo(&result);
   return Status{};
 }
+#endif
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -109,6 +109,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
   return output;
 }
 
+// add google.cloud.operation_polling_method
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json, std::string const& base_path,
     std::set<std::string> const& operation_services,
