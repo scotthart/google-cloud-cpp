@@ -35,6 +35,7 @@ using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::testing::_;
