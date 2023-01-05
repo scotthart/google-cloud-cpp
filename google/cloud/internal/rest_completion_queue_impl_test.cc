@@ -298,7 +298,7 @@ TEST(RestCompletionQueueImplTest, RunAsyncSingleRunner) {
   std::thread t{[&] { cq.Run(); }};
   std::cout << "runner thread=" << t.get_id() << std::endl;
 
-  auto constexpr kIterations = 10;
+  auto constexpr kIterations = 100;
   std::atomic<int> threads_joined{0};
   std::vector<std::pair<future<void>, std::thread>> workers;
   std::vector<promise<void>> work;
@@ -312,8 +312,8 @@ TEST(RestCompletionQueueImplTest, RunAsyncSingleRunner) {
     auto& p = work[i];
     auto f = p.get_future();
     workers.emplace_back(std::move(f), [&work, i]() {
-      std::cout << "thread=" << std::this_thread::get_id() << " set_value"
-                << std::endl;
+//      std::cout << "thread=" << std::this_thread::get_id() << " set_value"
+//                << std::endl;
       work[i].set_value();
     });
   }
@@ -328,8 +328,8 @@ TEST(RestCompletionQueueImplTest, RunAsyncSingleRunner) {
             if (std::this_thread::get_id() == t2.get_id()) {
               std::cout << "skipping joining self=" << t2.get_id() << std::endl;
             } else {
-              std::cout << "thread=" << std::this_thread::get_id()
-                        << " joining thread=" << t2.get_id() << std::endl;
+//              std::cout << "thread=" << std::this_thread::get_id()
+//                        << " joining thread=" << t2.get_id() << std::endl;
               t2.join();
               ++threads_joined;
             }
