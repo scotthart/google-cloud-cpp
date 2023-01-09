@@ -89,8 +89,8 @@ RestCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
 void RestCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   ++run_async_counter_;
-//  std::cout << __func__ << " thread=" << std::this_thread::get_id()
-//            << std::endl;
+  //  std::cout << __func__ << " thread=" << std::this_thread::get_id()
+  //            << std::endl;
   MakeRelativeTimer(std::chrono::seconds())
       .then([f = std::move(function)](auto) { f->exec(); });
 }

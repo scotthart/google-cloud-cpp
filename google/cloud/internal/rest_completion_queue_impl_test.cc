@@ -312,8 +312,9 @@ TEST(RestCompletionQueueImplTest, RunAsyncSingleRunner) {
     auto& p = work[i];
     auto f = p.get_future();
     workers.emplace_back(std::move(f), [&work, i]() {
-//      std::cout << "thread=" << std::this_thread::get_id() << " set_value"
-//                << std::endl;
+      //      std::cout << "thread=" << std::this_thread::get_id() << "
+      //      set_value"
+      //                << std::endl;
       work[i].set_value();
     });
   }
@@ -328,8 +329,10 @@ TEST(RestCompletionQueueImplTest, RunAsyncSingleRunner) {
             if (std::this_thread::get_id() == t2.get_id()) {
               std::cout << "skipping joining self=" << t2.get_id() << std::endl;
             } else {
-//              std::cout << "thread=" << std::this_thread::get_id()
-//                        << " joining thread=" << t2.get_id() << std::endl;
+              //              std::cout << "thread=" <<
+              //              std::this_thread::get_id()
+              //                        << " joining thread=" << t2.get_id() <<
+              //                        std::endl;
               t2.join();
               ++threads_joined;
             }
