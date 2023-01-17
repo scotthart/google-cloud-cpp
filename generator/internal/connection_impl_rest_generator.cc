@@ -162,6 +162,9 @@ Status ConnectionImplRestGenerator::GenerateCc() {
        "google/cloud/credentials.h", "google/cloud/rest_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : "",
        HasLongrunningMethod()
+           ? "google/cloud/internal/extract_long_running_result.h"
+           : "",
+       HasLongrunningMethod()
            ? "google/cloud/internal/async_rest_long_running_operation.h"
            : "",
        needs_async_retry_loop ? "google/cloud/internal/async_rest_retry_loop.h"

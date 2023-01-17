@@ -24,6 +24,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
 #include "google/cloud/internal/async_rest_retry_loop.h"
+#include "google/cloud/internal/extract_long_running_result.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/rest_background_threads_impl.h"
 #include "google/cloud/internal/rest_retry_loop.h"
