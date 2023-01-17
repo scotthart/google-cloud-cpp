@@ -20,8 +20,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_rest_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_connection_impl.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_rest_stub.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>

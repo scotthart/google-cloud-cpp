@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
-#include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_rest_stub.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_retry_traits.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_retry_traits.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GoldenKitchenSinkRestConnectionImpl
-    : public golden::GoldenKitchenSinkConnection {
+    : public golden_v1::GoldenKitchenSinkConnection {
  public:
   ~GoldenKitchenSinkRestConnectionImpl() override = default;
 
   GoldenKitchenSinkRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenKitchenSinkRestStub> stub,
+    std::shared_ptr<golden_v1_internal::GoldenKitchenSinkRestStub> stub,
     Options options);
 
   Options options() override { return options_; }
@@ -74,39 +74,39 @@ class GoldenKitchenSinkRestConnectionImpl
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
-  std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy> retry_policy() {
+  std::unique_ptr<golden_v1::GoldenKitchenSinkRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenKitchenSinkRetryPolicyOption>()) {
+      return options.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
+    return options_.get<golden_v1::GoldenKitchenSinkRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()) {
+      return options.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+    return options_.get<golden_v1::GoldenKitchenSinkBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
+      return options.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
+    return options_.get<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
 clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenKitchenSinkRestStub> stub_;
+  std::shared_ptr<golden_v1_internal::GoldenKitchenSinkRestStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_REST_CONNECTION_IMPL_H

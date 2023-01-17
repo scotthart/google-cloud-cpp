@@ -16,14 +16,14 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H
 
-#include "generator/integration_tests/golden/golden_thing_admin_connection.h"
-#include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.h"
-#include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_rest_stub.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_retry_traits.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_retry_traits.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -35,17 +35,17 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class GoldenThingAdminRestConnectionImpl
-    : public golden::GoldenThingAdminConnection {
+    : public golden_v1::GoldenThingAdminConnection {
  public:
   ~GoldenThingAdminRestConnectionImpl() override = default;
 
   GoldenThingAdminRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenThingAdminRestStub> stub,
+    std::shared_ptr<golden_v1_internal::GoldenThingAdminRestStub> stub,
     Options options);
 
   Options options() override { return options_; }
@@ -108,47 +108,47 @@ class GoldenThingAdminRestConnectionImpl
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
  private:
-  std::unique_ptr<golden::GoldenThingAdminRetryPolicy> retry_policy() {
+  std::unique_ptr<golden_v1::GoldenThingAdminRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenThingAdminRetryPolicyOption>()) {
+      return options.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
+    return options_.get<golden_v1::GoldenThingAdminRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenThingAdminBackoffPolicyOption>()) {
+      return options.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
+    return options_.get<golden_v1::GoldenThingAdminBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<golden_v1::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
+      return options.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
+    return options_.get<golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
 clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
+    if (options.has<golden_v1::GoldenThingAdminPollingPolicyOption>()) {
+      return options.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
+    return options_.get<golden_v1::GoldenThingAdminPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenThingAdminRestStub> stub_;
+  std::shared_ptr<golden_v1_internal::GoldenThingAdminRestStub> stub_;
   Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_THING_ADMIN_REST_CONNECTION_IMPL_H

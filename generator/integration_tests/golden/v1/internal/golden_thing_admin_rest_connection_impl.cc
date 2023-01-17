@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: generator/integration_tests/test.proto
 
-#include "generator/integration_tests/golden/internal/golden_thing_admin_rest_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_connection_impl.h"
 #include "absl/memory/memory.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_rest_stub_factory.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub_factory.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/async_rest_long_running_operation.h"
@@ -32,7 +32,7 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnectionRest(
@@ -40,29 +40,29 @@ std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnectionRest(
   internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
       UnifiedCredentialsOptionList,
       GoldenThingAdminPolicyOptionList>(options, __func__);
-  options = golden_internal::GoldenThingAdminDefaultOptions(
+  options = golden_v1_internal::GoldenThingAdminDefaultOptions(
       std::move(options));
   auto background = absl::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = golden_internal::CreateDefaultGoldenThingAdminRestStub(
+  auto stub = golden_v1_internal::CreateDefaultGoldenThingAdminRestStub(
     options);
-  return std::make_shared<golden_internal::GoldenThingAdminRestConnectionImpl>(
+  return std::make_shared<golden_v1_internal::GoldenThingAdminRestConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GoldenThingAdminRestConnectionImpl::GoldenThingAdminRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenThingAdminRestStub> stub,
+    std::shared_ptr<golden_v1_internal::GoldenThingAdminRestStub> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
     options_(internal::MergeOptions(
@@ -73,7 +73,7 @@ StreamRange<google::test::admin::database::v1::Database>
 GoldenThingAdminRestConnectionImpl::ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenThingAdminRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatabases(request);
   char const* function_name = __func__;
@@ -289,7 +289,7 @@ StreamRange<google::test::admin::database::v1::Backup>
 GoldenThingAdminRestConnectionImpl::ListBackups(google::test::admin::database::v1::ListBackupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenThingAdminRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackups(request);
   char const* function_name = __func__;
@@ -343,7 +343,7 @@ StreamRange<google::longrunning::Operation>
 GoldenThingAdminRestConnectionImpl::ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenThingAdminRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatabaseOperations(request);
   char const* function_name = __func__;
@@ -370,7 +370,7 @@ StreamRange<google::longrunning::Operation>
 GoldenThingAdminRestConnectionImpl::ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenThingAdminRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<golden_v1::GoldenThingAdminRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackupOperations(request);
   char const* function_name = __func__;
@@ -424,6 +424,6 @@ GoldenThingAdminRestConnectionImpl::AsyncDropDatabase(google::test::admin::datab
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

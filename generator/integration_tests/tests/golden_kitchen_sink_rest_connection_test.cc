@@ -18,8 +18,8 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_rest_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_connection_impl.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_rest_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
