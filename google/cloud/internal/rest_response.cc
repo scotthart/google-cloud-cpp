@@ -165,6 +165,7 @@ Status AsStatus(RestResponse&& response) {
   auto const http_status_code = response.StatusCode();
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return AsStatus(http_status_code, "");
+  std::cout << __func__ << " payload=" << *payload << std::endl;
   return AsStatus(http_status_code, *std::move(payload));
 }
 

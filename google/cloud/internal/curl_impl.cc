@@ -52,9 +52,19 @@ std::string UserAgentSuffix() {
   return *kUserAgentSuffix;
 }
 
-std::string NormalizeEndpoint(std::string endpoint) {
-  if (!endpoint.empty() && endpoint.back() != '/') endpoint.push_back('/');
-  return endpoint;
+std::string ConcatenateEndpointAndPath(std::string const& endpoint,
+                                       std::string const& path) {
+  bool const path_starts_with_slash = !path.empty() && (path.front() == '/');
+  bool const endpoint_ends_with_slash =
+      !endpoint.empty() && (endpoint.back() == '/');
+  if ((endpoint_ends_with_slash && !path_starts_with_slash) ||
+      (!endpoint_ends_with_slash && path_starts_with_slash)) {
+    return absl::StrCat(endpoint, path);
+  }
+  if (!endpoint_ends_with_slash && !path_starts_with_slash) {
+    return absl::StrCat(endpoint, "/", path);
+  }
+  return absl::StrCat(endpoint, path.substr(1));
 }
 
 char const* InitialQueryParameterSeparator(std::string const& url) {
@@ -294,8 +304,13 @@ void CurlImpl::SetUrl(
   if (absl::StartsWithIgnoreCase(request.path(), "http://") ||
       absl::StartsWithIgnoreCase(request.path(), "https://")) {
     url_ = request.path();
+    std::cout << __func__ << " request.path()=" << url_ << std::endl;
   } else {
-    url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
+    url_ = ConcatenateEndpointAndPath(endpoint, request.path());
+    //    url_ = absl::StrCat(NormalizeEndpoint(endpoint), request.path());
+    std::cout << __func__
+              << " ConcatenateEndpointAndPath(endpoint, request.path())="
+              << url_ << std::endl;
   }
 
   char const* query_parameter_separator = InitialQueryParameterSeparator(url_);
@@ -484,7 +499,7 @@ std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
 
 Status CurlImpl::MakeRequestImpl() {
   TRACE_STATE() << ", url_=" << url_;
-
+  std::cout << __func__ << " url=" << url_ << std::endl;
   Status status;
   status = handle_.SetOption(CURLOPT_URL, url_.c_str());
   if (!status.ok()) return OnTransferError(std::move(status));

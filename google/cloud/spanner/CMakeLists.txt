@@ -57,6 +57,16 @@ add_library(
     admin/internal/database_admin_metadata_decorator.h
     admin/internal/database_admin_option_defaults.cc
     admin/internal/database_admin_option_defaults.h
+    admin/internal/database_admin_rest_connection_impl.cc
+    admin/internal/database_admin_rest_connection_impl.h
+    admin/internal/database_admin_rest_logging_decorator.cc
+    admin/internal/database_admin_rest_logging_decorator.h
+    admin/internal/database_admin_rest_metadata_decorator.cc
+    admin/internal/database_admin_rest_metadata_decorator.h
+    admin/internal/database_admin_rest_stub.cc
+    admin/internal/database_admin_rest_stub.h
+    admin/internal/database_admin_rest_stub_factory.cc
+    admin/internal/database_admin_rest_stub_factory.h
     admin/internal/database_admin_retry_traits.h
     admin/internal/database_admin_stub.cc
     admin/internal/database_admin_stub.h
@@ -72,6 +82,16 @@ add_library(
     admin/internal/instance_admin_metadata_decorator.h
     admin/internal/instance_admin_option_defaults.cc
     admin/internal/instance_admin_option_defaults.h
+    admin/internal/instance_admin_rest_connection_impl.cc
+    admin/internal/instance_admin_rest_connection_impl.h
+    admin/internal/instance_admin_rest_logging_decorator.cc
+    admin/internal/instance_admin_rest_logging_decorator.h
+    admin/internal/instance_admin_rest_metadata_decorator.cc
+    admin/internal/instance_admin_rest_metadata_decorator.h
+    admin/internal/instance_admin_rest_stub.cc
+    admin/internal/instance_admin_rest_stub.h
+    admin/internal/instance_admin_rest_stub_factory.cc
+    admin/internal/instance_admin_rest_stub_factory.h
     admin/internal/instance_admin_retry_traits.h
     admin/internal/instance_admin_stub.cc
     admin/internal/instance_admin_stub.h
@@ -206,6 +226,8 @@ target_link_libraries(
            absl::numeric
            absl::strings
            absl::time
+           google-cloud-cpp::rest_internal
+           google-cloud-cpp::rest_protobuf_internal
            google-cloud-cpp::grpc_utils
            google-cloud-cpp::common
            google-cloud-cpp::spanner_protos)

@@ -218,6 +218,7 @@ InstanceAdminClient::UpdateInstance(
 
 Status InstanceAdminClient::DeleteInstance(std::string const& name,
                                            Options opts) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::spanner::admin::instance::v1::DeleteInstanceRequest request;
   request.set_name(name);

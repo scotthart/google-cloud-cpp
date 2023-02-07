@@ -23,8 +23,12 @@ function (spanner_admin_define_integration_tests)
 
     set(spanner_admin_integration_tests
         # cmake-format: sort
-        backup_extra_integration_test.cc backup_integration_test.cc
-        database_admin_integration_test.cc instance_admin_integration_test.cc)
+        backup_extra_integration_test.cc
+        backup_integration_test.cc
+        database_admin_integration_test.cc
+        database_admin_rest_integration_test.cc
+        instance_admin_integration_test.cc
+        instance_admin_rest_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

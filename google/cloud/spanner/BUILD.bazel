@@ -29,6 +29,8 @@ cc_library(
     deps = [
         "//:common",
         "//:grpc_utils",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "@com_google_absl//absl/container:fixed_array",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/numeric:int128",

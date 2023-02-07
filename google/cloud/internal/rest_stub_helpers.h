@@ -48,6 +48,7 @@ template <typename Request>
 Status Delete(rest_internal::RestClient& client,
               rest_internal::RestContext& rest_context, Request const&,
               std::string path) {
+  std::cout << __func__ << std::endl;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   auto response = client.Delete(rest_request);
@@ -59,6 +60,7 @@ template <typename Response, typename Request>
 StatusOr<Response> Delete(rest_internal::RestClient& client,
                           rest_internal::RestContext& rest_context,
                           Request const&, std::string path) {
+  std::cout << __func__ << std::endl;
   rest_internal::RestRequest rest_request(rest_context);
   rest_request.SetPath(std::move(path));
   auto response = client.Delete(rest_request);
@@ -71,6 +73,7 @@ StatusOr<Response> Get(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
+  std::cout << __func__ << std::endl;
   rest_internal::RestRequest rest_request(rest_context);
   for (auto& p : query_params) {
     rest_request.AddQueryParameter(std::move(p));
@@ -85,6 +88,7 @@ template <typename Response, typename Request>
 StatusOr<Response> Patch(rest_internal::RestClient& client,
                          rest_internal::RestContext& rest_context,
                          Request const& request, std::string path) {
+  std::cout << __func__ << std::endl;
   std::string json_payload;
   auto status = ProtoRequestToJsonPayload(request, json_payload);
   if (!status.ok()) return status;
@@ -102,6 +106,7 @@ StatusOr<Response> Post(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
+  std::cout << __func__ << std::endl;
   std::string json_payload;
   auto status = ProtoRequestToJsonPayload(request, json_payload);
   if (!status.ok()) return status;
@@ -122,6 +127,7 @@ Status Post(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, std::string path,
     std::vector<std::pair<std::string, std::string>> query_params = {}) {
+  std::cout << __func__ << std::endl;
   std::string json_payload;
   auto status = ProtoRequestToJsonPayload(request, json_payload);
   if (!status.ok()) return status;
@@ -141,6 +147,7 @@ template <typename Response, typename Request>
 StatusOr<Response> Put(rest_internal::RestClient& client,
                        rest_internal::RestContext& rest_context,
                        Request const& request, std::string path) {
+  std::cout << __func__ << std::endl;
   std::string json_payload;
   auto status = ProtoRequestToJsonPayload(request, json_payload);
   if (!status.ok()) return status;
