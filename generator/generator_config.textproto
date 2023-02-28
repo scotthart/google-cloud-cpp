@@ -946,6 +946,12 @@ service {
   initial_copyright_year: "2020"
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  idempotency_overrides: [
+    {rpc_name: "IamCredentials.GenerateAccessToken", idempotency: IDEMPOTENT},
+    {rpc_name: "IamCredentials.GenerateIdToken", idempotency: IDEMPOTENT},
+    {rpc_name: "IamCredentials.SignBlob", idempotency: IDEMPOTENT},
+    {rpc_name: "IamCredentials.SignJwt", idempotency: IDEMPOTENT}
+  ]
 }
 
 service {
