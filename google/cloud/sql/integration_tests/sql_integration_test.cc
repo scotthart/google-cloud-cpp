@@ -51,6 +51,7 @@ TEST_F(SqlIntegrationTest, PaginatedList) {
   for (auto database : client.List(request)) {
     ASSERT_STATUS_OK(database);
     EXPECT_THAT(database->name(), Not(IsEmpty()));
+    std::cout << database->DebugString() << std::endl;
   }
 }
 
