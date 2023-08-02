@@ -89,15 +89,22 @@ bool DiscoveryTypeVertex::IsSynthesizedRequestType() const {
 }
 
 void DiscoveryTypeVertex::AddNeedsTypeName(std::string type_name) {
-  needs_.insert(std::move(type_name));
+  needs_type_name_.insert(std::move(type_name));
 }
 
 void DiscoveryTypeVertex::AddNeededByTypeName(std::string type_name) {
-  needed_by_.insert(std::move(type_name));
+  needed_by_type_name_.insert(std::move(type_name));
+}
+
+void DiscoveryTypeVertex::AddNeedsType(DiscoveryTypeVertex* type) {
+  needs_type_.insert(type);
+}
+void DiscoveryTypeVertex::AddNeededByType(DiscoveryTypeVertex* type) {
+  needed_by_type_.insert(type);
 }
 
 void DiscoveryTypeVertex::AddNeededByResource(std::string resource_name) {
-  needed_by_resources_.insert(std::move(resource_name));
+  needed_by_resource_.insert(std::move(resource_name));
 }
 
 std::string DiscoveryTypeVertex::DetermineIntroducer(
@@ -469,9 +476,10 @@ StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
 }
 
 std::string DiscoveryTypeVertex::DebugString() const {
-  return absl::StrFormat("name: %s; needs: %s; needed_by: %s", name_,
-                         absl::StrJoin(needs_, ","),
-                         absl::StrJoin(needed_by_, ","));
+  return absl::StrFormat(
+      "name: %s; needs_type_name: %s; needed_by_type_name: %s", name_,
+      absl::StrJoin(needs_type_name_, ","),
+      absl::StrJoin(needed_by_type_name_, ","));
 }
 
 }  // namespace generator_internal

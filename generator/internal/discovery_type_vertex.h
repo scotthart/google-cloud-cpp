@@ -44,16 +44,30 @@ class DiscoveryTypeVertex {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
+  std::set<std::string> const& needs_type_name() const {
+    return needs_type_name_;
+  }
+  std::set<std::string> const& needed_by_type_name() const {
+    return needed_by_type_name_;
+  }
+  std::set<DiscoveryTypeVertex*> needs_type() { return needs_type_; }
+
+  std::set<DiscoveryTypeVertex*> needed_by_type() { return needed_by_type_; }
+  std::set<std::string> const& needed_by_resource() const {
+    return needed_by_resource_;
+  }
 
   bool IsSynthesizedRequestType() const;
 
   // Adds edge to this vertex for a type name that exists as a field in this
   // type.
   void AddNeedsTypeName(std::string type_name);
+  void AddNeedsType(DiscoveryTypeVertex* type);
 
   // Adds edge to this vertex for a type name that contains this type as a
   // field.
   void AddNeededByTypeName(std::string type_name);
+  void AddNeededByType(DiscoveryTypeVertex* type);
 
   // Adds the name of the resource that either directly or transitively depends
   // on this type.
@@ -76,7 +90,7 @@ class DiscoveryTypeVertex {
   };
 
   // Determines the type of the field and if a definition of that nested type
-  // needs to be defined in the message.
+  // needs_type_name to be defined in the message.
   // Returns a pair containing the name of the type and possibly the json
   // that defines the type.
   static StatusOr<TypeInfo> DetermineTypeAndSynthesis(
@@ -135,9 +149,11 @@ class DiscoveryTypeVertex {
   std::string package_name_;
   nlohmann::json json_;
   google::protobuf::DescriptorPool const* const descriptor_pool_;
-  std::set<std::string> needs_;
-  std::set<std::string> needed_by_;
-  std::set<std::string> needed_by_resources_;
+  std::set<std::string> needs_type_name_;
+  std::set<std::string> needed_by_type_name_;
+  std::set<DiscoveryTypeVertex*> needs_type_;
+  std::set<DiscoveryTypeVertex*> needed_by_type_;
+  std::set<std::string> needed_by_resource_;
 };
 
 }  // namespace generator_internal

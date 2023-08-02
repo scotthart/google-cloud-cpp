@@ -43,7 +43,7 @@ std::map<std::string, DiscoveryResource> ExtractResources(
 
 // Determines the name of the response type for each method and verifies it
 // exists in the collection of DiscoveryTypeVertex objects.
-StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
+StatusOr<DiscoveryTypeVertex*> DetermineAndVerifyResponseType(
     nlohmann::json const& method_json, DiscoveryResource& resource,
     std::map<std::string, DiscoveryTypeVertex>& types);
 
@@ -70,7 +70,7 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
 // non-request types.
 std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
-    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
