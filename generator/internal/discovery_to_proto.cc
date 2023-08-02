@@ -152,6 +152,10 @@ StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
           "Response name=%s not found in types", response_type_name));
     }
     response_type = &iter->second;
+#if NEED_RESOURCE_TYPE_TRACKING
+    response_type->second.AddNeededByResource(resource.name());
+    resource.AddResponseType(response_type->first, &response_type->second);
+#endif
   }
   return response_type;
 }
@@ -264,6 +268,9 @@ Status ProcessMethodRequestsAndResponses(
           return internal::InternalError(
               absl::StrCat("Unable to insert type ", resource_name, ".", id));
         }
+#if NEED_RESOURCE_TYPE_TRACKING
+        insert_result.first->second.AddNeededByResource(resource_name);
+#endif
         resource.second.AddRequestType(id, &insert_result.first->second);
       } else {
         resource.second.AddEmptyRequestType();
@@ -274,6 +281,49 @@ Status ProcessMethodRequestsAndResponses(
   return {};
 }
 
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  nlohmann::json fields;
+  for (auto& type : types) {
+    auto const& json = type.second.json();
+    if (json.contains("properties")) {
+      fields = json["properties"];
+    } else if (json.contains("additionalProperties")) {
+      fields = json["additionalProperties"];
+    }
+    for (auto const& p : fields) {
+      if (p.contains("$ref")) {
+        std::string dep = p["$ref"];
+        type.second.AddNeedsTypeName(dep);
+        //        auto& provider = types[dep];
+        auto iter = types.find(dep);
+        assert(iter != types.end());
+        auto& provider = iter->second;
+        provider.AddNeededByTypeName(type.first);
+      } else if (p.contains("type") && p["type"] == "array") {
+        auto const& items = p["items"];
+        auto const& dep = items.find("$ref");
+        if (dep != items.end()) {
+          std::string dep_name = *dep;
+          type.second.AddNeedsTypeName(*dep);
+          auto iter = types.find(dep_name);
+          assert(iter != types.end());
+          auto& provider = iter->second;
+          //          auto& provider = types[*dep];
+          provider.AddNeededByTypeName(type.first);
+        }
+      }
+    }
+  }
+}
+
+void ApplyResourceLabelsToTypes(std::map<std::string, DiscoveryResource>&,
+                                std::map<std::string, DiscoveryTypeVertex>&) {
+  // TODO(sdhart): Not yet implemented
+  // starting from each resource bfs needs edges for request and response types
+  // and add resource label to each type encountered
+}
+
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
@@ -281,6 +331,11 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
+    // Not sure if this is needed for dependency tracking or not.
+    //    std::vector<DiscoveryTypeVertex const*> types;
+    //    for (auto const& request_type : r.second.request_types()) {
+    //      types.push_back(request_type.second);
+    //    }
     DiscoveryFile f{
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
@@ -433,8 +488,19 @@ Status GenerateProtosFromDiscoveryDoc(
       ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
 
+#if NEED_RESOURCE_TYPE_TRACKING
+  EstablishTypeDependencies(*types);
+  ApplyResourceLabelsToTypes(resources, *types);
+#endif
+
+  // group types with equal resource label sets into "files"
   std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
       resources, *types, document_properties, output_path);
+
+  //  std::cerr << "num_files: " << files.size() << std::endl;
+  // Determine common files and add imports
+  // add import directives to "files" by using topological sort of types to
+  //     determine starting types and walking needed_by edges
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By

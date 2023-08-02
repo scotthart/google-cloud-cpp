@@ -88,6 +88,13 @@ Status GenerateProtosFromDiscoveryDoc(
     std::string const& googleapis_proto_path, std::string const& output_path,
     std::set<std::string> operation_services = {});
 
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
+void ApplyResourceLabelsToTypes(
+    std::map<std::string, DiscoveryResource>& resources,
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
