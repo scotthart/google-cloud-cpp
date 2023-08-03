@@ -561,6 +561,8 @@ TEST_F(HttpOptionUtilsTest, HasNoHttpAnnotation) {
       HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
 }
 
+TEST_F(HttpOptionUtilsTest, FormatRequestResource) {}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

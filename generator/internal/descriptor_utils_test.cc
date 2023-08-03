@@ -955,7 +955,11 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method8", "method_request_params",
             "\"namespace.name=\", request.namespace_().name()"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
+<<<<<<< Updated upstream
                              "request_resource", "request"),
+=======
+                             "request_resource", "request.namespace_()"),
+>>>>>>> Stashed changes
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
             "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),

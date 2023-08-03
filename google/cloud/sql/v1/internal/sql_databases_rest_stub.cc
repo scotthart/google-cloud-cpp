@@ -65,7 +65,11 @@ DefaultSqlDatabasesServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
+<<<<<<< Updated upstream
       *service_, rest_context, request,
+=======
+      *service_, rest_context, request.body(),
+>>>>>>> Stashed changes
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/databases"));
 }
@@ -86,7 +90,11 @@ DefaultSqlDatabasesServiceRestStub::Patch(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return rest_internal::Patch<google::cloud::sql::v1::Operation>(
+<<<<<<< Updated upstream
       *service_, rest_context, request,
+=======
+      *service_, rest_context, request.body(),
+>>>>>>> Stashed changes
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/databases/", request.database(), ""));
 }
@@ -96,7 +104,11 @@ DefaultSqlDatabasesServiceRestStub::Update(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlDatabasesUpdateRequest const& request) {
   return rest_internal::Put<google::cloud::sql::v1::Operation>(
+<<<<<<< Updated upstream
       *service_, rest_context, request,
+=======
+      *service_, rest_context, request.body(),
+>>>>>>> Stashed changes
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/databases/", request.database(), ""));
 }

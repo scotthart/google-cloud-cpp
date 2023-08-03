@@ -36,6 +36,11 @@ struct HttpExtensionInfo {
   std::string http_verb;
   std::string url_path;
   std::vector<std::pair<std::string, std::string>> field_substitutions;
+<<<<<<< Updated upstream
+=======
+  //  std::string request_field_name;
+  //  std::string url_substitution;
+>>>>>>> Stashed changes
   std::string body;
   std::string path_prefix;
   std::string path_suffix;
@@ -86,6 +91,20 @@ bool HasHttpRoutingHeader(google::protobuf::MethodDescriptor const& method);
  * supporting REST transport.
  */
 bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Determines the value of the "request_resource" value in method_vars.
+ *
+ * If the rpc has the google.api.http extension with the body field specified as
+ * not "*", that field is returned, else if the rpc request message has a field
+ * annotated with:
+ *  [json_name = __json_request_body] that field is returned. Otherwise, the
+ *  entire request is used.
+ */
+std::string FormatRequestResource(
+    google::protobuf::Descriptor const& request,
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
+        parsed_http_info);
 
 }  // namespace generator_internal
 }  // namespace cloud

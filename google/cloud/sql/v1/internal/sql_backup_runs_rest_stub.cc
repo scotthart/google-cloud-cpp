@@ -65,7 +65,11 @@ DefaultSqlBackupRunsServiceRestStub::Insert(
     google::cloud::rest_internal::RestContext& rest_context,
     google::cloud::sql::v1::SqlBackupRunsInsertRequest const& request) {
   return rest_internal::Post<google::cloud::sql::v1::Operation>(
+<<<<<<< Updated upstream
       *service_, rest_context, request,
+=======
+      *service_, rest_context, request.body(),
+>>>>>>> Stashed changes
       absl::StrCat("/v1/projects/", request.project(), "/instances/",
                    request.instance(), "/backupRuns"));
 }

@@ -180,13 +180,20 @@ void SetHttpGetQueryParameters(
     //   patch: "/v1/projects/{project}/instances/{instance}/databases"
     // In the first case 'parent' is expected to be found as a field in the
     // protobuf request message and is already included in the url. In the
+<<<<<<< Updated upstream
     // second case, both 'project' and 'instance' are expected as fields in
+=======
+    // second case, both 'project' and 'instance' are exepcted as fields in
+>>>>>>> Stashed changes
     // the request and are already present in the url. No need to duplicate
     // these fields as query parameters.
     void operator()(HttpExtensionInfo const& info) {
       FormatQueryParameterCode(info.http_verb, [&] {
         std::vector<std::string> param_field_names;
+<<<<<<< Updated upstream
         param_field_names.reserve(info.field_substitutions.size());
+=======
+>>>>>>> Stashed changes
         for (auto const& p : info.field_substitutions) {
           param_field_names.push_back(FormatFieldAccessorCall(method, p.first));
         }
@@ -293,8 +300,17 @@ ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
     std::pair<std::string, std::string> param = absl::StrSplit(
         url_pattern.substr(current, close - current), absl::ByChar('='));
     if (!param.first.empty() && param.second.empty()) {
+<<<<<<< Updated upstream
       info.field_substitutions.emplace_back(param.first, param.first);
     } else if (!param.first.empty() && !param.second.empty()) {
+=======
+      std::cerr << __func__ << ": emplace (" << param.first << ", "
+                << param.first << ")" << std::endl;
+      info.field_substitutions.emplace_back(param.first, param.first);
+    } else if (!param.first.empty() && !param.second.empty()) {
+      std::cerr << __func__ << ": emplace (" << param.first << ", "
+                << param.second << ")" << std::endl;
+>>>>>>> Stashed changes
       info.field_substitutions.emplace_back(param.first, param.second);
     }
     info.rest_path.emplace_back(
@@ -321,6 +337,42 @@ bool HasHttpAnnotation(MethodDescriptor const& method) {
   auto result = ParseHttpExtension(method);
   return absl::holds_alternative<HttpExtensionInfo>(result) ||
          absl::holds_alternative<HttpSimpleInfo>(result);
+}
+
+std::string FormatRequestResource(
+    google::protobuf::Descriptor const& request,
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo> const&
+        parsed_http_info) {
+  struct HttpInfoVisitor {
+    std::string operator()(HttpExtensionInfo const& info) { return info.body; }
+    std::string operator()(HttpSimpleInfo const& info) { return info.body; }
+    std::string operator()(absl::monostate) { return ""; }
+  };
+
+  std::string body_field_name =
+      absl::visit(HttpInfoVisitor{}, parsed_http_info);
+  if (body_field_name.empty()) return "request";
+
+  std::string field_name;
+  for (int i = 0; i != request.field_count(); ++i) {
+    auto const* field = request.field(i);
+    if (field->name() == body_field_name) {
+      field_name = FieldName(field);
+    }
+  }
+
+  if (field_name.empty()) {
+    for (int i = 0; i != request.field_count(); ++i) {
+      auto const* field = request.field(i);
+      if (field->has_json_name() &&
+          field->json_name() == "__json_request_body") {
+        field_name = FieldName(field);
+      }
+    }
+  }
+
+  if (field_name.empty()) return "request";
+  return absl::StrCat("request.", field_name, "()");
 }
 
 }  // namespace generator_internal
