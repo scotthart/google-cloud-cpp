@@ -64,7 +64,8 @@ Status ProcessMethodRequestsAndResponses(
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path);
+    std::string const& output_path,
+    std::map<std::string, DiscoveryFile> const& common_files);
 
 // Creates a DiscoveryFile object for each resource and each group of
 // non-request types.
@@ -87,6 +88,8 @@ Status GenerateProtosFromDiscoveryDoc(
     std::string const& protobuf_proto_path,
     std::string const& googleapis_proto_path, std::string const& output_path,
     std::set<std::string> operation_services = {});
+
+std::set<std::string> FindAllRefValues(nlohmann::json const& json);
 
 void EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types);

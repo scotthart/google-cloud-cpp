@@ -282,6 +282,74 @@ Status ProcessMethodRequestsAndResponses(
   return {};
 }
 
+bool IsDiscoveryArrayType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "array" &&
+         json.contains("items");
+}
+
+bool IsDiscoveryMapType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("additionalProperties");
+}
+
+bool IsDiscoveryNestedType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("properties");
+}
+
+template <typename T>
+void SetMerge(std::set<T>& lhs, std::set<T> const& rhs) {
+  lhs.insert(rhs.begin(), rhs.end());
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
+  //  std::cerr << json.dump() << std::endl;
+  std::set<std::string> ref_values;
+  nlohmann::json fields;
+  if (json.contains("properties")) {
+    //    std::cerr << "fields=properties" << std::endl;
+    fields = json["properties"];
+  } else if (json.contains("additionalProperties") || json.contains("items")) {
+    //    std::cerr << "fields=additionalProperties" << std::endl;
+    fields = json;
+    //  } else if (json.contains("items")) {
+    //    //    std::cerr << "fields=items" << std::endl;
+    //    fields = json;
+  } else {
+    return {};
+  }
+
+  for (auto const& f : fields) {
+    if (f.contains("$ref")) {
+      ref_values.insert(f["$ref"]);
+      //      std::cerr << "insert=" << f["$ref"] << std::endl;
+    } else if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
+               IsDiscoveryNestedType(f)) {
+      //      std::cerr << "recurse" << std::endl;
+      SetMerge(ref_values, FindAllRefValues(f));
+    }
+  }
+
+  return ref_values;
+}
+
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  for (auto& type : types) {
+    auto const& json = type.second.json();
+    auto ref_values = FindAllRefValues(json);
+    for (auto const& ref : ref_values) {
+      auto ref_iter = types.find(ref);
+      assert(ref_iter != types.end());
+      type.second.AddNeedsTypeName(ref_iter->first);
+      type.second.AddNeedsType(&ref_iter->second);
+      ref_iter->second.AddNeededByTypeName(type.first);
+      ref_iter->second.AddNeededByType(&type.second);
+    }
+  }
+}
+#if 0
 void EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types) {
   nlohmann::json fields;
@@ -338,19 +406,21 @@ void EstablishTypeDependencies(
     }
   }
 }
+#endif
 
+// NOLINTNEXTLINE(misc-no-recursion)
 void ApplyResourceLabelToType(std::string const& resource_name,
                               DiscoveryTypeVertex& type) {
   type.AddNeededByResource(resource_name);
   auto deps = type.needs_type();
-  for (auto dep : deps) {
+  for (auto* dep : deps) {
     ApplyResourceLabelToType(resource_name, *dep);
   }
 }
 
 void ApplyResourceLabelsToTypes(
     std::map<std::string, DiscoveryResource>& resources,
-    std::map<std::string, DiscoveryTypeVertex>& types) {
+    std::map<std::string, DiscoveryTypeVertex>&) {
   // TODO(sdhart): Not yet implemented
   // starting from each resource bfs needs_type_name edges for request and
   // response types and add resource label to each type encountered
@@ -367,7 +437,8 @@ void ApplyResourceLabelsToTypes(
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
-    std::string const& output_path) {
+    std::string const& output_path,
+    std::map<std::string, DiscoveryFile> const& common_files) {
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
@@ -397,6 +468,29 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
       f.AddImportPath("google/cloud/extended_operations.proto");
     }
 
+    for (auto const& request : r.second.request_types()) {
+      for (auto const& needs : request.second->needs_type()) {
+        std::string key = absl::StrJoin(needs->needed_by_resource(), "");
+        auto iter = common_files.find(key);
+        if (iter != common_files.end()) {
+          if (f.relative_proto_path() != iter->second.relative_proto_path()) {
+            f.AddImportPath(iter->second.relative_proto_path());
+          }
+        }
+      }
+    }
+
+    for (auto const& response : r.second.response_types()) {
+      std::string key =
+          absl::StrJoin(response.second->needed_by_resource(), "");
+      auto iter = common_files.find(key);
+      if (iter != common_files.end()) {
+        if (f.relative_proto_path() != iter->second.relative_proto_path()) {
+          f.AddImportPath(iter->second.relative_proto_path());
+        }
+      }
+    }
+
     files.push_back(std::move(f));
   }
   return files;
@@ -407,8 +501,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path) {
-  auto files =
-      CreateFilesFromResources(resources, document_properties, output_path);
+  std::vector<DiscoveryFile> files;
 
   // TODO(#11190): For the first phase of implementation, we create one proto
   // per resource and its request types. For the remainder of the types, we
@@ -428,7 +521,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
   //  std::endl;
   std::map<std::string, DiscoveryFile> common_files;
   int i = 0;
-  for (auto t : common_types) {
+  for (auto* t : common_types) {
     std::string key = absl::StrJoin(t->needed_by_resource(), "");
     //    std::cerr << __func__ << " key=" << key << std::endl;
 
@@ -456,10 +549,10 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     }
   }
 
-  for (auto const& f : common_files) {
-    std::cerr << __func__ << ": file=" << f.second.relative_proto_path()
-              << "; key=" << f.first << std::endl;
-  }
+//  for (auto const& f : common_files) {
+//    std::cerr << __func__ << ": file=" << f.second.relative_proto_path()
+//              << "; key=" << f.first << std::endl;
+//  }
 #if 0
   auto proto_path = absl::StrFormat("google/cloud/%s/%s/internal/common.proto",
                                     document_properties.product_name,
@@ -479,7 +572,7 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
       needs_types.insert(n.begin(), n.end());
     }
 
-    for (auto t : needs_types) {
+    for (auto* t : needs_types) {
       std::string key = absl::StrJoin(t->needed_by_resource(), "");
       auto needed_file = common_files[key];
       if (file.relative_proto_path() != needed_file.relative_proto_path()) {
@@ -504,30 +597,36 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
       needs_types.insert(n.begin(), n.end());
     }
 
-    std::cerr << __func__ << ": " << file.relative_proto_path()
-              << "; type_names=" << type_names << "; needs_types="
-              << absl::StrJoin(needs_types, ",",
-                               [](std::string* out, DiscoveryTypeVertex* t) {
-                                 out->append(t->name());
-                               })
-              << std::endl;
+    //    std::cerr << __func__ << ": " << file.relative_proto_path()
+    //              << "; type_names=" << type_names << "; needs_types="
+    //              << absl::StrJoin(needs_types, ",",
+    //                               [](std::string* out, DiscoveryTypeVertex*
+    //                               t) {
+    //                                 out->append(t->name());
+    //                               })
+    //              << std::endl;
 
-    for (auto t : needs_types) {
+    for (auto* t : needs_types) {
       std::string key = absl::StrJoin(t->needed_by_resource(), "");
       auto iter = common_files.find(key);
       assert(iter != common_files.end());
       auto needed_file = iter->second;
-      std::cerr << __func__ << ": needed_type=" << t->name() << "; key=" << key
-                << "; needed_file=" << needed_file.relative_proto_path()
-                << std::endl;
+      //      std::cerr << __func__ << ": needed_type=" << t->name() << "; key="
+      //      << key
+      //                << "; needed_file=" << needed_file.relative_proto_path()
+      //                << std::endl;
       if (file.relative_proto_path() != needed_file.relative_proto_path()) {
         file.AddImportPath(needed_file.relative_proto_path());
       }
-      std::cerr << __func__ << ": file=" << file.relative_proto_path()
-                << "; AddImportPath=" << needed_file.relative_proto_path()
-                << std::endl;
+      //      std::cerr << __func__ << ": file=" << file.relative_proto_path()
+      //                << "; AddImportPath=" <<
+      //                needed_file.relative_proto_path()
+      //                << std::endl;
     }
   }
+
+  files = CreateFilesFromResources(resources, document_properties, output_path,
+                                   common_files);
 
   std::cerr << __func__ << " combine resource files and common files"
             << std::endl;
@@ -636,7 +735,7 @@ Status GenerateProtosFromDiscoveryDoc(
   if (!method_status.ok()) return method_status;
 
   EstablishTypeDependencies(*types);
-  EstablishTypeDependencies(*types);
+  //  EstablishTypeDependencies(*types);
   for (auto const& t : *types) {
     std::cerr << t.first << " needs_type_name: "
               << absl::StrJoin(t.second.needs_type_name(), ",") << std::endl;
