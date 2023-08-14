@@ -106,8 +106,6 @@ filegroup(
     srcs = glob([d + "*.proto" for d in proto_dirs]),
 )
 
-
-
 proto_library(
     name = "google_cloud_cpp_compute_proto",
     srcs = [":protos"],

@@ -61,6 +61,41 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   return rest::ReadAll(std::move(payload));
 }
 
+bool IsDiscoveryArrayType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "array" &&
+         json.contains("items");
+}
+
+bool IsDiscoveryMapType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("additionalProperties");
+}
+
+bool IsDiscoveryNestedType(nlohmann::json const& json) {
+  return json.contains("type") && json["type"] == "object" &&
+         json.contains("properties");
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
+                                      DiscoveryTypeVertex& type) {
+  type.AddNeededByResource(resource_name);
+  auto deps = type.needs_type();
+  for (auto* dep : deps) {
+    ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+  }
+}
+
+void AddImportToFile(std::map<std::string, DiscoveryFile> const& common_files,
+                     DiscoveryTypeVertex const& type, DiscoveryFile& file) {
+  auto iter = common_files.find(absl::StrJoin(type.needed_by_resource(), ""));
+  if (iter != common_files.end()) {
+    if (file.relative_proto_path() != iter->second.relative_proto_path()) {
+      file.AddImportPath(iter->second.relative_proto_path());
+    }
+  }
+}
+
 }  // namespace
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
@@ -250,8 +285,7 @@ Status ProcessMethodRequestsAndResponses(
       std::string response_type_name;
       if (*response_type != nullptr) {
         response_type_name = (*response_type)->name();
-        DiscoveryTypeVertex* node = *response_type;
-        resource.second.AddResponseType(response_type_name, node);
+        resource.second.AddResponseType(response_type_name, *response_type);
       } else {
         resource.second.AddEmptyResponseType();
       }
@@ -282,154 +316,59 @@ Status ProcessMethodRequestsAndResponses(
   return {};
 }
 
-bool IsDiscoveryArrayType(nlohmann::json const& json) {
-  return json.contains("type") && json["type"] == "array" &&
-         json.contains("items");
-}
-
-bool IsDiscoveryMapType(nlohmann::json const& json) {
-  return json.contains("type") && json["type"] == "object" &&
-         json.contains("additionalProperties");
-}
-
-bool IsDiscoveryNestedType(nlohmann::json const& json) {
-  return json.contains("type") && json["type"] == "object" &&
-         json.contains("properties");
-}
-
-template <typename T>
-void SetMerge(std::set<T>& lhs, std::set<T> const& rhs) {
-  lhs.insert(rhs.begin(), rhs.end());
-}
-
 // NOLINTNEXTLINE(misc-no-recursion)
 std::set<std::string> FindAllRefValues(nlohmann::json const& json) {
-  //  std::cerr << json.dump() << std::endl;
   std::set<std::string> ref_values;
   nlohmann::json fields;
   if (json.contains("properties")) {
-    //    std::cerr << "fields=properties" << std::endl;
     fields = json["properties"];
   } else if (json.contains("additionalProperties") || json.contains("items")) {
-    //    std::cerr << "fields=additionalProperties" << std::endl;
     fields = json;
-    //  } else if (json.contains("items")) {
-    //    //    std::cerr << "fields=items" << std::endl;
-    //    fields = json;
-  } else {
-    return {};
   }
 
   for (auto const& f : fields) {
     if (f.contains("$ref")) {
       ref_values.insert(f["$ref"]);
-      //      std::cerr << "insert=" << f["$ref"] << std::endl;
     } else if (IsDiscoveryArrayType(f) || IsDiscoveryMapType(f) ||
                IsDiscoveryNestedType(f)) {
-      //      std::cerr << "recurse" << std::endl;
-      SetMerge(ref_values, FindAllRefValues(f));
+      auto new_ref_values = FindAllRefValues(f);
+      ref_values.insert(new_ref_values.begin(), new_ref_values.end());
     }
   }
 
   return ref_values;
 }
 
-void EstablishTypeDependencies(
+Status EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types) {
   for (auto& type : types) {
     auto const& json = type.second.json();
     auto ref_values = FindAllRefValues(json);
     for (auto const& ref : ref_values) {
       auto ref_iter = types.find(ref);
-      assert(ref_iter != types.end());
-      type.second.AddNeedsTypeName(ref_iter->first);
+      if (ref_iter == types.end()) {
+        return internal::InvalidArgumentError(
+            absl::StrCat("Unknown depended upon type: ", ref),
+            GCP_ERROR_INFO()
+                .WithMetadata("dependent type", type.first)
+                .WithMetadata("depended upon type", ref));
+      }
       type.second.AddNeedsType(&ref_iter->second);
-      ref_iter->second.AddNeededByTypeName(type.first);
       ref_iter->second.AddNeededByType(&type.second);
     }
   }
-}
-#if 0
-void EstablishTypeDependencies(
-    std::map<std::string, DiscoveryTypeVertex>& types) {
-  nlohmann::json fields;
-  for (auto& type : types) {
-    auto const& json = type.second.json();
-    if (json.contains("properties")) {
-      fields = json["properties"];
-    } else if (json.contains("additionalProperties")) {
-      fields = json["additionalProperties"];
-    }
-    for (auto const& p : fields) {
-      if (p.contains("$ref")) {
-        std::string dep = p["$ref"];
-        type.second.AddNeedsTypeName(dep);
-        auto dep_iter = types.find(dep);
-        assert(dep_iter != types.end());
-        type.second.AddNeedsType(&dep_iter->second);
-        //        auto& provider = types[dep];
-        auto iter = types.find(dep);
-        assert(iter != types.end());
-        auto& provider = iter->second;
-        provider.AddNeededByTypeName(type.first);
-        provider.AddNeededByType(&type.second);
-      } else if (p.contains("type") && p["type"] == "array") {
-        auto const& items = p["items"];
-        auto const& dep = items.find("$ref");
-        if (dep != items.end()) {
-          std::string dep_name = *dep;
-          type.second.AddNeedsTypeName(dep_name);
-          auto dep_iter = types.find(dep_name);
-          assert(dep_iter != types.end());
-          type.second.AddNeedsType(&dep_iter->second);
-          auto iter = types.find(dep_name);
-          assert(iter != types.end());
-          auto& provider = iter->second;
-          //          auto& provider = types[*dep];
-          provider.AddNeededByTypeName(type.first);
-          provider.AddNeededByType(&type.second);
-        }
-      } else if (p.contains("type") && p["type"] == "object" &&
-                 p.contains("additionalProperties")) {
-        // this is a map field
-        if (p["additionalProperties"].contains("$ref")) {
-          std::string dep_name = p["additionalProperties"]["$ref"];
-          type.second.AddNeedsTypeName(dep_name);
-          auto dep_iter = types.find(dep_name);
-          assert(dep_iter != types.end());
-          type.second.AddNeedsType(&dep_iter->second);
-          auto& provider = dep_iter->second;
-          provider.AddNeededByTypeName(type.first);
-          provider.AddNeededByType(&type.second);
-        }
-      }
-    }
-  }
-}
-#endif
 
-// NOLINTNEXTLINE(misc-no-recursion)
-void ApplyResourceLabelToType(std::string const& resource_name,
-                              DiscoveryTypeVertex& type) {
-  type.AddNeededByResource(resource_name);
-  auto deps = type.needs_type();
-  for (auto* dep : deps) {
-    ApplyResourceLabelToType(resource_name, *dep);
-  }
+  return {};
 }
 
 void ApplyResourceLabelsToTypes(
-    std::map<std::string, DiscoveryResource>& resources,
-    std::map<std::string, DiscoveryTypeVertex>&) {
-  // TODO(sdhart): Not yet implemented
-  // starting from each resource bfs needs_type_name edges for request and
-  // response types and add resource label to each type encountered
+    std::map<std::string, DiscoveryResource>& resources) {
   for (auto& resource : resources) {
-    for (auto& request_type : resource.second.mutable_request_types()) {
-      ApplyResourceLabelToType(resource.first, *request_type.second);
+    for (auto const& request_type : resource.second.request_types()) {
+      ApplyResourceLabelsToTypesHelper(resource.first, *request_type.second);
     }
-    for (auto& response_type : resource.second.mutable_response_types()) {
-      ApplyResourceLabelToType(resource.first, *response_type.second);
+    for (auto const& response_type : resource.second.response_types()) {
+      ApplyResourceLabelsToTypesHelper(resource.first, *response_type.second);
     }
   }
 }
@@ -442,25 +381,17 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
-    // Not sure if this is needed for dependency tracking or not.
-    //    std::vector<DiscoveryTypeVertex const*> types;
-    //    for (auto const& request_type : r.second.request_types()) {
-    //      types.push_back(request_type.second);
-    //    }
-    DiscoveryFile f{
-        &r.second,
-        r.second.FormatFilePath(document_properties.product_name,
-                                document_properties.version, output_path),
-        r.second.FormatFilePath(document_properties.product_name,
-                                document_properties.version, {}),
-        r.second.package_name(), r.second.GetRequestTypesList()};
-    f.AddImportPath("google/api/annotations.proto")
-        .AddImportPath("google/api/client.proto")
-        .AddImportPath("google/api/field_behavior.proto");
-    //        .AddImportPath(
-    //            "google/cloud/$product_name$/$version$/"
-    //            "internal/common.proto");
-
+    auto f =
+        DiscoveryFile{
+            &r.second,
+            r.second.FormatFilePath(document_properties.product_name,
+                                    document_properties.version, output_path),
+            r.second.FormatFilePath(document_properties.product_name,
+                                    document_properties.version, {}),
+            r.second.package_name(), r.second.GetRequestTypesList()}
+            .AddImportPath("google/api/annotations.proto")
+            .AddImportPath("google/api/client.proto")
+            .AddImportPath("google/api/field_behavior.proto");
     if (r.second.RequiresEmptyImport()) {
       f.AddImportPath("google/protobuf/empty.proto");
     }
@@ -470,172 +401,80 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
 
     for (auto const& request : r.second.request_types()) {
       for (auto const& needs : request.second->needs_type()) {
-        std::string key = absl::StrJoin(needs->needed_by_resource(), "");
-        auto iter = common_files.find(key);
-        if (iter != common_files.end()) {
-          if (f.relative_proto_path() != iter->second.relative_proto_path()) {
-            f.AddImportPath(iter->second.relative_proto_path());
-          }
-        }
+        AddImportToFile(common_files, *needs, f);
       }
     }
-
     for (auto const& response : r.second.response_types()) {
-      std::string key =
-          absl::StrJoin(response.second->needed_by_resource(), "");
-      auto iter = common_files.find(key);
-      if (iter != common_files.end()) {
-        if (f.relative_proto_path() != iter->second.relative_proto_path()) {
-          f.AddImportPath(iter->second.relative_proto_path());
-        }
-      }
+      AddImportToFile(common_files, *response.second, f);
     }
-
     files.push_back(std::move(f));
   }
   return files;
 }
 
-std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
+StatusOr<std::vector<DiscoveryFile>> AssignResourcesAndTypesToFiles(
     std::map<std::string, DiscoveryResource> const& resources,
     std::map<std::string, DiscoveryTypeVertex>& types,
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path) {
-  std::vector<DiscoveryFile> files;
-
-  // TODO(#11190): For the first phase of implementation, we create one proto
-  // per resource and its request types. For the remainder of the types, we
-  // dump them all into one internal/common.proto file. This should be reworked
-  // to split the common types into multiple files and inject the corresponding
-  // import statements where needed.
-  std::vector<DiscoveryTypeVertex*> common_types;
-  for (auto& t : types) {
-    if (!t.second.IsSynthesizedRequestType()) {
-      //      std::cerr << __func__ << " t.second.name()=" << t.second.name()
-      //                << std::endl;
-      common_types.push_back(&t.second);
-    }
-  }
-
-  //  std::cerr << __func__ << " group common_types into common_files" <<
-  //  std::endl;
-  std::map<std::string, DiscoveryFile> common_files;
+  std::map<std::string, DiscoveryFile> common_files_by_resource;
   int i = 0;
-  for (auto* t : common_types) {
-    std::string key = absl::StrJoin(t->needed_by_resource(), "");
-    //    std::cerr << __func__ << " key=" << key << std::endl;
-
-    auto iter = common_files.find(key);
-    if (iter != common_files.end()) {
-      //      std::cerr << __func__ << " add type to existing file" <<
-      //      std::endl;
-      iter->second.AddType(t);
-    } else {
-      //      std::cerr << __func__ << " create new file and add type" <<
-      //      std::endl;
-      auto proto_path = absl::StrFormat(
-          "google/cloud/%s/%s/internal/common_file_%d.proto",
-          document_properties.product_name, document_properties.version, i);
-      i++;
-      auto emplace_iter = common_files.emplace(
-          key,
-          DiscoveryFile(nullptr, absl::StrCat(output_path, "/", proto_path),
-                        proto_path,
-                        absl::StrFormat(kCommonPackageNameFormat,
-                                        document_properties.product_name,
-                                        document_properties.version),
-                        {}));
-      emplace_iter.first->second.AddType(t);
-    }
-  }
-
-//  for (auto const& f : common_files) {
-//    std::cerr << __func__ << ": file=" << f.second.relative_proto_path()
-//              << "; key=" << f.first << std::endl;
-//  }
-#if 0
-  auto proto_path = absl::StrFormat("google/cloud/%s/%s/internal/common.proto",
-                                    document_properties.product_name,
-                                    document_properties.version);
-  files.emplace_back(nullptr, absl::StrCat(output_path, "/", proto_path),
-                     proto_path,
-                     absl::StrFormat(kCommonPackageNameFormat,
-                                     document_properties.product_name,
-                                     document_properties.version),
-                     std::move(common_types));
-#endif
-
-  auto foo = [&](DiscoveryFile& file) {
-    std::set<DiscoveryTypeVertex*> needs_types;
-    for (auto* type : file.types()) {
-      auto n = type->needs_type();
-      needs_types.insert(n.begin(), n.end());
-    }
-
-    for (auto* t : needs_types) {
-      std::string key = absl::StrJoin(t->needed_by_resource(), "");
-      auto needed_file = common_files[key];
-      if (file.relative_proto_path() != needed_file.relative_proto_path()) {
-        file.AddImportPath(needed_file.relative_proto_path());
+  for (auto& kv : types) {
+    if (!kv.second.IsSynthesizedRequestType()) {
+      auto* type = &kv.second;
+      std::string resource_key = absl::StrJoin(type->needed_by_resource(), "");
+      auto iter = common_files_by_resource.find(resource_key);
+      if (iter != common_files_by_resource.end()) {
+        iter->second.AddType(type);
+      } else {
+        auto relative_proto_path = absl::StrFormat(
+            "google/cloud/%s/%s/internal/common_file_%03d.proto",
+            document_properties.product_name, document_properties.version, i++);
+        common_files_by_resource.emplace(
+            resource_key,
+            DiscoveryFile(nullptr,
+                          absl::StrCat(output_path, "/", relative_proto_path),
+                          relative_proto_path,
+                          absl::StrFormat(kCommonPackageNameFormat,
+                                          document_properties.product_name,
+                                          document_properties.version),
+                          {})
+                .AddType(type));
       }
     }
-  };
-
-  std::cerr << __func__ << " add import paths for resource files" << std::endl;
-  for (auto& file : files) {
-    foo(file);
   }
 
-  std::cerr << __func__ << " add import paths for common files" << std::endl;
-  for (auto& p : common_files) {
-    auto& file = p.second;
-    std::set<DiscoveryTypeVertex*> needs_types;
-    std::string type_names;
+  for (auto& kv : common_files_by_resource) {
+    auto& file = kv.second;
     for (auto* type : file.types()) {
-      absl::StrAppend(&type_names, ",", type->name());
-      auto n = type->needs_type();
-      needs_types.insert(n.begin(), n.end());
-    }
-
-    //    std::cerr << __func__ << ": " << file.relative_proto_path()
-    //              << "; type_names=" << type_names << "; needs_types="
-    //              << absl::StrJoin(needs_types, ",",
-    //                               [](std::string* out, DiscoveryTypeVertex*
-    //                               t) {
-    //                                 out->append(t->name());
-    //                               })
-    //              << std::endl;
-
-    for (auto* t : needs_types) {
-      std::string key = absl::StrJoin(t->needed_by_resource(), "");
-      auto iter = common_files.find(key);
-      assert(iter != common_files.end());
-      auto needed_file = iter->second;
-      //      std::cerr << __func__ << ": needed_type=" << t->name() << "; key="
-      //      << key
-      //                << "; needed_file=" << needed_file.relative_proto_path()
-      //                << std::endl;
-      if (file.relative_proto_path() != needed_file.relative_proto_path()) {
-        file.AddImportPath(needed_file.relative_proto_path());
+      for (auto* needed_type : type->needs_type()) {
+        std::string resource_key =
+            absl::StrJoin(needed_type->needed_by_resource(), "");
+        auto iter = common_files_by_resource.find(resource_key);
+        if (iter == common_files_by_resource.end()) {
+          return internal::InvalidArgumentError(
+              absl::StrCat("Unable to find resource_key: ", resource_key),
+              GCP_ERROR_INFO()
+                  .WithMetadata("resource_key", resource_key)
+                  .WithMetadata("needed_type", needed_type->name())
+                  .WithMetadata("type", type->name())
+                  .WithMetadata("proto_file", file.relative_proto_path()));
+        }
+        auto needed_file_relative_proto_path =
+            iter->second.relative_proto_path();
+        if (file.relative_proto_path() != needed_file_relative_proto_path) {
+          file.AddImportPath(std::move(needed_file_relative_proto_path));
+        }
       }
-      //      std::cerr << __func__ << ": file=" << file.relative_proto_path()
-      //                << "; AddImportPath=" <<
-      //                needed_file.relative_proto_path()
-      //                << std::endl;
     }
   }
 
-  files = CreateFilesFromResources(resources, document_properties, output_path,
-                                   common_files);
+  auto files = CreateFilesFromResources(resources, document_properties,
+                                        output_path, common_files_by_resource);
 
-  std::cerr << __func__ << " combine resource files and common files"
-            << std::endl;
-  //  for (auto& f : common_files) {
-  //    files.push_back(std::move(f.second));
-  //  }
-
-  std::transform(common_files.begin(), common_files.end(),
-                 std::back_inserter(files), [](auto p) { return p.second; });
+  std::transform(common_files_by_resource.begin(),
+                 common_files_by_resource.end(), std::back_inserter(files),
+                 [](auto p) { return p.second; });
 
   return files;
 }
@@ -735,16 +574,16 @@ Status GenerateProtosFromDiscoveryDoc(
   if (!method_status.ok()) return method_status;
 
   EstablishTypeDependencies(*types);
-  //  EstablishTypeDependencies(*types);
-  for (auto const& t : *types) {
-    std::cerr << t.first << " needs_type_name: "
-              << absl::StrJoin(t.second.needs_type_name(), ",") << std::endl;
-    std::cerr << t.first << " needed_by_type_name: "
-              << absl::StrJoin(t.second.needed_by_type_name(), ",")
-              << std::endl;
-  }
+  //  for (auto const& t : *types) {
+  //    std::cerr << t.first << " needs_type_name: "
+  //              << absl::StrJoin(t.second.needs_type_name(), ",") <<
+  //              std::endl;
+  //    std::cerr << t.first << " needed_by_type_name: "
+  //              << absl::StrJoin(t.second.needed_by_type_name(), ",")
+  //              << std::endl;
+  //  }
 
-  ApplyResourceLabelsToTypes(resources, *types);
+  ApplyResourceLabelsToTypes(resources);
 
   for (auto const& t : *types) {
     std::cerr << t.first << " needed_by_resource: "
@@ -752,13 +591,11 @@ Status GenerateProtosFromDiscoveryDoc(
   }
 
   // group types with equal resource label sets into "files"
-  std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
-      resources, *types, document_properties, output_path);
+  auto files = AssignResourcesAndTypesToFiles(resources, *types,
+                                              document_properties, output_path);
+  if (!files) return std::move(files.status());
 
   //  std::cerr << "num_files: " << files.size() << std::endl;
-  // Determine common files and add imports
-  // add import directives to "files" by using topological sort of types to
-  //     determine starting types and walking needed_by_type_name edges
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By
@@ -767,15 +604,15 @@ Status GenerateProtosFromDiscoveryDoc(
   // this mutation of the DescriptorPool before we begin the threaded write
   // process. Additionally, populating the DescriptorPool allows us to snapshot
   // the existing proto files before we overwrite them in place.
-  for (auto const& f : files) {
+  for (auto const& f : *files) {
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
 
   std::cerr << __func__ << " write proto files" << std::endl;
 
   std::vector<std::future<google::cloud::Status>> tasks;
-  tasks.reserve(files.size());
-  for (auto f : files) {
+  tasks.reserve(files->size());
+  for (auto f : *files) {
     tasks.push_back(std::async(
         std::launch::async,
         [](DiscoveryFile const& f,

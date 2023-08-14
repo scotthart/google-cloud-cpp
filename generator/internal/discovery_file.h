@@ -45,7 +45,8 @@ class DiscoveryFile {
   std::string resource_name() const {
     return (resource_ ? resource_->name() : "");
   }
-  std::vector<DiscoveryTypeVertex*> types() const { return types_; }
+  std::vector<DiscoveryTypeVertex*> const& types() const { return types_; }
+  std::set<std::string> const& import_paths() const { return import_paths_; }
 
 #ifdef NOT_CURRENTLY_NEEDED
   std::set<std::string> const& resource_labels() const {
@@ -62,7 +63,10 @@ class DiscoveryFile {
   }
 #endif
 
-  void AddType(DiscoveryTypeVertex* type) { types_.push_back(type); }
+  DiscoveryFile& AddType(DiscoveryTypeVertex* type) {
+    types_.push_back(type);
+    return *this;
+  }
 
   DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));

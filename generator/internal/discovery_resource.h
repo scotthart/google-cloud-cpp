@@ -40,13 +40,6 @@ class DiscoveryResource {
     return response_types_;
   }
 
-  std::map<std::string, DiscoveryTypeVertex*>& mutable_request_types() {
-    return request_types_;
-  }
-  std::map<std::string, DiscoveryTypeVertex*>& mutable_response_types() {
-    return response_types_;
-  }
-
   bool RequiresEmptyImport() const { return has_empty_request_or_response_; }
   bool RequiresLROImport() const {
     return response_types_.find("Operation") != response_types_.end();
