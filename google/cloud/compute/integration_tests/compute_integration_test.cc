@@ -175,41 +175,81 @@ TEST_F(ComputeIntegrationTest, VerifyUpdateSendsUpdateMaskParameter) {
 
 TEST_F(ComputeIntegrationTest, VerifyPatchResourceFieldNameFormat) {
   namespace instances = ::google::cloud::compute_instances_v1;
+  namespace disks = ::google::cloud::compute_disks_v1;
   auto client =
       instances::InstancesClient(instances::MakeInstancesConnectionRest());
-  std::string const instance_name = "test-e2-micro-instance";
+  auto disk_client = disks::DisksClient(disks::MakeDisksConnectionRest());
+
+  auto existing_instance = client.GetInstance(project_id_, zone_, "test-e2-micro-instance");
+  ASSERT_STATUS_OK(existing_instance);
+  *existing_instance;
+
+  google::cloud::cpp::compute::v1::Disk disk;
+  disk.set_name(CreateRandomName("int-test-disk-"));
+  disk.set_size_gb("10");
+  disk.set_architecture("x86_64");
+  disk.set_source_image("projects/debian-cloud/global/images/family/debian-11");
+  (*disk.mutable_labels())["test"] = "test";
+  auto disk_result = disk_client.InsertDisk(project_id_, zone_, disk).get();
+  ASSERT_THAT(disk_result, testing_util::IsOk());
+
+  google::cloud::cpp::compute::v1::AttachedDisk attached_disk;
+  attached_disk.set_auto_delete(true);
+  attached_disk.set_disk_size_gb("10");
+  attached_disk.set_boot(true);
+  attached_disk.set_source(disk_result->target_link());
+
+
+  google::cloud::cpp::compute::v1::Instance test_instance;
+  test_instance.set_name(CreateRandomName("test-e2-micro-instance-"));
+  test_instance.set_machine_type(existing_instance->machine_type());
+  *test_instance.add_disks() = attached_disk;
+  (*test_instance.mutable_labels())["test"] = "test";
+  *test_instance.add_network_interfaces() = existing_instance->network_interfaces(0);
+  test_instance.mutable_network_interfaces(0)->clear_network_ip();
+
   google::cloud::cpp::compute::v1::ShieldedInstanceConfig
       shielded_instance_config;
-
   shielded_instance_config.set_enable_integrity_monitoring(false);
   shielded_instance_config.set_enable_vtpm(false);
   shielded_instance_config.set_enable_secure_boot(true);
-  auto updated_instance = client.UpdateShieldedInstanceConfig(
-      project_id_, zone_, instance_name, shielded_instance_config);
-  ASSERT_STATUS_OK(updated_instance.get());
+  *test_instance.mutable_shielded_instance_config() = shielded_instance_config;
 
-  auto get_instance = client.GetInstance(project_id_, zone_, instance_name);
-  ASSERT_THAT(get_instance, IsOk());
-  EXPECT_THAT(get_instance->name(), Eq(instance_name));
+  auto create_instance = client.InsertInstance(project_id_, zone_, test_instance)
+       .then([client, project = project_id_, zone = zone_, instance = test_instance](auto f)  mutable
+                                       -> StatusOr<google::cloud::cpp::compute::v1::Instance>{
+         auto result = f.get();
+         if (!result.ok()) return std::move(result).status();
+         return client.GetInstance(project, zone, instance.name());
+       }).get();
+  ASSERT_STATUS_OK(create_instance);
+  EXPECT_THAT(create_instance->name(), Eq(test_instance.name()));
   EXPECT_FALSE(
-      get_instance->shielded_instance_config().enable_integrity_monitoring());
-  EXPECT_FALSE(get_instance->shielded_instance_config().enable_vtpm());
-  EXPECT_TRUE(get_instance->shielded_instance_config().enable_secure_boot());
+      create_instance->shielded_instance_config().enable_integrity_monitoring());
+  EXPECT_FALSE(create_instance->shielded_instance_config().enable_vtpm());
+  EXPECT_TRUE(create_instance->shielded_instance_config().enable_secure_boot());
+
+  auto stop_instance = client.Stop(project_id_, zone_, create_instance->name()).get();
+
+  ASSERT_STATUS_OK(stop_instance);
 
   shielded_instance_config.set_enable_integrity_monitoring(true);
   shielded_instance_config.set_enable_vtpm(true);
   shielded_instance_config.set_enable_secure_boot(false);
-  updated_instance = client.UpdateShieldedInstanceConfig(
-      project_id_, zone_, instance_name, shielded_instance_config);
+  auto updated_instance = client.UpdateShieldedInstanceConfig(
+      project_id_, zone_, create_instance->name(), shielded_instance_config);
   ASSERT_STATUS_OK(updated_instance.get());
 
-  get_instance = client.GetInstance(project_id_, zone_, instance_name);
+  auto get_instance = client.GetInstance(project_id_, zone_, create_instance->name());
   ASSERT_THAT(get_instance, IsOk());
-  EXPECT_THAT(get_instance->name(), Eq(instance_name));
+  EXPECT_THAT(get_instance->name(), Eq(test_instance.name()));
   EXPECT_TRUE(
       get_instance->shielded_instance_config().enable_integrity_monitoring());
   EXPECT_TRUE(get_instance->shielded_instance_config().enable_vtpm());
   EXPECT_FALSE(get_instance->shielded_instance_config().enable_secure_boot());
+
+  auto delete_instance = client.DeleteInstance(project_id_, zone_, test_instance.name()).get();
+  EXPECT_STATUS_OK(delete_instance);
 }
 
 TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
