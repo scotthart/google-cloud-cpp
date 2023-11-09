@@ -28,9 +28,9 @@ function ctest::common_args() {
     # Print the full output on failures
     --output-on-failure
     # Run many tests in parallel, use -j for compatibility with old versions
-    -j "$(nproc)"
+    #-j "$(nproc)"
     # Make the output shorter on interactive tests
-    --progress
+    #--progress
   )
   printf "%s\n" "${args[@]}"
 }

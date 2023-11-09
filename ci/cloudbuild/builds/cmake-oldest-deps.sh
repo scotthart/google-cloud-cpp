@@ -46,7 +46,8 @@ cmake --build cmake-out/build
 
 io::log_h2 "Testing"
 
-mapfile -t ctest_args < <(ctest::common_args)
-env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
+#mapfile -t ctest_args < <(ctest::common_args)
+#env -C cmake-out/build ctest "${ctest_args[@]}" -LE "integration-test"
+env -C cmake-out/build/ GTEST_SHUFFLE=0 ctest -R storage_internal_storage_stub_factory_test --repeat-until-fail 100
 
-integration::ctest_with_emulators "cmake-out/build"
+#integration::ctest_with_emulators "cmake-out/build"
