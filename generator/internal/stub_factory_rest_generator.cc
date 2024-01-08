@@ -72,19 +72,21 @@ Status StubFactoryRestGenerator::GenerateCc() {
 )""");
 
   // includes
-  CcLocalIncludes(
-      {vars("stub_factory_rest_header_path"), vars("logging_rest_header_path"),
-       vars("metadata_rest_header_path"), vars("stub_rest_header_path"),
-       "google/cloud/common_options.h", "google/cloud/credentials.h",
-       "google/cloud/internal/credentials_impl.h",
-       "google/cloud/internal/getenv.h",
-       "google/cloud/internal/populate_common_options.h",
-       "google/cloud/internal/rest_options.h",
-       "google/cloud/internal/service_endpoint.h",
-       "google/cloud/rest_options.h",
-       "google/cloud/internal/absl_str_cat_quiet.h",
-       "google/cloud/internal/algorithm.h", "google/cloud/options.h",
-       "google/cloud/log.h", "absl/strings/match.h"});
+  CcLocalIncludes({
+      vars("stub_factory_rest_header_path"),
+      vars("logging_rest_header_path"),
+      vars("metadata_rest_header_path"),
+      vars("stub_rest_header_path"),
+      "google/cloud/common_options.h",
+      "google/cloud/internal/getenv.h",
+      "google/cloud/internal/populate_common_options.h",
+      "google/cloud/internal/rest_options.h",
+      "google/cloud/internal/rest_stub_factory_helpers.h",
+      "google/cloud/rest_options.h",
+      "google/cloud/internal/algorithm.h",
+      "google/cloud/options.h",
+      "google/cloud/log.h",
+  });
   CcSystemIncludes({"memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -94,50 +96,10 @@ Status StubFactoryRestGenerator::GenerateCc() {
   CcPrint(R"""(
 std::shared_ptr<$stub_rest_class_name$>
 CreateDefault$stub_rest_class_name$(Options& options) {
-  Options stub_creation_opts = options;
-  if (!options.has<UnifiedCredentialsOption>()) {
-    stub_creation_opts.set<UnifiedCredentialsOption>(
-        MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
-  }
-  auto lro_endpoint = internal::DetermineServiceEndpoint(
-      {},
-      internal::FetchOption<rest_internal::LongrunningEndpointOption>(options),
-      "https://longrunning.googleapis.com",
-      options);
-
-  auto service_endpoint = internal::DetermineServiceEndpoint(
+  Options stub_creation_opts = rest_internal::DetermineStubCreationOptions(
       internal::GetEnv("$service_endpoint_env_var$"),
-      internal::FetchOption<EndpointOption>(options), "$service_endpoint$",
+      "$service_endpoint$",
       options);
-
-  if (!lro_endpoint.ok() || !service_endpoint.ok()) {
-    if (!service_endpoint.ok()) {
-      options.unset<EndpointOption>();
-      stub_creation_opts.set<UnifiedCredentialsOption>(
-          internal::MakeErrorCredentials(std::move(service_endpoint).status()));
-    } else {
-      options.unset<rest_internal::LongrunningEndpointOption>();
-      stub_creation_opts.set<UnifiedCredentialsOption>(
-          internal::MakeErrorCredentials(std::move(lro_endpoint).status()));
-    }
-  } else {
-    if (!absl::StartsWithIgnoreCase(*lro_endpoint, "http")) {
-      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
-          absl::StrCat("https://", *lro_endpoint));
-    } else {
-      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
-          *lro_endpoint);
-    }
-
-    if (!absl::StartsWithIgnoreCase(*service_endpoint, "http")) {
-      stub_creation_opts.set<EndpointOption>(absl::StrCat(
-          "https://", *service_endpoint));
-    } else {
-      stub_creation_opts.set<EndpointOption>(*service_endpoint);
-    }
-    options.set<EndpointOption>(*service_endpoint);
-    options.set<rest_internal::LongrunningEndpointOption>(*lro_endpoint);
-  }
 
   std::shared_ptr<$stub_rest_class_name$> stub =
       std::make_shared<Default$stub_rest_class_name$>(std::move(stub_creation_opts));

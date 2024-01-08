@@ -17,19 +17,15 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub_factory.h"
-#include "absl/strings/match.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_logging_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_metadata_decorator.h"
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub.h"
 #include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
-#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/rest_options.h"
-#include "google/cloud/internal/service_endpoint.h"
+#include "google/cloud/internal/rest_stub_factory_helpers.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
@@ -42,50 +38,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GoldenThingAdminRestStub>
 CreateDefaultGoldenThingAdminRestStub(Options& options) {
-  Options stub_creation_opts = options;
-  if (!options.has<UnifiedCredentialsOption>()) {
-    stub_creation_opts.set<UnifiedCredentialsOption>(
-        MakeGoogleDefaultCredentials(internal::MakeAuthOptions(options)));
-  }
-  auto lro_endpoint = internal::DetermineServiceEndpoint(
-      {},
-      internal::FetchOption<rest_internal::LongrunningEndpointOption>(options),
-      "https://longrunning.googleapis.com",
-      options);
-
-  auto service_endpoint = internal::DetermineServiceEndpoint(
+  Options stub_creation_opts = rest_internal::DetermineStubCreationOptions(
       internal::GetEnv("GOLDEN_KITCHEN_SINK_ENDPOINT"),
-      internal::FetchOption<EndpointOption>(options), "test.googleapis.com",
+      "test.googleapis.com",
       options);
-
-  if (!lro_endpoint.ok() || !service_endpoint.ok()) {
-    if (!service_endpoint.ok()) {
-      options.unset<EndpointOption>();
-      stub_creation_opts.set<UnifiedCredentialsOption>(
-          internal::MakeErrorCredentials(std::move(service_endpoint).status()));
-    } else {
-      options.unset<rest_internal::LongrunningEndpointOption>();
-      stub_creation_opts.set<UnifiedCredentialsOption>(
-          internal::MakeErrorCredentials(std::move(lro_endpoint).status()));
-    }
-  } else {
-    if (!absl::StartsWithIgnoreCase(*lro_endpoint, "http")) {
-      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
-          absl::StrCat("https://", *lro_endpoint));
-    } else {
-      stub_creation_opts.set<rest_internal::LongrunningEndpointOption>(
-          *lro_endpoint);
-    }
-
-    if (!absl::StartsWithIgnoreCase(*service_endpoint, "http")) {
-      stub_creation_opts.set<EndpointOption>(absl::StrCat(
-          "https://", *service_endpoint));
-    } else {
-      stub_creation_opts.set<EndpointOption>(*service_endpoint);
-    }
-    options.set<EndpointOption>(*service_endpoint);
-    options.set<rest_internal::LongrunningEndpointOption>(*lro_endpoint);
-  }
 
   std::shared_ptr<GoldenThingAdminRestStub> stub =
       std::make_shared<DefaultGoldenThingAdminRestStub>(std::move(stub_creation_opts));
