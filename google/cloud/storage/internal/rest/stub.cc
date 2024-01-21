@@ -33,6 +33,7 @@
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/url_encode.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
 #include <sstream>
 
@@ -118,6 +119,11 @@ Status AddAuthorizationHeader(Options const& options,
   return {};
 }
 
+std::string StripProtocol(std::string const& uri) {
+  std::pair<std::string, std::string> p = absl::StrSplit(uri, "://");
+  return p.second;
+}
+
 }  // namespace
 
 RestStub::RestStub(Options options)
@@ -141,21 +147,26 @@ RestStub::RestStub(
 }
 
 Options RestStub::ResolveStorageAuthority(Options const& options) {
-  auto endpoint = RestEndpoint(options);
-  if (options.has<AuthorityOption>() ||
-      !absl::StrContains(endpoint, "googleapis.com")) {
+  if (options.has<AuthorityOption>()) {
     return options;
   }
-  return Options(options).set<AuthorityOption>("storage.googleapis.com");
+  auto endpoint = RestEndpoint(options);
+  if (absl::StrContains(endpoint, "googleapis.com")) {
+    return Options(options).set<AuthorityOption>("storage.googleapis.com");
+  }
+  return Options(options).set<AuthorityOption>(StripProtocol(endpoint));
 }
 
 Options RestStub::ResolveIamAuthority(Options const& options) {
-  auto endpoint = IamEndpoint(options);
-  if (options.has<AuthorityOption>() ||
-      !absl::StrContains(endpoint, "googleapis.com")) {
+  if (options.has<AuthorityOption>()) {
     return options;
   }
-  return Options(options).set<AuthorityOption>("iamcredentials.googleapis.com");
+  auto endpoint = IamEndpoint(options);
+  if (absl::StrContains(endpoint, "googleapis.com")) {
+    return Options(options).set<AuthorityOption>("iamcredentials.googleapis.com");
+  }
+
+  return Options(options).set<AuthorityOption>(StripProtocol(IamEndpoint(options)));
 }
 
 Options RestStub::options() const { return options_; }

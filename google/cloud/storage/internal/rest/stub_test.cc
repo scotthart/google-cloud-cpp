@@ -64,7 +64,8 @@ TEST(RestStubTest, ResolveStorageAuthorityEapEndpoint) {
 TEST(RestStubTest, ResolveStorageAuthorityNonGoogleEndpoint) {
   auto options = Options{}.set<RestEndpointOption>("https://localhost");
   auto result_options = RestStub::ResolveStorageAuthority(options);
-  EXPECT_FALSE(result_options.has<AuthorityOption>());
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("localhost"));
 }
 
 TEST(RestStubTest, ResolveStorageAuthorityOptionSpecified) {
@@ -93,7 +94,8 @@ TEST(RestStubTest, ResolveIamAuthorityEapEndpoint) {
 TEST(RestStubTest, ResolveIamAuthorityNonGoogleEndpoint) {
   auto options = Options{}.set<IamEndpointOption>("https://localhost");
   auto result_options = RestStub::ResolveIamAuthority(options);
-  EXPECT_FALSE(result_options.has<AuthorityOption>());
+  EXPECT_THAT(result_options.get<AuthorityOption>(),
+              Eq("localhost"));
 }
 
 TEST(RestStubTest, ResolveIamAuthorityOptionSpecified) {
