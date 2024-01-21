@@ -28,6 +28,8 @@ printf "%10s %s\n" "ninja:" "$(ninja --version || echo not available)"
 printf "%10s %s\n" "sccache:" "$(sccache --version || echo not available)"
 
 if command -v sccache >/dev/null 2>&1; then
+  io::log "Manually start background sccache server"
+  sccache --start-server
   io::log "Clearing sccache stats"
   sccache --zero-stats
   function show_stats_handler() {
