@@ -111,6 +111,8 @@ add_library(
     internal/retry_loop_helpers.h
     internal/retry_policy_impl.cc
     internal/retry_policy_impl.h
+    internal/service_endpoint.cc
+    internal/service_endpoint.h
     internal/sha256_hash.cc
     internal/sha256_hash.h
     internal/sha256_hmac.cc
@@ -160,6 +162,8 @@ add_library(
     terminate_handler.h
     tracing_options.cc
     tracing_options.h
+    universe_domain_options.cc
+    universe_domain_options.h
     version.cc
     version.h)
 target_link_libraries(

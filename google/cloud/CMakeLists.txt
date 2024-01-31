@@ -51,6 +51,7 @@ set(GOOGLE_CLOUD_CPP_BUILD_METADATA
 mark_as_advanced(GOOGLE_CLOUD_CPP_BUILD_METADATA)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_common.cmake")
+include("${CMAKE_CURRENT_SOURCE_DIR}/google_cloud_cpp_universe_domain.cmake")
 
 add_subdirectory(testing_util)
 

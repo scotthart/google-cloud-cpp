@@ -73,6 +73,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/random.h",
     "internal/retry_loop_helpers.h",
     "internal/retry_policy_impl.h",
+    "internal/service_endpoint.h",
     "internal/sha256_hash.h",
     "internal/sha256_hmac.h",
     "internal/sha256_type.h",
@@ -104,6 +105,7 @@ google_cloud_cpp_common_hdrs = [
     "stream_range.h",
     "terminate_handler.h",
     "tracing_options.h",
+    "universe_domain_options.h",
     "version.h",
 ]
 
@@ -134,6 +136,7 @@ google_cloud_cpp_common_srcs = [
     "internal/random.cc",
     "internal/retry_loop_helpers.cc",
     "internal/retry_policy_impl.cc",
+    "internal/service_endpoint.cc",
     "internal/sha256_hash.cc",
     "internal/sha256_hmac.cc",
     "internal/status_payload_keys.cc",
@@ -152,5 +155,6 @@ google_cloud_cpp_common_srcs = [
     "status.cc",
     "terminate_handler.cc",
     "tracing_options.cc",
+    "universe_domain_options.cc",
     "version.cc",
 ]

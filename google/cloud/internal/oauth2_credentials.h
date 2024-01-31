@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
 #include "google/cloud/access_token.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -75,6 +76,11 @@ class Credentials {
 
   /// Return the account's key_id associated with these credentials, if any.
   virtual std::string KeyId() const { return std::string{}; }
+
+  virtual StatusOr<std::string> universe_domain(
+      google::cloud::Options const& options) const {
+    return {};
+  }
 };
 
 /**

@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CREDENTIALS_H
 
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
@@ -26,6 +28,7 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+StatusOr<Options> AddUniverseDomainOption(Options);
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
@@ -66,6 +69,33 @@ class Credentials {
  * @ingroup options
  * @ingroup guac
  */
+#if 0
+struct UnifiedCredentialsOption {
+  class Type {
+   public:
+    Type()
+        : universe_domain_(internal::FailedPreconditionError(
+              "call AddUniverseDomainOption to retrieve universe_domain")) {}
+    Type(std::shared_ptr<Credentials> credentials)
+        : credentials_(std::move(credentials)),
+          universe_domain_(internal::FailedPreconditionError(
+              "call AddUniverseDomainOption to retrieve universe_domain")) {}
+
+    operator std::shared_ptr<Credentials>() const { return credentials_; }
+    Credentials const& operator*() const { return *credentials_; }
+    StatusOr<std::string> universe_domain() const { return universe_domain_; }
+
+   private:
+    friend StatusOr<Options> AddUniverseDomainOption(Options);
+    Type(std::shared_ptr<Credentials> credentials,
+         StatusOr<std::string> universe_domain)
+        : credentials_(std::move(credentials)),
+          universe_domain_(std::move(universe_domain)) {}
+    std::shared_ptr<Credentials> credentials_;
+    StatusOr<std::string> universe_domain_;
+  };
+};
+#endif
 struct UnifiedCredentialsOption {
   using Type = std::shared_ptr<Credentials>;
 };

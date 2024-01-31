@@ -50,6 +50,9 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
 std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     std::shared_ptr<grpc::ChannelCredentials> const& credentials);
 
+std::shared_ptr<GrpcAuthenticationStrategy> CreateErrorAuthenticationStrategy(
+    Status status, Options const& options);
+
 absl::optional<std::string> LoadCAInfo(Options const& opts);
 
 }  // namespace internal

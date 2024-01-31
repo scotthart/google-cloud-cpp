@@ -48,6 +48,10 @@ class ImpersonateServiceAccountCredentials
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
 
+  StatusOr<std::string> universe_domain(Options const& options) override {
+    return stub_->universe_domain(options);
+  }
+
  private:
   std::shared_ptr<MinimalIamCredentialsRest> stub_;
   GenerateAccessTokenRequest request_;

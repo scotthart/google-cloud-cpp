@@ -14,6 +14,7 @@
 
 //! [all]
 #include "google/cloud/speech/v1/speech_client.h"
+// #include "google/cloud/universe_domain.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -28,6 +29,30 @@ int main(int argc, char* argv[]) try {
   auto uri = std::string{argc == 2 ? argv[1] : kDefaultUri};
 
   namespace speech = ::google::cloud::speech_v1;
+#if 0
+  auto options = google::cloud::AddUniverseDomainOption();
+  if (!options.ok()) throw std::move(options).status();
+  auto client = speech::SpeechClient(speech::MakeSpeechConnection(*options));
+#endif
+
+#if 0
+  auto options = Options{}.set<UnifiedCredentialsOptions>(
+      MakeServiceAccountCredentials(json_credentials));
+  auto updated_options = AddUniverseDomainOption(options);
+  if (!updated_options.ok()) return std::move(updated_options).status();
+  auto client =
+      speech::SpeechClient(speech::MakeSpeechConnection(updated_options));
+#endif
+
+  auto creds = MakeServiceAccountCredentials(json_credentials);
+  auto universe_domain = GetUniverseDomain(creds);
+  if (!universe_domain.ok()) return std::move(universe_domain).stats();
+  if (*universe_domain != desired_universe_domain) return 1;
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(creds).set<UniverseDomainOption>(
+          desired_universe_domain);
+  auto client = speech::SpeechClient(speech::MakeSpeechConnection(options));
+
   auto client = speech::SpeechClient(speech::MakeSpeechConnection());
 
   google::cloud::speech::v1::RecognitionConfig config;
