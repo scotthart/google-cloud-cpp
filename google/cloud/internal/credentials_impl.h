@@ -32,6 +32,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+class ErrorCredentialsConfig;
 class InsecureCredentialsConfig;
 class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
@@ -42,6 +43,7 @@ class ExternalAccountConfig;
 class CredentialsVisitor {
  public:
   virtual ~CredentialsVisitor() = default;
+  virtual void visit(ErrorCredentialsConfig const&) = 0;
   virtual void visit(InsecureCredentialsConfig const&) = 0;
   virtual void visit(GoogleDefaultCredentialsConfig const&) = 0;
   virtual void visit(AccessTokenConfig const&) = 0;
@@ -53,30 +55,65 @@ class CredentialsVisitor {
                        CredentialsVisitor& visitor);
 };
 
+class ErrorCredentialsConfig : public Credentials {
+ public:
+  ErrorCredentialsConfig(Status error_status, Options opts)
+      : error_status_(std::move(error_status)), options_(std::move(opts)) {}
+  ~ErrorCredentialsConfig() override = default;
+  StatusOr<std::string> universe_domain() const override {
+    return error_status_;
+  }
+
+  Status const& error_status() const { return error_status_; }
+  Options const& options() const { return options_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string>) override {}
+
+  Status error_status_;
+  Options options_;
+};
+
+inline std::shared_ptr<Credentials> MakeErrorCredentials(Status error_status,
+                                                         Options opts = {}) {
+  return std::make_shared<internal::ErrorCredentialsConfig>(
+      std::move(error_status), std::move(opts));
+}
+
 class InsecureCredentialsConfig : public Credentials {
  public:
   explicit InsecureCredentialsConfig(Options opts);
   ~InsecureCredentialsConfig() override = default;
+  StatusOr<std::string> universe_domain() const override;
 
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 class GoogleDefaultCredentialsConfig : public Credentials {
  public:
   explicit GoogleDefaultCredentialsConfig(Options opts);
   ~GoogleDefaultCredentialsConfig() override = default;
-
+  StatusOr<std::string> universe_domain() const override;
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 class AccessTokenConfig : public Credentials {
@@ -85,15 +122,19 @@ class AccessTokenConfig : public Credentials {
                     std::chrono::system_clock::time_point expiration,
                     Options opts);
   ~AccessTokenConfig() override = default;
-
+  StatusOr<std::string> universe_domain() const override;
   AccessToken const& access_token() const { return access_token_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   AccessToken access_token_;
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 class ImpersonateServiceAccountConfig : public Credentials {
@@ -101,7 +142,7 @@ class ImpersonateServiceAccountConfig : public Credentials {
   ImpersonateServiceAccountConfig(std::shared_ptr<Credentials> base_credentials,
                                   std::string target_service_account,
                                   Options opts);
-
+  StatusOr<std::string> universe_domain() const override;
   std::shared_ptr<Credentials> base_credentials() const {
     return base_credentials_;
   }
@@ -115,38 +156,50 @@ class ImpersonateServiceAccountConfig : public Credentials {
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   std::shared_ptr<Credentials> base_credentials_;
   std::string target_service_account_;
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 class ServiceAccountConfig : public Credentials {
  public:
   ServiceAccountConfig(std::string json_object, Options opts);
-
+  StatusOr<std::string> universe_domain() const override;
   std::string const& json_object() const { return json_object_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   std::string json_object_;
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 class ExternalAccountConfig : public Credentials {
  public:
   ExternalAccountConfig(std::string json_object, Options options);
-
+  StatusOr<std::string> universe_domain() const override;
   std::string const& json_object() const { return json_object_; }
   Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) const override { v.visit(*this); }
+  void set_universe_domain(StatusOr<std::string> universe_domain) override {
+    universe_domain_ = std::move(universe_domain);
+  }
 
   std::string json_object_;
   Options options_;
+  StatusOr<std::string> universe_domain_;
 };
 
 /// A helper function to initialize Auth options.

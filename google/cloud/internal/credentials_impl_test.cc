@@ -32,6 +32,10 @@ struct Visitor : public CredentialsVisitor {
   std::string json_object;
   Options options;
 
+  void visit(ErrorCredentialsConfig const&) override {
+    name = "ErrorCredentialsConfig";
+  }
+
   void visit(InsecureCredentialsConfig const&) override {
     name = "InsecureCredentialsConfig";
   }

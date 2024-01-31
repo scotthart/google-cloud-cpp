@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include <chrono>
 
@@ -88,6 +89,32 @@ ExternalAccountConfig::ExternalAccountConfig(std::string json_object,
                                              Options options)
     : json_object_(std::move(json_object)),
       options_(PopulateAuthOptions(std::move(options))) {}
+
+StatusOr<std::string> InsecureCredentialsConfig::universe_domain() const {
+  return internal::FailedPreconditionError(
+      "Credentials type does not support universe_domain");
+}
+
+StatusOr<std::string> GoogleDefaultCredentialsConfig::universe_domain() const {
+  return universe_domain_;
+}
+
+StatusOr<std::string> AccessTokenConfig::universe_domain() const {
+  return internal::FailedPreconditionError(
+      "Credentials type does not support universe_domain");
+}
+
+StatusOr<std::string> ImpersonateServiceAccountConfig::universe_domain() const {
+  return universe_domain_;
+}
+
+StatusOr<std::string> ServiceAccountConfig::universe_domain() const {
+  return universe_domain_;
+}
+
+StatusOr<std::string> ExternalAccountConfig::universe_domain() const {
+  return universe_domain_;
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,6 +17,7 @@
 
 #include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <memory>
@@ -26,6 +27,9 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class Credentials;
+StatusOr<std::string> GetUniverseDomain(std::shared_ptr<Credentials>,
+                                        Options const&);
 namespace internal {
 class CredentialsVisitor;
 }  // namespace internal
@@ -54,9 +58,17 @@ class CredentialsVisitor;
 class Credentials {
  public:
   virtual ~Credentials() = 0;
+  virtual StatusOr<std::string> universe_domain() const = 0;
 
  private:
   friend class internal::CredentialsVisitor;
+  friend StatusOr<std::string> google::cloud::GetUniverseDomain(
+      std::shared_ptr<Credentials>, Options const&);
+  virtual void set_universe_domain(StatusOr<std::string>) = 0;
+  enum class UniverseDomainLocation { kUnsupported, kInSitu, kMDS };
+  virtual UniverseDomainLocation universe_domain_location() const {
+    return UniverseDomainLocation::kUnsupported;
+  }
   virtual void dispatch(internal::CredentialsVisitor& visitor) const = 0;
 };
 
