@@ -28,7 +28,7 @@ set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
 # on Protobuf but not gRPC. So these libraries must depend on
 # `google_cloud_cpp_grpc_utils`.
 set(GOOGLE_CLOUD_CPP_REST_ONLY_FEATURES
-    "oauth2;storage;experimental-bigquery_rest")
+    "oauth2;storage;experimental-bigquery_rest;experimental-bigquery_generated")
 
 set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sort
@@ -377,6 +377,7 @@ endmacro ()
 # Most of them are subdirectories in `google/cloud/`. Some number of them have
 # additional samples that are enabled if needed.
 function (google_cloud_cpp_enable_features)
+    set(bigquery_generated_added FALSE)
     set(compute_added FALSE)
     foreach (feature IN LISTS GOOGLE_CLOUD_CPP_ENABLE)
         if ("${feature}" STREQUAL "generator")
@@ -388,6 +389,14 @@ function (google_cloud_cpp_enable_features)
         elseif ("${feature}" STREQUAL "experimental-bigquery_rest")
             if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/bigquery)
+            endif ()
+        elseif ("${feature}" STREQUAL "experimental-bigquery_generated")
+            if (NOT ("bigquery" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
+                add_subdirectory(google/cloud/bigquery)
+            endif ()
+            if (NOT bigquery_generated_added)
+                add_subdirectory(protos/google/cloud/bigquery)
+                set(bigquery_generated_added TRUE)
             endif ()
         elseif ("${feature}" STREQUAL "experimental-http-transcoding")
             continue()

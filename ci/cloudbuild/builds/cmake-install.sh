@@ -30,6 +30,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 INSTALL_PREFIX="$(mktemp -d)"
 readonly INSTALL_PREFIX
 read -r ENABLED_FEATURES < <(features::list_full_cmake)
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-bigquery_generated"
 readonly ENABLED_FEATURES
 
 # Compiles and installs all libraries and headers.

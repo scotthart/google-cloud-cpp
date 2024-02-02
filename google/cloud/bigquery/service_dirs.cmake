@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2021 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,18 +14,17 @@
 # limitations under the License.
 # ~~~
 
-include(GoogleCloudCppCommon)
+set(service_dirs
+    # cmake-format: sort
+    "datasets/v2/"
+    "jobs/v2/"
+    "models/v2/"
+    "projects/v2/"
+    "routines/v2/"
+    "row_access_policies/v2/"
+    "tabledata/v2/"
+    "tables/v2/")
 
-if (bigquery IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(bigquery_grpc.cmake)
-endif ()
-
-if (experimental-bigquery_generated IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(bigquery_generated.cmake)
-
-endif ()
-
-if (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    include(bigquery_rest.cmake)
-    add_subdirectory(v2/minimal/benchmarks)
-endif ()
+set(operation_service_dirs
+    # cmake-format: sort
+)

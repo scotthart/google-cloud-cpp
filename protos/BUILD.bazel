@@ -19,5 +19,5 @@ licenses(["notice"])  # Apache 2.0
 cc_library(
     name = "system_includes",
     includes = ["."],
-    visibility = ["//google/cloud/compute:__pkg__"],
+    visibility = ["//google/cloud/compute:__pkg__","//google/cloud/bigquery:__pkg__"],
 )
