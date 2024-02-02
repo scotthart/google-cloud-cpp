@@ -19,6 +19,7 @@
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
@@ -77,14 +78,30 @@ bool IsDiscoveryNestedType(nlohmann::json const& json) {
          json.contains("properties");
 }
 
+auto constexpr kMaxRecursionDepth = 32;
 // NOLINTNEXTLINE(misc-no-recursion)
 void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
-                                      DiscoveryTypeVertex& type) {
+                                      DiscoveryTypeVertex& type,
+                                      int call_depth) {
+  if (call_depth > kMaxRecursionDepth) {
+    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
+  }
+  //  std::cout << __func__ << " resource=" << resource_name
+  //            << "; type=" << type.name() << std::endl;
   type.AddNeededByResource(resource_name);
   auto deps = type.needs_type();
   for (auto* dep : deps) {
-    ApplyResourceLabelsToTypesHelper(resource_name, *dep);
+    //    std::cout << __func__ << " dep=" << dep->name() << std::endl;
+    if (!internal::Contains(dep->needed_by_resource(), resource_name)) {
+      ApplyResourceLabelsToTypesHelper(resource_name, *dep, ++call_depth);
+    }
   }
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+void ApplyResourceLabelsToTypesHelper(std::string const& resource_name,
+                                      DiscoveryTypeVertex& type) {
+  ApplyResourceLabelsToTypesHelper(resource_name, type, 0);
 }
 
 std::string FormatFileResourceKey(std::set<std::string> const& resources) {
@@ -130,21 +147,27 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
   }
 
   auto const& schemas = discovery_doc["schemas"];
-  bool schemas_all_type_object = true;
+  bool schemas_all_recognized_types = true;
   bool schemas_all_have_id = true;
   std::string id;
   for (auto const& s : schemas) {
     if (!s.contains("id") || s["id"].is_null()) {
-      GCP_LOG(ERROR) << "current schema has no id. last schema with id="
-                     << (id.empty() ? "(none)" : id);
+      return internal::InvalidArgumentError(
+          absl::StrCat("current schema has no id. last schema with id=",
+                       (id.empty() ? "(none)" : id)),
+          GCP_ERROR_INFO().WithMetadata("schema", s.dump()));
+      //      GCP_LOG(ERROR) << "current schema has no id. last schema with id="
+      //                     << (id.empty() ? "(none)" : id);
       schemas_all_have_id = false;
       continue;
     }
     id = s["id"];
     std::string type = s.value("type", "untyped");
-    if (type != "object") {
-      GCP_LOG(ERROR) << id << " not type:object; is instead " << type;
-      schemas_all_type_object = false;
+    if (type != "object" && type != "any") {
+      return internal::InvalidArgumentError(
+          absl::StrCat(id, " unrecognized type; is type ", type),
+          GCP_ERROR_INFO().WithMetadata("schema", s.dump()));
+      schemas_all_recognized_types = false;
       continue;
     }
     types.emplace(id, DiscoveryTypeVertex{
@@ -160,9 +183,9 @@ StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
         "Discovery Document contains schema without id field.");
   }
 
-  if (!schemas_all_type_object) {
+  if (!schemas_all_recognized_types) {
     return internal::InvalidArgumentError(
-        "Discovery Document contains non object schema.");
+        "Discovery Document contains unrecognized typed schema.");
   }
 
   return types;
@@ -241,7 +264,7 @@ StatusOr<DiscoveryTypeVertex> SynthesizeRequestType(
   // add method parameters as properties to new type
   auto const& params = method_json.find("parameters");
   for (auto p = params->begin(); p != params->end(); ++p) {
-    std::string const& param_name = p.key();
+    std::string param_name = p.key();
     synthesized_request["properties"][param_name] = *p;
     if (response_type_name == "Operation" &&
         internal::Contains(operation_request_fields, param_name)) {
@@ -338,12 +361,19 @@ std::set<std::string> FindAllTypesToImport(nlohmann::json const& json) {
     fields = json["properties"];
   } else if (json.contains("additionalProperties") || json.contains("items")) {
     fields = json;
+  } else if (!json.contains("properties") &&
+             !json.contains("additionalProperties")) {
+    // Handle singleton by adding it to a JSON array for the loop to process.
+    fields.push_back(json);
+    std::cout << __func__ << " singleton\n";
+    std::cout << __func__ << "json=" << fields << "\n";
   }
 
   for (auto const& f : fields) {
     if (f.contains("type")) {
       if (f["type"] == "any") {
         types_to_import.insert("google.protobuf.Any");
+        std::cout << __func__ << " import google.protobuf.Any added\n";
       }
     }
 
@@ -365,6 +395,10 @@ Status EstablishTypeDependencies(
     std::map<std::string, DiscoveryTypeVertex>& types) {
   for (auto& type : types) {
     auto const& json = type.second.json();
+    if (type.first == "JsonValue") {
+      std::cout << __func__ << " type=" << type.first << "; json=" << json
+                << "\n";
+    }
     auto ref_values = FindAllTypesToImport(json);
     for (auto const& ref : ref_values) {
       if (absl::StartsWith(ref, "google.protobuf.")) {
@@ -389,6 +423,7 @@ Status EstablishTypeDependencies(
 
 void ApplyResourceLabelsToTypes(
     std::map<std::string, DiscoveryResource>& resources) {
+  std::cout << __func__ << "Enter\n";
   for (auto& resource : resources) {
     for (auto const& request_type : resource.second.request_types()) {
       ApplyResourceLabelsToTypesHelper(resource.first, *request_type.second);
@@ -397,6 +432,7 @@ void ApplyResourceLabelsToTypes(
       ApplyResourceLabelsToTypesHelper(resource.first, *response_type.second);
     }
   }
+  std::cout << __func__ << "Leave\n";
 }
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
@@ -452,8 +488,11 @@ AssignResourcesAndTypesToFiles(
       auto* type = &kv.second;
       std::string resource_key =
           FormatFileResourceKey(type->needed_by_resource());
+      std::cout << __func__ << " resource_key=" << resource_key << "\n";
       auto iter = common_files_by_resource.find(resource_key);
       if (iter != common_files_by_resource.end()) {
+        std::cout << __func__ << " AddType=" << type->name()
+                  << " to file=" << iter->second.relative_proto_path() << "\n";
         iter->second.AddType(type);
       } else {
         auto relative_proto_path = absl::StrFormat(
@@ -469,6 +508,8 @@ AssignResourcesAndTypesToFiles(
                                           document_properties.version),
                           {})
                 .AddType(type));
+        std::cout << __func__ << " AddType=" << type->name()
+                  << " to file=" << relative_proto_path << "\n";
       }
     }
   }
@@ -616,22 +657,49 @@ Status GenerateProtosFromDiscoveryDoc(
   auto types = ExtractTypesFromSchema(document_properties, discovery_doc,
                                       &descriptor_pool);
   if (!types) return std::move(types).status();
+  //  for (auto const& t : *types) {
+  //    std::cout << t.first << "\n";
+  //  }
+  std::cout << __func__ << " extracted " << types->size() << " types\n";
 
   auto resources = ExtractResources(document_properties, discovery_doc);
   if (resources.empty()) {
     return internal::InvalidArgumentError(
         "No resources found in Discovery Document.");
   }
+  std::cout << __func__ << " extracted " << resources.size() << " resources\n";
 
   auto method_status =
       ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
+  std::cout << __func__ << " ProcessMethodRequestsAndReponses success\n";
 
   EstablishTypeDependencies(*types);
+  for (auto& t : *types) {
+    std::cout << t.first << ": "
+              << absl::StrJoin(t.second.needs_type(), ",",
+                               [](std::string* s, DiscoveryTypeVertex* v) {
+                                 *s += v->name();
+                               })
+              << "\n";
+  }
+  std::cout << __func__ << " EstablishTypeDependencies success\n";
+
   ApplyResourceLabelsToTypes(resources);
+  for (auto& t : *types) {
+    std::cout << t.first << ": "
+              << absl::StrJoin(t.second.needed_by_resource(), ",") << "\n";
+  }
+  std::cout << __func__ << " ApplyResourceLabelsToTypes success\n";
+
   auto files = AssignResourcesAndTypesToFiles(
       resources, *types, document_properties, output_path, export_output_path);
   if (!files) return std::move(files).status();
+
+  std::cout << __func__ << " created " << files->first.size()
+            << " DiscoveryFiles;"
+            << " and " << files->second.size()
+            << " DiscoveryProtoExportFiles\n";
 
   // google::protobuf::DescriptorPool lazily initializes itself. Searching for
   // types by name will fail if the descriptor has not yet been created. By
@@ -646,34 +714,55 @@ Status GenerateProtosFromDiscoveryDoc(
 
   std::vector<std::future<google::cloud::Status>> tasks;
   tasks.reserve(files->first.size());
+  std::vector<Status> errors;
+  bool file_write_error = false;
+
   for (auto f : files->first) {
-    tasks.push_back(std::async(
-        std::launch::async,
-        [](DiscoveryFile const& f,
-           DiscoveryDocumentProperties const& document_properties,
-           std::map<std::string, DiscoveryTypeVertex> const& types) {
-          return f.WriteFile(document_properties, types);
-        },
-        std::move(f), document_properties, *types));
+    std::cout << "f=" << f.relative_proto_path() << "; types="
+              << absl::StrJoin(f.types(), ",",
+                               [](std::string* s, DiscoveryTypeVertex* v) {
+                                 *s += v->name();
+                               })
+              << "\n";
+
+    auto result = f.WriteFile(document_properties, *types);
+    if (!result.ok()) {
+      file_write_error = true;
+      errors.push_back(result);
+    }
+    //    tasks.push_back(std::async(
+    //        std::launch::async,
+    //        [](DiscoveryFile const& f,
+    //           DiscoveryDocumentProperties const& document_properties,
+    //           std::map<std::string, DiscoveryTypeVertex> const& types) {
+    //          return f.WriteFile(document_properties, types);
+    //        },
+    //        std::move(f), document_properties, *types));
   }
 
   for (auto f : files->second) {
-    tasks.push_back(std::async(
-        std::launch::async,
-        [](DiscoveryProtoExportFile const& f) { return f.WriteFile(); },
-        std::move(f)));
+    //    tasks.push_back(std::async(
+    //        std::launch::async,
+    //        [](DiscoveryProtoExportFile const& f) { return f.WriteFile(); },
+    //        std::move(f)));
   }
 
-  bool file_write_error = false;
   for (auto& t : tasks) {
     auto result = t.get();
     if (!result.ok()) {
+      errors.push_back(result);
       GCP_LOG(ERROR) << result;
       file_write_error = true;
     }
   }
 
   if (file_write_error) {
+    std::cerr << "Encountered " << errors.size() << " writing files\n";
+    int error_num = 0;
+    for (auto const& e : errors) {
+      std::cerr << "Error" << ++error_num << "\n";
+      std::cerr << e << "\n";
+    }
     return internal::InternalError(
         "Error encountered writing file. Check log for additional details.");
   }

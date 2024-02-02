@@ -18,6 +18,7 @@
 #include "generator/internal/longrunning.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
+#include "google/cloud/internal/algorithm.h"
 #include "absl/strings/str_split.h"
 #include <google/protobuf/descriptor.h>
 
@@ -352,6 +353,21 @@ Status Default$stub_rest_class_name$::$method_name$(
       Options const& options,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$(
+      *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
+      $method_rest_path$$method_http_query_parameters$);
+}
+)""");
+      } else if (internal::Contains(
+                     std::vector<std::string>{"InsertDataset", "InsertJob",
+                                              "InsertRoutine", "InsertTable"},
+                     method.get().name())) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>
+Default$stub_rest_class_name$::$method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options,
+      $request_type$ const& request) {
+  return rest_internal::$method_http_verb$<$response_type$, $response_type$>(
       *service_, rest_context, $request_resource$, $preserve_proto_field_names_in_json$,
       $method_rest_path$$method_http_query_parameters$);
 }

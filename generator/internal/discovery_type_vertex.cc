@@ -15,6 +15,7 @@
 #include "generator/internal/discovery_type_vertex.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/log.h"
@@ -48,9 +49,10 @@ std::string FormatMessageDescription(nlohmann::json const& field,
                                      int indent_level) {
   std::string description;
   if (field.contains("description")) {
+    auto sanitized_description = std::string(field["description"]);
+    absl::StrReplaceAll({{"$", "$$"}}, &sanitized_description);
     description = absl::StrCat(
-        FormatCommentBlock(std::string(field["description"]), indent_level),
-        "\n");
+        FormatCommentBlock(sanitized_description, indent_level), "\n");
   }
 
   auto enum_field = field.value("enum", nlohmann::json{});
@@ -119,6 +121,7 @@ std::string DiscoveryTypeVertex::DetermineIntroducer(
 StatusOr<DiscoveryTypeVertex::TypeInfo>
 DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
                                                std::string const& field_name) {
+  // std::cout << __func__ << " field_name=" << field_name << std::endl;
   nlohmann::json const* properties_for_synthesis = nullptr;
   bool compare_package_name = false;
   bool is_message = false;
@@ -134,7 +137,13 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
   std::string type = v["type"];
   auto scalar_type = CheckForScalarType(v);
   if (scalar_type) {
+    // std::cout << __func__ << " return scalar_type" << std::endl;
     return TypeInfo{*scalar_type, compare_package_name,
+                    properties_for_synthesis, false, false};
+  }
+
+  if (type == "any") {
+    return TypeInfo{"google.protobuf.Any", compare_package_name,
                     properties_for_synthesis, false, false};
   }
 
@@ -164,6 +173,8 @@ DiscoveryTypeVertex::DetermineTypeAndSynthesis(nlohmann::json const& v,
       scalar_type = CheckForScalarType(additional_properties);
       if (scalar_type) {
         map_type = *scalar_type;
+      } else if (map_type == "any") {
+        map_type = "google.protobuf.Any";
       } else if (map_type == "object" &&
                  additional_properties.contains("properties")) {
         map_type = CapitalizeFirstLetter(field_name + "Item");
@@ -239,25 +250,32 @@ StatusOr<std::string> DiscoveryTypeVertex::FormatMessage(
     std::string const& name, std::string const& qualified_name,
     std::string const& file_package_name, nlohmann::json const& json,
     int indent_level) const {
+  //  std::cout << __func__ << " name=" << name << std::endl;
   if (indent_level > kMaxRecursionDepth) {
     GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
   }
-  std::string indent(indent_level * 2, ' ');
-  auto properties = FormatProperties(types, name, qualified_name,
-                                     file_package_name, json, indent_level + 1);
-  if (!properties) return std::move(properties).status();
-  std::vector<std::string> message_name_parts =
-      absl::StrSplit(name, absl::ByChar('.'));
-  std::string reserved_numbers;
-  if (!properties->reserved_numbers.empty()) {
-    reserved_numbers =
-        absl::StrCat(indent, "  reserved ",
-                     absl::StrJoin(properties->reserved_numbers, ", "), ";\n");
+  try {
+    std::string indent(indent_level * 2, ' ');
+    auto properties = FormatProperties(
+        types, name, qualified_name, file_package_name, json, indent_level + 1);
+    if (!properties) return std::move(properties).status();
+    std::vector<std::string> message_name_parts =
+        absl::StrSplit(name, absl::ByChar('.'));
+    std::string reserved_numbers;
+    if (!properties->reserved_numbers.empty()) {
+      reserved_numbers = absl::StrCat(
+          indent, "  reserved ",
+          absl::StrJoin(properties->reserved_numbers, ", "), ";\n");
+    }
+    // std::cout << __func__ << " Leave" << std::endl;
+    return absl::StrCat(
+        indent, absl::StrFormat("message %s {\n", message_name_parts.back()),
+        reserved_numbers, absl::StrJoin(properties->lines, "\n\n"), "\n",
+        indent, "}");
+  } catch (std::exception& e) {
+    return internal::InternalError(
+        e.what(), GCP_ERROR_INFO().WithMetadata("json", json.dump()));
   }
-  return absl::StrCat(
-      indent, absl::StrFormat("message %s {\n", message_name_parts.back()),
-      reserved_numbers, absl::StrJoin(properties->lines, "\n\n"), "\n", indent,
-      "}");
 }
 
 DiscoveryTypeVertex::MessageProperties
@@ -307,33 +325,27 @@ Status DiscoveryTypeVertex::UpdateTypeNames(
   return {};
 }
 
-// TODO(#12234): Refactor this function into multiple smaller functions to
-// reduce cognitive burden.
-StatusOr<DiscoveryTypeVertex::MessageProperties>
-DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
+Status DiscoveryTypeVertex::Helper(
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& message_name, std::string const& qualified_message_name,
-    std::string const& file_package_name, nlohmann::json const& json,
-    int indent_level) const {
-  if (indent_level > kMaxRecursionDepth) {
-    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
-  }
+    std::string const& file_package_name, nlohmann::json const& field,
+    std::string const& field_key, int indent_level,
+    MessageProperties& message_properties,
+    google::protobuf::Descriptor const* message_descriptor,
+    std::set<std::string>& current_field_names,
+    std::string const& indent) const {
+  try {
+    std::string json_field_name = field_key;
+    if (field.contains("id")) {
+      json_field_name = field["id"];
+    }
+    if (message_name == "JsonObject") {
+      //      std::cout << __func__ << " field=" << field
+      //                << "; json_field_name=" << json_field_name << std::endl;
+    }
 
-  MessageProperties message_properties{{}, {}, kInitialFieldNumber};
-  auto const* message_descriptor =
-      descriptor_pool_->FindMessageTypeByName(qualified_message_name);
-  if (message_descriptor != nullptr) {
-    message_properties =
-        DetermineReservedAndMaxFieldNumbers(*message_descriptor);
-  }
-
-  std::string indent(indent_level * 2, ' ');
-  std::set<std::string> current_field_names;
-  auto const& properties = json.find("properties");
-  for (auto p = properties->begin(); p != properties->end(); ++p) {
-    auto const& field = p.value();
     auto type_and_synthesize =
-        DetermineTypeAndSynthesis(field, field.value("id", p.key()));
+        DetermineTypeAndSynthesis(field, json_field_name);
     if (!type_and_synthesize) return std::move(type_and_synthesize).status();
 
     std::string type_name = type_and_synthesize->name;
@@ -357,8 +369,12 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (!update_type_name_status.ok()) return update_type_name_status;
 
     std::string const introducer = DetermineIntroducer(field);
-    std::string json_field_name = field.value("id", p.key());
+    // std::cout << __func__ << " get json_field_name" << std::endl;
+    //        std::string json_field_name = field.value("id", field_key);
+    // std::cout << __func__ << " json_field_name=" << json_field_name
+    //                  << std::endl;
     std::string field_name = CamelCaseToSnakeCase(json_field_name);
+    absl::StrReplaceAll({{".", "_"}}, &field_name);
     current_field_names.insert(field_name);
 
     auto field_number =
@@ -366,6 +382,7 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
                        absl::StrCat(introducer, qualified_type_name),
                        message_properties.next_available_field_number);
     if (!field_number) return std::move(field_number).status();
+    // std::cout << __func__ << " finished GetFieldNumber" << std::endl;
 
     message_properties.lines.push_back(absl::StrFormat(
         "%s%s%s%s %s = %d%s;", FormatMessageDescription(field, indent_level),
@@ -374,19 +391,240 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
     if (*field_number == message_properties.next_available_field_number) {
       ++message_properties.next_available_field_number;
     }
-  }
 
-  // Identify field numbers of deleted fields.
-  if (message_descriptor != nullptr) {
-    for (auto i = 0; i != message_descriptor->field_count(); ++i) {
-      auto const* field_descriptor = message_descriptor->field(i);
-      if (!internal::Contains(current_field_names, field_descriptor->name())) {
-        message_properties.reserved_numbers.insert(field_descriptor->number());
+    return {};
+  } catch (std::exception& e) {
+    return internal::InternalError(
+        e.what(), GCP_ERROR_INFO().WithMetadata("json", field.dump()));
+  }
+}
+
+// TODO(#12234): Refactor this function into multiple smaller functions to
+// reduce cognitive burden.
+StatusOr<DiscoveryTypeVertex::MessageProperties>
+DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
+    std::map<std::string, DiscoveryTypeVertex> const& types,
+    std::string const& message_name, std::string const& qualified_message_name,
+    std::string const& file_package_name, nlohmann::json const& json,
+    int indent_level) const {
+  if (indent_level > kMaxRecursionDepth) {
+    GCP_LOG(FATAL) << __func__ << " exceeded kMaxRecursionDepth";
+  }
+  try {
+    //    std::cout << __func__ << " message_name=" << message_name <<
+    //    std::endl;
+    MessageProperties message_properties{{}, {}, kInitialFieldNumber};
+    auto const* message_descriptor =
+        descriptor_pool_->FindMessageTypeByName(qualified_message_name);
+    if (message_descriptor != nullptr) {
+      message_properties =
+          DetermineReservedAndMaxFieldNumbers(*message_descriptor);
+    }
+
+    std::string indent(indent_level * 2, ' ');
+    std::set<std::string> current_field_names;
+    //    // std::cout << __func__ << " json=" << json.dump() << std::endl;
+    if (json.contains("properties")) {
+      auto const& properties = json.find("properties");
+      // std::cout << __func__ << " handle properties here" << std::endl;
+      if (message_name == "JsonObject") {
+        //        std::cout << __func__ << " properties=" << properties->dump()
+        //                  << std::endl;
+      }
+      for (auto p = properties->begin(); p != properties->end(); ++p) {
+        //        // std::cout << __func__ << " enter for loop" << std::endl;
+        auto const& field = p.value();
+        auto const& field_key = p.key();
+        auto result = Helper(types, message_name, qualified_message_name,
+                             file_package_name, field, field_key, indent_level,
+                             message_properties, message_descriptor,
+                             current_field_names, indent);
+        if (!result.ok()) return result;
+
+        //        // std::cout << __func__ << " field=" << field << std::endl;
+        //        auto type_and_synthesize =
+        //            DetermineTypeAndSynthesis(field, field.value("id",
+        //            p.key()));
+        //        if (!type_and_synthesize)
+        //          return std::move(type_and_synthesize).status();
+        //
+        //        std::string type_name = type_and_synthesize->name;
+        //        std::string qualified_type_name = type_and_synthesize->name;
+        //        if (type_and_synthesize->is_message) {
+        //          qualified_type_name =
+        //              absl::StrCat(qualified_message_name, ".", type_name);
+        //        }
+        //
+        //        if (type_and_synthesize->properties) {
+        //          auto result = FormatMessage(
+        //              types, absl::StrCat(message_name, ".", type_name),
+        //              absl::StrCat(qualified_message_name, ".", type_name),
+        //              file_package_name, *type_and_synthesize->properties,
+        //              indent_level);
+        //          if (!result) return std::move(result).status();
+        //          message_properties.lines.push_back(*std::move(result));
+        //        }
+        //
+        //        auto update_type_name_status = UpdateTypeNames(
+        //            types, *type_and_synthesize, type_name,
+        //            qualified_type_name);
+        //        if (!update_type_name_status.ok()) return
+        //        update_type_name_status;
+        //
+        //        std::string const introducer = DetermineIntroducer(field);
+        //        // std::cout << __func__ << " get json_field_name" <<
+        //        std::endl; std::string json_field_name = field.value("id",
+        //        p.key());
+        //        // std::cout << __func__ << " json_field_name=" <<
+        //        json_field_name
+        //        //                  << std::endl;
+        //        std::string field_name =
+        //        CamelCaseToSnakeCase(json_field_name);
+        //        current_field_names.insert(field_name);
+        //
+        //        auto field_number =
+        //            GetFieldNumber(message_descriptor, field_name,
+        //                           absl::StrCat(introducer,
+        //                           qualified_type_name),
+        //                           message_properties.next_available_field_number);
+        //        if (!field_number) return std::move(field_number).status();
+        //        // std::cout << __func__ << " finished GetFieldNumber" <<
+        //        std::endl; message_properties.lines.push_back(absl::StrFormat(
+        //            "%s%s%s%s %s = %d%s;",
+        //            FormatMessageDescription(field, indent_level), indent,
+        //            introducer, type_name, field_name, *field_number,
+        //            FormatFieldOptions(field_name, json_field_name, field)));
+        //        if (*field_number ==
+        //        message_properties.next_available_field_number) {
+        //          ++message_properties.next_available_field_number;
+        //        }
       }
     }
-  }
 
-  return message_properties;
+    // std::cout << __func__ << " find additionalProperties" << std::endl;
+    //    auto const& additional_properties = json.find("additionalProperties");
+    // std::cout << __func__ << " finish find additionalProperties" <<
+    // std::endl;
+    //    if (additional_properties != additional_properties->end()) {
+    //    if (!additional_properties->empty()) {
+
+    // This checks for a BigQuery style map field.
+    if (json.contains("additionalProperties") &&
+        json.value("type", "untyped") == "object") {
+      //      std::cout << __func__ << " handle BigQuery style map" <<
+      //      std::endl; auto const& additional_properties =
+      //      json.find("additionalProperties");
+      //            if (message_name == "JsonObject") {
+      //        std::cout << __func__
+      //                  << " additionalProperties=" <<
+      //                  additional_properties->dump()
+      //                  << std::endl;
+      //      }
+      //
+      //      for (auto p = additional_properties->begin();
+      //           p != additional_properties->end(); ++p) {
+      //        //        // std::cout << __func__ << " enter for loop" <<
+      //        std::endl; auto const& field = p.value(); auto const& field_key
+      //        = p.key();
+      //            if (message_name == "JsonObject") {
+      //              std::cout << __func__ << " field=" << field
+      //                        << "; field_key=" << field_key << std::endl;
+      //            }
+
+      auto result =
+          Helper(types, message_name, qualified_message_name, file_package_name,
+                 json, message_name, indent_level, message_properties,
+                 message_descriptor, current_field_names, indent);
+      if (!result.ok()) return result;
+      //
+      //        auto type_and_synthesize =
+      //            DetermineTypeAndSynthesis(field, field.value("id",
+      //            p.key()));
+      //        if (!type_and_synthesize)
+      //          return std::move(type_and_synthesize).status();
+      //        std::string type_name = type_and_synthesize->name;
+      //        std::string qualified_type_name = type_and_synthesize->name;
+      //        if (type_and_synthesize->is_message) {
+      //          qualified_type_name =
+      //              absl::StrCat(qualified_message_name, ".", type_name);
+      //        }
+      //
+      //        if (type_and_synthesize->properties) {
+      //          auto result = FormatMessage(
+      //              types, absl::StrCat(message_name, ".", type_name),
+      //              absl::StrCat(qualified_message_name, ".", type_name),
+      //              file_package_name, *type_and_synthesize->properties,
+      //              indent_level);
+      //          if (!result) return std::move(result).status();
+      //          message_properties.lines.push_back(*std::move(result));
+      //        }
+      //
+      //        auto update_type_name_status = UpdateTypeNames(
+      //            types, *type_and_synthesize, type_name,
+      //            qualified_type_name);
+      //        if (!update_type_name_status.ok()) return
+      //        update_type_name_status;
+      //
+      //        std::string const introducer = DetermineIntroducer(field);
+      //        // std::cout << __func__ << " get json_field_name" << std::endl;
+      //        std::string json_field_name = field.value("id", p.key());
+      //        // std::cout << __func__ << " json_field_name=" <<
+      //        json_field_name
+      //        //                  << std::endl;
+      //        std::string field_name = CamelCaseToSnakeCase(json_field_name);
+      //        current_field_names.insert(field_name);
+      //
+      //        auto field_number =
+      //            GetFieldNumber(message_descriptor, field_name,
+      //                           absl::StrCat(introducer,
+      //                           qualified_type_name),
+      //                           message_properties.next_available_field_number);
+      //        if (!field_number) return std::move(field_number).status();
+      //        // std::cout << __func__ << " finished GetFieldNumber" <<
+      //        std::endl; message_properties.lines.push_back(absl::StrFormat(
+      //            "%s%s%s%s %s = %d%s;",
+      //            FormatMessageDescription(field, indent_level), indent,
+      //            introducer, type_name, field_name, *field_number,
+      //            FormatFieldOptions(field_name, json_field_name, field)));
+      //        if (*field_number ==
+      //        message_properties.next_available_field_number) {
+      //          ++message_properties.next_available_field_number;
+      //        }
+      //      }
+    }
+    //    else {
+    //      // std::cout << __func__ << " NO additionalProperties here" <<
+    //      std::endl;
+    //    }
+
+    // BigQuery style singleton object.
+    if (!json.contains("properties") &&
+        !json.contains("additionalProperties")) {
+      auto result =
+          Helper(types, message_name, qualified_message_name, file_package_name,
+                 json, message_name, indent_level, message_properties,
+                 message_descriptor, current_field_names, indent);
+      if (!result.ok()) return result;
+    }
+
+    // Identify field numbers of deleted fields.
+    if (message_descriptor != nullptr) {
+      for (auto i = 0; i != message_descriptor->field_count(); ++i) {
+        auto const* field_descriptor = message_descriptor->field(i);
+        if (!internal::Contains(current_field_names,
+                                field_descriptor->name())) {
+          message_properties.reserved_numbers.insert(
+              field_descriptor->number());
+        }
+      }
+    }
+
+    // std::cout << __func__ << " Leave" << std::endl;
+    return message_properties;
+  } catch (std::exception& e) {
+    return internal::InternalError(
+        e.what(), GCP_ERROR_INFO().WithMetadata("json", json.dump()));
+  }
 }
 
 std::string DiscoveryTypeVertex::FormatFieldOptions(
@@ -434,6 +672,7 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
     google::protobuf::Descriptor const* message_descriptor,
     std::string const& field_name, std::string const& field_type,
     int candidate_field_number) {
+  // std::cout << __func__ << std::endl;
   if (message_descriptor == nullptr) return candidate_field_number;
 
   auto qualified_type_name = [](google::protobuf::FieldDescriptor const& f) {
@@ -482,13 +721,15 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
 StatusOr<std::string> DiscoveryTypeVertex::JsonToProtobufMessage(
     std::map<std::string, DiscoveryTypeVertex> const& types,
     std::string const& file_package_name) const {
+  // std::cout << __func__ << " file_package_name=" << file_package_name <<
+  // "\n";
   int indent_level = 0;
   std::string proto;
   if (json_.contains("description")) {
-    absl::StrAppend(
-        &proto,
-        FormatCommentBlock(std::string(json_["description"]), indent_level),
-        "\n");
+    auto description = std::string{json_["description"]};
+    absl::StrReplaceAll({{"$", "$$"}}, &description);
+    absl::StrAppend(&proto, FormatCommentBlock(description, indent_level),
+                    "\n");
   }
   auto message =
       FormatMessage(types, name_, absl::StrCat(file_package_name, ".", name_),

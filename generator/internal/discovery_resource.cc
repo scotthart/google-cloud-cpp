@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/ascii.h"
@@ -95,6 +96,7 @@ std::vector<DiscoveryTypeVertex*> DiscoveryResource::GetRequestTypesList()
 std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
   std::string output;
   std::size_t current = 0;
+  //  std::cout << __func__ << " path=" << path << "\n";
   for (auto open = path.find('{'); open != std::string::npos;
        open = path.find('{', current)) {
     absl::StrAppend(&output, path.substr(current, open - current + 1));
@@ -105,6 +107,8 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
     current = close;
   }
   absl::StrAppend(&output, path.substr(current));
+  absl::StrReplaceAll({{"{+", "{"}}, &output);
+  //  std::cout << __func__ << " output=" << output << "\n";
   return output;
 }
 

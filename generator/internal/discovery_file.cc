@@ -15,6 +15,7 @@
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
@@ -101,8 +102,12 @@ package $package_name$;
   }
 
   for (auto const& t : types_) {
+    //    std::cout << __func__ << " t->name()=" << t->name() << std::endl;
     auto message = t->JsonToProtobufMessage(types, package_name_);
-    if (!message) return std::move(message).status();
+    if (!message) {
+      std::cout << __func__ << " error=" << message.status() << std::endl;
+      return std::move(message).status();
+    }
     printer.Print("\n");
     printer.Print(vars, std::move(message)->c_str());
   }
@@ -113,13 +118,20 @@ package $package_name$;
 Status DiscoveryFile::WriteFile(
     DiscoveryDocumentProperties const& document_properties,
     std::map<std::string, DiscoveryTypeVertex> const& types) const {
-  std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
-  std::string service_dir_path =
-      version_dir_path.substr(0, version_dir_path.rfind('/'));
-  MakeDirectory(service_dir_path);
-  MakeDirectory(version_dir_path);
-  std::ofstream os(file_path_);
-  return FormatFile(document_properties, types, os);
+  try {
+    std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
+    std::string service_dir_path =
+        version_dir_path.substr(0, version_dir_path.rfind('/'));
+    //    std::cout << __func__ << " file_path_=" << file_path_ << "\n";
+    MakeDirectory(service_dir_path);
+    MakeDirectory(version_dir_path);
+    std::ofstream os(file_path_);
+    return FormatFile(document_properties, types, os);
+  } catch (std::exception& e) {
+    std::cerr << __func__ << " Caught Exception" << std::endl;
+    std::cout << __func__ << " Caught Exception" << std::endl;
+    return internal::InternalError("Caught Exception");
+  }
 }
 
 }  // namespace generator_internal

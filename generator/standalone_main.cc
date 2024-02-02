@@ -449,7 +449,10 @@ int main(int argc, char** argv) {
   if (args.generate_discovery_protos) {
     auto result =
         GenerateProtosForRestProducts(args, config->discovery_products());
-    if (!result.ok()) GCP_LOG(FATAL) << result;
+    if (!result.ok()) {
+      std::cerr << result << std::endl;
+      GCP_LOG(FATAL) << result;
+    }
     return 0;
   }
 

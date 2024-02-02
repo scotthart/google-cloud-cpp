@@ -481,7 +481,7 @@ service {
   gen_async_rpcs: ["CheckConsistency"]
   retryable_status_codes: ["kUnavailable", "kAborted"]
   idempotency_overrides: [
-    {rpc_name: "BigtableTableAdmin.CheckConsistency", idempotency: IDEMPOTENT}
+    { rpc_name: "BigtableTableAdmin.CheckConsistency" idempotency: IDEMPOTENT }
   ]
   omit_repo_metadata: true
 }
@@ -606,6 +606,83 @@ service {
   forwarding_product_path: "google/cloud/composer"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+}
+
+## BigQuery
+discovery_products {
+  discovery_document_url: "file:///workspace/generator/discovery/bigquery_public_google_rest_v2.json"
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/datasets/v2/datasets.proto"
+    product_path: "google/cloud/bigquery/datasets/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/jobs/v2/jobs.proto"
+    product_path: "google/cloud/bigquery/jobs/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/models/v2/models.proto"
+    product_path: "google/cloud/bigquery/models/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/projects/v2/projects.proto"
+    product_path: "google/cloud/bigquery/projects/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/routines/v2/routines.proto"
+    product_path: "google/cloud/bigquery/routines/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/row_access_policies/v2/row_access_policies.proto"
+    product_path: "google/cloud/bigquery/row_access_policies/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/tabledata/v2/tabledata.proto"
+    product_path: "google/cloud/bigquery/tabledata/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
+
+ rest_services {
+    service_proto_path: "google/cloud/bigquery/tables/v2/tables.proto"
+    product_path: "google/cloud/bigquery/tables/v2"
+    initial_copyright_year: "2024"
+    retryable_status_codes: ["kUnavailable"]
+    generate_rest_transport: true
+    generate_grpc_transport: false
+  }
 }
 
 # Compute
@@ -2204,10 +2281,10 @@ service {
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
   idempotency_overrides: [
-    {rpc_name: "IAMCredentials.GenerateAccessToken", idempotency: IDEMPOTENT},
-    {rpc_name: "IAMCredentials.GenerateIdToken", idempotency: IDEMPOTENT},
-    {rpc_name: "IAMCredentials.SignBlob", idempotency: IDEMPOTENT},
-    {rpc_name: "IAMCredentials.SignJwt", idempotency: IDEMPOTENT}
+    { rpc_name: "IAMCredentials.GenerateAccessToken" idempotency: IDEMPOTENT },
+    { rpc_name: "IAMCredentials.GenerateIdToken" idempotency: IDEMPOTENT },
+    { rpc_name: "IAMCredentials.SignBlob" idempotency: IDEMPOTENT },
+    { rpc_name: "IAMCredentials.SignJwt" idempotency: IDEMPOTENT }
   ]
 }
 
@@ -2224,10 +2301,10 @@ service {
     "SignJwt(std::string const&, std::string const&)"
   ]
   idempotency_overrides: [
-    {rpc_name: "IAM.QueryGrantableRoles", idempotency: IDEMPOTENT},
-    {rpc_name: "IAM.QueryTestablePermissions", idempotency: IDEMPOTENT},
-    {rpc_name: "IAM.QueryAuditableServices", idempotency: IDEMPOTENT},
-    {rpc_name: "IAM.LintPolicy", idempotency: IDEMPOTENT}
+    { rpc_name: "IAM.QueryGrantableRoles" idempotency: IDEMPOTENT },
+    { rpc_name: "IAM.QueryTestablePermissions" idempotency: IDEMPOTENT },
+    { rpc_name: "IAM.QueryAuditableServices" idempotency: IDEMPOTENT },
+    { rpc_name: "IAM.LintPolicy" idempotency: IDEMPOTENT }
   ]
 
 }
@@ -2652,10 +2729,10 @@ service {
     "StreamingPull"
   ]
   omit_repo_metadata: true
-  service_name_mapping { key: "Publisher" value: "TopicAdmin"}
-  service_name_mapping { key: "Subscriber" value: "SubscriptionAdmin"}
-  service_name_to_comment { key: "TopicAdmin" value: " A service to manipulate topics."}
-  service_name_to_comment { key: "SubscriptionAdmin" value: " A service to manipulate subscriptions."}
+  service_name_mapping { key: "Publisher" value: "TopicAdmin" }
+  service_name_mapping { key: "Subscriber" value: "SubscriptionAdmin" }
+  service_name_to_comment { key: "TopicAdmin" value: " A service to manipulate topics." }
+  service_name_to_comment { key: "SubscriptionAdmin" value: " A service to manipulate subscriptions." }
 }
 
 service {
@@ -3371,7 +3448,7 @@ service {
   initial_copyright_year: "2023"
   retryable_status_codes: ["kUnavailable"]
   idempotency_overrides: [
-    {rpc_name: "TraceService.PatchTraces", idempotency: IDEMPOTENT}
+    { rpc_name: "TraceService.PatchTraces" idempotency: IDEMPOTENT }
   ]
 }
 
