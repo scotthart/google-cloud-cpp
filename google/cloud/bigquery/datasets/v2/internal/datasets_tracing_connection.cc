@@ -31,51 +31,71 @@ DatasetsTracingConnection::DatasetsTracingConnection(
     std::shared_ptr<bigquery_datasets_v2::DatasetsConnection> child)
     : child_(std::move(child)) {}
 
-Status
-DatasetsTracingConnection::DeleteDataset(google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::DeleteDataset");
+Status DatasetsTracingConnection::DeleteDataset(
+    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::DeleteDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteDataset(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsTracingConnection::GetDataset(google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::GetDataset");
+DatasetsTracingConnection::GetDataset(
+    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::GetDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetDataset(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsTracingConnection::InsertDataset(google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::InsertDataset");
+DatasetsTracingConnection::InsertDataset(
+    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::InsertDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertDataset(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
-DatasetsTracingConnection::ListDatasets(google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::ListDatasets");
+DatasetsTracingConnection::ListDatasets(
+    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::ListDatasets");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListDatasets(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsTracingConnection::PatchDataset(google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::PatchDataset");
+DatasetsTracingConnection::PatchDataset(
+    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::PatchDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchDataset(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsTracingConnection::Undelete(google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::Undelete");
+DatasetsTracingConnection::Undelete(
+    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::Undelete");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Undelete(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsTracingConnection::UpdateDataset(google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_datasets_v2::DatasetsConnection::UpdateDataset");
+DatasetsTracingConnection::UpdateDataset(
+    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_datasets_v2::DatasetsConnection::UpdateDataset");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateDataset(request));
 }

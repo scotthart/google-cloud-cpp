@@ -36,15 +36,17 @@ class TabledataConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TabledataConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request);
+  virtual google::cloud::Idempotency InsertAll(
+      google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request);
+  virtual google::cloud::Idempotency ListTabledata(
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request);
 };
 
 std::unique_ptr<TabledataConnectionIdempotencyPolicy>
-    MakeDefaultTabledataConnectionIdempotencyPolicy();
+MakeDefaultTabledataConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_tabledata_v2

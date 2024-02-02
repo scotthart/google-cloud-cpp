@@ -89,11 +89,8 @@ endforeach ()
 
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/v2/" "" short_dir "${dir}")
-    bigquery_service_library(
-        ${dir}
-        bigquery_${short_dir}
-        DEPS
-        google-cloud-cpp::bigquery_${short_dir}_protos)
+    bigquery_service_library(${dir} bigquery_${short_dir} DEPS
+                             google-cloud-cpp::bigquery_${short_dir}_protos)
     list(APPEND bigquery_lib_targets "bigquery_${short_dir}")
 endforeach ()
 
@@ -102,9 +99,11 @@ target_link_libraries(
     google_cloud_cpp_bigquery_generated
     PUBLIC
     INTERFACE ${bigquery_lib_targets})
-set_target_properties(google_cloud_cpp_bigquery_generated
-                      PROPERTIES EXPORT_NAME "google-cloud-cpp::bigquery_generated")
-add_library(google-cloud-cpp::bigquery_generated ALIAS google_cloud_cpp_bigquery_generated)
+set_target_properties(
+    google_cloud_cpp_bigquery_generated
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::bigquery_generated")
+add_library(google-cloud-cpp::bigquery_generated ALIAS
+            google_cloud_cpp_bigquery_generated)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -143,21 +142,17 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
         "include/google/cloud/bigquery")
 endforeach ()
 
-#if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-#    add_executable(bigquery_quickstart "quickstart/quickstart.cc")
-#    target_link_libraries(bigquery_quickstart
-#                          PRIVATE google-cloud-cpp::bigquery_disks)
-#    google_cloud_cpp_add_common_options(bigquery_quickstart)
-#    add_test(
-#        NAME bigquery_quickstart
-#        COMMAND
-#            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-#            $<TARGET_FILE:bigquery_quickstart> GOOGLE_CLOUD_PROJECT
-#            GOOGLE_CLOUD_CPP_TEST_ZONE)
-#    set_tests_properties(bigquery_quickstart
-#                         PROPERTIES LABELS "integration-test;quickstart")
-#    add_subdirectory(integration_tests)
-#endif ()
+# if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+# add_executable(bigquery_quickstart "quickstart/quickstart.cc")
+# target_link_libraries(bigquery_quickstart PRIVATE
+# google-cloud-cpp::bigquery_disks)
+# google_cloud_cpp_add_common_options(bigquery_quickstart) add_test( NAME
+# bigquery_quickstart COMMAND cmake -P
+# "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+# $<TARGET_FILE:bigquery_quickstart> GOOGLE_CLOUD_PROJECT
+# GOOGLE_CLOUD_CPP_TEST_ZONE) set_tests_properties(bigquery_quickstart
+# PROPERTIES LABELS "integration-test;quickstart")
+# add_subdirectory(integration_tests) endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)
@@ -165,7 +160,8 @@ include(GNUInstallDirs)
 # Export the CMake targets to make it easy to create configuration files.
 install(
     EXPORT google_cloud_cpp_bigquery_generated-targets
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_generated"
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_generated"
     COMPONENT google_cloud_cpp_development)
 
 # Install the libraries and headers in the locations determined by
@@ -184,7 +180,8 @@ install(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_bigquery_generated-config.cmake" @ONLY)
+configure_file("config.cmake.in"
+               "google_cloud_cpp_bigquery_generated-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_bigquery_generated-config-version.cmake"
     VERSION ${PROJECT_VERSION}
@@ -194,7 +191,8 @@ install(
     FILES
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_generated-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery_generated-config-version.cmake"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_generated"
+    DESTINATION
+        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery_generated"
     COMPONENT google_cloud_cpp_development)
 
 foreach (dir IN LISTS operation_service_dirs)

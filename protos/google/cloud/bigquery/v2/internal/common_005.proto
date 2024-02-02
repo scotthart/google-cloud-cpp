@@ -47,11 +47,11 @@ message BiEngineReason {
   // acceleration.
   // TABLE_EXCLUDED: One or more tables were not eligible for BI Engine
   // acceleration.
-  optional string code = 1 [json_name="code"];
+  optional string code = 1 [json_name = "code"];
 
   // Output only. Free form human-readable reason for partial or disabled
   // acceleration.
-  optional string message = 2 [json_name="message"];
+  optional string message = 2 [json_name = "message"];
 }
 
 // Statistics for a BI Engine specific query. Populated as part of
@@ -66,7 +66,7 @@ message BiEngineStatistics {
   // bi_engine_reasons for why parts of the query were not accelerated.
   // FULL_INPUT: All of the query inputs were accelerated using BI Engine.
   // FULL_QUERY: All of the query was accelerated using BI Engine.
-  optional string acceleration_mode = 1 [json_name="accelerationMode"];
+  optional string acceleration_mode = 1 [json_name = "accelerationMode"];
 
   // Output only. Specifies which mode of BI Engine acceleration was performed
   // (if any).
@@ -76,20 +76,21 @@ message BiEngineStatistics {
   // PARTIAL: Part of the query was accelerated using BI Engine. See
   // bi_engine_reasons for why parts of the query were not accelerated.
   // FULL: All of the query was accelerated using BI Engine.
-  optional string bi_engine_mode = 2 [json_name="biEngineMode"];
+  optional string bi_engine_mode = 2 [json_name = "biEngineMode"];
 
   // In case of DISABLED or PARTIAL bi_engine_mode, these contain the
   // explanatory reasons as to why BI Engine could not accelerate. In case the
   // full query was accelerated, this field is not populated.
-  repeated BiEngineReason bi_engine_reasons = 3 [json_name="biEngineReasons"];
+  repeated BiEngineReason bi_engine_reasons = 3 [json_name = "biEngineReasons"];
 }
 
 message BigQueryModelTraining {
   // Deprecated.
-  optional int32 current_iteration = 1 [json_name="currentIteration"];
+  optional int32 current_iteration = 1 [json_name = "currentIteration"];
 
   // Deprecated.
-  optional string expected_total_iterations = 2 [json_name="expectedTotalIterations"];
+  optional string expected_total_iterations = 2
+      [json_name = "expectedTotalIterations"];
 }
 
 // A connection-level property to customize query behavior. Under JDBC, these
@@ -110,22 +111,22 @@ message BigQueryModelTraining {
 // connection properties with the same key returns an error.
 message ConnectionProperty {
   // The key of the property to set.
-  optional string key = 1 [json_name="key"];
+  optional string key = 1 [json_name = "key"];
 
   // The value of the property to set.
-  optional string value = 2 [json_name="value"];
+  optional string value = 2 [json_name = "value"];
 }
 
 // Options for data format adjustments.
 message DataFormatOptions {
   // Optional. Output timestamp as usec int64. Default is false.
-  optional bool use_int64_timestamp = 1 [json_name="useInt64Timestamp"];
+  optional bool use_int64_timestamp = 1 [json_name = "useInt64Timestamp"];
 }
 
 // Statistics for data-masking.
 message DataMaskingStatistics {
   // Whether any accessed data was protected by the data masking.
-  optional bool data_masking_applied = 1 [json_name="dataMaskingApplied"];
+  optional bool data_masking_applied = 1 [json_name = "dataMaskingApplied"];
 }
 
 // Properties for the destination table.
@@ -134,144 +135,146 @@ message DestinationTableProperties {
   // if the destination table is newly created. If the table already exists and
   // a value different than the current description is provided, the job will
   // fail.
-  optional string description = 1 [json_name="description"];
+  optional string description = 1 [json_name = "description"];
 
   // Internal use only.
-  optional string expiration_time = 2 [json_name="expirationTime"];
+  optional string expiration_time = 2 [json_name = "expirationTime"];
 
   // Optional. Friendly name for the destination table. If the table already
   // exists, it should be same as the existing friendly name.
-  optional string friendly_name = 3 [json_name="friendlyName"];
+  optional string friendly_name = 3 [json_name = "friendlyName"];
 
   // Optional. The labels associated with this table. You can use these to
   // organize and group your tables. This will only be used if the destination
   // table is newly created. If the table already exists and labels are
   // different than the current labels are provided, the job will fail.
-  map<string, string> labels = 4 [json_name="labels"];
+  map<string, string> labels = 4 [json_name = "labels"];
 }
 
 // Detailed statistics for DML statements
 message DmlStatistics {
   // Output only. Number of deleted Rows. populated by DML DELETE, MERGE and
   // TRUNCATE statements.
-  optional string deleted_row_count = 1 [json_name="deletedRowCount"];
+  optional string deleted_row_count = 1 [json_name = "deletedRowCount"];
 
   // Output only. Number of inserted Rows. Populated by DML INSERT and MERGE
   // statements
-  optional string inserted_row_count = 2 [json_name="insertedRowCount"];
+  optional string inserted_row_count = 2 [json_name = "insertedRowCount"];
 
   // Output only. Number of updated Rows. Populated by DML UPDATE and MERGE
   // statements.
-  optional string updated_row_count = 3 [json_name="updatedRowCount"];
+  optional string updated_row_count = 3 [json_name = "updatedRowCount"];
 }
 
 // A single stage of query execution.
 message ExplainQueryStage {
   // Number of parallel input segments completed.
-  optional string completed_parallel_inputs = 1 [json_name="completedParallelInputs"];
+  optional string completed_parallel_inputs = 1
+      [json_name = "completedParallelInputs"];
 
   // Output only. Compute mode for this stage.
   // COMPUTE_MODE_UNSPECIFIED: ComputeMode type not specified.
   // BIGQUERY: This stage was processed using BigQuery slots.
   // BI_ENGINE: This stage was processed using BI Engine compute.
-  optional string compute_mode = 2 [json_name="computeMode"];
+  optional string compute_mode = 2 [json_name = "computeMode"];
 
   // Milliseconds the average shard spent on CPU-bound tasks.
-  optional string compute_ms_avg = 3 [json_name="computeMsAvg"];
+  optional string compute_ms_avg = 3 [json_name = "computeMsAvg"];
 
   // Milliseconds the slowest shard spent on CPU-bound tasks.
-  optional string compute_ms_max = 4 [json_name="computeMsMax"];
+  optional string compute_ms_max = 4 [json_name = "computeMsMax"];
 
   // Relative amount of time the average shard spent on CPU-bound tasks.
-  optional double compute_ratio_avg = 5 [json_name="computeRatioAvg"];
+  optional double compute_ratio_avg = 5 [json_name = "computeRatioAvg"];
 
   // Relative amount of time the slowest shard spent on CPU-bound tasks.
-  optional double compute_ratio_max = 6 [json_name="computeRatioMax"];
+  optional double compute_ratio_max = 6 [json_name = "computeRatioMax"];
 
   // Stage end time represented as milliseconds since the epoch.
-  optional string end_ms = 7 [json_name="endMs"];
+  optional string end_ms = 7 [json_name = "endMs"];
 
   // Unique ID for the stage within the plan.
-  optional string id = 8 [json_name="id"];
+  optional string id = 8 [json_name = "id"];
 
   // IDs for stages that are inputs to this stage.
-  repeated string input_stages = 9 [json_name="inputStages"];
+  repeated string input_stages = 9 [json_name = "inputStages"];
 
   // Human-readable name for the stage.
-  optional string name = 10 [json_name="name"];
+  optional string name = 10 [json_name = "name"];
 
   // Number of parallel input segments to be processed
-  optional string parallel_inputs = 11 [json_name="parallelInputs"];
+  optional string parallel_inputs = 11 [json_name = "parallelInputs"];
 
   // Milliseconds the average shard spent reading input.
-  optional string read_ms_avg = 12 [json_name="readMsAvg"];
+  optional string read_ms_avg = 12 [json_name = "readMsAvg"];
 
   // Milliseconds the slowest shard spent reading input.
-  optional string read_ms_max = 13 [json_name="readMsMax"];
+  optional string read_ms_max = 13 [json_name = "readMsMax"];
 
   // Relative amount of time the average shard spent reading input.
-  optional double read_ratio_avg = 14 [json_name="readRatioAvg"];
+  optional double read_ratio_avg = 14 [json_name = "readRatioAvg"];
 
   // Relative amount of time the slowest shard spent reading input.
-  optional double read_ratio_max = 15 [json_name="readRatioMax"];
+  optional double read_ratio_max = 15 [json_name = "readRatioMax"];
 
   // Number of records read into the stage.
-  optional string records_read = 16 [json_name="recordsRead"];
+  optional string records_read = 16 [json_name = "recordsRead"];
 
   // Number of records written by the stage.
-  optional string records_written = 17 [json_name="recordsWritten"];
+  optional string records_written = 17 [json_name = "recordsWritten"];
 
   // Total number of bytes written to shuffle.
-  optional string shuffle_output_bytes = 18 [json_name="shuffleOutputBytes"];
+  optional string shuffle_output_bytes = 18 [json_name = "shuffleOutputBytes"];
 
   // Total number of bytes written to shuffle and spilled to disk.
-  optional string shuffle_output_bytes_spilled = 19 [json_name="shuffleOutputBytesSpilled"];
+  optional string shuffle_output_bytes_spilled = 19
+      [json_name = "shuffleOutputBytesSpilled"];
 
   // Slot-milliseconds used by the stage.
-  optional string slot_ms = 20 [json_name="slotMs"];
+  optional string slot_ms = 20 [json_name = "slotMs"];
 
   // Stage start time represented as milliseconds since the epoch.
-  optional string start_ms = 21 [json_name="startMs"];
+  optional string start_ms = 21 [json_name = "startMs"];
 
   // Current status for this stage.
-  optional string status = 22 [json_name="status"];
+  optional string status = 22 [json_name = "status"];
 
   // List of operations within the stage in dependency order (approximately
   // chronological).
-  repeated ExplainQueryStep steps = 23 [json_name="steps"];
+  repeated ExplainQueryStep steps = 23 [json_name = "steps"];
 
   // Milliseconds the average shard spent waiting to be scheduled.
-  optional string wait_ms_avg = 24 [json_name="waitMsAvg"];
+  optional string wait_ms_avg = 24 [json_name = "waitMsAvg"];
 
   // Milliseconds the slowest shard spent waiting to be scheduled.
-  optional string wait_ms_max = 25 [json_name="waitMsMax"];
+  optional string wait_ms_max = 25 [json_name = "waitMsMax"];
 
   // Relative amount of time the average shard spent waiting to be scheduled.
-  optional double wait_ratio_avg = 26 [json_name="waitRatioAvg"];
+  optional double wait_ratio_avg = 26 [json_name = "waitRatioAvg"];
 
   // Relative amount of time the slowest shard spent waiting to be scheduled.
-  optional double wait_ratio_max = 27 [json_name="waitRatioMax"];
+  optional double wait_ratio_max = 27 [json_name = "waitRatioMax"];
 
   // Milliseconds the average shard spent on writing output.
-  optional string write_ms_avg = 28 [json_name="writeMsAvg"];
+  optional string write_ms_avg = 28 [json_name = "writeMsAvg"];
 
   // Milliseconds the slowest shard spent on writing output.
-  optional string write_ms_max = 29 [json_name="writeMsMax"];
+  optional string write_ms_max = 29 [json_name = "writeMsMax"];
 
   // Relative amount of time the average shard spent on writing output.
-  optional double write_ratio_avg = 30 [json_name="writeRatioAvg"];
+  optional double write_ratio_avg = 30 [json_name = "writeRatioAvg"];
 
   // Relative amount of time the slowest shard spent on writing output.
-  optional double write_ratio_max = 31 [json_name="writeRatioMax"];
+  optional double write_ratio_max = 31 [json_name = "writeRatioMax"];
 }
 
 // An operation within a stage.
 message ExplainQueryStep {
   // Machine-readable operation type.
-  optional string kind = 1 [json_name="kind"];
+  optional string kind = 1 [json_name = "kind"];
 
   // Human-readable description of the step(s).
-  repeated string substeps = 2 [json_name="substeps"];
+  repeated string substeps = 2 [json_name = "substeps"];
 }
 
 // Statistics for the EXPORT DATA statement as part of Query Job. EXTRACT JOB
@@ -279,11 +282,11 @@ message ExplainQueryStep {
 message ExportDataStatistics {
   // Number of destination files generated in case of EXPORT DATA statement
   // only.
-  optional string file_count = 1 [json_name="fileCount"];
+  optional string file_count = 1 [json_name = "fileCount"];
 
   // [Alpha] Number of destination rows generated in case of EXPORT DATA
   // statement only.
-  optional string row_count = 2 [json_name="rowCount"];
+  optional string row_count = 2 [json_name = "rowCount"];
 }
 
 // The external service cost is a portion of the total cost, these costs are not
@@ -298,27 +301,27 @@ message ExportDataStatistics {
 // purposes. Output only.
 message ExternalServiceCost {
   // External service cost in terms of bigquery bytes billed.
-  optional string bytes_billed = 1 [json_name="bytesBilled"];
+  optional string bytes_billed = 1 [json_name = "bytesBilled"];
 
   // External service cost in terms of bigquery bytes processed.
-  optional string bytes_processed = 2 [json_name="bytesProcessed"];
+  optional string bytes_processed = 2 [json_name = "bytesProcessed"];
 
   // External service name.
-  optional string external_service = 3 [json_name="externalService"];
+  optional string external_service = 3 [json_name = "externalService"];
 
   // Non-preemptable reserved slots used for external job. For example, reserved
   // slots for Cloua AI Platform job are the VM usages converted to BigQuery
   // slot with equivalent mount of price.
-  optional string reserved_slot_count = 4 [json_name="reservedSlotCount"];
+  optional string reserved_slot_count = 4 [json_name = "reservedSlotCount"];
 
   // External service cost in terms of bigquery slot milliseconds.
-  optional string slot_ms = 5 [json_name="slotMs"];
+  optional string slot_ms = 5 [json_name = "slotMs"];
 }
 
 // Response object of GetQueryResults.
 message GetQueryResultsResponse {
   // Whether the query result was fetched from the query cache.
-  optional bool cache_hit = 1 [json_name="cacheHit"];
+  optional bool cache_hit = 1 [json_name = "cacheHit"];
 
   // Output only. The first errors or warnings encountered during the running of
   // the job. The final message includes the number of errors that caused the
@@ -326,33 +329,33 @@ message GetQueryResultsResponse {
   // completed or was unsuccessful. For more information about error messages,
   // see [Error
   // messages](https://cloud.google.com/bigquery/docs/error-messages).
-  repeated ErrorProto errors = 2 [json_name="errors"];
+  repeated ErrorProto errors = 2 [json_name = "errors"];
 
   // A hash of this response.
-  optional string etag = 3 [json_name="etag"];
+  optional string etag = 3 [json_name = "etag"];
 
   // Whether the query has completed or not. If rows or totalRows are present,
   // this will always be true. If this is false, totalRows will not be
   // available.
-  optional bool job_complete = 4 [json_name="jobComplete"];
+  optional bool job_complete = 4 [json_name = "jobComplete"];
 
   // Reference to the BigQuery Job that was created to run the query. This field
   // will be present even if the original request timed out, in which case
   // GetQueryResults can be used to read the results once the query has
   // completed. Since this API only returns the first page of results,
   // subsequent pages can be fetched via the same mechanism (GetQueryResults).
-  optional JobReference job_reference = 5 [json_name="jobReference"];
+  optional JobReference job_reference = 5 [json_name = "jobReference"];
 
   // The resource type of the response.
-  optional string kind = 6 [json_name="kind"];
+  optional string kind = 6 [json_name = "kind"];
 
   // Output only. The number of rows affected by a DML statement. Present only
   // for DML statements INSERT, UPDATE or DELETE.
-  optional string num_dml_affected_rows = 7 [json_name="numDmlAffectedRows"];
+  optional string num_dml_affected_rows = 7 [json_name = "numDmlAffectedRows"];
 
   // A token used for paging results. When this token is non-empty, it indicates
   // additional results are available.
-  optional string page_token = 8 [json_name="pageToken"];
+  optional string page_token = 8 [json_name = "pageToken"];
 
   // An object with as many results as can be contained within the maximum
   // permitted reply size. To get any additional rows, you can call
@@ -360,41 +363,42 @@ message GetQueryResultsResponse {
   // when the query completes successfully. The REST-based representation of
   // this data leverages a series of JSON f,v objects for indicating fields and
   // values.
-  repeated TableRow rows = 9 [json_name="rows"];
+  repeated TableRow rows = 9 [json_name = "rows"];
 
   // The schema of the results. Present only when the query completes
   // successfully.
-  optional TableSchema schema = 10 [json_name="schema"];
+  optional TableSchema schema = 10 [json_name = "schema"];
 
   // The total number of bytes processed for this query.
-  optional string total_bytes_processed = 11 [json_name="totalBytesProcessed"];
+  optional string total_bytes_processed = 11
+      [json_name = "totalBytesProcessed"];
 
   // The total number of rows in the complete query result set, which can be
   // more than the number of rows in this single page of results. Present only
   // when the query completes successfully.
-  optional string total_rows = 12 [json_name="totalRows"];
+  optional string total_rows = 12 [json_name = "totalRows"];
 }
 
 // High cardinality join detailed information.
 message HighCardinalityJoin {
   // Output only. Count of left input rows.
-  optional string left_rows = 1 [json_name="leftRows"];
+  optional string left_rows = 1 [json_name = "leftRows"];
 
   // Output only. Count of the output rows.
-  optional string output_rows = 2 [json_name="outputRows"];
+  optional string output_rows = 2 [json_name = "outputRows"];
 
   // Output only. Count of right input rows.
-  optional string right_rows = 3 [json_name="rightRows"];
+  optional string right_rows = 3 [json_name = "rightRows"];
 
   // Output only. The index of the join operator in the ExplainQueryStep lists.
-  optional int32 step_index = 4 [json_name="stepIndex"];
+  optional int32 step_index = 4 [json_name = "stepIndex"];
 }
 
 // Reason about why no search index was used in the search query (or sub-query).
 message IndexUnusedReason {
   // Specifies the base table involved in the reason that no search index was
   // used.
-  optional TableReference base_table = 1 [json_name="baseTable"];
+  optional TableReference base_table = 1 [json_name = "baseTable"];
 
   // Specifies the high-level reason for the scenario when no search index was
   // used.
@@ -443,92 +447,94 @@ message IndexUnusedReason {
   // index was not used.
   // OTHER_REASON: Indicates that the reason search indexes cannot be used in
   // the query is not covered by any of the other IndexUnusedReason options.
-  optional string code = 2 [json_name="code"];
+  optional string code = 2 [json_name = "code"];
 
   // Specifies the name of the unused search index, if available.
-  optional string index_name = 3 [json_name="indexName"];
+  optional string index_name = 3 [json_name = "indexName"];
 
   // Free form human-readable reason for the scenario when no search index was
   // used.
-  optional string message = 4 [json_name="message"];
+  optional string message = 4 [json_name = "message"];
 }
 
 // Details about the input data change insight.
 message InputDataChange {
   // Output only. Records read difference percentage compared to a previous run.
-  optional float records_read_diff_percentage = 1 [json_name="recordsReadDiffPercentage"];
+  optional float records_read_diff_percentage = 1
+      [json_name = "recordsReadDiffPercentage"];
 }
 
 message Job {
   // Required. Describes the job configuration.
-  optional JobConfiguration configuration = 1 [json_name="configuration"];
+  optional JobConfiguration configuration = 1 [json_name = "configuration"];
 
   // Output only. A hash of this resource.
-  optional string etag = 2 [json_name="etag"];
+  optional string etag = 2 [json_name = "etag"];
 
   // Output only. Opaque ID field of the job.
-  optional string id = 3 [json_name="id"];
+  optional string id = 3 [json_name = "id"];
 
   // Output only. If set, it provides the reason why a Job was created. If not
   // set, it should be treated as the default: REQUESTED. This feature is not
   // yet available. Jobs will always be created.
-  optional JobCreationReason job_creation_reason = 4 [json_name="jobCreationReason"];
+  optional JobCreationReason job_creation_reason = 4
+      [json_name = "jobCreationReason"];
 
   // Optional. Reference describing the unique-per-user name of the job.
-  optional JobReference job_reference = 5 [json_name="jobReference"];
+  optional JobReference job_reference = 5 [json_name = "jobReference"];
 
   // Output only. The type of the resource.
-  optional string kind = 6 [json_name="kind"];
+  optional string kind = 6 [json_name = "kind"];
 
   // Output only. [Full-projection-only] String representation of identity of
   // requesting party. Populated for both first- and third-party identities.
   // Only present for APIs that support third-party identities.
-  optional string principal_subject = 7 [json_name="principal_subject"];
+  optional string principal_subject = 7 [json_name = "principal_subject"];
 
   // Output only. A URL that can be used to access the resource again.
-  optional string self_link = 8 [json_name="selfLink"];
+  optional string self_link = 8 [json_name = "selfLink"];
 
   // Output only. Information about the job, including starting time and ending
   // time of the job.
-  optional JobStatistics statistics = 9 [json_name="statistics"];
+  optional JobStatistics statistics = 9 [json_name = "statistics"];
 
   // Output only. The status of this job. Examine this value when polling an
   // asynchronous job to see if the job is complete.
-  optional JobStatus status = 10 [json_name="status"];
+  optional JobStatus status = 10 [json_name = "status"];
 
   // Output only. Email address of the user who ran the job.
-  optional string user_email = 11 [json_name="user_email"];
+  optional string user_email = 11 [json_name = "user_email"];
 }
 
 // Describes format of a jobs cancellation response.
 message JobCancelResponse {
   // The final state of the job.
-  optional Job job = 1 [json_name="job"];
+  optional Job job = 1 [json_name = "job"];
 
   // The resource type of the response.
-  optional string kind = 2 [json_name="kind"];
+  optional string kind = 2 [json_name = "kind"];
 }
 
 message JobConfiguration {
   // [Pick one] Copies a table.
-  optional JobConfigurationTableCopy copy = 1 [json_name="copy"];
+  optional JobConfigurationTableCopy copy = 1 [json_name = "copy"];
 
   // Optional. If set, don't actually run this job. A valid query will return a
   // mostly empty response with some processing statistics, while an invalid
   // query will return the same error it would if it wasn't a dry run. Behavior
   // of non-query jobs is undefined.
-  optional bool dry_run = 2 [json_name="dryRun"];
+  optional bool dry_run = 2 [json_name = "dryRun"];
 
   // [Pick one] Configures an extract job.
-  optional JobConfigurationExtract extract = 3 [json_name="extract"];
+  optional JobConfigurationExtract extract = 3 [json_name = "extract"];
 
   // Optional. Job timeout in milliseconds. If this time limit is exceeded,
   // BigQuery might attempt to stop the job.
-  optional string job_timeout_ms = 4 [json_name="jobTimeoutMs"];
+  optional string job_timeout_ms = 4 [json_name = "jobTimeoutMs"];
 
   // Output only. The type of the job. Can be QUERY, LOAD, EXTRACT, COPY or
   // UNKNOWN.
-  optional string job_type = 5 [json_name="jobType"];
+  optional string job_type = 5 [json_name = "jobType"];
 
   // The labels associated with this job. You can use these to organize and
   // group your jobs. Label keys and values can be no longer than 63 characters,
@@ -536,13 +542,13 @@ message JobConfiguration {
   // dashes. International characters are allowed. Label values are optional.
   // Label keys must start with a letter and each label in the list must have a
   // different key.
-  map<string, string> labels = 6 [json_name="labels"];
+  map<string, string> labels = 6 [json_name = "labels"];
 
   // [Pick one] Configures a load job.
-  optional JobConfigurationLoad load = 7 [json_name="load"];
+  optional JobConfigurationLoad load = 7 [json_name = "load"];
 
   // [Pick one] Configures a query job.
-  optional JobConfigurationQuery query = 8 [json_name="query"];
+  optional JobConfigurationQuery query = 8 [json_name = "query"];
 }
 
 // JobConfigurationExtract configures a job that exports data from a BigQuery
@@ -553,45 +559,46 @@ message JobConfigurationExtract {
   // Not all compression formats are support for all file formats. DEFLATE is
   // only supported for Avro. ZSTD is only supported for Parquet. Not applicable
   // when extracting models.
-  optional string compression = 1 [json_name="compression"];
+  optional string compression = 1 [json_name = "compression"];
 
   // Optional. The exported file format. Possible values include CSV,
   // NEWLINE_DELIMITED_JSON, PARQUET, or AVRO for tables and ML_TF_SAVED_MODEL
   // or ML_XGBOOST_BOOSTER for models. The default value for tables is CSV.
   // Tables with nested or repeated fields cannot be exported as CSV. The
   // default value for models is ML_TF_SAVED_MODEL.
-  optional string destination_format = 2 [json_name="destinationFormat"];
+  optional string destination_format = 2 [json_name = "destinationFormat"];
 
   // [Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as
   // necessary. The fully-qualified Google Cloud Storage URI where the extracted
   // table should be written.
-  optional string destination_uri = 3 [json_name="destinationUri"];
+  optional string destination_uri = 3 [json_name = "destinationUri"];
 
   // [Pick one] A list of fully-qualified Google Cloud Storage URIs where the
   // extracted table should be written.
-  repeated string destination_uris = 4 [json_name="destinationUris"];
+  repeated string destination_uris = 4 [json_name = "destinationUris"];
 
   // Optional. When extracting data in CSV format, this defines the delimiter to
   // use between fields in the exported data. Default is ','. Not applicable
   // when extracting models.
-  optional string field_delimiter = 5 [json_name="fieldDelimiter"];
+  optional string field_delimiter = 5 [json_name = "fieldDelimiter"];
 
   // Optional. Model extract options only applicable when extracting models.
-  optional ModelExtractOptions model_extract_options = 6 [json_name="modelExtractOptions"];
+  optional ModelExtractOptions model_extract_options = 6
+      [json_name = "modelExtractOptions"];
 
   // Optional. Whether to print out a header row in the results. Default is
   // true. Not applicable when extracting models.
-  optional bool print_header = 7 [json_name="printHeader"];
+  optional bool print_header = 7 [json_name = "printHeader"];
 
   // A reference to the model being exported.
-  optional ModelReference source_model = 8 [json_name="sourceModel"];
+  optional ModelReference source_model = 8 [json_name = "sourceModel"];
 
   // A reference to the table being exported.
-  optional TableReference source_table = 9 [json_name="sourceTable"];
+  optional TableReference source_table = 9 [json_name = "sourceTable"];
 
   // Whether to use logical types when extracting to AVRO format. Not applicable
   // when extracting models.
-  optional bool use_avro_logical_types = 10 [json_name="useAvroLogicalTypes"];
+  optional bool use_avro_logical_types = 10 [json_name = "useAvroLogicalTypes"];
 }
 
 // JobConfigurationLoad contains the configuration properties for loading data
@@ -602,23 +609,24 @@ message JobConfigurationLoad {
   // trailing columns are treated as bad records, and if there are too many bad
   // records, an invalid error is returned in the job result. The default value
   // is false. Only applicable to CSV, ignored for other formats.
-  optional bool allow_jagged_rows = 1 [json_name="allowJaggedRows"];
+  optional bool allow_jagged_rows = 1 [json_name = "allowJaggedRows"];
 
   // Indicates if BigQuery should allow quoted data sections that contain
   // newline characters in a CSV file. The default value is false.
-  optional bool allow_quoted_newlines = 2 [json_name="allowQuotedNewlines"];
+  optional bool allow_quoted_newlines = 2 [json_name = "allowQuotedNewlines"];
 
   // Optional. Indicates if we should automatically infer the options and schema
   // for CSV and JSON sources.
-  optional bool autodetect = 3 [json_name="autodetect"];
+  optional bool autodetect = 3 [json_name = "autodetect"];
 
   // Clustering specification for the destination table.
-  optional Clustering clustering = 4 [json_name="clustering"];
+  optional Clustering clustering = 4 [json_name = "clustering"];
 
   // Optional. Connection properties which can modify the load job behavior.
   // Currently, only the 'session_id' connection property is supported, and is
   // used to resolve _SESSION appearing as the dataset id.
-  repeated ConnectionProperty connection_properties = 5 [json_name="connectionProperties"];
+  repeated ConnectionProperty connection_properties = 5
+      [json_name = "connectionProperties"];
 
   // Optional. Specifies whether the job is allowed to create new tables. The
   // following values are supported: * CREATE_IF_NEEDED: If the table does not
@@ -626,7 +634,7 @@ message JobConfigurationLoad {
   // exist. If it does not, a 'notFound' error is returned in the job result.
   // The default value is CREATE_IF_NEEDED. Creation, truncation and append
   // actions occur as one atomic update upon job completion.
-  optional string create_disposition = 6 [json_name="createDisposition"];
+  optional string create_disposition = 6 [json_name = "createDisposition"];
 
   // Optional. If this property is true, the job creates a new session using a
   // randomly generated session_id. To continue using a created session with
@@ -635,7 +643,7 @@ message JobConfigurationLoad {
   // the `SessionInfo` message within the query statistics. The new session's
   // location will be set to `Job.JobReference.location` if it is present,
   // otherwise it's set to the default location based on existing routing logic.
-  optional bool create_session = 7 [json_name="createSession"];
+  optional bool create_session = 7 [json_name = "createSession"];
 
   // Defines the list of possible SQL data types to which the source decimal
   // values are converted. This list and the precision and the scale parameters
@@ -655,17 +663,20 @@ message JobConfigurationLoad {
   // same as ["NUMERIC", "BIGNUMERIC"] and NUMERIC always takes precedence over
   // BIGNUMERIC. Defaults to ["NUMERIC", "STRING"] for ORC and ["NUMERIC"] for
   // the other file formats.
-  repeated string decimal_target_types = 8 [json_name="decimalTargetTypes"];
+  repeated string decimal_target_types = 8 [json_name = "decimalTargetTypes"];
 
   // Custom encryption configuration (e.g., Cloud KMS keys)
-  optional EncryptionConfiguration destination_encryption_configuration = 9 [json_name="destinationEncryptionConfiguration"];
+  optional EncryptionConfiguration destination_encryption_configuration = 9
+      [json_name = "destinationEncryptionConfiguration"];
 
   // [Required] The destination table to load the data into.
-  optional TableReference destination_table = 10 [json_name="destinationTable"];
+  optional TableReference destination_table = 10
+      [json_name = "destinationTable"];
 
   // Optional. [Experimental] Properties with which to create the destination
   // table if it is new.
-  optional DestinationTableProperties destination_table_properties = 11 [json_name="destinationTableProperties"];
+  optional DestinationTableProperties destination_table_properties = 11
+      [json_name = "destinationTableProperties"];
 
   // Optional. The character encoding of the data. The supported values are
   // UTF-8, ISO-8859-1, UTF-16BE, UTF-16LE, UTF-32BE, and UTF-32LE. The default
@@ -678,7 +689,7 @@ message JobConfigurationLoad {
   // by using the `--encoding` flag. If BigQuery can't convert a character other
   // than the ASCII `0` character, BigQuery converts the character to the
   // standard Unicode replacement character: �.
-  optional string encoding = 12 [json_name="encoding"];
+  optional string encoding = 12 [json_name = "encoding"];
 
   // Optional. The separator character for fields in a CSV file. The separator
   // is interpreted as a single byte. For files encoded in ISO-8859-1, any
@@ -689,7 +700,7 @@ message JobConfigurationLoad {
   // fields. The remaining bytes will be treated as a part of the field.
   // BigQuery also supports the escape sequence "\t" (U+0009) to specify a tab
   // separator. The default value is comma (",", U+002C).
-  optional string field_delimiter = 13 [json_name="fieldDelimiter"];
+  optional string field_delimiter = 13 [json_name = "fieldDelimiter"];
 
   // Optional. Specifies how source URIs are interpreted for constructing the
   // file set to load. By default, source URIs are expanded against the
@@ -702,13 +713,14 @@ message JobConfigurationLoad {
   // FILE_SET_SPEC_TYPE_NEW_LINE_DELIMITED_MANIFEST: This option indicates that
   // the provided URIs are newline-delimited manifest files, with one URI per
   // line. Wildcard URIs are not supported.
-  optional string file_set_spec_type = 14 [json_name="fileSetSpecType"];
+  optional string file_set_spec_type = 14 [json_name = "fileSetSpecType"];
 
   // Optional. When set, configures hive partitioning support. Not all storage
   // formats support hive partitioning -- requesting hive partitioning on an
   // unsupported format will lead to an error, as will providing an invalid
   // specification.
-  optional HivePartitioningOptions hive_partitioning_options = 15 [json_name="hivePartitioningOptions"];
+  optional HivePartitioningOptions hive_partitioning_options = 15
+      [json_name = "hivePartitioningOptions"];
 
   // Optional. Indicates if BigQuery should allow extra values that are not
   // represented in the table schema. If true, the extra values are ignored. If
@@ -718,7 +730,7 @@ message JobConfigurationLoad {
   // BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values
   // that don't match any column names in the table schema Avro, Parquet, ORC:
   // Fields in the file schema that don't exist in the table schema.
-  optional bool ignore_unknown_values = 16 [json_name="ignoreUnknownValues"];
+  optional bool ignore_unknown_values = 16 [json_name = "ignoreUnknownValues"];
 
   // Optional. Load option to be used together with source_format
   // newline-delimited JSON to indicate that a variant of JSON is being loaded.
@@ -729,14 +741,14 @@ message JobConfigurationLoad {
   // parsed without any modification.
   // GEOJSON: Use GeoJSON variant of JSON. See
   // https://tools.ietf.org/html/rfc7946.
-  optional string json_extension = 17 [json_name="jsonExtension"];
+  optional string json_extension = 17 [json_name = "jsonExtension"];
 
   // Optional. The maximum number of bad records that BigQuery can ignore when
   // running the job. If the number of bad records exceeds this value, an
   // invalid error is returned in the job result. The default value is 0, which
   // requires that all records are valid. This is only supported for CSV and
   // NEWLINE_DELIMITED_JSON file formats.
-  optional int32 max_bad_records = 18 [json_name="maxBadRecords"];
+  optional int32 max_bad_records = 18 [json_name = "maxBadRecords"];
 
   // Optional. Specifies a string that represents a null value in a CSV file.
   // For example, if you specify "\N", BigQuery interprets "\N" as a null value
@@ -744,15 +756,16 @@ message JobConfigurationLoad {
   // this property to a custom value, BigQuery throws an error if an empty
   // string is present for all data types except for STRING and BYTE. For STRING
   // and BYTE columns, BigQuery interprets the empty string as an empty value.
-  optional string null_marker = 19 [json_name="nullMarker"];
+  optional string null_marker = 19 [json_name = "nullMarker"];
 
   // Optional. Additional properties to set if sourceFormat is set to PARQUET.
-  optional ParquetOptions parquet_options = 20 [json_name="parquetOptions"];
+  optional ParquetOptions parquet_options = 20 [json_name = "parquetOptions"];
 
   // Optional. When sourceFormat is set to "CSV", this indicates whether the
   // embedded ASCII control characters (the first 32 characters in the
   // ASCII-table, from '\x00' to '\x1F') are preserved.
-  optional bool preserve_ascii_control_characters = 21 [json_name="preserveAsciiControlCharacters"];
+  optional bool preserve_ascii_control_characters = 21
+      [json_name = "preserveAsciiControlCharacters"];
 
   // If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity
   // properties to load into BigQuery from a Cloud Datastore backup. Property
@@ -760,7 +773,7 @@ message JobConfigurationLoad {
   // are specified, BigQuery loads all properties. If any named property isn't
   // found in the Cloud Datastore backup, an invalid error is returned in the
   // job result.
-  repeated string projection_fields = 22 [json_name="projectionFields"];
+  repeated string projection_fields = 22 [json_name = "projectionFields"];
 
   // Optional. The value that is used to quote data sections in a CSV file.
   // BigQuery converts the string to ISO-8859-1 encoding, and then uses the
@@ -772,29 +785,31 @@ message JobConfigurationLoad {
   // character within a quoted value, precede it with an additional matching
   // quote character. For example, if you want to escape the default character '
   // " ', use ' "" '. @default "
-  optional string quote = 23 [json_name="quote"];
+  optional string quote = 23 [json_name = "quote"];
 
   // Range partitioning specification for the destination table. Only one of
   // timePartitioning and rangePartitioning should be specified.
-  optional RangePartitioning range_partitioning = 24 [json_name="rangePartitioning"];
+  optional RangePartitioning range_partitioning = 24
+      [json_name = "rangePartitioning"];
 
   // Optional. The user can provide a reference file with the reader schema.
   // This file is only loaded if it is part of source URIs, but is not loaded
   // otherwise. It is enabled for the following formats: AVRO, PARQUET, ORC.
-  optional string reference_file_schema_uri = 25 [json_name="referenceFileSchemaUri"];
+  optional string reference_file_schema_uri = 25
+      [json_name = "referenceFileSchemaUri"];
 
   // Optional. The schema for the destination table. The schema can be omitted
   // if the destination table already exists, or if you're loading data from
   // Google Cloud Datastore.
-  optional TableSchema schema = 26 [json_name="schema"];
+  optional TableSchema schema = 26 [json_name = "schema"];
 
   // [Deprecated] The inline schema. For CSV schemas, specify as
   // "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER,
   // baz:FLOAT".
-  optional string schema_inline = 27 [json_name="schemaInline"];
+  optional string schema_inline = 27 [json_name = "schemaInline"];
 
   // [Deprecated] The format of the schemaInline property.
-  optional string schema_inline_format = 28 [json_name="schemaInlineFormat"];
+  optional string schema_inline_format = 28 [json_name = "schemaInlineFormat"];
 
   // Allows the schema of the destination table to be updated as a side effect
   // of the load job if a schema is autodetected or supplied in the job
@@ -806,7 +821,8 @@ message JobConfigurationLoad {
   // ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema. *
   // ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original
   // schema to nullable.
-  repeated string schema_update_options = 29 [json_name="schemaUpdateOptions"];
+  repeated string schema_update_options = 29
+      [json_name = "schemaUpdateOptions"];
 
   // Optional. The number of rows at the top of a CSV file that BigQuery will
   // skip when loading the data. The default value is 0. This property is useful
@@ -819,13 +835,13 @@ message JobConfigurationLoad {
   // skipLeadingRows = N > 0 - Autodetect skips N-1 rows and tries to detect
   // headers in row N. If headers are not detected, row N is just skipped.
   // Otherwise row N is used to extract column names for the detected schema.
-  optional int32 skip_leading_rows = 30 [json_name="skipLeadingRows"];
+  optional int32 skip_leading_rows = 30 [json_name = "skipLeadingRows"];
 
   // Optional. The format of the data files. For CSV files, specify "CSV". For
   // datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON,
   // specify "NEWLINE_DELIMITED_JSON". For Avro, specify "AVRO". For parquet,
   // specify "PARQUET". For orc, specify "ORC". The default value is CSV.
-  optional string source_format = 31 [json_name="sourceFormat"];
+  optional string source_format = 31 [json_name = "sourceFormat"];
 
   // [Required] The fully-qualified URIs that point to your data in Google
   // Cloud. For Google Cloud Storage URIs: Each URI can contain one '*' wildcard
@@ -835,16 +851,17 @@ message JobConfigurationLoad {
   // HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore
   // backups: Exactly one URI can be specified. Also, the '*' wildcard character
   // is not allowed.
-  repeated string source_uris = 32 [json_name="sourceUris"];
+  repeated string source_uris = 32 [json_name = "sourceUris"];
 
   // Time-based partitioning specification for the destination table. Only one
   // of timePartitioning and rangePartitioning should be specified.
-  optional TimePartitioning time_partitioning = 33 [json_name="timePartitioning"];
+  optional TimePartitioning time_partitioning = 33
+      [json_name = "timePartitioning"];
 
   // Optional. If sourceFormat is set to "AVRO", indicates whether to interpret
   // logical types as the corresponding BigQuery data type (for example,
   // TIMESTAMP), instead of using the raw type (for example, INTEGER).
-  optional bool use_avro_logical_types = 34 [json_name="useAvroLogicalTypes"];
+  optional bool use_avro_logical_types = 34 [json_name = "useAvroLogicalTypes"];
 
   // Optional. Specifies the action that occurs if the destination table already
   // exists. The following values are supported: * WRITE_TRUNCATE: If the table
@@ -856,7 +873,7 @@ message JobConfigurationLoad {
   // only occurs if BigQuery is able to complete the job successfully. Creation,
   // truncation and append actions occur as one atomic update upon job
   // completion.
-  optional string write_disposition = 35 [json_name="writeDisposition"];
+  optional string write_disposition = 35 [json_name = "writeDisposition"];
 }
 
 // JobConfigurationQuery configures a BigQuery query job.
@@ -867,17 +884,18 @@ message JobConfigurationQuery {
   // ignored and large results are always allowed. However, you must still set
   // destinationTable when result size exceeds the allowed maximum response
   // size.
-  optional bool allow_large_results = 1 [json_name="allowLargeResults"];
+  optional bool allow_large_results = 1 [json_name = "allowLargeResults"];
 
   // Clustering specification for the destination table.
-  optional Clustering clustering = 2 [json_name="clustering"];
+  optional Clustering clustering = 2 [json_name = "clustering"];
 
   // Connection properties which can modify the query behavior.
-  repeated ConnectionProperty connection_properties = 3 [json_name="connectionProperties"];
+  repeated ConnectionProperty connection_properties = 3
+      [json_name = "connectionProperties"];
 
   // [Optional] Specifies whether the query should be executed as a continuous
   // query. The default value is false.
-  optional bool continuous = 4 [json_name="continuous"];
+  optional bool continuous = 4 [json_name = "continuous"];
 
   // Optional. Specifies whether the job is allowed to create new tables. The
   // following values are supported: * CREATE_IF_NEEDED: If the table does not
@@ -885,7 +903,7 @@ message JobConfigurationQuery {
   // exist. If it does not, a 'notFound' error is returned in the job result.
   // The default value is CREATE_IF_NEEDED. Creation, truncation and append
   // actions occur as one atomic update upon job completion.
-  optional string create_disposition = 5 [json_name="createDisposition"];
+  optional string create_disposition = 5 [json_name = "createDisposition"];
 
   // If this property is true, the job creates a new session using a randomly
   // generated session_id. To continue using a created session with subsequent
@@ -894,7 +912,7 @@ message JobConfigurationQuery {
   // message within the query statistics. The new session's location will be set
   // to `Job.JobReference.location` if it is present, otherwise it's set to the
   // default location based on existing routing logic.
-  optional bool create_session = 6 [json_name="createSession"];
+  optional bool create_session = 6 [json_name = "createSession"];
 
   // Optional. Specifies the default dataset to use for unqualified table names
   // in the query. This setting does not alter behavior of unqualified dataset
@@ -902,22 +920,24 @@ message JobConfigurationQuery {
   // behavior. See
   // https://cloud.google.com/bigquery/docs/reference/system-variables for more
   // information on system variables.
-  optional DatasetReference default_dataset = 7 [json_name="defaultDataset"];
+  optional DatasetReference default_dataset = 7 [json_name = "defaultDataset"];
 
   // Custom encryption configuration (e.g., Cloud KMS keys)
-  optional EncryptionConfiguration destination_encryption_configuration = 8 [json_name="destinationEncryptionConfiguration"];
+  optional EncryptionConfiguration destination_encryption_configuration = 8
+      [json_name = "destinationEncryptionConfiguration"];
 
   // Optional. Describes the table where the query results should be stored.
   // This property must be set for large results that exceed the maximum
   // response size. For queries that produce anonymous (cached) results, this
   // field will be populated by BigQuery.
-  optional TableReference destination_table = 9 [json_name="destinationTable"];
+  optional TableReference destination_table = 9
+      [json_name = "destinationTable"];
 
   // Optional. If true and query uses legacy SQL dialect, flattens all nested
   // and repeated fields in the query results. allowLargeResults must be true if
   // this is set to false. For GoogleSQL queries, this flag is ignored and
   // results are never flattened.
-  optional bool flatten_results = 10 [json_name="flattenResults"];
+  optional bool flatten_results = 10 [json_name = "flattenResults"];
 
   // Optional. [Deprecated] Maximum billing tier allowed for this query. The
   // billing tier controls the amount of compute resources allotted to the
@@ -928,34 +948,35 @@ message JobConfigurationQuery {
   // The billed byte amount can be multiplied by an amount up to this number!
   // Most users should not need to alter this setting, and we recommend that you
   // avoid introducing new uses of it.
-  optional int32 maximum_billing_tier = 11 [json_name="maximumBillingTier"];
+  optional int32 maximum_billing_tier = 11 [json_name = "maximumBillingTier"];
 
   // Limits the bytes billed for this job. Queries that will have bytes billed
   // beyond this limit will fail (without incurring a charge). If unspecified,
   // this will be set to your project default.
-  optional string maximum_bytes_billed = 12 [json_name="maximumBytesBilled"];
+  optional string maximum_bytes_billed = 12 [json_name = "maximumBytesBilled"];
 
   // GoogleSQL only. Set to POSITIONAL to use positional (?) query parameters or
   // to NAMED to use named (@myparam) query parameters in this query.
-  optional string parameter_mode = 13 [json_name="parameterMode"];
+  optional string parameter_mode = 13 [json_name = "parameterMode"];
 
   // [Deprecated] This property is deprecated.
-  optional bool preserve_nulls = 14 [json_name="preserveNulls"];
+  optional bool preserve_nulls = 14 [json_name = "preserveNulls"];
 
   // Optional. Specifies a priority for the query. Possible values include
   // INTERACTIVE and BATCH. The default value is INTERACTIVE.
-  optional string priority = 15 [json_name="priority"];
+  optional string priority = 15 [json_name = "priority"];
 
   // [Required] SQL query text to execute. The useLegacySql field can be used to
   // indicate whether the query uses legacy SQL or GoogleSQL.
-  optional string query = 16 [json_name="query"];
+  optional string query = 16 [json_name = "query"];
 
   // Query parameters for GoogleSQL queries.
-  repeated QueryParameter query_parameters = 17 [json_name="queryParameters"];
+  repeated QueryParameter query_parameters = 17 [json_name = "queryParameters"];
 
   // Range partitioning specification for the destination table. Only one of
   // timePartitioning and rangePartitioning should be specified.
-  optional RangePartitioning range_partitioning = 18 [json_name="rangePartitioning"];
+  optional RangePartitioning range_partitioning = 18
+      [json_name = "rangePartitioning"];
 
   // Allows the schema of the destination table to be updated as a side effect
   // of the query job. Schema update options are supported in two cases: when
@@ -966,42 +987,47 @@ message JobConfigurationQuery {
   // ALLOW_FIELD_ADDITION: allow adding a nullable field to the schema. *
   // ALLOW_FIELD_RELAXATION: allow relaxing a required field in the original
   // schema to nullable.
-  repeated string schema_update_options = 19 [json_name="schemaUpdateOptions"];
+  repeated string schema_update_options = 19
+      [json_name = "schemaUpdateOptions"];
 
   // Options controlling the execution of scripts.
-  optional ScriptOptions script_options = 20 [json_name="scriptOptions"];
+  optional ScriptOptions script_options = 20 [json_name = "scriptOptions"];
 
   // Output only. System variables for GoogleSQL queries. A system variable is
   // output if the variable is settable and its value differs from the system
   // default. "@@" prefix is not included in the name of the System variables.
-  optional SystemVariables system_variables = 21 [json_name="systemVariables"];
+  optional SystemVariables system_variables = 21
+      [json_name = "systemVariables"];
 
   // Optional. You can specify external table definitions, which operate as
   // ephemeral tables that can be queried. These definitions are configured
   // using a JSON map, where the string key represents the table identifier, and
   // the value is the corresponding external data configuration object.
-  map<string, ExternalDataConfiguration> table_definitions = 22 [json_name="tableDefinitions"];
+  map<string, ExternalDataConfiguration> table_definitions = 22
+      [json_name = "tableDefinitions"];
 
   // Time-based partitioning specification for the destination table. Only one
   // of timePartitioning and rangePartitioning should be specified.
-  optional TimePartitioning time_partitioning = 23 [json_name="timePartitioning"];
+  optional TimePartitioning time_partitioning = 23
+      [json_name = "timePartitioning"];
 
   // Optional. Specifies whether to use BigQuery's legacy SQL dialect for this
   // query. The default value is true. If set to false, the query will use
   // BigQuery's GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ When
   // useLegacySql is set to false, the value of flattenResults is ignored; query
   // will be run as if flattenResults is false.
-  optional bool use_legacy_sql = 24 [json_name="useLegacySql"];
+  optional bool use_legacy_sql = 24 [json_name = "useLegacySql"];
 
   // Optional. Whether to look for the result in the query cache. The query
   // cache is a best-effort cache that will be flushed whenever tables in the
   // query are modified. Moreover, the query cache is only available when a
   // query does not have a destination table specified. The default value is
   // true.
-  optional bool use_query_cache = 25 [json_name="useQueryCache"];
+  optional bool use_query_cache = 25 [json_name = "useQueryCache"];
 
   // Describes user-defined function resources used in the query.
-  repeated UserDefinedFunctionResource user_defined_function_resources = 26 [json_name="userDefinedFunctionResources"];
+  repeated UserDefinedFunctionResource user_defined_function_resources = 26
+      [json_name = "userDefinedFunctionResources"];
 
   // Optional. Specifies the action that occurs if the destination table already
   // exists. The following values are supported: * WRITE_TRUNCATE: If the table
@@ -1013,7 +1039,7 @@ message JobConfigurationQuery {
   // only occurs if BigQuery is able to complete the job successfully. Creation,
   // truncation and append actions occur as one atomic update upon job
   // completion.
-  optional string write_disposition = 27 [json_name="writeDisposition"];
+  optional string write_disposition = 27 [json_name = "writeDisposition"];
 }
 
 // JobConfigurationTableCopy configures a job that copies data from one table to
@@ -1026,17 +1052,20 @@ message JobConfigurationTableCopy {
   // exist. If it does not, a 'notFound' error is returned in the job result.
   // The default value is CREATE_IF_NEEDED. Creation, truncation and append
   // actions occur as one atomic update upon job completion.
-  optional string create_disposition = 1 [json_name="createDisposition"];
+  optional string create_disposition = 1 [json_name = "createDisposition"];
 
   // Custom encryption configuration (e.g., Cloud KMS keys).
-  optional EncryptionConfiguration destination_encryption_configuration = 2 [json_name="destinationEncryptionConfiguration"];
+  optional EncryptionConfiguration destination_encryption_configuration = 2
+      [json_name = "destinationEncryptionConfiguration"];
 
   // Optional. The time when the destination table expires. Expired tables will
   // be deleted and their storage reclaimed.
-  optional string destination_expiration_time = 3 [json_name="destinationExpirationTime"];
+  optional string destination_expiration_time = 3
+      [json_name = "destinationExpirationTime"];
 
   // [Required] The destination table.
-  optional TableReference destination_table = 4 [json_name="destinationTable"];
+  optional TableReference destination_table = 4
+      [json_name = "destinationTable"];
 
   // Optional. Supported operation types in table copy job.
   // OPERATION_TYPE_UNSPECIFIED: Unspecified operation type.
@@ -1047,13 +1076,13 @@ message JobConfigurationTableCopy {
   // is TABLE.
   // CLONE: The source and destination table have the same table type, but only
   // bill for unique data.
-  optional string operation_type = 5 [json_name="operationType"];
+  optional string operation_type = 5 [json_name = "operationType"];
 
   // [Pick one] Source table to copy.
-  optional TableReference source_table = 6 [json_name="sourceTable"];
+  optional TableReference source_table = 6 [json_name = "sourceTable"];
 
   // [Pick one] Source tables to copy.
-  repeated TableReference source_tables = 7 [json_name="sourceTables"];
+  repeated TableReference source_tables = 7 [json_name = "sourceTables"];
 
   // Optional. Specifies the action that occurs if the destination table already
   // exists. The following values are supported: * WRITE_TRUNCATE: If the table
@@ -1065,7 +1094,7 @@ message JobConfigurationTableCopy {
   // and only occurs if BigQuery is able to complete the job successfully.
   // Creation, truncation and append actions occur as one atomic update upon job
   // completion.
-  optional string write_disposition = 8 [json_name="writeDisposition"];
+  optional string write_disposition = 8 [json_name = "writeDisposition"];
 }
 
 // Reason about why a Job was created from a
@@ -1086,63 +1115,63 @@ message JobCreationReason {
   // LARGE_RESULTS: The results from the query cannot fit in the response.
   // OTHER: BigQuery has determined that the query needs to be executed as a
   // Job.
-  optional string code = 1 [json_name="code"];
+  optional string code = 1 [json_name = "code"];
 }
 
 // JobList is the response format for a jobs.list call.
 message JobList {
   // A hash of this page of results.
-  optional string etag = 1 [json_name="etag"];
+  optional string etag = 1 [json_name = "etag"];
 
   message JobsItem {
     // Required. Describes the job configuration.
-    optional JobConfiguration configuration = 1 [json_name="configuration"];
+    optional JobConfiguration configuration = 1 [json_name = "configuration"];
 
     // A result object that will be present only if the job has failed.
-    optional ErrorProto error_result = 2 [json_name="errorResult"];
+    optional ErrorProto error_result = 2 [json_name = "errorResult"];
 
     // Unique opaque ID of the job.
-    optional string id = 3 [json_name="id"];
+    optional string id = 3 [json_name = "id"];
 
     // Unique opaque ID of the job.
-    optional JobReference job_reference = 4 [json_name="jobReference"];
+    optional JobReference job_reference = 4 [json_name = "jobReference"];
 
     // The resource type.
-    optional string kind = 5 [json_name="kind"];
+    optional string kind = 5 [json_name = "kind"];
 
     // [Full-projection-only] String representation of identity of requesting
     // party. Populated for both first- and third-party identities. Only present
     // for APIs that support third-party identities.
-    optional string principal_subject = 6 [json_name="principal_subject"];
+    optional string principal_subject = 6 [json_name = "principal_subject"];
 
     // Running state of the job. When the state is DONE, errorResult can be
     // checked to determine whether the job succeeded or failed.
-    optional string state = 7 [json_name="state"];
+    optional string state = 7 [json_name = "state"];
 
     // Output only. Information about the job, including starting time and
     // ending time of the job.
-    optional JobStatistics statistics = 8 [json_name="statistics"];
+    optional JobStatistics statistics = 8 [json_name = "statistics"];
 
     // [Full-projection-only] Describes the status of this job.
-    optional JobStatus status = 9 [json_name="status"];
+    optional JobStatus status = 9 [json_name = "status"];
 
     // [Full-projection-only] Email address of the user who ran the job.
-    optional string user_email = 10 [json_name="user_email"];
+    optional string user_email = 10 [json_name = "user_email"];
   }
 
   // List of jobs that were requested.
-  repeated JobsItem jobs = 2 [json_name="jobs"];
+  repeated JobsItem jobs = 2 [json_name = "jobs"];
 
   // The resource type of the response.
-  optional string kind = 3 [json_name="kind"];
+  optional string kind = 3 [json_name = "kind"];
 
   // A token to request the next page of results.
-  optional string next_page_token = 4 [json_name="nextPageToken"];
+  optional string next_page_token = 4 [json_name = "nextPageToken"];
 
   // A list of skipped locations that were unreachable. For more information
   // about BigQuery locations, see:
   // https://cloud.google.com/bigquery/docs/locations. Example: "europe-west5"
-  repeated string unreachable = 5 [json_name="unreachable"];
+  repeated string unreachable = 5 [json_name = "unreachable"];
 }
 
 // A job reference is a fully qualified identifier for referring to a job.
@@ -1150,111 +1179,119 @@ message JobReference {
   // Required. The ID of the job. The ID must contain only letters (a-z, A-Z),
   // numbers (0-9), underscores (_), or dashes (-). The maximum length is 1,024
   // characters.
-  optional string job_id = 1 [json_name="jobId"];
+  optional string job_id = 1 [json_name = "jobId"];
 
   // Optional. The geographic location of the job. The default value is US. For
   // more information about BigQuery locations, see:
   // https://cloud.google.com/bigquery/docs/locations
-  optional string location = 2 [json_name="location"];
+  optional string location = 2 [json_name = "location"];
 
   // Required. The ID of the project containing this job.
-  optional string project_id = 3 [json_name="projectId"];
+  optional string project_id = 3 [json_name = "projectId"];
 }
 
 // Statistics for a single job execution.
 message JobStatistics {
   // Output only. [TrustedTester] Job progress (0.0 -> 1.0) for LOAD and EXTRACT
   // jobs.
-  optional double completion_ratio = 1 [json_name="completionRatio"];
+  optional double completion_ratio = 1 [json_name = "completionRatio"];
 
   // Output only. Statistics for a copy job.
-  optional JobStatistics5 copy = 2 [json_name="copy"];
+  optional JobStatistics5 copy = 2 [json_name = "copy"];
 
   // Output only. Creation time of this job, in milliseconds since the epoch.
   // This field will be present on all jobs.
-  optional string creation_time = 3 [json_name="creationTime"];
+  optional string creation_time = 3 [json_name = "creationTime"];
 
   // Output only. Statistics for data-masking. Present only for query and
   // extract jobs.
-  optional DataMaskingStatistics data_masking_statistics = 4 [json_name="dataMaskingStatistics"];
+  optional DataMaskingStatistics data_masking_statistics = 4
+      [json_name = "dataMaskingStatistics"];
 
   // Output only. End time of this job, in milliseconds since the epoch. This
   // field will be present whenever a job is in the DONE state.
-  optional string end_time = 5 [json_name="endTime"];
+  optional string end_time = 5 [json_name = "endTime"];
 
   // Output only. Statistics for an extract job.
-  optional JobStatistics4 extract = 6 [json_name="extract"];
+  optional JobStatistics4 extract = 6 [json_name = "extract"];
 
   // Output only. The duration in milliseconds of the execution of the final
   // attempt of this job, as BigQuery may internally re-attempt to execute the
   // job.
-  optional string final_execution_duration_ms = 7 [json_name="finalExecutionDurationMs"];
+  optional string final_execution_duration_ms = 7
+      [json_name = "finalExecutionDurationMs"];
 
   // Output only. Statistics for a load job.
-  optional JobStatistics3 load = 8 [json_name="load"];
+  optional JobStatistics3 load = 8 [json_name = "load"];
 
   // Output only. Number of child jobs executed.
-  optional string num_child_jobs = 9 [json_name="numChildJobs"];
+  optional string num_child_jobs = 9 [json_name = "numChildJobs"];
 
   // Output only. If this is a child job, specifies the job ID of the parent.
-  optional string parent_job_id = 10 [json_name="parentJobId"];
+  optional string parent_job_id = 10 [json_name = "parentJobId"];
 
   // Output only. Statistics for a query job.
-  optional JobStatistics2 query = 11 [json_name="query"];
+  optional JobStatistics2 query = 11 [json_name = "query"];
 
   // Output only. Quotas which delayed this job's start time.
-  repeated string quota_deferments = 12 [json_name="quotaDeferments"];
+  repeated string quota_deferments = 12 [json_name = "quotaDeferments"];
 
   message ReservationUsageItem {
     // Reservation name or "unreserved" for on-demand resources usage.
-    optional string name = 1 [json_name="name"];
+    optional string name = 1 [json_name = "name"];
 
     // Total slot milliseconds used by the reservation for a particular job.
-    optional string slot_ms = 2 [json_name="slotMs"];
+    optional string slot_ms = 2 [json_name = "slotMs"];
   }
 
   // Output only. Job resource usage breakdown by reservation. This field
   // reported misleading information and will no longer be populated.
-  repeated ReservationUsageItem reservation_usage = 13 [json_name="reservationUsage"];
+  repeated ReservationUsageItem reservation_usage = 13
+      [json_name = "reservationUsage"];
 
   // Output only. Name of the primary reservation assigned to this job. Note
   // that this could be different than reservations reported in the reservation
   // usage field if parent reservations were used to execute this job.
-  optional string reservation_id = 14 [json_name="reservation_id"];
+  optional string reservation_id = 14 [json_name = "reservation_id"];
 
   // Output only. Statistics for row-level security. Present only for query and
   // extract jobs.
-  optional RowLevelSecurityStatistics row_level_security_statistics = 15 [json_name="rowLevelSecurityStatistics"];
+  optional RowLevelSecurityStatistics row_level_security_statistics = 15
+      [json_name = "rowLevelSecurityStatistics"];
 
   // Output only. If this a child job of a script, specifies information about
   // the context of this job within the script.
-  optional ScriptStatistics script_statistics = 16 [json_name="scriptStatistics"];
+  optional ScriptStatistics script_statistics = 16
+      [json_name = "scriptStatistics"];
 
   // Output only. Information of the session if this job is part of one.
-  optional SessionInfo session_info = 17 [json_name="sessionInfo"];
+  optional SessionInfo session_info = 17 [json_name = "sessionInfo"];
 
   // Output only. Start time of this job, in milliseconds since the epoch. This
   // field will be present when the job transitions from the PENDING state to
   // either RUNNING or DONE.
-  optional string start_time = 18 [json_name="startTime"];
+  optional string start_time = 18 [json_name = "startTime"];
 
   // Output only. Total bytes processed for the job.
-  optional string total_bytes_processed = 19 [json_name="totalBytesProcessed"];
+  optional string total_bytes_processed = 19
+      [json_name = "totalBytesProcessed"];
 
   // Output only. Slot-milliseconds for the job.
-  optional string total_slot_ms = 20 [json_name="totalSlotMs"];
+  optional string total_slot_ms = 20 [json_name = "totalSlotMs"];
 
   // Output only. [Alpha] Information of the multi-statement transaction if this
   // job is part of one. This property is only expected on a child job or a job
   // that is in a session. A script parent job is not part of the transaction
   // started in the script.
-  optional TransactionInfo transaction_info = 21 [json_name="transactionInfo"];
+  optional TransactionInfo transaction_info = 21
+      [json_name = "transactionInfo"];
 }
 
 // Statistics for a query job.
 message JobStatistics2 {
   // Output only. BI Engine specific Statistics.
-  optional BiEngineStatistics bi_engine_statistics = 1 [json_name="biEngineStatistics"];
+  optional BiEngineStatistics bi_engine_statistics = 1
+      [json_name = "biEngineStatistics"];
 
   // Output only. Billing tier for the job. This is a BigQuery-specific concept
   // which is not related to the Google Cloud notion of "free tier". The value
@@ -1263,125 +1300,147 @@ message JobStatistics2 {
   // queries within this limit are billed at the standard on-demand rates.
   // On-demand queries that exceed this limit will fail with a
   // billingTierLimitExceeded error.
-  optional int32 billing_tier = 2 [json_name="billingTier"];
+  optional int32 billing_tier = 2 [json_name = "billingTier"];
 
   // Output only. Whether the query result was fetched from the query cache.
-  optional bool cache_hit = 3 [json_name="cacheHit"];
+  optional bool cache_hit = 3 [json_name = "cacheHit"];
 
   // Output only. Referenced dataset for DCL statement.
-  optional DatasetReference dcl_target_dataset = 4 [json_name="dclTargetDataset"];
+  optional DatasetReference dcl_target_dataset = 4
+      [json_name = "dclTargetDataset"];
 
   // Output only. Referenced table for DCL statement.
-  optional TableReference dcl_target_table = 5 [json_name="dclTargetTable"];
+  optional TableReference dcl_target_table = 5 [json_name = "dclTargetTable"];
 
   // Output only. Referenced view for DCL statement.
-  optional TableReference dcl_target_view = 6 [json_name="dclTargetView"];
+  optional TableReference dcl_target_view = 6 [json_name = "dclTargetView"];
 
   // Output only. The number of row access policies affected by a DDL statement.
   // Present only for DROP ALL ROW ACCESS POLICIES queries.
-  optional string ddl_affected_row_access_policy_count = 7 [json_name="ddlAffectedRowAccessPolicyCount"];
+  optional string ddl_affected_row_access_policy_count = 7
+      [json_name = "ddlAffectedRowAccessPolicyCount"];
 
   // Output only. The table after rename. Present only for ALTER TABLE RENAME TO
   // query.
-  optional TableReference ddl_destination_table = 8 [json_name="ddlDestinationTable"];
+  optional TableReference ddl_destination_table = 8
+      [json_name = "ddlDestinationTable"];
 
   // Output only. The DDL operation performed, possibly dependent on the
   // pre-existence of the DDL target.
-  optional string ddl_operation_performed = 9 [json_name="ddlOperationPerformed"];
+  optional string ddl_operation_performed = 9
+      [json_name = "ddlOperationPerformed"];
 
   // Output only. The DDL target dataset. Present only for CREATE/ALTER/DROP
   // SCHEMA(dataset) queries.
-  optional DatasetReference ddl_target_dataset = 10 [json_name="ddlTargetDataset"];
+  optional DatasetReference ddl_target_dataset = 10
+      [json_name = "ddlTargetDataset"];
 
   // Output only. [Beta] The DDL target routine. Present only for CREATE/DROP
   // FUNCTION/PROCEDURE queries.
-  optional RoutineReference ddl_target_routine = 11 [json_name="ddlTargetRoutine"];
+  optional RoutineReference ddl_target_routine = 11
+      [json_name = "ddlTargetRoutine"];
 
   // Output only. The DDL target row access policy. Present only for CREATE/DROP
   // ROW ACCESS POLICY queries.
-  optional RowAccessPolicyReference ddl_target_row_access_policy = 12 [json_name="ddlTargetRowAccessPolicy"];
+  optional RowAccessPolicyReference ddl_target_row_access_policy = 12
+      [json_name = "ddlTargetRowAccessPolicy"];
 
   // Output only. The DDL target table. Present only for CREATE/DROP TABLE/VIEW
   // and DROP ALL ROW ACCESS POLICIES queries.
-  optional TableReference ddl_target_table = 13 [json_name="ddlTargetTable"];
+  optional TableReference ddl_target_table = 13 [json_name = "ddlTargetTable"];
 
   // Output only. Detailed statistics for DML statements INSERT, UPDATE, DELETE,
   // MERGE or TRUNCATE.
-  optional DmlStatistics dml_stats = 14 [json_name="dmlStats"];
+  optional DmlStatistics dml_stats = 14 [json_name = "dmlStats"];
 
   // Output only. The original estimate of bytes processed for the job.
-  optional string estimated_bytes_processed = 15 [json_name="estimatedBytesProcessed"];
+  optional string estimated_bytes_processed = 15
+      [json_name = "estimatedBytesProcessed"];
 
   // Output only. Stats for EXPORT DATA statement.
-  optional ExportDataStatistics export_data_statistics = 16 [json_name="exportDataStatistics"];
+  optional ExportDataStatistics export_data_statistics = 16
+      [json_name = "exportDataStatistics"];
 
   // Output only. Job cost breakdown as bigquery internal cost and external
   // service costs.
-  repeated ExternalServiceCost external_service_costs = 17 [json_name="externalServiceCosts"];
+  repeated ExternalServiceCost external_service_costs = 17
+      [json_name = "externalServiceCosts"];
 
   // Output only. Statistics for a LOAD query.
-  optional LoadQueryStatistics load_query_statistics = 18 [json_name="loadQueryStatistics"];
+  optional LoadQueryStatistics load_query_statistics = 18
+      [json_name = "loadQueryStatistics"];
 
   // Output only. Statistics of materialized views of a query job.
-  optional MaterializedViewStatistics materialized_view_statistics = 19 [json_name="materializedViewStatistics"];
+  optional MaterializedViewStatistics materialized_view_statistics = 19
+      [json_name = "materializedViewStatistics"];
 
   // Output only. Statistics of metadata cache usage in a query for BigLake
   // tables.
-  optional MetadataCacheStatistics metadata_cache_statistics = 20 [json_name="metadataCacheStatistics"];
+  optional MetadataCacheStatistics metadata_cache_statistics = 20
+      [json_name = "metadataCacheStatistics"];
 
   // Output only. Statistics of a BigQuery ML training job.
-  optional MlStatistics ml_statistics = 21 [json_name="mlStatistics"];
+  optional MlStatistics ml_statistics = 21 [json_name = "mlStatistics"];
 
   // Deprecated.
-  optional BigQueryModelTraining model_training = 22 [json_name="modelTraining"];
+  optional BigQueryModelTraining model_training = 22
+      [json_name = "modelTraining"];
 
   // Deprecated.
-  optional int32 model_training_current_iteration = 23 [json_name="modelTrainingCurrentIteration"];
+  optional int32 model_training_current_iteration = 23
+      [json_name = "modelTrainingCurrentIteration"];
 
   // Deprecated.
-  optional string model_training_expected_total_iteration = 24 [json_name="modelTrainingExpectedTotalIteration"];
+  optional string model_training_expected_total_iteration = 24
+      [json_name = "modelTrainingExpectedTotalIteration"];
 
   // Output only. The number of rows affected by a DML statement. Present only
   // for DML statements INSERT, UPDATE or DELETE.
-  optional string num_dml_affected_rows = 25 [json_name="numDmlAffectedRows"];
+  optional string num_dml_affected_rows = 25 [json_name = "numDmlAffectedRows"];
 
   // Output only. Performance insights.
-  optional PerformanceInsights performance_insights = 26 [json_name="performanceInsights"];
+  optional PerformanceInsights performance_insights = 26
+      [json_name = "performanceInsights"];
 
   // Output only. Query optimization information for a QUERY job.
-  optional QueryInfo query_info = 27 [json_name="queryInfo"];
+  optional QueryInfo query_info = 27 [json_name = "queryInfo"];
 
   // Output only. Describes execution plan for the query.
-  repeated ExplainQueryStage query_plan = 28 [json_name="queryPlan"];
+  repeated ExplainQueryStage query_plan = 28 [json_name = "queryPlan"];
 
   // Output only. Referenced routines for the job.
-  repeated RoutineReference referenced_routines = 29 [json_name="referencedRoutines"];
+  repeated RoutineReference referenced_routines = 29
+      [json_name = "referencedRoutines"];
 
   // Output only. Referenced tables for the job. Queries that reference more
   // than 50 tables will not have a complete list.
-  repeated TableReference referenced_tables = 30 [json_name="referencedTables"];
+  repeated TableReference referenced_tables = 30
+      [json_name = "referencedTables"];
 
   message ReservationUsageItem {
     // Reservation name or "unreserved" for on-demand resources usage.
-    optional string name = 1 [json_name="name"];
+    optional string name = 1 [json_name = "name"];
 
     // Total slot milliseconds used by the reservation for a particular job.
-    optional string slot_ms = 2 [json_name="slotMs"];
+    optional string slot_ms = 2 [json_name = "slotMs"];
   }
 
   // Output only. Job resource usage breakdown by reservation. This field
   // reported misleading information and will no longer be populated.
-  repeated ReservationUsageItem reservation_usage = 31 [json_name="reservationUsage"];
+  repeated ReservationUsageItem reservation_usage = 31
+      [json_name = "reservationUsage"];
 
   // Output only. The schema of the results. Present only for successful dry run
   // of non-legacy SQL queries.
-  optional TableSchema schema = 32 [json_name="schema"];
+  optional TableSchema schema = 32 [json_name = "schema"];
 
   // Output only. Search query specific statistics.
-  optional SearchStatistics search_statistics = 33 [json_name="searchStatistics"];
+  optional SearchStatistics search_statistics = 33
+      [json_name = "searchStatistics"];
 
   // Output only. Statistics of a Spark procedure job.
-  optional SparkStatistics spark_statistics = 34 [json_name="sparkStatistics"];
+  optional SparkStatistics spark_statistics = 34
+      [json_name = "sparkStatistics"];
 
   // Output only. The type of query statement, if valid. Possible values: *
   // `SELECT`:
@@ -1468,44 +1527,49 @@ message JobStatistics2 {
   // statement. * `CALL`:
   // [`CALL`](/bigquery/docs/reference/standard-sql/procedural-language#call)
   // statement.
-  optional string statement_type = 35 [json_name="statementType"];
+  optional string statement_type = 35 [json_name = "statementType"];
 
   // Output only. Describes a timeline of job execution.
-  repeated QueryTimelineSample timeline = 36 [json_name="timeline"];
+  repeated QueryTimelineSample timeline = 36 [json_name = "timeline"];
 
   // Output only. If the project is configured to use on-demand pricing, then
   // this field contains the total bytes billed for the job. If the project is
   // configured to use flat-rate pricing, then you are not billed for bytes and
   // this field is informational only.
-  optional string total_bytes_billed = 37 [json_name="totalBytesBilled"];
+  optional string total_bytes_billed = 37 [json_name = "totalBytesBilled"];
 
   // Output only. Total bytes processed for the job.
-  optional string total_bytes_processed = 38 [json_name="totalBytesProcessed"];
+  optional string total_bytes_processed = 38
+      [json_name = "totalBytesProcessed"];
 
   // Output only. For dry-run jobs, totalBytesProcessed is an estimate and this
   // field specifies the accuracy of the estimate. Possible values can be:
   // UNKNOWN: accuracy of the estimate is unknown. PRECISE: estimate is precise.
   // LOWER_BOUND: estimate is lower bound of what the query would cost.
   // UPPER_BOUND: estimate is upper bound of what the query would cost.
-  optional string total_bytes_processed_accuracy = 39 [json_name="totalBytesProcessedAccuracy"];
+  optional string total_bytes_processed_accuracy = 39
+      [json_name = "totalBytesProcessedAccuracy"];
 
   // Output only. Total number of partitions processed from all partitioned
   // tables referenced in the job.
-  optional string total_partitions_processed = 40 [json_name="totalPartitionsProcessed"];
+  optional string total_partitions_processed = 40
+      [json_name = "totalPartitionsProcessed"];
 
   // Output only. Slot-milliseconds for the job.
-  optional string total_slot_ms = 41 [json_name="totalSlotMs"];
+  optional string total_slot_ms = 41 [json_name = "totalSlotMs"];
 
   // Output only. Total bytes transferred for cross-cloud queries such as Cross
   // Cloud Transfer and CREATE TABLE AS SELECT (CTAS).
-  optional string transferred_bytes = 42 [json_name="transferredBytes"];
+  optional string transferred_bytes = 42 [json_name = "transferredBytes"];
 
   // Output only. GoogleSQL only: list of undeclared query parameters detected
   // during a dry run validation.
-  repeated QueryParameter undeclared_query_parameters = 43 [json_name="undeclaredQueryParameters"];
+  repeated QueryParameter undeclared_query_parameters = 43
+      [json_name = "undeclaredQueryParameters"];
 
   // Output only. Search query specific statistics.
-  optional VectorSearchStatistics vector_search_statistics = 44 [json_name="vectorSearchStatistics"];
+  optional VectorSearchStatistics vector_search_statistics = 44
+      [json_name = "vectorSearchStatistics"];
 }
 
 // Statistics for a load job.
@@ -1514,24 +1578,24 @@ message JobStatistics3 {
   // has failed because of more bad records encountered than the maximum allowed
   // in the load job configuration, then this number can be less than the total
   // number of bad records present in the input data.
-  optional string bad_records = 1 [json_name="badRecords"];
+  optional string bad_records = 1 [json_name = "badRecords"];
 
   // Output only. Number of bytes of source data in a load job.
-  optional string input_file_bytes = 2 [json_name="inputFileBytes"];
+  optional string input_file_bytes = 2 [json_name = "inputFileBytes"];
 
   // Output only. Number of source files in a load job.
-  optional string input_files = 3 [json_name="inputFiles"];
+  optional string input_files = 3 [json_name = "inputFiles"];
 
   // Output only. Size of the loaded data in bytes. Note that while a load job
   // is in the running state, this value may change.
-  optional string output_bytes = 4 [json_name="outputBytes"];
+  optional string output_bytes = 4 [json_name = "outputBytes"];
 
   // Output only. Number of rows imported in a load job. Note that while an
   // import job is in the running state, this value may change.
-  optional string output_rows = 5 [json_name="outputRows"];
+  optional string output_rows = 5 [json_name = "outputRows"];
 
   // Output only. Describes a timeline of job execution.
-  repeated QueryTimelineSample timeline = 6 [json_name="timeline"];
+  repeated QueryTimelineSample timeline = 6 [json_name = "timeline"];
 }
 
 // Statistics for an extract job.
@@ -1539,41 +1603,42 @@ message JobStatistics4 {
   // Output only. Number of files per destination URI or URI pattern specified
   // in the extract configuration. These values will be in the same order as the
   // URIs specified in the 'destinationUris' field.
-  repeated string destination_uri_file_counts = 1 [json_name="destinationUriFileCounts"];
+  repeated string destination_uri_file_counts = 1
+      [json_name = "destinationUriFileCounts"];
 
   // Output only. Number of user bytes extracted into the result. This is the
   // byte count as computed by BigQuery for billing purposes and doesn't have
   // any relationship with the number of actual result bytes extracted in the
   // desired format.
-  optional string input_bytes = 2 [json_name="inputBytes"];
+  optional string input_bytes = 2 [json_name = "inputBytes"];
 
   // Output only. Describes a timeline of job execution.
-  repeated QueryTimelineSample timeline = 3 [json_name="timeline"];
+  repeated QueryTimelineSample timeline = 3 [json_name = "timeline"];
 }
 
 // Statistics for a copy job.
 message JobStatistics5 {
   // Output only. Number of logical bytes copied to the destination table.
-  optional string copied_logical_bytes = 1 [json_name="copiedLogicalBytes"];
+  optional string copied_logical_bytes = 1 [json_name = "copiedLogicalBytes"];
 
   // Output only. Number of rows copied to the destination table.
-  optional string copied_rows = 2 [json_name="copiedRows"];
+  optional string copied_rows = 2 [json_name = "copiedRows"];
 }
 
 message JobStatus {
   // Output only. Final error result of the job. If present, indicates that the
   // job has completed and was unsuccessful.
-  optional ErrorProto error_result = 1 [json_name="errorResult"];
+  optional ErrorProto error_result = 1 [json_name = "errorResult"];
 
   // Output only. The first errors encountered during the running of the job.
   // The final message includes the number of errors that caused the process to
   // stop. Errors here do not necessarily mean that the job has not completed or
   // was unsuccessful.
-  repeated ErrorProto errors = 2 [json_name="errors"];
+  repeated ErrorProto errors = 2 [json_name = "errors"];
 
   // Output only. Running state of the job. Valid states include 'PENDING',
   // 'RUNNING', and 'DONE'.
-  optional string state = 3 [json_name="state"];
+  optional string state = 3 [json_name = "state"];
 }
 
 // Statistics for a LOAD query.
@@ -1583,27 +1648,27 @@ message LoadQueryStatistics {
   // encountered than the maximum allowed in the load job configuration, then
   // this number can be less than the total number of bad records present in the
   // input data.
-  optional string bad_records = 1 [json_name="badRecords"];
+  optional string bad_records = 1 [json_name = "badRecords"];
 
   // Output only. This field is deprecated. The number of bytes of source data
   // copied over the network for a `LOAD` query. `transferred_bytes` has the
   // canonical value for physical transferred bytes, which is used for BigQuery
   // Omni billing.
-  optional string bytes_transferred = 2 [json_name="bytesTransferred"];
+  optional string bytes_transferred = 2 [json_name = "bytesTransferred"];
 
   // Output only. Number of bytes of source data in a LOAD query.
-  optional string input_file_bytes = 3 [json_name="inputFileBytes"];
+  optional string input_file_bytes = 3 [json_name = "inputFileBytes"];
 
   // Output only. Number of source files in a LOAD query.
-  optional string input_files = 4 [json_name="inputFiles"];
+  optional string input_files = 4 [json_name = "inputFiles"];
 
   // Output only. Size of the loaded data in bytes. Note that while a LOAD query
   // is in the running state, this value may change.
-  optional string output_bytes = 5 [json_name="outputBytes"];
+  optional string output_bytes = 5 [json_name = "outputBytes"];
 
   // Output only. Number of rows imported in a LOAD query. Note that while a
   // LOAD query is in the running state, this value may change.
-  optional string output_rows = 6 [json_name="outputRows"];
+  optional string output_rows = 6 [json_name = "outputRows"];
 }
 
 // A materialized view considered for a query job.
@@ -1613,11 +1678,11 @@ message MaterializedView {
   // materialized view is chosen to rewrite any part of the query, then this
   // field is true, even if the materialized view was not chosen to rewrite
   // others parts.
-  optional bool chosen = 1 [json_name="chosen"];
+  optional bool chosen = 1 [json_name = "chosen"];
 
   // If present, specifies a best-effort estimation of the bytes saved by using
   // the materialized view rather than its base tables.
-  optional string estimated_bytes_saved = 2 [json_name="estimatedBytesSaved"];
+  optional string estimated_bytes_saved = 2 [json_name = "estimatedBytesSaved"];
 
   // If present, specifies the reason why the materialized view was not chosen
   // for the query.
@@ -1645,10 +1710,10 @@ message MaterializedView {
   // because of a fine-grained security policy on one of its base tables.
   // BASE_TABLE_TOO_STALE: One of the view's base tables is too stale. For
   // example, the cached metadata of a biglake table needs to be updated.
-  optional string rejected_reason = 3 [json_name="rejectedReason"];
+  optional string rejected_reason = 3 [json_name = "rejectedReason"];
 
   // The candidate materialized view.
-  optional TableReference table_reference = 4 [json_name="tableReference"];
+  optional TableReference table_reference = 4 [json_name = "tableReference"];
 }
 
 // Statistics of materialized views considered in a query job.
@@ -1656,13 +1721,15 @@ message MaterializedViewStatistics {
   // Materialized views considered for the query job. Only certain materialized
   // views are used. For a detailed list, see the child message. If many
   // materialized views are considered, then the list might be incomplete.
-  repeated MaterializedView materialized_view = 1 [json_name="materializedView"];
+  repeated MaterializedView materialized_view = 1
+      [json_name = "materializedView"];
 }
 
 // Statistics for metadata caching in BigLake tables.
 message MetadataCacheStatistics {
   // Set for the Metadata caching eligible tables referenced in the query.
-  repeated TableMetadataCacheUsage table_metadata_cache_usage = 1 [json_name="tableMetadataCacheUsage"];
+  repeated TableMetadataCacheUsage table_metadata_cache_usage = 1
+      [json_name = "tableMetadataCacheUsage"];
 }
 
 // Job statistics specific to a BigQuery ML training job.
@@ -1670,16 +1737,17 @@ message MlStatistics {
   // Output only. Trials of a [hyperparameter tuning
   // job](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
   // sorted by trial_id.
-  repeated HparamTuningTrial hparam_trials = 1 [json_name="hparamTrials"];
+  repeated HparamTuningTrial hparam_trials = 1 [json_name = "hparamTrials"];
 
   // Results for all completed iterations. Empty for [hyperparameter tuning
   // jobs](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview).
-  repeated IterationResult iteration_results = 2 [json_name="iterationResults"];
+  repeated IterationResult iteration_results = 2
+      [json_name = "iterationResults"];
 
   // Output only. Maximum number of iterations specified as max_iterations in
   // the 'CREATE MODEL' query. The actual number of iterations may be less than
   // this number due to early stop.
-  optional string max_iterations = 3 [json_name="maxIterations"];
+  optional string max_iterations = 3 [json_name = "maxIterations"];
 
   // Output only. The type of the model that is being trained.
   // MODEL_TYPE_UNSPECIFIED: Default value.
@@ -1706,14 +1774,14 @@ message MlStatistics {
   // RANDOM_FOREST_CLASSIFIER: Random forest classifier model.
   // TENSORFLOW_LITE: An imported TensorFlow Lite model.
   // ONNX: An imported ONNX model.
-  optional string model_type = 4 [json_name="modelType"];
+  optional string model_type = 4 [json_name = "modelType"];
 
   // Output only. Training type of the job.
   // TRAINING_TYPE_UNSPECIFIED: Unspecified training type.
   // SINGLE_TRAINING: Single training with fixed parameter space.
   // HPARAM_TUNING: [Hyperparameter tuning
   // training](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview).
-  optional string training_type = 5 [json_name="trainingType"];
+  optional string training_type = 5 [json_name = "trainingType"];
 }
 
 // Options related to model extraction.
@@ -1723,7 +1791,7 @@ message ModelExtractOptions {
   // [Model](/bigquery/docs/reference/rest/v2/models#resource:-model).defaultTrialId
   // is exported. This field is ignored for models not trained with
   // hyperparameter tuning.
-  optional string trial_id = 1 [json_name="trialId"];
+  optional string trial_id = 1 [json_name = "trialId"];
 }
 
 // Performance insights for the job.
@@ -1731,107 +1799,116 @@ message PerformanceInsights {
   // Output only. Average execution ms of previous runs. Indicates the job ran
   // slow compared to previous executions. To find previous executions, use
   // INFORMATION_SCHEMA tables and filter jobs with same query hash.
-  optional string avg_previous_execution_ms = 1 [json_name="avgPreviousExecutionMs"];
+  optional string avg_previous_execution_ms = 1
+      [json_name = "avgPreviousExecutionMs"];
 
   // Output only. Query stage performance insights compared to previous runs,
   // for diagnosing performance regression.
-  repeated StagePerformanceChangeInsight stage_performance_change_insights = 2 [json_name="stagePerformanceChangeInsights"];
+  repeated StagePerformanceChangeInsight stage_performance_change_insights = 2
+      [json_name = "stagePerformanceChangeInsights"];
 
   // Output only. Standalone query stage performance insights, for exploring
   // potential improvements.
-  repeated StagePerformanceStandaloneInsight stage_performance_standalone_insights = 3 [json_name="stagePerformanceStandaloneInsights"];
+  repeated StagePerformanceStandaloneInsight
+      stage_performance_standalone_insights = 3
+      [json_name = "stagePerformanceStandaloneInsights"];
 }
 
 // Query optimization information for a QUERY job.
 message QueryInfo {
   // Output only. Information about query optimizations.
-  map<string, google.protobuf.Any> optimization_details = 1 [json_name="optimizationDetails"];
+  map<string, google.protobuf.Any> optimization_details = 1
+      [json_name = "optimizationDetails"];
 }
 
 // A parameter given to a query.
 message QueryParameter {
   // Optional. If unset, this is a positional parameter. Otherwise, should be
   // unique within a query.
-  optional string name = 1 [json_name="name"];
+  optional string name = 1 [json_name = "name"];
 
   // Required. The type of this parameter.
-  optional QueryParameterType parameter_type = 2 [json_name="parameterType"];
+  optional QueryParameterType parameter_type = 2 [json_name = "parameterType"];
 
   // Required. The value of this parameter.
-  optional QueryParameterValue parameter_value = 3 [json_name="parameterValue"];
+  optional QueryParameterValue parameter_value = 3
+      [json_name = "parameterValue"];
 }
 
 // The type of a query parameter.
 message QueryParameterType {
   // Optional. The type of the array's elements, if this is an array.
-  optional QueryParameterType array_type = 1 [json_name="arrayType"];
+  optional QueryParameterType array_type = 1 [json_name = "arrayType"];
 
   // Optional. The element type of the range, if this is a range.
-  optional QueryParameterType range_element_type = 2 [json_name="rangeElementType"];
+  optional QueryParameterType range_element_type = 2
+      [json_name = "rangeElementType"];
 
   message StructTypesItem {
     // Optional. Human-oriented description of the field.
-    optional string description = 1 [json_name="description"];
+    optional string description = 1 [json_name = "description"];
 
     // Optional. The name of this field.
-    optional string name = 2 [json_name="name"];
+    optional string name = 2 [json_name = "name"];
 
     // Required. The type of this field.
-    optional QueryParameterType type = 3 [json_name="type"];
+    optional QueryParameterType type = 3 [json_name = "type"];
   }
 
   // Optional. The types of the fields of this struct, in order, if this is a
   // struct.
-  repeated StructTypesItem struct_types = 3 [json_name="structTypes"];
+  repeated StructTypesItem struct_types = 3 [json_name = "structTypes"];
 
   // Required. The top level type of this field.
-  optional string type = 4 [json_name="type"];
+  optional string type = 4 [json_name = "type"];
 }
 
 // The value of a query parameter.
 message QueryParameterValue {
   // Optional. The array values, if this is an array type.
-  repeated QueryParameterValue array_values = 1 [json_name="arrayValues"];
+  repeated QueryParameterValue array_values = 1 [json_name = "arrayValues"];
 
   // Optional. The range value, if this is a range type.
-  optional RangeValue range_value = 2 [json_name="rangeValue"];
+  optional RangeValue range_value = 2 [json_name = "rangeValue"];
 
   // The struct field values.
-  map<string, QueryParameterValue> struct_values = 3 [json_name="structValues"];
+  map<string, QueryParameterValue> struct_values = 3
+      [json_name = "structValues"];
 
   // Optional. The value of this value, if a simple scalar type.
-  optional string value = 4 [json_name="value"];
+  optional string value = 4 [json_name = "value"];
 }
 
 // Describes the format of the jobs.query request.
 message QueryRequest {
   // Optional. Connection properties which can modify the query behavior.
-  repeated ConnectionProperty connection_properties = 1 [json_name="connectionProperties"];
+  repeated ConnectionProperty connection_properties = 1
+      [json_name = "connectionProperties"];
 
   // [Optional] Specifies whether the query should be executed as a continuous
   // query. The default value is false.
-  optional bool continuous = 2 [json_name="continuous"];
+  optional bool continuous = 2 [json_name = "continuous"];
 
   // Optional. If true, creates a new session using a randomly generated
   // session_id. If false, runs query with an existing session_id passed in
   // ConnectionProperty, otherwise runs query in non-session mode. The session
   // location will be set to QueryRequest.location if it is present, otherwise
   // it's set to the default location based on existing routing logic.
-  optional bool create_session = 3 [json_name="createSession"];
+  optional bool create_session = 3 [json_name = "createSession"];
 
   // Optional. Specifies the default datasetId and projectId to assume for any
   // unqualified table names in the query. If not set, all table names in the
   // query string must be qualified in the format 'datasetId.tableId'.
-  optional DatasetReference default_dataset = 4 [json_name="defaultDataset"];
+  optional DatasetReference default_dataset = 4 [json_name = "defaultDataset"];
 
   // Optional. If set to true, BigQuery doesn't run the job. Instead, if the
   // query is valid, BigQuery returns statistics about the job such as how many
   // bytes would be processed. If the query is invalid, an error returns. The
   // default value is false.
-  optional bool dry_run = 5 [json_name="dryRun"];
+  optional bool dry_run = 5 [json_name = "dryRun"];
 
   // Optional. Output format adjustments.
-  optional DataFormatOptions format_options = 6 [json_name="formatOptions"];
+  optional DataFormatOptions format_options = 6 [json_name = "formatOptions"];
 
   // Optional. If not set, jobs are always required. If set, the query request
   // will follow the behavior described JobCreationMode. This feature is not yet
@@ -1844,10 +1921,10 @@ message QueryRequest {
   // needs to be created. The conditions under which BigQuery can decide to not
   // create a Job are subject to change. If Job creation is required,
   // JOB_CREATION_REQUIRED mode should be used, which is the default.
-  optional string job_creation_mode = 7 [json_name="jobCreationMode"];
+  optional string job_creation_mode = 7 [json_name = "jobCreationMode"];
 
   // The resource type of the request.
-  optional string kind = 8 [json_name="kind"];
+  optional string kind = 8 [json_name = "kind"];
 
   // Optional. The labels associated with this query. Labels can be used to
   // organize and group query jobs. Label keys and values can be no longer than
@@ -1855,38 +1932,38 @@ message QueryRequest {
   // underscores and dashes. International characters are allowed. Label keys
   // must start with a letter and each label in the list must have a different
   // key.
-  map<string, string> labels = 9 [json_name="labels"];
+  map<string, string> labels = 9 [json_name = "labels"];
 
   // The geographic location where the job should run. See details at
   // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
-  optional string location = 10 [json_name="location"];
+  optional string location = 10 [json_name = "location"];
 
   // Optional. The maximum number of rows of data to return per page of results.
   // Setting this flag to a small value such as 1000 and then paging through
   // results might improve reliability when the query result set is large. In
   // addition to this limit, responses are also limited to 10 MB. By default,
   // there is no maximum row count, and only the byte limit applies.
-  optional uint32 max_results = 11 [json_name="maxResults"];
+  optional uint32 max_results = 11 [json_name = "maxResults"];
 
   // Optional. Limits the bytes billed for this query. Queries with bytes billed
   // above this limit will fail (without incurring a charge). If unspecified,
   // the project default is used.
-  optional string maximum_bytes_billed = 12 [json_name="maximumBytesBilled"];
+  optional string maximum_bytes_billed = 12 [json_name = "maximumBytesBilled"];
 
   // GoogleSQL only. Set to POSITIONAL to use positional (?) query parameters or
   // to NAMED to use named (@myparam) query parameters in this query.
-  optional string parameter_mode = 13 [json_name="parameterMode"];
+  optional string parameter_mode = 13 [json_name = "parameterMode"];
 
   // This property is deprecated.
-  optional bool preserve_nulls = 14 [json_name="preserveNulls"];
+  optional bool preserve_nulls = 14 [json_name = "preserveNulls"];
 
   // Required. A query string to execute, using Google Standard SQL or legacy
   // SQL syntax. Example: "SELECT COUNT(f1) FROM
   // myProjectId.myDatasetId.myTableId".
-  optional string query = 15 [json_name="query"];
+  optional string query = 15 [json_name = "query"];
 
   // Query parameters for GoogleSQL queries.
-  repeated QueryParameter query_parameters = 16 [json_name="queryParameters"];
+  repeated QueryParameter query_parameters = 16 [json_name = "queryParameters"];
 
   // Optional. A unique user provided identifier to ensure idempotent behavior
   // for queries. Note that this is different from the job_id. It has the
@@ -1907,7 +1984,7 @@ message QueryRequest {
   // is still in progress at the end of the timeout. 5. Its lifetime is limited
   // to 15 minutes. In other words, if two requests are sent with the same
   // request_id, but more than 15 minutes apart, idempotency is not guaranteed.
-  optional string request_id = 17 [json_name="requestId"];
+  optional string request_id = 17 [json_name = "requestId"];
 
   // Optional. Optional: Specifies the maximum amount of time, in milliseconds,
   // that the client is willing to wait for the query to complete. By default,
@@ -1920,28 +1997,28 @@ message QueryRequest {
   // you can continue to wait for the query to complete by calling the
   // getQueryResults method until the jobComplete field in the getQueryResults
   // response is true.
-  optional uint32 timeout_ms = 18 [json_name="timeoutMs"];
+  optional uint32 timeout_ms = 18 [json_name = "timeoutMs"];
 
   // Specifies whether to use BigQuery's legacy SQL dialect for this query. The
   // default value is true. If set to false, the query will use BigQuery's
   // GoogleSQL: https://cloud.google.com/bigquery/sql-reference/ When
   // useLegacySql is set to false, the value of flattenResults is ignored; query
   // will be run as if flattenResults is false.
-  optional bool use_legacy_sql = 19 [json_name="useLegacySql"];
+  optional bool use_legacy_sql = 19 [json_name = "useLegacySql"];
 
   // Optional. Whether to look for the result in the query cache. The query
   // cache is a best-effort cache that will be flushed whenever tables in the
   // query are modified. The default value is true.
-  optional bool use_query_cache = 20 [json_name="useQueryCache"];
+  optional bool use_query_cache = 20 [json_name = "useQueryCache"];
 }
 
 message QueryResponse {
   // Whether the query result was fetched from the query cache.
-  optional bool cache_hit = 1 [json_name="cacheHit"];
+  optional bool cache_hit = 1 [json_name = "cacheHit"];
 
   // Output only. Detailed statistics for DML statements INSERT, UPDATE, DELETE,
   // MERGE or TRUNCATE.
-  optional DmlStatistics dml_stats = 2 [json_name="dmlStats"];
+  optional DmlStatistics dml_stats = 2 [json_name = "dmlStats"];
 
   // Output only. The first errors or warnings encountered during the running of
   // the job. The final message includes the number of errors that caused the
@@ -1949,12 +2026,12 @@ message QueryResponse {
   // completed or was unsuccessful. For more information about error messages,
   // see [Error
   // messages](https://cloud.google.com/bigquery/docs/error-messages).
-  repeated ErrorProto errors = 3 [json_name="errors"];
+  repeated ErrorProto errors = 3 [json_name = "errors"];
 
   // Whether the query has completed or not. If rows or totalRows are present,
   // this will always be true. If this is false, totalRows will not be
   // available.
-  optional bool job_complete = 4 [json_name="jobComplete"];
+  optional bool job_complete = 4 [json_name = "jobComplete"];
 
   // Optional. Only relevant when a job_reference is present in the response. If
   // job_reference is not present it will always be unset. When job_reference is
@@ -1962,96 +2039,100 @@ message QueryResponse {
   // provide the reason of why a Job was created. If not set, it should be
   // treated as the default: REQUESTED. This feature is not yet available. Jobs
   // will always be created.
-  optional JobCreationReason job_creation_reason = 5 [json_name="jobCreationReason"];
+  optional JobCreationReason job_creation_reason = 5
+      [json_name = "jobCreationReason"];
 
   // Reference to the Job that was created to run the query. This field will be
   // present even if the original request timed out, in which case
   // GetQueryResults can be used to read the results once the query has
   // completed. Since this API only returns the first page of results,
   // subsequent pages can be fetched via the same mechanism (GetQueryResults).
-  optional JobReference job_reference = 6 [json_name="jobReference"];
+  optional JobReference job_reference = 6 [json_name = "jobReference"];
 
   // The resource type.
-  optional string kind = 7 [json_name="kind"];
+  optional string kind = 7 [json_name = "kind"];
 
   // Output only. The number of rows affected by a DML statement. Present only
   // for DML statements INSERT, UPDATE or DELETE.
-  optional string num_dml_affected_rows = 8 [json_name="numDmlAffectedRows"];
+  optional string num_dml_affected_rows = 8 [json_name = "numDmlAffectedRows"];
 
   // A token used for paging results. A non-empty token indicates that
   // additional results are available. To see additional results, query the
   // [`jobs.getQueryResults`](https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults)
   // method. For more information, see [Paging through table
   // data](https://cloud.google.com/bigquery/docs/paging-results).
-  optional string page_token = 9 [json_name="pageToken"];
+  optional string page_token = 9 [json_name = "pageToken"];
 
   // Query ID for the completed query. This ID will be auto-generated. This
   // field is not yet available and it is currently not guaranteed to be
   // populated.
-  optional string query_id = 10 [json_name="queryId"];
+  optional string query_id = 10 [json_name = "queryId"];
 
   // An object with as many results as can be contained within the maximum
   // permitted reply size. To get any additional rows, you can call
   // GetQueryResults and specify the jobReference returned above.
-  repeated TableRow rows = 11 [json_name="rows"];
+  repeated TableRow rows = 11 [json_name = "rows"];
 
   // The schema of the results. Present only when the query completes
   // successfully.
-  optional TableSchema schema = 12 [json_name="schema"];
+  optional TableSchema schema = 12 [json_name = "schema"];
 
   // Output only. Information of the session if this job is part of one.
-  optional SessionInfo session_info = 13 [json_name="sessionInfo"];
+  optional SessionInfo session_info = 13 [json_name = "sessionInfo"];
 
   // The total number of bytes processed for this query. If this query was a dry
   // run, this is the number of bytes that would be processed if the query were
   // run.
-  optional string total_bytes_processed = 14 [json_name="totalBytesProcessed"];
+  optional string total_bytes_processed = 14
+      [json_name = "totalBytesProcessed"];
 
   // The total number of rows in the complete query result set, which can be
   // more than the number of rows in this single page of results.
-  optional string total_rows = 15 [json_name="totalRows"];
+  optional string total_rows = 15 [json_name = "totalRows"];
 }
 
 // Summary of the state of query execution at a given time.
 message QueryTimelineSample {
   // Total number of active workers. This does not correspond directly to slot
   // usage. This is the largest value observed since the last sample.
-  optional string active_units = 1 [json_name="activeUnits"];
+  optional string active_units = 1 [json_name = "activeUnits"];
 
   // Total parallel units of work completed by this query.
-  optional string completed_units = 2 [json_name="completedUnits"];
+  optional string completed_units = 2 [json_name = "completedUnits"];
 
   // Milliseconds elapsed since the start of query execution.
-  optional string elapsed_ms = 3 [json_name="elapsedMs"];
+  optional string elapsed_ms = 3 [json_name = "elapsedMs"];
 
   // Units of work that can be scheduled immediately. Providing additional slots
   // for these units of work will accelerate the query, if no other query in the
   // reservation needs additional slots.
-  optional string estimated_runnable_units = 4 [json_name="estimatedRunnableUnits"];
+  optional string estimated_runnable_units = 4
+      [json_name = "estimatedRunnableUnits"];
 
   // Total units of work remaining for the query. This number can be revised
   // (increased or decreased) while the query is running.
-  optional string pending_units = 5 [json_name="pendingUnits"];
+  optional string pending_units = 5 [json_name = "pendingUnits"];
 
   // Cumulative slot-ms consumed by the query.
-  optional string total_slot_ms = 6 [json_name="totalSlotMs"];
+  optional string total_slot_ms = 6 [json_name = "totalSlotMs"];
 }
 
 // Represents the value of a range.
 message RangeValue {
   // Optional. The end value of the range. A missing value represents an
   // unbounded end.
-  optional QueryParameterValue end = 1 [json_name="end"];
+  optional QueryParameterValue end = 1 [json_name = "end"];
 
   // Optional. The start value of the range. A missing value represents an
   // unbounded start.
-  optional QueryParameterValue start = 2 [json_name="start"];
+  optional QueryParameterValue start = 2 [json_name = "start"];
 }
 
 // Statistics for row-level security.
 message RowLevelSecurityStatistics {
   // Whether any accessed data was protected by row access policies.
-  optional bool row_level_security_applied = 1 [json_name="rowLevelSecurityApplied"];
+  optional bool row_level_security_applied = 1
+      [json_name = "rowLevelSecurityApplied"];
 }
 
 // Options related to script execution.
@@ -2062,14 +2143,14 @@ message ScriptOptions {
   // KEY_RESULT_STATEMENT_KIND_UNSPECIFIED: Default value.
   // LAST: The last result determines the key result.
   // FIRST_SELECT: The first SELECT statement determines the key result.
-  optional string key_result_statement = 1 [json_name="keyResultStatement"];
+  optional string key_result_statement = 1 [json_name = "keyResultStatement"];
 
   // Limit on the number of bytes billed per statement. Exceeding this budget
   // results in an error.
-  optional string statement_byte_budget = 2 [json_name="statementByteBudget"];
+  optional string statement_byte_budget = 2 [json_name = "statementByteBudget"];
 
   // Timeout period for each statement in a script.
-  optional string statement_timeout_ms = 3 [json_name="statementTimeoutMs"];
+  optional string statement_timeout_ms = 3 [json_name = "statementTimeoutMs"];
 }
 
 // Represents the location of the statement/expression being evaluated. Line and
@@ -2087,22 +2168,22 @@ message ScriptOptions {
 // column 17.
 message ScriptStackFrame {
   // Output only. One-based end column.
-  optional int32 end_column = 1 [json_name="endColumn"];
+  optional int32 end_column = 1 [json_name = "endColumn"];
 
   // Output only. One-based end line.
-  optional int32 end_line = 2 [json_name="endLine"];
+  optional int32 end_line = 2 [json_name = "endLine"];
 
   // Output only. Name of the active procedure, empty if in a top-level script.
-  optional string procedure_id = 3 [json_name="procedureId"];
+  optional string procedure_id = 3 [json_name = "procedureId"];
 
   // Output only. One-based start column.
-  optional int32 start_column = 4 [json_name="startColumn"];
+  optional int32 start_column = 4 [json_name = "startColumn"];
 
   // Output only. One-based start line.
-  optional int32 start_line = 5 [json_name="startLine"];
+  optional int32 start_line = 5 [json_name = "startLine"];
 
   // Output only. Text of the current statement/expression.
-  optional string text = 6 [json_name="text"];
+  optional string text = 6 [json_name = "text"];
 }
 
 // Job statistics specific to the child job of a script.
@@ -2112,12 +2193,12 @@ message ScriptStatistics {
   // STATEMENT: The statement appears directly in the script.
   // EXPRESSION: The statement evaluates an expression that appears in the
   // script.
-  optional string evaluation_kind = 1 [json_name="evaluationKind"];
+  optional string evaluation_kind = 1 [json_name = "evaluationKind"];
 
   // Stack trace showing the line/column/procedure name of each frame on the
   // stack at the point where the current evaluation happened. The leaf frame is
   // first, the primary script is last. Never empty.
-  repeated ScriptStackFrame stack_frames = 2 [json_name="stackFrames"];
+  repeated ScriptStackFrame stack_frames = 2 [json_name = "stackFrames"];
 }
 
 // Statistics for a search query. Populated as part of JobStatistics2.
@@ -2125,7 +2206,8 @@ message SearchStatistics {
   // When `indexUsageMode` is `UNUSED` or `PARTIALLY_USED`, this field explains
   // why indexes were not used in all or part of the search query. If
   // `indexUsageMode` is `FULLY_USED`, this field is not populated.
-  repeated IndexUnusedReason index_unused_reasons = 1 [json_name="indexUnusedReasons"];
+  repeated IndexUnusedReason index_unused_reasons = 1
+      [json_name = "indexUnusedReasons"];
 
   // Specifies the index usage mode for the query.
   // INDEX_USAGE_MODE_UNSPECIFIED: Index usage mode not specified.
@@ -2138,29 +2220,29 @@ message SearchStatistics {
   // (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for why other
   // parts of the query did not use search indexes.
   // FULLY_USED: The entire search query used search indexes.
-  optional string index_usage_mode = 2 [json_name="indexUsageMode"];
+  optional string index_usage_mode = 2 [json_name = "indexUsageMode"];
 }
 
 // [Preview] Information related to sessions.
 message SessionInfo {
   // Output only. The id of the session.
-  optional string session_id = 1 [json_name="sessionId"];
+  optional string session_id = 1 [json_name = "sessionId"];
 }
 
 // Spark job logs can be filtered by these fields in Cloud Logging.
 message SparkLoggingInfo {
   // Output only. Project ID where the Spark logs were written.
-  optional string project_id = 1 [json_name="projectId"];
+  optional string project_id = 1 [json_name = "projectId"];
 
   // Output only. Resource type used for logging.
-  optional string resource_type = 2 [json_name="resourceType"];
+  optional string resource_type = 2 [json_name = "resourceType"];
 }
 
 // Statistics for a BigSpark query. Populated as part of JobStatistics2
 message SparkStatistics {
   // Output only. Endpoints returned from Dataproc. Key list: -
   // history_server_endpoint: A link to Spark job UI.
-  map<string, string> endpoints = 1 [json_name="endpoints"];
+  map<string, string> endpoints = 1 [json_name = "endpoints"];
 
   // Output only. The Google Cloud Storage bucket that is used as the default
   // filesystem by the Spark application. This fields is only filled when the
@@ -2168,7 +2250,7 @@ message SparkStatistics {
   // system variable @@spark_proc_properties.staging_bucket if it is provided.
   // Otherwise, BigQuery creates a default staging bucket for the job and
   // returns the bucket name in this field. Example: * `gs://[bucket_name]`
-  optional string gcs_staging_bucket = 2 [json_name="gcsStagingBucket"];
+  optional string gcs_staging_bucket = 2 [json_name = "gcsStagingBucket"];
 
   // Output only. The Cloud KMS encryption key that is used to protect the
   // resources created by the Spark job. If the Spark procedure uses DEFINER
@@ -2181,68 +2263,71 @@ message SparkStatistics {
   // the key is inferred fromt he default key of the BigQuery job's project if
   // the CMEK organization policy is enforced. Example: *
   // `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]`
-  optional string kms_key_name = 3 [json_name="kmsKeyName"];
+  optional string kms_key_name = 3 [json_name = "kmsKeyName"];
 
   // Output only. Logging info is used to generate a link to Cloud Logging.
-  optional SparkLoggingInfo logging_info = 4 [json_name="loggingInfo"];
+  optional SparkLoggingInfo logging_info = 4 [json_name = "loggingInfo"];
 
   // Output only. Spark job ID if a Spark job is created successfully.
-  optional string spark_job_id = 5 [json_name="sparkJobId"];
+  optional string spark_job_id = 5 [json_name = "sparkJobId"];
 
   // Output only. Location where the Spark job is executed. A location is
   // selected by BigQueury for jobs configured to run in a multi-region.
-  optional string spark_job_location = 6 [json_name="sparkJobLocation"];
+  optional string spark_job_location = 6 [json_name = "sparkJobLocation"];
 }
 
 // Performance insights compared to the previous executions for a specific
 // stage.
 message StagePerformanceChangeInsight {
   // Output only. Input data change insight of the query stage.
-  optional InputDataChange input_data_change = 1 [json_name="inputDataChange"];
+  optional InputDataChange input_data_change = 1
+      [json_name = "inputDataChange"];
 
   // Output only. The stage id that the insight mapped to.
-  optional string stage_id = 2 [json_name="stageId"];
+  optional string stage_id = 2 [json_name = "stageId"];
 }
 
 // Standalone performance insights for a specific stage.
 message StagePerformanceStandaloneInsight {
   // Output only. If present, the stage had the following reasons for being
   // disqualified from BI Engine execution.
-  repeated BiEngineReason bi_engine_reasons = 1 [json_name="biEngineReasons"];
+  repeated BiEngineReason bi_engine_reasons = 1 [json_name = "biEngineReasons"];
 
   // Output only. High cardinality joins in the stage.
-  repeated HighCardinalityJoin high_cardinality_joins = 2 [json_name="highCardinalityJoins"];
+  repeated HighCardinalityJoin high_cardinality_joins = 2
+      [json_name = "highCardinalityJoins"];
 
   // Output only. True if the stage has insufficient shuffle quota.
-  optional bool insufficient_shuffle_quota = 3 [json_name="insufficientShuffleQuota"];
+  optional bool insufficient_shuffle_quota = 3
+      [json_name = "insufficientShuffleQuota"];
 
   // Output only. True if the stage has a slot contention issue.
-  optional bool slot_contention = 4 [json_name="slotContention"];
+  optional bool slot_contention = 4 [json_name = "slotContention"];
 
   // Output only. The stage id that the insight mapped to.
-  optional string stage_id = 5 [json_name="stageId"];
+  optional string stage_id = 5 [json_name = "stageId"];
 }
 
 // System variables given to a query.
 message SystemVariables {
   // Output only. Data type for each system variable.
-  map<string, StandardSqlDataType> types = 1 [json_name="types"];
+  map<string, StandardSqlDataType> types = 1 [json_name = "types"];
 
   // Output only. Value for each system variable.
-  map<string, google.protobuf.Any> values = 2 [json_name="values"];
+  map<string, google.protobuf.Any> values = 2 [json_name = "values"];
 }
 
 // Table level detail on the usage of metadata caching. Only set for Metadata
 // caching eligible tables referenced in the query.
 message TableMetadataCacheUsage {
   // Free form human-readable reason metadata caching was unused for the job.
-  optional string explanation = 1 [json_name="explanation"];
+  optional string explanation = 1 [json_name = "explanation"];
 
   // Metadata caching eligible table referenced in the query.
-  optional TableReference table_reference = 2 [json_name="tableReference"];
+  optional TableReference table_reference = 2 [json_name = "tableReference"];
 
   // [Table type](/bigquery/docs/reference/rest/v2/tables#Table.FIELDS.type).
-  optional string table_type = 3 [json_name="tableType"];
+  optional string table_type = 3 [json_name = "tableType"];
 
   // Reason for not using metadata caching for the table.
   // UNUSED_REASON_UNSPECIFIED: Unused reasons not specified.
@@ -2253,13 +2338,13 @@ message TableMetadataCacheUsage {
   // (/bigquery/docs/create-cloud-storage-table-biglake#update-biglake-tables)
   // to enable the metadata caching.
   // OTHER_REASON: Other unknown reason.
-  optional string unused_reason = 4 [json_name="unusedReason"];
+  optional string unused_reason = 4 [json_name = "unusedReason"];
 }
 
 // [Alpha] Information of a multi-statement transaction.
 message TransactionInfo {
   // Output only. [Alpha] Id of the transaction.
-  optional string transaction_id = 1 [json_name="transactionId"];
+  optional string transaction_id = 1 [json_name = "transactionId"];
 }
 
 // Statistics for a vector search query. Populated as part of JobStatistics2.
@@ -2267,7 +2352,8 @@ message VectorSearchStatistics {
   // When `indexUsageMode` is `UNUSED` or `PARTIALLY_USED`, this field explains
   // why indexes were not used in all or part of the vector search query. If
   // `indexUsageMode` is `FULLY_USED`, this field is not populated.
-  repeated IndexUnusedReason index_unused_reasons = 1 [json_name="indexUnusedReasons"];
+  repeated IndexUnusedReason index_unused_reasons = 1
+      [json_name = "indexUnusedReasons"];
 
   // Specifies the index usage mode for the query.
   // INDEX_USAGE_MODE_UNSPECIFIED: Index usage mode not specified.
@@ -2280,5 +2366,5 @@ message VectorSearchStatistics {
   // (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for why other
   // parts of the query did not use vector indexes.
   // FULLY_USED: The entire vector search query used vector indexes.
-  optional string index_usage_mode = 2 [json_name="indexUsageMode"];
+  optional string index_usage_mode = 2 [json_name = "indexUsageMode"];
 }

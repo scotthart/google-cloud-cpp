@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/projects/v2/projects.proto
 
 #include "google/cloud/bigquery/projects/v2/projects_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/projects/v2/internal/projects_option_defaults.h"
 #include "google/cloud/bigquery/projects/v2/internal/projects_tracing_connection.h"
 #include "google/cloud/bigquery/projects/v2/projects_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -35,8 +35,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectsConnection::~ProjectsConnection() = default;
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-ProjectsConnection::GetServiceAccount(
-    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&) {
+ProjectsConnection::GetServiceAccount(google::cloud::cpp::bigquery::projects::
+                                          v2::GetServiceAccountRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

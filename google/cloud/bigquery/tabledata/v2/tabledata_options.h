@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_TABLEDATA_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_TABLEDATA_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct TabledataConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquery-options
  */
 using TabledataPolicyOptionList =
-    OptionList<TabledataRetryPolicyOption,
-               TabledataBackoffPolicyOption,
+    OptionList<TabledataRetryPolicyOption, TabledataBackoffPolicyOption,
                TabledataConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

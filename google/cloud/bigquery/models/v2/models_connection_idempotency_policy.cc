@@ -26,31 +26,36 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ModelsConnectionIdempotencyPolicy::~ModelsConnectionIdempotencyPolicy() = default;
+ModelsConnectionIdempotencyPolicy::~ModelsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ModelsConnectionIdempotencyPolicy>
 ModelsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ModelsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ModelsConnectionIdempotencyPolicy::DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&) {
+Idempotency ModelsConnectionIdempotencyPolicy::DeleteModel(
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency ModelsConnectionIdempotencyPolicy::GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const&) {
+Idempotency ModelsConnectionIdempotencyPolicy::GetModel(
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelsConnectionIdempotencyPolicy::ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&) {
+Idempotency ModelsConnectionIdempotencyPolicy::ListModels(
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ModelsConnectionIdempotencyPolicy::PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&) {
+Idempotency ModelsConnectionIdempotencyPolicy::PatchModel(
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ModelsConnectionIdempotencyPolicy>
-    MakeDefaultModelsConnectionIdempotencyPolicy() {
+MakeDefaultModelsConnectionIdempotencyPolicy() {
   return std::make_unique<ModelsConnectionIdempotencyPolicy>();
 }
 

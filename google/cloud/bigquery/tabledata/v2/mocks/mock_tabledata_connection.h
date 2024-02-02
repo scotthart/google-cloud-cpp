@@ -42,17 +42,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockTabledataConnection : public bigquery_tabledata_v2::TabledataConnection {
+class MockTabledataConnection
+    : public bigquery_tabledata_v2::TabledataConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>,
-  InsertAll,
-  (google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>,
+      InsertAll,
+      (google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>,
-  ListTabledata,
-  (google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>, ListTabledata,
+      (google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

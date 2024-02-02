@@ -29,48 +29,48 @@ import "google/cloud/bigquery/v2/internal/common_017.proto";
 // data tables that were used to train the model.
 message DataSplitResult {
   // Table reference of the evaluation data after split.
-  optional TableReference evaluation_table = 1 [json_name="evaluationTable"];
+  optional TableReference evaluation_table = 1 [json_name = "evaluationTable"];
 
   // Table reference of the test data after split.
-  optional TableReference test_table = 2 [json_name="testTable"];
+  optional TableReference test_table = 2 [json_name = "testTable"];
 
   // Table reference of the training data after split.
-  optional TableReference training_table = 3 [json_name="trainingTable"];
+  optional TableReference training_table = 3 [json_name = "trainingTable"];
 }
 
 // Discrete candidates of a double hyperparameter.
 message DoubleCandidates {
   // Candidates for the double parameter in increasing order.
-  repeated double candidates = 1 [json_name="candidates"];
+  repeated double candidates = 1 [json_name = "candidates"];
 }
 
 // Search space for a double hyperparameter.
 message DoubleHparamSearchSpace {
   // Candidates of the double hyperparameter.
-  optional DoubleCandidates candidates = 1 [json_name="candidates"];
+  optional DoubleCandidates candidates = 1 [json_name = "candidates"];
 
   // Range of the double hyperparameter.
-  optional DoubleRange range = 2 [json_name="range"];
+  optional DoubleRange range = 2 [json_name = "range"];
 }
 
 // Range of a double hyperparameter.
 message DoubleRange {
   // Max value of the double parameter.
-  optional double max = 1 [json_name="max"];
+  optional double max = 1 [json_name = "max"];
 
   // Min value of the double parameter.
-  optional double min = 2 [json_name="min"];
+  optional double min = 2 [json_name = "min"];
 }
 
 // Explanation for a single feature.
 message Explanation {
   // Attribution of feature.
-  optional double attribution = 1 [json_name="attribution"];
+  optional double attribution = 1 [json_name = "attribution"];
 
   // The full feature name. For non-numerical features, will be formatted like
   // `.`. Overall size of feature name will always be truncated to first 120
   // characters.
-  optional string feature_name = 2 [json_name="featureName"];
+  optional string feature_name = 2 [json_name = "featureName"];
 }
 
 // Global explanations containing the top most important features after
@@ -79,139 +79,149 @@ message GlobalExplanation {
   // Class label for this set of global explanations. Will be empty/null for
   // binary logistic and linear regression models. Sorted alphabetically in
   // descending order.
-  optional string class_label = 1 [json_name="classLabel"];
+  optional string class_label = 1 [json_name = "classLabel"];
 
   // A list of the top global explanations. Sorted by absolute value of
   // attribution in descending order.
-  repeated Explanation explanations = 2 [json_name="explanations"];
+  repeated Explanation explanations = 2 [json_name = "explanations"];
 }
 
 // Hyperparameter search spaces. These should be a subset of training_options.
 message HparamSearchSpaces {
   // Activation functions of neural network models.
-  optional StringHparamSearchSpace activation_fn = 1 [json_name="activationFn"];
+  optional StringHparamSearchSpace activation_fn = 1
+      [json_name = "activationFn"];
 
   // Mini batch sample size.
-  optional IntHparamSearchSpace batch_size = 2 [json_name="batchSize"];
+  optional IntHparamSearchSpace batch_size = 2 [json_name = "batchSize"];
 
   // Booster type for boosted tree models.
-  optional StringHparamSearchSpace booster_type = 3 [json_name="boosterType"];
+  optional StringHparamSearchSpace booster_type = 3 [json_name = "boosterType"];
 
   // Subsample ratio of columns for each level for boosted tree models.
-  optional DoubleHparamSearchSpace colsample_bylevel = 4 [json_name="colsampleBylevel"];
+  optional DoubleHparamSearchSpace colsample_bylevel = 4
+      [json_name = "colsampleBylevel"];
 
   // Subsample ratio of columns for each node(split) for boosted tree models.
-  optional DoubleHparamSearchSpace colsample_bynode = 5 [json_name="colsampleBynode"];
+  optional DoubleHparamSearchSpace colsample_bynode = 5
+      [json_name = "colsampleBynode"];
 
   // Subsample ratio of columns when constructing each tree for boosted tree
   // models.
-  optional DoubleHparamSearchSpace colsample_bytree = 6 [json_name="colsampleBytree"];
+  optional DoubleHparamSearchSpace colsample_bytree = 6
+      [json_name = "colsampleBytree"];
 
   // Dart normalization type for boosted tree models.
-  optional StringHparamSearchSpace dart_normalize_type = 7 [json_name="dartNormalizeType"];
+  optional StringHparamSearchSpace dart_normalize_type = 7
+      [json_name = "dartNormalizeType"];
 
   // Dropout probability for dnn model training and boosted tree models using
   // dart booster.
-  optional DoubleHparamSearchSpace dropout = 8 [json_name="dropout"];
+  optional DoubleHparamSearchSpace dropout = 8 [json_name = "dropout"];
 
   // Hidden units for neural network models.
-  optional IntArrayHparamSearchSpace hidden_units = 9 [json_name="hiddenUnits"];
+  optional IntArrayHparamSearchSpace hidden_units = 9
+      [json_name = "hiddenUnits"];
 
   // L1 regularization coefficient.
-  optional DoubleHparamSearchSpace l1_reg = 10 [json_name="l1Reg"];
+  optional DoubleHparamSearchSpace l1_reg = 10 [json_name = "l1Reg"];
 
   // L2 regularization coefficient.
-  optional DoubleHparamSearchSpace l2_reg = 11 [json_name="l2Reg"];
+  optional DoubleHparamSearchSpace l2_reg = 11 [json_name = "l2Reg"];
 
   // Learning rate of training jobs.
-  optional DoubleHparamSearchSpace learn_rate = 12 [json_name="learnRate"];
+  optional DoubleHparamSearchSpace learn_rate = 12 [json_name = "learnRate"];
 
   // Maximum depth of a tree for boosted tree models.
-  optional IntHparamSearchSpace max_tree_depth = 13 [json_name="maxTreeDepth"];
+  optional IntHparamSearchSpace max_tree_depth = 13
+      [json_name = "maxTreeDepth"];
 
   // Minimum split loss for boosted tree models.
-  optional DoubleHparamSearchSpace min_split_loss = 14 [json_name="minSplitLoss"];
+  optional DoubleHparamSearchSpace min_split_loss = 14
+      [json_name = "minSplitLoss"];
 
   // Minimum sum of instance weight needed in a child for boosted tree models.
-  optional IntHparamSearchSpace min_tree_child_weight = 15 [json_name="minTreeChildWeight"];
+  optional IntHparamSearchSpace min_tree_child_weight = 15
+      [json_name = "minTreeChildWeight"];
 
   // Number of clusters for k-means.
-  optional IntHparamSearchSpace num_clusters = 16 [json_name="numClusters"];
+  optional IntHparamSearchSpace num_clusters = 16 [json_name = "numClusters"];
 
   // Number of latent factors to train on.
-  optional IntHparamSearchSpace num_factors = 17 [json_name="numFactors"];
+  optional IntHparamSearchSpace num_factors = 17 [json_name = "numFactors"];
 
   // Number of parallel trees for boosted tree models.
-  optional IntHparamSearchSpace num_parallel_tree = 18 [json_name="numParallelTree"];
+  optional IntHparamSearchSpace num_parallel_tree = 18
+      [json_name = "numParallelTree"];
 
   // Optimizer of TF models.
-  optional StringHparamSearchSpace optimizer = 19 [json_name="optimizer"];
+  optional StringHparamSearchSpace optimizer = 19 [json_name = "optimizer"];
 
   // Subsample the training data to grow tree to prevent overfitting for boosted
   // tree models.
-  optional DoubleHparamSearchSpace subsample = 20 [json_name="subsample"];
+  optional DoubleHparamSearchSpace subsample = 20 [json_name = "subsample"];
 
   // Tree construction algorithm for boosted tree models.
-  optional StringHparamSearchSpace tree_method = 21 [json_name="treeMethod"];
+  optional StringHparamSearchSpace tree_method = 21 [json_name = "treeMethod"];
 
   // Hyperparameter for matrix factoration when implicit feedback type is
   // specified.
-  optional DoubleHparamSearchSpace wals_alpha = 22 [json_name="walsAlpha"];
+  optional DoubleHparamSearchSpace wals_alpha = 22 [json_name = "walsAlpha"];
 }
 
 // An array of int.
 message IntArray {
   // Elements in the int array.
-  repeated string elements = 1 [json_name="elements"];
+  repeated string elements = 1 [json_name = "elements"];
 }
 
 // Search space for int array.
 message IntArrayHparamSearchSpace {
   // Candidates for the int array parameter.
-  repeated IntArray candidates = 1 [json_name="candidates"];
+  repeated IntArray candidates = 1 [json_name = "candidates"];
 }
 
 // Discrete candidates of an int hyperparameter.
 message IntCandidates {
   // Candidates for the int parameter in increasing order.
-  repeated string candidates = 1 [json_name="candidates"];
+  repeated string candidates = 1 [json_name = "candidates"];
 }
 
 // Search space for an int hyperparameter.
 message IntHparamSearchSpace {
   // Candidates of the int hyperparameter.
-  optional IntCandidates candidates = 1 [json_name="candidates"];
+  optional IntCandidates candidates = 1 [json_name = "candidates"];
 
   // Range of the int hyperparameter.
-  optional IntRange range = 2 [json_name="range"];
+  optional IntRange range = 2 [json_name = "range"];
 }
 
 // Range of an int hyperparameter.
 message IntRange {
   // Max value of the int parameter.
-  optional string max = 1 [json_name="max"];
+  optional string max = 1 [json_name = "max"];
 
   // Min value of the int parameter.
-  optional string min = 2 [json_name="min"];
+  optional string min = 2 [json_name = "min"];
 }
 
 // Response format for a single page when listing BigQuery ML models.
 message ListModelsResponse {
   // Models in the requested dataset. Only the following fields are populated:
   // model_reference, model_type, creation_time, last_modified_time and labels.
-  repeated Model models = 1 [json_name="models"];
+  repeated Model models = 1 [json_name = "models"];
 
   // A token to request the next page of results.
-  optional string next_page_token = 2 [json_name="nextPageToken"];
+  optional string next_page_token = 2 [json_name = "nextPageToken"];
 }
 
 message Model {
   // The best trial_id across all training runs.
-  optional string best_trial_id = 1 [json_name="bestTrialId"];
+  optional string best_trial_id = 1 [json_name = "bestTrialId"];
 
   // Output only. The time when this model was created, in millisecs since the
   // epoch.
-  optional string creation_time = 2 [json_name="creationTime"];
+  optional string creation_time = 2 [json_name = "creationTime"];
 
   // Output only. The default trial_id to use in TVFs when the trial_id is not
   // passed in. For single-objective [hyperparameter
@@ -219,45 +229,47 @@ message Model {
   // models, this is the best trial ID. For multi-objective [hyperparameter
   // tuning](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
   // models, this is the smallest trial ID among all Pareto optimal trials.
-  optional string default_trial_id = 3 [json_name="defaultTrialId"];
+  optional string default_trial_id = 3 [json_name = "defaultTrialId"];
 
   // Optional. A user-friendly description of this model.
-  optional string description = 4 [json_name="description"];
+  optional string description = 4 [json_name = "description"];
 
   // Custom encryption configuration (e.g., Cloud KMS keys). This shows the
   // encryption configuration of the model data while stored in BigQuery
   // storage. This field can be used with PatchModel to update encryption key
   // for an already encrypted model.
-  optional EncryptionConfiguration encryption_configuration = 5 [json_name="encryptionConfiguration"];
+  optional EncryptionConfiguration encryption_configuration = 5
+      [json_name = "encryptionConfiguration"];
 
   // Output only. A hash of this resource.
-  optional string etag = 6 [json_name="etag"];
+  optional string etag = 6 [json_name = "etag"];
 
   // Optional. The time when this model expires, in milliseconds since the
   // epoch. If not present, the model will persist indefinitely. Expired models
   // will be deleted and their storage reclaimed. The defaultTableExpirationMs
   // property of the encapsulating dataset can be used to set a default
   // expirationTime on newly created models.
-  optional string expiration_time = 7 [json_name="expirationTime"];
+  optional string expiration_time = 7 [json_name = "expirationTime"];
 
   // Output only. Input feature columns for the model inference. If the model is
   // trained with TRANSFORM clause, these are the input of the TRANSFORM clause.
-  repeated StandardSqlField feature_columns = 8 [json_name="featureColumns"];
+  repeated StandardSqlField feature_columns = 8 [json_name = "featureColumns"];
 
   // Optional. A descriptive name for this model.
-  optional string friendly_name = 9 [json_name="friendlyName"];
+  optional string friendly_name = 9 [json_name = "friendlyName"];
 
   // Output only. All hyperparameter search spaces in this model.
-  optional HparamSearchSpaces hparam_search_spaces = 10 [json_name="hparamSearchSpaces"];
+  optional HparamSearchSpaces hparam_search_spaces = 10
+      [json_name = "hparamSearchSpaces"];
 
   // Output only. Trials of a [hyperparameter
   // tuning](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
   // model sorted by trial_id.
-  repeated HparamTuningTrial hparam_trials = 11 [json_name="hparamTrials"];
+  repeated HparamTuningTrial hparam_trials = 11 [json_name = "hparamTrials"];
 
   // Output only. Label columns that were used to train this model. The output
   // of the model will have a "predicted_" prefix to these columns.
-  repeated StandardSqlField label_columns = 12 [json_name="labelColumns"];
+  repeated StandardSqlField label_columns = 12 [json_name = "labelColumns"];
 
   // The labels associated with this model. You can use these to organize and
   // group your models. Label keys and values can be no longer than 63
@@ -265,18 +277,18 @@ message Model {
   // underscores and dashes. International characters are allowed. Label values
   // are optional. Label keys must start with a letter and each label in the
   // list must have a different key.
-  map<string, string> labels = 13 [json_name="labels"];
+  map<string, string> labels = 13 [json_name = "labels"];
 
   // Output only. The time when this model was last modified, in millisecs since
   // the epoch.
-  optional string last_modified_time = 14 [json_name="lastModifiedTime"];
+  optional string last_modified_time = 14 [json_name = "lastModifiedTime"];
 
   // Output only. The geographic location where the model resides. This value is
   // inherited from the dataset.
-  optional string location = 15 [json_name="location"];
+  optional string location = 15 [json_name = "location"];
 
   // Required. Unique identifier for this model.
-  optional ModelReference model_reference = 16 [json_name="modelReference"];
+  optional ModelReference model_reference = 16 [json_name = "modelReference"];
 
   // Output only. Type of the model resource.
   // MODEL_TYPE_UNSPECIFIED: Default value.
@@ -303,7 +315,7 @@ message Model {
   // RANDOM_FOREST_CLASSIFIER: Random forest classifier model.
   // TENSORFLOW_LITE: An imported TensorFlow Lite model.
   // ONNX: An imported ONNX model.
-  optional string model_type = 17 [json_name="modelType"];
+  optional string model_type = 17 [json_name = "modelType"];
 
   // Output only. For single-objective [hyperparameter
   // tuning](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
@@ -311,19 +323,21 @@ message Model {
   // [hyperparameter
   // tuning](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview)
   // models, it contains all Pareto optimal trials sorted by trial_id.
-  repeated string optimal_trial_ids = 18 [json_name="optimalTrialIds"];
+  repeated string optimal_trial_ids = 18 [json_name = "optimalTrialIds"];
 
   // Output only. Remote model info
-  optional RemoteModelInfo remote_model_info = 19 [json_name="remoteModelInfo"];
+  optional RemoteModelInfo remote_model_info = 19
+      [json_name = "remoteModelInfo"];
 
   // Information for all training runs in increasing order of start_time.
-  repeated TrainingRun training_runs = 20 [json_name="trainingRuns"];
+  repeated TrainingRun training_runs = 20 [json_name = "trainingRuns"];
 
   // Output only. This field will be populated if a TRANSFORM clause was used to
   // train a model. TRANSFORM clause (if used) takes feature_columns as input
   // and outputs transform_columns. transform_columns then are used to train the
   // model.
-  repeated TransformColumn transform_columns = 21 [json_name="transformColumns"];
+  repeated TransformColumn transform_columns = 21
+      [json_name = "transformColumns"];
 }
 
 // Remote Model Info
@@ -331,17 +345,17 @@ message RemoteModelInfo {
   // Output only. Fully qualified name of the user-provided connection object of
   // the remote model. Format:
   // ```"projects/{project_id}/locations/{location_id}/connections/{connection_id}"```
-  optional string connection = 1 [json_name="connection"];
+  optional string connection = 1 [json_name = "connection"];
 
   // Output only. The endpoint for remote model.
-  optional string endpoint = 2 [json_name="endpoint"];
+  optional string endpoint = 2 [json_name = "endpoint"];
 
   // Output only. Max number of rows in each batch sent to the remote service.
   // If unset, the number of rows in each batch is set dynamically.
-  optional string max_batching_rows = 3 [json_name="maxBatchingRows"];
+  optional string max_batching_rows = 3 [json_name = "maxBatchingRows"];
 
   // Output only. The model version for LLM.
-  optional string remote_model_version = 4 [json_name="remoteModelVersion"];
+  optional string remote_model_version = 4 [json_name = "remoteModelVersion"];
 
   // Output only. The remote service type for remote model.
   // REMOTE_SERVICE_TYPE_UNSPECIFIED: Unspecified remote service type.
@@ -356,7 +370,7 @@ message RemoteModelInfo {
   // CLOUD_AI_SPEECH_TO_TEXT_V2: V2 Speech-to-Text API. See more details at
   // [Google Cloud Speech-to-Text V2
   // API](https://cloud.google.com/speech-to-text/v2/docs)
-  optional string remote_service_type = 5 [json_name="remoteServiceType"];
+  optional string remote_service_type = 5 [json_name = "remoteServiceType"];
 
   // Output only. The name of the speech recognizer to use for speech
   // recognition. The expected format is
@@ -365,67 +379,72 @@ message RemoteModelInfo {
   // default recognizer `projects/{model
   // project}/locations/global/recognizers/_` will be used. See more details at
   // [recognizers](https://cloud.google.com/speech-to-text/v2/docs/reference/rest/v2/projects.locations.recognizers)
-  optional string speech_recognizer = 6 [json_name="speechRecognizer"];
+  optional string speech_recognizer = 6 [json_name = "speechRecognizer"];
 }
 
 // Search space for string and enum.
 message StringHparamSearchSpace {
   // Canididates for the string or enum parameter in lower case.
-  repeated string candidates = 1 [json_name="candidates"];
+  repeated string candidates = 1 [json_name = "candidates"];
 }
 
 // Information about a single training query run for the model.
 message TrainingRun {
   // Output only. Global explanation contains the explanation of top features on
   // the class level. Applies to classification models only.
-  repeated GlobalExplanation class_level_global_explanations = 1 [json_name="classLevelGlobalExplanations"];
+  repeated GlobalExplanation class_level_global_explanations = 1
+      [json_name = "classLevelGlobalExplanations"];
 
   // Output only. Data split result of the training run. Only set when the input
   // data is actually split.
-  optional DataSplitResult data_split_result = 2 [json_name="dataSplitResult"];
+  optional DataSplitResult data_split_result = 2
+      [json_name = "dataSplitResult"];
 
   // Output only. The evaluation metrics over training/eval data that were
   // computed at the end of training.
-  optional EvaluationMetrics evaluation_metrics = 3 [json_name="evaluationMetrics"];
+  optional EvaluationMetrics evaluation_metrics = 3
+      [json_name = "evaluationMetrics"];
 
   // Output only. Global explanation contains the explanation of top features on
   // the model level. Applies to both regression and classification models.
-  optional GlobalExplanation model_level_global_explanation = 4 [json_name="modelLevelGlobalExplanation"];
+  optional GlobalExplanation model_level_global_explanation = 4
+      [json_name = "modelLevelGlobalExplanation"];
 
   // Output only. Output of each iteration run, results.size() <=
   // max_iterations.
-  repeated IterationResult results = 5 [json_name="results"];
+  repeated IterationResult results = 5 [json_name = "results"];
 
   // Output only. The start time of this training run.
-  optional string start_time = 6 [json_name="startTime"];
+  optional string start_time = 6 [json_name = "startTime"];
 
   // Output only. Options that were used for this training run, includes user
   // specified and default options that were used.
-  optional TrainingOptions training_options = 7 [json_name="trainingOptions"];
+  optional TrainingOptions training_options = 7 [json_name = "trainingOptions"];
 
   // Output only. The start time of this training run, in milliseconds since
   // epoch.
-  optional string training_start_time = 8 [json_name="trainingStartTime"];
+  optional string training_start_time = 8 [json_name = "trainingStartTime"];
 
   // The model id in the [Vertex AI Model
   // Registry](https://cloud.google.com/vertex-ai/docs/model-registry/introduction)
   // for this training run.
-  optional string vertex_ai_model_id = 9 [json_name="vertexAiModelId"];
+  optional string vertex_ai_model_id = 9 [json_name = "vertexAiModelId"];
 
   // Output only. The model version in the [Vertex AI Model
   // Registry](https://cloud.google.com/vertex-ai/docs/model-registry/introduction)
   // for this training run.
-  optional string vertex_ai_model_version = 10 [json_name="vertexAiModelVersion"];
+  optional string vertex_ai_model_version = 10
+      [json_name = "vertexAiModelVersion"];
 }
 
 // Information about a single transform column.
 message TransformColumn {
   // Output only. Name of the column.
-  optional string name = 1 [json_name="name"];
+  optional string name = 1 [json_name = "name"];
 
   // Output only. The SQL expression used in the column transform.
-  optional string transform_sql = 2 [json_name="transformSql"];
+  optional string transform_sql = 2 [json_name = "transformSql"];
 
   // Output only. Data type of the column after the transform.
-  optional StandardSqlDataType type = 3 [json_name="type"];
+  optional StandardSqlDataType type = 3 [json_name = "type"];
 }

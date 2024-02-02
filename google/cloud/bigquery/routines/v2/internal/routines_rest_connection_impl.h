@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_INTERNAL_ROUTINES_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_INTERNAL_ROUTINES_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/routines/v2/internal/routines_rest_stub.h"
 #include "google/cloud/bigquery/routines/v2/internal/routines_retry_traits.h"
 #include "google/cloud/bigquery/routines/v2/routines_connection.h"
 #include "google/cloud/bigquery/routines/v2/routines_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/routines/v2/routines_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,40 +42,50 @@ class RoutinesRestConnectionImpl
   ~RoutinesRestConnectionImpl() override = default;
 
   RoutinesRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_routines_v2_internal::RoutinesRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_routines_v2_internal::RoutinesRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  Status
-  DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) override;
+  Status DeleteRoutine(
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request) override;
 
  private:
   static std::unique_ptr<bigquery_routines_v2::RoutinesRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquery_routines_v2::RoutinesRetryPolicyOption>()->clone();
+    return options.get<bigquery_routines_v2::RoutinesRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquery_routines_v2::RoutinesBackoffPolicyOption>()->clone();
+    return options.get<bigquery_routines_v2::RoutinesBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<bigquery_routines_v2::RoutinesConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      bigquery_routines_v2::RoutinesConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquery_routines_v2::RoutinesConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<bigquery_routines_v2::RoutinesConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

@@ -26,36 +26,33 @@ namespace cloud {
 namespace bigquery_models_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ModelsRestLogging::ModelsRestLogging(
-    std::shared_ptr<ModelsRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+ModelsRestLogging::ModelsRestLogging(std::shared_ptr<ModelsRestStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status
-ModelsRestLogging::DeleteModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+Status ModelsRestLogging::DeleteModel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+                 request) {
         return child_->DeleteModel(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsRestLogging::GetModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsRestLogging::GetModel(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::GetModelRequest const&
+                 request) {
         return child_->GetModel(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -63,27 +60,26 @@ ModelsRestLogging::GetModel(
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
 ModelsRestLogging::ListModels(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+                 request) {
         return child_->ListModels(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsRestLogging::PatchModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsRestLogging::PatchModel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+                 request) {
         return child_->PatchModel(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

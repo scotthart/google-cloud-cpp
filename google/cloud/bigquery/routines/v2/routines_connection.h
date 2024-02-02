@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_ROUTINES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_ROUTINES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/routines/v2/internal/routines_retry_traits.h"
 #include "google/cloud/bigquery/routines/v2/routines_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class RoutinesLimitedErrorCountRetryPolicy : public RoutinesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit RoutinesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   RoutinesLimitedErrorCountRetryPolicy(
       RoutinesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : RoutinesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutinesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   RoutinesLimitedErrorCountRetryPolicy(
       RoutinesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : RoutinesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : RoutinesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class RoutinesLimitedErrorCountRetryPolicy : public RoutinesRetryPolicy {
   using BaseType = RoutinesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_routines_v2_internal::RoutinesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_routines_v2_internal::RoutinesRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,13 @@ class RoutinesLimitedTimeRetryPolicy : public RoutinesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit RoutinesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   RoutinesLimitedTimeRetryPolicy(RoutinesLimitedTimeRetryPolicy&& rhs) noexcept
-    : RoutinesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  RoutinesLimitedTimeRetryPolicy(RoutinesLimitedTimeRetryPolicy const& rhs) noexcept
-    : RoutinesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : RoutinesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  RoutinesLimitedTimeRetryPolicy(
+      RoutinesLimitedTimeRetryPolicy const& rhs) noexcept
+      : RoutinesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +148,16 @@ class RoutinesLimitedTimeRetryPolicy : public RoutinesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<RoutinesRetryPolicy> clone() const override {
-    return std::make_unique<RoutinesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<RoutinesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = RoutinesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_routines_v2_internal::RoutinesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_routines_v2_internal::RoutinesRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,20 +178,26 @@ class RoutinesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request);
+  virtual Status DeleteRoutine(
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request);
+  ListRoutines(
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

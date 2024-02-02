@@ -33,32 +33,39 @@ TabledataRestConnectionImpl::TabledataRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquery_tabledata_v2_internal::TabledataRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        TabledataConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      TabledataConnection::options())) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-TabledataRestConnectionImpl::InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
+TabledataRestConnectionImpl::InsertAll(
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertAll(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+              request) {
         return stub_->InsertAll(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-TabledataRestConnectionImpl::ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+TabledataRestConnectionImpl::ListTabledata(
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListTabledata(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tabledata::v2::
+                 ListTabledataRequest const& request) {
         return stub_->ListTabledata(rest_context, options, request);
       },
       *current, request, __func__);

@@ -38,16 +38,20 @@ class ProjectsRestLogging : public ProjectsRestStub {
  public:
   ~ProjectsRestLogging() override = default;
   ProjectsRestLogging(std::shared_ptr<ProjectsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                      TracingOptions tracing_options,
+                      std::set<std::string> components);
 
-  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<ProjectsRestStub> child_;

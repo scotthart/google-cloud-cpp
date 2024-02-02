@@ -36,15 +36,17 @@ class ProjectsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ProjectsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request);
+  virtual google::cloud::Idempotency GetServiceAccount(
+      google::cloud::cpp::bigquery::projects::v2::
+          GetServiceAccountRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request);
+  virtual google::cloud::Idempotency ListProjects(
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request);
 };
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy();
+MakeDefaultProjectsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_projects_v2

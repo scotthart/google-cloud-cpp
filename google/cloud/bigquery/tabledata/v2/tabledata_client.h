@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TabledataClient {
  public:
-  explicit TabledataClient(std::shared_ptr<TabledataConnection> connection, Options opts = {});
+  explicit TabledataClient(std::shared_ptr<TabledataConnection> connection,
+                           Options opts = {});
   ~TabledataClient();
 
   ///@{
@@ -110,7 +111,11 @@ class TabledataClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-  InsertAll(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::TableDataInsertAllRequest const& table_data_insert_all_request_resource, Options opts = {});
+  InsertAll(std::string const& project_id, std::string const& dataset_id,
+            std::string const& table_id,
+            google::cloud::cpp::bigquery::v2::TableDataInsertAllRequest const&
+                table_data_insert_all_request_resource,
+            Options opts = {});
 
   // clang-format off
   ///
@@ -142,7 +147,9 @@ class TabledataClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request, Options opts = {});
+  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request,
+            Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +176,9 @@ class TabledataClient {
   /// [google.cloud.cpp.bigquery.v2.TableDataList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_012.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-  ListTabledata(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& table_id, Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +208,10 @@ class TabledataClient {
   /// [google.cloud.cpp.bigquery.v2.TableDataList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_012.proto#L98}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-  ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TabledataConnection> connection_;

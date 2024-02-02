@@ -31,37 +31,51 @@ RoutinesTracingConnection::RoutinesTracingConnection(
     std::shared_ptr<bigquery_routines_v2::RoutinesConnection> child)
     : child_(std::move(child)) {}
 
-Status
-RoutinesTracingConnection::DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_routines_v2::RoutinesConnection::DeleteRoutine");
+Status RoutinesTracingConnection::DeleteRoutine(
+    google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_routines_v2::RoutinesConnection::DeleteRoutine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteRoutine(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesTracingConnection::GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_routines_v2::RoutinesConnection::GetRoutine");
+RoutinesTracingConnection::GetRoutine(
+    google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_routines_v2::RoutinesConnection::GetRoutine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetRoutine(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesTracingConnection::InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_routines_v2::RoutinesConnection::InsertRoutine");
+RoutinesTracingConnection::InsertRoutine(
+    google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_routines_v2::RoutinesConnection::InsertRoutine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertRoutine(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-RoutinesTracingConnection::ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_routines_v2::RoutinesConnection::ListRoutines");
+RoutinesTracingConnection::ListRoutines(
+    google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_routines_v2::RoutinesConnection::ListRoutines");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListRoutines(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesTracingConnection::UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_routines_v2::RoutinesConnection::UpdateRoutine");
+RoutinesTracingConnection::UpdateRoutine(
+    google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_routines_v2::RoutinesConnection::UpdateRoutine");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateRoutine(request));
 }

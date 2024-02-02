@@ -25,6 +25,5 @@ set(service_dirs
     "tabledata/v2/"
     "tables/v2/")
 
-set(operation_service_dirs
-    # cmake-format: sort
+set(operation_service_dirs # cmake-format: sort
 )

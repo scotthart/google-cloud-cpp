@@ -26,10 +26,11 @@ import "google/cloud/bigquery/v2/internal/common_016.proto";
 // Response message for the ListRowAccessPolicies method.
 message ListRowAccessPoliciesResponse {
   // A token to request the next page of results.
-  optional string next_page_token = 1 [json_name="nextPageToken"];
+  optional string next_page_token = 1 [json_name = "nextPageToken"];
 
   // Row access policies on the requested table.
-  repeated RowAccessPolicy row_access_policies = 2 [json_name="rowAccessPolicies"];
+  repeated RowAccessPolicy row_access_policies = 2
+      [json_name = "rowAccessPolicies"];
 }
 
 // Represents access on a subset of rows on the specified table, defined by its
@@ -38,10 +39,10 @@ message ListRowAccessPoliciesResponse {
 message RowAccessPolicy {
   // Output only. The time when this row access policy was created, in
   // milliseconds since the epoch.
-  optional string creation_time = 1 [json_name="creationTime"];
+  optional string creation_time = 1 [json_name = "creationTime"];
 
   // Output only. A hash of this resource.
-  optional string etag = 2 [json_name="etag"];
+  optional string etag = 2 [json_name = "etag"];
 
   // Required. A SQL boolean expression that represents the rows defined by this
   // row access policy, similar to the boolean expression in a WHERE clause of a
@@ -49,12 +50,13 @@ message RowAccessPolicy {
   // temporary functions are not supported. Examples: region="EU" date_field =
   // CAST('2019-9-27' as DATE) nullable_field is not NULL numeric_field BETWEEN
   // 1.0 AND 5.0
-  optional string filter_predicate = 3 [json_name="filterPredicate"];
+  optional string filter_predicate = 3 [json_name = "filterPredicate"];
 
   // Output only. The time when this row access policy was last modified, in
   // milliseconds since the epoch.
-  optional string last_modified_time = 4 [json_name="lastModifiedTime"];
+  optional string last_modified_time = 4 [json_name = "lastModifiedTime"];
 
   // Required. Reference describing the ID of this row access policy.
-  optional RowAccessPolicyReference row_access_policy_reference = 5 [json_name="rowAccessPolicyReference"];
+  optional RowAccessPolicyReference row_access_policy_reference = 5
+      [json_name = "rowAccessPolicyReference"];
 }

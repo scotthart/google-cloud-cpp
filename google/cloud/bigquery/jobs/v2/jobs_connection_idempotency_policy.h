@@ -36,30 +36,31 @@ class JobsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<JobsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request);
+  virtual google::cloud::Idempotency Cancel(
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request);
+  virtual google::cloud::Idempotency DeleteJob(
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request);
+  virtual google::cloud::Idempotency GetJob(
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request);
+  virtual google::cloud::Idempotency GetQueryResults(
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request);
+  virtual google::cloud::Idempotency InsertJob(
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request);
+  virtual google::cloud::Idempotency ListJobs(
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request);
 
-  virtual google::cloud::Idempotency
-  Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request);
+  virtual google::cloud::Idempotency Query(
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request);
 };
 
 std::unique_ptr<JobsConnectionIdempotencyPolicy>
-    MakeDefaultJobsConnectionIdempotencyPolicy();
+MakeDefaultJobsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_jobs_v2

@@ -38,31 +38,45 @@ class DatasetsRestStub {
 
   virtual Status DeleteDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> GetDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> InsertDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::DatasetList> ListDatasets(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> PatchDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> Undelete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> UpdateDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+          request) = 0;
 };
 
 class DefaultDatasetsRestStub : public DatasetsRestStub {
@@ -70,37 +84,50 @@ class DefaultDatasetsRestStub : public DatasetsRestStub {
   ~DefaultDatasetsRestStub() override = default;
 
   explicit DefaultDatasetsRestStub(Options options);
-  DefaultDatasetsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultDatasetsRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                          Options options);
 
   Status DeleteDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Dataset> GetDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Dataset> InsertDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::DatasetList> ListDatasets(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Dataset> PatchDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Dataset> Undelete(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Dataset> UpdateDataset(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -31,65 +31,90 @@ TablesTracingConnection::TablesTracingConnection(
     std::shared_ptr<bigquery_tables_v2::TablesConnection> child)
     : child_(std::move(child)) {}
 
-Status
-TablesTracingConnection::DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::DeleteTable");
+Status TablesTracingConnection::DeleteTable(
+    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::DeleteTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTable(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesTracingConnection::GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::GetTable");
+TablesTracingConnection::GetTable(
+    google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::GetTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTable(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesTracingConnection::GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::GetIamPolicy");
+TablesTracingConnection::GetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesTracingConnection::InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::InsertTable");
+TablesTracingConnection::InsertTable(
+    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::InsertTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertTable(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-TablesTracingConnection::ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::ListTables");
+TablesTracingConnection::ListTables(
+    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::ListTables");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListTables(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesTracingConnection::PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::PatchTable");
+TablesTracingConnection::PatchTable(
+    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::PatchTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchTable(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesTracingConnection::SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::SetIamPolicy");
+TablesTracingConnection::SetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-TablesTracingConnection::TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::TestIamPermissions");
+TablesTracingConnection::TestIamPermissions(
+    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_tables_v2::TablesConnection::TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesTracingConnection::UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tables_v2::TablesConnection::UpdateTable");
+TablesTracingConnection::UpdateTable(
+    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_tables_v2::TablesConnection::UpdateTable");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTable(request));
 }

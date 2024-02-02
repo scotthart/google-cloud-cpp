@@ -32,18 +32,19 @@ import "google/protobuf/empty.proto";
 service Jobs {
   option (google.api.default_host) = "bigquery.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/bigquery,"
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/cloud-platform.read-only,"
-    "https://www.googleapis.com/auth/devstorage.full_control,"
-    "https://www.googleapis.com/auth/devstorage.read_only,"
-    "https://www.googleapis.com/auth/devstorage.read_write";
+      "https://www.googleapis.com/auth/bigquery,"
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/cloud-platform.read-only,"
+      "https://www.googleapis.com/auth/devstorage.full_control,"
+      "https://www.googleapis.com/auth/devstorage.read_only,"
+      "https://www.googleapis.com/auth/devstorage.read_write";
 
   // Requests that a job be cancelled. This call will return immediately, and
   // the client will need to poll for the job status to see if the cancel
   // completed successfully. Cancelled jobs may still incur costs.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/cancel
-  rpc Cancel(CancelRequest) returns (google.cloud.cpp.bigquery.v2.JobCancelResponse) {
+  rpc Cancel(CancelRequest)
+      returns (google.cloud.cpp.bigquery.v2.JobCancelResponse) {
     option (google.api.http) = {
       post: "/bigquery/v2/projects/{project_id}/jobs/{job_id}/cancel"
       body: "*"
@@ -74,7 +75,8 @@ service Jobs {
 
   // RPC to get the results of a query job.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults
-  rpc GetQueryResults(GetQueryResultsRequest) returns (google.cloud.cpp.bigquery.v2.GetQueryResultsResponse) {
+  rpc GetQueryResults(GetQueryResultsRequest)
+      returns (google.cloud.cpp.bigquery.v2.GetQueryResultsResponse) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/queries/{job_id}"
     };
@@ -125,17 +127,19 @@ service Jobs {
 // Request message for Cancel.
 message CancelRequest {
   // Required. Job ID of the job to cancel
-  string job_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="jobId"];
+  string job_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "jobId"];
 
   // The geographic location of the job. You must specify the location to run
   // the job for the following scenarios: - If the location to run a job is not
   // in the `us` or the `eu` multi-regional location - If the job's location is
   // in a single region (for example, `us-central1`) For more information, see
   // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
-  optional string location = 2 [json_name="location"];
+  optional string location = 2 [json_name = "location"];
 
   // Required. Project ID of the job to cancel
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for DeleteJob.
@@ -144,59 +148,66 @@ message DeleteJobRequest {
   // a parent job which has child jobs, the metadata from all child jobs will be
   // deleted as well. Direct deletion of the metadata of child jobs is not
   // allowed.
-  string job_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="jobId"];
+  string job_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "jobId"];
 
   // The geographic location of the job. Required. See details at:
   // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
-  optional string location = 2 [json_name="location"];
+  optional string location = 2 [json_name = "location"];
 
   // Required. Project ID of the job for which metadata is to be deleted.
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for GetJob.
 message GetJobRequest {
   // Required. Job ID of the requested job.
-  string job_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="jobId"];
+  string job_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "jobId"];
 
   // The geographic location of the job. You must specify the location to run
   // the job for the following scenarios: - If the location to run a job is not
   // in the `us` or the `eu` multi-regional location - If the job's location is
   // in a single region (for example, `us-central1`) For more information, see
   // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
-  optional string location = 2 [json_name="location"];
+  optional string location = 2 [json_name = "location"];
 
   // Required. Project ID of the requested job.
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for GetQueryResults.
 message GetQueryResultsRequest {
   // Optional. Output timestamp as usec int64. Default is false.
-  optional bool format_options_use_int64_timestamp = 1 [json_name="formatOptions.useInt64Timestamp"];
+  optional bool format_options_use_int64_timestamp = 1
+      [json_name = "formatOptions.useInt64Timestamp"];
 
   // Required. Job ID of the query job.
-  string job_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="jobId"];
+  string job_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "jobId"];
 
   // The geographic location of the job. You must specify the location to run
   // the job for the following scenarios: - If the location to run a job is not
   // in the `us` or the `eu` multi-regional location - If the job's location is
   // in a single region (for example, `us-central1`) For more information, see
   // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
-  optional string location = 3 [json_name="location"];
+  optional string location = 3 [json_name = "location"];
 
   // Maximum number of results to read.
-  optional uint32 max_results = 4 [json_name="maxResults"];
+  optional uint32 max_results = 4 [json_name = "maxResults"];
 
   // Page token, returned by a previous call, to request the next page of
   // results.
-  optional string page_token = 5 [json_name="pageToken"];
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // Required. Project ID of the query job.
-  string project_id = 6 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 6
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 
   // Zero-based index of the starting row.
-  optional string start_index = 7 [json_name="startIndex"];
+  optional string start_index = 7 [json_name = "startIndex"];
 
   // Optional: Specifies the maximum amount of time, in milliseconds, that the
   // client is willing to wait for the query to complete. By default, this limit
@@ -209,63 +220,68 @@ message GetQueryResultsRequest {
   // you can continue to wait for the query to complete by calling the
   // getQueryResults method until the jobComplete field in the getQueryResults
   // response is true.
-  optional uint32 timeout_ms = 8 [json_name="timeoutMs"];
+  optional uint32 timeout_ms = 8 [json_name = "timeoutMs"];
 }
 
 // Request message for InsertJob.
 message InsertJobRequest {
   // The Job for this request.
-  optional google.cloud.cpp.bigquery.v2.Job job_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.Job job_resource = 1
+      [json_name = "__json_request_body"];
 
   // Project ID of project that will be billed for the job.
-  string project_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for ListJobs.
 message ListJobsRequest {
   // Whether to display jobs owned by all users in the project. Default False.
-  optional bool all_users = 1 [json_name="allUsers"];
+  optional bool all_users = 1 [json_name = "allUsers"];
 
   // Max value for job creation time, in milliseconds since the POSIX epoch. If
   // set, only jobs created before or at this timestamp are returned.
-  optional string max_creation_time = 2 [json_name="maxCreationTime"];
+  optional string max_creation_time = 2 [json_name = "maxCreationTime"];
 
   // The maximum number of results to return in a single response page. Leverage
   // the page tokens to iterate through the entire collection.
-  optional uint32 max_results = 3 [json_name="maxResults"];
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Min value for job creation time, in milliseconds since the POSIX epoch. If
   // set, only jobs created after or at this timestamp are returned.
-  optional string min_creation_time = 4 [json_name="minCreationTime"];
+  optional string min_creation_time = 4 [json_name = "minCreationTime"];
 
   // Page token, returned by a previous call, to request the next page of
   // results.
-  optional string page_token = 5 [json_name="pageToken"];
+  optional string page_token = 5 [json_name = "pageToken"];
 
   // If set, show only child jobs of the specified parent. Otherwise, show all
   // top-level jobs.
-  optional string parent_job_id = 6 [json_name="parentJobId"];
+  optional string parent_job_id = 6 [json_name = "parentJobId"];
 
   // Project ID of the jobs to list.
-  string project_id = 7 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 7
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 
   // Restrict information returned to a set of selected fields
   // full: Includes all job data
   // minimal: Does not include the job configuration
-  optional string projection = 8 [json_name="projection"];
+  optional string projection = 8 [json_name = "projection"];
 
   // Filter for job state
   // done: Finished jobs
   // pending: Pending jobs
   // running: Running jobs
-  optional string state_filter = 9 [json_name="stateFilter"];
+  optional string state_filter = 9 [json_name = "stateFilter"];
 }
 
 // Request message for Query.
 message QueryRequest {
   // Required. Project ID of the query request.
-  string project_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 
   // The QueryRequest for this request.
-  optional google.cloud.cpp.bigquery.v2.QueryRequest query_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.QueryRequest query_request_resource = 2
+      [json_name = "__json_request_body"];
 }

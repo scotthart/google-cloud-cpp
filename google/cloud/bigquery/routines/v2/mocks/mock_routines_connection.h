@@ -46,25 +46,36 @@ class MockRoutinesConnection : public bigquery_routines_v2::RoutinesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status,
-  DeleteRoutine,
-  (google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteRoutine,
+      (google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Routine>,
-  GetRoutine,
-  (google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Routine>, GetRoutine,
+      (google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Routine>,
-  InsertRoutine,
-  (google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Routine>, InsertRoutine,
+      (google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>,
-  ListRoutines,
-  (google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>,
+      ListRoutines,
+      (google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Routine>,
-  UpdateRoutine,
-  (google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Routine>, UpdateRoutine,
+      (google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

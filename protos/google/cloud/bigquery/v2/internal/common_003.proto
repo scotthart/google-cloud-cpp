@@ -39,12 +39,12 @@ package google.cloud.cpp.bigquery.v2;
 // DATA_WRITE logging.
 message AuditConfig {
   // The configuration for logging of each type of permission.
-  repeated AuditLogConfig audit_log_configs = 1 [json_name="auditLogConfigs"];
+  repeated AuditLogConfig audit_log_configs = 1 [json_name = "auditLogConfigs"];
 
   // Specifies a service that will be enabled for audit logging. For example,
   // `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices` is a
   // special value that covers all services.
-  optional string service = 2 [json_name="service"];
+  optional string service = 2 [json_name = "service"];
 }
 
 // Provides the configuration for logging a type of permissions. Example: {
@@ -55,14 +55,14 @@ message AuditConfig {
 message AuditLogConfig {
   // Specifies the identities that do not cause logging for this type of
   // permission. Follows the same format of Binding.members.
-  repeated string exempted_members = 1 [json_name="exemptedMembers"];
+  repeated string exempted_members = 1 [json_name = "exemptedMembers"];
 
   // The log type that this config enables.
   // LOG_TYPE_UNSPECIFIED: Default case. Should never be this.
   // ADMIN_READ: Admin reads. Example: CloudIAM getIamPolicy
   // DATA_WRITE: Data writes. Example: CloudSQL Users create
   // DATA_READ: Data reads. Example: CloudSQL Users list
-  optional string log_type = 2 [json_name="logType"];
+  optional string log_type = 2 [json_name = "logType"];
 }
 
 // Associates `members`, or principals, with a `role`.
@@ -74,7 +74,7 @@ message Binding {
   // role to one or more of the principals in this binding. To learn which
   // resources support conditions in their IAM policies, see the [IAM
   // documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-  optional Expr condition = 1 [json_name="condition"];
+  optional Expr condition = 1 [json_name = "condition"];
 
   // Specifies the principals requesting access for a Google Cloud resource.
   // `members` can have the following values: * `allUsers`: A special identifier
@@ -130,7 +130,7 @@ message Binding {
   // `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`:
   // Deleted single identity in a workforce identity pool. For example,
   // `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.
-  repeated string members = 2 [json_name="members"];
+  repeated string members = 2 [json_name = "members"];
 
   // Role that is assigned to the list of `members`, or principals. For example,
   // `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the
@@ -138,7 +138,7 @@ message Binding {
   // documentation](https://cloud.google.com/iam/docs/roles-overview). For a
   // list of the available pre-defined roles, see
   // [here](https://cloud.google.com/iam/docs/understanding-roles).
-  optional string role = 3 [json_name="role"];
+  optional string role = 3 [json_name = "role"];
 }
 
 // Represents a textual expression in the Common Expression Language (CEL)
@@ -160,26 +160,26 @@ message Binding {
 message Expr {
   // Optional. Description of the expression. This is a longer text which
   // describes the expression, e.g. when hovered over it in a UI.
-  optional string description = 1 [json_name="description"];
+  optional string description = 1 [json_name = "description"];
 
   // Textual representation of an expression in Common Expression Language
   // syntax.
-  optional string expression = 2 [json_name="expression"];
+  optional string expression = 2 [json_name = "expression"];
 
   // Optional. String indicating the location of the expression for error
   // reporting, e.g. a file name and a position in the file.
-  optional string location = 3 [json_name="location"];
+  optional string location = 3 [json_name = "location"];
 
   // Optional. Title for the expression, i.e. a short string describing its
   // purpose. This can be used e.g. in UIs which allow to enter the expression.
-  optional string title = 4 [json_name="title"];
+  optional string title = 4 [json_name = "title"];
 }
 
 // Request message for `GetIamPolicy` method.
 message GetIamPolicyRequest {
   // OPTIONAL: A `GetPolicyOptions` object for specifying options to
   // `GetIamPolicy`.
-  optional GetPolicyOptions options = 1 [json_name="options"];
+  optional GetPolicyOptions options = 1 [json_name = "options"];
 }
 
 // Encapsulates settings provided to GetIamPolicy.
@@ -194,7 +194,8 @@ message GetPolicyOptions {
   // has no conditional role bindings, the response uses version 1. To learn
   // which resources support conditions in their IAM policies, see the [IAM
   // documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-  optional int32 requested_policy_version = 1 [json_name="requestedPolicyVersion"];
+  optional int32 requested_policy_version = 1
+      [json_name = "requestedPolicyVersion"];
 }
 
 // An Identity and Access Management (IAM) policy, which specifies access
@@ -228,7 +229,7 @@ message GetPolicyOptions {
 // documentation](https://cloud.google.com/iam/docs/).
 message Policy {
   // Specifies cloud audit logging configuration for this policy.
-  repeated AuditConfig audit_configs = 1 [json_name="auditConfigs"];
+  repeated AuditConfig audit_configs = 1 [json_name = "auditConfigs"];
 
   // Associates a list of `members`, or principals, with a `role`. Optionally,
   // may specify a `condition` that determines how and when the `bindings` are
@@ -239,7 +240,7 @@ message Policy {
   // different roles to `user:alice@example.com`, and not to any other
   // principal, then you can add another 1,450 principals to the `bindings` in
   // the `Policy`.
-  repeated Binding bindings = 2 [json_name="bindings"];
+  repeated Binding bindings = 2 [json_name = "bindings"];
 
   // `etag` is used for optimistic concurrency control as a way to help prevent
   // simultaneous updates of a policy from overwriting each other. It is
@@ -252,7 +253,7 @@ message Policy {
   // whenever you call `setIamPolicy`. If you omit this field, then IAM allows
   // you to overwrite a version `3` policy with a version `1` policy, and all of
   // the conditions in the version `3` policy are lost.
-  optional string etag = 3 [json_name="etag"];
+  optional string etag = 3 [json_name = "etag"];
 
   // Specifies the format of the policy. Valid values are `0`, `1`, and `3`.
   // Requests that specify an invalid value are rejected. Any operation that
@@ -269,7 +270,7 @@ message Policy {
   // valid version or leave the field unset. To learn which resources support
   // conditions in their IAM policies, see the [IAM
   // documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
-  optional int32 version = 4 [json_name="version"];
+  optional int32 version = 4 [json_name = "version"];
 }
 
 // Request message for `TestIamPermissions` method.
@@ -278,12 +279,12 @@ message TestIamPermissionsRequest {
   // wildcards (such as `*` or `storage.*`) are not allowed. For more
   // information see [IAM
   // Overview](https://cloud.google.com/iam/docs/overview#permissions).
-  repeated string permissions = 1 [json_name="permissions"];
+  repeated string permissions = 1 [json_name = "permissions"];
 }
 
 // Response message for `TestIamPermissions` method.
 message TestIamPermissionsResponse {
   // A subset of `TestPermissionsRequest.permissions` that the caller is
   // allowed.
-  repeated string permissions = 1 [json_name="permissions"];
+  repeated string permissions = 1 [json_name = "permissions"];
 }

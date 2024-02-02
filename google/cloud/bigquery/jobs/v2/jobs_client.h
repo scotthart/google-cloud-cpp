@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class JobsClient {
  public:
-  explicit JobsClient(std::shared_ptr<JobsConnection> connection, Options opts = {});
+  explicit JobsClient(std::shared_ptr<JobsConnection> connection,
+                      Options opts = {});
   ~JobsClient();
 
   ///@{
@@ -108,8 +109,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.JobCancelResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L504}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-  Cancel(std::string const& project_id, std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
+      std::string const& project_id, std::string const& job_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -141,8 +143,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.JobCancelResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L504}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-  Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +172,8 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.jobs.v2.DeleteJobRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/jobs/v2/jobs.proto#L142}
   ///
   // clang-format on
-  Status
-  DeleteJob(std::string const& project_id, std::string const& job_id, Options opts = {});
+  Status DeleteJob(std::string const& project_id, std::string const& job_id,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -198,8 +201,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.jobs.v2.DeleteJobRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/jobs/v2/jobs.proto#L142}
   ///
   // clang-format on
-  Status
-  DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request, Options opts = {});
+  Status DeleteJob(
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -227,8 +231,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.Job]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  GetJob(std::string const& project_id, std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
+      std::string const& project_id, std::string const& job_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +265,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.Job]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,7 +294,8 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(std::string const& project_id, std::string const& job_id, Options opts = {});
+  GetQueryResults(std::string const& project_id, std::string const& job_id,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -319,7 +326,10 @@ class JobsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request, Options opts = {});
+  GetQueryResults(
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +361,10 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.Job]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  InsertJob(std::string const& project_id, google::cloud::cpp::bigquery::v2::Job const& job_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
+      std::string const& project_id,
+      google::cloud::cpp::bigquery::v2::Job const& job_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -388,8 +400,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.Job]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L462}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -418,8 +431,8 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.JobList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L1093}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-  ListJobs(std::string const& project_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
+      std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -453,8 +466,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.JobList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L1093}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-  ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -481,8 +495,11 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.QueryResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L1938}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-  Query(std::string const& project_id, google::cloud::cpp::bigquery::v2::QueryRequest const& query_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
+      std::string const& project_id,
+      google::cloud::cpp::bigquery::v2::QueryRequest const&
+          query_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +530,9 @@ class JobsClient {
   /// [google.cloud.cpp.bigquery.v2.QueryResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_005.proto#L1938}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-  Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<JobsConnection> connection_;

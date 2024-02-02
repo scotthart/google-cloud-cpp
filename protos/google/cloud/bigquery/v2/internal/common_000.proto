@@ -30,132 +30,140 @@ package google.cloud.cpp.bigquery.v2;
 message AggregateClassificationMetrics {
   // Accuracy is the fraction of predictions given the correct label. For
   // multiclass this is a micro-averaged metric.
-  optional double accuracy = 1 [json_name="accuracy"];
+  optional double accuracy = 1 [json_name = "accuracy"];
 
   // The F1 score is an average of recall and precision. For multiclass this is
   // a macro-averaged metric.
-  optional double f1_score = 2 [json_name="f1Score"];
+  optional double f1_score = 2 [json_name = "f1Score"];
 
   // Logarithmic Loss. For multiclass this is a macro-averaged metric.
-  optional double log_loss = 3 [json_name="logLoss"];
+  optional double log_loss = 3 [json_name = "logLoss"];
 
   // Precision is the fraction of actual positive predictions that had positive
   // actual labels. For multiclass this is a macro-averaged metric treating each
   // class as a binary classifier.
-  optional double precision = 4 [json_name="precision"];
+  optional double precision = 4 [json_name = "precision"];
 
   // Recall is the fraction of actual positive labels that were given a positive
   // prediction. For multiclass this is a macro-averaged metric.
-  optional double recall = 5 [json_name="recall"];
+  optional double recall = 5 [json_name = "recall"];
 
   // Area Under a ROC Curve. For multiclass this is a macro-averaged metric.
-  optional double roc_auc = 6 [json_name="rocAuc"];
+  optional double roc_auc = 6 [json_name = "rocAuc"];
 
   // Threshold at which the metrics are computed. For binary classification
   // models this is the positive class threshold. For multi-class classfication
   // models this is the confidence threshold.
-  optional double threshold = 7 [json_name="threshold"];
+  optional double threshold = 7 [json_name = "threshold"];
 }
 
 // Arima coefficients.
 message ArimaCoefficients {
   // Auto-regressive coefficients, an array of double.
-  repeated double auto_regressive_coefficients = 1 [json_name="autoRegressiveCoefficients"];
+  repeated double auto_regressive_coefficients = 1
+      [json_name = "autoRegressiveCoefficients"];
 
   // Intercept coefficient, just a double not an array.
-  optional double intercept_coefficient = 2 [json_name="interceptCoefficient"];
+  optional double intercept_coefficient = 2
+      [json_name = "interceptCoefficient"];
 
   // Moving-average coefficients, an array of double.
-  repeated double moving_average_coefficients = 3 [json_name="movingAverageCoefficients"];
+  repeated double moving_average_coefficients = 3
+      [json_name = "movingAverageCoefficients"];
 }
 
 // ARIMA model fitting metrics.
 message ArimaFittingMetrics {
   // AIC.
-  optional double aic = 1 [json_name="aic"];
+  optional double aic = 1 [json_name = "aic"];
 
   // Log-likelihood.
-  optional double log_likelihood = 2 [json_name="logLikelihood"];
+  optional double log_likelihood = 2 [json_name = "logLikelihood"];
 
   // Variance.
-  optional double variance = 3 [json_name="variance"];
+  optional double variance = 3 [json_name = "variance"];
 }
 
 // Model evaluation metrics for ARIMA forecasting models.
 message ArimaForecastingMetrics {
   // Arima model fitting metrics.
-  repeated ArimaFittingMetrics arima_fitting_metrics = 1 [json_name="arimaFittingMetrics"];
+  repeated ArimaFittingMetrics arima_fitting_metrics = 1
+      [json_name = "arimaFittingMetrics"];
 
   // Repeated as there can be many metric sets (one for each model) in
   // auto-arima and the large-scale case.
-  repeated ArimaSingleModelForecastingMetrics arima_single_model_forecasting_metrics = 2 [json_name="arimaSingleModelForecastingMetrics"];
+  repeated ArimaSingleModelForecastingMetrics
+      arima_single_model_forecasting_metrics = 2
+      [json_name = "arimaSingleModelForecastingMetrics"];
 
   // Whether Arima model fitted with drift or not. It is always false when d is
   // not 1.
-  repeated bool has_drift = 3 [json_name="hasDrift"];
+  repeated bool has_drift = 3 [json_name = "hasDrift"];
 
   // Non-seasonal order.
-  repeated ArimaOrder non_seasonal_order = 4 [json_name="nonSeasonalOrder"];
+  repeated ArimaOrder non_seasonal_order = 4 [json_name = "nonSeasonalOrder"];
 
   // Seasonal periods. Repeated because multiple periods are supported for one
   // time series.
-  repeated string seasonal_periods = 5 [json_name="seasonalPeriods"];
+  repeated string seasonal_periods = 5 [json_name = "seasonalPeriods"];
 
   // Id to differentiate different time series for the large-scale case.
-  repeated string time_series_id = 6 [json_name="timeSeriesId"];
+  repeated string time_series_id = 6 [json_name = "timeSeriesId"];
 }
 
 // Arima model information.
 message ArimaModelInfo {
   // Arima coefficients.
-  optional ArimaCoefficients arima_coefficients = 1 [json_name="arimaCoefficients"];
+  optional ArimaCoefficients arima_coefficients = 1
+      [json_name = "arimaCoefficients"];
 
   // Arima fitting metrics.
-  optional ArimaFittingMetrics arima_fitting_metrics = 2 [json_name="arimaFittingMetrics"];
+  optional ArimaFittingMetrics arima_fitting_metrics = 2
+      [json_name = "arimaFittingMetrics"];
 
   // Whether Arima model fitted with drift or not. It is always false when d is
   // not 1.
-  optional bool has_drift = 3 [json_name="hasDrift"];
+  optional bool has_drift = 3 [json_name = "hasDrift"];
 
   // If true, holiday_effect is a part of time series decomposition result.
-  optional bool has_holiday_effect = 4 [json_name="hasHolidayEffect"];
+  optional bool has_holiday_effect = 4 [json_name = "hasHolidayEffect"];
 
   // If true, spikes_and_dips is a part of time series decomposition result.
-  optional bool has_spikes_and_dips = 5 [json_name="hasSpikesAndDips"];
+  optional bool has_spikes_and_dips = 5 [json_name = "hasSpikesAndDips"];
 
   // If true, step_changes is a part of time series decomposition result.
-  optional bool has_step_changes = 6 [json_name="hasStepChanges"];
+  optional bool has_step_changes = 6 [json_name = "hasStepChanges"];
 
   // Non-seasonal order.
-  optional ArimaOrder non_seasonal_order = 7 [json_name="nonSeasonalOrder"];
+  optional ArimaOrder non_seasonal_order = 7 [json_name = "nonSeasonalOrder"];
 
   // Seasonal periods. Repeated because multiple periods are supported for one
   // time series.
-  repeated string seasonal_periods = 8 [json_name="seasonalPeriods"];
+  repeated string seasonal_periods = 8 [json_name = "seasonalPeriods"];
 
   // The time_series_id value for this time series. It will be one of the unique
   // values from the time_series_id_column specified during ARIMA model
   // training. Only present when time_series_id_column training option was used.
-  optional string time_series_id = 9 [json_name="timeSeriesId"];
+  optional string time_series_id = 9 [json_name = "timeSeriesId"];
 
   // The tuple of time_series_ids identifying this time series. It will be one
   // of the unique tuples of values present in the time_series_id_columns
   // specified during ARIMA model training. Only present when
   // time_series_id_columns training option was used and the order of values
   // here are same as the order of time_series_id_columns.
-  repeated string time_series_ids = 10 [json_name="timeSeriesIds"];
+  repeated string time_series_ids = 10 [json_name = "timeSeriesIds"];
 }
 
 // Arima order, can be used for both non-seasonal and seasonal parts.
 message ArimaOrder {
   // Order of the differencing part.
-  optional string d = 1 [json_name="d"];
+  optional string d = 1 [json_name = "d"];
 
   // Order of the autoregressive part.
-  optional string p = 2 [json_name="p"];
+  optional string p = 2 [json_name = "p"];
 
   // Order of the moving-average part.
-  optional string q = 3 [json_name="q"];
+  optional string q = 3 [json_name = "q"];
 }
 
 // (Auto-)arima fitting result. Wrap everything in ArimaResult for easier
@@ -163,96 +171,100 @@ message ArimaOrder {
 message ArimaResult {
   // This message is repeated because there are multiple arima models fitted in
   // auto-arima. For non-auto-arima model, its size is one.
-  repeated ArimaModelInfo arima_model_info = 1 [json_name="arimaModelInfo"];
+  repeated ArimaModelInfo arima_model_info = 1 [json_name = "arimaModelInfo"];
 
   // Seasonal periods. Repeated because multiple periods are supported for one
   // time series.
-  repeated string seasonal_periods = 2 [json_name="seasonalPeriods"];
+  repeated string seasonal_periods = 2 [json_name = "seasonalPeriods"];
 }
 
 // Model evaluation metrics for a single ARIMA forecasting model.
 message ArimaSingleModelForecastingMetrics {
   // Arima fitting metrics.
-  optional ArimaFittingMetrics arima_fitting_metrics = 1 [json_name="arimaFittingMetrics"];
+  optional ArimaFittingMetrics arima_fitting_metrics = 1
+      [json_name = "arimaFittingMetrics"];
 
   // Is arima model fitted with drift or not. It is always false when d is not
   // 1.
-  optional bool has_drift = 2 [json_name="hasDrift"];
+  optional bool has_drift = 2 [json_name = "hasDrift"];
 
   // If true, holiday_effect is a part of time series decomposition result.
-  optional bool has_holiday_effect = 3 [json_name="hasHolidayEffect"];
+  optional bool has_holiday_effect = 3 [json_name = "hasHolidayEffect"];
 
   // If true, spikes_and_dips is a part of time series decomposition result.
-  optional bool has_spikes_and_dips = 4 [json_name="hasSpikesAndDips"];
+  optional bool has_spikes_and_dips = 4 [json_name = "hasSpikesAndDips"];
 
   // If true, step_changes is a part of time series decomposition result.
-  optional bool has_step_changes = 5 [json_name="hasStepChanges"];
+  optional bool has_step_changes = 5 [json_name = "hasStepChanges"];
 
   // Non-seasonal order.
-  optional ArimaOrder non_seasonal_order = 6 [json_name="nonSeasonalOrder"];
+  optional ArimaOrder non_seasonal_order = 6 [json_name = "nonSeasonalOrder"];
 
   // Seasonal periods. Repeated because multiple periods are supported for one
   // time series.
-  repeated string seasonal_periods = 7 [json_name="seasonalPeriods"];
+  repeated string seasonal_periods = 7 [json_name = "seasonalPeriods"];
 
   // The time_series_id value for this time series. It will be one of the unique
   // values from the time_series_id_column specified during ARIMA model
   // training. Only present when time_series_id_column training option was used.
-  optional string time_series_id = 8 [json_name="timeSeriesId"];
+  optional string time_series_id = 8 [json_name = "timeSeriesId"];
 
   // The tuple of time_series_ids identifying this time series. It will be one
   // of the unique tuples of values present in the time_series_id_columns
   // specified during ARIMA model training. Only present when
   // time_series_id_columns training option was used and the order of values
   // here are same as the order of time_series_id_columns.
-  repeated string time_series_ids = 9 [json_name="timeSeriesIds"];
+  repeated string time_series_ids = 9 [json_name = "timeSeriesIds"];
 }
 
 // Evaluation metrics for binary classification/classifier models.
 message BinaryClassificationMetrics {
   // Aggregate classification metrics.
-  optional AggregateClassificationMetrics aggregate_classification_metrics = 1 [json_name="aggregateClassificationMetrics"];
+  optional AggregateClassificationMetrics aggregate_classification_metrics = 1
+      [json_name = "aggregateClassificationMetrics"];
 
   // Binary confusion matrix at multiple thresholds.
-  repeated BinaryConfusionMatrix binary_confusion_matrix_list = 2 [json_name="binaryConfusionMatrixList"];
+  repeated BinaryConfusionMatrix binary_confusion_matrix_list = 2
+      [json_name = "binaryConfusionMatrixList"];
 
   // Label representing the negative class.
-  optional string negative_label = 3 [json_name="negativeLabel"];
+  optional string negative_label = 3 [json_name = "negativeLabel"];
 
   // Label representing the positive class.
-  optional string positive_label = 4 [json_name="positiveLabel"];
+  optional string positive_label = 4 [json_name = "positiveLabel"];
 }
 
 // Confusion matrix for binary classification models.
 message BinaryConfusionMatrix {
   // The fraction of predictions given the correct label.
-  optional double accuracy = 1 [json_name="accuracy"];
+  optional double accuracy = 1 [json_name = "accuracy"];
 
   // The equally weighted average of recall and precision.
-  optional double f1_score = 2 [json_name="f1Score"];
+  optional double f1_score = 2 [json_name = "f1Score"];
 
   // Number of false samples predicted as false.
-  optional string false_negatives = 3 [json_name="falseNegatives"];
+  optional string false_negatives = 3 [json_name = "falseNegatives"];
 
   // Number of false samples predicted as true.
-  optional string false_positives = 4 [json_name="falsePositives"];
+  optional string false_positives = 4 [json_name = "falsePositives"];
 
   // Threshold value used when computing each of the following metric.
-  optional double positive_class_threshold = 5 [json_name="positiveClassThreshold"];
+  optional double positive_class_threshold = 5
+      [json_name = "positiveClassThreshold"];
 
   // The fraction of actual positive predictions that had positive actual
   // labels.
-  optional double precision = 6 [json_name="precision"];
+  optional double precision = 6 [json_name = "precision"];
 
   // The fraction of actual positive labels that were given a positive
   // prediction.
-  optional double recall = 7 [json_name="recall"];
+  optional double recall = 7 [json_name = "recall"];
 
   // Number of true samples predicted as false.
-  optional string true_negatives = 8 [json_name="trueNegatives"];
+  optional string true_negatives = 8 [json_name = "trueNegatives"];
 
   // Number of true samples predicted as true.
-  optional string true_positives = 9 [json_name="truePositives"];
+  optional string true_positives = 9 [json_name = "truePositives"];
 }
 
 // Representative value of a categorical feature.
@@ -261,80 +273,81 @@ message CategoricalValue {
   // than ten categories, we return top ten (by count) and return one more
   // CategoryCount with category "_OTHER_" and count as aggregate counts of
   // remaining categories.
-  repeated CategoryCount category_counts = 1 [json_name="categoryCounts"];
+  repeated CategoryCount category_counts = 1 [json_name = "categoryCounts"];
 }
 
 // Represents the count of a single category within the cluster.
 message CategoryCount {
   // The name of category.
-  optional string category = 1 [json_name="category"];
+  optional string category = 1 [json_name = "category"];
 
   // The count of training samples matching the category within the cluster.
-  optional string count = 2 [json_name="count"];
+  optional string count = 2 [json_name = "count"];
 }
 
 // Message containing the information about one cluster.
 message Cluster {
   // Centroid id.
-  optional string centroid_id = 1 [json_name="centroidId"];
+  optional string centroid_id = 1 [json_name = "centroidId"];
 
   // Count of training data rows that were assigned to this cluster.
-  optional string count = 2 [json_name="count"];
+  optional string count = 2 [json_name = "count"];
 
   // Values of highly variant features for this cluster.
-  repeated FeatureValue feature_values = 3 [json_name="featureValues"];
+  repeated FeatureValue feature_values = 3 [json_name = "featureValues"];
 }
 
 // Information about a single cluster for clustering model.
 message ClusterInfo {
   // Centroid id.
-  optional string centroid_id = 1 [json_name="centroidId"];
+  optional string centroid_id = 1 [json_name = "centroidId"];
 
   // Cluster radius, the average distance from centroid to each point assigned
   // to the cluster.
-  optional double cluster_radius = 2 [json_name="clusterRadius"];
+  optional double cluster_radius = 2 [json_name = "clusterRadius"];
 
   // Cluster size, the total number of points assigned to the cluster.
-  optional string cluster_size = 3 [json_name="clusterSize"];
+  optional string cluster_size = 3 [json_name = "clusterSize"];
 }
 
 // Evaluation metrics for clustering models.
 message ClusteringMetrics {
   // Information for all clusters.
-  repeated Cluster clusters = 1 [json_name="clusters"];
+  repeated Cluster clusters = 1 [json_name = "clusters"];
 
   // Davies-Bouldin index.
-  optional double davies_bouldin_index = 2 [json_name="daviesBouldinIndex"];
+  optional double davies_bouldin_index = 2 [json_name = "daviesBouldinIndex"];
 
   // Mean of squared distances between each sample to its cluster centroid.
-  optional double mean_squared_distance = 3 [json_name="meanSquaredDistance"];
+  optional double mean_squared_distance = 3 [json_name = "meanSquaredDistance"];
 }
 
 // Confusion matrix for multi-class classification models.
 message ConfusionMatrix {
   // Confidence threshold used when computing the entries of the confusion
   // matrix.
-  optional double confidence_threshold = 1 [json_name="confidenceThreshold"];
+  optional double confidence_threshold = 1 [json_name = "confidenceThreshold"];
 
   // One row per actual label.
-  repeated Row rows = 2 [json_name="rows"];
+  repeated Row rows = 2 [json_name = "rows"];
 }
 
 // Model evaluation metrics for dimensionality reduction models.
 message DimensionalityReductionMetrics {
   // Total percentage of variance explained by the selected principal
   // components.
-  optional double total_explained_variance_ratio = 1 [json_name="totalExplainedVarianceRatio"];
+  optional double total_explained_variance_ratio = 1
+      [json_name = "totalExplainedVarianceRatio"];
 }
 
 // A single entry in the confusion matrix.
 message Entry {
   // Number of items being predicted as this label.
-  optional string item_count = 1 [json_name="itemCount"];
+  optional string item_count = 1 [json_name = "itemCount"];
 
   // The predicted label. For confidence_threshold > 0, we will also add an
   // entry indicating the number of items under the confidence threshold.
-  optional string predicted_label = 2 [json_name="predictedLabel"];
+  optional string predicted_label = 2 [json_name = "predictedLabel"];
 }
 
 // Evaluation metrics of a model. These are either computed on all training data
@@ -342,39 +355,46 @@ message Entry {
 // These are not present for imported models.
 message EvaluationMetrics {
   // Populated for ARIMA models.
-  optional ArimaForecastingMetrics arima_forecasting_metrics = 1 [json_name="arimaForecastingMetrics"];
+  optional ArimaForecastingMetrics arima_forecasting_metrics = 1
+      [json_name = "arimaForecastingMetrics"];
 
   // Populated for binary classification/classifier models.
-  optional BinaryClassificationMetrics binary_classification_metrics = 2 [json_name="binaryClassificationMetrics"];
+  optional BinaryClassificationMetrics binary_classification_metrics = 2
+      [json_name = "binaryClassificationMetrics"];
 
   // Populated for clustering models.
-  optional ClusteringMetrics clustering_metrics = 3 [json_name="clusteringMetrics"];
+  optional ClusteringMetrics clustering_metrics = 3
+      [json_name = "clusteringMetrics"];
 
   // Evaluation metrics when the model is a dimensionality reduction model,
   // which currently includes PCA.
-  optional DimensionalityReductionMetrics dimensionality_reduction_metrics = 4 [json_name="dimensionalityReductionMetrics"];
+  optional DimensionalityReductionMetrics dimensionality_reduction_metrics = 4
+      [json_name = "dimensionalityReductionMetrics"];
 
   // Populated for multi-class classification/classifier models.
-  optional MultiClassClassificationMetrics multi_class_classification_metrics = 5 [json_name="multiClassClassificationMetrics"];
+  optional MultiClassClassificationMetrics multi_class_classification_metrics =
+      5 [json_name = "multiClassClassificationMetrics"];
 
   // Populated for implicit feedback type matrix factorization models.
-  optional RankingMetrics ranking_metrics = 6 [json_name="rankingMetrics"];
+  optional RankingMetrics ranking_metrics = 6 [json_name = "rankingMetrics"];
 
   // Populated for regression models and explicit feedback type matrix
   // factorization models.
-  optional RegressionMetrics regression_metrics = 7 [json_name="regressionMetrics"];
+  optional RegressionMetrics regression_metrics = 7
+      [json_name = "regressionMetrics"];
 }
 
 // Representative value of a single feature within the cluster.
 message FeatureValue {
   // The categorical feature value.
-  optional CategoricalValue categorical_value = 1 [json_name="categoricalValue"];
+  optional CategoricalValue categorical_value = 1
+      [json_name = "categoricalValue"];
 
   // The feature column name.
-  optional string feature_column = 2 [json_name="featureColumn"];
+  optional string feature_column = 2 [json_name = "featureColumn"];
 
   // The numerical feature value. This is the centroid value for this feature.
-  optional double numerical_value = 3 [json_name="numericalValue"];
+  optional double numerical_value = 3 [json_name = "numericalValue"];
 }
 
 // Training info of a trial in [hyperparameter
@@ -382,28 +402,30 @@ message FeatureValue {
 // models.
 message HparamTuningTrial {
   // Ending time of the trial.
-  optional string end_time_ms = 1 [json_name="endTimeMs"];
+  optional string end_time_ms = 1 [json_name = "endTimeMs"];
 
   // Error message for FAILED and INFEASIBLE trial.
-  optional string error_message = 2 [json_name="errorMessage"];
+  optional string error_message = 2 [json_name = "errorMessage"];
 
   // Loss computed on the eval data at the end of trial.
-  optional double eval_loss = 3 [json_name="evalLoss"];
+  optional double eval_loss = 3 [json_name = "evalLoss"];
 
   // Evaluation metrics of this trial calculated on the test data. Empty in Job
   // API.
-  optional EvaluationMetrics evaluation_metrics = 4 [json_name="evaluationMetrics"];
+  optional EvaluationMetrics evaluation_metrics = 4
+      [json_name = "evaluationMetrics"];
 
   // Hyperparameter tuning evaluation metrics of this trial calculated on the
   // eval data. Unlike evaluation_metrics, only the fields corresponding to the
   // hparam_tuning_objectives are set.
-  optional EvaluationMetrics hparam_tuning_evaluation_metrics = 5 [json_name="hparamTuningEvaluationMetrics"];
+  optional EvaluationMetrics hparam_tuning_evaluation_metrics = 5
+      [json_name = "hparamTuningEvaluationMetrics"];
 
   // The hyperprameters selected for this trial.
-  optional TrainingOptions hparams = 6 [json_name="hparams"];
+  optional TrainingOptions hparams = 6 [json_name = "hparams"];
 
   // Starting time of the trial.
-  optional string start_time_ms = 7 [json_name="startTimeMs"];
+  optional string start_time_ms = 7 [json_name = "startTimeMs"];
 
   // The status of the trial.
   // TRIAL_STATUS_UNSPECIFIED: Default value.
@@ -413,62 +435,65 @@ message HparamTuningTrial {
   // FAILED: The trial failed.
   // INFEASIBLE: The trial is infeasible due to the invalid params.
   // STOPPED_EARLY: Trial stopped early because it's not promising.
-  optional string status = 8 [json_name="status"];
+  optional string status = 8 [json_name = "status"];
 
   // Loss computed on the training data at the end of trial.
-  optional double training_loss = 9 [json_name="trainingLoss"];
+  optional double training_loss = 9 [json_name = "trainingLoss"];
 
   // 1-based index of the trial.
-  optional string trial_id = 10 [json_name="trialId"];
+  optional string trial_id = 10 [json_name = "trialId"];
 }
 
 // Information about a single iteration of the training run.
 message IterationResult {
   // Arima result.
-  optional ArimaResult arima_result = 1 [json_name="arimaResult"];
+  optional ArimaResult arima_result = 1 [json_name = "arimaResult"];
 
   // Information about top clusters for clustering models.
-  repeated ClusterInfo cluster_infos = 2 [json_name="clusterInfos"];
+  repeated ClusterInfo cluster_infos = 2 [json_name = "clusterInfos"];
 
   // Time taken to run the iteration in milliseconds.
-  optional string duration_ms = 3 [json_name="durationMs"];
+  optional string duration_ms = 3 [json_name = "durationMs"];
 
   // Loss computed on the eval data at the end of iteration.
-  optional double eval_loss = 4 [json_name="evalLoss"];
+  optional double eval_loss = 4 [json_name = "evalLoss"];
 
   // Index of the iteration, 0 based.
-  optional int32 index = 5 [json_name="index"];
+  optional int32 index = 5 [json_name = "index"];
 
   // Learn rate used for this iteration.
-  optional double learn_rate = 6 [json_name="learnRate"];
+  optional double learn_rate = 6 [json_name = "learnRate"];
 
   // The information of the principal components.
-  repeated PrincipalComponentInfo principal_component_infos = 7 [json_name="principalComponentInfos"];
+  repeated PrincipalComponentInfo principal_component_infos = 7
+      [json_name = "principalComponentInfos"];
 
   // Loss computed on the training data at the end of iteration.
-  optional double training_loss = 8 [json_name="trainingLoss"];
+  optional double training_loss = 8 [json_name = "trainingLoss"];
 }
 
 // Id path of a model.
 message ModelReference {
   // Required. The ID of the dataset containing this model.
-  optional string dataset_id = 1 [json_name="datasetId"];
+  optional string dataset_id = 1 [json_name = "datasetId"];
 
   // Required. The ID of the model. The ID must contain only letters (a-z, A-Z),
   // numbers (0-9), or underscores (_). The maximum length is 1,024 characters.
-  optional string model_id = 2 [json_name="modelId"];
+  optional string model_id = 2 [json_name = "modelId"];
 
   // Required. The ID of the project containing this model.
-  optional string project_id = 3 [json_name="projectId"];
+  optional string project_id = 3 [json_name = "projectId"];
 }
 
 // Evaluation metrics for multi-class classification/classifier models.
 message MultiClassClassificationMetrics {
   // Aggregate classification metrics.
-  optional AggregateClassificationMetrics aggregate_classification_metrics = 1 [json_name="aggregateClassificationMetrics"];
+  optional AggregateClassificationMetrics aggregate_classification_metrics = 1
+      [json_name = "aggregateClassificationMetrics"];
 
   // Confusion matrix at different thresholds.
-  repeated ConfusionMatrix confusion_matrix_list = 2 [json_name="confusionMatrixList"];
+  repeated ConfusionMatrix confusion_matrix_list = 2
+      [json_name = "confusionMatrixList"];
 }
 
 // Principal component infos, used only for eigen decomposition based models,
@@ -476,17 +501,20 @@ message MultiClassClassificationMetrics {
 message PrincipalComponentInfo {
   // The explained_variance is pre-ordered in the descending order to compute
   // the cumulative explained variance ratio.
-  optional double cumulative_explained_variance_ratio = 1 [json_name="cumulativeExplainedVarianceRatio"];
+  optional double cumulative_explained_variance_ratio = 1
+      [json_name = "cumulativeExplainedVarianceRatio"];
 
   // Explained variance by this principal component, which is simply the
   // eigenvalue.
-  optional double explained_variance = 2 [json_name="explainedVariance"];
+  optional double explained_variance = 2 [json_name = "explainedVariance"];
 
   // Explained_variance over the total explained variance.
-  optional double explained_variance_ratio = 3 [json_name="explainedVarianceRatio"];
+  optional double explained_variance_ratio = 3
+      [json_name = "explainedVarianceRatio"];
 
   // Id of the principal component.
-  optional string principal_component_id = 4 [json_name="principalComponentId"];
+  optional string principal_component_id = 4
+      [json_name = "principalComponentId"];
 }
 
 // Evaluation metrics used by weighted-ALS models specified by
@@ -494,103 +522,108 @@ message PrincipalComponentInfo {
 message RankingMetrics {
   // Determines the goodness of a ranking by computing the percentile rank from
   // the predicted confidence and dividing it by the original rank.
-  optional double average_rank = 1 [json_name="averageRank"];
+  optional double average_rank = 1 [json_name = "averageRank"];
 
   // Calculates a precision per user for all the items by ranking them and then
   // averages all the precisions across all the users.
-  optional double mean_average_precision = 2 [json_name="meanAveragePrecision"];
+  optional double mean_average_precision = 2
+      [json_name = "meanAveragePrecision"];
 
   // Similar to the mean squared error computed in regression and explicit
   // recommendation models except instead of computing the rating directly, the
   // output from evaluate is computed against a preference which is 1 or 0
   // depending on if the rating exists or not.
-  optional double mean_squared_error = 3 [json_name="meanSquaredError"];
+  optional double mean_squared_error = 3 [json_name = "meanSquaredError"];
 
   // A metric to determine the goodness of a ranking calculated from the
   // predicted confidence by comparing it to an ideal rank measured by the
   // original ratings.
-  optional double normalized_discounted_cumulative_gain = 4 [json_name="normalizedDiscountedCumulativeGain"];
+  optional double normalized_discounted_cumulative_gain = 4
+      [json_name = "normalizedDiscountedCumulativeGain"];
 }
 
 // Evaluation metrics for regression and explicit feedback type matrix
 // factorization models.
 message RegressionMetrics {
   // Mean absolute error.
-  optional double mean_absolute_error = 1 [json_name="meanAbsoluteError"];
+  optional double mean_absolute_error = 1 [json_name = "meanAbsoluteError"];
 
   // Mean squared error.
-  optional double mean_squared_error = 2 [json_name="meanSquaredError"];
+  optional double mean_squared_error = 2 [json_name = "meanSquaredError"];
 
   // Mean squared log error.
-  optional double mean_squared_log_error = 3 [json_name="meanSquaredLogError"];
+  optional double mean_squared_log_error = 3
+      [json_name = "meanSquaredLogError"];
 
   // Median absolute error.
-  optional double median_absolute_error = 4 [json_name="medianAbsoluteError"];
+  optional double median_absolute_error = 4 [json_name = "medianAbsoluteError"];
 
   // R^2 score. This corresponds to r2_score in ML.EVALUATE.
-  optional double r_squared = 5 [json_name="rSquared"];
+  optional double r_squared = 5 [json_name = "rSquared"];
 }
 
 // A single row in the confusion matrix.
 message Row {
   // The original label of this row.
-  optional string actual_label = 1 [json_name="actualLabel"];
+  optional string actual_label = 1 [json_name = "actualLabel"];
 
   // Info describing predicted label distribution.
-  repeated Entry entries = 2 [json_name="entries"];
+  repeated Entry entries = 2 [json_name = "entries"];
 }
 
 // Options used in model training.
 message TrainingOptions {
   // Activation function of the neural nets.
-  optional string activation_fn = 1 [json_name="activationFn"];
+  optional string activation_fn = 1 [json_name = "activationFn"];
 
   // If true, detect step changes and make data adjustment in the input time
   // series.
-  optional bool adjust_step_changes = 2 [json_name="adjustStepChanges"];
+  optional bool adjust_step_changes = 2 [json_name = "adjustStepChanges"];
 
   // Whether to use approximate feature contribution method in XGBoost model
   // explanation for global explain.
-  optional bool approx_global_feature_contrib = 3 [json_name="approxGlobalFeatureContrib"];
+  optional bool approx_global_feature_contrib = 3
+      [json_name = "approxGlobalFeatureContrib"];
 
   // Whether to enable auto ARIMA or not.
-  optional bool auto_arima = 4 [json_name="autoArima"];
+  optional bool auto_arima = 4 [json_name = "autoArima"];
 
   // The max value of the sum of non-seasonal p and q.
-  optional string auto_arima_max_order = 5 [json_name="autoArimaMaxOrder"];
+  optional string auto_arima_max_order = 5 [json_name = "autoArimaMaxOrder"];
 
   // The min value of the sum of non-seasonal p and q.
-  optional string auto_arima_min_order = 6 [json_name="autoArimaMinOrder"];
+  optional string auto_arima_min_order = 6 [json_name = "autoArimaMinOrder"];
 
   // Whether to calculate class weights automatically based on the popularity of
   // each label.
-  optional bool auto_class_weights = 7 [json_name="autoClassWeights"];
+  optional bool auto_class_weights = 7 [json_name = "autoClassWeights"];
 
   // Batch size for dnn models.
-  optional string batch_size = 8 [json_name="batchSize"];
+  optional string batch_size = 8 [json_name = "batchSize"];
 
   // Booster type for boosted tree models.
   // BOOSTER_TYPE_UNSPECIFIED: Unspecified booster type.
   // GBTREE: Gbtree booster.
   // DART: Dart booster.
-  optional string booster_type = 9 [json_name="boosterType"];
+  optional string booster_type = 9 [json_name = "boosterType"];
 
   // Budget in hours for AutoML training.
-  optional double budget_hours = 10 [json_name="budgetHours"];
+  optional double budget_hours = 10 [json_name = "budgetHours"];
 
   // Whether or not p-value test should be computed for this model. Only
   // available for linear and logistic regression models.
-  optional bool calculate_p_values = 11 [json_name="calculatePValues"];
+  optional bool calculate_p_values = 11 [json_name = "calculatePValues"];
 
   // Categorical feature encoding method.
   // ENCODING_METHOD_UNSPECIFIED: Unspecified encoding method.
   // ONE_HOT_ENCODING: Applies one-hot encoding.
   // LABEL_ENCODING: Applies label encoding.
   // DUMMY_ENCODING: Applies dummy encoding.
-  optional string category_encoding_method = 12 [json_name="categoryEncodingMethod"];
+  optional string category_encoding_method = 12
+      [json_name = "categoryEncodingMethod"];
 
   // If true, clean spikes and dips in the input time series.
-  optional bool clean_spikes_and_dips = 13 [json_name="cleanSpikesAndDips"];
+  optional bool clean_spikes_and_dips = 13 [json_name = "cleanSpikesAndDips"];
 
   // Enums for color space, used for processing images in Object Table. See more
   // details at https://www.tensorflow.org/io/tutorials/colorspace.
@@ -600,23 +633,23 @@ message TrainingOptions {
   // YIQ: YIQ
   // YUV: YUV
   // GRAYSCALE: GRAYSCALE
-  optional string color_space = 14 [json_name="colorSpace"];
+  optional string color_space = 14 [json_name = "colorSpace"];
 
   // Subsample ratio of columns for each level for boosted tree models.
-  optional double colsample_bylevel = 15 [json_name="colsampleBylevel"];
+  optional double colsample_bylevel = 15 [json_name = "colsampleBylevel"];
 
   // Subsample ratio of columns for each node(split) for boosted tree models.
-  optional double colsample_bynode = 16 [json_name="colsampleBynode"];
+  optional double colsample_bynode = 16 [json_name = "colsampleBynode"];
 
   // Subsample ratio of columns when constructing each tree for boosted tree
   // models.
-  optional double colsample_bytree = 17 [json_name="colsampleBytree"];
+  optional double colsample_bytree = 17 [json_name = "colsampleBytree"];
 
   // Type of normalization algorithm for boosted tree models using dart booster.
   // DART_NORMALIZE_TYPE_UNSPECIFIED: Unspecified dart normalize type.
   // TREE: New trees have the same weight of each of dropped trees.
   // FOREST: New trees have the same weight of sum of dropped trees.
-  optional string dart_normalize_type = 18 [json_name="dartNormalizeType"];
+  optional string dart_normalize_type = 18 [json_name = "dartNormalizeType"];
 
   // The data frequency of a time series.
   // DATA_FREQUENCY_UNSPECIFIED: Default value.
@@ -628,7 +661,7 @@ message TrainingOptions {
   // DAILY: Daily data.
   // HOURLY: Hourly data.
   // PER_MINUTE: Per-minute data.
-  optional string data_frequency = 19 [json_name="dataFrequency"];
+  optional string data_frequency = 19 [json_name = "dataFrequency"];
 
   // The column to split data with. This column won't be used as a feature. 1.
   // When data_split_method is CUSTOM, the corresponding column should be
@@ -638,12 +671,13 @@ message TrainingOptions {
   // corresponding column are used as training data, and the rest are eval data.
   // It respects the order in Orderable data types:
   // https://cloud.google.com/bigquery/docs/reference/standard-sql/data-types#data-type-properties
-  optional string data_split_column = 20 [json_name="dataSplitColumn"];
+  optional string data_split_column = 20 [json_name = "dataSplitColumn"];
 
   // The fraction of evaluation data over the whole input data. The rest of data
   // will be used as training data. The format should be double. Accurate to two
   // decimal places. Default value is 0.2.
-  optional double data_split_eval_fraction = 21 [json_name="dataSplitEvalFraction"];
+  optional double data_split_eval_fraction = 21
+      [json_name = "dataSplitEvalFraction"];
 
   // The data split type for training and evaluation, e.g. RANDOM.
   // DATA_SPLIT_METHOD_UNSPECIFIED: Default value.
@@ -653,40 +687,40 @@ message TrainingOptions {
   // NO_SPLIT: Data split will be skipped.
   // AUTO_SPLIT: Splits data automatically: Uses NO_SPLIT if the data size is
   // small. Otherwise uses RANDOM.
-  optional string data_split_method = 22 [json_name="dataSplitMethod"];
+  optional string data_split_method = 22 [json_name = "dataSplitMethod"];
 
   // If true, perform decompose time series and save the results.
-  optional bool decompose_time_series = 23 [json_name="decomposeTimeSeries"];
+  optional bool decompose_time_series = 23 [json_name = "decomposeTimeSeries"];
 
   // Distance type for clustering models.
   // DISTANCE_TYPE_UNSPECIFIED: Default value.
   // EUCLIDEAN: Eculidean distance.
   // COSINE: Cosine distance.
-  optional string distance_type = 24 [json_name="distanceType"];
+  optional string distance_type = 24 [json_name = "distanceType"];
 
   // Dropout probability for dnn models.
-  optional double dropout = 25 [json_name="dropout"];
+  optional double dropout = 25 [json_name = "dropout"];
 
   // Whether to stop early when the loss doesn't improve significantly any more
   // (compared to min_relative_progress). Used only for iterative training
   // algorithms.
-  optional bool early_stop = 26 [json_name="earlyStop"];
+  optional bool early_stop = 26 [json_name = "earlyStop"];
 
   // If true, enable global explanation during training.
-  optional bool enable_global_explain = 27 [json_name="enableGlobalExplain"];
+  optional bool enable_global_explain = 27 [json_name = "enableGlobalExplain"];
 
   // Feedback type that specifies which algorithm to run for matrix
   // factorization.
   // FEEDBACK_TYPE_UNSPECIFIED: Default value.
   // IMPLICIT: Use weighted-als for implicit feedback problems.
   // EXPLICIT: Use nonweighted-als for explicit feedback problems.
-  optional string feedback_type = 28 [json_name="feedbackType"];
+  optional string feedback_type = 28 [json_name = "feedbackType"];
 
   // Whether the model should include intercept during model training.
-  optional bool fit_intercept = 29 [json_name="fitIntercept"];
+  optional bool fit_intercept = 29 [json_name = "fitIntercept"];
 
   // Hidden units for dnn models.
-  repeated string hidden_units = 30 [json_name="hiddenUnits"];
+  repeated string hidden_units = 30 [json_name = "hiddenUnits"];
 
   // The geographical region based on which the holidays are considered in time
   // series modeling. If a valid value is specified, then holiday effects
@@ -761,40 +795,44 @@ message TrainingOptions {
   // VE: Venezuela
   // VN: Viet Nam
   // ZA: South Africa
-  optional string holiday_region = 31 [json_name="holidayRegion"];
+  optional string holiday_region = 31 [json_name = "holidayRegion"];
 
   // A list of geographical regions that are used for time series modeling.
-  repeated string holiday_regions = 32 [json_name="holidayRegions"];
+  repeated string holiday_regions = 32 [json_name = "holidayRegions"];
 
   // The number of periods ahead that need to be forecasted.
-  optional string horizon = 33 [json_name="horizon"];
+  optional string horizon = 33 [json_name = "horizon"];
 
   // The target evaluation metrics to optimize the hyperparameters for.
-  repeated string hparam_tuning_objectives = 34 [json_name="hparamTuningObjectives"];
+  repeated string hparam_tuning_objectives = 34
+      [json_name = "hparamTuningObjectives"];
 
   // Include drift when fitting an ARIMA model.
-  optional bool include_drift = 35 [json_name="includeDrift"];
+  optional bool include_drift = 35 [json_name = "includeDrift"];
 
   // Specifies the initial learning rate for the line search learn rate
   // strategy.
-  optional double initial_learn_rate = 36 [json_name="initialLearnRate"];
+  optional double initial_learn_rate = 36 [json_name = "initialLearnRate"];
 
   // Name of input label columns in training data.
-  repeated string input_label_columns = 37 [json_name="inputLabelColumns"];
+  repeated string input_label_columns = 37 [json_name = "inputLabelColumns"];
 
   // Name of the instance weight column for training data. This column isn't be
   // used as a feature.
-  optional string instance_weight_column = 38 [json_name="instanceWeightColumn"];
+  optional string instance_weight_column = 38
+      [json_name = "instanceWeightColumn"];
 
   // Number of integral steps for the integrated gradients explain method.
-  optional string integrated_gradients_num_steps = 39 [json_name="integratedGradientsNumSteps"];
+  optional string integrated_gradients_num_steps = 39
+      [json_name = "integratedGradientsNumSteps"];
 
   // Item column specified for matrix factorization models.
-  optional string item_column = 40 [json_name="itemColumn"];
+  optional string item_column = 40 [json_name = "itemColumn"];
 
   // The column used to provide the initial centroids for kmeans algorithm when
   // kmeans_initialization_method is CUSTOM.
-  optional string kmeans_initialization_column = 41 [json_name="kmeansInitializationColumn"];
+  optional string kmeans_initialization_column = 41
+      [json_name = "kmeansInitializationColumn"];
 
   // The method used to initialize the centroids for kmeans algorithm.
   // KMEANS_INITIALIZATION_METHOD_UNSPECIFIED: Unspecified initialization
@@ -803,57 +841,61 @@ message TrainingOptions {
   // CUSTOM: Initializes the centroids using data specified in
   // kmeans_initialization_column.
   // KMEANS_PLUS_PLUS: Initializes with kmeans++.
-  optional string kmeans_initialization_method = 42 [json_name="kmeansInitializationMethod"];
+  optional string kmeans_initialization_method = 42
+      [json_name = "kmeansInitializationMethod"];
 
   // L1 regularization coefficient to activations.
-  optional double l1_reg_activation = 43 [json_name="l1RegActivation"];
+  optional double l1_reg_activation = 43 [json_name = "l1RegActivation"];
 
   // L1 regularization coefficient.
-  optional double l1_regularization = 44 [json_name="l1Regularization"];
+  optional double l1_regularization = 44 [json_name = "l1Regularization"];
 
   // L2 regularization coefficient.
-  optional double l2_regularization = 45 [json_name="l2Regularization"];
+  optional double l2_regularization = 45 [json_name = "l2Regularization"];
 
   // Weights associated with each label class, for rebalancing the training
   // data. Only applicable for classification models.
-  map<string, double> label_class_weights = 46 [json_name="labelClassWeights"];
+  map<string, double> label_class_weights = 46
+      [json_name = "labelClassWeights"];
 
   // Learning rate in training. Used only for iterative training algorithms.
-  optional double learn_rate = 47 [json_name="learnRate"];
+  optional double learn_rate = 47 [json_name = "learnRate"];
 
   // The strategy to determine learn rate for the current iteration.
   // LEARN_RATE_STRATEGY_UNSPECIFIED: Default value.
   // LINE_SEARCH: Use line search to determine learning rate.
   // CONSTANT: Use a constant learning rate.
-  optional string learn_rate_strategy = 48 [json_name="learnRateStrategy"];
+  optional string learn_rate_strategy = 48 [json_name = "learnRateStrategy"];
 
   // Type of loss function used during training run.
   // LOSS_TYPE_UNSPECIFIED: Default value.
   // MEAN_SQUARED_LOSS: Mean squared loss, used for linear regression.
   // MEAN_LOG_LOSS: Mean log loss, used for logistic regression.
-  optional string loss_type = 49 [json_name="lossType"];
+  optional string loss_type = 49 [json_name = "lossType"];
 
   // The maximum number of iterations in training. Used only for iterative
   // training algorithms.
-  optional string max_iterations = 50 [json_name="maxIterations"];
+  optional string max_iterations = 50 [json_name = "maxIterations"];
 
   // Maximum number of trials to run in parallel.
-  optional string max_parallel_trials = 51 [json_name="maxParallelTrials"];
+  optional string max_parallel_trials = 51 [json_name = "maxParallelTrials"];
 
   // The maximum number of time points in a time series that can be used in
   // modeling the trend component of the time series. Don't use this option with
   // the `timeSeriesLengthFraction` or `minTimeSeriesLength` options.
-  optional string max_time_series_length = 52 [json_name="maxTimeSeriesLength"];
+  optional string max_time_series_length = 52
+      [json_name = "maxTimeSeriesLength"];
 
   // Maximum depth of a tree for boosted tree models.
-  optional string max_tree_depth = 53 [json_name="maxTreeDepth"];
+  optional string max_tree_depth = 53 [json_name = "maxTreeDepth"];
 
   // When early_stop is true, stops training when accuracy improvement is less
   // than 'min_relative_progress'. Used only for iterative training algorithms.
-  optional double min_relative_progress = 54 [json_name="minRelativeProgress"];
+  optional double min_relative_progress = 54
+      [json_name = "minRelativeProgress"];
 
   // Minimum split loss for boosted tree models.
-  optional double min_split_loss = 55 [json_name="minSplitLoss"];
+  optional double min_split_loss = 55 [json_name = "minSplitLoss"];
 
   // The minimum number of time points in a time series that are used in
   // modeling the trend component of the time series. If you use this option you
@@ -863,88 +905,95 @@ message TrainingOptions {
   // important when forecasting multiple time series in a single query using
   // `timeSeriesIdColumn`. If the total number of time points is less than the
   // `minTimeSeriesLength` value, then the query uses all available time points.
-  optional string min_time_series_length = 56 [json_name="minTimeSeriesLength"];
+  optional string min_time_series_length = 56
+      [json_name = "minTimeSeriesLength"];
 
   // Minimum sum of instance weight needed in a child for boosted tree models.
-  optional string min_tree_child_weight = 57 [json_name="minTreeChildWeight"];
+  optional string min_tree_child_weight = 57 [json_name = "minTreeChildWeight"];
 
   // The model registry.
   // MODEL_REGISTRY_UNSPECIFIED: Default value.
   // VERTEX_AI: Vertex AI.
-  optional string model_registry = 58 [json_name="modelRegistry"];
+  optional string model_registry = 58 [json_name = "modelRegistry"];
 
   // Google Cloud Storage URI from which the model was imported. Only applicable
   // for imported models.
-  optional string model_uri = 59 [json_name="modelUri"];
+  optional string model_uri = 59 [json_name = "modelUri"];
 
   // A specification of the non-seasonal part of the ARIMA model: the three
   // components (p, d, q) are the AR order, the degree of differencing, and the
   // MA order.
-  optional ArimaOrder non_seasonal_order = 60 [json_name="nonSeasonalOrder"];
+  optional ArimaOrder non_seasonal_order = 60 [json_name = "nonSeasonalOrder"];
 
   // Number of clusters for clustering models.
-  optional string num_clusters = 61 [json_name="numClusters"];
+  optional string num_clusters = 61 [json_name = "numClusters"];
 
   // Num factors specified for matrix factorization models.
-  optional string num_factors = 62 [json_name="numFactors"];
+  optional string num_factors = 62 [json_name = "numFactors"];
 
   // Number of parallel trees constructed during each iteration for boosted tree
   // models.
-  optional string num_parallel_tree = 63 [json_name="numParallelTree"];
+  optional string num_parallel_tree = 63 [json_name = "numParallelTree"];
 
   // Number of principal components to keep in the PCA model. Must be <= the
   // number of features.
-  optional string num_principal_components = 64 [json_name="numPrincipalComponents"];
+  optional string num_principal_components = 64
+      [json_name = "numPrincipalComponents"];
 
   // Number of trials to run this hyperparameter tuning job.
-  optional string num_trials = 65 [json_name="numTrials"];
+  optional string num_trials = 65 [json_name = "numTrials"];
 
   // Optimization strategy for training linear regression models.
   // OPTIMIZATION_STRATEGY_UNSPECIFIED: Default value.
   // BATCH_GRADIENT_DESCENT: Uses an iterative batch gradient descent algorithm.
   // NORMAL_EQUATION: Uses a normal equation to solve linear regression problem.
-  optional string optimization_strategy = 66 [json_name="optimizationStrategy"];
+  optional string optimization_strategy = 66
+      [json_name = "optimizationStrategy"];
 
   // Optimizer used for training the neural nets.
-  optional string optimizer = 67 [json_name="optimizer"];
+  optional string optimizer = 67 [json_name = "optimizer"];
 
   // The minimum ratio of cumulative explained variance that needs to be given
   // by the PCA model.
-  optional double pca_explained_variance_ratio = 68 [json_name="pcaExplainedVarianceRatio"];
+  optional double pca_explained_variance_ratio = 68
+      [json_name = "pcaExplainedVarianceRatio"];
 
   // The solver for PCA.
   // UNSPECIFIED: Default value.
   // FULL: Full eigen-decoposition.
   // RANDOMIZED: Randomized SVD.
   // AUTO: Auto.
-  optional string pca_solver = 69 [json_name="pcaSolver"];
+  optional string pca_solver = 69 [json_name = "pcaSolver"];
 
   // Number of paths for the sampled Shapley explain method.
-  optional string sampled_shapley_num_paths = 70 [json_name="sampledShapleyNumPaths"];
+  optional string sampled_shapley_num_paths = 70
+      [json_name = "sampledShapleyNumPaths"];
 
   // If true, scale the feature values by dividing the feature standard
   // deviation. Currently only apply to PCA.
-  optional bool scale_features = 71 [json_name="scaleFeatures"];
+  optional bool scale_features = 71 [json_name = "scaleFeatures"];
 
   // Whether to standardize numerical features. Default to true.
-  optional bool standardize_features = 72 [json_name="standardizeFeatures"];
+  optional bool standardize_features = 72 [json_name = "standardizeFeatures"];
 
   // Subsample fraction of the training data to grow tree to prevent overfitting
   // for boosted tree models.
-  optional double subsample = 73 [json_name="subsample"];
+  optional double subsample = 73 [json_name = "subsample"];
 
   // Based on the selected TF version, the corresponding docker image is used to
   // train external models.
-  optional string tf_version = 74 [json_name="tfVersion"];
+  optional string tf_version = 74 [json_name = "tfVersion"];
 
   // Column to be designated as time series data for ARIMA model.
-  optional string time_series_data_column = 75 [json_name="timeSeriesDataColumn"];
+  optional string time_series_data_column = 75
+      [json_name = "timeSeriesDataColumn"];
 
   // The time series id column that was used during ARIMA model training.
-  optional string time_series_id_column = 76 [json_name="timeSeriesIdColumn"];
+  optional string time_series_id_column = 76 [json_name = "timeSeriesIdColumn"];
 
   // The time series id columns that were used during ARIMA model training.
-  repeated string time_series_id_columns = 77 [json_name="timeSeriesIdColumns"];
+  repeated string time_series_id_columns = 77
+      [json_name = "timeSeriesIdColumns"];
 
   // The fraction of the interpolated length of the time series that's used to
   // model the time series trend component. All of the time points of the time
@@ -952,10 +1001,12 @@ message TrainingOptions {
   // accelerates modeling training without sacrificing much forecasting
   // accuracy. You can use this option with `minTimeSeriesLength` but not with
   // `maxTimeSeriesLength`.
-  optional double time_series_length_fraction = 78 [json_name="timeSeriesLengthFraction"];
+  optional double time_series_length_fraction = 78
+      [json_name = "timeSeriesLengthFraction"];
 
   // Column to be designated as time series timestamp for ARIMA model.
-  optional string time_series_timestamp_column = 79 [json_name="timeSeriesTimestampColumn"];
+  optional string time_series_timestamp_column = 79
+      [json_name = "timeSeriesTimestampColumn"];
 
   // Tree construction algorithm for boosted tree models.
   // TREE_METHOD_UNSPECIFIED: Unspecified tree method.
@@ -964,29 +1015,31 @@ message TrainingOptions {
   // APPROX: Approximate greedy algorithm using quantile sketch and gradient
   // histogram.
   // HIST: Fast histogram optimized approximate greedy algorithm.
-  optional string tree_method = 80 [json_name="treeMethod"];
+  optional string tree_method = 80 [json_name = "treeMethod"];
 
   // Smoothing window size for the trend component. When a positive value is
   // specified, a center moving average smoothing is applied on the history
   // trend. When the smoothing window is out of the boundary at the beginning or
   // the end of the trend, the first element or the last element is padded to
   // fill the smoothing window before the average is applied.
-  optional string trend_smoothing_window_size = 81 [json_name="trendSmoothingWindowSize"];
+  optional string trend_smoothing_window_size = 81
+      [json_name = "trendSmoothingWindowSize"];
 
   // User column specified for matrix factorization models.
-  optional string user_column = 82 [json_name="userColumn"];
+  optional string user_column = 82 [json_name = "userColumn"];
 
   // The version aliases to apply in Vertex AI model registry. Always overwrite
   // if the version aliases exists in a existing model.
-  repeated string vertex_ai_model_version_aliases = 83 [json_name="vertexAiModelVersionAliases"];
+  repeated string vertex_ai_model_version_aliases = 83
+      [json_name = "vertexAiModelVersionAliases"];
 
   // Hyperparameter for matrix factoration when implicit feedback type is
   // specified.
-  optional double wals_alpha = 84 [json_name="walsAlpha"];
+  optional double wals_alpha = 84 [json_name = "walsAlpha"];
 
   // Whether to train a model from the last checkpoint.
-  optional bool warm_start = 85 [json_name="warmStart"];
+  optional bool warm_start = 85 [json_name = "warmStart"];
 
   // User-selected XGBoost versions for training of XGBoost models.
-  optional string xgboost_version = 86 [json_name="xgboostVersion"];
+  optional string xgboost_version = 86 [json_name = "xgboostVersion"];
 }

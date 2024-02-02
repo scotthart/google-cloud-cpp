@@ -35,25 +35,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ModelsRestMetadata : public ModelsRestStub {
  public:
   ~ModelsRestMetadata() override = default;
-  explicit ModelsRestMetadata(
-      std::shared_ptr<ModelsRestStub> child,
-      std::string api_client_header = "");
+  explicit ModelsRestMetadata(std::shared_ptr<ModelsRestStub> child,
+                              std::string api_client_header = "");
 
   Status DeleteModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

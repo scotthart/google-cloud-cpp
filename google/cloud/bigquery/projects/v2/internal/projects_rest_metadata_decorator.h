@@ -35,17 +35,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ProjectsRestMetadata : public ProjectsRestStub {
  public:
   ~ProjectsRestMetadata() override = default;
-  explicit ProjectsRestMetadata(
-      std::shared_ptr<ProjectsRestStub> child,
-      std::string api_client_header = "");
+  explicit ProjectsRestMetadata(std::shared_ptr<ProjectsRestStub> child,
+                                std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

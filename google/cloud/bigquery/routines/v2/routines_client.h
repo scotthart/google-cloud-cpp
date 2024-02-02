@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutinesClient {
  public:
-  explicit RoutinesClient(std::shared_ptr<RoutinesConnection> connection, Options opts = {});
+  explicit RoutinesClient(std::shared_ptr<RoutinesConnection> connection,
+                          Options opts = {});
   ~RoutinesClient();
 
   ///@{
@@ -104,8 +105,9 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.routines.v2.DeleteRoutineRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/routines/v2/routines.proto#L90}
   ///
   // clang-format on
-  Status
-  DeleteRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, Options opts = {});
+  Status DeleteRoutine(std::string const& project_id,
+                       std::string const& dataset_id,
+                       std::string const& routine_id, Options opts = {});
 
   // clang-format off
   ///
@@ -132,8 +134,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.routines.v2.DeleteRoutineRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/routines/v2/routines.proto#L90}
   ///
   // clang-format on
-  Status
-  DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request, Options opts = {});
+  Status DeleteRoutine(
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -160,8 +164,9 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  GetRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& routine_id, Options opts = {});
 
   // clang-format off
   ///
@@ -191,8 +196,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -219,8 +226,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  InsertRoutine(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Routine const& routine_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
+      std::string const& project_id, std::string const& dataset_id,
+      google::cloud::cpp::bigquery::v2::Routine const& routine_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -250,8 +259,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -278,8 +289,9 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.ListRoutinesResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L61}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(std::string const& project_id, std::string const& dataset_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
+      std::string const& project_id, std::string const& dataset_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -310,8 +322,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.ListRoutinesResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L61}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -340,8 +354,11 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  UpdateRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, google::cloud::cpp::bigquery::v2::Routine const& routine_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& routine_id,
+      google::cloud::cpp::bigquery::v2::Routine const& routine_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -372,8 +389,10 @@ class RoutinesClient {
   /// [google.cloud.cpp.bigquery.v2.Routine]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_002.proto#L95}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<RoutinesConnection> connection_;

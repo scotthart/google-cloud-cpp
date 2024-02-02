@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/models/v2/models.proto
 
 #include "google/cloud/bigquery/models/v2/models_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/models/v2/internal/models_option_defaults.h"
 #include "google/cloud/bigquery/models/v2/internal/models_tracing_connection.h"
 #include "google/cloud/bigquery/models/v2/models_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -34,14 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelsConnection::~ModelsConnection() = default;
 
-Status
-ModelsConnection::DeleteModel(
+Status ModelsConnection::DeleteModel(
     google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsConnection::GetModel(
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsConnection::GetModel(
     google::cloud::cpp::bigquery::models::v2::GetModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -52,8 +50,7 @@ ModelsConnection::ListModels(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsConnection::PatchModel(
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsConnection::PatchModel(
     google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

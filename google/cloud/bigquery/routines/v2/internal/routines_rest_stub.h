@@ -38,23 +38,34 @@ class RoutinesRestStub {
 
   virtual Status DeleteRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
+  ListRoutines(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request) = 0;
 };
 
 class DefaultRoutinesRestStub : public RoutinesRestStub {
@@ -62,29 +73,38 @@ class DefaultRoutinesRestStub : public RoutinesRestStub {
   ~DefaultRoutinesRestStub() override = default;
 
   explicit DefaultRoutinesRestStub(Options options);
-  DefaultRoutinesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultRoutinesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                          Options options);
 
   Status DeleteRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

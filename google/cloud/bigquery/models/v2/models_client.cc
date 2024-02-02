@@ -24,15 +24,16 @@ namespace cloud {
 namespace bigquery_models_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ModelsClient::ModelsClient(
-    std::shared_ptr<ModelsConnection> connection, Options opts)
+ModelsClient::ModelsClient(std::shared_ptr<ModelsConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ModelsClient::~ModelsClient() = default;
 
-Status
-ModelsClient::DeleteModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, Options opts) {
+Status ModelsClient::DeleteModel(std::string const& project_id,
+                                 std::string const& dataset_id,
+                                 std::string const& model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::models::v2::DeleteModelRequest request;
   request.set_project_id(project_id);
@@ -41,14 +42,16 @@ ModelsClient::DeleteModel(std::string const& project_id, std::string const& data
   return connection_->DeleteModel(request);
 }
 
-Status
-ModelsClient::DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request, Options opts) {
+Status ModelsClient::DeleteModel(
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteModel(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsClient::GetModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsClient::GetModel(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& model_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::models::v2::GetModelRequest request;
   request.set_project_id(project_id);
@@ -57,14 +60,16 @@ ModelsClient::GetModel(std::string const& project_id, std::string const& dataset
   return connection_->GetModel(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsClient::GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsClient::GetModel(
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetModel(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-ModelsClient::ListModels(std::string const& project_id, std::string const& dataset_id, Options opts) {
+ModelsClient::ListModels(std::string const& project_id,
+                         std::string const& dataset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::models::v2::ListModelsRequest request;
   request.set_project_id(project_id);
@@ -73,13 +78,18 @@ ModelsClient::ListModels(std::string const& project_id, std::string const& datas
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-ModelsClient::ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request, Options opts) {
+ModelsClient::ListModels(
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListModels(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsClient::PatchModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, google::cloud::cpp::bigquery::v2::Model const& model_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsClient::PatchModel(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& model_id,
+    google::cloud::cpp::bigquery::v2::Model const& model_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::models::v2::PatchModelRequest request;
   request.set_project_id(project_id);
@@ -89,8 +99,9 @@ ModelsClient::PatchModel(std::string const& project_id, std::string const& datas
   return connection_->PatchModel(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsClient::PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsClient::PatchModel(
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchModel(request);
 }

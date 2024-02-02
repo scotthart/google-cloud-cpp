@@ -35,63 +35,88 @@ DefaultRoutinesRestStub::DefaultRoutinesRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultRoutinesRestStub::DefaultRoutinesRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 Status DefaultRoutinesRestStub::DeleteRoutine(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+        request) {
   return rest_internal::Delete(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "routines", "/", request.routine_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "routines", "/",
+                   request.routine_id()));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 DefaultRoutinesRestStub::GetRoutine(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::Routine>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "routines", "/", request.routine_id()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("read_mask", request.read_mask())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "routines", "/",
+                   request.routine_id()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("read_mask", request.read_mask())}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 DefaultRoutinesRestStub::InsertRoutine(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::bigquery::v2::Routine, google::cloud::cpp::bigquery::v2::Routine>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::bigquery::v2::Routine,
+                             google::cloud::cpp::bigquery::v2::Routine>(
       *service_, rest_context, request.routine_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "routines"));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "routines"));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
 DefaultRoutinesRestStub::ListRoutines(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::bigquery::v2::ListRoutinesResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "routines"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("filter", request.filter()),
-        std::make_pair("max_results", std::to_string(request.max_results())),
-        std::make_pair("page_token", request.page_token()),
-        std::make_pair("read_mask", request.read_mask())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "routines"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("read_mask", request.read_mask())}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 DefaultRoutinesRestStub::UpdateRoutine(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::bigquery::v2::Routine>(
       *service_, rest_context, request.routine_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "routines", "/", request.routine_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "routines", "/",
+                   request.routine_id()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

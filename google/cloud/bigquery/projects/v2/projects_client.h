@@ -61,7 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ProjectsClient {
  public:
-  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection, Options opts = {});
+  explicit ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
+                          Options opts = {});
   ~ProjectsClient();
 
   ///@{
@@ -139,7 +140,9 @@ class ProjectsClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request, Options opts = {});
+  GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +175,10 @@ class ProjectsClient {
   /// [google.cloud.cpp.bigquery.v2.ProjectList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_011.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
-  ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ProjectsConnection> connection_;

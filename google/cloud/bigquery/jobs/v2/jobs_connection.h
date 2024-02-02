@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_JOBS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_JOBS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_retry_traits.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class JobsLimitedErrorCountRetryPolicy : public JobsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit JobsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   JobsLimitedErrorCountRetryPolicy(
       JobsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   JobsLimitedErrorCountRetryPolicy(
       JobsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : JobsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class JobsLimitedErrorCountRetryPolicy : public JobsRetryPolicy {
   using BaseType = JobsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_jobs_v2_internal::JobsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_jobs_v2_internal::JobsRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,12 @@ class JobsLimitedTimeRetryPolicy : public JobsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit JobsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   JobsLimitedTimeRetryPolicy(JobsLimitedTimeRetryPolicy&& rhs) noexcept
-    : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   JobsLimitedTimeRetryPolicy(JobsLimitedTimeRetryPolicy const& rhs) noexcept
-    : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : JobsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +147,16 @@ class JobsLimitedTimeRetryPolicy : public JobsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<JobsRetryPolicy> clone() const override {
-    return std::make_unique<JobsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<JobsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = JobsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_jobs_v2_internal::JobsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_jobs_v2_internal::JobsRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,26 +177,28 @@ class JobsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-  Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request);
 
-  virtual Status
-  DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request);
+  virtual Status DeleteJob(
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request);
+  GetQueryResults(
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-  ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-  Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

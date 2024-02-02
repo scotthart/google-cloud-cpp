@@ -38,36 +38,51 @@ class JobsRestLogging : public JobsRestStub {
  public:
   ~JobsRestLogging() override = default;
   JobsRestLogging(std::shared_ptr<JobsRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+                  TracingOptions tracing_options,
+                  std::set<std::string> components);
 
   StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request)
+      override;
 
   Status DeleteJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse> GetQueryResults(
+  StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
+  GetQueryResults(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request)
+      override;
 
  private:
   std::shared_ptr<JobsRestStub> child_;

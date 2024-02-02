@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/tabledata/v2/tabledata.proto
 
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_stub_factory.h"
-#include "absl/strings/match.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_logging_decorator.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_metadata_decorator.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_stub.h"
@@ -27,6 +26,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
 #include "google/cloud/rest_options.h"
+#include "absl/strings/match.h"
 #include <memory>
 
 namespace google {
@@ -34,18 +34,16 @@ namespace cloud {
 namespace bigquery_tabledata_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<TabledataRestStub>
-CreateDefaultTabledataRestStub(Options const& options) {
+std::shared_ptr<TabledataRestStub> CreateDefaultTabledataRestStub(
+    Options const& options) {
   auto opts = internal::PopulateRestOptions(options);
   std::shared_ptr<TabledataRestStub> stub =
       std::make_shared<DefaultTabledataRestStub>(std::move(opts));
   stub = std::make_shared<TabledataRestMetadata>(std::move(stub));
-  if (internal::Contains(
-      options.get<TracingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<TabledataRestLogging>(
-        std::move(stub),
-        options.get<RestTracingOptionsOption>(),
+        std::move(stub), options.get<RestTracingOptionsOption>(),
         options.get<TracingComponentsOption>());
   }
   return stub;

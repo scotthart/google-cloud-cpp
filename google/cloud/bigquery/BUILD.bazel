@@ -167,7 +167,6 @@ load(":bigquery_rest_unit_tests.bzl", "bigquery_rest_unit_tests")
     ],
 ) for test in bigquery_rest_unit_tests]
 
-
 # Generated BigQuery
 load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
 

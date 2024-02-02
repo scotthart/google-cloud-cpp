@@ -26,51 +26,62 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TablesConnectionIdempotencyPolicy::~TablesConnectionIdempotencyPolicy() = default;
+TablesConnectionIdempotencyPolicy::~TablesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<TablesConnectionIdempotencyPolicy>
 TablesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TablesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::DeleteTable(
+    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::GetTable(
+    google::cloud::cpp::bigquery::tables::v2::GetTableRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::GetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::InsertTable(
+    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::ListTables(
+    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::PatchTable(
+    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::SetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::TestIamPermissions(
+    google::cloud::cpp::bigquery::tables::v2::
+        TestIamPermissionsRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TablesConnectionIdempotencyPolicy::UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&) {
+Idempotency TablesConnectionIdempotencyPolicy::UpdateTable(
+    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TablesConnectionIdempotencyPolicy>
-    MakeDefaultTablesConnectionIdempotencyPolicy() {
+MakeDefaultTablesConnectionIdempotencyPolicy() {
   return std::make_unique<TablesConnectionIdempotencyPolicy>();
 }
 

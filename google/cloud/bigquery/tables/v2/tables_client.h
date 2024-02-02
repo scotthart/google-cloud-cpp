@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TablesClient {
  public:
-  explicit TablesClient(std::shared_ptr<TablesConnection> connection, Options opts = {});
+  explicit TablesClient(std::shared_ptr<TablesConnection> connection,
+                        Options opts = {});
   ~TablesClient();
 
   ///@{
@@ -106,8 +107,9 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.tables.v2.DeleteTableRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/tables/v2/tables.proto#L145}
   ///
   // clang-format on
-  Status
-  DeleteTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts = {});
+  Status DeleteTable(std::string const& project_id,
+                     std::string const& dataset_id, std::string const& table_id,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -135,8 +137,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.tables.v2.DeleteTableRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/tables/v2/tables.proto#L145}
   ///
   // clang-format on
-  Status
-  DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request, Options opts = {});
+  Status DeleteTable(
+      google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -165,8 +169,9 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  GetTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> GetTable(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& table_id, Options opts = {});
 
   // clang-format off
   ///
@@ -198,8 +203,9 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> GetTable(
+      google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -228,8 +234,11 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Policy]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_003.proto#L229}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  GetIamPolicy(std::string const& resource, google::cloud::cpp::bigquery::v2::GetIamPolicyRequest const& get_iam_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Policy> GetIamPolicy(
+      std::string const& resource,
+      google::cloud::cpp::bigquery::v2::GetIamPolicyRequest const&
+          get_iam_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -260,8 +269,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Policy]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_003.proto#L229}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Policy> GetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -288,8 +299,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  InsertTable(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> InsertTable(
+      std::string const& project_id, std::string const& dataset_id,
+      google::cloud::cpp::bigquery::v2::Table const& table_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -319,8 +332,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> InsertTable(
+      google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -347,8 +362,9 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.TableList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L486}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-  ListTables(std::string const& project_id, std::string const& dataset_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::TableList> ListTables(
+      std::string const& project_id, std::string const& dataset_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -379,8 +395,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.TableList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L486}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-  ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::TableList> ListTables(
+      google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -411,8 +429,11 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  PatchTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> PatchTable(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& table_id,
+      google::cloud::cpp::bigquery::v2::Table const& table_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -445,8 +466,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> PatchTable(
+      google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -476,8 +499,11 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Policy]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_003.proto#L229}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  SetIamPolicy(std::string const& resource, google::cloud::cpp::bigquery::v2::SetIamPolicyRequest const& set_iam_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Policy> SetIamPolicy(
+      std::string const& resource,
+      google::cloud::cpp::bigquery::v2::SetIamPolicyRequest const&
+          set_iam_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -509,8 +535,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Policy]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_003.proto#L229}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Policy> SetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -543,7 +571,11 @@ class TablesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, google::cloud::cpp::bigquery::v2::TestIamPermissionsRequest const& test_iam_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& resource,
+      google::cloud::cpp::bigquery::v2::TestIamPermissionsRequest const&
+          test_iam_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -578,7 +610,10 @@ class TablesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(
+      google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -608,8 +643,11 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  UpdateTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> UpdateTable(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& table_id,
+      google::cloud::cpp::bigquery::v2::Table const& table_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -641,8 +679,10 @@ class TablesClient {
   /// [google.cloud.cpp.bigquery.v2.Table]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_001.proto#L226}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Table> UpdateTable(
+      google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<TablesConnection> connection_;

@@ -24,16 +24,16 @@ package google.cloud.cpp.bigquery.v2;
 // Id path of a row access policy.
 message RowAccessPolicyReference {
   // Required. The ID of the dataset containing this row access policy.
-  optional string dataset_id = 1 [json_name="datasetId"];
+  optional string dataset_id = 1 [json_name = "datasetId"];
 
   // Required. The ID of the row access policy. The ID must contain only letters
   // (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256
   // characters.
-  optional string policy_id = 2 [json_name="policyId"];
+  optional string policy_id = 2 [json_name = "policyId"];
 
   // Required. The ID of the project containing this row access policy.
-  optional string project_id = 3 [json_name="projectId"];
+  optional string project_id = 3 [json_name = "projectId"];
 
   // Required. The ID of the table containing this row access policy.
-  optional string table_id = 4 [json_name="tableId"];
+  optional string table_id = 4 [json_name = "tableId"];
 }

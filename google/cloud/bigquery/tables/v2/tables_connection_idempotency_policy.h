@@ -36,36 +36,44 @@ class TablesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<TablesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request);
+  virtual google::cloud::Idempotency DeleteTable(
+      google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request);
+  virtual google::cloud::Idempotency GetTable(
+      google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request);
 
-  virtual google::cloud::Idempotency
-  GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request);
+  virtual google::cloud::Idempotency InsertTable(
+      google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request);
+  virtual google::cloud::Idempotency ListTables(
+      google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request);
+  virtual google::cloud::Idempotency PatchTable(
+      google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request);
+  virtual google::cloud::Idempotency UpdateTable(
+      google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+          request);
 };
 
 std::unique_ptr<TablesConnectionIdempotencyPolicy>
-    MakeDefaultTablesConnectionIdempotencyPolicy();
+MakeDefaultTablesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_tables_v2

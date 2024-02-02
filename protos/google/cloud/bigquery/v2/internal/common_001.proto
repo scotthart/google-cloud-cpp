@@ -33,10 +33,10 @@ message AggregationThresholdPolicy {
   // privacy unit column. Representing as a repeated field in metadata for
   // extensibility to multiple columns in future. Duplicates and Repeated struct
   // fields are not allowed. For nested fields, use dot notation ("outer.inner")
-  repeated string privacy_unit_columns = 1 [json_name="privacyUnitColumns"];
+  repeated string privacy_unit_columns = 1 [json_name = "privacyUnitColumns"];
 
   // Optional. The threshold for the "aggregation threshold" policy.
-  optional string threshold = 2 [json_name="threshold"];
+  optional string threshold = 2 [json_name = "threshold"];
 }
 
 // Configuration for BigLake managed tables.
@@ -45,109 +45,113 @@ message BigLakeConfiguration {
   // write to external storage, such as Cloud Storage. The connection_id can
   // have the form "<project\_id>.<location\_id>.<connection\_id>" or
   // "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>".
-  optional string connection_id = 1 [json_name="connectionId"];
+  optional string connection_id = 1 [json_name = "connectionId"];
 
   // Required. The file format the table data is stored in.
   // FILE_FORMAT_UNSPECIFIED: Default Value.
   // PARQUET: Apache Parquet format.
-  optional string file_format = 2 [json_name="fileFormat"];
+  optional string file_format = 2 [json_name = "fileFormat"];
 
   // Required. The fully qualified location prefix of the external folder where
   // table data is stored. The '*' wildcard character is not allowed. The URI
   // should be in the format "gs://bucket/path_to_table/"
-  optional string storage_uri = 3 [json_name="storageUri"];
+  optional string storage_uri = 3 [json_name = "storageUri"];
 
   // Required. The table format the metadata only snapshots are stored in.
   // TABLE_FORMAT_UNSPECIFIED: Default Value.
   // ICEBERG: Apache Iceberg format.
-  optional string table_format = 4 [json_name="tableFormat"];
+  optional string table_format = 4 [json_name = "tableFormat"];
 }
 
 message BqmlIterationResult {
   // Deprecated.
-  optional string duration_ms = 1 [json_name="durationMs"];
+  optional string duration_ms = 1 [json_name = "durationMs"];
 
   // Deprecated.
-  optional double eval_loss = 2 [json_name="evalLoss"];
+  optional double eval_loss = 2 [json_name = "evalLoss"];
 
   // Deprecated.
-  optional int32 index = 3 [json_name="index"];
+  optional int32 index = 3 [json_name = "index"];
 
   // Deprecated.
-  optional double learn_rate = 4 [json_name="learnRate"];
+  optional double learn_rate = 4 [json_name = "learnRate"];
 
   // Deprecated.
-  optional double training_loss = 5 [json_name="trainingLoss"];
+  optional double training_loss = 5 [json_name = "trainingLoss"];
 }
 
 message BqmlTrainingRun {
   // Deprecated.
-  repeated BqmlIterationResult iteration_results = 1 [json_name="iterationResults"];
+  repeated BqmlIterationResult iteration_results = 1
+      [json_name = "iterationResults"];
 
   // Deprecated.
-  optional string start_time = 2 [json_name="startTime"];
+  optional string start_time = 2 [json_name = "startTime"];
 
   // Deprecated.
-  optional string state = 3 [json_name="state"];
+  optional string state = 3 [json_name = "state"];
 
   message TrainingOptions {
-    optional bool early_stop = 1 [json_name="earlyStop"];
+    optional bool early_stop = 1 [json_name = "earlyStop"];
 
-    optional double l1_reg = 2 [json_name="l1Reg"];
+    optional double l1_reg = 2 [json_name = "l1Reg"];
 
-    optional double l2_reg = 3 [json_name="l2Reg"];
+    optional double l2_reg = 3 [json_name = "l2Reg"];
 
-    optional double learn_rate = 4 [json_name="learnRate"];
+    optional double learn_rate = 4 [json_name = "learnRate"];
 
-    optional string learn_rate_strategy = 5 [json_name="learnRateStrategy"];
+    optional string learn_rate_strategy = 5 [json_name = "learnRateStrategy"];
 
-    optional double line_search_init_learn_rate = 6 [json_name="lineSearchInitLearnRate"];
+    optional double line_search_init_learn_rate = 6
+        [json_name = "lineSearchInitLearnRate"];
 
-    optional string max_iteration = 7 [json_name="maxIteration"];
+    optional string max_iteration = 7 [json_name = "maxIteration"];
 
-    optional double min_rel_progress = 8 [json_name="minRelProgress"];
+    optional double min_rel_progress = 8 [json_name = "minRelProgress"];
 
-    optional bool warm_start = 9 [json_name="warmStart"];
+    optional bool warm_start = 9 [json_name = "warmStart"];
   }
 
   // Deprecated.
-  optional TrainingOptions training_options = 4 [json_name="trainingOptions"];
+  optional TrainingOptions training_options = 4 [json_name = "trainingOptions"];
 }
 
 // Information about base table and clone time of a table clone.
 message CloneDefinition {
   // Required. Reference describing the ID of the table that was cloned.
-  optional TableReference base_table_reference = 1 [json_name="baseTableReference"];
+  optional TableReference base_table_reference = 1
+      [json_name = "baseTableReference"];
 
   // Required. The time at which the base table was cloned. This value is
   // reported in the JSON response using RFC3339 format.
-  optional string clone_time = 2 [json_name="cloneTime"];
+  optional string clone_time = 2 [json_name = "cloneTime"];
 }
 
 // Definition and configuration of a materialized view.
 message MaterializedViewDefinition {
   // Optional. This option declares authors intention to construct a
   // materialized view that will not be refreshed incrementally.
-  optional bool allow_non_incremental_definition = 1 [json_name="allowNonIncrementalDefinition"];
+  optional bool allow_non_incremental_definition = 1
+      [json_name = "allowNonIncrementalDefinition"];
 
   // Optional. Enable automatic refresh of the materialized view when the base
   // table is updated. The default value is "true".
-  optional bool enable_refresh = 2 [json_name="enableRefresh"];
+  optional bool enable_refresh = 2 [json_name = "enableRefresh"];
 
   // Output only. The time when this materialized view was last refreshed, in
   // milliseconds since the epoch.
-  optional string last_refresh_time = 3 [json_name="lastRefreshTime"];
+  optional string last_refresh_time = 3 [json_name = "lastRefreshTime"];
 
   // [Optional] Max staleness of data that could be returned when materizlized
   // view is queried (formatted as Google SQL Interval type).
-  optional string max_staleness = 4 [json_name="maxStaleness"];
+  optional string max_staleness = 4 [json_name = "maxStaleness"];
 
   // Required. A query whose results are persisted.
-  optional string query = 5 [json_name="query"];
+  optional string query = 5 [json_name = "query"];
 
   // Optional. The maximum frequency at which this materialized view will be
   // refreshed. The default value is "1800000" (30 minutes).
-  optional string refresh_interval_ms = 6 [json_name="refreshIntervalMs"];
+  optional string refresh_interval_ms = 6 [json_name = "refreshIntervalMs"];
 }
 
 // Status of a materialized view. The last refresh timestamp status is omitted
@@ -155,34 +159,35 @@ message MaterializedViewDefinition {
 message MaterializedViewStatus {
   // Output only. Error result of the last automatic refresh. If present,
   // indicates that the last automatic refresh was unsuccessful.
-  optional ErrorProto last_refresh_status = 1 [json_name="lastRefreshStatus"];
+  optional ErrorProto last_refresh_status = 1 [json_name = "lastRefreshStatus"];
 
   // Output only. Refresh watermark of materialized view. The base tables' data
   // were collected into the materialized view cache until this time.
-  optional string refresh_watermark = 2 [json_name="refreshWatermark"];
+  optional string refresh_watermark = 2 [json_name = "refreshWatermark"];
 }
 
 message ModelDefinition {
   message ModelOptions {
-    repeated string labels = 1 [json_name="labels"];
+    repeated string labels = 1 [json_name = "labels"];
 
-    optional string loss_type = 2 [json_name="lossType"];
+    optional string loss_type = 2 [json_name = "lossType"];
 
-    optional string model_type = 3 [json_name="modelType"];
+    optional string model_type = 3 [json_name = "modelType"];
   }
 
   // Deprecated.
-  optional ModelOptions model_options = 1 [json_name="modelOptions"];
+  optional ModelOptions model_options = 1 [json_name = "modelOptions"];
 
   // Deprecated.
-  repeated BqmlTrainingRun training_runs = 2 [json_name="trainingRuns"];
+  repeated BqmlTrainingRun training_runs = 2 [json_name = "trainingRuns"];
 }
 
 // Represents privacy policy that contains the privacy requirements specified by
 // the data owner. Currently, this is only supported on views.
 message PrivacyPolicy {
   // Optional. Policy used for aggregation thresholds.
-  optional AggregationThresholdPolicy aggregation_threshold_policy = 1 [json_name="aggregationThresholdPolicy"];
+  optional AggregationThresholdPolicy aggregation_threshold_policy = 1
+      [json_name = "aggregationThresholdPolicy"];
 }
 
 // Request message for `SetIamPolicy` method.
@@ -190,55 +195,57 @@ message SetIamPolicyRequest {
   // REQUIRED: The complete policy to be applied to the `resource`. The size of
   // the policy is limited to a few 10s of KB. An empty policy is a valid policy
   // but certain Google Cloud services (such as Projects) might reject them.
-  optional Policy policy = 1 [json_name="policy"];
+  optional Policy policy = 1 [json_name = "policy"];
 
   // OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
   // the fields in the mask will be modified. If no mask is provided, the
   // following default mask is used: `paths: "bindings, etag"`
-  optional string update_mask = 2 [json_name="updateMask"];
+  optional string update_mask = 2 [json_name = "updateMask"];
 }
 
 // Information about base table and snapshot time of the snapshot.
 message SnapshotDefinition {
   // Required. Reference describing the ID of the table that was snapshot.
-  optional TableReference base_table_reference = 1 [json_name="baseTableReference"];
+  optional TableReference base_table_reference = 1
+      [json_name = "baseTableReference"];
 
   // Required. The time at which the base table was snapshot. This value is
   // reported in the JSON response using RFC3339 format.
-  optional string snapshot_time = 2 [json_name="snapshotTime"];
+  optional string snapshot_time = 2 [json_name = "snapshotTime"];
 }
 
 message Streamingbuffer {
   // Output only. A lower-bound estimate of the number of bytes currently in the
   // streaming buffer.
-  optional string estimated_bytes = 1 [json_name="estimatedBytes"];
+  optional string estimated_bytes = 1 [json_name = "estimatedBytes"];
 
   // Output only. A lower-bound estimate of the number of rows currently in the
   // streaming buffer.
-  optional string estimated_rows = 2 [json_name="estimatedRows"];
+  optional string estimated_rows = 2 [json_name = "estimatedRows"];
 
   // Output only. Contains the timestamp of the oldest entry in the streaming
   // buffer, in milliseconds since the epoch, if the streaming buffer is
   // available.
-  optional string oldest_entry_time = 3 [json_name="oldestEntryTime"];
+  optional string oldest_entry_time = 3 [json_name = "oldestEntryTime"];
 }
 
 message Table {
   // Optional. Specifies the configuration of a BigLake managed table.
-  optional BigLakeConfiguration biglake_configuration = 1 [json_name="biglakeConfiguration"];
+  optional BigLakeConfiguration biglake_configuration = 1
+      [json_name = "biglakeConfiguration"];
 
   // Output only. Contains information about the clone. This value is set via
   // the clone operation.
-  optional CloneDefinition clone_definition = 2 [json_name="cloneDefinition"];
+  optional CloneDefinition clone_definition = 2 [json_name = "cloneDefinition"];
 
   // Clustering specification for the table. Must be specified with time-based
   // partitioning, data in the table will be first partitioned and subsequently
   // clustered.
-  optional Clustering clustering = 3 [json_name="clustering"];
+  optional Clustering clustering = 3 [json_name = "clustering"];
 
   // Output only. The time when this table was created, in milliseconds since
   // the epoch.
-  optional string creation_time = 4 [json_name="creationTime"];
+  optional string creation_time = 4 [json_name = "creationTime"];
 
   // Optional. Defines the default collation specification of new STRING fields
   // in the table. During table creation or update, if a STRING field is added
@@ -247,7 +254,7 @@ message Table {
   // added afterwards, and does not alter the existing fields. The following
   // values are supported: * 'und:ci': undetermined locale, case insensitive. *
   // '': empty string. Default to case-sensitive behavior.
-  optional string default_collation = 5 [json_name="defaultCollation"];
+  optional string default_collation = 5 [json_name = "defaultCollation"];
 
   // Optional. Defines the default rounding mode specification of new decimal
   // fields (NUMERIC OR BIGNUMERIC) in the table. During table creation or
@@ -264,37 +271,39 @@ message Table {
   // value when applying precision and scale upon writing of NUMERIC and
   // BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 => 1 1.5 => 2 1.6, 1.7,
   // 1.8, 1.9 => 2 2.5 => 2
-  optional string default_rounding_mode = 6 [json_name="defaultRoundingMode"];
+  optional string default_rounding_mode = 6 [json_name = "defaultRoundingMode"];
 
   // Optional. A user-friendly description of this table.
-  optional string description = 7 [json_name="description"];
+  optional string description = 7 [json_name = "description"];
 
   // Custom encryption configuration (e.g., Cloud KMS keys).
-  optional EncryptionConfiguration encryption_configuration = 8 [json_name="encryptionConfiguration"];
+  optional EncryptionConfiguration encryption_configuration = 8
+      [json_name = "encryptionConfiguration"];
 
   // Output only. A hash of this resource.
-  optional string etag = 9 [json_name="etag"];
+  optional string etag = 9 [json_name = "etag"];
 
   // Optional. The time when this table expires, in milliseconds since the
   // epoch. If not present, the table will persist indefinitely. Expired tables
   // will be deleted and their storage reclaimed. The defaultTableExpirationMs
   // property of the encapsulating dataset can be used to set a default
   // expirationTime on newly created tables.
-  optional string expiration_time = 10 [json_name="expirationTime"];
+  optional string expiration_time = 10 [json_name = "expirationTime"];
 
   // Optional. Describes the data format, location, and other properties of a
   // table stored outside of BigQuery. By defining these properties, the data
   // source can then be queried as if it were a standard BigQuery table.
-  optional ExternalDataConfiguration external_data_configuration = 11 [json_name="externalDataConfiguration"];
+  optional ExternalDataConfiguration external_data_configuration = 11
+      [json_name = "externalDataConfiguration"];
 
   // Optional. A descriptive name for this table.
-  optional string friendly_name = 12 [json_name="friendlyName"];
+  optional string friendly_name = 12 [json_name = "friendlyName"];
 
   // Output only. An opaque ID uniquely identifying the table.
-  optional string id = 13 [json_name="id"];
+  optional string id = 13 [json_name = "id"];
 
   // The type of resource ID.
-  optional string kind = 14 [json_name="kind"];
+  optional string kind = 14 [json_name = "kind"];
 
   // The labels associated with this table. You can use these to organize and
   // group your tables. Label keys and values can be no longer than 63
@@ -302,91 +311,102 @@ message Table {
   // underscores and dashes. International characters are allowed. Label values
   // are optional. Label keys must start with a letter and each label in the
   // list must have a different key.
-  map<string, string> labels = 15 [json_name="labels"];
+  map<string, string> labels = 15 [json_name = "labels"];
 
   // Output only. The time when this table was last modified, in milliseconds
   // since the epoch.
-  optional string last_modified_time = 16 [json_name="lastModifiedTime"];
+  optional string last_modified_time = 16 [json_name = "lastModifiedTime"];
 
   // Output only. The geographic location where the table resides. This value is
   // inherited from the dataset.
-  optional string location = 17 [json_name="location"];
+  optional string location = 17 [json_name = "location"];
 
   // Optional. The materialized view definition.
-  optional MaterializedViewDefinition materialized_view = 18 [json_name="materializedView"];
+  optional MaterializedViewDefinition materialized_view = 18
+      [json_name = "materializedView"];
 
   // Output only. The materialized view status.
-  optional MaterializedViewStatus materialized_view_status = 19 [json_name="materializedViewStatus"];
+  optional MaterializedViewStatus materialized_view_status = 19
+      [json_name = "materializedViewStatus"];
 
   // Optional. The maximum staleness of data that could be returned when the
   // table (or stale MV) is queried. Staleness encoded as a string encoding of
   // sql IntervalValue type.
-  optional string max_staleness = 20 [json_name="maxStaleness"];
+  optional string max_staleness = 20 [json_name = "maxStaleness"];
 
   // Deprecated.
-  optional ModelDefinition model = 21 [json_name="model"];
+  optional ModelDefinition model = 21 [json_name = "model"];
 
   // Output only. Number of logical bytes that are less than 90 days old.
-  optional string num_active_logical_bytes = 22 [json_name="numActiveLogicalBytes"];
+  optional string num_active_logical_bytes = 22
+      [json_name = "numActiveLogicalBytes"];
 
   // Output only. Number of physical bytes less than 90 days old. This data is
   // not kept in real time, and might be delayed by a few seconds to a few
   // minutes.
-  optional string num_active_physical_bytes = 23 [json_name="numActivePhysicalBytes"];
+  optional string num_active_physical_bytes = 23
+      [json_name = "numActivePhysicalBytes"];
 
   // Output only. The size of this table in logical bytes, excluding any data in
   // the streaming buffer.
-  optional string num_bytes = 24 [json_name="numBytes"];
+  optional string num_bytes = 24 [json_name = "numBytes"];
 
   // Output only. The number of logical bytes in the table that are considered
   // "long-term storage".
-  optional string num_long_term_bytes = 25 [json_name="numLongTermBytes"];
+  optional string num_long_term_bytes = 25 [json_name = "numLongTermBytes"];
 
   // Output only. Number of logical bytes that are more than 90 days old.
-  optional string num_long_term_logical_bytes = 26 [json_name="numLongTermLogicalBytes"];
+  optional string num_long_term_logical_bytes = 26
+      [json_name = "numLongTermLogicalBytes"];
 
   // Output only. Number of physical bytes more than 90 days old. This data is
   // not kept in real time, and might be delayed by a few seconds to a few
   // minutes.
-  optional string num_long_term_physical_bytes = 27 [json_name="numLongTermPhysicalBytes"];
+  optional string num_long_term_physical_bytes = 27
+      [json_name = "numLongTermPhysicalBytes"];
 
   // Output only. The number of partitions present in the table or materialized
   // view. This data is not kept in real time, and might be delayed by a few
   // seconds to a few minutes.
-  optional string num_partitions = 28 [json_name="numPartitions"];
+  optional string num_partitions = 28 [json_name = "numPartitions"];
 
   // Output only. The physical size of this table in bytes. This includes
   // storage used for time travel.
-  optional string num_physical_bytes = 29 [json_name="numPhysicalBytes"];
+  optional string num_physical_bytes = 29 [json_name = "numPhysicalBytes"];
 
   // Output only. The number of rows of data in this table, excluding any data
   // in the streaming buffer.
-  optional string num_rows = 30 [json_name="numRows"];
+  optional string num_rows = 30 [json_name = "numRows"];
 
   // Output only. Number of physical bytes used by time travel storage (deleted
   // or changed data). This data is not kept in real time, and might be delayed
   // by a few seconds to a few minutes.
-  optional string num_time_travel_physical_bytes = 31 [json_name="numTimeTravelPhysicalBytes"];
+  optional string num_time_travel_physical_bytes = 31
+      [json_name = "numTimeTravelPhysicalBytes"];
 
   // Output only. Total number of logical bytes in the table or materialized
   // view.
-  optional string num_total_logical_bytes = 32 [json_name="numTotalLogicalBytes"];
+  optional string num_total_logical_bytes = 32
+      [json_name = "numTotalLogicalBytes"];
 
   // Output only. The physical size of this table in bytes. This also includes
   // storage used for time travel. This data is not kept in real time, and might
   // be delayed by a few seconds to a few minutes.
-  optional string num_total_physical_bytes = 33 [json_name="numTotalPhysicalBytes"];
+  optional string num_total_physical_bytes = 33
+      [json_name = "numTotalPhysicalBytes"];
 
   // If specified, configures range partitioning for this table.
-  optional RangePartitioning range_partitioning = 34 [json_name="rangePartitioning"];
+  optional RangePartitioning range_partitioning = 34
+      [json_name = "rangePartitioning"];
 
   // Optional. Output only. Table references of all replicas currently active on
   // the table.
-  repeated TableReference replicas = 35 [json_name="replicas"];
+  repeated TableReference replicas = 35 [json_name = "replicas"];
 
   // Optional. If set to true, queries over this table require a partition
   // filter that can be used for partition elimination to be specified.
-  optional bool require_partition_filter = 36 [json_name="requirePartitionFilter"];
+  optional bool require_partition_filter = 36
+      [json_name = "requirePartitionFilter"];
 
   // [Optional] The tags associated with this table. Tag keys are globally
   // unique. See additional information on
@@ -395,35 +415,40 @@ message Table {
   // namespaced friendly name of the tag key, e.g. "12345/environment" where
   // 12345 is parent id. The value is the friendly short name of the tag value,
   // e.g. "production".
-  map<string, string> resource_tags = 37 [json_name="resourceTags"];
+  map<string, string> resource_tags = 37 [json_name = "resourceTags"];
 
   // Optional. Describes the schema of this table.
-  optional TableSchema schema = 38 [json_name="schema"];
+  optional TableSchema schema = 38 [json_name = "schema"];
 
   // Output only. A URL that can be used to access this resource again.
-  optional string self_link = 39 [json_name="selfLink"];
+  optional string self_link = 39 [json_name = "selfLink"];
 
   // Output only. Contains information about the snapshot. This value is set via
   // snapshot creation.
-  optional SnapshotDefinition snapshot_definition = 40 [json_name="snapshotDefinition"];
+  optional SnapshotDefinition snapshot_definition = 40
+      [json_name = "snapshotDefinition"];
 
   // Output only. Contains information regarding this table's streaming buffer,
   // if one is present. This field will be absent if the table is not being
   // streamed to or if there is no data in the streaming buffer.
-  optional Streamingbuffer streaming_buffer = 41 [json_name="streamingBuffer"];
+  optional Streamingbuffer streaming_buffer = 41
+      [json_name = "streamingBuffer"];
 
   // Optional. Tables Primary Key and Foreign Key information
-  optional TableConstraints table_constraints = 42 [json_name="tableConstraints"];
+  optional TableConstraints table_constraints = 42
+      [json_name = "tableConstraints"];
 
   // Required. Reference describing the ID of this table.
-  optional TableReference table_reference = 43 [json_name="tableReference"];
+  optional TableReference table_reference = 43 [json_name = "tableReference"];
 
   // Optional. Table replication info for table created `AS REPLICA` DDL like:
   // `CREATE MATERIALIZED VIEW mv1 AS REPLICA OF src_mv`
-  optional TableReplicationInfo table_replication_info = 44 [json_name="tableReplicationInfo"];
+  optional TableReplicationInfo table_replication_info = 44
+      [json_name = "tableReplicationInfo"];
 
   // If specified, configures time-based partitioning for this table.
-  optional TimePartitioning time_partitioning = 45 [json_name="timePartitioning"];
+  optional TimePartitioning time_partitioning = 45
+      [json_name = "timePartitioning"];
 
   // Output only. Describes the table type. The following values are supported:
   // * `TABLE`: A normal BigQuery table. * `VIEW`: A virtual table defined by a
@@ -434,10 +459,10 @@ message Table {
   // time. See additional information on [table
   // snapshots](/bigquery/docs/table-snapshots-intro). The default value is
   // `TABLE`.
-  optional string type = 46 [json_name="type"];
+  optional string type = 46 [json_name = "type"];
 
   // Optional. The view definition.
-  optional ViewDefinition view = 47 [json_name="view"];
+  optional ViewDefinition view = 47 [json_name = "view"];
 }
 
 // The TableConstraints defines the primary key and foreign key.
@@ -446,112 +471,117 @@ message TableConstraints {
     message ColumnReferencesItem {
       // Required. The column in the primary key that are referenced by the
       // referencing_column.
-      optional string referenced_column = 1 [json_name="referencedColumn"];
+      optional string referenced_column = 1 [json_name = "referencedColumn"];
 
       // Required. The column that composes the foreign key.
-      optional string referencing_column = 2 [json_name="referencingColumn"];
+      optional string referencing_column = 2 [json_name = "referencingColumn"];
     }
 
     // Required. The columns that compose the foreign key.
-    repeated ColumnReferencesItem column_references = 1 [json_name="columnReferences"];
+    repeated ColumnReferencesItem column_references = 1
+        [json_name = "columnReferences"];
 
     // Optional. Set only if the foreign key constraint is named.
-    optional string name = 2 [json_name="name"];
+    optional string name = 2 [json_name = "name"];
 
     message ReferencedTable {
-      optional string dataset_id = 1 [json_name="datasetId"];
+      optional string dataset_id = 1 [json_name = "datasetId"];
 
-      optional string project_id = 2 [json_name="projectId"];
+      optional string project_id = 2 [json_name = "projectId"];
 
-      optional string table_id = 3 [json_name="tableId"];
+      optional string table_id = 3 [json_name = "tableId"];
     }
 
-    optional ReferencedTable referenced_table = 3 [json_name="referencedTable"];
+    optional ReferencedTable referenced_table = 3
+        [json_name = "referencedTable"];
   }
 
   // Optional. Present only if the table has a foreign key. The foreign key is
   // not enforced.
-  repeated ForeignKeysItem foreign_keys = 1 [json_name="foreignKeys"];
+  repeated ForeignKeysItem foreign_keys = 1 [json_name = "foreignKeys"];
 
   message PrimaryKey {
     // Required. The columns that are composed of the primary key constraint.
-    repeated string columns = 1 [json_name="columns"];
+    repeated string columns = 1 [json_name = "columns"];
   }
 
   // Represents the primary key constraint on a table's columns.
-  optional PrimaryKey primary_key = 2 [json_name="primaryKey"];
+  optional PrimaryKey primary_key = 2 [json_name = "primaryKey"];
 }
 
 // Partial projection of the metadata for a given table in a list response.
 message TableList {
   // A hash of this page of results.
-  optional string etag = 1 [json_name="etag"];
+  optional string etag = 1 [json_name = "etag"];
 
   // The type of list.
-  optional string kind = 2 [json_name="kind"];
+  optional string kind = 2 [json_name = "kind"];
 
   // A token to request the next page of results.
-  optional string next_page_token = 3 [json_name="nextPageToken"];
+  optional string next_page_token = 3 [json_name = "nextPageToken"];
 
   message TablesItem {
     // Clustering specification for this table, if configured.
-    optional Clustering clustering = 1 [json_name="clustering"];
+    optional Clustering clustering = 1 [json_name = "clustering"];
 
     // Output only. The time when this table was created, in milliseconds since
     // the epoch.
-    optional string creation_time = 2 [json_name="creationTime"];
+    optional string creation_time = 2 [json_name = "creationTime"];
 
     // The time when this table expires, in milliseconds since the epoch. If not
     // present, the table will persist indefinitely. Expired tables will be
     // deleted and their storage reclaimed.
-    optional string expiration_time = 3 [json_name="expirationTime"];
+    optional string expiration_time = 3 [json_name = "expirationTime"];
 
     // The user-friendly name for this table.
-    optional string friendly_name = 4 [json_name="friendlyName"];
+    optional string friendly_name = 4 [json_name = "friendlyName"];
 
     // An opaque ID of the table.
-    optional string id = 5 [json_name="id"];
+    optional string id = 5 [json_name = "id"];
 
     // The resource type.
-    optional string kind = 6 [json_name="kind"];
+    optional string kind = 6 [json_name = "kind"];
 
     // The labels associated with this table. You can use these to organize and
     // group your tables.
-    map<string, string> labels = 7 [json_name="labels"];
+    map<string, string> labels = 7 [json_name = "labels"];
 
     // The range partitioning for this table.
-    optional RangePartitioning range_partitioning = 8 [json_name="rangePartitioning"];
+    optional RangePartitioning range_partitioning = 8
+        [json_name = "rangePartitioning"];
 
     // Optional. If set to true, queries including this table must specify a
     // partition filter. This filter is used for partition elimination.
-    optional bool require_partition_filter = 9 [json_name="requirePartitionFilter"];
+    optional bool require_partition_filter = 9
+        [json_name = "requirePartitionFilter"];
 
     // A reference uniquely identifying table.
-    optional TableReference table_reference = 10 [json_name="tableReference"];
+    optional TableReference table_reference = 10 [json_name = "tableReference"];
 
     // The time-based partitioning for this table.
-    optional TimePartitioning time_partitioning = 11 [json_name="timePartitioning"];
+    optional TimePartitioning time_partitioning = 11
+        [json_name = "timePartitioning"];
 
     // The type of table.
-    optional string type = 12 [json_name="type"];
+    optional string type = 12 [json_name = "type"];
 
     message View {
       // Specifices the privacy policy for the view.
-      optional PrivacyPolicy privacy_policy = 1 [json_name="privacyPolicy"];
+      optional PrivacyPolicy privacy_policy = 1 [json_name = "privacyPolicy"];
 
       // True if view is defined in legacy SQL dialect, false if in GoogleSQL.
-      optional bool use_legacy_sql = 2 [json_name="useLegacySql"];
+      optional bool use_legacy_sql = 2 [json_name = "useLegacySql"];
     }
 
     // Information about a logical view.
-    optional View view = 13 [json_name="view"];
+    optional View view = 13 [json_name = "view"];
   }
 
   // Tables in the requested dataset.
-  repeated TablesItem tables = 4 [json_name="tables"];
+  repeated TablesItem tables = 4 [json_name = "tables"];
 
   // The total number of tables in the dataset.
-  optional int32 total_items = 5 [json_name="totalItems"];
+  optional int32 total_items = 5 [json_name = "totalItems"];
 }
 
 // Replication info of a table created using `AS REPLICA` DDL like: `CREATE
@@ -559,15 +589,17 @@ message TableList {
 message TableReplicationInfo {
   // Optional. Output only. If source is a materialized view, this field
   // signifies the last refresh time of the source.
-  optional string replicated_source_last_refresh_time = 1 [json_name="replicatedSourceLastRefreshTime"];
+  optional string replicated_source_last_refresh_time = 1
+      [json_name = "replicatedSourceLastRefreshTime"];
 
   // Optional. Output only. Replication error that will permanently stopped
   // table replication.
-  optional ErrorProto replication_error = 2 [json_name="replicationError"];
+  optional ErrorProto replication_error = 2 [json_name = "replicationError"];
 
   // Required. Specifies the interval at which the source table is polled for
   // updates.
-  optional string replication_interval_ms = 3 [json_name="replicationIntervalMs"];
+  optional string replication_interval_ms = 3
+      [json_name = "replicationIntervalMs"];
 
   // Optional. Output only. Replication status of configured replication.
   // REPLICATION_STATUS_UNSPECIFIED: Default value.
@@ -576,31 +608,33 @@ message TableReplicationInfo {
   // PERMISSION_DENIED: Source revoked replication permissions.
   // UNSUPPORTED_CONFIGURATION: Source configuration doesn’t allow
   // replication.
-  optional string replication_status = 4 [json_name="replicationStatus"];
+  optional string replication_status = 4 [json_name = "replicationStatus"];
 
   // Required. Source table reference that is replicated.
-  optional TableReference source_table = 5 [json_name="sourceTable"];
+  optional TableReference source_table = 5 [json_name = "sourceTable"];
 }
 
 // Describes the definition of a logical view.
 message ViewDefinition {
   // Optional. Specifices the privacy policy for the view.
-  optional PrivacyPolicy privacy_policy = 1 [json_name="privacyPolicy"];
+  optional PrivacyPolicy privacy_policy = 1 [json_name = "privacyPolicy"];
 
   // Required. A query that BigQuery executes when the view is referenced.
-  optional string query = 2 [json_name="query"];
+  optional string query = 2 [json_name = "query"];
 
   // True if the column names are explicitly specified. For example by using the
   // 'CREATE VIEW v(c1, c2) AS ...' syntax. Can only be set for GoogleSQL views.
-  optional bool use_explicit_column_names = 3 [json_name="useExplicitColumnNames"];
+  optional bool use_explicit_column_names = 3
+      [json_name = "useExplicitColumnNames"];
 
   // Specifies whether to use BigQuery's legacy SQL for this view. The default
   // value is true. If set to false, the view will use BigQuery's GoogleSQL:
   // https://cloud.google.com/bigquery/sql-reference/ Queries and views that
   // reference this view must use the same flag value. A wrapper is used here
   // because the default value is True.
-  optional bool use_legacy_sql = 4 [json_name="useLegacySql"];
+  optional bool use_legacy_sql = 4 [json_name = "useLegacySql"];
 
   // Describes user-defined function resources used in the query.
-  repeated UserDefinedFunctionResource user_defined_function_resources = 5 [json_name="userDefinedFunctionResources"];
+  repeated UserDefinedFunctionResource user_defined_function_resources = 5
+      [json_name = "userDefinedFunctionResources"];
 }

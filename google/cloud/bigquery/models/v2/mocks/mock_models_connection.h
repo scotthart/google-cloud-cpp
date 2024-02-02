@@ -46,21 +46,29 @@ class MockModelsConnection : public bigquery_models_v2::ModelsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(Status,
-  DeleteModel,
-  (google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteModel,
+      (google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Model>,
-  GetModel,
-  (google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request), (override));
+  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Model>, GetModel,
+              (google::cloud::cpp::bigquery::models::v2::GetModelRequest const&
+                   request),
+              (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>,
-  ListModels,
-  (google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>,
+      ListModels,
+      (google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Model>,
-  PatchModel,
-  (google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Model>, PatchModel,
+      (google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

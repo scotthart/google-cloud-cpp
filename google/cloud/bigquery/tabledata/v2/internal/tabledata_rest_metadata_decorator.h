@@ -35,17 +35,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class TabledataRestMetadata : public TabledataRestStub {
  public:
   ~TabledataRestMetadata() override = default;
-  explicit TabledataRestMetadata(
-      std::shared_ptr<TabledataRestStub> child,
-      std::string api_client_header = "");
+  explicit TabledataRestMetadata(std::shared_ptr<TabledataRestStub> child,
+                                 std::string api_client_header = "");
 
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse> InsertAll(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
+  InsertAll(google::cloud::rest_internal::RestContext& rest_context,
+            Options const& options,
+            google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request) override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

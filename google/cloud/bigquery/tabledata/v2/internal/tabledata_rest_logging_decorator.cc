@@ -27,21 +27,22 @@ namespace bigquery_tabledata_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TabledataRestLogging::TabledataRestLogging(
-    std::shared_ptr<TabledataRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<TabledataRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
 TabledataRestLogging::InsertAll(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+              request) {
         return child_->InsertAll(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -49,13 +50,13 @@ TabledataRestLogging::InsertAll(
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
 TabledataRestLogging::ListTabledata(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tabledata::v2::
+                 ListTabledataRequest const& request) {
         return child_->ListTabledata(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

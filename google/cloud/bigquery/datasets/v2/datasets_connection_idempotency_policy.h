@@ -36,30 +36,37 @@ class DatasetsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<DatasetsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteDataset(google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request);
+  virtual google::cloud::Idempotency DeleteDataset(
+      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetDataset(google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request);
+  virtual google::cloud::Idempotency GetDataset(
+      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertDataset(google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request);
+  virtual google::cloud::Idempotency InsertDataset(
+      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListDatasets(google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request);
+  virtual google::cloud::Idempotency ListDatasets(
+      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchDataset(google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request);
+  virtual google::cloud::Idempotency PatchDataset(
+      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  Undelete(google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request);
+  virtual google::cloud::Idempotency Undelete(
+      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateDataset(google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request);
+  virtual google::cloud::Idempotency UpdateDataset(
+      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+          request);
 };
 
 std::unique_ptr<DatasetsConnectionIdempotencyPolicy>
-    MakeDefaultDatasetsConnectionIdempotencyPolicy();
+MakeDefaultDatasetsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_datasets_v2

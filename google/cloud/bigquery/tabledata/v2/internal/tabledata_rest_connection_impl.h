@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_INTERNAL_TABLEDATA_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_INTERNAL_TABLEDATA_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_stub.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_retry_traits.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -42,31 +42,39 @@ class TabledataRestConnectionImpl
   ~TabledataRestConnectionImpl() override = default;
 
   TabledataRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_tabledata_v2_internal::TabledataRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_tabledata_v2_internal::TabledataRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) override;
+  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-  ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request) override;
 
  private:
   static std::unique_ptr<bigquery_tabledata_v2::TabledataRetryPolicy>
   retry_policy(Options const& options) {
-    return options.get<bigquery_tabledata_v2::TabledataRetryPolicyOption>()->clone();
+    return options.get<bigquery_tabledata_v2::TabledataRetryPolicyOption>()
+        ->clone();
   }
 
   static std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
-    return options.get<bigquery_tabledata_v2::TabledataBackoffPolicyOption>()->clone();
+    return options.get<bigquery_tabledata_v2::TabledataBackoffPolicyOption>()
+        ->clone();
   }
 
-  static std::unique_ptr<bigquery_tabledata_v2::TabledataConnectionIdempotencyPolicy>
+  static std::unique_ptr<
+      bigquery_tabledata_v2::TabledataConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquery_tabledata_v2::TabledataConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<
+            bigquery_tabledata_v2::TabledataConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

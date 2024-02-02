@@ -27,21 +27,21 @@ namespace bigquery_projects_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ProjectsRestLogging::ProjectsRestLogging(
-    std::shared_ptr<ProjectsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ProjectsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
 ProjectsRestLogging::GetServiceAccount(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::projects::v2::
+                 GetServiceAccountRequest const& request) {
         return child_->GetServiceAccount(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -49,13 +49,14 @@ ProjectsRestLogging::GetServiceAccount(
 
 StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
 ProjectsRestLogging::ListProjects(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+              request) {
         return child_->ListProjects(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

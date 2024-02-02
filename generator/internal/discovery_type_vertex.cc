@@ -440,162 +440,18 @@ DiscoveryTypeVertex::FormatProperties(  // NOLINT(misc-no-recursion)
                              message_properties, message_descriptor,
                              current_field_names, indent);
         if (!result.ok()) return result;
-
-        //        // std::cout << __func__ << " field=" << field << std::endl;
-        //        auto type_and_synthesize =
-        //            DetermineTypeAndSynthesis(field, field.value("id",
-        //            p.key()));
-        //        if (!type_and_synthesize)
-        //          return std::move(type_and_synthesize).status();
-        //
-        //        std::string type_name = type_and_synthesize->name;
-        //        std::string qualified_type_name = type_and_synthesize->name;
-        //        if (type_and_synthesize->is_message) {
-        //          qualified_type_name =
-        //              absl::StrCat(qualified_message_name, ".", type_name);
-        //        }
-        //
-        //        if (type_and_synthesize->properties) {
-        //          auto result = FormatMessage(
-        //              types, absl::StrCat(message_name, ".", type_name),
-        //              absl::StrCat(qualified_message_name, ".", type_name),
-        //              file_package_name, *type_and_synthesize->properties,
-        //              indent_level);
-        //          if (!result) return std::move(result).status();
-        //          message_properties.lines.push_back(*std::move(result));
-        //        }
-        //
-        //        auto update_type_name_status = UpdateTypeNames(
-        //            types, *type_and_synthesize, type_name,
-        //            qualified_type_name);
-        //        if (!update_type_name_status.ok()) return
-        //        update_type_name_status;
-        //
-        //        std::string const introducer = DetermineIntroducer(field);
-        //        // std::cout << __func__ << " get json_field_name" <<
-        //        std::endl; std::string json_field_name = field.value("id",
-        //        p.key());
-        //        // std::cout << __func__ << " json_field_name=" <<
-        //        json_field_name
-        //        //                  << std::endl;
-        //        std::string field_name =
-        //        CamelCaseToSnakeCase(json_field_name);
-        //        current_field_names.insert(field_name);
-        //
-        //        auto field_number =
-        //            GetFieldNumber(message_descriptor, field_name,
-        //                           absl::StrCat(introducer,
-        //                           qualified_type_name),
-        //                           message_properties.next_available_field_number);
-        //        if (!field_number) return std::move(field_number).status();
-        //        // std::cout << __func__ << " finished GetFieldNumber" <<
-        //        std::endl; message_properties.lines.push_back(absl::StrFormat(
-        //            "%s%s%s%s %s = %d%s;",
-        //            FormatMessageDescription(field, indent_level), indent,
-        //            introducer, type_name, field_name, *field_number,
-        //            FormatFieldOptions(field_name, json_field_name, field)));
-        //        if (*field_number ==
-        //        message_properties.next_available_field_number) {
-        //          ++message_properties.next_available_field_number;
-        //        }
       }
     }
-
-    // std::cout << __func__ << " find additionalProperties" << std::endl;
-    //    auto const& additional_properties = json.find("additionalProperties");
-    // std::cout << __func__ << " finish find additionalProperties" <<
-    // std::endl;
-    //    if (additional_properties != additional_properties->end()) {
-    //    if (!additional_properties->empty()) {
 
     // This checks for a BigQuery style map field.
     if (json.contains("additionalProperties") &&
         json.value("type", "untyped") == "object") {
-      //      std::cout << __func__ << " handle BigQuery style map" <<
-      //      std::endl; auto const& additional_properties =
-      //      json.find("additionalProperties");
-      //            if (message_name == "JsonObject") {
-      //        std::cout << __func__
-      //                  << " additionalProperties=" <<
-      //                  additional_properties->dump()
-      //                  << std::endl;
-      //      }
-      //
-      //      for (auto p = additional_properties->begin();
-      //           p != additional_properties->end(); ++p) {
-      //        //        // std::cout << __func__ << " enter for loop" <<
-      //        std::endl; auto const& field = p.value(); auto const& field_key
-      //        = p.key();
-      //            if (message_name == "JsonObject") {
-      //              std::cout << __func__ << " field=" << field
-      //                        << "; field_key=" << field_key << std::endl;
-      //            }
-
       auto result =
           Helper(types, message_name, qualified_message_name, file_package_name,
                  json, message_name, indent_level, message_properties,
                  message_descriptor, current_field_names, indent);
       if (!result.ok()) return result;
-      //
-      //        auto type_and_synthesize =
-      //            DetermineTypeAndSynthesis(field, field.value("id",
-      //            p.key()));
-      //        if (!type_and_synthesize)
-      //          return std::move(type_and_synthesize).status();
-      //        std::string type_name = type_and_synthesize->name;
-      //        std::string qualified_type_name = type_and_synthesize->name;
-      //        if (type_and_synthesize->is_message) {
-      //          qualified_type_name =
-      //              absl::StrCat(qualified_message_name, ".", type_name);
-      //        }
-      //
-      //        if (type_and_synthesize->properties) {
-      //          auto result = FormatMessage(
-      //              types, absl::StrCat(message_name, ".", type_name),
-      //              absl::StrCat(qualified_message_name, ".", type_name),
-      //              file_package_name, *type_and_synthesize->properties,
-      //              indent_level);
-      //          if (!result) return std::move(result).status();
-      //          message_properties.lines.push_back(*std::move(result));
-      //        }
-      //
-      //        auto update_type_name_status = UpdateTypeNames(
-      //            types, *type_and_synthesize, type_name,
-      //            qualified_type_name);
-      //        if (!update_type_name_status.ok()) return
-      //        update_type_name_status;
-      //
-      //        std::string const introducer = DetermineIntroducer(field);
-      //        // std::cout << __func__ << " get json_field_name" << std::endl;
-      //        std::string json_field_name = field.value("id", p.key());
-      //        // std::cout << __func__ << " json_field_name=" <<
-      //        json_field_name
-      //        //                  << std::endl;
-      //        std::string field_name = CamelCaseToSnakeCase(json_field_name);
-      //        current_field_names.insert(field_name);
-      //
-      //        auto field_number =
-      //            GetFieldNumber(message_descriptor, field_name,
-      //                           absl::StrCat(introducer,
-      //                           qualified_type_name),
-      //                           message_properties.next_available_field_number);
-      //        if (!field_number) return std::move(field_number).status();
-      //        // std::cout << __func__ << " finished GetFieldNumber" <<
-      //        std::endl; message_properties.lines.push_back(absl::StrFormat(
-      //            "%s%s%s%s %s = %d%s;",
-      //            FormatMessageDescription(field, indent_level), indent,
-      //            introducer, type_name, field_name, *field_number,
-      //            FormatFieldOptions(field_name, json_field_name, field)));
-      //        if (*field_number ==
-      //        message_properties.next_available_field_number) {
-      //          ++message_properties.next_available_field_number;
-      //        }
-      //      }
     }
-    //    else {
-    //      // std::cout << __func__ << " NO additionalProperties here" <<
-    //      std::endl;
-    //    }
 
     // BigQuery style singleton object.
     if (!json.contains("properties") &&

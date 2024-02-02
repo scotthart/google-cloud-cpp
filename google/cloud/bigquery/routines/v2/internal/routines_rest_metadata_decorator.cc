@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/routines/v2/routines.proto
 
 #include "google/cloud/bigquery/routines/v2/internal/routines_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -32,75 +32,78 @@ namespace bigquery_routines_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoutinesRestMetadata::RoutinesRestMetadata(
-    std::shared_ptr<RoutinesRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<RoutinesRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status
-RoutinesRestMetadata::DeleteRoutine(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) {
+Status RoutinesRestMetadata::DeleteRoutine(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->DeleteRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 RoutinesRestMetadata::GetRoutine(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 RoutinesRestMetadata::InsertRoutine(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->InsertRoutine(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
 RoutinesRestMetadata::ListRoutines(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListRoutines(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
 RoutinesRestMetadata::UpdateRoutine(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->UpdateRoutine(rest_context, options, request);
 }
 
-void RoutinesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
+void RoutinesRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                       Options const& options,
+                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

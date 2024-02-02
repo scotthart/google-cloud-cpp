@@ -36,24 +36,29 @@ class RoutinesTracingConnection
   ~RoutinesTracingConnection() override = default;
 
   explicit RoutinesTracingConnection(
-    std::shared_ptr<bigquery_routines_v2::RoutinesConnection> child);
+      std::shared_ptr<bigquery_routines_v2::RoutinesConnection> child);
 
   Options options() override { return child_->options(); }
 
-  Status
-  DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request) override;
+  Status DeleteRoutine(
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> GetRoutine(
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> InsertRoutine(
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-  ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse> ListRoutines(
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-  UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Routine> UpdateRoutine(
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request) override;
 
  private:
   std::shared_ptr<bigquery_routines_v2::RoutinesConnection> child_;

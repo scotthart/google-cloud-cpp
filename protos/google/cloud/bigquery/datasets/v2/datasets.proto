@@ -32,9 +32,9 @@ import "google/protobuf/empty.proto";
 service Datasets {
   option (google.api.default_host) = "bigquery.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/bigquery,"
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/cloud-platform.read-only";
+      "https://www.googleapis.com/auth/bigquery,"
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/cloud-platform.read-only";
 
   // Deletes the dataset specified by the datasetId value. Before you can delete
   // a dataset, you must delete all its tables, either manually or by specifying
@@ -50,7 +50,8 @@ service Datasets {
 
   // Returns the dataset specified by datasetID.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets/get
-  rpc GetDataset(GetDatasetRequest) returns (google.cloud.cpp.bigquery.v2.Dataset) {
+  rpc GetDataset(GetDatasetRequest)
+      returns (google.cloud.cpp.bigquery.v2.Dataset) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}"
     };
@@ -59,7 +60,8 @@ service Datasets {
 
   // Creates a new empty dataset.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets/insert
-  rpc InsertDataset(InsertDatasetRequest) returns (google.cloud.cpp.bigquery.v2.Dataset) {
+  rpc InsertDataset(InsertDatasetRequest)
+      returns (google.cloud.cpp.bigquery.v2.Dataset) {
     option (google.api.http) = {
       post: "/bigquery/v2/projects/{project_id}/datasets"
       body: "dataset_resource"
@@ -70,7 +72,8 @@ service Datasets {
   // Lists all datasets in the specified project to which the user has been
   // granted the READER dataset role.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets/list
-  rpc ListDatasets(ListDatasetsRequest) returns (google.cloud.cpp.bigquery.v2.DatasetList) {
+  rpc ListDatasets(ListDatasetsRequest)
+      returns (google.cloud.cpp.bigquery.v2.DatasetList) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/datasets"
     };
@@ -82,12 +85,14 @@ service Datasets {
   // are provided in the submitted dataset resource. This method supports
   // RFC5789 patch semantics.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets/patch
-  rpc PatchDataset(PatchDatasetRequest) returns (google.cloud.cpp.bigquery.v2.Dataset) {
+  rpc PatchDataset(PatchDatasetRequest)
+      returns (google.cloud.cpp.bigquery.v2.Dataset) {
     option (google.api.http) = {
       patch: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}"
       body: "dataset_resource"
     };
-    option (google.api.method_signature) = "project_id,dataset_id,dataset_resource";
+    option (google.api.method_signature) =
+        "project_id,dataset_id,dataset_resource";
   }
 
   // Undeletes a dataset which is within time travel window based on datasetId.
@@ -99,39 +104,45 @@ service Datasets {
       post: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}:undelete"
       body: "undelete_dataset_request_resource"
     };
-    option (google.api.method_signature) = "project_id,dataset_id,undelete_dataset_request_resource";
+    option (google.api.method_signature) =
+        "project_id,dataset_id,undelete_dataset_request_resource";
   }
 
   // Updates information in an existing dataset. The update method replaces the
   // entire dataset resource, whereas the patch method only replaces fields that
   // are provided in the submitted dataset resource.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/datasets/update
-  rpc UpdateDataset(UpdateDatasetRequest) returns (google.cloud.cpp.bigquery.v2.Dataset) {
+  rpc UpdateDataset(UpdateDatasetRequest)
+      returns (google.cloud.cpp.bigquery.v2.Dataset) {
     option (google.api.http) = {
       put: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}"
       body: "dataset_resource"
     };
-    option (google.api.method_signature) = "project_id,dataset_id,dataset_resource";
+    option (google.api.method_signature) =
+        "project_id,dataset_id,dataset_resource";
   }
 }
 
 // Request message for DeleteDataset.
 message DeleteDatasetRequest {
   // Required. Dataset ID of dataset being deleted
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // If True, delete all the tables in the dataset. If False and the dataset
   // contains tables, the request will fail. Default is False
-  optional bool delete_contents = 2 [json_name="deleteContents"];
+  optional bool delete_contents = 2 [json_name = "deleteContents"];
 
   // Required. Project ID of the dataset being deleted
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for GetDataset.
 message GetDatasetRequest {
   // Required. Dataset ID of the requested dataset
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // Optional. Specifies the view that determines which dataset information is
   // returned. By default, metadata and ACL information are returned.
@@ -141,25 +152,28 @@ message GetDatasetRequest {
   // ACL: Includes ACL information for the dataset, which defines dataset access
   // for one or more entities.
   // FULL: Includes both dataset metadata and ACL information.
-  optional string dataset_view = 2 [json_name="datasetView"];
+  optional string dataset_view = 2 [json_name = "datasetView"];
 
   // Required. Project ID of the requested dataset
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for InsertDataset.
 message InsertDatasetRequest {
   // The Dataset for this request.
-  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 1
+      [json_name = "__json_request_body"];
 
   // Required. Project ID of the new dataset
-  string project_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for ListDatasets.
 message ListDatasetsRequest {
   // Whether to list all datasets, including hidden ones
-  optional bool all = 1 [json_name="all"];
+  optional bool all = 1 [json_name = "all"];
 
   // An expression for filtering the results of the request by label. The syntax
   // is \"labels.<name>[:<value>]\". Multiple filters can be ANDed together by
@@ -167,52 +181,62 @@ message ListDatasetsRequest {
   // labels.active\". See [Filtering datasets using
   // labels](/bigquery/docs/labeling-datasets#filtering_datasets_using_labels)
   // for details.
-  optional string filter = 2 [json_name="filter"];
+  optional string filter = 2 [json_name = "filter"];
 
   // The maximum number of results to return in a single response page. Leverage
   // the page tokens to iterate through the entire collection.
-  optional uint32 max_results = 3 [json_name="maxResults"];
+  optional uint32 max_results = 3 [json_name = "maxResults"];
 
   // Page token, returned by a previous call, to request the next page of
   // results
-  optional string page_token = 4 [json_name="pageToken"];
+  optional string page_token = 4 [json_name = "pageToken"];
 
   // Required. Project ID of the datasets to be listed
-  string project_id = 5 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for PatchDataset.
 message PatchDatasetRequest {
   // Required. Dataset ID of the dataset being updated
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // The Dataset for this request.
-  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 2
+      [json_name = "__json_request_body"];
 
   // Required. Project ID of the dataset being updated
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for Undelete.
 message UndeleteRequest {
   // Required. Dataset ID of dataset being deleted
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // Required. Project ID of the dataset to be undeleted
-  string project_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 
   // The UndeleteDatasetRequest for this request.
-  optional google.cloud.cpp.bigquery.v2.UndeleteDatasetRequest undelete_dataset_request_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.UndeleteDatasetRequest
+      undelete_dataset_request_resource = 3 [json_name = "__json_request_body"];
 }
 
 // Request message for UpdateDataset.
 message UpdateDatasetRequest {
   // Required. Dataset ID of the dataset being updated
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // The Dataset for this request.
-  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.Dataset dataset_resource = 2
+      [json_name = "__json_request_body"];
 
   // Required. Project ID of the dataset being updated
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }

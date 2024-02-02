@@ -32,15 +32,21 @@ ProjectsTracingConnection::ProjectsTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-ProjectsTracingConnection::GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_projects_v2::ProjectsConnection::GetServiceAccount");
+ProjectsTracingConnection::GetServiceAccount(
+    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_projects_v2::ProjectsConnection::GetServiceAccount");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetServiceAccount(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
-ProjectsTracingConnection::ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_projects_v2::ProjectsConnection::ListProjects");
+ProjectsTracingConnection::ListProjects(
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_projects_v2::ProjectsConnection::ListProjects");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListProjects(request));
 }

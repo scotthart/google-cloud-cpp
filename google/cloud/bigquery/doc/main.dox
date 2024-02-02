@@ -34,11 +34,19 @@ application.
 - [\c bigquery_biglake_v1::MetastoreServiceClient](@ref google::cloud::bigquery_biglake_v1::MetastoreServiceClient)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref google::cloud::bigquery_connection_v1::ConnectionServiceClient)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref google::cloud::bigquery_datapolicies_v1::DataPolicyServiceClient)
+- [\c bigquery_datasets_v2::DatasetsClient](@ref google::cloud::bigquery_datasets_v2::DatasetsClient)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref google::cloud::bigquery_datatransfer_v1::DataTransferServiceClient)
+- [\c bigquery_jobs_v2::JobsClient](@ref google::cloud::bigquery_jobs_v2::JobsClient)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref google::cloud::bigquery_migration_v2::MigrationServiceClient)
+- [\c bigquery_models_v2::ModelsClient](@ref google::cloud::bigquery_models_v2::ModelsClient)
+- [\c bigquery_projects_v2::ProjectsClient](@ref google::cloud::bigquery_projects_v2::ProjectsClient)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref google::cloud::bigquery_reservation_v1::ReservationServiceClient)
+- [\c bigquery_routines_v2::RoutinesClient](@ref google::cloud::bigquery_routines_v2::RoutinesClient)
+- [\c bigquery_row_access_policies_v2::RowAccessPoliciesClient](@ref google::cloud::bigquery_row_access_policies_v2::RowAccessPoliciesClient)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref google::cloud::bigquery_storage_v1::BigQueryReadClient)
 - [\c bigquery_storage_v1::BigQueryWriteClient](@ref google::cloud::bigquery_storage_v1::BigQueryWriteClient)
+- [\c bigquery_tabledata_v2::TabledataClient](@ref google::cloud::bigquery_tabledata_v2::TabledataClient)
+- [\c bigquery_tables_v2::TablesClient](@ref google::cloud::bigquery_tables_v2::TablesClient)
 <!-- inject-client-list-end -->
 
 ## Next Steps

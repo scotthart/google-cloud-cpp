@@ -92,8 +92,8 @@ install(
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
-configure_file("config.cmake.in" "google_cloud_cpp_bigquery_protos-config.cmake"
-               @ONLY)
+configure_file("config.cmake.in"
+               "google_cloud_cpp_bigquery_protos-config.cmake" @ONLY)
 write_basic_package_version_file(
     "google_cloud_cpp_bigquery_protos-config-version.cmake"
     VERSION ${PROJECT_VERSION}

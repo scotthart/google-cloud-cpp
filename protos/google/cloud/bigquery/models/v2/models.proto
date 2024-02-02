@@ -32,9 +32,9 @@ import "google/protobuf/empty.proto";
 service Models {
   option (google.api.default_host) = "bigquery.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/bigquery,"
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/cloud-platform.read-only";
+      "https://www.googleapis.com/auth/bigquery,"
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/cloud-platform.read-only";
 
   // Deletes the model specified by modelId from the dataset.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/models/delete
@@ -58,7 +58,8 @@ service Models {
   // role. After retrieving the list of models, you can get information about a
   // particular model by calling the models.get method.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/models/list
-  rpc ListModels(ListModelsRequest) returns (google.cloud.cpp.bigquery.v2.ListModelsResponse) {
+  rpc ListModels(ListModelsRequest)
+      returns (google.cloud.cpp.bigquery.v2.ListModelsResponse) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}/models"
     };
@@ -67,66 +68,80 @@ service Models {
 
   // Patch specific fields in the specified model.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/models/patch
-  rpc PatchModel(PatchModelRequest) returns (google.cloud.cpp.bigquery.v2.Model) {
+  rpc PatchModel(PatchModelRequest)
+      returns (google.cloud.cpp.bigquery.v2.Model) {
     option (google.api.http) = {
       patch: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}/models/{model_id}"
       body: "model_resource"
     };
-    option (google.api.method_signature) = "project_id,dataset_id,model_id,model_resource";
+    option (google.api.method_signature) =
+        "project_id,dataset_id,model_id,model_resource";
   }
 }
 
 // Request message for DeleteModel.
 message DeleteModelRequest {
   // Required. Dataset ID of the model to delete.
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // Required. Model ID of the model to delete.
-  string model_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="modelId"];
+  string model_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "modelId"];
 
   // Required. Project ID of the model to delete.
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for GetModel.
 message GetModelRequest {
   // Required. Dataset ID of the requested model.
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // Required. Model ID of the requested model.
-  string model_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="modelId"];
+  string model_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "modelId"];
 
   // Required. Project ID of the requested model.
-  string project_id = 3 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 3
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for ListModels.
 message ListModelsRequest {
   // Required. Dataset ID of the models to list.
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // The maximum number of results to return in a single response page. Leverage
   // the page tokens to iterate through the entire collection.
-  optional uint32 max_results = 2 [json_name="maxResults"];
+  optional uint32 max_results = 2 [json_name = "maxResults"];
 
   // Page token, returned by a previous call to request the next page of results
-  optional string page_token = 3 [json_name="pageToken"];
+  optional string page_token = 3 [json_name = "pageToken"];
 
   // Required. Project ID of the models to list.
-  string project_id = 4 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for PatchModel.
 message PatchModelRequest {
   // Required. Dataset ID of the model to patch.
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // Required. Model ID of the model to patch.
-  string model_id = 2 [(google.api.field_behavior) = REQUIRED,json_name="modelId"];
+  string model_id = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "modelId"];
 
   // The Model for this request.
-  optional google.cloud.cpp.bigquery.v2.Model model_resource = 3 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.Model model_resource = 3
+      [json_name = "__json_request_body"];
 
   // Required. Project ID of the model to patch.
-  string project_id = 4 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }

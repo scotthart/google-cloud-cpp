@@ -46,33 +46,42 @@ class MockJobsConnection : public bigquery_jobs_v2::JobsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>,
-  Cancel,
-  (google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>, Cancel,
+      (google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request),
+      (override));
 
-  MOCK_METHOD(Status,
-  DeleteJob,
-  (google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request), (override));
+  MOCK_METHOD(
+      Status, DeleteJob,
+      (google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Job>,
-  GetJob,
-  (google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Job>, GetJob,
+      (google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>,
-  GetQueryResults,
-  (google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>,
+      GetQueryResults,
+      (google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+           request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::Job>,
-  InsertJob,
-  (google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::Job>, InsertJob,
+      (google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::JobList>,
-  ListJobs,
-  (google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::JobList>, ListJobs,
+      (google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>,
-  Query,
-  (google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>, Query,
+      (google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

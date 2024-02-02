@@ -33,20 +33,18 @@ namespace cloud {
 namespace bigquery_models_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<ModelsConnection> MakeModelsConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      ModelsPolicyOptionList>(options, __func__);
-  options = bigquery_models_v2_internal::ModelsDefaultOptions(
-      std::move(options));
+std::shared_ptr<ModelsConnection> MakeModelsConnectionRest(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, ModelsPolicyOptionList>(options,
+                                                                     __func__);
+  options =
+      bigquery_models_v2_internal::ModelsDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquery_models_v2_internal::CreateDefaultModelsRestStub(
-      options);
+  auto stub = bigquery_models_v2_internal::CreateDefaultModelsRestStub(options);
   return bigquery_models_v2_internal::MakeModelsTracingConnection(
-      std::make_shared<
-          bigquery_models_v2_internal::ModelsRestConnectionImpl>(
+      std::make_shared<bigquery_models_v2_internal::ModelsRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

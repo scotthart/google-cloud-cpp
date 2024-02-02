@@ -26,23 +26,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-TabledataConnectionIdempotencyPolicy::~TabledataConnectionIdempotencyPolicy() = default;
+TabledataConnectionIdempotencyPolicy::~TabledataConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<TabledataConnectionIdempotencyPolicy>
 TabledataConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<TabledataConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency TabledataConnectionIdempotencyPolicy::InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&) {
+Idempotency TabledataConnectionIdempotencyPolicy::InsertAll(
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency TabledataConnectionIdempotencyPolicy::ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&) {
+Idempotency TabledataConnectionIdempotencyPolicy::ListTabledata(
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<TabledataConnectionIdempotencyPolicy>
-    MakeDefaultTabledataConnectionIdempotencyPolicy() {
+MakeDefaultTabledataConnectionIdempotencyPolicy() {
   return std::make_unique<TabledataConnectionIdempotencyPolicy>();
 }
 

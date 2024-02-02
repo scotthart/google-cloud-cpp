@@ -25,14 +25,14 @@ package google.cloud.cpp.bigquery.v2;
 message ErrorProto {
   // Debugging information. This property is internal to Google and should not
   // be used.
-  optional string debug_info = 1 [json_name="debugInfo"];
+  optional string debug_info = 1 [json_name = "debugInfo"];
 
   // Specifies where the error occurred, if present.
-  optional string location = 2 [json_name="location"];
+  optional string location = 2 [json_name = "location"];
 
   // A human-readable description of the error.
-  optional string message = 3 [json_name="message"];
+  optional string message = 3 [json_name = "message"];
 
   // A short error code that summarizes the error.
-  optional string reason = 4 [json_name="reason"];
+  optional string reason = 4 [json_name = "reason"];
 }

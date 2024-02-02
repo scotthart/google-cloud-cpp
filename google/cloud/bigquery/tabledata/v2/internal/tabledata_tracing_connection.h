@@ -36,15 +36,17 @@ class TabledataTracingConnection
   ~TabledataTracingConnection() override = default;
 
   explicit TabledataTracingConnection(
-    std::shared_ptr<bigquery_tabledata_v2::TabledataConnection> child);
+      std::shared_ptr<bigquery_tabledata_v2::TabledataConnection> child);
 
   Options options() override { return child_->options(); }
 
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) override;
+  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-  ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request) override;
 
  private:
   std::shared_ptr<bigquery_tabledata_v2::TabledataConnection> child_;

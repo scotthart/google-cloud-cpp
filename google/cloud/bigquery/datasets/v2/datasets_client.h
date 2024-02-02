@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatasetsClient {
  public:
-  explicit DatasetsClient(std::shared_ptr<DatasetsConnection> connection, Options opts = {});
+  explicit DatasetsClient(std::shared_ptr<DatasetsConnection> connection,
+                          Options opts = {});
   ~DatasetsClient();
 
   ///@{
@@ -107,8 +108,8 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.datasets.v2.DeleteDatasetRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/datasets/v2/datasets.proto#L119}
   ///
   // clang-format on
-  Status
-  DeleteDataset(std::string const& project_id, std::string const& dataset_id, Options opts = {});
+  Status DeleteDataset(std::string const& project_id,
+                       std::string const& dataset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -138,8 +139,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.datasets.v2.DeleteDatasetRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/datasets/v2/datasets.proto#L119}
   ///
   // clang-format on
-  Status
-  DeleteDataset(google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request, Options opts = {});
+  Status DeleteDataset(
+      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -165,8 +168,9 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  GetDataset(std::string const& project_id, std::string const& dataset_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> GetDataset(
+      std::string const& project_id, std::string const& dataset_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -196,8 +200,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  GetDataset(google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> GetDataset(
+      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -223,8 +229,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  InsertDataset(std::string const& project_id, google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> InsertDataset(
+      std::string const& project_id,
+      google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -254,8 +262,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  InsertDataset(google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> InsertDataset(
+      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -281,8 +291,8 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.DatasetList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L264}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
-  ListDatasets(std::string const& project_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::DatasetList> ListDatasets(
+      std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -313,8 +323,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.DatasetList]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L264}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
-  ListDatasets(google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::DatasetList> ListDatasets(
+      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -344,8 +356,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  PatchDataset(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> PatchDataset(
+      std::string const& project_id, std::string const& dataset_id,
+      google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -378,8 +392,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  PatchDataset(google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> PatchDataset(
+      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -408,8 +424,11 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  Undelete(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::UndeleteDatasetRequest const& undelete_dataset_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> Undelete(
+      std::string const& project_id, std::string const& dataset_id,
+      google::cloud::cpp::bigquery::v2::UndeleteDatasetRequest const&
+          undelete_dataset_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +460,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  Undelete(google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> Undelete(
+      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -471,8 +492,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  UpdateDataset(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> UpdateDataset(
+      std::string const& project_id, std::string const& dataset_id,
+      google::cloud::cpp::bigquery::v2::Dataset const& dataset_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -504,8 +527,10 @@ class DatasetsClient {
   /// [google.cloud.cpp.bigquery.v2.Dataset]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_007.proto#L28}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  UpdateDataset(google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Dataset> UpdateDataset(
+      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DatasetsConnection> connection_;

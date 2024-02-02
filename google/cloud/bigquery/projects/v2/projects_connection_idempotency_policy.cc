@@ -26,23 +26,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() = default;
+ProjectsConnectionIdempotencyPolicy::~ProjectsConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
 ProjectsConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::GetServiceAccount(
+    google::cloud::cpp::bigquery::projects::v2::
+        GetServiceAccountRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&) {
+Idempotency ProjectsConnectionIdempotencyPolicy::ListProjects(
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ProjectsConnectionIdempotencyPolicy>
-    MakeDefaultProjectsConnectionIdempotencyPolicy() {
+MakeDefaultProjectsConnectionIdempotencyPolicy() {
   return std::make_unique<ProjectsConnectionIdempotencyPolicy>();
 }
 

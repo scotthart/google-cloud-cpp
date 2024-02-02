@@ -30,27 +30,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class ModelsTracingConnection
-    : public bigquery_models_v2::ModelsConnection {
+class ModelsTracingConnection : public bigquery_models_v2::ModelsConnection {
  public:
   ~ModelsTracingConnection() override = default;
 
   explicit ModelsTracingConnection(
-    std::shared_ptr<bigquery_models_v2::ModelsConnection> child);
+      std::shared_ptr<bigquery_models_v2::ModelsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  Status
-  DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) override;
+  Status DeleteModel(
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-  ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
+      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request) override;
 
  private:
   std::shared_ptr<bigquery_models_v2::ModelsConnection> child_;

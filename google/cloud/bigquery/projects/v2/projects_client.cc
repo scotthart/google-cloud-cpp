@@ -24,11 +24,11 @@ namespace cloud {
 namespace bigquery_projects_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ProjectsClient::ProjectsClient(
-    std::shared_ptr<ProjectsConnection> connection, Options opts)
+ProjectsClient::ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProjectsClient::~ProjectsClient() = default;
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
@@ -40,13 +40,19 @@ ProjectsClient::GetServiceAccount(std::string const& project_id, Options opts) {
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-ProjectsClient::GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request, Options opts) {
+ProjectsClient::GetServiceAccount(
+    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetServiceAccount(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
-ProjectsClient::ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request, Options opts) {
+ProjectsClient::ListProjects(
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListProjects(request);
 }

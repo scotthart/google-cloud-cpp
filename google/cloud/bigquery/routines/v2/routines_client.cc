@@ -24,15 +24,17 @@ namespace cloud {
 namespace bigquery_routines_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-RoutinesClient::RoutinesClient(
-    std::shared_ptr<RoutinesConnection> connection, Options opts)
+RoutinesClient::RoutinesClient(std::shared_ptr<RoutinesConnection> connection,
+                               Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 RoutinesClient::~RoutinesClient() = default;
 
-Status
-RoutinesClient::DeleteRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, Options opts) {
+Status RoutinesClient::DeleteRoutine(std::string const& project_id,
+                                     std::string const& dataset_id,
+                                     std::string const& routine_id,
+                                     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest request;
   request.set_project_id(project_id);
@@ -41,14 +43,17 @@ RoutinesClient::DeleteRoutine(std::string const& project_id, std::string const& 
   return connection_->DeleteRoutine(request);
 }
 
-Status
-RoutinesClient::DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request, Options opts) {
+Status RoutinesClient::DeleteRoutine(
+    google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoutine(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::GetRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Routine> RoutinesClient::GetRoutine(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& routine_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest request;
   request.set_project_id(project_id);
@@ -57,14 +62,19 @@ RoutinesClient::GetRoutine(std::string const& project_id, std::string const& dat
   return connection_->GetRoutine(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Routine> RoutinesClient::GetRoutine(
+    google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetRoutine(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::InsertRoutine(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Routine const& routine_resource, Options opts) {
+RoutinesClient::InsertRoutine(
+    std::string const& project_id, std::string const& dataset_id,
+    google::cloud::cpp::bigquery::v2::Routine const& routine_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest request;
   request.set_project_id(project_id);
@@ -74,13 +84,17 @@ RoutinesClient::InsertRoutine(std::string const& project_id, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request, Options opts) {
+RoutinesClient::InsertRoutine(
+    google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertRoutine(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-RoutinesClient::ListRoutines(std::string const& project_id, std::string const& dataset_id, Options opts) {
+RoutinesClient::ListRoutines(std::string const& project_id,
+                             std::string const& dataset_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest request;
   request.set_project_id(project_id);
@@ -89,13 +103,20 @@ RoutinesClient::ListRoutines(std::string const& project_id, std::string const& d
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListRoutinesResponse>
-RoutinesClient::ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request, Options opts) {
+RoutinesClient::ListRoutines(
+    google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRoutines(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::UpdateRoutine(std::string const& project_id, std::string const& dataset_id, std::string const& routine_id, google::cloud::cpp::bigquery::v2::Routine const& routine_resource, Options opts) {
+RoutinesClient::UpdateRoutine(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& routine_id,
+    google::cloud::cpp::bigquery::v2::Routine const& routine_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest request;
   request.set_project_id(project_id);
@@ -106,7 +127,10 @@ RoutinesClient::UpdateRoutine(std::string const& project_id, std::string const& 
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Routine>
-RoutinesClient::UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request, Options opts) {
+RoutinesClient::UpdateRoutine(
+    google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateRoutine(request);
 }

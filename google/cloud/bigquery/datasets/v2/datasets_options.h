@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATASETS_V2_DATASETS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATASETS_V2_DATASETS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datasets/v2/datasets_connection.h"
 #include "google/cloud/bigquery/datasets/v2/datasets_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct DatasetsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquery-options
  */
 using DatasetsPolicyOptionList =
-    OptionList<DatasetsRetryPolicyOption,
-               DatasetsBackoffPolicyOption,
+    OptionList<DatasetsRetryPolicyOption, DatasetsBackoffPolicyOption,
                DatasetsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

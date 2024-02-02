@@ -32,17 +32,17 @@ message Argument {
   // be a struct or an array, but not a table.
   // ANY_TYPE: The argument is any type, including struct or array, but not a
   // table. To be added: FIXED_TABLE, ANY_TABLE
-  optional string argument_kind = 1 [json_name="argumentKind"];
+  optional string argument_kind = 1 [json_name = "argumentKind"];
 
   // Required unless argument_kind = ANY_TYPE.
-  optional StandardSqlDataType data_type = 2 [json_name="dataType"];
+  optional StandardSqlDataType data_type = 2 [json_name = "dataType"];
 
   // Optional. Whether the argument is an aggregate function parameter. Must be
   // Unset for routine types other than AGGREGATE_FUNCTION. For
   // AGGREGATE_FUNCTION, if set to false, it is equivalent to adding "NOT
   // AGGREGATE" clause in DDL; Otherwise, it is equivalent to omitting "NOT
   // AGGREGATE" clause in DDL.
-  optional bool is_aggregate = 3 [json_name="isAggregate"];
+  optional bool is_aggregate = 3 [json_name = "isAggregate"];
 
   // Optional. Specifies whether the argument is input or output. Can be set for
   // procedures only.
@@ -50,23 +50,23 @@ message Argument {
   // IN: The argument is input-only.
   // OUT: The argument is output-only.
   // INOUT: The argument is both an input and an output.
-  optional string mode = 4 [json_name="mode"];
+  optional string mode = 4 [json_name = "mode"];
 
   // Optional. The name of this argument. Can be absent for function return
   // argument.
-  optional string name = 5 [json_name="name"];
+  optional string name = 5 [json_name = "name"];
 }
 
 // Describes the format of a single result page when listing routines.
 message ListRoutinesResponse {
   // A token to request the next page of results.
-  optional string next_page_token = 1 [json_name="nextPageToken"];
+  optional string next_page_token = 1 [json_name = "nextPageToken"];
 
   // Routines in the requested dataset. Unless read_mask is set in the request,
   // only the following fields are populated: etag, project_id, dataset_id,
   // routine_id, routine_type, creation_time, last_modified_time, language, and
   // remote_function_options.
-  repeated Routine routines = 2 [json_name="routines"];
+  repeated Routine routines = 2 [json_name = "routines"];
 }
 
 // Options for a remote user-defined function.
@@ -74,31 +74,32 @@ message RemoteFunctionOptions {
   // Fully qualified name of the user-provided connection object which holds the
   // authentication information to send requests to the remote service. Format:
   // ```"projects/{projectId}/locations/{locationId}/connections/{connectionId}"```
-  optional string connection = 1 [json_name="connection"];
+  optional string connection = 1 [json_name = "connection"];
 
   // Endpoint of the user-provided remote service, e.g.
   // ```https://us-east1-my_gcf_project.cloudfunctions.net/remote_add```
-  optional string endpoint = 2 [json_name="endpoint"];
+  optional string endpoint = 2 [json_name = "endpoint"];
 
   // Max number of rows in each batch sent to the remote service. If absent or
   // if 0, BigQuery dynamically decides the number of rows in a batch.
-  optional string max_batching_rows = 3 [json_name="maxBatchingRows"];
+  optional string max_batching_rows = 3 [json_name = "maxBatchingRows"];
 
   // User-defined context as a set of key/value pairs, which will be sent as
   // function invocation context together with batched arguments in the requests
   // to the remote service. The total number of bytes of keys and values must be
   // less than 8KB.
-  map<string, string> user_defined_context = 4 [json_name="userDefinedContext"];
+  map<string, string> user_defined_context = 4
+      [json_name = "userDefinedContext"];
 }
 
 // A user-defined function or a stored procedure.
 message Routine {
   // Optional.
-  repeated Argument arguments = 1 [json_name="arguments"];
+  repeated Argument arguments = 1 [json_name = "arguments"];
 
   // Output only. The time when this routine was created, in milliseconds since
   // the epoch.
-  optional string creation_time = 2 [json_name="creationTime"];
+  optional string creation_time = 2 [json_name = "creationTime"];
 
   // Optional. If set to `DATA_MASKING`, the function is validated and made
   // available as a masking function. For more information, see [Create custom
@@ -106,7 +107,7 @@ message Routine {
   // routines](https://cloud.google.com/bigquery/docs/user-defined-functions#custom-mask).
   // DATA_GOVERNANCE_TYPE_UNSPECIFIED: The data governance type is unspecified.
   // DATA_MASKING: The data governance type is data masking.
-  optional string data_governance_type = 3 [json_name="dataGovernanceType"];
+  optional string data_governance_type = 3 [json_name = "dataGovernanceType"];
 
   // Required. The body of the routine. For functions, this is the expression in
   // the AS clause. If language=SQL, it is the substring inside (but excluding)
@@ -118,24 +119,24 @@ message Routine {
   // statement: `CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return
   // "\n";\n'` The definition_body is `return "\n";\n` Note that both \n are
   // replaced with linebreaks.
-  optional string definition_body = 4 [json_name="definitionBody"];
+  optional string definition_body = 4 [json_name = "definitionBody"];
 
   // Optional. The description of the routine, if defined.
-  optional string description = 5 [json_name="description"];
+  optional string description = 5 [json_name = "description"];
 
   // Optional. The determinism level of the JavaScript UDF, if defined.
   // DETERMINISM_LEVEL_UNSPECIFIED: The determinism of the UDF is unspecified.
   // DETERMINISTIC: The UDF is deterministic, meaning that 2 function calls with
   // the same inputs always produce the same result, even across 2 query runs.
   // NOT_DETERMINISTIC: The UDF is not deterministic.
-  optional string determinism_level = 6 [json_name="determinismLevel"];
+  optional string determinism_level = 6 [json_name = "determinismLevel"];
 
   // Output only. A hash of this resource.
-  optional string etag = 7 [json_name="etag"];
+  optional string etag = 7 [json_name = "etag"];
 
   // Optional. If language = "JAVASCRIPT", this field stores the path of the
   // imported JAVASCRIPT libraries.
-  repeated string imported_libraries = 8 [json_name="importedLibraries"];
+  repeated string imported_libraries = 8 [json_name = "importedLibraries"];
 
   // Optional. Defaults to "SQL" if remote_function_options field is absent, not
   // set otherwise.
@@ -145,21 +146,23 @@ message Routine {
   // PYTHON: Python language.
   // JAVA: Java language.
   // SCALA: Scala language.
-  optional string language = 9 [json_name="language"];
+  optional string language = 9 [json_name = "language"];
 
   // Output only. The time when this routine was last modified, in milliseconds
   // since the epoch.
-  optional string last_modified_time = 10 [json_name="lastModifiedTime"];
+  optional string last_modified_time = 10 [json_name = "lastModifiedTime"];
 
   // Optional. Remote function specific options.
-  optional RemoteFunctionOptions remote_function_options = 11 [json_name="remoteFunctionOptions"];
+  optional RemoteFunctionOptions remote_function_options = 11
+      [json_name = "remoteFunctionOptions"];
 
   // Optional. Can be set only if routine_type = "TABLE_VALUED_FUNCTION". If
   // absent, the return table type is inferred from definition_body at query
   // time in each query that references this routine. If present, then the
   // columns in the evaluated table result will be cast to match the column
   // types specified in return table type, at query time.
-  optional StandardSqlTableType return_table_type = 12 [json_name="returnTableType"];
+  optional StandardSqlTableType return_table_type = 12
+      [json_name = "returnTableType"];
 
   // Optional if language = "SQL"; required otherwise. Cannot be set if
   // routine_type = "TABLE_VALUED_FUNCTION". If absent, the return type is
@@ -175,10 +178,11 @@ message Routine {
   // REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);` Then the inferred
   // return type of `Increment` is automatically changed to INT64 at query time,
   // while the return type of `Decrement` remains FLOAT64.
-  optional StandardSqlDataType return_type = 13 [json_name="returnType"];
+  optional StandardSqlDataType return_type = 13 [json_name = "returnType"];
 
   // Required. Reference describing the ID of this routine.
-  optional RoutineReference routine_reference = 14 [json_name="routineReference"];
+  optional RoutineReference routine_reference = 14
+      [json_name = "routineReference"];
 
   // Required. The type of routine.
   // ROUTINE_TYPE_UNSPECIFIED: Default value.
@@ -186,7 +190,7 @@ message Routine {
   // PROCEDURE: Stored procedure.
   // TABLE_VALUED_FUNCTION: Non-built-in persistent TVF.
   // AGGREGATE_FUNCTION: Non-built-in persistent aggregate function.
-  optional string routine_type = 15 [json_name="routineType"];
+  optional string routine_type = 15 [json_name = "routineType"];
 
   // Optional. The security mode of the routine, if defined. If not defined, the
   // security mode is automatically determined from the routine's configuration.
@@ -195,10 +199,10 @@ message Routine {
   // defines it.
   // INVOKER: The routine is to be executed with the privileges of the user who
   // invokes it.
-  optional string security_mode = 16 [json_name="securityMode"];
+  optional string security_mode = 16 [json_name = "securityMode"];
 
   // Optional. Spark specific options.
-  optional SparkOptions spark_options = 17 [json_name="sparkOptions"];
+  optional SparkOptions spark_options = 17 [json_name = "sparkOptions"];
 
   // Optional. Use this option to catch many common errors. Error checking is
   // not exhaustive, and successfully creating a procedure doesn't guarantee
@@ -209,7 +213,7 @@ message Routine {
   // procedure body is checked only for syntax. For procedures that invoke
   // themselves recursively, specify `strictMode=FALSE` to avoid non-existent
   // procedure errors during validation. Default value is `TRUE`.
-  optional bool strict_mode = 18 [json_name="strictMode"];
+  optional bool strict_mode = 18 [json_name = "strictMode"];
 }
 
 // Options for a user-defined Spark routine.
@@ -217,55 +221,55 @@ message SparkOptions {
   // Archive files to be extracted into the working directory of each executor.
   // For more information about Apache Spark, see [Apache
   // Spark](https://spark.apache.org/docs/latest/index.html).
-  repeated string archive_uris = 1 [json_name="archiveUris"];
+  repeated string archive_uris = 1 [json_name = "archiveUris"];
 
   // Fully qualified name of the user-provided Spark connection object. Format:
   // ```"projects/{project_id}/locations/{location_id}/connections/{connection_id}"```
-  optional string connection = 2 [json_name="connection"];
+  optional string connection = 2 [json_name = "connection"];
 
   // Custom container image for the runtime environment.
-  optional string container_image = 3 [json_name="containerImage"];
+  optional string container_image = 3 [json_name = "containerImage"];
 
   // Files to be placed in the working directory of each executor. For more
   // information about Apache Spark, see [Apache
   // Spark](https://spark.apache.org/docs/latest/index.html).
-  repeated string file_uris = 4 [json_name="fileUris"];
+  repeated string file_uris = 4 [json_name = "fileUris"];
 
   // JARs to include on the driver and executor CLASSPATH. For more information
   // about Apache Spark, see [Apache
   // Spark](https://spark.apache.org/docs/latest/index.html).
-  repeated string jar_uris = 5 [json_name="jarUris"];
+  repeated string jar_uris = 5 [json_name = "jarUris"];
 
   // The fully qualified name of a class in jar_uris, for example,
   // com.example.wordcount. Exactly one of main_class and main_jar_uri field
   // should be set for Java/Scala language type.
-  optional string main_class = 6 [json_name="mainClass"];
+  optional string main_class = 6 [json_name = "mainClass"];
 
   // The main file/jar URI of the Spark application. Exactly one of the
   // definition_body field and the main_file_uri field must be set for Python.
   // Exactly one of main_class and main_file_uri field should be set for
   // Java/Scala language type.
-  optional string main_file_uri = 7 [json_name="mainFileUri"];
+  optional string main_file_uri = 7 [json_name = "mainFileUri"];
 
   // Configuration properties as a set of key/value pairs, which will be passed
   // on to the Spark application. For more information, see [Apache
   // Spark](https://spark.apache.org/docs/latest/index.html) and the [procedure
   // option
   // list](https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#procedure_option_list).
-  map<string, string> properties = 8 [json_name="properties"];
+  map<string, string> properties = 8 [json_name = "properties"];
 
   // Python files to be placed on the PYTHONPATH for PySpark application.
   // Supported file types: `.py`, `.egg`, and `.zip`. For more information about
   // Apache Spark, see [Apache
   // Spark](https://spark.apache.org/docs/latest/index.html).
-  repeated string py_file_uris = 9 [json_name="pyFileUris"];
+  repeated string py_file_uris = 9 [json_name = "pyFileUris"];
 
   // Runtime version. If not specified, the default runtime version is used.
-  optional string runtime_version = 10 [json_name="runtimeVersion"];
+  optional string runtime_version = 10 [json_name = "runtimeVersion"];
 }
 
 // A table type
 message StandardSqlTableType {
   // The columns in this table type
-  repeated StandardSqlField columns = 1 [json_name="columns"];
+  repeated StandardSqlField columns = 1 [json_name = "columns"];
 }

@@ -24,12 +24,12 @@ cc_library(
     name = "google_cloud_cpp_generator",
     srcs = google_cloud_cpp_generator_srcs,
     hdrs = google_cloud_cpp_generator_hdrs,
+    copts = ["-fexceptions"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
-    copts = ["-fexceptions"],
     deps = [
         ":generator_config_cc_proto",
         "//:common",
@@ -85,7 +85,6 @@ cc_binary(
     name = "protoc-gen-cpp_codegen",
     srcs = ["plugin_main.cc"],
     copts = ["-fexceptions"],
-
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
@@ -108,12 +107,12 @@ cc_proto_library(
 cc_binary(
     name = "google-cloud-cpp-codegen",
     srcs = ["standalone_main.cc"],
+    copts = ["-fexceptions"],
     target_compatible_with = select({
         "@platforms//os:macos": ["@platforms//:incompatible"],
         "@platforms//os:windows": ["@platforms//:incompatible"],
         "//conditions:default": [],
     }),
-    copts = ["-fexceptions"],
     visibility = ["//visibility:public"],
     deps = [
         ":generator_config_cc_proto",

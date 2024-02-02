@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/tables/v2/tables.proto
 
 #include "google/cloud/bigquery/tables/v2/internal/tables_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,108 +31,113 @@ namespace cloud {
 namespace bigquery_tables_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TablesRestMetadata::TablesRestMetadata(
-    std::shared_ptr<TablesRestStub> child,
-    std::string api_client_header)
+TablesRestMetadata::TablesRestMetadata(std::shared_ptr<TablesRestStub> child,
+                                       std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status
-TablesRestMetadata::DeleteTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) {
+Status TablesRestMetadata::DeleteTable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->DeleteTable(rest_context, options, request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesRestMetadata::GetTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesRestMetadata::GetTable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetTable(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
 TablesRestMetadata::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
 TablesRestMetadata::InsertTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->InsertTable(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableList>
 TablesRestMetadata::ListTables(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListTables(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
 TablesRestMetadata::PatchTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->PatchTable(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
 TablesRestMetadata::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->SetIamPolicy(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
 TablesRestMetadata::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->TestIamPermissions(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
 TablesRestMetadata::UpdateTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->UpdateTable(rest_context, options, request);
 }
 
-void TablesRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
+void TablesRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                     Options const& options,
+                                     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

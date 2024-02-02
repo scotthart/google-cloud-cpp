@@ -35,15 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<DatasetsConnection> MakeDatasetsConnectionRest(
     Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      DatasetsPolicyOptionList>(options, __func__);
-  options = bigquery_datasets_v2_internal::DatasetsDefaultOptions(
-      std::move(options));
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, DatasetsPolicyOptionList>(
+      options, __func__);
+  options =
+      bigquery_datasets_v2_internal::DatasetsDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquery_datasets_v2_internal::CreateDefaultDatasetsRestStub(
-      options);
+  auto stub =
+      bigquery_datasets_v2_internal::CreateDefaultDatasetsRestStub(options);
   return bigquery_datasets_v2_internal::MakeDatasetsTracingConnection(
       std::make_shared<
           bigquery_datasets_v2_internal::DatasetsRestConnectionImpl>(

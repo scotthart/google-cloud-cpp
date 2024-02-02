@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/tabledata/v2/tabledata.proto
 
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -32,8 +32,7 @@ namespace bigquery_tabledata_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TabledataRestMetadata::TabledataRestMetadata(
-    std::shared_ptr<TabledataRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<TabledataRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
@@ -42,41 +41,43 @@ TabledataRestMetadata::TabledataRestMetadata(
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
 TabledataRestMetadata::InsertAll(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->InsertAll(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
 TabledataRestMetadata::ListTabledata(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListTabledata(rest_context, options, request);
 }
 
 void TabledataRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

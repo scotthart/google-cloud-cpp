@@ -27,21 +27,20 @@ namespace bigquery_datasets_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatasetsRestLogging::DatasetsRestLogging(
-    std::shared_ptr<DatasetsRestStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<DatasetsRestStub> child, TracingOptions tracing_options,
     std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status
-DatasetsRestLogging::DeleteDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+Status DatasetsRestLogging::DeleteDataset(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 DeleteDatasetRequest const& request) {
         return child_->DeleteDataset(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -49,13 +48,14 @@ DatasetsRestLogging::DeleteDataset(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestLogging::GetDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+              request) {
         return child_->GetDataset(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -63,13 +63,13 @@ DatasetsRestLogging::GetDataset(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestLogging::InsertDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 InsertDatasetRequest const& request) {
         return child_->InsertDataset(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -77,13 +77,14 @@ DatasetsRestLogging::InsertDataset(
 
 StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
 DatasetsRestLogging::ListDatasets(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+              request) {
         return child_->ListDatasets(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -91,13 +92,14 @@ DatasetsRestLogging::ListDatasets(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestLogging::PatchDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+              request) {
         return child_->PatchDataset(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -105,13 +107,13 @@ DatasetsRestLogging::PatchDataset(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestLogging::Undelete(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+                 request) {
         return child_->Undelete(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -119,13 +121,13 @@ DatasetsRestLogging::Undelete(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestLogging::UpdateDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 UpdateDatasetRequest const& request) {
         return child_->UpdateDataset(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

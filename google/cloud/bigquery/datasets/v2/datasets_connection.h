@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATASETS_V2_DATASETS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_DATASETS_V2_DATASETS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/datasets/v2/datasets_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/datasets/v2/internal/datasets_retry_traits.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class DatasetsLimitedErrorCountRetryPolicy : public DatasetsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DatasetsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   DatasetsLimitedErrorCountRetryPolicy(
       DatasetsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : DatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   DatasetsLimitedErrorCountRetryPolicy(
       DatasetsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : DatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : DatasetsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class DatasetsLimitedErrorCountRetryPolicy : public DatasetsRetryPolicy {
   using BaseType = DatasetsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_datasets_v2_internal::DatasetsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_datasets_v2_internal::DatasetsRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,13 @@ class DatasetsLimitedTimeRetryPolicy : public DatasetsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit DatasetsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   DatasetsLimitedTimeRetryPolicy(DatasetsLimitedTimeRetryPolicy&& rhs) noexcept
-    : DatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  DatasetsLimitedTimeRetryPolicy(DatasetsLimitedTimeRetryPolicy const& rhs) noexcept
-    : DatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : DatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  DatasetsLimitedTimeRetryPolicy(
+      DatasetsLimitedTimeRetryPolicy const& rhs) noexcept
+      : DatasetsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +148,16 @@ class DatasetsLimitedTimeRetryPolicy : public DatasetsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<DatasetsRetryPolicy> clone() const override {
-    return std::make_unique<DatasetsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<DatasetsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = DatasetsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_datasets_v2_internal::DatasetsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_datasets_v2_internal::DatasetsRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,26 +178,33 @@ class DatasetsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteDataset(google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request);
+  virtual Status DeleteDataset(
+      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  GetDataset(google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> GetDataset(
+      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  InsertDataset(google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> InsertDataset(
+      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
-  ListDatasets(google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::DatasetList> ListDatasets(
+      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  PatchDataset(google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> PatchDataset(
+      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  Undelete(google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> Undelete(
+      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-  UpdateDataset(google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Dataset> UpdateDataset(
+      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

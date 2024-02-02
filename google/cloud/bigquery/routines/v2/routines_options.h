@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_ROUTINES_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_ROUTINES_V2_ROUTINES_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/routines/v2/routines_connection.h"
 #include "google/cloud/bigquery/routines/v2/routines_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct RoutinesConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquery-options
  */
 using RoutinesPolicyOptionList =
-    OptionList<RoutinesRetryPolicyOption,
-               RoutinesBackoffPolicyOption,
+    OptionList<RoutinesRetryPolicyOption, RoutinesBackoffPolicyOption,
                RoutinesConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

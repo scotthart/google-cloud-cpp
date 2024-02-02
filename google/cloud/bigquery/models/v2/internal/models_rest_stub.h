@@ -38,19 +38,27 @@ class ModelsRestStub {
 
   virtual Status DeleteModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
+  ListModels(google::cloud::rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+                 request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request) = 0;
 };
 
 class DefaultModelsRestStub : public ModelsRestStub {
@@ -58,25 +66,32 @@ class DefaultModelsRestStub : public ModelsRestStub {
   ~DefaultModelsRestStub() override = default;
 
   explicit DefaultModelsRestStub(Options options);
-  DefaultModelsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultModelsRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                        Options options);
 
   Status DeleteModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -36,13 +36,18 @@ class TabledataRestStub {
  public:
   virtual ~TabledataRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse> InsertAll(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
+  InsertAll(google::cloud::rest_internal::RestContext& rest_context,
+            Options const& options,
+            google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
+  ListTabledata(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request) = 0;
 };
 
 class DefaultTabledataRestStub : public TabledataRestStub {
@@ -50,17 +55,20 @@ class DefaultTabledataRestStub : public TabledataRestStub {
   ~DefaultTabledataRestStub() override = default;
 
   explicit DefaultTabledataRestStub(Options options);
-  DefaultTabledataRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultTabledataRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                           Options options);
 
-  StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse> InsertAll(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
+  InsertAll(google::cloud::rest_internal::RestContext& rest_context,
+            Options const& options,
+            google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::TableDataList> ListTabledata(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

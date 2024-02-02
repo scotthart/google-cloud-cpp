@@ -672,7 +672,7 @@ Status GenerateProtosFromDiscoveryDoc(
   auto method_status =
       ProcessMethodRequestsAndResponses(resources, *types, &descriptor_pool);
   if (!method_status.ok()) return method_status;
-  std::cout << __func__ << " ProcessMethodRequestsAndReponses success\n";
+  std::cout << __func__ << " ProcessMethodRequestsAndResponses success\n";
 
   EstablishTypeDependencies(*types);
   for (auto& t : *types) {

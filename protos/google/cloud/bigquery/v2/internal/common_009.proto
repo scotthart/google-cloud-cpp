@@ -25,15 +25,15 @@ message EncryptionConfiguration {
   // Optional. Describes the Cloud KMS encryption key that will be used to
   // protect destination BigQuery table. The BigQuery Service Account associated
   // with your project requires access to this encryption key.
-  optional string kms_key_name = 1 [json_name="kmsKeyName"];
+  optional string kms_key_name = 1 [json_name = "kmsKeyName"];
 }
 
 message TableReference {
   // Required. The ID of the dataset containing this table.
-  optional string dataset_id = 1 [json_name="datasetId"];
+  optional string dataset_id = 1 [json_name = "datasetId"];
 
   // Required. The ID of the project containing this table.
-  optional string project_id = 2 [json_name="projectId"];
+  optional string project_id = 2 [json_name = "projectId"];
 
   // Required. The ID of the table. The ID can contain Unicode characters in
   // category L (letter), M (mark), N (number), Pc (connector, including
@@ -42,5 +42,5 @@ message TableReference {
   // The maximum length is 1,024 characters. Certain operations allow suffixing
   // of the table ID with a partition decorator, such as
   // `sample_table$20190123`.
-  optional string table_id = 3 [json_name="tableId"];
+  optional string table_id = 3 [json_name = "tableId"];
 }

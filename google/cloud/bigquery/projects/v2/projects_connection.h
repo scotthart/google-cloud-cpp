@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_PROJECTS_V2_PROJECTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_PROJECTS_V2_PROJECTS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/projects/v2/internal/projects_retry_traits.h"
 #include "google/cloud/bigquery/projects/v2/projects_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ProjectsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ProjectsLimitedErrorCountRetryPolicy(
       ProjectsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ProjectsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class ProjectsLimitedErrorCountRetryPolicy : public ProjectsRetryPolicy {
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_projects_v2_internal::ProjectsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_projects_v2_internal::ProjectsRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,13 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ProjectsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ProjectsLimitedTimeRetryPolicy(ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ProjectsLimitedTimeRetryPolicy(
+      ProjectsLimitedTimeRetryPolicy const& rhs) noexcept
+      : ProjectsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +148,16 @@ class ProjectsLimitedTimeRetryPolicy : public ProjectsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ProjectsRetryPolicy> clone() const override {
-    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ProjectsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ProjectsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_projects_v2_internal::ProjectsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_projects_v2_internal::ProjectsRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,10 +179,12 @@ class ProjectsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-  GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request);
+  GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
-  ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

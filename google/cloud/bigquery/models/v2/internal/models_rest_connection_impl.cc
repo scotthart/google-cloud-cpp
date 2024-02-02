@@ -33,58 +33,68 @@ ModelsRestConnectionImpl::ModelsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquery_models_v2_internal::ModelsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ModelsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ModelsConnection::options())) {}
 
-Status
-ModelsRestConnectionImpl::DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+Status ModelsRestConnectionImpl::DeleteModel(
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteModel(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+                 request) {
         return stub_->DeleteModel(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsRestConnectionImpl::GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+ModelsRestConnectionImpl::GetModel(
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetModel(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::GetModelRequest const&
+                 request) {
         return stub_->GetModel(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-ModelsRestConnectionImpl::ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
+ModelsRestConnectionImpl::ListModels(
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListModels(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+                 request) {
         return stub_->ListModels(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsRestConnectionImpl::PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+ModelsRestConnectionImpl::PatchModel(
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchModel(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+                 request) {
         return stub_->PatchModel(rest_context, options, request);
       },
       *current, request, __func__);

@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/tables/v2/tables.proto
 
 #include "google/cloud/bigquery/tables/v2/tables_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/tables/v2/internal/tables_option_defaults.h"
 #include "google/cloud/bigquery/tables/v2/internal/tables_tracing_connection.h"
 #include "google/cloud/bigquery/tables/v2/tables_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -34,14 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TablesConnection::~TablesConnection() = default;
 
-Status
-TablesConnection::DeleteTable(
+Status TablesConnection::DeleteTable(
     google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesConnection::GetTable(
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesConnection::GetTable(
     google::cloud::cpp::bigquery::tables::v2::GetTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -52,8 +50,7 @@ TablesConnection::GetIamPolicy(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesConnection::InsertTable(
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesConnection::InsertTable(
     google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -64,8 +61,7 @@ TablesConnection::ListTables(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesConnection::PatchTable(
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesConnection::PatchTable(
     google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -77,13 +73,12 @@ TablesConnection::SetIamPolicy(
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-TablesConnection::TestIamPermissions(
-    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&) {
+TablesConnection::TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::
+                                         TestIamPermissionsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesConnection::UpdateTable(
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesConnection::UpdateTable(
     google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

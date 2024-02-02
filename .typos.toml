@@ -8,6 +8,9 @@ extend-exclude = [
     "generator/discovery/compute_public_google_rest_v1.json",
     "protos/google/cloud/compute/*/*/*.proto",
     "google/cloud/compute/*/*/*.h",
+    "generator/discovery/bigquery_public_google_rest_v2.json",
+    "protos/google/cloud/bigquery/*/*/*.proto",
+    "google/cloud/bigquery/*/*/*.h",
     # Truncates strings, which might not form valid words.
     "google/cloud/internal/debug_string_protobuf_test.cc",
     # Testing input file

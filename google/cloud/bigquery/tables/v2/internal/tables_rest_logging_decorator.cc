@@ -26,36 +26,33 @@ namespace cloud {
 namespace bigquery_tables_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TablesRestLogging::TablesRestLogging(
-    std::shared_ptr<TablesRestStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> components)
-    : child_(std::move(child)), tracing_options_(std::move(tracing_options)),
+TablesRestLogging::TablesRestLogging(std::shared_ptr<TablesRestStub> child,
+                                     TracingOptions tracing_options,
+                                     std::set<std::string> components)
+    : child_(std::move(child)),
+      tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
-Status
-TablesRestLogging::DeleteTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) {
+Status TablesRestLogging::DeleteTable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+                 request) {
         return child_->DeleteTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesRestLogging::GetTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesRestLogging::GetTable(
+    rest_internal::RestContext& rest_context, Options const& options,
     google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::GetTableRequest const&
+                 request) {
         return child_->GetTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -63,13 +60,14 @@ TablesRestLogging::GetTable(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
 TablesRestLogging::GetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+              request) {
         return child_->GetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -77,13 +75,13 @@ TablesRestLogging::GetIamPolicy(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
 TablesRestLogging::InsertTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+                 request) {
         return child_->InsertTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -91,27 +89,26 @@ TablesRestLogging::InsertTable(
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableList>
 TablesRestLogging::ListTables(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+                 request) {
         return child_->ListTables(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesRestLogging::PatchTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesRestLogging::PatchTable(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+                 request) {
         return child_->PatchTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -119,13 +116,14 @@ TablesRestLogging::PatchTable(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Policy>
 TablesRestLogging::SetIamPolicy(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+              request) {
         return child_->SetIamPolicy(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -133,13 +131,13 @@ TablesRestLogging::SetIamPolicy(
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
 TablesRestLogging::TestIamPermissions(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::
+                 TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);
@@ -147,13 +145,13 @@ TablesRestLogging::TestIamPermissions(
 
 StatusOr<google::cloud::cpp::bigquery::v2::Table>
 TablesRestLogging::UpdateTable(
-    rest_internal::RestContext& rest_context,
-    Options const& options,
-    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options,
-             google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+                 request) {
         return child_->UpdateTable(rest_context, options, request);
       },
       rest_context, options, request, __func__, tracing_options_);

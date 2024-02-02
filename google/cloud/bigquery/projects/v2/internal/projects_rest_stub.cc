@@ -35,31 +35,38 @@ DefaultProjectsRestStub::DefaultProjectsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultProjectsRestStub::DefaultProjectsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
 DefaultProjectsRestStub::GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "serviceAccount"));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/",
+                   "serviceAccount"));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
 DefaultProjectsRestStub::ListProjects(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::ProjectList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/bigquery/", rest_internal::DetermineApiVersion("v2", options), "/projects"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("max_results", std::to_string(request.max_results())),
-        std::make_pair("page_token", request.page_token())}));
+      absl::StrCat("/bigquery/",
+                   rest_internal::DetermineApiVersion("v2", options),
+                   "/projects"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

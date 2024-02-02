@@ -24,15 +24,16 @@ namespace cloud {
 namespace bigquery_tables_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-TablesClient::TablesClient(
-    std::shared_ptr<TablesConnection> connection, Options opts)
+TablesClient::TablesClient(std::shared_ptr<TablesConnection> connection,
+                           Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TablesClient::~TablesClient() = default;
 
-Status
-TablesClient::DeleteTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts) {
+Status TablesClient::DeleteTable(std::string const& project_id,
+                                 std::string const& dataset_id,
+                                 std::string const& table_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest request;
   request.set_project_id(project_id);
@@ -41,14 +42,16 @@ TablesClient::DeleteTable(std::string const& project_id, std::string const& data
   return connection_->DeleteTable(request);
 }
 
-Status
-TablesClient::DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request, Options opts) {
+Status TablesClient::DeleteTable(
+    google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::GetTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::GetTable(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& table_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::GetTableRequest request;
   request.set_project_id(project_id);
@@ -57,29 +60,38 @@ TablesClient::GetTable(std::string const& project_id, std::string const& dataset
   return connection_->GetTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::GetTable(
+    google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesClient::GetIamPolicy(std::string const& resource, google::cloud::cpp::bigquery::v2::GetIamPolicyRequest const& get_iam_policy_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Policy> TablesClient::GetIamPolicy(
+    std::string const& resource,
+    google::cloud::cpp::bigquery::v2::GetIamPolicyRequest const&
+        get_iam_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest request;
   request.set_resource(resource);
-  *request.mutable_get_iam_policy_request_resource() = get_iam_policy_request_resource;
+  *request.mutable_get_iam_policy_request_resource() =
+      get_iam_policy_request_resource;
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesClient::GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Policy> TablesClient::GetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::InsertTable(std::string const& project_id, std::string const& dataset_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::InsertTable(
+    std::string const& project_id, std::string const& dataset_id,
+    google::cloud::cpp::bigquery::v2::Table const& table_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::InsertTableRequest request;
   request.set_project_id(project_id);
@@ -88,14 +100,16 @@ TablesClient::InsertTable(std::string const& project_id, std::string const& data
   return connection_->InsertTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::InsertTable(
+    google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-TablesClient::ListTables(std::string const& project_id, std::string const& dataset_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::TableList> TablesClient::ListTables(
+    std::string const& project_id, std::string const& dataset_id,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::ListTablesRequest request;
   request.set_project_id(project_id);
@@ -103,14 +117,18 @@ TablesClient::ListTables(std::string const& project_id, std::string const& datas
   return connection_->ListTables(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-TablesClient::ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::TableList> TablesClient::ListTables(
+    google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTables(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::PatchTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::PatchTable(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& table_id,
+    google::cloud::cpp::bigquery::v2::Table const& table_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::PatchTableRequest request;
   request.set_project_id(project_id);
@@ -120,44 +138,62 @@ TablesClient::PatchTable(std::string const& project_id, std::string const& datas
   return connection_->PatchTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::PatchTable(
+    google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->PatchTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesClient::SetIamPolicy(std::string const& resource, google::cloud::cpp::bigquery::v2::SetIamPolicyRequest const& set_iam_policy_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Policy> TablesClient::SetIamPolicy(
+    std::string const& resource,
+    google::cloud::cpp::bigquery::v2::SetIamPolicyRequest const&
+        set_iam_policy_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest request;
   request.set_resource(resource);
-  *request.mutable_set_iam_policy_request_resource() = set_iam_policy_request_resource;
+  *request.mutable_set_iam_policy_request_resource() =
+      set_iam_policy_request_resource;
   return connection_->SetIamPolicy(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-TablesClient::SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Policy> TablesClient::SetIamPolicy(
+    google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SetIamPolicy(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-TablesClient::TestIamPermissions(std::string const& resource, google::cloud::cpp::bigquery::v2::TestIamPermissionsRequest const& test_iam_permissions_request_resource, Options opts) {
+TablesClient::TestIamPermissions(
+    std::string const& resource,
+    google::cloud::cpp::bigquery::v2::TestIamPermissionsRequest const&
+        test_iam_permissions_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest request;
   request.set_resource(resource);
-  *request.mutable_test_iam_permissions_request_resource() = test_iam_permissions_request_resource;
+  *request.mutable_test_iam_permissions_request_resource() =
+      test_iam_permissions_request_resource;
   return connection_->TestIamPermissions(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-TablesClient::TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request, Options opts) {
+TablesClient::TestIamPermissions(
+    google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::UpdateTable(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::Table const& table_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::UpdateTable(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& table_id,
+    google::cloud::cpp::bigquery::v2::Table const& table_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest request;
   request.set_project_id(project_id);
@@ -167,8 +203,9 @@ TablesClient::UpdateTable(std::string const& project_id, std::string const& data
   return connection_->UpdateTable(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Table>
-TablesClient::UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Table> TablesClient::UpdateTable(
+    google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateTable(request);
 }

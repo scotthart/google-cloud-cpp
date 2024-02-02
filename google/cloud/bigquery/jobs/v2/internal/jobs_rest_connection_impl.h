@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_INTERNAL_JOBS_REST_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_INTERNAL_JOBS_REST_CONNECTION_IMPL_H
 
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_rest_stub.h"
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_retry_traits.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_connection.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_connection_idempotency_policy.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_options.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -36,42 +36,49 @@ namespace cloud {
 namespace bigquery_jobs_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class JobsRestConnectionImpl
-    : public bigquery_jobs_v2::JobsConnection {
+class JobsRestConnectionImpl : public bigquery_jobs_v2::JobsConnection {
  public:
   ~JobsRestConnectionImpl() override = default;
 
   JobsRestConnectionImpl(
-    std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_jobs_v2_internal::JobsRestStub> stub,
-    Options options);
+      std::unique_ptr<google::cloud::BackgroundThreads> background,
+      std::shared_ptr<bigquery_jobs_v2_internal::JobsRestStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
-  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-  Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request)
+      override;
 
-  Status
-  DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request) override;
+  Status DeleteJob(
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request) override;
+  GetQueryResults(
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-  ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-  Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request)
+      override;
 
  private:
-  static std::unique_ptr<bigquery_jobs_v2::JobsRetryPolicy>
-  retry_policy(Options const& options) {
+  static std::unique_ptr<bigquery_jobs_v2::JobsRetryPolicy> retry_policy(
+      Options const& options) {
     return options.get<bigquery_jobs_v2::JobsRetryPolicyOption>()->clone();
   }
 
@@ -81,7 +88,9 @@ class JobsRestConnectionImpl
 
   static std::unique_ptr<bigquery_jobs_v2::JobsConnectionIdempotencyPolicy>
   idempotency_policy(Options const& options) {
-    return options.get<bigquery_jobs_v2::JobsConnectionIdempotencyPolicyOption>()->clone();
+    return options
+        .get<bigquery_jobs_v2::JobsConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

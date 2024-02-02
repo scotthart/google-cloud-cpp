@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/tabledata/v2/tabledata.proto
 
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_option_defaults.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_tracing_connection.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"

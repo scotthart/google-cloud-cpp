@@ -36,13 +36,17 @@ class ProjectsRestStub {
  public:
   virtual ~ProjectsRestStub() = default;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) = 0;
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request) = 0;
 };
 
 class DefaultProjectsRestStub : public ProjectsRestStub {
@@ -50,17 +54,20 @@ class DefaultProjectsRestStub : public ProjectsRestStub {
   ~DefaultProjectsRestStub() override = default;
 
   explicit DefaultProjectsRestStub(Options options);
-  DefaultProjectsRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultProjectsRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                          Options options);
 
-  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse> GetServiceAccount(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
+  GetServiceAccount(google::cloud::rest_internal::RestContext& rest_context,
+                    Options const& options,
+                    google::cloud::cpp::bigquery::projects::v2::
+                        GetServiceAccountRequest const& request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::ProjectList> ListProjects(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/models/v2/models.proto
 
 #include "google/cloud/bigquery/models/v2/internal/models_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -31,68 +31,68 @@ namespace cloud {
 namespace bigquery_models_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ModelsRestMetadata::ModelsRestMetadata(
-    std::shared_ptr<ModelsRestStub> child,
-    std::string api_client_header)
+ModelsRestMetadata::ModelsRestMetadata(std::shared_ptr<ModelsRestStub> child,
+                                       std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status
-ModelsRestMetadata::DeleteModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+Status ModelsRestMetadata::DeleteModel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->DeleteModel(rest_context, options, request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsRestMetadata::GetModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+StatusOr<google::cloud::cpp::bigquery::v2::Model> ModelsRestMetadata::GetModel(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
   SetMetadata(rest_context, options);
   return child_->GetModel(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
 ModelsRestMetadata::ListModels(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListModels(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
 ModelsRestMetadata::PatchModel(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->PatchModel(rest_context, options, request);
 }
 
-void ModelsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
+void ModelsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                     Options const& options,
+                                     std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

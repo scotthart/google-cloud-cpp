@@ -29,8 +29,7 @@ namespace cloud {
 namespace bigquery_jobs_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<JobsRestStub> CreateDefaultJobsRestStub(
-    Options const& options);
+std::shared_ptr<JobsRestStub> CreateDefaultJobsRestStub(Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_jobs_v2_internal

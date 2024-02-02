@@ -32,15 +32,21 @@ TabledataTracingConnection::TabledataTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-TabledataTracingConnection::InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tabledata_v2::TabledataConnection::InsertAll");
+TabledataTracingConnection::InsertAll(
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_tabledata_v2::TabledataConnection::InsertAll");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->InsertAll(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-TabledataTracingConnection::ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_tabledata_v2::TabledataConnection::ListTabledata");
+TabledataTracingConnection::ListTabledata(
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "bigquery_tabledata_v2::TabledataConnection::ListTabledata");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListTabledata(request));
 }

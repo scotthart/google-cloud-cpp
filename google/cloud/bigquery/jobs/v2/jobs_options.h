@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_JOBS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_JOBS_V2_JOBS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_connection.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -64,8 +64,7 @@ struct JobsConnectionIdempotencyPolicyOption {
  * @ingroup google-cloud-bigquery-options
  */
 using JobsPolicyOptionList =
-    OptionList<JobsRetryPolicyOption,
-               JobsBackoffPolicyOption,
+    OptionList<JobsRetryPolicyOption, JobsBackoffPolicyOption,
                JobsConnectionIdempotencyPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

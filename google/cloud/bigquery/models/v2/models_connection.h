@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MODELS_V2_MODELS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_MODELS_V2_MODELS_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/models/v2/internal/models_retry_traits.h"
 #include "google/cloud/bigquery/models/v2/models_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class ModelsLimitedErrorCountRetryPolicy : public ModelsRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit ModelsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   ModelsLimitedErrorCountRetryPolicy(
       ModelsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   ModelsLimitedErrorCountRetryPolicy(
       ModelsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ModelsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class ModelsLimitedErrorCountRetryPolicy : public ModelsRetryPolicy {
   using BaseType = ModelsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_models_v2_internal::ModelsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_models_v2_internal::ModelsRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,12 @@ class ModelsLimitedTimeRetryPolicy : public ModelsRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit ModelsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   ModelsLimitedTimeRetryPolicy(ModelsLimitedTimeRetryPolicy&& rhs) noexcept
-    : ModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   ModelsLimitedTimeRetryPolicy(ModelsLimitedTimeRetryPolicy const& rhs) noexcept
-    : ModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : ModelsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +147,16 @@ class ModelsLimitedTimeRetryPolicy : public ModelsRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ModelsRetryPolicy> clone() const override {
-    return std::make_unique<ModelsLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<ModelsLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = ModelsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_models_v2_internal::ModelsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_models_v2_internal::ModelsRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,17 +177,20 @@ class ModelsConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request);
+  virtual Status DeleteModel(
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request);
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-  ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request);
+  ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+                 request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

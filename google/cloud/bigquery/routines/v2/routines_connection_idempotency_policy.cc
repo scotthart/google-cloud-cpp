@@ -26,35 +26,41 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RoutinesConnectionIdempotencyPolicy::~RoutinesConnectionIdempotencyPolicy() = default;
+RoutinesConnectionIdempotencyPolicy::~RoutinesConnectionIdempotencyPolicy() =
+    default;
 
 std::unique_ptr<RoutinesConnectionIdempotencyPolicy>
 RoutinesConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<RoutinesConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency RoutinesConnectionIdempotencyPolicy::DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&) {
+Idempotency RoutinesConnectionIdempotencyPolicy::DeleteRoutine(
+    google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutinesConnectionIdempotencyPolicy::GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&) {
+Idempotency RoutinesConnectionIdempotencyPolicy::GetRoutine(
+    google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutinesConnectionIdempotencyPolicy::InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&) {
+Idempotency RoutinesConnectionIdempotencyPolicy::InsertRoutine(
+    google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency RoutinesConnectionIdempotencyPolicy::ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&) {
+Idempotency RoutinesConnectionIdempotencyPolicy::ListRoutines(
+    google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency RoutinesConnectionIdempotencyPolicy::UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&) {
+Idempotency RoutinesConnectionIdempotencyPolicy::UpdateRoutine(
+    google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RoutinesConnectionIdempotencyPolicy>
-    MakeDefaultRoutinesConnectionIdempotencyPolicy() {
+MakeDefaultRoutinesConnectionIdempotencyPolicy() {
   return std::make_unique<RoutinesConnectionIdempotencyPolicy>();
 }
 

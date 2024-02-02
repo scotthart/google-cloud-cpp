@@ -24,15 +24,15 @@ namespace cloud {
 namespace bigquery_jobs_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-JobsClient::JobsClient(
-    std::shared_ptr<JobsConnection> connection, Options opts)
+JobsClient::JobsClient(std::shared_ptr<JobsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 JobsClient::~JobsClient() = default;
 
 StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-JobsClient::Cancel(std::string const& project_id, std::string const& job_id, Options opts) {
+JobsClient::Cancel(std::string const& project_id, std::string const& job_id,
+                   Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::CancelRequest request;
   request.set_project_id(project_id);
@@ -41,13 +41,15 @@ JobsClient::Cancel(std::string const& project_id, std::string const& job_id, Opt
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-JobsClient::Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request, Options opts) {
+JobsClient::Cancel(
+    google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Cancel(request);
 }
 
-Status
-JobsClient::DeleteJob(std::string const& project_id, std::string const& job_id, Options opts) {
+Status JobsClient::DeleteJob(std::string const& project_id,
+                             std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest request;
   request.set_project_id(project_id);
@@ -55,14 +57,15 @@ JobsClient::DeleteJob(std::string const& project_id, std::string const& job_id, 
   return connection_->DeleteJob(request);
 }
 
-Status
-JobsClient::DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request, Options opts) {
+Status JobsClient::DeleteJob(
+    google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteJob(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsClient::GetJob(std::string const& project_id, std::string const& job_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsClient::GetJob(
+    std::string const& project_id, std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::GetJobRequest request;
   request.set_project_id(project_id);
@@ -70,14 +73,16 @@ JobsClient::GetJob(std::string const& project_id, std::string const& job_id, Opt
   return connection_->GetJob(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsClient::GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsClient::GetJob(
+    google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetJob(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-JobsClient::GetQueryResults(std::string const& project_id, std::string const& job_id, Options opts) {
+JobsClient::GetQueryResults(std::string const& project_id,
+                            std::string const& job_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest request;
   request.set_project_id(project_id);
@@ -86,13 +91,17 @@ JobsClient::GetQueryResults(std::string const& project_id, std::string const& jo
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-JobsClient::GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request, Options opts) {
+JobsClient::GetQueryResults(
+    google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetQueryResults(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsClient::InsertJob(std::string const& project_id, google::cloud::cpp::bigquery::v2::Job const& job_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsClient::InsertJob(
+    std::string const& project_id,
+    google::cloud::cpp::bigquery::v2::Job const& job_resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest request;
   request.set_project_id(project_id);
@@ -100,28 +109,33 @@ JobsClient::InsertJob(std::string const& project_id, google::cloud::cpp::bigquer
   return connection_->InsertJob(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsClient::InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsClient::InsertJob(
+    google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertJob(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-JobsClient::ListJobs(std::string const& project_id, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::JobList> JobsClient::ListJobs(
+    std::string const& project_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest request;
   request.set_project_id(project_id);
   return connection_->ListJobs(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-JobsClient::ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::JobList> JobsClient::ListJobs(
+    google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListJobs(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-JobsClient::Query(std::string const& project_id, google::cloud::cpp::bigquery::v2::QueryRequest const& query_request_resource, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> JobsClient::Query(
+    std::string const& project_id,
+    google::cloud::cpp::bigquery::v2::QueryRequest const&
+        query_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::jobs::v2::QueryRequest request;
   request.set_project_id(project_id);
@@ -129,8 +143,9 @@ JobsClient::Query(std::string const& project_id, google::cloud::cpp::bigquery::v
   return connection_->Query(request);
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-JobsClient::Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request, Options opts) {
+StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> JobsClient::Query(
+    google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Query(request);
 }

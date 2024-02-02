@@ -35,84 +35,113 @@ DefaultDatasetsRestStub::DefaultDatasetsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultDatasetsRestStub::DefaultDatasetsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 Status DefaultDatasetsRestStub::DeleteDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+        request) {
   return rest_internal::Delete(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("delete_contents", request.delete_contents() ? "1" : "0")}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id()),
+      rest_internal::TrimEmptyQueryParameters({std::make_pair(
+          "delete_contents", request.delete_contents() ? "1" : "0")}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DefaultDatasetsRestStub::GetDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::Dataset>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id()),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("dataset_view", request.dataset_view())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id()),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("dataset_view", request.dataset_view())}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DefaultDatasetsRestStub::InsertDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::bigquery::v2::Dataset, google::cloud::cpp::bigquery::v2::Dataset>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+        request) {
+  return rest_internal::Post<google::cloud::cpp::bigquery::v2::Dataset,
+                             google::cloud::cpp::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets"));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets"));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
 DefaultDatasetsRestStub::ListDatasets(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::DatasetList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("all", request.all() ? "1" : "0"),
-        std::make_pair("filter", request.filter()),
-        std::make_pair("max_results", std::to_string(request.max_results())),
-        std::make_pair("page_token", request.page_token())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("all", request.all() ? "1" : "0"),
+           std::make_pair("filter", request.filter()),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DefaultDatasetsRestStub::PatchDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id()));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DefaultDatasetsRestStub::Undelete(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+        request) {
   return rest_internal::Post<google::cloud::cpp::bigquery::v2::Dataset>(
-      *service_, rest_context, request.undelete_dataset_request_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), ":undelete"));
+      *service_, rest_context, request.undelete_dataset_request_resource(),
+      false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), ":undelete"));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DefaultDatasetsRestStub::UpdateDataset(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+        request) {
   return rest_internal::Put<google::cloud::cpp::bigquery::v2::Dataset>(
       *service_, rest_context, request.dataset_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

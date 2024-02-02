@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ModelsClient {
  public:
-  explicit ModelsClient(std::shared_ptr<ModelsConnection> connection, Options opts = {});
+  explicit ModelsClient(std::shared_ptr<ModelsConnection> connection,
+                        Options opts = {});
   ~ModelsClient();
 
   ///@{
@@ -105,8 +106,9 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.models.v2.DeleteModelRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/models/v2/models.proto#L80}
   ///
   // clang-format on
-  Status
-  DeleteModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, Options opts = {});
+  Status DeleteModel(std::string const& project_id,
+                     std::string const& dataset_id, std::string const& model_id,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -133,8 +135,10 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.models.v2.DeleteModelRequest]: @cloud_cpp_reference_link{google/cloud/bigquery/models/v2/models.proto#L80}
   ///
   // clang-format on
-  Status
-  DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request, Options opts = {});
+  Status DeleteModel(
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -161,8 +165,9 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.Model]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  GetModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& model_id, Options opts = {});
 
   // clang-format off
   ///
@@ -192,8 +197,9 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.Model]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> GetModel(
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -221,8 +227,9 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.ListModelsResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-  ListModels(std::string const& project_id, std::string const& dataset_id, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
+      std::string const& project_id, std::string const& dataset_id,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -254,8 +261,10 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.ListModelsResponse]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-  ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse> ListModels(
+      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -283,8 +292,11 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.Model]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  PatchModel(std::string const& project_id, std::string const& dataset_id, std::string const& model_id, google::cloud::cpp::bigquery::v2::Model const& model_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
+      std::string const& project_id, std::string const& dataset_id,
+      std::string const& model_id,
+      google::cloud::cpp::bigquery::v2::Model const& model_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +326,10 @@ class ModelsClient {
   /// [google.cloud.cpp.bigquery.v2.Model]: @cloud_cpp_reference_link{google/cloud/bigquery/v2/internal/common_006.proto#L208}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::bigquery::v2::Model>
-  PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::bigquery::v2::Model> PatchModel(
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ModelsConnection> connection_;

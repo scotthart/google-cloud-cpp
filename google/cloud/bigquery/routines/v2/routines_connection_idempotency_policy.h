@@ -36,24 +36,29 @@ class RoutinesConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<RoutinesConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteRoutine(google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const& request);
+  virtual google::cloud::Idempotency DeleteRoutine(
+      google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetRoutine(google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const& request);
+  virtual google::cloud::Idempotency GetRoutine(
+      google::cloud::cpp::bigquery::routines::v2::GetRoutineRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  InsertRoutine(google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const& request);
+  virtual google::cloud::Idempotency InsertRoutine(
+      google::cloud::cpp::bigquery::routines::v2::InsertRoutineRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  ListRoutines(google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const& request);
+  virtual google::cloud::Idempotency ListRoutines(
+      google::cloud::cpp::bigquery::routines::v2::ListRoutinesRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  UpdateRoutine(google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const& request);
+  virtual google::cloud::Idempotency UpdateRoutine(
+      google::cloud::cpp::bigquery::routines::v2::UpdateRoutineRequest const&
+          request);
 };
 
 std::unique_ptr<RoutinesConnectionIdempotencyPolicy>
-    MakeDefaultRoutinesConnectionIdempotencyPolicy();
+MakeDefaultRoutinesConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_routines_v2

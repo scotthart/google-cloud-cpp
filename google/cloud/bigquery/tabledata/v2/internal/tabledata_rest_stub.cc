@@ -35,34 +35,47 @@ DefaultTabledataRestStub::DefaultTabledataRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultTabledataRestStub::DefaultTabledataRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
 DefaultTabledataRestStub::InsertAll(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>(
-      *service_, rest_context, request.table_data_insert_all_request_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "tables", "/", request.table_id(), "/", "insertAll"));
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request) {
+  return rest_internal::Post<
+      google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>(
+      *service_, rest_context, request.table_data_insert_all_request_resource(),
+      false,
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "insertAll"));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
 DefaultTabledataRestStub::ListTabledata(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::TableDataList>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "tables", "/", request.table_id(), "/", "data"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("format_options_use_int64_timestamp", request.format_options_use_int64_timestamp() ? "1" : "0"),
-        std::make_pair("max_results", std::to_string(request.max_results())),
-        std::make_pair("page_token", request.page_token()),
-        std::make_pair("selected_fields", request.selected_fields()),
-        std::make_pair("start_index", request.start_index())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "tables", "/", request.table_id(),
+                   "/", "data"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair(
+               "format_options_use_int64_timestamp",
+               request.format_options_use_int64_timestamp() ? "1" : "0"),
+           std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token()),
+           std::make_pair("selected_fields", request.selected_fields()),
+           std::make_pair("start_index", request.start_index())}));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -33,32 +33,39 @@ ProjectsRestConnectionImpl::ProjectsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquery_projects_v2_internal::ProjectsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ProjectsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      ProjectsConnection::options())) {}
 
 StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>
-ProjectsRestConnectionImpl::GetServiceAccount(google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
+ProjectsRestConnectionImpl::GetServiceAccount(
+    google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetServiceAccount(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::projects::v2::
+                 GetServiceAccountRequest const& request) {
         return stub_->GetServiceAccount(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>
-ProjectsRestConnectionImpl::ListProjects(google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
+ProjectsRestConnectionImpl::ListProjects(
+    google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListProjects(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+              request) {
         return stub_->ListProjects(rest_context, options, request);
       },
       *current, request, __func__);

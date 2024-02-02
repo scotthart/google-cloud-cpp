@@ -35,50 +35,68 @@ DefaultModelsRestStub::DefaultModelsRestStub(Options options)
       options_(std::move(options)) {}
 
 DefaultModelsRestStub::DefaultModelsRestStub(
-    std::shared_ptr<rest_internal::RestClient> service,
-    Options options)
-    : service_(std::move(service)),
-      options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service, Options options)
+    : service_(std::move(service)), options_(std::move(options)) {}
 
 Status DefaultModelsRestStub::DeleteModel(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+        request) {
   return rest_internal::Delete(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "models", "/", request.model_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "models", "/",
+                   request.model_id()));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
 DefaultModelsRestStub::GetModel(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
   return rest_internal::Get<google::cloud::cpp::bigquery::v2::Model>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "models", "/", request.model_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "models", "/",
+                   request.model_id()));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
 DefaultModelsRestStub::ListModels(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
-  return rest_internal::Get<google::cloud::cpp::bigquery::v2::ListModelsResponse>(
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+        request) {
+  return rest_internal::Get<
+      google::cloud::cpp::bigquery::v2::ListModelsResponse>(
       *service_, rest_context, request, false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "models"),
-      rest_internal::TrimEmptyQueryParameters({std::make_pair("max_results", std::to_string(request.max_results())),
-        std::make_pair("page_token", request.page_token())}));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "models"),
+      rest_internal::TrimEmptyQueryParameters(
+          {std::make_pair("max_results", std::to_string(request.max_results())),
+           std::make_pair("page_token", request.page_token())}));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
 DefaultModelsRestStub::PatchModel(
-      google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
+    google::cloud::rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+        request) {
   return rest_internal::Patch<google::cloud::cpp::bigquery::v2::Model>(
       *service_, rest_context, request.model_resource(), false,
-      absl::StrCat("/", "bigquery", "/", rest_internal::DetermineApiVersion("v2", options), "/", "projects", "/", request.project_id(), "/", "datasets", "/", request.dataset_id(), "/", "models", "/", request.model_id()));
+      absl::StrCat("/", "bigquery", "/",
+                   rest_internal::DetermineApiVersion("v2", options), "/",
+                   "projects", "/", request.project_id(), "/", "datasets", "/",
+                   request.dataset_id(), "/", "models", "/",
+                   request.model_id()));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

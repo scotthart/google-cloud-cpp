@@ -27,29 +27,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TabledataClient::TabledataClient(
     std::shared_ptr<TabledataConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TabledataClient::~TabledataClient() = default;
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-TabledataClient::InsertAll(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, google::cloud::cpp::bigquery::v2::TableDataInsertAllRequest const& table_data_insert_all_request_resource, Options opts) {
+TabledataClient::InsertAll(
+    std::string const& project_id, std::string const& dataset_id,
+    std::string const& table_id,
+    google::cloud::cpp::bigquery::v2::TableDataInsertAllRequest const&
+        table_data_insert_all_request_resource,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest request;
   request.set_project_id(project_id);
   request.set_dataset_id(dataset_id);
   request.set_table_id(table_id);
-  *request.mutable_table_data_insert_all_request_resource() = table_data_insert_all_request_resource;
+  *request.mutable_table_data_insert_all_request_resource() =
+      table_data_insert_all_request_resource;
   return connection_->InsertAll(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-TabledataClient::InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request, Options opts) {
+TabledataClient::InsertAll(
+    google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertAll(request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-TabledataClient::ListTabledata(std::string const& project_id, std::string const& dataset_id, std::string const& table_id, Options opts) {
+TabledataClient::ListTabledata(std::string const& project_id,
+                               std::string const& dataset_id,
+                               std::string const& table_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest request;
   request.set_project_id(project_id);
@@ -59,7 +70,10 @@ TabledataClient::ListTabledata(std::string const& project_id, std::string const&
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-TabledataClient::ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request, Options opts) {
+TabledataClient::ListTabledata(
+    google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListTabledata(request);
 }

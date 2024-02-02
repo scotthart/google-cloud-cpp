@@ -31,14 +31,15 @@ import "google/cloud/bigquery/v2/internal/common_011.proto";
 service Projects {
   option (google.api.default_host) = "bigquery.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/bigquery,"
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/cloud-platform.read-only";
+      "https://www.googleapis.com/auth/bigquery,"
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/cloud-platform.read-only";
 
   // RPC to get the service account for a project used for interactions with
   // Google Cloud KMS
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/projects/getServiceAccount
-  rpc GetServiceAccount(GetServiceAccountRequest) returns (google.cloud.cpp.bigquery.v2.GetServiceAccountResponse) {
+  rpc GetServiceAccount(GetServiceAccountRequest)
+      returns (google.cloud.cpp.bigquery.v2.GetServiceAccountResponse) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/serviceAccount"
     };
@@ -50,7 +51,8 @@ service Projects {
   // Manager](https://cloud.google.com/resource-manager/docs/) API, which
   // provides the underlying data for this method and has more capabilities.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/projects/list
-  rpc ListProjects(ListProjectsRequest) returns (google.cloud.cpp.bigquery.v2.ProjectList) {
+  rpc ListProjects(ListProjectsRequest)
+      returns (google.cloud.cpp.bigquery.v2.ProjectList) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects"
     };
@@ -60,7 +62,8 @@ service Projects {
 // Request message for GetServiceAccount.
 message GetServiceAccountRequest {
   // Required. ID of the project.
-  string project_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 }
 
 // Request message for ListProjects.
@@ -69,9 +72,9 @@ message ListProjectsRequest {
   // the number of projects in a page may be fewer than `maxResults` because
   // projects are retrieved and then filtered to only projects with the BigQuery
   // API enabled.
-  optional uint32 max_results = 1 [json_name="maxResults"];
+  optional uint32 max_results = 1 [json_name = "maxResults"];
 
   // Page token, returned by a previous call, to request the next page of
   // results. If not present, no further pages are present.
-  optional string page_token = 2 [json_name="pageToken"];
+  optional string page_token = 2 [json_name = "pageToken"];
 }

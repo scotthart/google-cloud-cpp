@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/routines/v2/routines.proto
 
 #include "google/cloud/bigquery/routines/v2/routines_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/routines/v2/internal/routines_option_defaults.h"
 #include "google/cloud/bigquery/routines/v2/internal/routines_tracing_connection.h"
 #include "google/cloud/bigquery/routines/v2/routines_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -34,8 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RoutinesConnection::~RoutinesConnection() = default;
 
-Status
-RoutinesConnection::DeleteRoutine(
+Status RoutinesConnection::DeleteRoutine(
     google::cloud::cpp::bigquery::routines::v2::DeleteRoutineRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

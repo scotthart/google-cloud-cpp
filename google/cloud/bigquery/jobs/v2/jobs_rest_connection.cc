@@ -33,20 +33,17 @@ namespace cloud {
 namespace bigquery_jobs_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<JobsConnection> MakeJobsConnectionRest(
-    Options options) {
-  internal::CheckExpectedOptions<CommonOptionList, RestOptionList,
-      UnifiedCredentialsOptionList, rest_internal::TargetApiVersionOption,
-      JobsPolicyOptionList>(options, __func__);
-  options = bigquery_jobs_v2_internal::JobsDefaultOptions(
-      std::move(options));
+std::shared_ptr<JobsConnection> MakeJobsConnectionRest(Options options) {
+  internal::CheckExpectedOptions<
+      CommonOptionList, RestOptionList, UnifiedCredentialsOptionList,
+      rest_internal::TargetApiVersionOption, JobsPolicyOptionList>(options,
+                                                                   __func__);
+  options = bigquery_jobs_v2_internal::JobsDefaultOptions(std::move(options));
   auto background = std::make_unique<
       rest_internal::AutomaticallyCreatedRestBackgroundThreads>();
-  auto stub = bigquery_jobs_v2_internal::CreateDefaultJobsRestStub(
-      options);
+  auto stub = bigquery_jobs_v2_internal::CreateDefaultJobsRestStub(options);
   return bigquery_jobs_v2_internal::MakeJobsTracingConnection(
-      std::make_shared<
-          bigquery_jobs_v2_internal::JobsRestConnectionImpl>(
+      std::make_shared<bigquery_jobs_v2_internal::JobsRestConnectionImpl>(
           std::move(background), std::move(stub), std::move(options)));
 }
 

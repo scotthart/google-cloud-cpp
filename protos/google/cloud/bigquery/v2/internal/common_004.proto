@@ -26,7 +26,7 @@ message AvroOptions {
   // Optional. If sourceFormat is set to "AVRO", indicates whether to interpret
   // logical types as the corresponding BigQuery data type (for example,
   // TIMESTAMP), instead of using the raw type (for example, INTEGER).
-  optional bool use_avro_logical_types = 1 [json_name="useAvroLogicalTypes"];
+  optional bool use_avro_logical_types = 1 [json_name = "useAvroLogicalTypes"];
 }
 
 // Information related to a Bigtable column.
@@ -37,18 +37,18 @@ message BigtableColumn {
   // Bytes.toBytes family of functions. 'encoding' can also be set at the column
   // family level. However, the setting at this level takes precedence if
   // 'encoding' is set at both levels.
-  optional string encoding = 1 [json_name="encoding"];
+  optional string encoding = 1 [json_name = "encoding"];
 
   // Optional. If the qualifier is not a valid BigQuery field identifier i.e.
   // does not match a-zA-Z*, a valid identifier must be provided as the column
   // field name and is used as field name in queries.
-  optional string field_name = 2 [json_name="fieldName"];
+  optional string field_name = 2 [json_name = "fieldName"];
 
   // Optional. If this is set, only the latest version of value in this column
   // are exposed. 'onlyReadLatest' can also be set at the column family level.
   // However, the setting at this level takes precedence if 'onlyReadLatest' is
   // set at both levels.
-  optional bool only_read_latest = 3 [json_name="onlyReadLatest"];
+  optional bool only_read_latest = 3 [json_name = "onlyReadLatest"];
 
   // [Required] Qualifier of the column. Columns in the parent column family
   // that has this exact qualifier are exposed as . field. If the qualifier is
@@ -57,10 +57,10 @@ message BigtableColumn {
   // column field name is the same as the column qualifier. However, if the
   // qualifier is not a valid BigQuery field identifier i.e. does not match
   // a-zA-Z*, a valid identifier must be provided as field_name.
-  optional string qualifier_encoded = 4 [json_name="qualifierEncoded"];
+  optional string qualifier_encoded = 4 [json_name = "qualifierEncoded"];
 
   // Qualifier string.
-  optional string qualifier_string = 5 [json_name="qualifierString"];
+  optional string qualifier_string = 5 [json_name = "qualifierString"];
 
   // Optional. The type to convert the value in cells of this column. The values
   // are expected to be encoded using HBase Bytes.toBytes function when using
@@ -69,7 +69,7 @@ message BigtableColumn {
   // Default type is BYTES. 'type' can also be set at the column family level.
   // However, the setting at this level takes precedence if 'type' is set at
   // both levels.
-  optional string type = 6 [json_name="type"];
+  optional string type = 6 [json_name = "type"];
 }
 
 // Information related to a Bigtable column family.
@@ -78,7 +78,7 @@ message BigtableColumnFamily {
   // opposed to a list of (column name, value) pairs. All columns whose
   // qualifier matches a qualifier in this list can be accessed as .. Other
   // columns can be accessed as a list through .Column field.
-  repeated BigtableColumn columns = 1 [json_name="columns"];
+  repeated BigtableColumn columns = 1 [json_name = "columns"];
 
   // Optional. The encoding of the values when the type is not STRING.
   // Acceptable encoding values are: TEXT - indicates values are alphanumeric
@@ -86,16 +86,16 @@ message BigtableColumnFamily {
   // Bytes.toBytes family of functions. This can be overridden for a specific
   // column by listing that column in 'columns' and specifying an encoding for
   // it.
-  optional string encoding = 2 [json_name="encoding"];
+  optional string encoding = 2 [json_name = "encoding"];
 
   // Identifier of the column family.
-  optional string family_id = 3 [json_name="familyId"];
+  optional string family_id = 3 [json_name = "familyId"];
 
   // Optional. If this is set only the latest version of value are exposed for
   // all columns in this column family. This can be overridden for a specific
   // column by listing that column in 'columns' and specifying a different
   // setting for that column.
-  optional bool only_read_latest = 4 [json_name="onlyReadLatest"];
+  optional bool only_read_latest = 4 [json_name = "onlyReadLatest"];
 
   // Optional. The type to convert the value in cells of this column family. The
   // values are expected to be encoded using HBase Bytes.toBytes function when
@@ -103,7 +103,7 @@ message BigtableColumnFamily {
   // (case-sensitive): * BYTES * STRING * INTEGER * FLOAT * BOOLEAN * JSON
   // Default type is BYTES. This can be overridden for a specific column by
   // listing that column in 'columns' and specifying a type for it.
-  optional string type = 5 [json_name="type"];
+  optional string type = 5 [json_name = "type"];
 }
 
 // Options specific to Google Cloud Bigtable data sources.
@@ -115,23 +115,26 @@ message BigtableOptions {
   // list empty, all column families are present in the table schema and their
   // values are read as BYTES. During a query only the column families
   // referenced in that query are read from Bigtable.
-  repeated BigtableColumnFamily column_families = 1 [json_name="columnFamilies"];
+  repeated BigtableColumnFamily column_families = 1
+      [json_name = "columnFamilies"];
 
   // Optional. If field is true, then the column families that are not specified
   // in columnFamilies list are not exposed in the table schema. Otherwise, they
   // are read with BYTES type values. The default value is false.
-  optional bool ignore_unspecified_column_families = 2 [json_name="ignoreUnspecifiedColumnFamilies"];
+  optional bool ignore_unspecified_column_families = 2
+      [json_name = "ignoreUnspecifiedColumnFamilies"];
 
   // Optional. If field is true, then each column family will be read as a
   // single JSON column. Otherwise they are read as a repeated cell structure
   // containing timestamp/value tuples. The default value is false.
-  optional bool output_column_families_as_json = 3 [json_name="outputColumnFamiliesAsJson"];
+  optional bool output_column_families_as_json = 3
+      [json_name = "outputColumnFamiliesAsJson"];
 
   // Optional. If field is true, then the rowkey column families will be read
   // and converted to string. Otherwise they are read with BYTES type values and
   // users need to manually cast them with CAST if necessary. The default value
   // is false.
-  optional bool read_rowkey_as_string = 4 [json_name="readRowkeyAsString"];
+  optional bool read_rowkey_as_string = 4 [json_name = "readRowkeyAsString"];
 }
 
 // Configures table clustering.
@@ -142,7 +145,7 @@ message Clustering {
   // filtering purposes. Additional information on limitations can be found
   // here:
   // https://cloud.google.com/bigquery/docs/creating-clustered-tables#limitations
-  repeated string fields = 1 [json_name="fields"];
+  repeated string fields = 1 [json_name = "fields"];
 }
 
 // Information related to a CSV data source.
@@ -152,17 +155,17 @@ message CsvOptions {
   // columns as null values. If false, records with missing trailing columns are
   // treated as bad records, and if there are too many bad records, an invalid
   // error is returned in the job result. The default value is false.
-  optional bool allow_jagged_rows = 1 [json_name="allowJaggedRows"];
+  optional bool allow_jagged_rows = 1 [json_name = "allowJaggedRows"];
 
   // Optional. Indicates if BigQuery should allow quoted data sections that
   // contain newline characters in a CSV file. The default value is false.
-  optional bool allow_quoted_newlines = 2 [json_name="allowQuotedNewlines"];
+  optional bool allow_quoted_newlines = 2 [json_name = "allowQuotedNewlines"];
 
   // Optional. The character encoding of the data. The supported values are
   // UTF-8, ISO-8859-1, UTF-16BE, UTF-16LE, UTF-32BE, and UTF-32LE. The default
   // value is UTF-8. BigQuery decodes the data after the raw, binary data has
   // been split using the values of the quote and fieldDelimiter properties.
-  optional string encoding = 3 [json_name="encoding"];
+  optional string encoding = 3 [json_name = "encoding"];
 
   // Optional. The separator character for fields in a CSV file. The separator
   // is interpreted as a single byte. For files encoded in ISO-8859-1, any
@@ -173,15 +176,16 @@ message CsvOptions {
   // fields. The remaining bytes will be treated as a part of the field.
   // BigQuery also supports the escape sequence "\t" (U+0009) to specify a tab
   // separator. The default value is comma (",", U+002C).
-  optional string field_delimiter = 4 [json_name="fieldDelimiter"];
+  optional string field_delimiter = 4 [json_name = "fieldDelimiter"];
 
   // [Optional] A custom string that will represent a NULL value in CSV import
   // data.
-  optional string null_marker = 5 [json_name="nullMarker"];
+  optional string null_marker = 5 [json_name = "nullMarker"];
 
   // Optional. Indicates if the embedded ASCII control characters (the first 32
   // characters in the ASCII-table, from '\x00' to '\x1F') are preserved.
-  optional bool preserve_ascii_control_characters = 6 [json_name="preserveAsciiControlCharacters"];
+  optional bool preserve_ascii_control_characters = 6
+      [json_name = "preserveAsciiControlCharacters"];
 
   // Optional. The value that is used to quote data sections in a CSV file.
   // BigQuery converts the string to ISO-8859-1 encoding, and then uses the
@@ -193,7 +197,7 @@ message CsvOptions {
   // character within a quoted value, precede it with an additional matching
   // quote character. For example, if you want to escape the default character '
   // " ', use ' "" '.
-  optional string quote = 7 [json_name="quote"];
+  optional string quote = 7 [json_name = "quote"];
 
   // Optional. The number of rows at the top of a CSV file that BigQuery will
   // skip when reading the data. The default value is 0. This property is useful
@@ -206,35 +210,35 @@ message CsvOptions {
   // skipLeadingRows = N > 0 - Autodetect skips N-1 rows and tries to detect
   // headers in row N. If headers are not detected, row N is just skipped.
   // Otherwise row N is used to extract column names for the detected schema.
-  optional string skip_leading_rows = 8 [json_name="skipLeadingRows"];
+  optional string skip_leading_rows = 8 [json_name = "skipLeadingRows"];
 }
 
 message ExternalDataConfiguration {
   // Try to detect schema and format options automatically. Any option specified
   // explicitly will be honored.
-  optional bool autodetect = 1 [json_name="autodetect"];
+  optional bool autodetect = 1 [json_name = "autodetect"];
 
   // Optional. Additional properties to set if sourceFormat is set to AVRO.
-  optional AvroOptions avro_options = 2 [json_name="avroOptions"];
+  optional AvroOptions avro_options = 2 [json_name = "avroOptions"];
 
   // Optional. Additional options if sourceFormat is set to BIGTABLE.
-  optional BigtableOptions bigtable_options = 3 [json_name="bigtableOptions"];
+  optional BigtableOptions bigtable_options = 3 [json_name = "bigtableOptions"];
 
   // Optional. The compression type of the data source. Possible values include
   // GZIP and NONE. The default value is NONE. This setting is ignored for
   // Google Cloud Bigtable, Google Cloud Datastore backups, Avro, ORC and
   // Parquet formats. An empty string is an invalid value.
-  optional string compression = 4 [json_name="compression"];
+  optional string compression = 4 [json_name = "compression"];
 
   // Optional. The connection specifying the credentials to be used to read
   // external storage, such as Azure Blob, Cloud Storage, or S3. The
   // connection_id can have the form
   // "<project\_id>.<location\_id>.<connection\_id>" or
   // "projects/<project\_id>/locations/<location\_id>/connections/<connection\_id>".
-  optional string connection_id = 5 [json_name="connectionId"];
+  optional string connection_id = 5 [json_name = "connectionId"];
 
   // Optional. Additional properties to set if sourceFormat is set to CSV.
-  optional CsvOptions csv_options = 6 [json_name="csvOptions"];
+  optional CsvOptions csv_options = 6 [json_name = "csvOptions"];
 
   // Defines the list of possible SQL data types to which the source decimal
   // values are converted. This list and the precision and the scale parameters
@@ -254,7 +258,7 @@ message ExternalDataConfiguration {
   // same as ["NUMERIC", "BIGNUMERIC"] and NUMERIC always takes precedence over
   // BIGNUMERIC. Defaults to ["NUMERIC", "STRING"] for ORC and ["NUMERIC"] for
   // the other file formats.
-  repeated string decimal_target_types = 7 [json_name="decimalTargetTypes"];
+  repeated string decimal_target_types = 7 [json_name = "decimalTargetTypes"];
 
   // Optional. Specifies how source URIs are interpreted for constructing the
   // file set to load. By default source URIs are expanded against the
@@ -266,16 +270,18 @@ message ExternalDataConfiguration {
   // FILE_SET_SPEC_TYPE_NEW_LINE_DELIMITED_MANIFEST: This option indicates that
   // the provided URIs are newline-delimited manifest files, with one URI per
   // line. Wildcard URIs are not supported.
-  optional string file_set_spec_type = 8 [json_name="fileSetSpecType"];
+  optional string file_set_spec_type = 8 [json_name = "fileSetSpecType"];
 
   // Optional. Additional options if sourceFormat is set to GOOGLE_SHEETS.
-  optional GoogleSheetsOptions google_sheets_options = 9 [json_name="googleSheetsOptions"];
+  optional GoogleSheetsOptions google_sheets_options = 9
+      [json_name = "googleSheetsOptions"];
 
   // Optional. When set, configures hive partitioning support. Not all storage
   // formats support hive partitioning -- requesting hive partitioning on an
   // unsupported format will lead to an error, as will providing an invalid
   // specification.
-  optional HivePartitioningOptions hive_partitioning_options = 10 [json_name="hivePartitioningOptions"];
+  optional HivePartitioningOptions hive_partitioning_options = 10
+      [json_name = "hivePartitioningOptions"];
 
   // Optional. Indicates if BigQuery should allow extra values that are not
   // represented in the table schema. If true, the extra values are ignored. If
@@ -287,7 +293,7 @@ message ExternalDataConfiguration {
   // ignored. Google Cloud Datastore backups: This setting is ignored. Avro:
   // This setting is ignored. ORC: This setting is ignored. Parquet: This
   // setting is ignored.
-  optional bool ignore_unknown_values = 11 [json_name="ignoreUnknownValues"];
+  optional bool ignore_unknown_values = 11 [json_name = "ignoreUnknownValues"];
 
   // Optional. Load option to be used together with source_format
   // newline-delimited JSON to indicate that a variant of JSON is being loaded.
@@ -298,17 +304,17 @@ message ExternalDataConfiguration {
   // parsed without any modification.
   // GEOJSON: Use GeoJSON variant of JSON. See
   // https://tools.ietf.org/html/rfc7946.
-  optional string json_extension = 12 [json_name="jsonExtension"];
+  optional string json_extension = 12 [json_name = "jsonExtension"];
 
   // Optional. Additional properties to set if sourceFormat is set to JSON.
-  optional JsonOptions json_options = 13 [json_name="jsonOptions"];
+  optional JsonOptions json_options = 13 [json_name = "jsonOptions"];
 
   // Optional. The maximum number of bad records that BigQuery can ignore when
   // reading data. If the number of bad records exceeds this value, an invalid
   // error is returned in the job result. The default value is 0, which requires
   // that all records are valid. This setting is ignored for Google Cloud
   // Bigtable, Google Cloud Datastore backups, Avro, ORC and Parquet formats.
-  optional int32 max_bad_records = 14 [json_name="maxBadRecords"];
+  optional int32 max_bad_records = 14 [json_name = "maxBadRecords"];
 
   // Optional. Metadata Cache Mode for the table. Set this to enable caching of
   // metadata from external data source.
@@ -319,7 +325,7 @@ message ExternalDataConfiguration {
   // MANUAL: Set this mode to enable triggering manual refresh of the metadata
   // cache from external source. Queries will use the latest manually triggered
   // cache version within the table's maxStaleness interval.
-  optional string metadata_cache_mode = 15 [json_name="metadataCacheMode"];
+  optional string metadata_cache_mode = 15 [json_name = "metadataCacheMode"];
 
   // Optional. ObjectMetadata is used to create Object Tables. Object Tables
   // contain a listing of objects (with their metadata) found at the
@@ -328,20 +334,21 @@ message ExternalDataConfiguration {
   // OBJECT_METADATA_UNSPECIFIED: Unspecified by default.
   // DIRECTORY: A synonym for `SIMPLE`.
   // SIMPLE: Directory listing of objects.
-  optional string object_metadata = 16 [json_name="objectMetadata"];
+  optional string object_metadata = 16 [json_name = "objectMetadata"];
 
   // Optional. Additional properties to set if sourceFormat is set to PARQUET.
-  optional ParquetOptions parquet_options = 17 [json_name="parquetOptions"];
+  optional ParquetOptions parquet_options = 17 [json_name = "parquetOptions"];
 
   // Optional. When creating an external table, the user can provide a reference
   // file with the table schema. This is enabled for the following formats:
   // AVRO, PARQUET, ORC.
-  optional string reference_file_schema_uri = 18 [json_name="referenceFileSchemaUri"];
+  optional string reference_file_schema_uri = 18
+      [json_name = "referenceFileSchemaUri"];
 
   // Optional. The schema for the data. Schema is required for CSV and JSON
   // formats if autodetect is not on. Schema is disallowed for Google Cloud
   // Bigtable, Cloud Datastore backups, Avro, ORC and Parquet formats.
-  optional TableSchema schema = 19 [json_name="schema"];
+  optional TableSchema schema = 19 [json_name = "schema"];
 
   // [Required] The data format. For CSV files, specify "CSV". For Google
   // sheets, specify "GOOGLE_SHEETS". For newline-delimited JSON, specify
@@ -349,7 +356,7 @@ message ExternalDataConfiguration {
   // Datastore backups, specify "DATASTORE_BACKUP". For Apache Iceberg tables,
   // specify "ICEBERG". For ORC files, specify "ORC". For Parquet files, specify
   // "PARQUET". [Beta] For Google Cloud Bigtable, specify "BIGTABLE".
-  optional string source_format = 20 [json_name="sourceFormat"];
+  optional string source_format = 20 [json_name = "sourceFormat"];
 
   // [Required] The fully-qualified URIs that point to your data in Google
   // Cloud. For Google Cloud Storage URIs: Each URI can contain one '*' wildcard
@@ -359,7 +366,7 @@ message ExternalDataConfiguration {
   // HTTPS URL for a Google Cloud Bigtable table. For Google Cloud Datastore
   // backups, exactly one URI can be specified. Also, the '*' wildcard character
   // is not allowed.
-  repeated string source_uris = 21 [json_name="sourceUris"];
+  repeated string source_uris = 21 [json_name = "sourceUris"];
 }
 
 // Options specific to Google Sheets data sources.
@@ -367,7 +374,7 @@ message GoogleSheetsOptions {
   // Optional. Range of a sheet to query from. Only used when non-empty. Typical
   // format: sheet_name!top_left_cell_id:bottom_right_cell_id For example:
   // sheet1!A1:B20
-  optional string range = 1 [json_name="range"];
+  optional string range = 1 [json_name = "range"];
 
   // Optional. The number of rows at the top of a sheet that BigQuery will skip
   // when reading the data. The default value is 0. This property is useful if
@@ -380,7 +387,7 @@ message GoogleSheetsOptions {
   // - Autodetect skips N-1 rows and tries to detect headers in row N. If
   // headers are not detected, row N is just skipped. Otherwise row N is used to
   // extract column names for the detected schema.
-  optional string skip_leading_rows = 2 [json_name="skipLeadingRows"];
+  optional string skip_leading_rows = 2 [json_name = "skipLeadingRows"];
 }
 
 // Options for configuring hive partitioning detect.
@@ -391,7 +398,7 @@ message HivePartitioningOptions {
   // include the partition keys). Not every API will populate this field in the
   // output. For example, Tables.Get will populate it, but Tables.List will not
   // contain this field.
-  repeated string fields = 1 [json_name="fields"];
+  repeated string fields = 1 [json_name = "fields"];
 
   // Optional. When set, what mode of hive partitioning to use when reading
   // data. The following modes are supported: * AUTO: automatically infer
@@ -401,14 +408,15 @@ message HivePartitioningOptions {
   // partitioning. Requesting hive partitioning on an unsupported format will
   // lead to an error. Currently supported formats are: JSON, CSV, ORC, Avro and
   // Parquet.
-  optional string mode = 2 [json_name="mode"];
+  optional string mode = 2 [json_name = "mode"];
 
   // Optional. If set to true, queries over this table require a partition
   // filter that can be used for partition elimination to be specified. Note
   // that this field should only be true when creating a permanent external
   // table or querying a temporary external table. Hive-partitioned loads with
   // require_partition_filter explicitly set to true will fail.
-  optional bool require_partition_filter = 3 [json_name="requirePartitionFilter"];
+  optional bool require_partition_filter = 3
+      [json_name = "requirePartitionFilter"];
 
   // Optional. When hive partition detection is requested, a common prefix for
   // all source uris must be required. The prefix must end immediately before
@@ -424,7 +432,7 @@ message HivePartitioningOptions {
   // gs://bucket/path_to_table/{dt:STRING}/{country:STRING}/{id:INTEGER} *
   // gs://bucket/path_to_table/{dt:DATE}/{country:STRING}/{id:STRING} would all
   // be valid source URI prefixes.
-  optional string source_uri_prefix = 4 [json_name="sourceUriPrefix"];
+  optional string source_uri_prefix = 4 [json_name = "sourceUriPrefix"];
 }
 
 // Json Options for load and make external tables.
@@ -432,66 +440,67 @@ message JsonOptions {
   // Optional. The character encoding of the data. The supported values are
   // UTF-8, UTF-16BE, UTF-16LE, UTF-32BE, and UTF-32LE. The default value is
   // UTF-8.
-  optional string encoding = 1 [json_name="encoding"];
+  optional string encoding = 1 [json_name = "encoding"];
 }
 
 // Parquet Options for load and make external tables.
 message ParquetOptions {
   // Optional. Indicates whether to use schema inference specifically for
   // Parquet LIST logical type.
-  optional bool enable_list_inference = 1 [json_name="enableListInference"];
+  optional bool enable_list_inference = 1 [json_name = "enableListInference"];
 
   // Optional. Indicates whether to infer Parquet ENUM logical type as STRING
   // instead of BYTES by default.
-  optional bool enum_as_string = 2 [json_name="enumAsString"];
+  optional bool enum_as_string = 2 [json_name = "enumAsString"];
 }
 
 message RangePartitioning {
   // Required. [Experimental] The table is partitioned by this field. The field
   // must be a top-level NULLABLE/REQUIRED field. The only supported type is
   // INTEGER/INT64.
-  optional string field = 1 [json_name="field"];
+  optional string field = 1 [json_name = "field"];
 
   message Range {
     // [Experimental] The end of range partitioning, exclusive.
-    optional string end = 1 [json_name="end"];
+    optional string end = 1 [json_name = "end"];
 
     // [Experimental] The width of each interval.
-    optional string interval = 2 [json_name="interval"];
+    optional string interval = 2 [json_name = "interval"];
 
     // [Experimental] The start of range partitioning, inclusive.
-    optional string start = 3 [json_name="start"];
+    optional string start = 3 [json_name = "start"];
   }
 
   // [Experimental] Defines the ranges for range partitioning.
-  optional Range range = 2 [json_name="range"];
+  optional Range range = 2 [json_name = "range"];
 }
 
 // A field in TableSchema
 message TableFieldSchema {
   message Categories {
     // Deprecated.
-    repeated string names = 1 [json_name="names"];
+    repeated string names = 1 [json_name = "names"];
   }
 
   // Deprecated.
-  optional Categories categories = 1 [json_name="categories"];
+  optional Categories categories = 1 [json_name = "categories"];
 
   // Optional. Field collation can be set only when the type of field is STRING.
   // The following values are supported: * 'und:ci': undetermined locale, case
   // insensitive. * '': empty string. Default to case-sensitive behavior.
-  optional string collation = 2 [json_name="collation"];
+  optional string collation = 2 [json_name = "collation"];
 
   // Optional. A SQL expression to specify the [default value]
   // (https://cloud.google.com/bigquery/docs/default-values) for this field.
-  optional string default_value_expression = 3 [json_name="defaultValueExpression"];
+  optional string default_value_expression = 3
+      [json_name = "defaultValueExpression"];
 
   // Optional. The field description. The maximum length is 1,024 characters.
-  optional string description = 4 [json_name="description"];
+  optional string description = 4 [json_name = "description"];
 
   // Optional. Describes the nested schema fields if the type property is set to
   // RECORD.
-  repeated TableFieldSchema fields = 5 [json_name="fields"];
+  repeated TableFieldSchema fields = 5 [json_name = "fields"];
 
   // Optional. Maximum length of values of this field for STRINGS or BYTES. If
   // max_length is not specified, no maximum length constraint is imposed on
@@ -499,27 +508,27 @@ message TableFieldSchema {
   // UTF-8 length of strings in this field. If type = "BYTES", then max_length
   // represents the maximum number of bytes in this field. It is invalid to set
   // this field if type ≠ "STRING" and ≠ "BYTES".
-  optional string max_length = 6 [json_name="maxLength"];
+  optional string max_length = 6 [json_name = "maxLength"];
 
   // Optional. The field mode. Possible values include NULLABLE, REQUIRED and
   // REPEATED. The default value is NULLABLE.
-  optional string mode = 7 [json_name="mode"];
+  optional string mode = 7 [json_name = "mode"];
 
   // Required. The field name. The name must contain only letters (a-z, A-Z),
   // numbers (0-9), or underscores (_), and must start with a letter or
   // underscore. The maximum length is 300 characters.
-  optional string name = 8 [json_name="name"];
+  optional string name = 8 [json_name = "name"];
 
   message PolicyTags {
     // A list of policy tag resource names. For example,
     // "projects/1/locations/eu/taxonomies/2/policyTags/3". At most 1 policy tag
     // is currently allowed.
-    repeated string names = 1 [json_name="names"];
+    repeated string names = 1 [json_name = "names"];
   }
 
   // Optional. The policy tags attached to this field, used for field-level
   // access control. If not set, defaults to empty policy_tags.
-  optional PolicyTags policy_tags = 9 [json_name="policyTags"];
+  optional PolicyTags policy_tags = 9 [json_name = "policyTags"];
 
   // Optional. Precision (maximum number of total digits in base 10) and scale
   // (maximum number of digits in the fractional part in base 10) constraints
@@ -538,15 +547,16 @@ message TableFieldSchema {
   // equal to zero): * If type = "NUMERIC": 1 ≤ precision ≤ 29. * If type =
   // "BIGNUMERIC": 1 ≤ precision ≤ 38. If scale is specified but not
   // precision, then it is invalid.
-  optional string precision = 10 [json_name="precision"];
+  optional string precision = 10 [json_name = "precision"];
 
   message RangeElementType {
     // Required. The type of a field element. See TableFieldSchema.type.
-    optional string type = 1 [json_name="type"];
+    optional string type = 1 [json_name = "type"];
   }
 
   // Represents the type of a field element.
-  optional RangeElementType range_element_type = 11 [json_name="rangeElementType"];
+  optional RangeElementType range_element_type = 11
+      [json_name = "rangeElementType"];
 
   // Optional. Specifies the rounding mode to be used when storing values of
   // NUMERIC and BIGNUMERIC type.
@@ -560,47 +570,48 @@ message TableFieldSchema {
   // value when applying precision and scale upon writing of NUMERIC and
   // BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 => 1 1.5 => 2 1.6, 1.7,
   // 1.8, 1.9 => 2 2.5 => 2
-  optional string rounding_mode = 12 [json_name="roundingMode"];
+  optional string rounding_mode = 12 [json_name = "roundingMode"];
 
   // Optional. See documentation for precision.
-  optional string scale = 13 [json_name="scale"];
+  optional string scale = 13 [json_name = "scale"];
 
   // Required. The field data type. Possible values include: * STRING * BYTES *
   // INTEGER (or INT64) * FLOAT (or FLOAT64) * BOOLEAN (or BOOL) * TIMESTAMP *
   // DATE * TIME * DATETIME * GEOGRAPHY * NUMERIC * BIGNUMERIC * JSON * RECORD
   // (or STRUCT) Use of RECORD/STRUCT indicates that the field contains a nested
   // schema.
-  optional string type = 14 [json_name="type"];
+  optional string type = 14 [json_name = "type"];
 }
 
 // Schema of a table
 message TableSchema {
   // Describes the fields in a table.
-  repeated TableFieldSchema fields = 1 [json_name="fields"];
+  repeated TableFieldSchema fields = 1 [json_name = "fields"];
 }
 
 message TimePartitioning {
   // Optional. Number of milliseconds for which to keep the storage for a
   // partition. A wrapper is used here because 0 is an invalid value.
-  optional string expiration_ms = 1 [json_name="expirationMs"];
+  optional string expiration_ms = 1 [json_name = "expirationMs"];
 
   // Optional. If not set, the table is partitioned by pseudo column
   // '_PARTITIONTIME'; if set, the table is partitioned by this field. The field
   // must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or
   // REQUIRED. A wrapper is used here because an empty string is an invalid
   // value.
-  optional string field = 2 [json_name="field"];
+  optional string field = 2 [json_name = "field"];
 
   // If set to true, queries over this table require a partition filter that can
   // be used for partition elimination to be specified. This field is
   // deprecated; please set the field with the same name on the table itself
   // instead. This field needs a wrapper because we want to output the default
   // value, false, if the user explicitly set it.
-  optional bool require_partition_filter = 3 [json_name="requirePartitionFilter"];
+  optional bool require_partition_filter = 3
+      [json_name = "requirePartitionFilter"];
 
   // Required. The supported types are DAY, HOUR, MONTH, and YEAR, which will
   // generate one partition per day, hour, month, and year, respectively.
-  optional string type = 4 [json_name="type"];
+  optional string type = 4 [json_name = "type"];
 }
 
 //  This is used for defining User Defined Function (UDF) resources only when
@@ -612,9 +623,9 @@ message UserDefinedFunctionResource {
   // [Pick one] An inline resource that contains code for a user-defined
   // function (UDF). Providing a inline code resource is equivalent to providing
   // a URI for a file containing the same code.
-  optional string inline_code = 1 [json_name="inlineCode"];
+  optional string inline_code = 1 [json_name = "inlineCode"];
 
   // [Pick one] A code resource to load from a Google Cloud Storage URI
   // (gs://bucket/path).
-  optional string resource_uri = 2 [json_name="resourceUri"];
+  optional string resource_uri = 2 [json_name = "resourceUri"];
 }

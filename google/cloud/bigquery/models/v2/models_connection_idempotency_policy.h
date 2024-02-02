@@ -36,21 +36,24 @@ class ModelsConnectionIdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<ModelsConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency
-  DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request);
+  virtual google::cloud::Idempotency DeleteModel(
+      google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request);
+  virtual google::cloud::Idempotency GetModel(
+      google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request);
 
-  virtual google::cloud::Idempotency
-  ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request);
+  virtual google::cloud::Idempotency ListModels(
+      google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+          request);
 
-  virtual google::cloud::Idempotency
-  PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request);
+  virtual google::cloud::Idempotency PatchModel(
+      google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+          request);
 };
 
 std::unique_ptr<ModelsConnectionIdempotencyPolicy>
-    MakeDefaultModelsConnectionIdempotencyPolicy();
+MakeDefaultModelsConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_models_v2

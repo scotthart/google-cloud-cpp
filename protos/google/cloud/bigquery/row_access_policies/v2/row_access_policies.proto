@@ -32,24 +32,27 @@ import "google/cloud/bigquery/v2/internal/common_013.proto";
 service RowAccessPolicies {
   option (google.api.default_host) = "bigquery.googleapis.com";
   option (google.api.oauth_scopes) =
-    "https://www.googleapis.com/auth/bigquery,"
-    "https://www.googleapis.com/auth/cloud-platform,"
-    "https://www.googleapis.com/auth/cloud-platform.read-only";
+      "https://www.googleapis.com/auth/bigquery,"
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/cloud-platform.read-only";
 
   // Gets the access control policy for a resource. Returns an empty policy if
   // the resource exists and does not have a policy set.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/rowAccessPolicies/getIamPolicy
-  rpc GetIamPolicy(GetIamPolicyRequest) returns (google.cloud.cpp.bigquery.v2.Policy) {
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.bigquery.v2.Policy) {
     option (google.api.http) = {
       post: "/bigquery/v2/{resource}:getIamPolicy"
       body: "get_iam_policy_request_resource"
     };
-    option (google.api.method_signature) = "resource,get_iam_policy_request_resource";
+    option (google.api.method_signature) =
+        "resource,get_iam_policy_request_resource";
   }
 
   // Lists all row access policies on the specified table.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/rowAccessPolicies/list
-  rpc ListRowAccessPolicies(ListRowAccessPoliciesRequest) returns (google.cloud.cpp.bigquery.v2.ListRowAccessPoliciesResponse) {
+  rpc ListRowAccessPolicies(ListRowAccessPoliciesRequest)
+      returns (google.cloud.cpp.bigquery.v2.ListRowAccessPoliciesResponse) {
     option (google.api.http) = {
       get: "/bigquery/v2/projects/{project_id}/datasets/{dataset_id}/tables/{table_id}/rowAccessPolicies"
     };
@@ -62,44 +65,51 @@ service RowAccessPolicies {
   // building permission-aware UIs and command-line tools, not for authorization
   // checking. This operation may "fail open" without warning.
   // https://cloud.google.com/bigquery/docs/reference/rest/v2/rowAccessPolicies/testIamPermissions
-  rpc TestIamPermissions(TestIamPermissionsRequest) returns (google.cloud.cpp.bigquery.v2.TestIamPermissionsResponse) {
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.bigquery.v2.TestIamPermissionsResponse) {
     option (google.api.http) = {
       post: "/bigquery/v2/{resource}:testIamPermissions"
       body: "test_iam_permissions_request_resource"
     };
-    option (google.api.method_signature) = "resource,test_iam_permissions_request_resource";
+    option (google.api.method_signature) =
+        "resource,test_iam_permissions_request_resource";
   }
 }
 
 // Request message for GetIamPolicy.
 message GetIamPolicyRequest {
   // The GetIamPolicyRequest for this request.
-  optional google.cloud.cpp.bigquery.v2.GetIamPolicyRequest get_iam_policy_request_resource = 1 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.GetIamPolicyRequest
+      get_iam_policy_request_resource = 1 [json_name = "__json_request_body"];
 
   // REQUIRED: The resource for which the policy is being requested. See
   // [Resource names](https://cloud.google.com/apis/design/resource_names) for
   // the appropriate value for this field.
-  string resource = 2 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
+  string resource = 2
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 }
 
 // Request message for ListRowAccessPolicies.
 message ListRowAccessPoliciesRequest {
   // Required. Dataset ID of row access policies to list.
-  string dataset_id = 1 [(google.api.field_behavior) = REQUIRED,json_name="datasetId"];
+  string dataset_id = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "datasetId"];
 
   // The maximum number of results to return in a single response page. Leverage
   // the page tokens to iterate through the entire collection.
-  optional int32 page_size = 2 [json_name="pageSize"];
+  optional int32 page_size = 2 [json_name = "pageSize"];
 
   // Page token, returned by a previous call, to request the next page of
   // results.
-  optional string page_token = 3 [json_name="pageToken"];
+  optional string page_token = 3 [json_name = "pageToken"];
 
   // Required. Project ID of the row access policies to list.
-  string project_id = 4 [(google.api.field_behavior) = REQUIRED,json_name="projectId"];
+  string project_id = 4
+      [(google.api.field_behavior) = REQUIRED, json_name = "projectId"];
 
   // Required. Table ID of the table to list row access policies.
-  string table_id = 5 [(google.api.field_behavior) = REQUIRED,json_name="tableId"];
+  string table_id = 5
+      [(google.api.field_behavior) = REQUIRED, json_name = "tableId"];
 }
 
 // Request message for TestIamPermissions.
@@ -107,8 +117,11 @@ message TestIamPermissionsRequest {
   // REQUIRED: The resource for which the policy detail is being requested. See
   // [Resource names](https://cloud.google.com/apis/design/resource_names) for
   // the appropriate value for this field.
-  string resource = 1 [(google.api.field_behavior) = REQUIRED,json_name="resource"];
+  string resource = 1
+      [(google.api.field_behavior) = REQUIRED, json_name = "resource"];
 
   // The TestIamPermissionsRequest for this request.
-  optional google.cloud.cpp.bigquery.v2.TestIamPermissionsRequest test_iam_permissions_request_resource = 2 [json_name="__json_request_body"];
+  optional google.cloud.cpp.bigquery.v2.TestIamPermissionsRequest
+      test_iam_permissions_request_resource = 2
+      [json_name = "__json_request_body"];
 }

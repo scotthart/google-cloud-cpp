@@ -33,97 +33,120 @@ DatasetsRestConnectionImpl::DatasetsRestConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<bigquery_datasets_v2_internal::DatasetsRestStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        DatasetsConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DatasetsConnection::options())) {}
 
-Status
-DatasetsRestConnectionImpl::DeleteDataset(google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+Status DatasetsRestConnectionImpl::DeleteDataset(
+    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->DeleteDataset(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 DeleteDatasetRequest const& request) {
         return stub_->DeleteDataset(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsRestConnectionImpl::GetDataset(google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+DatasetsRestConnectionImpl::GetDataset(
+    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetDataset(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+              request) {
         return stub_->GetDataset(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsRestConnectionImpl::InsertDataset(google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
+DatasetsRestConnectionImpl::InsertDataset(
+    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->InsertDataset(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 InsertDatasetRequest const& request) {
         return stub_->InsertDataset(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
-DatasetsRestConnectionImpl::ListDatasets(google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+DatasetsRestConnectionImpl::ListDatasets(
+    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->ListDatasets(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+              request) {
         return stub_->ListDatasets(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsRestConnectionImpl::PatchDataset(google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+DatasetsRestConnectionImpl::PatchDataset(
+    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->PatchDataset(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+      [this](
+          rest_internal::RestContext& rest_context, Options const& options,
+          google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+              request) {
         return stub_->PatchDataset(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsRestConnectionImpl::Undelete(google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+DatasetsRestConnectionImpl::Undelete(
+    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->Undelete(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+                 request) {
         return stub_->Undelete(rest_context, options, request);
       },
       *current, request, __func__);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
-DatasetsRestConnectionImpl::UpdateDataset(google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+DatasetsRestConnectionImpl::UpdateDataset(
+    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+        request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::rest_internal::RestRetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->UpdateDataset(request),
-      [this](rest_internal::RestContext& rest_context,
-             Options const& options, google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+      [this](rest_internal::RestContext& rest_context, Options const& options,
+             google::cloud::cpp::bigquery::datasets::v2::
+                 UpdateDatasetRequest const& request) {
         return stub_->UpdateDataset(rest_context, options, request);
       },
       *current, request, __func__);

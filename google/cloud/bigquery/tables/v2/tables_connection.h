@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLES_V2_TABLES_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLES_V2_TABLES_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/tables/v2/internal/tables_retry_traits.h"
 #include "google/cloud/bigquery/tables/v2/tables_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class TablesLimitedErrorCountRetryPolicy : public TablesRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TablesLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TablesLimitedErrorCountRetryPolicy(
       TablesLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TablesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TablesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TablesLimitedErrorCountRetryPolicy(
       TablesLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TablesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TablesLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class TablesLimitedErrorCountRetryPolicy : public TablesRetryPolicy {
   using BaseType = TablesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_tables_v2_internal::TablesRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_tables_v2_internal::TablesRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,12 @@ class TablesLimitedTimeRetryPolicy : public TablesRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TablesLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
   TablesLimitedTimeRetryPolicy(TablesLimitedTimeRetryPolicy&& rhs) noexcept
-    : TablesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TablesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
   TablesLimitedTimeRetryPolicy(TablesLimitedTimeRetryPolicy const& rhs) noexcept
-    : TablesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+      : TablesLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -145,15 +147,16 @@ class TablesLimitedTimeRetryPolicy : public TablesRetryPolicy {
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<TablesRetryPolicy> clone() const override {
-    return std::make_unique<TablesLimitedTimeRetryPolicy>(
-        maximum_duration());
+    return std::make_unique<TablesLimitedTimeRetryPolicy>(maximum_duration());
   }
 
   // This is provided only for backwards compatibility.
   using BaseType = TablesRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_tables_v2_internal::TablesRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_tables_v2_internal::TablesRetryTraits>
+      impl_;
 };
 
 /**
@@ -174,32 +177,41 @@ class TablesConnection {
 
   virtual Options options() { return Options{}; }
 
-  virtual Status
-  DeleteTable(google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request);
+  virtual Status DeleteTable(
+      google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  GetTable(google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> GetTable(
+      google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  GetIamPolicy(google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy> GetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  InsertTable(google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> InsertTable(
+      google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableList>
-  ListTables(google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::TableList> ListTables(
+      google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  PatchTable(google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> PatchTable(
+      google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy>
-  SetIamPolicy(google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy> SetIamPolicy(
+      google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+          request);
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request);
+  TestIamPermissions(
+      google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+          request);
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table>
-  UpdateTable(google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request);
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> UpdateTable(
+      google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

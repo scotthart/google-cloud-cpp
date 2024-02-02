@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/datasets/v2/datasets.proto
 
 #include "google/cloud/bigquery/datasets/v2/datasets_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/datasets/v2/datasets_options.h"
 #include "google/cloud/bigquery/datasets/v2/internal/datasets_option_defaults.h"
 #include "google/cloud/bigquery/datasets/v2/internal/datasets_tracing_connection.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -34,8 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatasetsConnection::~DatasetsConnection() = default;
 
-Status
-DatasetsConnection::DeleteDataset(
+Status DatasetsConnection::DeleteDataset(
     google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }

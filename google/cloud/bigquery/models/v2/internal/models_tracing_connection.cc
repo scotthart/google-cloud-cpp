@@ -31,30 +31,40 @@ ModelsTracingConnection::ModelsTracingConnection(
     std::shared_ptr<bigquery_models_v2::ModelsConnection> child)
     : child_(std::move(child)) {}
 
-Status
-ModelsTracingConnection::DeleteModel(google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_models_v2::ModelsConnection::DeleteModel");
+Status ModelsTracingConnection::DeleteModel(
+    google::cloud::cpp::bigquery::models::v2::DeleteModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_models_v2::ModelsConnection::DeleteModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteModel(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsTracingConnection::GetModel(google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_models_v2::ModelsConnection::GetModel");
+ModelsTracingConnection::GetModel(
+    google::cloud::cpp::bigquery::models::v2::GetModelRequest const& request) {
+  auto span =
+      internal::MakeSpan("bigquery_models_v2::ModelsConnection::GetModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetModel(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::ListModelsResponse>
-ModelsTracingConnection::ListModels(google::cloud::cpp::bigquery::models::v2::ListModelsRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_models_v2::ModelsConnection::ListModels");
+ModelsTracingConnection::ListModels(
+    google::cloud::cpp::bigquery::models::v2::ListModelsRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_models_v2::ModelsConnection::ListModels");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->ListModels(request));
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Model>
-ModelsTracingConnection::PatchModel(google::cloud::cpp::bigquery::models::v2::PatchModelRequest const& request) {
-  auto span = internal::MakeSpan("bigquery_models_v2::ModelsConnection::PatchModel");
+ModelsTracingConnection::PatchModel(
+    google::cloud::cpp::bigquery::models::v2::PatchModelRequest const&
+        request) {
+  auto span =
+      internal::MakeSpan("bigquery_models_v2::ModelsConnection::PatchModel");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->PatchModel(request));
 }

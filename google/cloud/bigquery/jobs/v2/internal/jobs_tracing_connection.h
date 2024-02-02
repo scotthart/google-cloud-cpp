@@ -30,36 +30,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-class JobsTracingConnection
-    : public bigquery_jobs_v2::JobsConnection {
+class JobsTracingConnection : public bigquery_jobs_v2::JobsConnection {
  public:
   ~JobsTracingConnection() override = default;
 
   explicit JobsTracingConnection(
-    std::shared_ptr<bigquery_jobs_v2::JobsConnection> child);
+      std::shared_ptr<bigquery_jobs_v2::JobsConnection> child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse>
-  Cancel(google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::JobCancelResponse> Cancel(
+      google::cloud::cpp::bigquery::jobs::v2::CancelRequest const& request)
+      override;
 
-  Status
-  DeleteJob(google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request) override;
+  Status DeleteJob(
+      google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  GetJob(google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> GetJob(
+      google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::GetQueryResultsResponse>
-  GetQueryResults(google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const& request) override;
+  GetQueryResults(
+      google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::Job>
-  InsertJob(google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::Job> InsertJob(
+      google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-  ListJobs(google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::JobList> ListJobs(
+      google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const& request)
+      override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-  Query(google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request) override;
+  StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> Query(
+      google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request)
+      override;
 
  private:
   std::shared_ptr<bigquery_jobs_v2::JobsConnection> child_;
@@ -73,8 +80,7 @@ class JobsTracingConnection
  * The connection is only decorated if tracing is enabled (as determined by the
  * connection's options).
  */
-std::shared_ptr<bigquery_jobs_v2::JobsConnection>
-MakeJobsTracingConnection(
+std::shared_ptr<bigquery_jobs_v2::JobsConnection> MakeJobsTracingConnection(
     std::shared_ptr<bigquery_jobs_v2::JobsConnection> conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

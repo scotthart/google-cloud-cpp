@@ -46,13 +46,18 @@ class MockProjectsConnection : public bigquery_projects_v2::ProjectsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>,
-  GetServiceAccount,
-  (google::cloud::cpp::bigquery::projects::v2::GetServiceAccountRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::GetServiceAccountResponse>,
+      GetServiceAccount,
+      (google::cloud::cpp::bigquery::projects::v2::
+           GetServiceAccountRequest const& request),
+      (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>,
-  ListProjects,
-  (google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const& request), (override));
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::bigquery::v2::ProjectList>, ListProjects,
+      (google::cloud::cpp::bigquery::projects::v2::ListProjectsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

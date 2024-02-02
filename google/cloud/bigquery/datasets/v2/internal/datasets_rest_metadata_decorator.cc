@@ -17,12 +17,12 @@
 // source: google/cloud/bigquery/datasets/v2/datasets.proto
 
 #include "google/cloud/bigquery/datasets/v2/internal/datasets_rest_metadata_decorator.h"
-#include "absl/strings/str_format.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
+#include "absl/strings/str_format.h"
 #include <memory>
 #include <utility>
 
@@ -32,91 +32,96 @@ namespace bigquery_datasets_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DatasetsRestMetadata::DatasetsRestMetadata(
-    std::shared_ptr<DatasetsRestStub> child,
-    std::string api_client_header)
+    std::shared_ptr<DatasetsRestStub> child, std::string api_client_header)
     : child_(std::move(child)),
       api_client_header_(
           api_client_header.empty()
               ? google::cloud::internal::GeneratedLibClientHeader()
               : std::move(api_client_header)) {}
 
-Status
-DatasetsRestMetadata::DeleteDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const& request) {
+Status DatasetsRestMetadata::DeleteDataset(
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::DeleteDatasetRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->DeleteDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestMetadata::GetDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::GetDatasetRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->GetDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestMetadata::InsertDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::InsertDatasetRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->InsertDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::DatasetList>
 DatasetsRestMetadata::ListDatasets(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::ListDatasetsRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->ListDatasets(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestMetadata::PatchDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::PatchDatasetRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->PatchDataset(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestMetadata::Undelete(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UndeleteRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->Undelete(rest_context, options, request);
 }
 
 StatusOr<google::cloud::cpp::bigquery::v2::Dataset>
 DatasetsRestMetadata::UpdateDataset(
-    rest_internal::RestContext& rest_context,
-    Options const& options, google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const& request) {
+    rest_internal::RestContext& rest_context, Options const& options,
+    google::cloud::cpp::bigquery::datasets::v2::UpdateDatasetRequest const&
+        request) {
   SetMetadata(rest_context, options);
   return child_->UpdateDataset(rest_context, options, request);
 }
 
-void DatasetsRestMetadata::SetMetadata(
-      rest_internal::RestContext& rest_context,
-      Options const& options, std::vector<std::string> const& params) {
+void DatasetsRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
+                                       Options const& options,
+                                       std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
   if (!params.empty()) {
     rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
   }
   if (options.has<UserProjectOption>()) {
-    rest_context.AddHeader(
-        "x-goog-user-project", options.get<UserProjectOption>());
+    rest_context.AddHeader("x-goog-user-project",
+                           options.get<UserProjectOption>());
   }
   if (options.has<google::cloud::QuotaUserOption>()) {
-    rest_context.AddHeader(
-        "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
+    rest_context.AddHeader("x-goog-quota-user",
+                           options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
     auto ms_rep = absl::StrCat(
         absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
-        absl::kZeroPad4));
+                  absl::kZeroPad4));
     rest_context.AddHeader("x-server-timeout",
-        ms_rep.insert(ms_rep.size() - 3, "."));
+                           ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 

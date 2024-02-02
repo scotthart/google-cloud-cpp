@@ -38,39 +38,58 @@ class TablesRestStub {
 
   virtual Status DeleteTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> GetTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::GetTableRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> InsertTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::TableList> ListTables(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> PatchTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse> TestIamPermissions(
+  virtual StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
+  TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::Table> UpdateTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) = 0;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+          request) = 0;
 };
 
 class DefaultTablesRestStub : public TablesRestStub {
@@ -78,45 +97,63 @@ class DefaultTablesRestStub : public TablesRestStub {
   ~DefaultTablesRestStub() override = default;
 
   explicit DefaultTablesRestStub(Options options);
-  DefaultTablesRestStub(
-      std::shared_ptr<rest_internal::RestClient> service,
-      Options options);
+  DefaultTablesRestStub(std::shared_ptr<rest_internal::RestClient> service,
+                        Options options);
 
   Status DeleteTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::DeleteTableRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Table> GetTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::GetTableRequest const& request)
+      override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Policy> GetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::GetIamPolicyRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Table> InsertTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::InsertTableRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::TableList> ListTables(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::ListTablesRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Table> PatchTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::PatchTableRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Policy> SetIamPolicy(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::SetIamPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse> TestIamPermissions(
+  StatusOr<google::cloud::cpp::bigquery::v2::TestIamPermissionsResponse>
+  TestIamPermissions(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::TestIamPermissionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cpp::bigquery::v2::Table> UpdateTable(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const& request) override;
+      Options const& options,
+      google::cloud::cpp::bigquery::tables::v2::UpdateTableRequest const&
+          request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

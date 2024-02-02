@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_TABLEDATA_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TABLEDATA_V2_TABLEDATA_CONNECTION_H
 
-#include "google/cloud/backoff_policy.h"
 #include "google/cloud/bigquery/tabledata/v2/internal/tabledata_retry_traits.h"
 #include "google/cloud/bigquery/tabledata/v2/tabledata_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -61,14 +61,14 @@ class TabledataLimitedErrorCountRetryPolicy : public TabledataRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit TabledataLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   TabledataLimitedErrorCountRetryPolicy(
       TabledataLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : TabledataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TabledataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   TabledataLimitedErrorCountRetryPolicy(
       TabledataLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : TabledataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : TabledataLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -88,7 +88,9 @@ class TabledataLimitedErrorCountRetryPolicy : public TabledataRetryPolicy {
   using BaseType = TabledataRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<bigquery_tabledata_v2_internal::TabledataRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      bigquery_tabledata_v2_internal::TabledataRetryTraits>
+      impl_;
 };
 
 /**
@@ -126,12 +128,14 @@ class TabledataLimitedTimeRetryPolicy : public TabledataRetryPolicy {
   template <typename DurationRep, typename DurationPeriod>
   explicit TabledataLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  TabledataLimitedTimeRetryPolicy(TabledataLimitedTimeRetryPolicy&& rhs) noexcept
-    : TabledataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  TabledataLimitedTimeRetryPolicy(TabledataLimitedTimeRetryPolicy const& rhs) noexcept
-    : TabledataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TabledataLimitedTimeRetryPolicy(
+      TabledataLimitedTimeRetryPolicy&& rhs) noexcept
+      : TabledataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  TabledataLimitedTimeRetryPolicy(
+      TabledataLimitedTimeRetryPolicy const& rhs) noexcept
+      : TabledataLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -153,7 +157,9 @@ class TabledataLimitedTimeRetryPolicy : public TabledataRetryPolicy {
   using BaseType = TabledataRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<bigquery_tabledata_v2_internal::TabledataRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      bigquery_tabledata_v2_internal::TabledataRetryTraits>
+      impl_;
 };
 
 /**
@@ -175,10 +181,13 @@ class TabledataConnection {
   virtual Options options() { return Options{}; }
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataInsertAllResponse>
-  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const& request);
+  InsertAll(google::cloud::cpp::bigquery::tabledata::v2::InsertAllRequest const&
+                request);
 
   virtual StatusOr<google::cloud::cpp::bigquery::v2::TableDataList>
-  ListTabledata(google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const& request);
+  ListTabledata(
+      google::cloud::cpp::bigquery::tabledata::v2::ListTabledataRequest const&
+          request);
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -17,10 +17,10 @@
 // source: google/cloud/bigquery/jobs/v2/jobs.proto
 
 #include "google/cloud/bigquery/jobs/v2/jobs_connection.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_option_defaults.h"
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_tracing_connection.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_options.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
@@ -40,14 +40,12 @@ JobsConnection::Cancel(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-JobsConnection::DeleteJob(
+Status JobsConnection::DeleteJob(
     google::cloud::cpp::bigquery::jobs::v2::DeleteJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsConnection::GetJob(
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsConnection::GetJob(
     google::cloud::cpp::bigquery::jobs::v2::GetJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -58,20 +56,17 @@ JobsConnection::GetQueryResults(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::Job>
-JobsConnection::InsertJob(
+StatusOr<google::cloud::cpp::bigquery::v2::Job> JobsConnection::InsertJob(
     google::cloud::cpp::bigquery::jobs::v2::InsertJobRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::JobList>
-JobsConnection::ListJobs(
+StatusOr<google::cloud::cpp::bigquery::v2::JobList> JobsConnection::ListJobs(
     google::cloud::cpp::bigquery::jobs::v2::ListJobsRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
-JobsConnection::Query(
+StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse> JobsConnection::Query(
     google::cloud::cpp::bigquery::jobs::v2::QueryRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
