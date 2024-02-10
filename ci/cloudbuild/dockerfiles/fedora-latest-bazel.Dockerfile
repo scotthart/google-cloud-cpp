@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:39
+FROM fedora:37
 ARG NCPU=4
 ARG ARCH=amd64
 
@@ -20,7 +20,7 @@ ARG ARCH=amd64
 # code.
 RUN dnf install -y clang diffutils findutils gcc-c++ git lcov libcxx-devel \
         libcxxabi-devel libasan libubsan libtsan llvm patch python python3 \
-        python-pip tar unzip w3m wget which zip zlib-devel
+        python-pip tar unzip w3m wget which zip zlib-devel libarrow-devel
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel

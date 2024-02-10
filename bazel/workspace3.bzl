@@ -34,3 +34,9 @@ def gl_cpp_workspace3(name = None):
     # Protobuf dependencies must be loaded after the gRPC dependencies.
     protobuf_deps()
     opentelemetry_cpp_deps()
+
+    native.new_local_repository(
+        name = "libarrow",
+        path = "/usr",
+        build_file = "bazel/arrow.BUILD",
+    )

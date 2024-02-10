@@ -33,8 +33,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::vector<std::pair<std::string, std::string>> TrimEmptyQueryParameters(
     std::vector<std::pair<std::string, std::string>> query_params);
 
-Status RestResponseToProto(google::protobuf::Message& destination,
-                           RestResponse&& rest_response);
+struct DefaultResponseHandler {
+  static Status RestResponseToProto(google::protobuf::Message& destination,
+                                    RestResponse&& rest_response);
+};
 
 StatusOr<std::string> ProtoRequestToJsonPayload(
     google::protobuf::Message const& request, bool preserve_proto_field_names);
@@ -50,10 +52,11 @@ inline std::string const& DetermineApiVersion(
              : default_version;
 }
 
-template <typename Response>
+template <typename Response, typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> RestResponseToProto(RestResponse&& rest_response) {
   Response destination;
-  auto status = RestResponseToProto(destination, std::move(rest_response));
+  auto status = ResponseHandler::RestResponseToProto(destination,
+                                                     std::move(rest_response));
   if (!status.ok()) return status;
   return destination;
 }
@@ -70,7 +73,8 @@ Status Delete(
   return AsStatus(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> Delete(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, bool, std::string path,
@@ -79,10 +83,11 @@ StatusOr<Response> Delete(
       CreateRestRequest(std::move(path), std::move(query_params));
   auto response = client.Delete(rest_context, rest_request);
   if (!response.ok()) return response.status();
-  return RestResponseToProto<Response>(std::move(**response));
+  return RestResponseToProto<Response, ResponseHandler>(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> Get(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const&, bool, std::string path,
@@ -91,10 +96,11 @@ StatusOr<Response> Get(
       CreateRestRequest(std::move(path), std::move(query_params));
   auto response = client.Get(rest_context, rest_request);
   if (!response.ok()) return response.status();
-  return RestResponseToProto<Response>(std::move(**response));
+  return RestResponseToProto<Response, ResponseHandler>(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> Patch(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, bool preserve_proto_field_names, std::string path,
@@ -108,10 +114,11 @@ StatusOr<Response> Patch(
   auto response = client.Patch(rest_context, rest_request,
                                {absl::MakeConstSpan(*json_payload)});
   if (!response.ok()) return response.status();
-  return RestResponseToProto<Response>(std::move(**response));
+  return RestResponseToProto<Response, ResponseHandler>(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> Post(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, bool preserve_proto_field_names, std::string path,
@@ -125,7 +132,7 @@ StatusOr<Response> Post(
   auto response = client.Post(rest_context, rest_request,
                               {absl::MakeConstSpan(*json_payload)});
   if (!response.ok()) return response.status();
-  return RestResponseToProto<Response>(std::move(**response));
+  return RestResponseToProto<Response, ResponseHandler>(std::move(**response));
 }
 
 template <typename Request>
@@ -145,7 +152,8 @@ Status Post(
   return AsStatus(std::move(**response));
 }
 
-template <typename Response, typename Request>
+template <typename Response, typename Request,
+          typename ResponseHandler = DefaultResponseHandler>
 StatusOr<Response> Put(
     rest_internal::RestClient& client, rest_internal::RestContext& rest_context,
     Request const& request, bool preserve_proto_field_names, std::string path,
@@ -159,7 +167,7 @@ StatusOr<Response> Put(
   auto response = client.Put(rest_context, rest_request,
                              {absl::MakeConstSpan(*json_payload)});
   if (!response.ok()) return response.status();
-  return RestResponseToProto<Response>(std::move(**response));
+  return RestResponseToProto<Response, ResponseHandler>(std::move(**response));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

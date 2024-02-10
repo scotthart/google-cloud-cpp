@@ -20,14 +20,15 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Status RestResponseToProto(google::protobuf::Message& destination,
-                           RestResponse&& rest_response) {
+Status DefaultResponseHandler::RestResponseToProto(
+    google::protobuf::Message& destination, RestResponse&& rest_response) {
   if (rest_response.StatusCode() != HttpStatusCode::kOk) {
     return AsStatus(std::move(rest_response));
   }
   auto json_response =
       rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
   if (!json_response.ok()) return std::move(json_response).status();
+
   google::protobuf::util::JsonParseOptions parse_options;
   parse_options.ignore_unknown_fields = true;
   auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(

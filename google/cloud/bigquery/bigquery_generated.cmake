@@ -33,7 +33,11 @@ function (bigquery_service_library dir library)
                $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                $<INSTALL_INTERFACE:include>)
 
-    target_link_libraries(${library} PUBLIC ${_opt_DEPS})
+    target_link_libraries(
+        ${library}
+        PUBLIC ${_opt_DEPS} google-cloud-cpp::rest_protobuf_internal
+               google-cloud-cpp::grpc_utils google-cloud-cpp::rest_internal
+               google-cloud-cpp::common)
 
     google_cloud_cpp_add_common_options(${library})
     set_target_properties(
@@ -89,8 +93,10 @@ endforeach ()
 
 foreach (dir IN LISTS service_dirs)
     string(REPLACE "/v2/" "" short_dir "${dir}")
-    bigquery_service_library(${dir} bigquery_${short_dir} DEPS
-                             google-cloud-cpp::bigquery_${short_dir}_protos)
+    bigquery_service_library(
+        ${dir} bigquery_${short_dir} DEPS
+        google-cloud-cpp::rest_protobuf_internal
+        google-cloud-cpp::bigquery_${short_dir}_protos)
     list(APPEND bigquery_lib_targets "bigquery_${short_dir}")
 endforeach ()
 
@@ -142,17 +148,21 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
         "include/google/cloud/bigquery")
 endforeach ()
 
-# if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
-# add_executable(bigquery_quickstart "quickstart/quickstart.cc")
-# target_link_libraries(bigquery_quickstart PRIVATE
-# google-cloud-cpp::bigquery_disks)
-# google_cloud_cpp_add_common_options(bigquery_quickstart) add_test( NAME
-# bigquery_quickstart COMMAND cmake -P
-# "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
-# $<TARGET_FILE:bigquery_quickstart> GOOGLE_CLOUD_PROJECT
-# GOOGLE_CLOUD_CPP_TEST_ZONE) set_tests_properties(bigquery_quickstart
-# PROPERTIES LABELS "integration-test;quickstart")
-# add_subdirectory(integration_tests) endif ()
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    add_executable(bigquery_quickstart_generated
+                   "quickstart/quickstart_generated.cc")
+    target_link_libraries(bigquery_quickstart_generated
+                          PRIVATE google-cloud-cpp::bigquery_generated)
+    google_cloud_cpp_add_common_options(bigquery_quickstart_generated)
+    add_test(
+        NAME bigquery_quickstart_generated
+        COMMAND
+            cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
+            $<TARGET_FILE:bigquery_quickstart_generated> GOOGLE_CLOUD_PROJECT
+            GOOGLE_CLOUD_CPP_TEST_ZONE)
+    set_tests_properties(bigquery_quickstart_generated
+                         PROPERTIES LABELS "integration-test;quickstart")
+endif ()
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

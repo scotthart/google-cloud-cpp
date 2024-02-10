@@ -1,0 +1,7 @@
+--- /dev/null	2022-10-16 17:03:40.015999686 +0000
++++ arrow/cpp/src/arrow/util/config.h	2022-11-07 22:08:29.135633955 +0000
+@@ -0,0 +1,3 @@
++#ifndef ARROW_UTIL_CONFIG_H
++#define ARROW_UTIL_CONFIG_H
++#endif
+

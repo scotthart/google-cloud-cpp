@@ -19,9 +19,11 @@
 #include "google/cloud/bigquery/jobs/v2/internal/jobs_rest_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/jobs/v2/jobs.pb.h>
+#include <nlohmann/json.hpp>
 #include <memory>
 
 namespace google {
@@ -140,12 +142,54 @@ DefaultJobsRestStub::ListJobs(
            std::make_pair("state_filter", request.state_filter())}));
 }
 
+struct QueryResponseHandler {
+  static Status RestResponseToProto(
+      google::protobuf::Message& destination,
+      rest_internal::RestResponse&& rest_response) {
+    if (rest_response.StatusCode() != rest_internal::HttpStatusCode::kOk) {
+      return AsStatus(std::move(rest_response));
+    }
+    auto json_response =
+        rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
+    if (!json_response.ok()) return std::move(json_response).status();
+
+    nlohmann::json rows{};
+    auto response = nlohmann::json::parse(*json_response);
+    if (response.contains("rows")) {
+      std::cout << "swapped rows" << std::endl;
+      auto rows_iter = response.find("rows");
+      rows.swap(*rows_iter);
+    }
+
+    std::string dump = response.dump();
+
+    google::protobuf::util::JsonParseOptions parse_options;
+    parse_options.ignore_unknown_fields = true;
+    auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
+        dump, &destination, parse_options);
+    if (!json_to_proto_status.ok()) {
+      return Status(
+          static_cast<StatusCode>(json_to_proto_status.code()),
+          std::string(json_to_proto_status.message()),
+          GCP_ERROR_INFO()
+              .WithReason("Failure creating proto Message from Json")
+              .WithMetadata("message_type", destination.GetTypeName())
+              .WithMetadata("json_string", dump)
+              .Build(static_cast<StatusCode>(json_to_proto_status.code())));
+    }
+
+    return {};
+  }
+};
+
 StatusOr<google::cloud::cpp::bigquery::v2::QueryResponse>
 DefaultJobsRestStub::Query(
     google::cloud::rest_internal::RestContext& rest_context,
     Options const& options,
     google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request) {
-  return rest_internal::Post<google::cloud::cpp::bigquery::v2::QueryResponse>(
+  return rest_internal::Post<google::cloud::cpp::bigquery::v2::QueryResponse,
+                             google::cloud::cpp::bigquery::v2::QueryRequest,
+                             QueryResponseHandler>(
       *service_, rest_context, request.query_request_resource(), false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",

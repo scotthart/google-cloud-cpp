@@ -25,7 +25,8 @@ RUN dnf makecache && \
         cmake diffutils findutils gcc-c++ git \
         libcurl-devel llvm make ninja-build \
         openssl-devel patch python python3 \
-        python-pip tar unzip w3m wget which zip zlib-devel
+        python-pip tar unzip w3m wget which zip zlib-devel \
+    libarrow-devel
 
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel

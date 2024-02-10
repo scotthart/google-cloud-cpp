@@ -16,6 +16,7 @@
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:utils.bzl", "maybe")
+#load("@bazel_tools//tools/build_defs/repo:repository.bzl", "new_local_repository")
 
 def gl_cpp_workspace0(name = None):
     """Loads dependencies need to compile the google-cloud-cpp libraries.
@@ -170,7 +171,7 @@ def gl_cpp_workspace0(name = None):
         http_archive,
         name = "com_github_grpc_grpc",
         urls = [
-            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.60.0.tar.gz",
+            #            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_grpc_grpc/v1.60.0.tar.gz",
             "https://github.com/grpc/grpc/archive/v1.60.0.tar.gz",
         ],
         sha256 = "437068b8b777d3b339da94d3498f1dc20642ac9bfa76db43abdd522186b1542b",
@@ -247,3 +248,26 @@ def gl_cpp_workspace0(name = None):
             "@github_nlohmann_json": "@com_github_nlohmann_json",
         },
     )
+
+#    native.new_local_repository(
+#        name = "libarrow",
+#        path = "/usr",
+#        build_file = "bazel/arrow.BUILD",
+#    )
+
+# Apache Arrow for BigQuery
+
+#    maybe(
+#        http_archive,
+#        name = "com_github_apache_arrow",
+#        urls = [
+#            "https://storage.googleapis.com/cloud-cpp-community-archive/com_github_apache_arrow/apache-arrow-15.0.0.tar.gz",
+#            "https://github.com/apache/arrow/archive/apache-arrow-15.0.0.tar.gz",
+#        ],
+#        sha256 = "ab74c60c46938505c8cd7599b1d2826c68450645d5860d0ff40f67e371a5d0b5",
+#        strip_prefix = "arrow-apache-arrow-15.0.0",
+#        build_file = Label("//bazel:arrow.BUILD"),
+#        patch_tool = "patch",
+#        patch_args = ["-p1"],
+#        patches = [Label("//bazel:arrow_util_config.h.patch")],
+#    )

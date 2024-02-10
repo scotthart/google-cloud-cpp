@@ -25,3 +25,14 @@ cc_binary(
         "@google_cloud_cpp//:bigquery",
     ],
 )
+
+cc_binary(
+    name = "quickstart_generated",
+    srcs = [
+        "quickstart_generated.cc",
+    ],
+    deps = [
+        "@google_cloud_cpp//google/cloud/bigquery:google_cloud_cpp_bigquery_datasets",
+        "@google_cloud_cpp//google/cloud/bigquery:google_cloud_cpp_bigquery_jobs",
+    ],
+)

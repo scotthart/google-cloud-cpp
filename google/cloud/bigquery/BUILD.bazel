@@ -69,6 +69,7 @@ cc_library(
         "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc",
+        "@libarrow",
     ],
 )
 
@@ -222,7 +223,7 @@ load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
     name = "google_cloud_cpp_bigquery_" + service.replace("/v2/", ""),
     srcs = [":" + service.replace("/v2/", "_srcs")],
     hdrs = [":" + service.replace("/v2/", "_hdrs")],
-    visibility = ["//:__pkg__"],
+    visibility = ["//visibility:public"],
     deps = [
         "//protos/google/cloud/bigquery:" + service.replace("/v2/", "") + "_cc_proto",
         "//:common",
@@ -230,6 +231,7 @@ load(":service_dirs.bzl", "operation_service_dirs", "service_dirs")
         "//google/cloud:google_cloud_cpp_rest_internal",
         "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
         "//protos:system_includes",
+        "@libarrow",
     ],
 ) for service in service_dirs]
 

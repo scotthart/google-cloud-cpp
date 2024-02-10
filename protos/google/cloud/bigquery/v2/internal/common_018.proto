@@ -23,8 +23,16 @@ package google.cloud.cpp.bigquery.v2;
 
 import "google/protobuf/any.proto";
 
+message StringCell {
+  optional string sc = 1 [json_name = "sc"];
+}
+
 message TableCell {
   optional google.protobuf.Any v = 1 [json_name = "v"];
+  //  oneof foo {
+  //    string v = 1;
+  //    google.protobuf.Any v = 2;
+  //}
 }
 
 message TableRow {
