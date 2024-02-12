@@ -17,8 +17,10 @@ project(google-cloud-cpp-universe-domain-demo CXX)
 
 find_package(google_cloud_cpp_bigquery REQUIRED)
 find_package(google_cloud_cpp_compute REQUIRED)
+find_package(google_cloud_cpp_iam REQUIRED)
 find_package(google_cloud_cpp_kms REQUIRED)
 find_package(google_cloud_cpp_pubsub REQUIRED)
+find_package(google_cloud_cpp_speech REQUIRED)
 find_package(google_cloud_cpp_storage REQUIRED)
 find_package(google_cloud_cpp_universe_domain REQUIRED)
 
@@ -29,7 +31,7 @@ else ()
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif ()
 
-set(universe_domain_demos bigquery compute kms pubsub storage)
+set(universe_domain_demos bigquery compute iam kms pubsub speech storage)
 foreach (library ${universe_domain_demos})
     add_executable(${library}_demo ${library}.cc)
     target_link_libraries(${library}_demo google-cloud-cpp::${library}

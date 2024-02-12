@@ -21,18 +21,35 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
+  if (argc != 3 && argc != 4) {
+    std::cerr << "Usage: " << argv[0]
+              << " project-id location-id [intended-universe-domain]\n";
     return 1;
   }
   namespace gc = ::google::cloud;
   namespace kms = ::google::cloud::kms_v1;
   auto const location = gc::Location(argv[1], argv[2]);
+  absl::optional<std::string> const intended_universe_domain =
+      [&]() -> absl::optional<std::string> {
+    if (argc == 4) {
+      return argv[3];
+    }
+    return absl::nullopt;
+  }();
 
   // Interrogate credentials for universe_domain and add the value to returned
   // options.
   auto options = gc::AddUniverseDomainOption(gc::ExperimentalTag{});
   if (!options.ok()) throw std::move(options).status();
+
+  // If specified, verify universe_domain value from credentials.
+  if (intended_universe_domain &&
+      options->get<gc::internal::UniverseDomainOption>() !=
+          *intended_universe_domain) {
+    throw gc::Status{gc::StatusCode::kInvalidArgument,
+                     "universe_domain retrieved from credentials does not "
+                     "match intended-universe-domain"};
+  }
 
   // Override retry policy to quickly exit if there's a failure.
   options->set<kms::KeyManagementServiceRetryPolicyOption>(

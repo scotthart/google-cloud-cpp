@@ -12,27 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/compute/disks/v1/disks_client.h"
-#include "google/cloud/compute/disks/v1/disks_options.h"
+#include "google/cloud/iam/v2/policies_client.h"
+#include "google/cloud/iam/v2/policies_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_options.h"
 #include "google/cloud/universe_domain.h"
 #include "google/cloud/universe_domain_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <iostream>
 #include <thread>
 
-namespace {
-
-// This is necessary to access alternate compute API.
-void AddTargetApiVersionFromEnvVar(google::cloud::Options& options) {
-  auto compute_api = google::cloud::internal::GetEnv("COMPUTE_TARGET_API");
-  if (compute_api) {
-    options.set<google::cloud::rest_internal::TargetApiVersionOption>(
-        *compute_api);
-  }
-}
-
-}  // namespace
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -43,18 +32,45 @@ int main(int argc, char* argv[]) try {
   std::string const zone_id = argv[2];
 
   // Create aliases to make the code easier to read.
-  namespace disks = ::google::cloud::compute_disks_v1;
+  namespace iam_v2 = ::google::cloud::iam_v2;
   auto options =
       google::cloud::AddUniverseDomainOption(google::cloud::ExperimentalTag{});
   if (!options.ok()) throw std::move(options).status();
 
   // Override retry policy to quickly exit if there's a failure.
-  options->set<disks::DisksRetryPolicyOption>(
-      std::make_shared<disks::DisksLimitedErrorCountRetryPolicy>(3));
-  // set env var COMPUTE_TARGET_API to select api other than "v1".
-  AddTargetApiVersionFromEnvVar(*options);
-  auto client = disks::DisksClient(disks::MakeDisksConnectionRest(*options));
+  options->set<iam_v2::PoliciesRetryPolicyOption>(
+      std::make_shared<iam_v2::PoliciesLimitedErrorCountRetryPolicy>(3));
+  auto client = iam_v2::PoliciesClient(iam_v2::MakePoliciesConnection(*options));
 
+  std::cout << "iam.ListPolicies:\n";
+  for (auto p : client.ListPolicies("policies/*/*")) {
+    if (!p) throw std::move(p).status();
+    std::cout << p->DebugString() << "\n";
+  }
+
+
+  google::iam::v2::Policy policy;
+  policy.set_name("demo-test-policy");
+  google::iam::v2::CreatePolicyRequest request;
+  // policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies
+  request.set_parent(absl::StrCat(
+      R"""(policies/cloudresourcemanager.googleapis.com%2Fprojects%2F)""",
+      project_id,
+      R"""(/denypolicies)"""
+      ));
+  request.set_policy_id("demo");
+  *request.mutable_policy() = policy;
+
+  std::cout << "iam.ListPoicies:\n";
+  auto create_policy = client.CreatePolicy(request).get();
+  if (!create_policy.ok()) throw std::move(create_policy).status();
+  std::cout << "Created IAM Policy: " << create_policy->DebugString() << "\n";
+
+  auto delete_policy = client.DeletePolicy(create_policy->name()).get();
+  if (!delete_policy.ok()) throw std::move(delete_policy).status();
+  std::cout << "Deleted IAM Policy: " << create_policy->name() << "\n";
+
+#if 0
   google::cloud::cpp::compute::v1::Disk disk;
   disk.set_name("demo-test-disk");
   disk.set_size_gb("10");
@@ -82,7 +98,7 @@ int main(int argc, char* argv[]) try {
     std::cout << disk->DebugString() << "\n";
   }
 #endif
-
+#endif
   return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
