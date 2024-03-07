@@ -40,8 +40,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::shared_ptr<SpeechStub> CreateDefaultSpeechStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
+  std::cout << __func__ << " endpoint=" << options.get<EndpointOption>() << "\n";
+  std::shared_ptr<grpc::Channel> channel =
+      auth->CreateChannel(options.get<EndpointOption>(),
+      internal::MakeChannelArguments(options));
+
+  std::cout << __func__ << " service_config=" << channel->GetServiceConfigJSON() << "\n";
   auto service_grpc_stub = google::cloud::speech::v2::Speech::NewStub(channel);
   std::shared_ptr<SpeechStub> stub = std::make_shared<DefaultSpeechStub>(
       std::move(service_grpc_stub),

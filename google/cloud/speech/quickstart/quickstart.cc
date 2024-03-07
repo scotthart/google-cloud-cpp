@@ -14,9 +14,61 @@
 
 //! [all]
 #include "google/cloud/speech/v1/speech_client.h"
+#include "google/cloud/speech/v2/speech_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
+
+int main(int argc, char* argv[]) {
+  auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
+  namespace speech_v2 = ::google::cloud::speech::v2;
+  google::cloud::Options options;
+//  auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
+//      "us-central1-speech.googleapis.com");
+//  auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
+//      "eu-speech.googleapis.com");
+  auto connection = google::cloud::speech_v2::MakeSpeechConnection(options);
+  auto client = google::cloud::speech_v2::SpeechClient(connection, options);
+
+  google::cloud::speech::v2::Recognizer recognizer;
+//  recognizer.mutable_config()->set_model("short");
+//  *(recognizer.mutable_config()->add_language_codes()) = "en-US";
+//  speech_v2::AutoDetectDecodingConfig config;
+//  *recognizer.mutable_config()->mutable_auto_decoding_config() = config;
+
+//  auto recognizer_result = client.CreateRecognizer(
+//      "projects/cloud-cpp-testing-resources/locations/us-central1",
+//      recognizer,
+//      "my-recognizer").get();
+//
+//  if (!recognizer_result) {
+//    std::cerr << "CreateRecognizer failed: " << recognizer_result.status() << "\n";
+//    return 1;
+//  }
+
+
+  google::cloud::speech::v2::RecognizeRequest request;
+  *(request.mutable_config()->add_language_codes()) = "en-US";
+  request.mutable_config()->set_model("short");
+  speech_v2::AutoDetectDecodingConfig config;
+  *request.mutable_config()->mutable_auto_decoding_config() = config;
+//  request.set_recognizer(
+//      "projects/cloud-cpp-testing-resources/locations/us-central1/recognizers/my-recognizer");
+  request.set_recognizer(
+      "projects/cloud-cpp-testing-resources/locations/global/recognizers/_");
+  request.set_uri(kDefaultUri);
+
+  auto response = client.Recognize(request, options);
+
+  if (response.status().code() != google::cloud::StatusCode::kOk) {
+    // Output: expected resource location to be global, but found asia-southeast1 in resource name.
+    std::cerr << "Recognize failed: " << response.status().message() << "\n";
+    return 1;
+  }
+}
+
+#if 0
 int main(int argc, char* argv[]) try {
   auto constexpr kDefaultUri = "gs://cloud-samples-data/speech/hello.wav";
   if (argc > 2) {
@@ -43,4 +95,5 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
+#endif
 //! [all]
