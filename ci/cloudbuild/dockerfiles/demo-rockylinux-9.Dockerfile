@@ -29,6 +29,20 @@ RUN dnf makecache && \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
+# ```bash
+RUN dnf install -y https://apache.jfrog.io/artifactory/arrow/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/apache-arrow-release-latest.rpm
+RUN dnf --enablerepo=crb install -y snappy-devel utf8proc-devel
+RUN dnf install -y arrow-devel-9.0.0-1.el9
+# ```
+
+
+# Sets root's password to the empty string to enable users to get a root shell
+# inside the container with `su -` and no password. Sudo would not work because
+# we run these containers as the invoking user's uid, which does not exist in
+# the container's /etc/passwd file.
+RUN echo 'root:' | chpasswd
+
+
 # Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
 # slow when handling `.pc` files with lots of `Requires:` deps, which happens
 # with Abseil. If you plan to use `pkg-config` with any of the installed

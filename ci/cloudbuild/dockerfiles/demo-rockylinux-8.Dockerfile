@@ -29,6 +29,38 @@ RUN dnf makecache && \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
+
+#    1  dnf install -y arrow-devel
+#    2  dnf install -y epel-release
+#    3  dnf install -y arrow-devel
+#    4  dnf install -y https://apache.jfrog.io/artifactory/arrow/almalinux/$(cut -d: -f5 /etc/system-release-cpe | cut -d. -f1)/apache-arrow-release-latest.rpm
+#    5  dnf install -y arrow-devel
+#    6  dnf install --nobest -y arrow-devel
+#    7  dnf install -y snappy-devel
+#    8  dnf install -y snappy-devel
+#    9  dnf --enablerepo=powertools install snappy-devel
+#   10  dnf install --nobest -y arrow-devel
+#   11  find /usr/include/arrow/ -name '*.h' -exec grep -H optional {} \;
+#   12  find /usr/include/arrow/ -name '*.h' -exec grep -H 'std::optional' {} \;
+#   13  dnf --showduplicates list arrow-devel
+#   14  dnf install -y arrow-devel-11.0.0.1.el8
+#   15  dnf install -y arrow-devel-11.0.0-1.el8
+#   16  find /usr/include/arrow/ -name '*.h' -exec grep -H 'std::optional' {} \;
+#   17  dnf --showduplicates list arrow-devel
+#   18  dnf install -y arrow-devel-9.0.0-1.el8
+#   19  dnf install -y gflags glog
+#   20  dnf --enablerepo=powertools install gflags glog
+#   21  dnf install -y arrow-devel-9.0.0-1.el8
+#   22  find /usr/include/arrow/ -name '*.h' -exec grep -H 'std::optional' {} \;
+
+
+
+# Sets root's password to the empty string to enable users to get a root shell
+# inside the container with `su -` and no password. Sudo would not work because
+# we run these containers as the invoking user's uid, which does not exist in
+# the container's /etc/passwd file.
+RUN echo 'root:' | chpasswd
+
 # Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
 # slow when handling `.pc` files with lots of `Requires:` deps, which happens
 # with Abseil. If you plan to use `pkg-config` with any of the installed
