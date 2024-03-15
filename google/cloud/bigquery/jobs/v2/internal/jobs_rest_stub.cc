@@ -23,6 +23,14 @@
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/jobs/v2/jobs.pb.h>
+#include <arrow/array/array_nested.h>
+#include <arrow/array/data.h>
+#include <arrow/io/memory.h>
+#include <arrow/ipc/api.h>
+#include <arrow/ipc/reader.h>
+#include <arrow/ipc/writer.h>
+#include <arrow/json/api.h>
+#include <arrow/record_batch.h>
 #include <nlohmann/json.hpp>
 #include <memory>
 
@@ -144,7 +152,8 @@ DefaultJobsRestStub::ListJobs(
 
 struct QueryResponseHandler {
   static Status RestResponseToProto(
-      google::protobuf::Message& destination,
+      //      google::protobuf::Message& destination,
+      google::cloud::cpp::bigquery::v2::QueryResponse& query_response,
       rest_internal::RestResponse&& rest_response) {
     if (rest_response.StatusCode() != rest_internal::HttpStatusCode::kOk) {
       return AsStatus(std::move(rest_response));
@@ -153,31 +162,127 @@ struct QueryResponseHandler {
         rest_internal::ReadAll(std::move(rest_response).ExtractPayload());
     if (!json_response.ok()) return std::move(json_response).status();
 
-    nlohmann::json rows{};
     auto response = nlohmann::json::parse(*json_response);
+    nlohmann::json json_rows{};
+#if 0
     if (response.contains("rows")) {
       std::cout << "swapped rows" << std::endl;
       auto rows_iter = response.find("rows");
-      rows.swap(*rows_iter);
+      json_rows.swap(*rows_iter);
     }
-
+#endif
     std::string dump = response.dump();
 
     google::protobuf::util::JsonParseOptions parse_options;
     parse_options.ignore_unknown_fields = true;
     auto json_to_proto_status = google::protobuf::util::JsonStringToMessage(
-        dump, &destination, parse_options);
+        dump, &query_response, parse_options);
     if (!json_to_proto_status.ok()) {
       return Status(
           static_cast<StatusCode>(json_to_proto_status.code()),
           std::string(json_to_proto_status.message()),
           GCP_ERROR_INFO()
               .WithReason("Failure creating proto Message from Json")
-              .WithMetadata("message_type", destination.GetTypeName())
+              .WithMetadata("message_type", query_response.GetTypeName())
               .WithMetadata("json_string", dump)
               .Build(static_cast<StatusCode>(json_to_proto_status.code())));
     }
 
+    //    for (auto& r : json_rows) {
+    //      google::cloud::cpp::bigquery::v2::TableRow table_row;
+    //      auto values_iter = r.find("f");
+    //      for (auto& v : *values_iter) {
+    //        *table_row.add_cells() = v.value("v", "");
+    //      }
+    //      *query_response.add_rows() = std::move(table_row);
+    //    }
+
+#if 0
+{"fields":[
+  {"mode":"NULLABLE","name":"state","type":"STRING"},
+  {"mode":"NULLABLE","name":"gender","type":"STRING"},
+  {"mode":"NULLABLE","name":"year","type":"INTEGER"},
+  {"mode":"NULLABLE","name":"name","type":"STRING"},
+  {"mode":"NULLABLE","name":"number","type":"INTEGER"}]}
+#endif
+#if 0
+    auto data_type = [](std::string const& type) -> std::shared_ptr<arrow::DataType> {
+      if (type == "STRING") return std::make_shared<arrow::StringType>();
+      if (type == "INTEGER") return std::make_shared<arrow::Int64Type>();
+      // temp sentinel for now; should return error
+      return std::make_shared<arrow::NullType>();
+    };
+
+    std::vector<std::shared_ptr<arrow::Field>> fields;
+    auto const& json_fields = response["schema"]["fields"];
+
+    std::vector<std::shared_ptr<arrow::ArrayData>> columns;
+    std::vector<std::vector<std::shared_ptr<arrow::Buffer>>> buffers;
+    std::vector<std::shared_ptr<arrow::DataType>> field_data_types;
+    for (auto const& f : json_fields) {
+      auto field_data_type = data_type(f.value("type", ""));
+      field_data_types.push_back(field_data_type);
+      auto field = std::make_shared<arrow::Field>(
+          f.value("name", ""), field_data_type,
+          ((f.value("mode", "") == "NULLABLE") ? true : false));
+      fields.push_back(field);
+      buffers.emplace_back();
+    }
+//      std::cout << "json_rows=" << json_rows.dump() << std::endl;
+//      std::cout << "json_rows.begin()=" << json_rows.begin()->dump() << std::endl;
+      for (auto const& r : json_rows) {
+//        std::cout << "r=" << r.dump() << std::endl;
+//        std::cout << (r.is_array() ? "is array" : "is NOT array") << std::endl;
+        auto cells = r["f"];
+        std::cout << "cells=" << cells << std::endl;
+        for (long unsigned i = 0; i < json_fields.size(); ++i) {
+          std::cout << "type_name=" << (r["f"][i]["v"]).type_name() << std::endl;
+          auto f = r.find("f");
+          auto idx = f->at(i);
+          auto v = idx.find("v");
+          auto ptr = (*v).get_ptr<nlohmann::json::string_t*>();
+//          auto const* foo = &(r["f"][i]["v"]);
+//          auto bar = (r["f"][i]["v"]).get_ptr<nlohmann::json::string_t*>();
+//          auto p_v = v.get_ptr<nlohmann::json::string_t*>();
+          std::cout << "v=" << *ptr << "\n";
+          auto b = std::make_shared<arrow::Buffer>(
+              reinterpret_cast<uint8_t const*>(ptr->data()), ptr->size());
+          buffers[i].push_back(b);
+        }
+      }
+
+      for (long unsigned i = 0; i < json_fields.size(); ++i) {
+      auto array_data = arrow::ArrayData::Make(
+          /*std::shared_ptr<DataType> type*/field_data_types[i],
+          /*int64_t length*/json_rows.size(),
+          /*std::vector<std::shared_ptr<Buffer>> buffers*/buffers[i],
+          /*int64_t null_count = kUnknownNullCount*/arrow::kUnknownNullCount,
+          /*int64_t offset = 0*/0
+          );
+      columns.push_back(array_data);
+    }
+
+    arrow::SchemaBuilder schema_builder(fields);
+    auto arrow_schema = schema_builder.Finish();
+    auto schema_buffer = arrow::ipc::SerializeSchema(*arrow_schema.ValueOrDie());
+
+    google::cloud::cpp::bigquery::v2::ArrowSchema proto_arrow_schema;
+//    proto_arrow_schema.set_serialized_schema(schema_buffer.ValueOrDie()->ToHexString());
+    *proto_arrow_schema.mutable_serialized_schema() = schema_buffer.ValueOrDie()->ToHexString();
+//    proto_arrow_schema.set_serialized_schema(schema_buffer.ValueOrDie()->data());
+    proto_arrow_schema.set_serialized_schema_size(schema_buffer.ValueOrDie()->size());
+    *query_response.mutable_arrow_schema() = proto_arrow_schema;
+
+    auto record_batch = arrow::RecordBatch::Make(arrow_schema.ValueOrDie(),
+                                                 json_rows.size(),
+                                                 columns);
+
+    auto record_batch_buffer = arrow::ipc::SerializeRecordBatch(*record_batch,
+                                                                arrow::ipc::IpcWriteOptions::Defaults());
+    google::cloud::cpp::bigquery::v2::ArrowRecordBatch proto_arrow_record_batch;
+    proto_arrow_record_batch.set_serialized_record_batch(record_batch_buffer.ValueOrDie()->ToHexString());
+    *query_response.mutable_arrow_record_batch() = proto_arrow_record_batch;
+#endif
     return {};
   }
 };
@@ -188,8 +293,9 @@ DefaultJobsRestStub::Query(
     Options const& options,
     google::cloud::cpp::bigquery::jobs::v2::QueryRequest const& request) {
   return rest_internal::Post<google::cloud::cpp::bigquery::v2::QueryResponse,
-                             google::cloud::cpp::bigquery::v2::QueryRequest,
-                             QueryResponseHandler>(
+                             google::cloud::cpp::bigquery::v2::QueryRequest>(
+      //                             google::cloud::cpp::bigquery::v2::QueryRequest,
+      //                             QueryResponseHandler>(
       *service_, rest_context, request.query_request_resource(), false,
       absl::StrCat("/", "bigquery", "/",
                    rest_internal::DetermineApiVersion("v2", options), "/",

@@ -611,6 +611,9 @@ service {
 ## BigQuery
 discovery_products {
   discovery_document_url: "file:///workspace/generator/discovery/bigquery_public_google_rest_v2.json"
+  proto_file_overrides: [
+    {schema_name: "TableCell", proto_override_file_path: "google/cloud/bigquery/v2/table_cell.proto"}
+  ]
 
  rest_services {
     service_proto_path: "google/cloud/bigquery/datasets/v2/datasets.proto"

@@ -21,6 +21,7 @@ top-level [README](/README.md#building-and-installing).
 ```cc
 #include "google/cloud/bigquery/storage/v1/bigquery_read_client.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include <arrow/array/array_nested.h>
 #include <arrow/array/data.h>
 #include <arrow/io/memory.h>
@@ -36,7 +37,41 @@ namespace {
 //   // Code to deserialize avro rows should be added here.
 // }
 
-void ProcessRowsInArrowFormat(
+google::cloud::StatusOr<std::int64_t> ProcessRowsInArrowFormat(
+    std::shared_ptr<arrow::Schema> schema,
+    std::shared_ptr<arrow::ipc::DictionaryMemo> dictionary_memo,
+    std::int64_t row_count,
+    ::google::cloud::bigquery::storage::v1::ArrowRecordBatch const&
+        record_batch_data) {
+  arrow::io::BufferReader record_buffer_reader(
+      record_batch_data.serialized_record_batch());
+
+  arrow::ipc::IpcReadOptions read_options;
+  auto rb_result = arrow::ipc::ReadRecordBatch(
+      schema, dictionary_memo.get(), read_options, &record_buffer_reader);
+  if (!rb_result.ok())
+    return google::cloud::internal::InternalError("arrow error");
+  std::shared_ptr<arrow::RecordBatch> rb = rb_result.ValueOrDie();
+  std::cout << rb->ToString() << "\n";
+  //  std::cout << "num_rows=" << rb->num_rows() << "\n";
+  return rb->num_rows();
+}
+
+std::shared_ptr<arrow::Schema> GetArrowSchema(
+    ::google::cloud::bigquery::storage::v1::ArrowSchema const& schema_data,
+    std::shared_ptr<arrow::ipc::DictionaryMemo> dictionary_memo) {
+  arrow::io::BufferReader schema_buffer_reader(schema_data.serialized_schema());
+  //  arrow::ipc::DictionaryMemo dictionary_memo;
+  auto result =
+      arrow::ipc::ReadSchema(&schema_buffer_reader, dictionary_memo.get());
+  if (!result.ok()) throw result.status();
+  std::shared_ptr<arrow::Schema> schema = result.ValueOrDie();
+  return schema;
+}
+
+#if 0
+google::cloud::StatusOr<std::shared_ptr<arrow::RecordBatch>>
+ProcessRowsInArrowFormat(
     ::google::cloud::bigquery::storage::v1::ArrowSchema const& schema_data,
     std::int64_t row_count,
     ::google::cloud::bigquery::storage::v1::ArrowRecordBatch const&
@@ -46,7 +81,7 @@ void ProcessRowsInArrowFormat(
   auto result = arrow::ipc::ReadSchema(&schema_buffer_reader, &dictionary_memo);
   if (!result.ok()) throw result.status();
   std::shared_ptr<arrow::Schema> schema = result.ValueOrDie();
-  std::cout << schema->ToString() << "\n";
+  //  std::cout << schema->ToString() << "\n";
 
   arrow::io::BufferReader record_buffer_reader(
       record_batch_data.serialized_record_batch());
@@ -54,12 +89,14 @@ void ProcessRowsInArrowFormat(
   arrow::ipc::IpcReadOptions read_options;
   auto rb_result = arrow::ipc::ReadRecordBatch(
       schema, &dictionary_memo, read_options, &record_buffer_reader);
-  if (!rb_result.ok()) throw rb_result.status();
+  if (!rb_result.ok())
+    return google::cloud::internal::InternalError("arrow error");
   std::shared_ptr<arrow::RecordBatch> rb = rb_result.ValueOrDie();
-  std::cout << rb->ToString() << "\n";
-  std::cout << "num_rows=" << rb->num_rows() << "\n";
+  //  std::cout << rb->ToString() << "\n";
+  //  std::cout << "num_rows=" << rb->num_rows() << "\n";
+  return rb;
 }
-
+#endif
 }  // namespace
 
 int main(int argc, char* argv[]) try {
@@ -78,7 +115,6 @@ int main(int argc, char* argv[]) try {
 
   // Create a namespace alias to make the code easier to read.
   namespace bigquery_storage = ::google::cloud::bigquery_storage_v1;
-  constexpr int kMaxReadStreams = 1;
   // Create the ReadSession.
   auto client = bigquery_storage::BigQueryReadClient(
       bigquery_storage::MakeBigQueryReadConnection());
@@ -88,28 +124,57 @@ int main(int argc, char* argv[]) try {
   read_session.set_data_format(
       google::cloud::bigquery::storage::v1::DataFormat::ARROW);
   read_session.set_table(table_name);
-  auto session =
-      client.CreateReadSession(project_name, read_session, kMaxReadStreams);
+  google::cloud::bigquery::storage::v1::CreateReadSessionRequest request;
+  request.set_parent(project_name);
+  *request.mutable_read_session() = read_session;
+  request.set_max_stream_count(20);
+  //  request.set_preferred_min_stream_count(20);
+  auto session = client.CreateReadSession(request);
   if (!session) throw std::move(session).status();
 
+  std::cout << " num streams=" << session->streams().size() << "\n";
   // Read rows from the ReadSession.
   constexpr int kRowOffset = 0;
-  auto read_rows = client.ReadRows(session->streams(0).name(), kRowOffset);
+  //  auto row_reader = client.ReadRows(session->streams(0).name(), kRowOffset);
 
-  std::int64_t num_rows = 0;
-  int i = 0;
-  for (auto const& row : read_rows) {
-    if (row.ok()) {
-      ++i;
-      num_rows += row->row_count();
-      //      ProcessRowsInAvroFormat(session->avro_schema(), row->avro_rows());
-      ProcessRowsInArrowFormat(session->arrow_schema(), row->row_count(),
-                               row->arrow_record_batch());
+  auto dictionary_memo = std::make_shared<arrow::ipc::DictionaryMemo>();
+  auto schema = GetArrowSchema(session->arrow_schema(), dictionary_memo);
+
+  std::vector<std::int64_t> num_rows;
+  num_rows.reserve(session->streams().size());
+
+  auto fn = [](auto row_reader, std::int64_t* num_rows,
+               std::shared_ptr<arrow::Schema> schema,
+               std::shared_ptr<arrow::ipc::DictionaryMemo> dictionary_memo) {
+    *num_rows = 0;
+    for (auto const& row_batch : row_reader) {
+      if (row_batch.ok()) {
+        *num_rows += row_batch->row_count();
+        ProcessRowsInArrowFormat(schema, dictionary_memo,
+                                 row_batch->row_count(),
+                                 row_batch->arrow_record_batch());
+      }
     }
+  };
+
+  std::vector<std::future<void>> tasks;
+  for (int i = 0; i != session->streams().size(); ++i) {
+    auto row_reader = client.ReadRows(session->streams(i).name(), kRowOffset);
+
+    tasks.push_back(std::async(std::launch::async, fn, std::move(row_reader),
+                               &num_rows[i], schema, dictionary_memo));
   }
 
-  std::cout << i << " iterations through StreamRange\n";
-  std::cout << num_rows << " rows read from table: " << table_name << "\n";
+  for (auto& t : tasks) {
+    t.get();
+  }
+
+  std::int64_t total_rows = 0;
+  for (int i = 0; i != session->streams().size(); ++i) {
+    total_rows += num_rows[i];
+  }
+
+  std::cout << total_rows << " rows read from table: " << table_name << "\n";
   return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";

@@ -23,6 +23,35 @@ load(
 )
 load("//google/cloud/bigquery:service_dirs.bzl", "operation_service_dirs", "service_dirs")
 
+# Custom protos target
+filegroup(
+    name = "custom_protos",
+    srcs = glob(["v2/*.proto"]),
+)
+
+proto_library(
+    name = "custom_proto",
+    srcs = [":custom_protos"],
+    strip_import_prefix = "/protos",
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/bigquery:__pkg__",
+    ],
+    deps = [
+        "@com_google_googleapis//google/cloud:extended_operations_proto",
+        "@com_google_protobuf//:any_proto",
+    ],
+)
+
+cc_proto_library(
+    name = "custom_cc_proto",
+    visibility = [
+        "//:__pkg__",
+        "//google/cloud/bigquery:__pkg__",
+    ],
+    deps = [":custom_proto"],
+)
+
 # Internal protos target
 filegroup(
     name = "internal_protos",
@@ -38,6 +67,7 @@ proto_library(
         "//google/cloud/bigquery:__pkg__",
     ],
     deps = [
+        ":custom_proto",
         "@com_google_googleapis//google/cloud:extended_operations_proto",
         "@com_google_protobuf//:any_proto",
     ],
@@ -49,7 +79,11 @@ cc_proto_library(
         "//:__pkg__",
         "//google/cloud/bigquery:__pkg__",
     ],
-    deps = [":internal_proto"],
+    deps = [
+        ":custom_cc_proto",
+        ":custom_proto",
+        ":internal_proto",
+    ],
 )
 
 # Service proto targets
