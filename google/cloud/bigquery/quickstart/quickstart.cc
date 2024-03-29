@@ -33,7 +33,7 @@ namespace {
 
 google::cloud::StatusOr<std::int64_t> ProcessRowsInArrowFormat(
     std::shared_ptr<arrow::Schema> schema,
-    std::shared_ptr<arrow::ipc::DictionaryMemo> dictionary_memo,
+    std::shared_ptr<arrow::ipc::DictionaryMemo const> dictionary_memo,
     std::int64_t row_count,
     ::google::cloud::bigquery::storage::v1::ArrowRecordBatch const&
         record_batch_data) {
@@ -107,8 +107,11 @@ int main(int argc, char* argv[]) try {
   // identical.
   std::string const table_name = argv[2];
 
+  using google::cloud::StatusOr;
+  using google::cloud::StreamRange;
   // Create a namespace alias to make the code easier to read.
   namespace bigquery_storage = ::google::cloud::bigquery_storage_v1;
+  namespace storage_proto = ::google::cloud::bigquery::storage::v1;
   // Create the ReadSession.
   auto client = bigquery_storage::BigQueryReadClient(
       bigquery_storage::MakeBigQueryReadConnection());
@@ -123,7 +126,7 @@ int main(int argc, char* argv[]) try {
   *request.mutable_read_session() = read_session;
   request.set_max_stream_count(20);
   //  request.set_preferred_min_stream_count(20);
-  auto session = client.CreateReadSession(request);
+  StatusOr<storage_proto::ReadSession> session = client.CreateReadSession(request);
   if (!session) throw std::move(session).status();
 
   std::cout << " num streams=" << session->streams().size() << "\n";
@@ -153,7 +156,8 @@ int main(int argc, char* argv[]) try {
 
   std::vector<std::future<void>> tasks;
   for (int i = 0; i != session->streams().size(); ++i) {
-    auto row_reader = client.ReadRows(session->streams(i).name(), kRowOffset);
+    StreamRange<storage_proto::ReadRowsResponse> row_reader = client.ReadRows(
+        session->streams(i).name(), kRowOffset);
 
     tasks.push_back(std::async(std::launch::async, fn, std::move(row_reader),
                                &num_rows[i], schema, dictionary_memo));
