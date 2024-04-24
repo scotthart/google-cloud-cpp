@@ -17,11 +17,19 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-service-account-snippet)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-service-account-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-service-account-snippet)
+- [\c bigquery_datasets_v2::DatasetsClient](@ref bigquery_datasets_v2::DatasetsClient-service-account-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet)
+- [\c bigquery_jobs_v2::JobsClient](@ref bigquery_jobs_v2::JobsClient-service-account-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-service-account-snippet)
+- [\c bigquery_models_v2::ModelsClient](@ref bigquery_models_v2::ModelsClient-service-account-snippet)
+- [\c bigquery_projects_v2::ProjectsClient](@ref bigquery_projects_v2::ProjectsClient-service-account-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-service-account-snippet)
+- [\c bigquery_routines_v2::RoutinesClient](@ref bigquery_routines_v2::RoutinesClient-service-account-snippet)
+- [\c bigquery_row_access_policies_v2::RowAccessPoliciesClient](@ref bigquery_row_access_policies_v2::RowAccessPoliciesClient-service-account-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-service-account-snippet)
 - [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-service-account-snippet)
+- [\c bigquery_tabledata_v2::TabledataClient](@ref bigquery_tabledata_v2::TabledataClient-service-account-snippet)
+- [\c bigquery_tables_v2::TablesClient](@ref bigquery_tables_v2::TablesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -63,9 +71,21 @@ guide for more details.
 
 */
 
+/*! @page bigquery_datasets_v2::DatasetsClient-service-account-snippet Override bigquery_datasets_v2::DatasetsClient Authentication Defaults
+
+@snippet google/cloud/bigquery/datasets/v2/samples/datasets_client_samples.cc with-service-account
+
+*/
+
 /*! @page bigquery_datatransfer_v1::DataTransferServiceClient-service-account-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_jobs_v2::JobsClient-service-account-snippet Override bigquery_jobs_v2::JobsClient Authentication Defaults
+
+@snippet google/cloud/bigquery/jobs/v2/samples/jobs_client_samples.cc with-service-account
 
 */
 
@@ -75,9 +95,33 @@ guide for more details.
 
 */
 
+/*! @page bigquery_models_v2::ModelsClient-service-account-snippet Override bigquery_models_v2::ModelsClient Authentication Defaults
+
+@snippet google/cloud/bigquery/models/v2/samples/models_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_projects_v2::ProjectsClient-service-account-snippet Override bigquery_projects_v2::ProjectsClient Authentication Defaults
+
+@snippet google/cloud/bigquery/projects/v2/samples/projects_client_samples.cc with-service-account
+
+*/
+
 /*! @page bigquery_reservation_v1::ReservationServiceClient-service-account-snippet Override bigquery_reservation_v1::ReservationServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_routines_v2::RoutinesClient-service-account-snippet Override bigquery_routines_v2::RoutinesClient Authentication Defaults
+
+@snippet google/cloud/bigquery/routines/v2/samples/routines_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_row_access_policies_v2::RowAccessPoliciesClient-service-account-snippet Override bigquery_row_access_policies_v2::RowAccessPoliciesClient Authentication Defaults
+
+@snippet google/cloud/bigquery/row_access_policies/v2/samples/row_access_policies_client_samples.cc with-service-account
 
 */
 
@@ -90,6 +134,18 @@ guide for more details.
 /*! @page bigquery_storage_v1::BigQueryWriteClient-service-account-snippet Override bigquery_storage_v1::BigQueryWriteClient Authentication Defaults
 
 @snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_tabledata_v2::TabledataClient-service-account-snippet Override bigquery_tabledata_v2::TabledataClient Authentication Defaults
+
+@snippet google/cloud/bigquery/tabledata/v2/samples/tabledata_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery_tables_v2::TablesClient-service-account-snippet Override bigquery_tables_v2::TablesClient Authentication Defaults
+
+@snippet google/cloud/bigquery/tables/v2/samples/tables_client_samples.cc with-service-account
 
 */
 // <!-- inject-authentication-pages-end -->

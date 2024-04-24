@@ -87,11 +87,19 @@ Follow these links to find examples for other \c *Client classes:
 - [\c bigquery_biglake_v1::MetastoreServiceClient](@ref bigquery_biglake_v1::MetastoreServiceClient-retry-snippet)
 - [\c bigquery_connection_v1::ConnectionServiceClient](@ref bigquery_connection_v1::ConnectionServiceClient-retry-snippet)
 - [\c bigquery_datapolicies_v1::DataPolicyServiceClient](@ref bigquery_datapolicies_v1::DataPolicyServiceClient-retry-snippet)
+- [\c bigquery_datasets_v2::DatasetsClient](@ref bigquery_datasets_v2::DatasetsClient-retry-snippet)
 - [\c bigquery_datatransfer_v1::DataTransferServiceClient](@ref bigquery_datatransfer_v1::DataTransferServiceClient-retry-snippet)
+- [\c bigquery_jobs_v2::JobsClient](@ref bigquery_jobs_v2::JobsClient-retry-snippet)
 - [\c bigquery_migration_v2::MigrationServiceClient](@ref bigquery_migration_v2::MigrationServiceClient-retry-snippet)
+- [\c bigquery_models_v2::ModelsClient](@ref bigquery_models_v2::ModelsClient-retry-snippet)
+- [\c bigquery_projects_v2::ProjectsClient](@ref bigquery_projects_v2::ProjectsClient-retry-snippet)
 - [\c bigquery_reservation_v1::ReservationServiceClient](@ref bigquery_reservation_v1::ReservationServiceClient-retry-snippet)
+- [\c bigquery_routines_v2::RoutinesClient](@ref bigquery_routines_v2::RoutinesClient-retry-snippet)
+- [\c bigquery_row_access_policies_v2::RowAccessPoliciesClient](@ref bigquery_row_access_policies_v2::RowAccessPoliciesClient-retry-snippet)
 - [\c bigquery_storage_v1::BigQueryReadClient](@ref bigquery_storage_v1::BigQueryReadClient-retry-snippet)
 - [\c bigquery_storage_v1::BigQueryWriteClient](@ref bigquery_storage_v1::BigQueryWriteClient-retry-snippet)
+- [\c bigquery_tabledata_v2::TabledataClient](@ref bigquery_tabledata_v2::TabledataClient-retry-snippet)
+- [\c bigquery_tables_v2::TablesClient](@ref bigquery_tables_v2::TablesClient-retry-snippet)
 
 <!-- inject-retry-snippet-end -->
 
@@ -155,6 +163,18 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page bigquery_datasets_v2::DatasetsClient-retry-snippet Override bigquery_datasets_v2::DatasetsClient Retry Policies
+
+This shows how to override the retry policies for bigquery_datasets_v2::DatasetsClient:
+
+@snippet google/cloud/bigquery/datasets/v2/samples/datasets_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/datasets/v2/samples/datasets_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page bigquery_datatransfer_v1::DataTransferServiceClient-retry-snippet Override bigquery_datatransfer_v1::DataTransferServiceClient Retry Policies
 
 This shows how to override the retry policies for bigquery_datatransfer_v1::DataTransferServiceClient:
@@ -164,6 +184,18 @@ This shows how to override the retry policies for bigquery_datatransfer_v1::Data
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/bigquery/datatransfer/v1/samples/data_transfer_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_jobs_v2::JobsClient-retry-snippet Override bigquery_jobs_v2::JobsClient Retry Policies
+
+This shows how to override the retry policies for bigquery_jobs_v2::JobsClient:
+
+@snippet google/cloud/bigquery/jobs/v2/samples/jobs_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/jobs/v2/samples/jobs_client_samples.cc custom-idempotency-policy
 
 */
 
@@ -179,6 +211,30 @@ Assuming you have created a custom idempotency policy. Such as:
 
 */
 
+/*! @page bigquery_models_v2::ModelsClient-retry-snippet Override bigquery_models_v2::ModelsClient Retry Policies
+
+This shows how to override the retry policies for bigquery_models_v2::ModelsClient:
+
+@snippet google/cloud/bigquery/models/v2/samples/models_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/models/v2/samples/models_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_projects_v2::ProjectsClient-retry-snippet Override bigquery_projects_v2::ProjectsClient Retry Policies
+
+This shows how to override the retry policies for bigquery_projects_v2::ProjectsClient:
+
+@snippet google/cloud/bigquery/projects/v2/samples/projects_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/projects/v2/samples/projects_client_samples.cc custom-idempotency-policy
+
+*/
+
 /*! @page bigquery_reservation_v1::ReservationServiceClient-retry-snippet Override bigquery_reservation_v1::ReservationServiceClient Retry Policies
 
 This shows how to override the retry policies for bigquery_reservation_v1::ReservationServiceClient:
@@ -188,6 +244,30 @@ This shows how to override the retry policies for bigquery_reservation_v1::Reser
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/bigquery/reservation/v1/samples/reservation_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_routines_v2::RoutinesClient-retry-snippet Override bigquery_routines_v2::RoutinesClient Retry Policies
+
+This shows how to override the retry policies for bigquery_routines_v2::RoutinesClient:
+
+@snippet google/cloud/bigquery/routines/v2/samples/routines_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/routines/v2/samples/routines_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_row_access_policies_v2::RowAccessPoliciesClient-retry-snippet Override bigquery_row_access_policies_v2::RowAccessPoliciesClient Retry Policies
+
+This shows how to override the retry policies for bigquery_row_access_policies_v2::RowAccessPoliciesClient:
+
+@snippet google/cloud/bigquery/row_access_policies/v2/samples/row_access_policies_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/row_access_policies/v2/samples/row_access_policies_client_samples.cc custom-idempotency-policy
 
 */
 
@@ -212,6 +292,30 @@ This shows how to override the retry policies for bigquery_storage_v1::BigQueryW
 Assuming you have created a custom idempotency policy. Such as:
 
 @snippet google/cloud/bigquery/storage/v1/samples/bigquery_write_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_tabledata_v2::TabledataClient-retry-snippet Override bigquery_tabledata_v2::TabledataClient Retry Policies
+
+This shows how to override the retry policies for bigquery_tabledata_v2::TabledataClient:
+
+@snippet google/cloud/bigquery/tabledata/v2/samples/tabledata_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/tabledata/v2/samples/tabledata_client_samples.cc custom-idempotency-policy
+
+*/
+
+/*! @page bigquery_tables_v2::TablesClient-retry-snippet Override bigquery_tables_v2::TablesClient Retry Policies
+
+This shows how to override the retry policies for bigquery_tables_v2::TablesClient:
+
+@snippet google/cloud/bigquery/tables/v2/samples/tables_client_samples.cc set-retry-policy
+
+Assuming you have created a custom idempotency policy. Such as:
+
+@snippet google/cloud/bigquery/tables/v2/samples/tables_client_samples.cc custom-idempotency-policy
 
 */
 // <!-- inject-retry-pages-end -->
