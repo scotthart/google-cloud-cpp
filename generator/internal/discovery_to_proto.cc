@@ -654,7 +654,7 @@ Status GenerateProtosFromDiscoveryDoc(
   for (auto const& f : files->first) {
     (void)descriptor_pool.FindFileByName(f.relative_proto_path());
   }
-
+  enable_parallel_write_for_discovery_protos = false;
   if (enable_parallel_write_for_discovery_protos) {
     std::vector<std::future<google::cloud::Status>> tasks;
     tasks.reserve(files->first.size());
@@ -693,7 +693,11 @@ Status GenerateProtosFromDiscoveryDoc(
   } else {
     for (auto const& f : files->first) {
       auto s = f.WriteFile(document_properties, *types);
-      if (!s.ok()) return s;
+      if (!s.ok()) {
+        std::cout << "file=" << f.relative_proto_path() << std::endl;
+        std::cout << s << std::endl;
+        return s;
+      }
     }
 
     for (auto const& f : files->second) {

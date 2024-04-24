@@ -16,6 +16,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/ascii.h"
@@ -135,6 +136,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
     current = close;
   }
   absl::StrAppend(&output, path.substr(current));
+  absl::StrReplaceAll({{"{+", "{"}}, &output);
   return output;
 }
 

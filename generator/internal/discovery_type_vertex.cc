@@ -325,6 +325,7 @@ DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
 
     std::string const introducer = DetermineIntroducer(field);
     std::string field_name = CamelCaseToSnakeCase(json_field_name);
+    absl::StrReplaceAll({{".", "_"}}, &field_name);
     current_field_names.insert(field_name);
 
     auto field_number =
@@ -333,6 +334,13 @@ DiscoveryTypeVertex::FormatPropertiesHelper(  // NOLINT(misc-no-recursion)
                        message_properties.next_available_field_number);
     if (!field_number) return std::move(field_number).status();
 
+    if (absl::StrContains(type_name, "google.protobuf.Any")) {
+      std::cout << "type_name=" << type_name
+                << "; message_name=" << message_name << "\n";
+      if (message_name != "Status") {
+        absl::StrReplaceAll({{"google.protobuf.Any", "string"}}, &type_name);
+      }
+    }
     message_properties.lines.push_back(absl::StrFormat(
         "%s%s%s%s %s = %d%s;", FormatMessageDescription(field, indent_level),
         indent, introducer, type_name, field_name, *field_number,
@@ -527,16 +535,35 @@ StatusOr<int> DiscoveryTypeVertex::GetFieldNumber(
       }
     }
 
-    if (field_descriptor->name() == field_name && type_name == field_type) {
+    std::string updated_field_type = field_type;
+    std::vector<std::string> const foos = {
+        "google.cloud.cpp.bigquery.v2.QueryInfo",
+        "google.cloud.cpp.bigquery.v2.SystemVariables",
+        "google.cloud.cpp.bigquery.v2.TableCell"};
+    if (internal::Contains(foos, message_descriptor->full_name())) {
+      //      std::cout << "message_descriptor->full_name()="
+      //                << message_descriptor->full_name()
+      //                << "; field_name=" << field_name
+      //                << "; field_type=" << field_type << "; type_name=" <<
+      //                type_name
+      //                << "; number=" << field_descriptor->number() << "\n";
+      absl::StrReplaceAll({{"google.protobuf.Any", "string"}},
+                          &updated_field_type);
+    }
+
+    if (field_descriptor->name() == field_name &&
+        type_name == updated_field_type) {
       return field_descriptor->number();
     }
 
-    if (field_descriptor->name() == field_name && type_name != field_type) {
+    if (field_descriptor->name() == field_name &&
+        type_name != updated_field_type) {
       // Existing field type has changed. This is a breaking change.
-      return internal::InvalidArgumentError(absl::StrFormat(
-          "Message: %s has field: %s whose type has changed "
-          "from: %s to: %s\n",
-          message_descriptor->full_name(), field_name, type_name, field_type));
+      return internal::InvalidArgumentError(
+          absl::StrFormat("Message: %s has field: %s whose type has changed "
+                          "from: %s to: %s\n",
+                          message_descriptor->full_name(), field_name,
+                          type_name, updated_field_type));
     }
   }
   return candidate_field_number;
