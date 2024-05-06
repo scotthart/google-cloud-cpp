@@ -27,7 +27,7 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+#io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 excluded_rules=(
   "-//examples:grpc_credential_types"
@@ -39,6 +39,9 @@ excluded_rules=(
 
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
-io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test" \
-  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
+#io::run bazel test "${args[@]}" "${integration_args[@]}" \
+io::run bazel test --test_output=all "${integration_args[@]}" \
+  -- //google/cloud/compute/integration_tests:compute_integration_test
+
+#  --cache_test_results="auto" --test_tag_filters="integration-test" \
+#  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"

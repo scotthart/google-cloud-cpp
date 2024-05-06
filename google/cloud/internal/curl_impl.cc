@@ -292,6 +292,7 @@ void CurlImpl::SetUrl(
   };
   append_params(request.parameters());
   append_params(additional_parameters);
+  std::cout << __func__ << "url_=" << url_ << "\n";
 }
 
 std::string CurlImpl::LastClientIpAddress() const {

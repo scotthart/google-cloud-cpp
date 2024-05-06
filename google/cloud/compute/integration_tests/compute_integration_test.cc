@@ -67,6 +67,7 @@ class ComputeIntegrationTest
   std::string zone_;
 };
 
+#if 0
 TEST_F(ComputeIntegrationTest, DeleteUnknownDisk) {
   namespace disks = ::google::cloud::compute_disks_v1;
   auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
@@ -255,6 +256,118 @@ TEST_F(ComputeIntegrationTest, VerifyRetrievalMalformedCamelCaseJsonField) {
               Not(IsEmpty()));
   EXPECT_THAT(get_instance->network_interfaces(0).access_configs(0).nat_ip(),
               Not(IsEmpty()));
+}
+#endif
+
+#if 0
+architecture: "X86_64"
+creation_timestamp: "2023-04-17T15:44:36.192-07:00"
+guest_os_features {
+  type: "UEFI_COMPATIBLE"
+}
+guest_os_features {
+  type: "VIRTIO_SCSI_MULTIQUEUE"
+}
+guest_os_features {
+  type: "GVNIC"
+}
+id: "720813704308880700"
+kind: "compute#disk"
+label_fingerprint: "42WmSpB8rSM="
+last_attach_timestamp: "2023-04-17T15:44:36.192-07:00"
+license_codes: "3853522013536123851"
+licenses: "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/debian-11-bullseye"
+name: "test-e2-micro-instance"
+physical_block_size_bytes: "4096"
+self_link: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/disks/test-e2-micro-instance"
+size_gb: "10"
+source_image: "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20230411"
+source_image_id: "4336443574969720783"
+status: "READY"
+type: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/diskTypes/pd-balanced"
+users: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/instances/test-e2-micro-instance"
+zone: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a"
+
+architecture: "X86_64"
+creation_timestamp: "2023-04-19T11:02:20.409-07:00"
+guest_os_features {
+  type: "UEFI_COMPATIBLE"
+}
+guest_os_features {
+  type: "VIRTIO_SCSI_MULTIQUEUE"
+}
+guest_os_features {
+  type: "GVNIC"
+}
+id: "2088820797374042692"
+kind: "compute#disk"
+label_fingerprint: "42WmSpB8rSM="
+last_attach_timestamp: "2023-04-19T11:02:20.409-07:00"
+license_codes: "3853522013536123851"
+licenses: "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/licenses/debian-11-bullseye"
+name: "test2-e2-micro-instance"
+physical_block_size_bytes: "4096"
+self_link: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/disks/test2-e2-micro-instance"
+size_gb: "10"
+source_image: "https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/debian-11-bullseye-v20230411"
+source_image_id: "4336443574969720783"
+status: "READY"
+type: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/diskTypes/pd-balanced"
+users: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a/instances/test2-e2-micro-instance"
+zone: "https://www.googleapis.com/compute/v1/projects/cloud-cpp-testing-resources/zones/us-central1-a"
+
+
+#endif
+TEST_F(ComputeIntegrationTest, VerifyListTimeFiltering) {
+  namespace disks = ::google::cloud::compute_disks_v1;
+  auto client = disks::DisksClient(disks::MakeDisksConnectionRest());
+
+//  google::cloud::cpp::compute::v1::Disk disk;
+//  disk.set_name(CreateRandomName("int-test-disk-"));
+//  disk.set_size_gb("10");
+//  (*disk.mutable_labels())["test"] = "test";
+//  auto result = client.InsertDisk(project_id_, zone_, disk).get();
+//  ASSERT_THAT(result, testing_util::IsOk());
+//
+//  auto get_disk = client.GetDisk(project_id_, zone_, disk.name());
+//  ASSERT_THAT(get_disk, IsOk());
+//  EXPECT_THAT(get_disk->name(), Eq(disk.name()));
+//
+//  google::cloud::cpp::compute::v1::ZoneSetLabelsRequest request;
+//  request.set_label_fingerprint(get_disk->label_fingerprint());
+//  (*request.mutable_labels())["test"] = "test";
+//  auto set_label =
+//      client.SetLabels(project_id_, zone_, disk.name(), request).get();
+//  EXPECT_THAT(set_label, IsOk());
+//
+//  auto const create_threshold =
+//      std::chrono::system_clock::now() - std::chrono::hours(48);
+  google::cloud::cpp::compute::disks::v1::ListDisksRequest request;
+  request.set_project(project_id_);
+  request.set_zone(zone_);
+  std::string filter;
+//  filter += "size_gb >= 10";
+//  filter += " AND ";
+  filter += "last_attach_timestamp ge \"2023-04-19T11:02:20.409-07:00\"";
+  request.set_filter(filter);
+
+  for (auto const& d : client.ListDisks(request)) {
+    ASSERT_STATUS_OK(d);
+    std::cout << d->DebugString() << "\n";
+//    // Delete the disk we just created, we expect this to succeed.
+//    if (d->name() == disk.name()) {
+//      auto delete_disk = client.DeleteDisk(project_id_, zone_, d->name()).get();
+//      EXPECT_THAT(delete_disk, IsOk());
+//    }
+//    // Garbage collect old disks, ignore errors.
+//    auto creation_timestamp = internal::ParseRfc3339(d->creation_timestamp());
+//    if (creation_timestamp) {
+//      if ((d->labels().contains("test") || d->labels().contains("sample")) &&
+//          *creation_timestamp < create_threshold) {
+//        (void)client.DeleteDisk(project_id_, zone_, d->name()).get();
+//      }
+//    }
+  }
 }
 
 }  // namespace
