@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INSTANCES_V1_INSTANCES_CLIENT_H
 
 #include "google/cloud/compute/instances/v1/instances_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -125,6 +127,14 @@ class InstancesClient {
           access_config_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::AccessConfig const&
+          access_config_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds an access config to an instance's network interface.
@@ -162,6 +172,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
       google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -206,6 +227,15 @@ class InstancesClient {
                               instances_add_resource_policies_request_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesAddResourcePoliciesRequest const&
+              instances_add_resource_policies_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Adds existing resource policies to an instance. You can only add one policy
@@ -246,6 +276,18 @@ class InstancesClient {
   AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
                           AddResourcePoliciesRequest const& request,
                       Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          AddResourcePoliciesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  AddResourcePolicies(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -377,6 +419,14 @@ class InstancesClient {
           attached_disk_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::AttachedDisk const&
+          attached_disk_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Attaches an existing Disk resource to an instance. You must first create
@@ -419,6 +469,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates multiple instances. Count specifies the number of instances to
@@ -452,6 +513,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
           bulk_insert_instance_resource,
@@ -497,6 +565,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified Instance resource. For more information, see Deleting
@@ -530,6 +609,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -573,6 +657,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an access config from an instance's network interface.
@@ -611,6 +706,12 @@ class InstancesClient {
                      std::string const& instance,
                      std::string const& access_config,
                      std::string const& network_interface, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& access_config,
+      std::string const& network_interface, Options opts = {});
 
   // clang-format off
   ///
@@ -651,6 +752,18 @@ class InstancesClient {
                          DeleteAccessConfigRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          DeleteAccessConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteAccessConfig(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Detaches a disk from an instance.
@@ -685,6 +798,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& device_name,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, std::string const& device_name,
       Options opts = {});
@@ -726,6 +845,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
       google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1208,6 +1338,12 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an instance resource in the specified project using the data
@@ -1246,6 +1382,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
       google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1446,6 +1593,11 @@ class InstancesClient {
   PerformMaintenance(std::string const& project, std::string const& zone,
                      std::string const& instance, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
   // clang-format off
   ///
   /// Perform a manual maintenance on the instance.
@@ -1485,6 +1637,18 @@ class InstancesClient {
                          PerformMaintenanceRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          PerformMaintenanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PerformMaintenance(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Removes resource policies from an instance.
@@ -1519,6 +1683,15 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   RemoveResourcePolicies(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesRemoveResourcePoliciesRequest const&
+              instances_remove_resource_policies_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::
@@ -1565,6 +1738,18 @@ class InstancesClient {
                              RemoveResourcePoliciesRequest const& request,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  RemoveResourcePolicies(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Performs a reset on the instance. This is a hard reset. The VM does not do
@@ -1598,6 +1783,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -1640,6 +1830,16 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Resumes an instance that was suspended using the instances().suspend
@@ -1673,6 +1873,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -1713,6 +1918,16 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
       google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -1807,6 +2022,11 @@ class InstancesClient {
   SetDeletionProtection(std::string const& project, std::string const& zone,
                         std::string const& resource, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& resource, Options opts = {});
+
   // clang-format off
   ///
   /// Sets deletion protection on the instance.
@@ -1845,6 +2065,18 @@ class InstancesClient {
   SetDeletionProtection(google::cloud::cpp::compute::instances::v1::
                             SetDeletionProtectionRequest const& request,
                         Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDeletionProtection(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1885,6 +2117,12 @@ class InstancesClient {
                     std::string const& instance, bool auto_delete,
                     std::string const& device_name, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, bool auto_delete,
+      std::string const& device_name, Options opts = {});
+
   // clang-format off
   ///
   /// Sets the auto-delete flag for a disk attached to an instance.
@@ -1922,6 +2160,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::
                         SetDiskAutoDeleteRequest const& request,
+                    Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetDiskAutoDeleteRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetDiskAutoDelete(google::cloud::ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
                     Options opts = {});
 
   // clang-format off
@@ -2032,6 +2281,14 @@ class InstancesClient {
           instances_set_labels_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetLabelsRequest const&
+          instances_set_labels_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets labels on an instance. To learn more about labels, read the Labeling
@@ -2070,6 +2327,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -2113,6 +2381,15 @@ class InstancesClient {
                               instances_set_machine_resources_request_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesSetMachineResourcesRequest const&
+              instances_set_machine_resources_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the number and/or type of accelerator for a stopped instance to the
@@ -2153,6 +2430,18 @@ class InstancesClient {
                           SetMachineResourcesRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetMachineResourcesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetMachineResources(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the machine type for a stopped instance to the machine type
@@ -2187,6 +2476,14 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const&
+          instances_set_machine_type_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const&
@@ -2233,6 +2530,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets metadata for the specified instance to the data included in the
@@ -2267,6 +2575,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
@@ -2312,6 +2627,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the minimum CPU platform that this instance should use. This method
@@ -2348,6 +2674,14 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetMinCpuPlatform(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const&
+          instances_set_min_cpu_platform_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const&
@@ -2395,6 +2729,17 @@ class InstancesClient {
                         SetMinCpuPlatformRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetMinCpuPlatformRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetMinCpuPlatform(google::cloud::ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Sets name of an instance.
@@ -2428,6 +2773,14 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetNameRequest const&
+          instances_set_name_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::InstancesSetNameRequest const&
@@ -2472,6 +2825,16 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets an instance's scheduling options. You can only call this method on a
@@ -2509,6 +2872,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource,
@@ -2557,6 +2927,17 @@ class InstancesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the Google Cloud Armor security policy for the specified instance. For
@@ -2593,6 +2974,14 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSecurityPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const&
+          instances_set_security_policy_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const&
@@ -2639,6 +3028,17 @@ class InstancesClient {
                         SetSecurityPolicyRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSecurityPolicy(google::cloud::ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Sets the service account on the instance. For more information, read
@@ -2674,6 +3074,14 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetServiceAccount(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const&
+          instances_set_service_account_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const&
@@ -2720,6 +3128,17 @@ class InstancesClient {
                         SetServiceAccountRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetServiceAccountRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetServiceAccount(google::cloud::ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Sets the Shielded Instance integrity policy for an instance. You can only
@@ -2756,6 +3175,15 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetShieldedInstanceIntegrityPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const&
+          shielded_instance_integrity_policy_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const&
@@ -2804,6 +3232,19 @@ class InstancesClient {
           SetShieldedInstanceIntegrityPolicyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets network tags for the specified instance to the data included in the
@@ -2838,6 +3279,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Tags const& tags_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::Tags const& tags_resource,
@@ -2882,6 +3330,16 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Simulates a host maintenance event on a VM. For more information, see
@@ -2917,6 +3375,11 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SimulateMaintenanceEvent(std::string const& project, std::string const& zone,
                            std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -2958,6 +3421,18 @@ class InstancesClient {
                                SimulateMaintenanceEventRequest const& request,
                            Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SimulateMaintenanceEvent(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
@@ -2991,6 +3466,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -3033,6 +3513,16 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::StartRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Starts an instance that was stopped using the instances().stop method. For
@@ -3068,6 +3558,15 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   StartWithEncryptionKey(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesStartWithEncryptionKeyRequest const&
+              instances_start_with_encryption_key_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::
@@ -3115,6 +3614,18 @@ class InstancesClient {
                              StartWithEncryptionKeyRequest const& request,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  StartWithEncryptionKey(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Stops a running instance, shutting it down cleanly, and allows you to
@@ -3152,6 +3663,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -3198,6 +3714,16 @@ class InstancesClient {
       google::cloud::cpp::compute::instances::v1::StopRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// This method suspends a running instance, saving its state to persistent
@@ -3236,6 +3762,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, Options opts = {});
 
@@ -3281,6 +3812,16 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
       google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -3390,6 +3931,13 @@ class InstancesClient {
       google::cloud::cpp::compute::v1::Instance const& instance_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates an instance only if the necessary resources are available. This
@@ -3429,6 +3977,17 @@ class InstancesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
       google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -3474,6 +4033,14 @@ class InstancesClient {
                          access_config_resource,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::AccessConfig const&
+          access_config_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified access config from an instance's network interface
@@ -3514,6 +4081,18 @@ class InstancesClient {
   UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::
                          UpdateAccessConfigRequest const& request,
                      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateAccessConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateAccessConfig(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3556,6 +4135,14 @@ class InstancesClient {
                           display_device_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::DisplayDevice const&
+          display_device_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the Display config for a VM instance. You can only use this method
@@ -3597,6 +4184,18 @@ class InstancesClient {
                           UpdateDisplayDeviceRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateDisplayDeviceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateDisplayDevice(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates an instance's network interface. This method can only update an
@@ -3636,6 +4235,14 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateNetworkInterface(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::NetworkInterface const&
+          network_interface_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance, std::string const& network_interface,
       google::cloud::cpp::compute::v1::NetworkInterface const&
@@ -3685,6 +4292,18 @@ class InstancesClient {
                              UpdateNetworkInterfaceRequest const& request,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateNetworkInterface(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the Shielded Instance config for an instance. You can only use this
@@ -3721,6 +4340,15 @@ class InstancesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   UpdateShieldedInstanceConfig(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceConfig const&
+          shielded_instance_config_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateShieldedInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& zone,
       std::string const& instance,
       google::cloud::cpp::compute::v1::ShieldedInstanceConfig const&
@@ -3767,6 +4395,19 @@ class InstancesClient {
   UpdateShieldedInstanceConfig(
       google::cloud::cpp::compute::instances::v1::
           UpdateShieldedInstanceConfigRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateShieldedInstanceConfig(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateShieldedInstanceConfig(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

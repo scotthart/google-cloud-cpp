@@ -78,6 +78,21 @@ SecureSourceManagerClient::CreateInstance(
   return connection_->CreateInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Instance const& instance,
+    std::string const& instance_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateInstanceRequest request;
+  request.set_parent(parent);
+  *request.mutable_instance() = instance;
+  request.set_instance_id(instance_id);
+  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
 SecureSourceManagerClient::CreateInstance(
     google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
@@ -85,6 +100,26 @@ SecureSourceManagerClient::CreateInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
+SecureSourceManagerClient::CreateInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateInstance(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -96,6 +131,18 @@ SecureSourceManagerClient::DeleteInstance(std::string const& name,
   return connection_->DeleteInstance(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteInstance(google::cloud::ExperimentalTag,
+                                          google::cloud::NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteInstanceRequest request;
+  request.set_name(name);
+  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerClient::DeleteInstance(
     google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
@@ -103,6 +150,26 @@ SecureSourceManagerClient::DeleteInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteInstance(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteInstance(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
+                                     google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteInstance(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteInstance(google::cloud::ExperimentalTag{},
+                                     operation);
 }
 
 StreamRange<google::cloud::securesourcemanager::v1::Repository>
@@ -152,6 +219,21 @@ SecureSourceManagerClient::CreateRepository(
   return connection_->CreateRepository(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::securesourcemanager::v1::Repository const& repository,
+    std::string const& repository_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::CreateRepositoryRequest request;
+  request.set_parent(parent);
+  *request.mutable_repository() = repository;
+  request.set_repository_id(repository_id);
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
 SecureSourceManagerClient::CreateRepository(
     google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
@@ -159,6 +241,26 @@ SecureSourceManagerClient::CreateRepository(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::CreateRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+SecureSourceManagerClient::CreateRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRepository(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
@@ -170,6 +272,18 @@ SecureSourceManagerClient::DeleteRepository(std::string const& name,
   return connection_->DeleteRepository(request);
 }
 
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteRepository(google::cloud::ExperimentalTag,
+                                            google::cloud::NoAwaitTag,
+                                            std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::securesourcemanager::v1::DeleteRepositoryRequest request;
+  request.set_name(name);
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
 SecureSourceManagerClient::DeleteRepository(
     google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
@@ -177,6 +291,26 @@ SecureSourceManagerClient::DeleteRepository(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRepository(request);
+}
+
+StatusOr<google::longrunning::Operation>
+SecureSourceManagerClient::DeleteRepository(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+SecureSourceManagerClient::DeleteRepository(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRepository(google::cloud::ExperimentalTag{},
+                                       operation);
 }
 
 StatusOr<google::iam::v1::Policy> SecureSourceManagerClient::GetIamPolicyRepo(

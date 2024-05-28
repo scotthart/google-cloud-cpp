@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_DOCUMENTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/documents_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -266,6 +268,12 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::Document const& document,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dialogflow::v2::Document const& document,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new document.
@@ -312,6 +320,15 @@ class DocumentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
       google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::CreateDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> CreateDocument(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -364,6 +381,16 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ImportDocuments(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ImportDocumentsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>
+  ImportDocuments(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified document.
@@ -405,6 +432,10 @@ class DocumentsClient {
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
   DeleteDocument(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -454,6 +485,16 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::DeleteDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>
+  DeleteDocument(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified document.
@@ -496,6 +537,11 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+      google::cloud::dialogflow::v2::Document const& document,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dialogflow::v2::Document const& document,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -545,6 +591,15 @@ class DocumentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
       google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::UpdateDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> UpdateDocument(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -597,6 +652,11 @@ class DocumentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+      std::string const& name, std::string const& content_uri,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ReloadDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, std::string const& content_uri,
       Options opts = {});
 
@@ -653,6 +713,15 @@ class DocumentsClient {
       google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ReloadDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ReloadDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ReloadDocument(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Exports a smart messaging candidate document into the specified
@@ -700,6 +769,15 @@ class DocumentsClient {
   future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
       google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ExportDocument(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::ExportDocumentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dialogflow::v2::Document>> ExportDocument(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<DocumentsConnection> connection_;

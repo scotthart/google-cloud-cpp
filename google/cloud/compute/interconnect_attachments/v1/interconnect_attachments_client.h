@@ -21,7 +21,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_INTERCONNECT_ATTACHMENTS_V1_INTERCONNECT_ATTACHMENTS_CLIENT_H
 
 #include "google/cloud/compute/interconnect_attachments/v1/interconnect_attachments_rest_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -213,6 +215,14 @@ class InterconnectAttachmentsClient {
                                std::string const& interconnect_attachment,
                                Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectAttachment(google::cloud::ExperimentalTag,
+                               google::cloud::NoAwaitTag,
+                               std::string const& project,
+                               std::string const& region,
+                               std::string const& interconnect_attachment,
+                               Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified interconnect attachment.
@@ -251,6 +261,19 @@ class InterconnectAttachmentsClient {
   DeleteInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
           DeleteInterconnectAttachmentRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          DeleteInterconnectAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -357,6 +380,14 @@ class InterconnectAttachmentsClient {
           interconnect_attachment_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::InterconnectAttachment const&
+          interconnect_attachment_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an InterconnectAttachment in the specified project using the data
@@ -396,6 +427,19 @@ class InterconnectAttachmentsClient {
   InsertInterconnectAttachment(
       google::cloud::cpp::compute::interconnect_attachments::v1::
           InsertInterconnectAttachmentRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          InsertInterconnectAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -522,6 +566,15 @@ class InterconnectAttachmentsClient {
           interconnect_attachment_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& region,
+      std::string const& interconnect_attachment,
+      google::cloud::cpp::compute::v1::InterconnectAttachment const&
+          interconnect_attachment_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified interconnect attachment with the data included in the
@@ -564,6 +617,19 @@ class InterconnectAttachmentsClient {
           PatchInterconnectAttachmentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchInterconnectAttachment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          PatchInterconnectAttachmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchInterconnectAttachment(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on an InterconnectAttachment. To learn more about labels,
@@ -598,6 +664,14 @@ class InterconnectAttachmentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& region,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
+          region_set_labels_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& region,
       std::string const& resource,
       google::cloud::cpp::compute::v1::RegionSetLabelsRequest const&
@@ -642,6 +716,17 @@ class InterconnectAttachmentsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::interconnect_attachments::v1::
           SetLabelsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::interconnect_attachments::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

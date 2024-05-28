@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATAPLEX_CLIENT_H
 
 #include "google/cloud/dataplex/v1/dataplex_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -135,6 +137,11 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
       std::string const& lake_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, google::cloud::dataplex::v1::Lake const& lake,
+      std::string const& lake_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a lake resource.
@@ -173,6 +180,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateLakeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateLakeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Lake>> CreateLake(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a lake resource.
@@ -205,6 +221,11 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      google::cloud::dataplex::v1::Lake const& lake,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::Lake const& lake,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -246,6 +267,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateLakeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateLakeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Lake>> UpdateLake(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a lake resource. All zones within the lake must be deleted before
@@ -278,6 +308,10 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -318,6 +352,15 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
       google::cloud::dataplex::v1::DeleteLakeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteLake(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteLakeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteLake(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -570,6 +613,11 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
       std::string const& zone_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, google::cloud::dataplex::v1::Zone const& zone,
+      std::string const& zone_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a zone resource within a lake.
@@ -608,6 +656,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateZoneRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateZoneRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Zone>> CreateZone(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a zone resource.
@@ -640,6 +697,11 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      google::cloud::dataplex::v1::Zone const& zone,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::Zone const& zone,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -681,6 +743,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateZoneRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateZoneRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Zone>> UpdateZone(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a zone resource. All assets within a zone must be deleted before
@@ -713,6 +784,10 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -753,6 +828,15 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
       google::cloud::dataplex::v1::DeleteZoneRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteZone(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteZoneRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteZone(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1004,6 +1088,12 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Asset const& asset,
       std::string const& asset_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataplex::v1::Asset const& asset,
+      std::string const& asset_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates an asset resource.
@@ -1042,6 +1132,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateAssetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateAssetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Asset>> CreateAsset(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an asset resource.
@@ -1074,6 +1173,11 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      google::cloud::dataplex::v1::Asset const& asset,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::Asset const& asset,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1115,6 +1219,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateAssetRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateAssetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Asset>> UpdateAsset(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an asset resource. The referenced storage resource is detached
@@ -1147,6 +1260,10 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1187,6 +1304,15 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
       google::cloud::dataplex::v1::DeleteAssetRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAsset(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteAssetRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteAsset(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1431,6 +1557,11 @@ class DataplexServiceClient {
       std::string const& parent, google::cloud::dataplex::v1::Task const& task,
       std::string const& task_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, google::cloud::dataplex::v1::Task const& task,
+      std::string const& task_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a task resource within a lake.
@@ -1469,6 +1600,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateTaskRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateTaskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Task>> CreateTask(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Update the task resource.
@@ -1501,6 +1641,11 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      google::cloud::dataplex::v1::Task const& task,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::Task const& task,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -1542,6 +1687,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateTaskRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateTaskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Task>> UpdateTask(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Delete the task resource.
@@ -1573,6 +1727,10 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -1612,6 +1770,15 @@ class DataplexServiceClient {
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
       google::cloud::dataplex::v1::DeleteTaskRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTask(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteTaskRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>> DeleteTask(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2023,6 +2190,12 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::Environment const& environment,
       std::string const& environment_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataplex::v1::Environment const& environment,
+      std::string const& environment_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create an environment resource.
@@ -2061,6 +2234,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Environment>> CreateEnvironment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Update the environment resource.
@@ -2093,6 +2275,11 @@ class DataplexServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
+      google::cloud::dataplex::v1::Environment const& environment,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::Environment const& environment,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -2134,6 +2321,15 @@ class DataplexServiceClient {
       google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::Environment>> UpdateEnvironment(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Delete the environment resource. All the child resources must have been
@@ -2167,6 +2363,10 @@ class DataplexServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteEnvironment(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2207,6 +2407,16 @@ class DataplexServiceClient {
   DeleteEnvironment(
       google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEnvironment(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteEnvironmentRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteEnvironment(google::cloud::ExperimentalTag,
+                    google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///

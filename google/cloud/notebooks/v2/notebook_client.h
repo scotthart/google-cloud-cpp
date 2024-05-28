@@ -20,7 +20,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NOTEBOOKS_V2_NOTEBOOK_CLIENT_H
 
 #include "google/cloud/notebooks/v2/notebook_connection.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
+#include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -256,6 +258,12 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::notebooks::v2::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Instance in a given project and location.
@@ -294,6 +302,15 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::CreateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::CreateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// UpdateInstance updates an Instance.
@@ -325,6 +342,11 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
+      google::cloud::notebooks::v2::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::notebooks::v2::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -366,6 +388,15 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::UpdateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Instance.
@@ -398,6 +429,10 @@ class NotebookServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -438,6 +473,16 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::DeleteInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Starts a notebook instance.
@@ -475,6 +520,15 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
       google::cloud::notebooks::v2::StartInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> StartInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::StartInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StartInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -514,6 +568,15 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::StopInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> StopInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::StopInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> StopInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Resets a notebook instance.
@@ -551,6 +614,15 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
       google::cloud::notebooks::v2::ResetInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ResetInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::ResetInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> ResetInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -623,6 +695,15 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::UpgradeInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpgradeInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::UpgradeInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> UpgradeInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Rollbacks a notebook instance to the previous version.
@@ -661,6 +742,15 @@ class NotebookServiceClient {
       google::cloud::notebooks::v2::RollbackInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> RollbackInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::RollbackInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> RollbackInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Diagnostic File and runs Diagnostic Tool given an Instance.
@@ -693,6 +783,12 @@ class NotebookServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
+      std::string const& name,
+      google::cloud::notebooks::v2::DiagnosticConfig const& diagnostic_config,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name,
       google::cloud::notebooks::v2::DiagnosticConfig const& diagnostic_config,
       Options opts = {});
@@ -734,6 +830,15 @@ class NotebookServiceClient {
   future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
       google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DiagnoseInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::notebooks::v2::DiagnoseInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::notebooks::v2::Instance>> DiagnoseInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<NotebookServiceConnection> connection_;
