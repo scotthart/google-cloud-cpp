@@ -66,11 +66,31 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateEnvironment,
+      (google::cloud::dialogflow::cx::v3::CreateEnvironmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+              AwaitCreateEnvironment,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
       UpdateEnvironment,
       (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateEnvironment,
+      (google::cloud::dialogflow::cx::v3::UpdateEnvironmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>,
+              AwaitUpdateEnvironment,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       Status, DeleteEnvironment,
@@ -94,6 +114,18 @@ class MockEnvironmentsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRunContinuousTest,
+      (google::cloud::dialogflow::cx::v3::RunContinuousTestRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::RunContinuousTestResponse>>,
+      AwaitRunContinuousTest, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::dialogflow::cx::v3::ContinuousTestResult>),
       ListContinuousTestResults,
       (google::cloud::dialogflow::cx::v3::ListContinuousTestResultsRequest
@@ -104,6 +136,16 @@ class MockEnvironmentsConnection
       future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
       DeployFlow,
       (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeployFlow,
+      (google::cloud::dialogflow::cx::v3::DeployFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::DeployFlowResponse>>,
+      AwaitDeployFlow, (google::longrunning::Operation const& operation),
       (override));
 };
 

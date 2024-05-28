@@ -58,20 +58,57 @@ class MockCloudShellServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartStartEnvironment,
+      (google::cloud::shell::v1::StartEnvironmentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>,
+      AwaitStartEnvironment, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
       AuthorizeEnvironment,
       (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAuthorizeEnvironment,
+      (google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>,
+      AwaitAuthorizeEnvironment,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
               AddPublicKey,
               (google::cloud::shell::v1::AddPublicKeyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartAddPublicKey,
+              (google::cloud::shell::v1::AddPublicKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>,
+              AwaitAddPublicKey,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
       RemovePublicKey,
       (google::cloud::shell::v1::RemovePublicKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartRemovePublicKey,
+              (google::cloud::shell::v1::RemovePublicKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>,
+      AwaitRemovePublicKey, (google::longrunning::Operation const& operation),
       (override));
 };
 

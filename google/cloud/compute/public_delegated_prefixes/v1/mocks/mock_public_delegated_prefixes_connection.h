@@ -63,10 +63,32 @@ class MockPublicDelegatedPrefixesConnection
                    AnnounceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAnnounce,
+              (google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   AnnounceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAnnounce,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePublicDelegatedPrefix,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    DeletePublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeletePublicDelegatedPrefix,
+              (google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   DeletePublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeletePublicDelegatedPrefix,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::PublicDelegatedPrefix>,
@@ -79,6 +101,17 @@ class MockPublicDelegatedPrefixesConnection
               InsertPublicDelegatedPrefix,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    InsertPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertPublicDelegatedPrefix,
+              (google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   InsertPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertPublicDelegatedPrefix,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -94,10 +127,32 @@ class MockPublicDelegatedPrefixesConnection
                    PatchPublicDelegatedPrefixRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchPublicDelegatedPrefix,
+              (google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   PatchPublicDelegatedPrefixRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchPublicDelegatedPrefix,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Withdraw,
               (google::cloud::cpp::compute::public_delegated_prefixes::v1::
                    WithdrawRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartWithdraw,
+              (google::cloud::cpp::compute::public_delegated_prefixes::v1::
+                   WithdrawRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitWithdraw,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

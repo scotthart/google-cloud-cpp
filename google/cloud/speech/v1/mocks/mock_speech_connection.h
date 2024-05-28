@@ -56,6 +56,16 @@ class MockSpeechConnection : public speech_v1::SpeechConnection {
       (google::cloud::speech::v1::LongRunningRecognizeRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartLongRunningRecognize,
+      (google::cloud::speech::v1::LongRunningRecognizeRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>,
+      AwaitLongRunningRecognize,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::speech::v1::StreamingRecognizeRequest,
                    google::cloud::speech::v1::StreamingRecognizeResponse>>),

@@ -54,6 +54,17 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            CreateEnvironmentRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateEnvironment,
+              (google::cloud::orchestration::airflow::service::v1::
+                   CreateEnvironmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::orchestration::airflow::service::v1::Environment>>,
+      AwaitCreateEnvironment, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>,
       GetEnvironment,
@@ -77,12 +88,33 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
            UpdateEnvironmentRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateEnvironment,
+              (google::cloud::orchestration::airflow::service::v1::
+                   UpdateEnvironmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::orchestration::airflow::service::v1::Environment>>,
+      AwaitUpdateEnvironment, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::OperationMetadata>>,
               DeleteEnvironment,
               (google::cloud::orchestration::airflow::service::v1::
                    DeleteEnvironmentRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteEnvironment,
+              (google::cloud::orchestration::airflow::service::v1::
+                   DeleteEnvironmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::OperationMetadata>>,
+              AwaitDeleteEnvironment,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
                            ExecuteAirflowCommandResponse>,
@@ -186,6 +218,16 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    SaveSnapshotRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartSaveSnapshot,
+              (google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::SaveSnapshotResponse>>,
+              AwaitSaveSnapshot,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::LoadSnapshotResponse>>,
               LoadSnapshot,
@@ -193,12 +235,32 @@ class MockEnvironmentsConnection : public composer_v1::EnvironmentsConnection {
                    LoadSnapshotRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartLoadSnapshot,
+              (google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::LoadSnapshotResponse>>,
+              AwaitLoadSnapshot,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
                                   v1::DatabaseFailoverResponse>>,
               DatabaseFailover,
               (google::cloud::orchestration::airflow::service::v1::
                    DatabaseFailoverRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDatabaseFailover,
+              (google::cloud::orchestration::airflow::service::v1::
+                   DatabaseFailoverRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::DatabaseFailoverResponse>>,
+              AwaitDatabaseFailover,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::orchestration::airflow::service::v1::
                            FetchDatabasePropertiesResponse>,

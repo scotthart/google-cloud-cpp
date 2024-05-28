@@ -197,16 +197,33 @@ std::string TracingConnectionGenerator::MethodDeclaration(
   }
 
   if (IsLongrunningOperation(method)) {
+    std::string extra_parameters;
     if (IsResponseTypeEmpty(method)) {
-      return R"""(
+      return absl::StrCat(R"""(
   future<Status>
   $method_name$($request_type$ const& request) override;
-)""";
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, $request_type$ const& request) override;
+
+  future<Status>
+  $method_name$(google::cloud::ExperimentalTag, $longrunning_operation_type$ const& operation)""",
+                          extra_parameters,
+                          R"""() override;
+)""");
     }
-    return R"""(
+    return absl::StrCat(R"""(
   future<StatusOr<$longrunning_deduced_response_type$>>
   $method_name$($request_type$ const& request) override;
-)""";
+
+  StatusOr<$longrunning_operation_type$>
+  $method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, $request_type$ const& request) override;
+
+  future<StatusOr<$longrunning_deduced_response_type$>>
+  $method_name$(google::cloud::ExperimentalTag, $longrunning_operation_type$ const& operation)""",
+                        extra_parameters,
+                        R"""() override;
+)""");
   }
 
   if (IsResponseTypeEmpty(method)) {
@@ -281,6 +298,8 @@ $tracing_connection_class_name$::$method_name$($request_type$ request) {
   }
 
   if (IsLongrunningOperation(method)) {
+    std::string extra_parameters;
+    std::string extra_arguments;
     return absl::StrCat(
         // The return type may be a simple `Status` or the
         // computed type of the long-running operation
@@ -297,7 +316,35 @@ $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
   internal::OTelScope scope(span);
   return internal::EndSpan(std::move(span), child_->$method_name$(request));
 }
-)""");
+)""",
+        "\n",
+        R"""(
+StatusOr<$longrunning_operation_type$>)""",
+        R"""(
+$tracing_connection_class_name$::$method_name$(google::cloud::ExperimentalTag, google::cloud::NoAwaitTag, $request_type$ const& request) {
+  auto span = internal::MakeSpan(
+      "$product_namespace$::$connection_class_name$::$method_name$");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(*span, child_->$method_name$(google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request));
+}
+)""",
+        "\n",
+        IsResponseTypeEmpty(method) ?
+                                    R"""(
+future<Status>)"""
+                                    :
+                                    R"""(
+future<StatusOr<$longrunning_deduced_response_type$>>)""",
+        R"""(
+$tracing_connection_class_name$::$method_name$(google::cloud::ExperimentalTag, $longrunning_operation_type$ const& operation)""",
+        extra_parameters, R"""() {
+  auto span = internal::MakeSpan(
+      "$product_namespace$::$connection_class_name$::$method_name$");
+  internal::OTelScope scope(span);
+  return internal::EndSpan(std::move(span), child_->$method_name$(google::cloud::ExperimentalTag{}, operation)""",
+        extra_arguments, R"""());
+}
+    )""");
   }
 
   return absl::StrCat(IsResponseTypeEmpty(method) ? R"""(

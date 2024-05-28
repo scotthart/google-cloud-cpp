@@ -55,6 +55,17 @@ class MockRegionInstanceTemplatesConnection
                    DeleteInstanceTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteInstanceTemplate,
+              (google::cloud::cpp::compute::region_instance_templates::v1::
+                   DeleteInstanceTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteInstanceTemplate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceTemplate>,
               GetInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
@@ -65,6 +76,17 @@ class MockRegionInstanceTemplatesConnection
               InsertInstanceTemplate,
               (google::cloud::cpp::compute::region_instance_templates::v1::
                    InsertInstanceTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertInstanceTemplate,
+              (google::cloud::cpp::compute::region_instance_templates::v1::
+                   InsertInstanceTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertInstanceTemplate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceTemplate>),

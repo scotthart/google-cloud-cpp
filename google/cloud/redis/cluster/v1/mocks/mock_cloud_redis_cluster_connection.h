@@ -64,15 +64,41 @@ class MockCloudRedisClusterConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateCluster,
+      (google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              AwaitUpdateCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Any>>, DeleteCluster,
       (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteCluster,
+      (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>, AwaitDeleteCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
       CreateCluster,
       (google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateCluster,
+      (google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+              AwaitCreateCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>,
               GetClusterCertificateAuthority,

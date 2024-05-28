@@ -78,6 +78,21 @@ DatastreamClient::CreateConnectionProfile(
   return connection_->CreateConnectionProfile(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
+    std::string const& connection_profile_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::CreateConnectionProfileRequest request;
+  request.set_parent(parent);
+  *request.mutable_connection_profile() = connection_profile;
+  request.set_connection_profile_id(connection_profile_id);
+  return connection_->CreateConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamClient::CreateConnectionProfile(
     google::cloud::datastream::v1::CreateConnectionProfileRequest const&
@@ -85,6 +100,26 @@ DatastreamClient::CreateConnectionProfile(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnectionProfile(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+DatastreamClient::CreateConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateConnectionProfile(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
@@ -98,6 +133,19 @@ DatastreamClient::UpdateConnectionProfile(
   return connection_->UpdateConnectionProfile(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamClient::UpdateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::ConnectionProfile const& connection_profile,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::UpdateConnectionProfileRequest request;
+  *request.mutable_connection_profile() = connection_profile;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
 DatastreamClient::UpdateConnectionProfile(
     google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
@@ -105,6 +153,26 @@ DatastreamClient::UpdateConnectionProfile(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnectionProfile(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamClient::UpdateConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>
+DatastreamClient::UpdateConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateConnectionProfile(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -116,6 +184,18 @@ DatastreamClient::DeleteConnectionProfile(std::string const& name,
   return connection_->DeleteConnectionProfile(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteConnectionProfile(google::cloud::ExperimentalTag,
+                                          google::cloud::NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::DeleteConnectionProfileRequest request;
+  request.set_name(name);
+  return connection_->DeleteConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamClient::DeleteConnectionProfile(
     google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
@@ -123,6 +203,26 @@ DatastreamClient::DeleteConnectionProfile(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnectionProfile(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeleteConnectionProfile(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConnectionProfile(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamClient::DeleteConnectionProfile(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteConnectionProfile(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::cloud::datastream::v1::DiscoverConnectionProfileResponse>
@@ -177,12 +277,43 @@ DatastreamClient::CreateStream(
   return connection_->CreateStream(request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamClient::CreateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::datastream::v1::Stream const& stream,
+    std::string const& stream_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::CreateStreamRequest request;
+  request.set_parent(parent);
+  *request.mutable_stream() = stream;
+  request.set_stream_id(stream_id);
+  return connection_->CreateStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamClient::CreateStream(
     google::cloud::datastream::v1::CreateStreamRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateStream(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::CreateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateStreamRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamClient::CreateStream(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateStream(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Stream>>
@@ -196,12 +327,41 @@ DatastreamClient::UpdateStream(
   return connection_->UpdateStream(request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamClient::UpdateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::Stream const& stream,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::UpdateStreamRequest request;
+  *request.mutable_stream() = stream;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::Stream>>
 DatastreamClient::UpdateStream(
     google::cloud::datastream::v1::UpdateStreamRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateStream(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::UpdateStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::UpdateStreamRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Stream>>
+DatastreamClient::UpdateStream(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateStream(google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
@@ -212,12 +372,39 @@ DatastreamClient::DeleteStream(std::string const& name, Options opts) {
   return connection_->DeleteStream(request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamClient::DeleteStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::DeleteStreamRequest request;
+  request.set_name(name);
+  return connection_->DeleteStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamClient::DeleteStream(
     google::cloud::datastream::v1::DeleteStreamRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteStream(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::DeleteStream(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteStreamRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteStream(google::cloud::ExperimentalTag{},
+                                   google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamClient::DeleteStream(google::cloud::ExperimentalTag,
+                               google::longrunning::Operation const& operation,
+                               Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteStream(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::datastream::v1::StreamObject>
@@ -320,6 +507,21 @@ DatastreamClient::CreatePrivateConnection(
   return connection_->CreatePrivateConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::datastream::v1::PrivateConnection const& private_connection,
+    std::string const& private_connection_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::CreatePrivateConnectionRequest request;
+  request.set_parent(parent);
+  *request.mutable_private_connection() = private_connection;
+  request.set_private_connection_id(private_connection_id);
+  return connection_->CreatePrivateConnection(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
 DatastreamClient::CreatePrivateConnection(
     google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
@@ -327,6 +529,26 @@ DatastreamClient::CreatePrivateConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreatePrivateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamClient::CreatePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePrivateConnection(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>
+DatastreamClient::CreatePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreatePrivateConnection(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 StatusOr<google::cloud::datastream::v1::PrivateConnection>
@@ -371,6 +593,18 @@ DatastreamClient::DeletePrivateConnection(std::string const& name,
   return connection_->DeletePrivateConnection(request);
 }
 
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeletePrivateConnection(google::cloud::ExperimentalTag,
+                                          google::cloud::NoAwaitTag,
+                                          std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::DeletePrivateConnectionRequest request;
+  request.set_name(name);
+  return connection_->DeletePrivateConnection(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamClient::DeletePrivateConnection(
     google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
@@ -378,6 +612,26 @@ DatastreamClient::DeletePrivateConnection(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePrivateConnection(request);
+}
+
+StatusOr<google::longrunning::Operation>
+DatastreamClient::DeletePrivateConnection(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePrivateConnection(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamClient::DeletePrivateConnection(
+    google::cloud::ExperimentalTag,
+    google::longrunning::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeletePrivateConnection(google::cloud::ExperimentalTag{},
+                                              operation);
 }
 
 future<StatusOr<google::cloud::datastream::v1::Route>>
@@ -392,12 +646,43 @@ DatastreamClient::CreateRoute(std::string const& parent,
   return connection_->CreateRoute(request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamClient::CreateRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& parent,
+    google::cloud::datastream::v1::Route const& route,
+    std::string const& route_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::CreateRouteRequest request;
+  request.set_parent(parent);
+  *request.mutable_route() = route;
+  request.set_route_id(route_id);
+  return connection_->CreateRoute(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::Route>>
 DatastreamClient::CreateRoute(
     google::cloud::datastream::v1::CreateRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateRoute(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::CreateRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::CreateRouteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRoute(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::Route>>
+DatastreamClient::CreateRoute(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateRoute(google::cloud::ExperimentalTag{}, operation);
 }
 
 StatusOr<google::cloud::datastream::v1::Route> DatastreamClient::GetRoute(
@@ -437,12 +722,39 @@ DatastreamClient::DeleteRoute(std::string const& name, Options opts) {
   return connection_->DeleteRoute(request);
 }
 
+StatusOr<google::longrunning::Operation> DatastreamClient::DeleteRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datastream::v1::DeleteRouteRequest request;
+  request.set_name(name);
+  return connection_->DeleteRoute(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
 DatastreamClient::DeleteRoute(
     google::cloud::datastream::v1::DeleteRouteRequest const& request,
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteRoute(request);
+}
+
+StatusOr<google::longrunning::Operation> DatastreamClient::DeleteRoute(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::datastream::v1::DeleteRouteRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRoute(google::cloud::ExperimentalTag{},
+                                  google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>
+DatastreamClient::DeleteRoute(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteRoute(google::cloud::ExperimentalTag{}, operation);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

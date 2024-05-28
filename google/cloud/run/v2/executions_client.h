@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_EXECUTIONS_CLIENT_H
 
 #include "google/cloud/run/v2/executions_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -255,6 +257,10 @@ class ExecutionsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
       std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an Execution.
@@ -293,6 +299,15 @@ class ExecutionsClient {
       google::cloud::run::v2::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteExecutionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Execution>> DeleteExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Cancels an Execution.
@@ -326,6 +341,10 @@ class ExecutionsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -365,6 +384,15 @@ class ExecutionsClient {
   future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
       google::cloud::run::v2::CancelExecutionRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CancelExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::CancelExecutionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Execution>> CancelExecution(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<ExecutionsConnection> connection_;

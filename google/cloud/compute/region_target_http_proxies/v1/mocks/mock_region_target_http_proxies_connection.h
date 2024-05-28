@@ -55,6 +55,17 @@ class MockRegionTargetHttpProxiesConnection
                    DeleteTargetHttpProxyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteTargetHttpProxy,
+              (google::cloud::cpp::compute::region_target_http_proxies::v1::
+                   DeleteTargetHttpProxyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteTargetHttpProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetHttpProxy>,
               GetTargetHttpProxy,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::
@@ -67,6 +78,17 @@ class MockRegionTargetHttpProxiesConnection
                    InsertTargetHttpProxyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertTargetHttpProxy,
+              (google::cloud::cpp::compute::region_target_http_proxies::v1::
+                   InsertTargetHttpProxyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertTargetHttpProxy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetHttpProxy>),
               ListRegionTargetHttpProxies,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::
@@ -77,6 +99,17 @@ class MockRegionTargetHttpProxiesConnection
               SetUrlMap,
               (google::cloud::cpp::compute::region_target_http_proxies::v1::
                    SetUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetUrlMap,
+              (google::cloud::cpp::compute::region_target_http_proxies::v1::
+                   SetUrlMapRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetUrlMap,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

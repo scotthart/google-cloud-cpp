@@ -61,6 +61,17 @@ class MockTargetInstancesConnection
                    DeleteTargetInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteTargetInstance,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   DeleteTargetInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteTargetInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetInstance>,
               GetTargetInstance,
               (google::cloud::cpp::compute::target_instances::v1::
@@ -73,6 +84,17 @@ class MockTargetInstancesConnection
                    InsertTargetInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertTargetInstance,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   InsertTargetInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertTargetInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::TargetInstance>),
               ListTargetInstances,
               (google::cloud::cpp::compute::target_instances::v1::
@@ -83,6 +105,17 @@ class MockTargetInstancesConnection
               SetSecurityPolicy,
               (google::cloud::cpp::compute::target_instances::v1::
                    SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetSecurityPolicy,
+              (google::cloud::cpp::compute::target_instances::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

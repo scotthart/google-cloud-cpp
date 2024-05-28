@@ -53,11 +53,29 @@ class MockAwsClustersConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateAwsCluster,
+              (google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
+              AwaitCreateAwsCluster,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
               UpdateAwsCluster,
               (google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateAwsCluster,
+              (google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>,
+              AwaitUpdateAwsCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>, GetAwsCluster,
@@ -75,6 +93,16 @@ class MockAwsClustersConnection
       DeleteAwsCluster,
       (google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteAwsCluster,
+              (google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      AwaitDeleteAwsCluster, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
@@ -98,11 +126,29 @@ class MockAwsClustersConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateAwsNodePool,
+              (google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+              AwaitCreateAwsNodePool,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
               UpdateAwsNodePool,
               (google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateAwsNodePool,
+              (google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+              AwaitUpdateAwsNodePool,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
@@ -110,6 +156,16 @@ class MockAwsClustersConnection
       (google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRollbackAwsNodePoolUpdate,
+      (google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>,
+              AwaitRollbackAwsNodePoolUpdate,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>, GetAwsNodePool,
@@ -127,6 +183,16 @@ class MockAwsClustersConnection
       DeleteAwsNodePool,
       (google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteAwsNodePool,
+              (google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      AwaitDeleteAwsNodePool, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

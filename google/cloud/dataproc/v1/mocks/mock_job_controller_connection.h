@@ -56,6 +56,15 @@ class MockJobControllerConnection
               (google::cloud::dataproc::v1::SubmitJobRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartSubmitJobAsOperation,
+              (google::cloud::dataproc::v1::SubmitJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Job>>,
+              AwaitSubmitJobAsOperation,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Job>, GetJob,
               (google::cloud::dataproc::v1::GetJobRequest const& request),
               (override));

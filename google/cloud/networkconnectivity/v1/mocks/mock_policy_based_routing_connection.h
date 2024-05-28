@@ -69,6 +69,18 @@ class MockPolicyBasedRoutingServiceConnection
            CreatePolicyBasedRouteRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreatePolicyBasedRoute,
+              (google::cloud::networkconnectivity::v1::
+                   CreatePolicyBasedRouteRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::PolicyBasedRoute>>,
+      AwaitCreatePolicyBasedRoute,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
@@ -76,6 +88,18 @@ class MockPolicyBasedRoutingServiceConnection
       (google::cloud::networkconnectivity::v1::
            DeletePolicyBasedRouteRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeletePolicyBasedRoute,
+              (google::cloud::networkconnectivity::v1::
+                   DeletePolicyBasedRouteRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>,
+      AwaitDeletePolicyBasedRoute,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

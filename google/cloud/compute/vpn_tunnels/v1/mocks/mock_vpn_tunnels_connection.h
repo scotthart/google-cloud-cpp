@@ -62,6 +62,17 @@ class MockVpnTunnelsConnection
                    DeleteVpnTunnelRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteVpnTunnel,
+              (google::cloud::cpp::compute::vpn_tunnels::v1::
+                   DeleteVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteVpnTunnel,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::VpnTunnel>, GetVpnTunnel,
       (google::cloud::cpp::compute::vpn_tunnels::v1::GetVpnTunnelRequest const&
@@ -72,6 +83,17 @@ class MockVpnTunnelsConnection
               InsertVpnTunnel,
               (google::cloud::cpp::compute::vpn_tunnels::v1::
                    InsertVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertVpnTunnel,
+              (google::cloud::cpp::compute::vpn_tunnels::v1::
+                   InsertVpnTunnelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertVpnTunnel,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -85,6 +107,17 @@ class MockVpnTunnelsConnection
       (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartSetLabels,
+      (google::cloud::cpp::compute::vpn_tunnels::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -55,6 +55,17 @@ class MockFirewallsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartDeleteFirewall,
+      (google::cloud::cpp::compute::firewalls::v1::DeleteFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteFirewall,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Firewall>, GetFirewall,
       (google::cloud::cpp::compute::firewalls::v1::GetFirewallRequest const&
            request),
@@ -66,6 +77,17 @@ class MockFirewallsConnection
       (google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartInsertFirewall,
+      (google::cloud::cpp::compute::firewalls::v1::InsertFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertFirewall,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Firewall>),
               ListFirewalls,
@@ -81,11 +103,33 @@ class MockFirewallsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartPatchFirewall,
+      (google::cloud::cpp::compute::firewalls::v1::PatchFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchFirewall,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateFirewall,
       (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartUpdateFirewall,
+      (google::cloud::cpp::compute::firewalls::v1::UpdateFirewallRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateFirewall,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

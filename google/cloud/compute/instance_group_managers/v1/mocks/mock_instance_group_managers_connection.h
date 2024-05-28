@@ -55,6 +55,17 @@ class MockInstanceGroupManagersConnection
                    AbandonInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAbandonInstances,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   AbandonInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAbandonInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<std::pair<
            std::string,
@@ -70,10 +81,32 @@ class MockInstanceGroupManagersConnection
                    ApplyUpdatesToInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartApplyUpdatesToInstances,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   ApplyUpdatesToInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitApplyUpdatesToInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               CreateInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    CreateInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartCreateInstances,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   CreateInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitCreateInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -82,16 +115,49 @@ class MockInstanceGroupManagersConnection
                    DeleteInstanceGroupManagerRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteInstanceGroupManager,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   DeleteInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteInstanceGroupManager,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteInstances,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    DeleteInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteInstances,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   DeleteInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeletePerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    DeletePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeletePerInstanceConfigs,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   DeletePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeletePerInstanceConfigs,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroupManager>,
@@ -104,6 +170,17 @@ class MockInstanceGroupManagersConnection
               InsertInstanceGroupManager,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    InsertInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertInstanceGroupManager,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   InsertInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertInstanceGroupManager,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -139,10 +216,32 @@ class MockInstanceGroupManagersConnection
                    PatchInstanceGroupManagerRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchInstanceGroupManager,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   PatchInstanceGroupManagerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchInstanceGroupManager,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchPerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    PatchPerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchPerInstanceConfigs,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   PatchPerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchPerInstanceConfigs,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -151,10 +250,31 @@ class MockInstanceGroupManagersConnection
                    RecreateInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRecreateInstances,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   RecreateInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRecreateInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               Resize,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    ResizeRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>, StartResize,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   ResizeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitResize,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -163,16 +283,49 @@ class MockInstanceGroupManagersConnection
                    SetInstanceTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetInstanceTemplate,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   SetInstanceTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetInstanceTemplate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetTargetPools,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    SetTargetPoolsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetTargetPools,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   SetTargetPoolsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetTargetPools,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdatePerInstanceConfigs,
               (google::cloud::cpp::compute::instance_group_managers::v1::
                    UpdatePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdatePerInstanceConfigs,
+              (google::cloud::cpp::compute::instance_group_managers::v1::
+                   UpdatePerInstanceConfigsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdatePerInstanceConfigs,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

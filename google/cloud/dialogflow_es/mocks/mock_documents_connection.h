@@ -62,9 +62,28 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateDocument,
+      (google::cloud::dialogflow::v2::CreateDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              AwaitCreateDocument,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
       ImportDocuments,
       (google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportDocuments,
+      (google::cloud::dialogflow::v2::ImportDocumentsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ImportDocumentsResponse>>,
+      AwaitImportDocuments, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -75,9 +94,29 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteDocument,
+      (google::cloud::dialogflow::v2::DeleteDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::KnowledgeOperationMetadata>>,
+      AwaitDeleteDocument, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, UpdateDocument,
       (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateDocument,
+      (google::cloud::dialogflow::v2::UpdateDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              AwaitUpdateDocument,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ReloadDocument,
@@ -85,9 +124,27 @@ class MockDocumentsConnection : public dialogflow_es::DocumentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartReloadDocument,
+      (google::cloud::dialogflow::v2::ReloadDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              AwaitReloadDocument,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::Document>>, ExportDocument,
       (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportDocument,
+      (google::cloud::dialogflow::v2::ExportDocumentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::Document>>,
+              AwaitExportDocument,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

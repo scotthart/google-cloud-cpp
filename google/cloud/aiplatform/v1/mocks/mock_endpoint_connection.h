@@ -53,6 +53,15 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateEndpoint,
+      (google::cloud::aiplatform::v1::CreateEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Endpoint>>,
+              AwaitCreateEndpoint,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Endpoint>, GetEndpoint,
       (google::cloud::aiplatform::v1::GetEndpointRequest const& request),
       (override));
@@ -74,9 +83,29 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteEndpoint,
+      (google::cloud::aiplatform::v1::DeleteEndpointRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteEndpoint, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
       DeployModel,
       (google::cloud::aiplatform::v1::DeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeployModel,
+      (google::cloud::aiplatform::v1::DeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployModelResponse>>,
+      AwaitDeployModel, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -86,12 +115,34 @@ class MockEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeployModel,
+      (google::cloud::aiplatform::v1::UndeployModelRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployModelResponse>>,
+      AwaitUndeployModel, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
       MutateDeployedModel,
       (google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartMutateDeployedModel,
+              (google::cloud::aiplatform::v1::MutateDeployedModelRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::MutateDeployedModelResponse>>,
+      AwaitMutateDeployedModel,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

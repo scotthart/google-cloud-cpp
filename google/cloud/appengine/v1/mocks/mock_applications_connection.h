@@ -55,15 +55,39 @@ class MockApplicationsConnection : public appengine_v1::ApplicationsConnection {
               (google::appengine::v1::CreateApplicationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateApplication,
+              (google::appengine::v1::CreateApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              AwaitCreateApplication,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               UpdateApplication,
               (google::appengine::v1::UpdateApplicationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateApplication,
+              (google::appengine::v1::UpdateApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              AwaitUpdateApplication,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
               RepairApplication,
               (google::appengine::v1::RepairApplicationRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartRepairApplication,
+              (google::appengine::v1::RepairApplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Application>>,
+              AwaitRepairApplication,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -63,16 +63,43 @@ class MockDomainMappingsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateDomainMapping,
+      (google::appengine::v1::CreateDomainMappingRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+              AwaitCreateDomainMapping,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::appengine::v1::DomainMapping>>,
       UpdateDomainMapping,
       (google::appengine::v1::UpdateDomainMappingRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateDomainMapping,
+      (google::appengine::v1::UpdateDomainMappingRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::DomainMapping>>,
+              AwaitUpdateDomainMapping,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
       DeleteDomainMapping,
       (google::appengine::v1::DeleteDomainMappingRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteDomainMapping,
+      (google::appengine::v1::DeleteDomainMappingRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+              AwaitDeleteDomainMapping,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

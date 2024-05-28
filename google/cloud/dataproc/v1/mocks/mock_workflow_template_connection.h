@@ -66,11 +66,32 @@ class MockWorkflowTemplateServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartInstantiateWorkflowTemplate,
+      (google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
+              AwaitInstantiateWorkflowTemplate,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
               InstantiateInlineWorkflowTemplate,
               (google::cloud::dataproc::v1::
                    InstantiateInlineWorkflowTemplateRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartInstantiateInlineWorkflowTemplate,
+              (google::cloud::dataproc::v1::
+                   InstantiateInlineWorkflowTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>,
+              AwaitInstantiateInlineWorkflowTemplate,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>,
               UpdateWorkflowTemplate,

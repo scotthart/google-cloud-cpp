@@ -59,6 +59,16 @@ class MockScheduleServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteSchedule,
+      (google::cloud::aiplatform::v1::DeleteScheduleRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteSchedule, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Schedule>, GetSchedule,
       (google::cloud::aiplatform::v1::GetScheduleRequest const& request),
       (override));

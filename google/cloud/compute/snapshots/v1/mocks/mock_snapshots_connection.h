@@ -55,6 +55,17 @@ class MockSnapshotsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartDeleteSnapshot,
+      (google::cloud::cpp::compute::snapshots::v1::DeleteSnapshotRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteSnapshot,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Snapshot>, GetSnapshot,
       (google::cloud::cpp::compute::snapshots::v1::GetSnapshotRequest const&
            request),
@@ -73,6 +84,17 @@ class MockSnapshotsConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartInsertSnapshot,
+      (google::cloud::cpp::compute::snapshots::v1::InsertSnapshotRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertSnapshot,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Snapshot>),
               ListSnapshots,
               (google::cloud::cpp::compute::snapshots::v1::ListSnapshotsRequest
@@ -90,6 +112,17 @@ class MockSnapshotsConnection
       (google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartSetLabels,
+      (google::cloud::cpp::compute::snapshots::v1::SetLabelsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,

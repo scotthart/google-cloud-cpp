@@ -59,10 +59,26 @@ class MockIDSConnection : public ids_v1::IDSConnection {
               (google::cloud::ids::v1::CreateEndpointRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateEndpoint,
+              (google::cloud::ids::v1::CreateEndpointRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::Endpoint>>,
+              AwaitCreateEndpoint,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
               DeleteEndpoint,
               (google::cloud::ids::v1::DeleteEndpointRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteEndpoint,
+              (google::cloud::ids::v1::DeleteEndpointRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::ids::v1::OperationMetadata>>,
+              AwaitDeleteEndpoint,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

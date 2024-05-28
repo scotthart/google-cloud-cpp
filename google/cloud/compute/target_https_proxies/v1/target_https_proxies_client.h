@@ -21,6 +21,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_TARGET_HTTPS_PROXIES_V1_TARGET_HTTPS_PROXIES_CLIENT_H
 
 #include "google/cloud/compute/target_https_proxies/v1/target_https_proxies_rest_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -212,6 +214,11 @@ class TargetHttpsProxiesClient {
                          std::string const& target_https_proxy,
                          Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& target_https_proxy,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified TargetHttpsProxy resource.
@@ -250,6 +257,18 @@ class TargetHttpsProxiesClient {
   DeleteTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
                              DeleteTargetHttpsProxyRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          DeleteTargetHttpsProxyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteTargetHttpsProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -350,6 +369,13 @@ class TargetHttpsProxiesClient {
           target_https_proxy_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project,
+      google::cloud::cpp::compute::v1::TargetHttpsProxy const&
+          target_https_proxy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a TargetHttpsProxy resource in the specified project using the data
@@ -389,6 +415,18 @@ class TargetHttpsProxiesClient {
   InsertTargetHttpsProxy(google::cloud::cpp::compute::target_https_proxies::v1::
                              InsertTargetHttpsProxyRequest const& request,
                          Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          InsertTargetHttpsProxyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertTargetHttpsProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -509,6 +547,13 @@ class TargetHttpsProxiesClient {
                             target_https_proxy_resource,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::TargetHttpsProxy const&
+          target_https_proxy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified TargetHttpsProxy resource with the data included in
@@ -550,6 +595,18 @@ class TargetHttpsProxiesClient {
                             PatchTargetHttpsProxyRequest const& request,
                         Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchTargetHttpsProxy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          PatchTargetHttpsProxyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchTargetHttpsProxy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the Certificate Map for TargetHttpsProxy.
@@ -584,6 +641,14 @@ class TargetHttpsProxiesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetCertificateMap(
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetHttpsProxiesSetCertificateMapRequest const&
+              target_https_proxies_set_certificate_map_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& target_https_proxy,
       google::cloud::cpp::compute::v1::
           TargetHttpsProxiesSetCertificateMapRequest const&
@@ -629,6 +694,17 @@ class TargetHttpsProxiesClient {
                         SetCertificateMapRequest const& request,
                     Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetCertificateMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          SetCertificateMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetCertificateMap(google::cloud::ExperimentalTag,
+                    google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
+
   // clang-format off
   ///
   /// Sets the QUIC override policy for TargetHttpsProxy.
@@ -662,6 +738,14 @@ class TargetHttpsProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetHttpsProxiesSetQuicOverrideRequest const&
+              target_https_proxies_set_quic_override_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& target_https_proxy,
       google::cloud::cpp::compute::v1::
           TargetHttpsProxiesSetQuicOverrideRequest const&
@@ -707,6 +791,17 @@ class TargetHttpsProxiesClient {
           SetQuicOverrideRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetQuicOverride(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          SetQuicOverrideRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetQuicOverride(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Replaces SslCertificates for TargetHttpsProxy.
@@ -741,6 +836,14 @@ class TargetHttpsProxiesClient {
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
   SetSslCertificates(
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::
+          TargetHttpsProxiesSetSslCertificatesRequest const&
+              target_https_proxies_set_ssl_certificates_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& target_https_proxy,
       google::cloud::cpp::compute::v1::
           TargetHttpsProxiesSetSslCertificatesRequest const&
@@ -786,6 +889,18 @@ class TargetHttpsProxiesClient {
                          SetSslCertificatesRequest const& request,
                      Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslCertificates(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          SetSslCertificatesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  SetSslCertificates(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the SSL policy for TargetHttpsProxy. The SSL policy specifies the
@@ -822,6 +937,13 @@ class TargetHttpsProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::SslPolicyReference const&
+          ssl_policy_reference_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& target_https_proxy,
       google::cloud::cpp::compute::v1::SslPolicyReference const&
           ssl_policy_reference_resource,
@@ -869,6 +991,17 @@ class TargetHttpsProxiesClient {
           SetSslPolicyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          SetSslPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetSslPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Changes the URL map for TargetHttpsProxy.
@@ -901,6 +1034,13 @@ class TargetHttpsProxiesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
+      std::string const& project, std::string const& target_https_proxy,
+      google::cloud::cpp::compute::v1::UrlMapReference const&
+          url_map_reference_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& target_https_proxy,
       google::cloud::cpp::compute::v1::UrlMapReference const&
           url_map_reference_resource,
@@ -943,6 +1083,17 @@ class TargetHttpsProxiesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
       google::cloud::cpp::compute::target_https_proxies::v1::
           SetUrlMapRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::target_https_proxies::v1::
+          SetUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

@@ -61,6 +61,16 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateDatabase,
+      (google::spanner::admin::database::v1::CreateDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              AwaitCreateDatabase,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Database>, GetDatabase,
       (google::spanner::admin::database::v1::GetDatabaseRequest const& request),
       (override));
@@ -73,11 +83,33 @@ class MockDatabaseAdminConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateDatabase,
+      (google::spanner::admin::database::v1::UpdateDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              AwaitUpdateDatabase,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
       UpdateDatabaseDdl,
       (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateDatabaseDdl,
+      (google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+      AwaitUpdateDatabaseDdl, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(Status, DropDatabase,
@@ -111,11 +143,29 @@ class MockDatabaseAdminConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateBackup,
+              (google::spanner::admin::database::v1::CreateBackupRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+              AwaitCreateBackup,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::spanner::admin::database::v1::Backup>>,
       CopyBackup,
       (google::spanner::admin::database::v1::CopyBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCopyBackup,
+      (google::spanner::admin::database::v1::CopyBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+              AwaitCopyBackup,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
@@ -144,6 +194,16 @@ class MockDatabaseAdminConnection
       (google::spanner::admin::database::v1::RestoreDatabaseRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRestoreDatabase,
+      (google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::spanner::admin::database::v1::Database>>,
+              AwaitRestoreDatabase,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::longrunning::Operation>), ListDatabaseOperations,

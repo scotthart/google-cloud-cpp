@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MEMCACHE_V1_CLOUD_MEMCACHE_CLIENT_H
 
 #include "google/cloud/memcache/v1/cloud_memcache_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -284,6 +286,12 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::memcache::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Instance in a given location.
@@ -322,6 +330,15 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::CreateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::CreateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates an existing Instance in a given project and location.
@@ -356,6 +373,11 @@ class CloudMemcacheClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
+      google::cloud::memcache::v1::Instance const& instance,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::memcache::v1::Instance const& instance,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -397,6 +419,15 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::UpdateInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the defined Memcached parameters for an existing instance.
@@ -433,6 +464,12 @@ class CloudMemcacheClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
+      std::string const& name, google::protobuf::FieldMask const& update_mask,
+      google::cloud::memcache::v1::MemcacheParameters const& parameters,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateParameters(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, google::protobuf::FieldMask const& update_mask,
       google::cloud::memcache::v1::MemcacheParameters const& parameters,
       Options opts = {});
@@ -478,6 +515,15 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::UpdateParametersRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateParameters(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::UpdateParametersRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Instance.
@@ -511,6 +557,10 @@ class CloudMemcacheClient {
   // clang-format on
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -551,6 +601,16 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::DeleteInstanceRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::DeleteInstanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// `ApplyParameters` restarts the set of specified nodes in order to update
@@ -587,6 +647,11 @@ class CloudMemcacheClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
+      std::string const& name, std::vector<std::string> const& node_ids,
+      bool apply_all, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> ApplyParameters(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, std::vector<std::string> const& node_ids,
       bool apply_all, Options opts = {});
 
@@ -629,6 +694,15 @@ class CloudMemcacheClient {
       google::cloud::memcache::v1::ApplyParametersRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> ApplyParameters(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::ApplyParametersRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Reschedules upcoming maintenance event.
@@ -665,6 +739,13 @@ class CloudMemcacheClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      std::string const& instance,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+          reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& instance,
       google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
           reschedule_type,
@@ -707,6 +788,15 @@ class CloudMemcacheClient {
   future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
       google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RescheduleMaintenance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<CloudMemcacheConnection> connection_;

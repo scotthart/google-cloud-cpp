@@ -65,6 +65,15 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRegisterDomain,
+      (google::cloud::domains::v1::RegisterDomainRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitRegisterDomain,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::domains::v1::RetrieveTransferParametersResponse>,
       RetrieveTransferParameters,
       (google::cloud::domains::v1::RetrieveTransferParametersRequest const&
@@ -76,6 +85,15 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       TransferDomain,
       (google::cloud::domains::v1::TransferDomainRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartTransferDomain,
+      (google::cloud::domains::v1::TransferDomainRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitTransferDomain,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::domains::v1::Registration>),
               ListRegistrations,
@@ -94,6 +112,15 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateRegistration,
+      (google::cloud::domains::v1::UpdateRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitUpdateRegistration,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureManagementSettings,
       (google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
@@ -101,10 +128,30 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartConfigureManagementSettings,
+      (google::cloud::domains::v1::ConfigureManagementSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitConfigureManagementSettings,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ConfigureDnsSettings,
       (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartConfigureDnsSettings,
+      (google::cloud::domains::v1::ConfigureDnsSettingsRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitConfigureDnsSettings,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
@@ -114,16 +161,44 @@ class MockDomainsConnection : public domains_v1::DomainsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartConfigureContactSettings,
+      (google::cloud::domains::v1::ConfigureContactSettingsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitConfigureContactSettings,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::Registration>>,
       ExportRegistration,
       (google::cloud::domains::v1::ExportRegistrationRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportRegistration,
+      (google::cloud::domains::v1::ExportRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::Registration>>,
+              AwaitExportRegistration,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
       DeleteRegistration,
       (google::cloud::domains::v1::DeleteRegistrationRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteRegistration,
+      (google::cloud::domains::v1::DeleteRegistrationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::domains::v1::OperationMetadata>>,
+              AwaitDeleteRegistration,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::domains::v1::AuthorizationCode>,

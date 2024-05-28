@@ -64,6 +64,17 @@ class MockNetworkEdgeSecurityServicesConnection
                    DeleteNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::network_edge_security_services::v1::
+                   DeleteNetworkEdgeSecurityServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::NetworkEdgeSecurityService>,
       GetNetworkEdgeSecurityService,
@@ -77,10 +88,32 @@ class MockNetworkEdgeSecurityServicesConnection
                    InsertNetworkEdgeSecurityServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::network_edge_security_services::v1::
+                   InsertNetworkEdgeSecurityServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchNetworkEdgeSecurityService,
               (google::cloud::cpp::compute::network_edge_security_services::v1::
                    PatchNetworkEdgeSecurityServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::network_edge_security_services::v1::
+                   PatchNetworkEdgeSecurityServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchNetworkEdgeSecurityService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

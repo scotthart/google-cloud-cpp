@@ -53,24 +53,68 @@ class MockClusterControllerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateCluster,
+      (google::cloud::dataproc::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              AwaitCreateCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::Cluster>>, UpdateCluster,
       (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateCluster,
+      (google::cloud::dataproc::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              AwaitUpdateCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
               StopCluster,
               (google::cloud::dataproc::v1::StopClusterRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStopCluster,
+              (google::cloud::dataproc::v1::StopClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              AwaitStopCluster,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
               StartCluster,
               (google::cloud::dataproc::v1::StartClusterRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStartCluster,
+              (google::cloud::dataproc::v1::StartClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dataproc::v1::Cluster>>,
+              AwaitStartCluster,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
       DeleteCluster,
       (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteCluster,
+      (google::cloud::dataproc::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>,
+      AwaitDeleteCluster, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dataproc::v1::Cluster>, GetCluster,
@@ -85,6 +129,16 @@ class MockClusterControllerConnection
       future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
       DiagnoseCluster,
       (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDiagnoseCluster,
+      (google::cloud::dataproc::v1::DiagnoseClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>,
+      AwaitDiagnoseCluster, (google::longrunning::Operation const& operation),
       (override));
 };
 

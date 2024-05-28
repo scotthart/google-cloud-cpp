@@ -53,6 +53,15 @@ class MockAzureClustersConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateAzureClient,
+              (google::cloud::gkemulticloud::v1::CreateAzureClientRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureClient>>,
+              AwaitCreateAzureClient,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AzureClient>, GetAzureClient,
       (google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request),
@@ -71,6 +80,16 @@ class MockAzureClustersConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteAzureClient,
+              (google::cloud::gkemulticloud::v1::DeleteAzureClientRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      AwaitDeleteAzureClient, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       CreateAzureCluster,
@@ -79,11 +98,31 @@ class MockAzureClustersConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateAzureCluster,
+      (google::cloud::gkemulticloud::v1::CreateAzureClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
+              AwaitCreateAzureCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
       UpdateAzureCluster,
       (google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateAzureCluster,
+      (google::cloud::gkemulticloud::v1::UpdateAzureClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>>,
+              AwaitUpdateAzureCluster,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>, GetAzureCluster,
@@ -102,6 +141,17 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteAzureCluster,
+      (google::cloud::gkemulticloud::v1::DeleteAzureClusterRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      AwaitDeleteAzureCluster,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::
                            GenerateAzureClusterAgentTokenResponse>,
@@ -126,11 +176,31 @@ class MockAzureClustersConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateAzureNodePool,
+      (google::cloud::gkemulticloud::v1::CreateAzureNodePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
+              AwaitCreateAzureNodePool,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
       UpdateAzureNodePool,
       (google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateAzureNodePool,
+      (google::cloud::gkemulticloud::v1::UpdateAzureNodePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>,
+              AwaitUpdateAzureNodePool,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>,
               GetAzureNodePool,
@@ -150,6 +220,17 @@ class MockAzureClustersConnection
       (google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteAzureNodePool,
+      (google::cloud::gkemulticloud::v1::DeleteAzureNodePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>,
+      AwaitDeleteAzureNodePool,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkemulticloud::v1::AzureOpenIdConfig>,

@@ -60,6 +60,18 @@ class MockMigrationServiceConnection
       (google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchMigrateResources,
+      (google::cloud::aiplatform::v1::BatchMigrateResourcesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::BatchMigrateResourcesResponse>>,
+      AwaitBatchMigrateResources,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -66,6 +66,18 @@ class MockUserEventServiceConnection
       (google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportUserEvents,
+      (google::cloud::discoveryengine::v1::ImportUserEventsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::discoveryengine::v1::ImportUserEventsResponse>>,
+      AwaitImportUserEvents, (google::longrunning::Operation const& operation),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

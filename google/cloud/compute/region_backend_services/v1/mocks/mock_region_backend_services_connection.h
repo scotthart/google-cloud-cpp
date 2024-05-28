@@ -55,6 +55,17 @@ class MockRegionBackendServicesConnection
                    DeleteBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteBackendService,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   DeleteBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
               GetBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -79,6 +90,17 @@ class MockRegionBackendServicesConnection
                    InsertBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertBackendService,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   InsertBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendService>),
               ListRegionBackendServices,
               (google::cloud::cpp::compute::region_backend_services::v1::
@@ -97,6 +119,17 @@ class MockRegionBackendServicesConnection
                    PatchBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchBackendService,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   PatchBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    SetIamPolicyRequest const& request),
@@ -106,6 +139,17 @@ class MockRegionBackendServicesConnection
               SetSecurityPolicy,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetSecurityPolicy,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -119,6 +163,17 @@ class MockRegionBackendServicesConnection
               UpdateBackendService,
               (google::cloud::cpp::compute::region_backend_services::v1::
                    UpdateBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdateBackendService,
+              (google::cloud::cpp::compute::region_backend_services::v1::
+                   UpdateBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

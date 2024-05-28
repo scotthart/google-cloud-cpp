@@ -68,6 +68,17 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateEndpointPolicy,
+      (google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
+      AwaitCreateEndpointPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
       UpdateEndpointPolicy,
       (google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
@@ -75,11 +86,33 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateEndpointPolicy,
+      (google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::EndpointPolicy>>,
+      AwaitUpdateEndpointPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteEndpointPolicy,
       (google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteEndpointPolicy,
+      (google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteEndpointPolicy,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::networkservices::v1::Gateway>),
               ListGateways,
@@ -98,15 +131,43 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateGateway,
+      (google::cloud::networkservices::v1::CreateGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
+              AwaitCreateGateway,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
       UpdateGateway,
       (google::cloud::networkservices::v1::UpdateGatewayRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateGateway,
+      (google::cloud::networkservices::v1::UpdateGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Gateway>>,
+              AwaitUpdateGateway,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGateway,
       (google::cloud::networkservices::v1::DeleteGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteGateway,
+      (google::cloud::networkservices::v1::DeleteGatewayRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteGateway, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -126,17 +187,45 @@ class MockNetworkServicesConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateGrpcRoute,
+              (google::cloud::networkservices::v1::CreateGrpcRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>,
+              AwaitCreateGrpcRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>,
               UpdateGrpcRoute,
               (google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateGrpcRoute,
+              (google::cloud::networkservices::v1::UpdateGrpcRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::GrpcRoute>>,
+              AwaitUpdateGrpcRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteGrpcRoute,
       (google::cloud::networkservices::v1::DeleteGrpcRouteRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteGrpcRoute,
+              (google::cloud::networkservices::v1::DeleteGrpcRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteGrpcRoute, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -156,17 +245,45 @@ class MockNetworkServicesConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateHttpRoute,
+              (google::cloud::networkservices::v1::CreateHttpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>,
+              AwaitCreateHttpRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>,
               UpdateHttpRoute,
               (google::cloud::networkservices::v1::UpdateHttpRouteRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateHttpRoute,
+              (google::cloud::networkservices::v1::UpdateHttpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::HttpRoute>>,
+              AwaitUpdateHttpRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteHttpRoute,
       (google::cloud::networkservices::v1::DeleteHttpRouteRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteHttpRoute,
+              (google::cloud::networkservices::v1::DeleteHttpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteHttpRoute, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -186,17 +303,45 @@ class MockNetworkServicesConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateTcpRoute,
+              (google::cloud::networkservices::v1::CreateTcpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>,
+              AwaitCreateTcpRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>,
               UpdateTcpRoute,
               (google::cloud::networkservices::v1::UpdateTcpRouteRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateTcpRoute,
+              (google::cloud::networkservices::v1::UpdateTcpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TcpRoute>>,
+              AwaitUpdateTcpRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteTcpRoute,
       (google::cloud::networkservices::v1::DeleteTcpRouteRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteTcpRoute,
+              (google::cloud::networkservices::v1::DeleteTcpRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteTcpRoute, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -216,17 +361,45 @@ class MockNetworkServicesConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateTlsRoute,
+              (google::cloud::networkservices::v1::CreateTlsRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>,
+              AwaitCreateTlsRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>,
               UpdateTlsRoute,
               (google::cloud::networkservices::v1::UpdateTlsRouteRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateTlsRoute,
+              (google::cloud::networkservices::v1::UpdateTlsRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::TlsRoute>>,
+              AwaitUpdateTlsRoute,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteTlsRoute,
       (google::cloud::networkservices::v1::DeleteTlsRouteRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteTlsRoute,
+              (google::cloud::networkservices::v1::DeleteTlsRouteRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteTlsRoute, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -250,11 +423,33 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateServiceBinding,
+      (google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::ServiceBinding>>,
+      AwaitCreateServiceBinding,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteServiceBinding,
       (google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteServiceBinding,
+      (google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteServiceBinding,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::networkservices::v1::Mesh>),
               ListMeshes,
@@ -272,14 +467,42 @@ class MockNetworkServicesConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateMesh,
+      (google::cloud::networkservices::v1::CreateMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Mesh>>,
+              AwaitCreateMesh,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::Mesh>>, UpdateMesh,
       (google::cloud::networkservices::v1::UpdateMeshRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateMesh,
+      (google::cloud::networkservices::v1::UpdateMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::networkservices::v1::Mesh>>,
+              AwaitUpdateMesh,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
       DeleteMesh,
       (google::cloud::networkservices::v1::DeleteMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteMesh,
+      (google::cloud::networkservices::v1::DeleteMeshRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkservices::v1::OperationMetadata>>,
+      AwaitDeleteMesh, (google::longrunning::Operation const& operation),
       (override));
 };
 

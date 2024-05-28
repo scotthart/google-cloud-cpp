@@ -61,6 +61,17 @@ class MockNetworkAttachmentsConnection
                    DeleteNetworkAttachmentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteNetworkAttachment,
+              (google::cloud::cpp::compute::network_attachments::v1::
+                   DeleteNetworkAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteNetworkAttachment,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::NetworkAttachment>,
               GetNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
@@ -78,6 +89,17 @@ class MockNetworkAttachmentsConnection
                    InsertNetworkAttachmentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertNetworkAttachment,
+              (google::cloud::cpp::compute::network_attachments::v1::
+                   InsertNetworkAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertNetworkAttachment,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::NetworkAttachment>),
               ListNetworkAttachments,
               (google::cloud::cpp::compute::network_attachments::v1::
@@ -88,6 +110,17 @@ class MockNetworkAttachmentsConnection
               PatchNetworkAttachment,
               (google::cloud::cpp::compute::network_attachments::v1::
                    PatchNetworkAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchNetworkAttachment,
+              (google::cloud::cpp::compute::network_attachments::v1::
+                   PatchNetworkAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchNetworkAttachment,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

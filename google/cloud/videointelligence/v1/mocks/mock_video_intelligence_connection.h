@@ -53,6 +53,16 @@ class MockVideoIntelligenceServiceConnection
               (google::cloud::videointelligence::v1::AnnotateVideoRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartAnnotateVideo,
+              (google::cloud::videointelligence::v1::AnnotateVideoRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::videointelligence::v1::AnnotateVideoResponse>>,
+              AwaitAnnotateVideo,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -59,10 +59,26 @@ class MockExecutionsConnection : public run_v2::ExecutionsConnection {
               (google::cloud::run::v2::DeleteExecutionRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteExecution,
+              (google::cloud::run::v2::DeleteExecutionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+              AwaitDeleteExecution,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
               CancelExecution,
               (google::cloud::run::v2::CancelExecutionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCancelExecution,
+              (google::cloud::run::v2::CancelExecutionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>,
+              AwaitCancelExecution,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

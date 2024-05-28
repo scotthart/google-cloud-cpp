@@ -55,10 +55,32 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::AddAssociationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAddAssociation,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::AddAssociationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddAssociation,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               AddRule,
               (google::cloud::cpp::compute::region_network_firewall_policies::
                    v1::AddRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAddRule,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::AddRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddRule,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -67,10 +89,32 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::CloneRulesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartCloneRules,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::CloneRulesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitCloneRules,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteFirewallPolicy,
               (google::cloud::cpp::compute::region_network_firewall_policies::
                    v1::DeleteFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::DeleteFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteFirewallPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::FirewallPolicy>,
@@ -111,6 +155,17 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::InsertFirewallPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::InsertFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertFirewallPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::FirewallPolicy>),
               ListRegionNetworkFirewallPolicies,
               (google::cloud::cpp::compute::region_network_firewall_policies::
@@ -123,10 +178,32 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::PatchFirewallPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchFirewallPolicy,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::PatchFirewallPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchFirewallPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PatchRule,
               (google::cloud::cpp::compute::region_network_firewall_policies::
                    v1::PatchRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchRule,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::PatchRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchRule,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -135,10 +212,32 @@ class MockRegionNetworkFirewallPoliciesConnection
                    v1::RemoveAssociationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveAssociation,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::RemoveAssociationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveAssociation,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveRule,
               (google::cloud::cpp::compute::region_network_firewall_policies::
                    v1::RemoveRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveRule,
+              (google::cloud::cpp::compute::region_network_firewall_policies::
+                   v1::RemoveRuleRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveRule,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,

@@ -55,6 +55,17 @@ class MockPersistentResourceServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreatePersistentResource,
+      (google::cloud::aiplatform::v1::CreatePersistentResourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      AwaitCreatePersistentResource,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::PersistentResource>,
       GetPersistentResource,
       (google::cloud::aiplatform::v1::GetPersistentResourceRequest const&
@@ -75,6 +86,17 @@ class MockPersistentResourceServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeletePersistentResource,
+      (google::cloud::aiplatform::v1::DeletePersistentResourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeletePersistentResource,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       UpdatePersistentResource,
       (google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
@@ -82,11 +104,33 @@ class MockPersistentResourceServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdatePersistentResource,
+      (google::cloud::aiplatform::v1::UpdatePersistentResourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      AwaitUpdatePersistentResource,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
       RebootPersistentResource,
       (google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRebootPersistentResource,
+      (google::cloud::aiplatform::v1::RebootPersistentResourceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PersistentResource>>,
+      AwaitRebootPersistentResource,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

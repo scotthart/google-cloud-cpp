@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_ENTITY_TYPES_CLIENT_H
 
 #include "google/cloud/dialogflow_es/entity_types_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -612,6 +614,18 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+          request,
+      Options opts = {});
+
+  future<
+      StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>
+  BatchUpdateEntityTypes(google::cloud::ExperimentalTag,
+                         google::longrunning::Operation const& operation,
+                         Options opts = {});
+
   // clang-format off
   ///
   /// Deletes entity types in the specified agent.
@@ -658,6 +672,11 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
+      std::string const& parent,
+      std::vector<std::string> const& entity_type_names, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& parent,
       std::vector<std::string> const& entity_type_names, Options opts = {});
 
@@ -713,6 +732,16 @@ class EntityTypesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchDeleteEntityTypes(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntityTypes(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Creates multiple new entities in the specified entity type.
@@ -758,6 +787,13 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
+      std::string const& parent,
+      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
+          entities,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
@@ -818,6 +854,13 @@ class EntityTypesClient {
           entities,
       std::string const& language_code, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
+          entities,
+      std::string const& language_code, Options opts = {});
+
   // clang-format off
   ///
   /// Creates multiple new entities in the specified entity type.
@@ -869,6 +912,15 @@ class EntityTypesClient {
       google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchCreateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> BatchCreateEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates or creates multiple entities in the specified entity type. This
@@ -917,6 +969,13 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
+      std::string const& parent,
+      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
+          entities,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
@@ -975,6 +1034,13 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
+      std::string const& parent,
+      std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
+          entities,
+      std::string const& language_code, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& parent,
       std::vector<google::cloud::dialogflow::v2::EntityType::Entity> const&
           entities,
@@ -1034,6 +1100,15 @@ class EntityTypesClient {
       google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchUpdateEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> BatchUpdateEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes entities in the specified entity type.
@@ -1081,6 +1156,11 @@ class EntityTypesClient {
   ///
   // clang-format on
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
+      std::string const& parent, std::vector<std::string> const& entity_values,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& parent, std::vector<std::string> const& entity_values,
       Options opts = {});
 
@@ -1139,6 +1219,11 @@ class EntityTypesClient {
       std::string const& parent, std::vector<std::string> const& entity_values,
       std::string const& language_code, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, std::vector<std::string> const& entity_values,
+      std::string const& language_code, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes entities in the specified entity type.
@@ -1189,6 +1274,15 @@ class EntityTypesClient {
   future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
       google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchDeleteEntities(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::protobuf::Struct>> BatchDeleteEntities(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<EntityTypesConnection> connection_;

@@ -53,6 +53,17 @@ class MockBackendServicesConnection
                    AddSignedUrlKeyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAddSignedUrlKey,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   AddSignedUrlKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddSignedUrlKey,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
                                               BackendServicesScopedList>>),
@@ -67,10 +78,32 @@ class MockBackendServicesConnection
                    DeleteBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteBackendService,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   DeleteBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteSignedUrlKey,
               (google::cloud::cpp::compute::backend_services::v1::
                    DeleteSignedUrlKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteSignedUrlKey,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   DeleteSignedUrlKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteSignedUrlKey,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::BackendService>,
@@ -97,6 +130,17 @@ class MockBackendServicesConnection
                    InsertBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertBackendService,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   InsertBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::BackendService>),
               ListBackendServices,
               (google::cloud::cpp::compute::backend_services::v1::
@@ -116,10 +160,32 @@ class MockBackendServicesConnection
                    PatchBackendServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchBackendService,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   PatchBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetEdgeSecurityPolicy,
               (google::cloud::cpp::compute::backend_services::v1::
                    SetEdgeSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetEdgeSecurityPolicy,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   SetEdgeSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetEdgeSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -133,6 +199,17 @@ class MockBackendServicesConnection
                    SetSecurityPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetSecurityPolicy,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>,
       TestIamPermissions,
@@ -144,6 +221,17 @@ class MockBackendServicesConnection
               UpdateBackendService,
               (google::cloud::cpp::compute::backend_services::v1::
                    UpdateBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdateBackendService,
+              (google::cloud::cpp::compute::backend_services::v1::
+                   UpdateBackendServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateBackendService,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

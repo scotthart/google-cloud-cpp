@@ -51,6 +51,15 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (google::cloud::speech::v2::CreateRecognizerRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateRecognizer,
+      (google::cloud::speech::v2::CreateRecognizerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+              AwaitCreateRecognizer,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::Recognizer>),
               ListRecognizers,
               (google::cloud::speech::v2::ListRecognizersRequest request),
@@ -66,15 +75,42 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateRecognizer,
+      (google::cloud::speech::v2::UpdateRecognizerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+              AwaitUpdateRecognizer,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>, DeleteRecognizer,
       (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteRecognizer,
+      (google::cloud::speech::v2::DeleteRecognizerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+              AwaitDeleteRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::Recognizer>>,
       UndeleteRecognizer,
       (google::cloud::speech::v2::UndeleteRecognizerRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeleteRecognizer,
+      (google::cloud::speech::v2::UndeleteRecognizerRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::Recognizer>>,
+              AwaitUndeleteRecognizer,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::speech::v2::RecognizeResponse>, Recognize,
               (google::cloud::speech::v2::RecognizeRequest const& request),
@@ -91,6 +127,15 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (google::cloud::speech::v2::BatchRecognizeRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartBatchRecognize,
+              (google::cloud::speech::v2::BatchRecognizeRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,
+      AwaitBatchRecognize, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(StatusOr<google::cloud::speech::v2::Config>, GetConfig,
               (google::cloud::speech::v2::GetConfigRequest const& request),
               (override));
@@ -104,6 +149,15 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       CreateCustomClass,
       (google::cloud::speech::v2::CreateCustomClassRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateCustomClass,
+      (google::cloud::speech::v2::CreateCustomClassRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+              AwaitCreateCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::CustomClass>),
               ListCustomClasses,
@@ -121,10 +175,28 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateCustomClass,
+      (google::cloud::speech::v2::UpdateCustomClassRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+              AwaitUpdateCustomClass,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
       DeleteCustomClass,
       (google::cloud::speech::v2::DeleteCustomClassRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteCustomClass,
+      (google::cloud::speech::v2::DeleteCustomClassRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+              AwaitDeleteCustomClass,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::CustomClass>>,
@@ -133,9 +205,27 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeleteCustomClass,
+      (google::cloud::speech::v2::UndeleteCustomClassRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::CustomClass>>,
+              AwaitUndeleteCustomClass,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, CreatePhraseSet,
       (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreatePhraseSet,
+      (google::cloud::speech::v2::CreatePhraseSetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
+              AwaitCreatePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::speech::v2::PhraseSet>),
               ListPhraseSets,
@@ -152,14 +242,41 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdatePhraseSet,
+      (google::cloud::speech::v2::UpdatePhraseSetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
+              AwaitUpdatePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, DeletePhraseSet,
       (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeletePhraseSet,
+      (google::cloud::speech::v2::DeletePhraseSetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
+              AwaitDeletePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::PhraseSet>>, UndeletePhraseSet,
       (google::cloud::speech::v2::UndeletePhraseSetRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeletePhraseSet,
+      (google::cloud::speech::v2::UndeletePhraseSetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::speech::v2::PhraseSet>>,
+              AwaitUndeletePhraseSet,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

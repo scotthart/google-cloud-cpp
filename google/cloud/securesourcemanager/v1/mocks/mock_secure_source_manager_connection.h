@@ -67,11 +67,34 @@ class MockSecureSourceManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateInstance,
+      (google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>,
+      AwaitCreateInstance, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteInstance,
+      (google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      AwaitDeleteInstance, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -95,11 +118,34 @@ class MockSecureSourceManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateRepository,
+      (google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>,
+      AwaitCreateRepository, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
       DeleteRepository,
       (google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteRepository,
+      (google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>,
+      AwaitDeleteRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicyRepo,

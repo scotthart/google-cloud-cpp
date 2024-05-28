@@ -55,11 +55,31 @@ class MockRapidMigrationAssessmentConnection
            CreateCollectorRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateCollector,
+              (google::cloud::rapidmigrationassessment::v1::
+                   CreateCollectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitCreateCollector, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
       CreateAnnotation,
       (google::cloud::rapidmigrationassessment::v1::
            CreateAnnotationRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateAnnotation,
+              (google::cloud::rapidmigrationassessment::v1::
+                   CreateAnnotationRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Annotation>>,
+      AwaitCreateAnnotation, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -90,11 +110,31 @@ class MockRapidMigrationAssessmentConnection
            UpdateCollectorRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateCollector,
+              (google::cloud::rapidmigrationassessment::v1::
+                   UpdateCollectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitUpdateCollector, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       DeleteCollector,
       (google::cloud::rapidmigrationassessment::v1::
            DeleteCollectorRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteCollector,
+              (google::cloud::rapidmigrationassessment::v1::
+                   DeleteCollectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitDeleteCollector, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -104,6 +144,16 @@ class MockRapidMigrationAssessmentConnection
            ResumeCollectorRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartResumeCollector,
+              (google::cloud::rapidmigrationassessment::v1::
+                   ResumeCollectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitResumeCollector, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       RegisterCollector,
@@ -111,11 +161,32 @@ class MockRapidMigrationAssessmentConnection
            RegisterCollectorRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartRegisterCollector,
+              (google::cloud::rapidmigrationassessment::v1::
+                   RegisterCollectorRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitRegisterCollector, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
       PauseCollector,
       (google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPauseCollector,
+      (google::cloud::rapidmigrationassessment::v1::PauseCollectorRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::rapidmigrationassessment::v1::Collector>>,
+      AwaitPauseCollector, (google::longrunning::Operation const& operation),
       (override));
 };
 

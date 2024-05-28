@@ -52,6 +52,17 @@ class MockRegionInstancesConnection
               (google::cloud::cpp::compute::region_instances::v1::
                    BulkInsertRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartBulkInsert,
+              (google::cloud::cpp::compute::region_instances::v1::
+                   BulkInsertRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitBulkInsert,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

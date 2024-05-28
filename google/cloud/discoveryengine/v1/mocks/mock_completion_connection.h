@@ -60,12 +60,34 @@ class MockCompletionServiceConnection
                    ImportSuggestionDenyListEntriesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartImportSuggestionDenyListEntries,
+              (google::cloud::discoveryengine::v1::
+                   ImportSuggestionDenyListEntriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  ImportSuggestionDenyListEntriesResponse>>,
+              AwaitImportSuggestionDenyListEntries,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   PurgeSuggestionDenyListEntriesResponse>>,
               PurgeSuggestionDenyListEntries,
               (google::cloud::discoveryengine::v1::
                    PurgeSuggestionDenyListEntriesRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartPurgeSuggestionDenyListEntries,
+              (google::cloud::discoveryengine::v1::
+                   PurgeSuggestionDenyListEntriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  PurgeSuggestionDenyListEntriesResponse>>,
+              AwaitPurgeSuggestionDenyListEntries,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

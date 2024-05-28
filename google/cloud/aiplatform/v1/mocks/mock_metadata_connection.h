@@ -53,6 +53,16 @@ class MockMetadataServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateMetadataStore,
+              (google::cloud::aiplatform::v1::CreateMetadataStoreRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>,
+              AwaitCreateMetadataStore,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::MetadataStore>, GetMetadataStore,
       (google::cloud::aiplatform::v1::GetMetadataStoreRequest const& request),
@@ -71,6 +81,18 @@ class MockMetadataServiceConnection
       (google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteMetadataStore,
+              (google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>,
+      AwaitDeleteMetadataStore,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Artifact>, CreateArtifact,
@@ -99,9 +121,29 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteArtifact,
+      (google::cloud::aiplatform::v1::DeleteArtifactRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteArtifact, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
       PurgeArtifacts,
       (google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPurgeArtifacts,
+      (google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>,
+      AwaitPurgeArtifacts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -130,9 +172,29 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteContext,
+      (google::cloud::aiplatform::v1::DeleteContextRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteContext, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
       PurgeContexts,
       (google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPurgeContexts,
+      (google::cloud::aiplatform::v1::PurgeContextsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>,
+      AwaitPurgeContexts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::
@@ -189,9 +251,29 @@ class MockMetadataServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteExecution,
+      (google::cloud::aiplatform::v1::DeleteExecutionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteExecution, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
       PurgeExecutions,
       (google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPurgeExecutions,
+      (google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>,
+      AwaitPurgeExecutions, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

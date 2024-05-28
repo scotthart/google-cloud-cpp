@@ -68,6 +68,18 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartCreateServiceProjectAttachment,
+      (google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>,
+      AwaitCreateServiceProjectAttachment,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>,
       GetServiceProjectAttachment,
       (google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
@@ -80,6 +92,17 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartDeleteServiceProjectAttachment,
+      (google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              AwaitDeleteServiceProjectAttachment,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -117,6 +140,14 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::CreateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateService,
+              (google::cloud::apphub::v1::CreateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
+              AwaitCreateService,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Service>, GetService,
               (google::cloud::apphub::v1::GetServiceRequest const& request),
               (override));
@@ -126,10 +157,26 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::UpdateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateService,
+              (google::cloud::apphub::v1::UpdateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Service>>,
+              AwaitUpdateService,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteService,
               (google::cloud::apphub::v1::DeleteServiceRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteService,
+              (google::cloud::apphub::v1::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              AwaitDeleteService,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>),
@@ -159,6 +206,14 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateWorkload,
+              (google::cloud::apphub::v1::CreateWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
+              AwaitCreateWorkload,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Workload>, GetWorkload,
               (google::cloud::apphub::v1::GetWorkloadRequest const& request),
               (override));
@@ -168,10 +223,26 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
               (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateWorkload,
+              (google::cloud::apphub::v1::UpdateWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Workload>>,
+              AwaitUpdateWorkload,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
               DeleteWorkload,
               (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteWorkload,
+              (google::cloud::apphub::v1::DeleteWorkloadRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              AwaitDeleteWorkload,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::apphub::v1::Application>),
               ListApplications,
@@ -184,6 +255,15 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (google::cloud::apphub::v1::CreateApplicationRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateApplication,
+      (google::cloud::apphub::v1::CreateApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
+              AwaitCreateApplication,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::apphub::v1::Application>, GetApplication,
               (google::cloud::apphub::v1::GetApplicationRequest const& request),
               (override));
@@ -195,10 +275,28 @@ class MockAppHubConnection : public apphub_v1::AppHubConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateApplication,
+      (google::cloud::apphub::v1::UpdateApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::Application>>,
+              AwaitUpdateApplication,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
       DeleteApplication,
       (google::cloud::apphub::v1::DeleteApplicationRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteApplication,
+      (google::cloud::apphub::v1::DeleteApplicationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>,
+              AwaitDeleteApplication,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

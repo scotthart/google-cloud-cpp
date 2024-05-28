@@ -53,11 +53,33 @@ class MockTargetPoolsConnection
                    AddHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAddHealthCheck,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   AddHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, AddInstance,
       (google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartAddInstance,
+      (google::cloud::cpp::compute::target_pools::v1::AddInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<
@@ -72,6 +94,17 @@ class MockTargetPoolsConnection
               DeleteTargetPool,
               (google::cloud::cpp::compute::target_pools::v1::
                    DeleteTargetPoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteTargetPool,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   DeleteTargetPoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteTargetPool,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::TargetPool>,
@@ -93,6 +126,17 @@ class MockTargetPoolsConnection
                    InsertTargetPoolRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertTargetPool,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   InsertTargetPoolRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertTargetPool,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::TargetPool>),
       ListTargetPools,
@@ -106,10 +150,32 @@ class MockTargetPoolsConnection
                    RemoveHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveHealthCheck,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   RemoveHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               RemoveInstance,
               (google::cloud::cpp::compute::target_pools::v1::
                    RemoveInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveInstance,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   RemoveInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -118,10 +184,32 @@ class MockTargetPoolsConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartSetBackup,
+      (google::cloud::cpp::compute::target_pools::v1::SetBackupRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetBackup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetSecurityPolicy,
               (google::cloud::cpp::compute::target_pools::v1::
                    SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetSecurityPolicy,
+              (google::cloud::cpp::compute::target_pools::v1::
+                   SetSecurityPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetSecurityPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

@@ -48,23 +48,58 @@ int main(int argc, char* argv[]) try {
   auto const uri = std::string{argc == 4 ? argv[3] : kDefaultUri};
   namespace speech = ::google::cloud::speech_v2;
 
-  std::shared_ptr<speech::SpeechConnection> connection;
-  google::cloud::speech::v2::RecognizeRequest request;
-  ConfigureRecognizer(request);
-  request.set_uri(uri);
-  request.set_recognizer("projects/" + project + "/locations/" + location +
-                         "/recognizers/_");
-
+  //  std::shared_ptr<speech::SpeechConnection> connection;
+  //  google::cloud::speech::v2::RecognizeRequest request;
+  //  ConfigureRecognizer(request);
+  //  request.set_uri(uri);
+  //  request.set_recognizer("projects/" + project + "/locations/" + location +
+  //                         "/recognizers/_");
+  //
   if (location == "global") {
     // An empty location string indicates that the global endpoint of the
     // service should be used.
-    location = "";
+    location = "global";
   }
+  //
+  //  auto client =
+  //  speech::SpeechClient(speech::MakeSpeechConnection(location)); auto
+  //  response = client.Recognize(request); if (!response) throw
+  //  std::move(response).status(); std::cout << response->DebugString() <<
+  //  "\n";
 
   auto client = speech::SpeechClient(speech::MakeSpeechConnection(location));
-  auto response = client.Recognize(request);
+  google::cloud::speech::v2::BatchRecognizeRequest request;
+  request.set_recognizer("projects/" + project + "/locations/" + location +
+                         "/recognizers/_");
+  google::cloud::speech::v2::BatchRecognizeFileMetadata file_metadata;
+  file_metadata.set_uri(uri);
+  *request.add_files() = file_metadata;
+
+  google::cloud::speech::v2::RecognitionOutputConfig output_config;
+  google::cloud::speech::v2::InlineOutputConfig inline_response_config;
+  *output_config.mutable_inline_response_config() = inline_response_config;
+  *request.mutable_recognition_output_config() = output_config;
+
+  auto response = client.BatchRecognize(request).get();
   if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
+
+#if 0
+  // Create Recognizer is unimplemented
+  auto client = speech::SpeechClient(speech::MakeSpeechConnection(location));
+  google::cloud::speech::v2::Recognizer recognizer;
+  *recognizer.mutable_default_recognition_config()->add_language_codes() = "en-US";
+  recognizer.mutable_default_recognition_config()->set_model("short");
+  *recognizer.mutable_default_recognition_config()->mutable_auto_decoding_config() = {};
+  google::cloud::speech::v2::CreateRecognizerRequest request;
+  *request.mutable_recognizer() = recognizer;
+  request.set_validate_only(true);
+  request.set_recognizer_id("test-recognizer");
+  request.set_parent("projects/" + project + "/locations/" + location);
+  auto response = client.CreateRecognizer(request).get();
+  if (!response) throw std::move(response).status();
+  std::cout << response->DebugString() << "\n";
+#endif
 
   return 0;
 } catch (google::cloud::Status const& status) {

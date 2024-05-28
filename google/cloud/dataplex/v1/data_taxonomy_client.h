@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPLEX_V1_DATA_TAXONOMY_CLIENT_H
 
 #include "google/cloud/dataplex/v1/data_taxonomy_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -134,6 +136,12 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       std::string const& data_taxonomy_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
+      std::string const& data_taxonomy_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a DataTaxonomy resource.
@@ -173,6 +181,16 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
+  CreateDataTaxonomy(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Updates a DataTaxonomy resource.
@@ -205,6 +223,11 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
   UpdateDataTaxonomy(
+      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -247,6 +270,16 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
+  UpdateDataTaxonomy(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a DataTaxonomy resource. All attributes within the DataTaxonomy
@@ -280,6 +313,10 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataTaxonomy(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -320,6 +357,16 @@ class DataTaxonomyServiceClient {
   DeleteDataTaxonomy(
       google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataTaxonomy(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -498,6 +545,13 @@ class DataTaxonomyServiceClient {
           data_attribute_binding,
       std::string const& data_attribute_binding_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataplex::v1::DataAttributeBinding const&
+          data_attribute_binding,
+      std::string const& data_attribute_binding_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a DataAttributeBinding resource.
@@ -538,6 +592,17 @@ class DataTaxonomyServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
+  CreateDataAttributeBinding(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
+
   // clang-format off
   ///
   /// Updates a DataAttributeBinding resource.
@@ -570,6 +635,12 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
   UpdateDataAttributeBinding(
+      google::cloud::dataplex::v1::DataAttributeBinding const&
+          data_attribute_binding,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::DataAttributeBinding const&
           data_attribute_binding,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
@@ -614,6 +685,17 @@ class DataTaxonomyServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
+  UpdateDataAttributeBinding(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a DataAttributeBinding resource. All attributes within the
@@ -648,6 +730,10 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttributeBinding(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -690,6 +776,17 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataAttributeBinding(google::cloud::ExperimentalTag,
+                             google::longrunning::Operation const& operation,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -869,6 +966,12 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       std::string const& data_attribute_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
+      std::string const& data_attribute_id, Options opts = {});
+
   // clang-format off
   ///
   /// Create a DataAttribute resource.
@@ -908,6 +1011,16 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
+  CreateDataAttribute(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Updates a DataAttribute resource.
@@ -940,6 +1053,11 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
   UpdateDataAttribute(
+      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::dataplex::v1::DataAttribute const& data_attribute,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -982,6 +1100,16 @@ class DataTaxonomyServiceClient {
       google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
+  UpdateDataAttribute(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Data Attribute resource.
@@ -1014,6 +1142,10 @@ class DataTaxonomyServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
   DeleteDataAttribute(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1053,6 +1185,16 @@ class DataTaxonomyServiceClient {
   DeleteDataAttribute(
       google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
+  DeleteDataAttribute(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///

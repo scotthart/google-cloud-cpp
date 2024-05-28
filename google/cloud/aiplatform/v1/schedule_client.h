@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_SCHEDULE_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/schedule_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -181,6 +183,10 @@ class ScheduleServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteSchedule(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Schedule.
@@ -219,6 +225,16 @@ class ScheduleServiceClient {
   DeleteSchedule(
       google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteSchedule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteSchedule(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///

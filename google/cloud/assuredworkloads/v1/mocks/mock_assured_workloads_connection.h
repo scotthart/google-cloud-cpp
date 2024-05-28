@@ -53,6 +53,15 @@ class MockAssuredWorkloadsServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateWorkload,
+              (google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>,
+              AwaitCreateWorkload,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::assuredworkloads::v1::Workload>,
               UpdateWorkload,
               (google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&

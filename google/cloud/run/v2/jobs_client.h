@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CLIENT_H
 
 #include "google/cloud/run/v2/jobs_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -123,6 +125,11 @@ class JobsClient {
       std::string const& parent, google::cloud::run::v2::Job const& job,
       std::string const& job_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, google::cloud::run::v2::Job const& job,
+      std::string const& job_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Job.
@@ -160,6 +167,15 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
       google::cloud::run::v2::CreateJobRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::CreateJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -325,6 +341,10 @@ class JobsClient {
   future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
       google::cloud::run::v2::Job const& job, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::Job const& job, Options opts = {});
+
   // clang-format off
   ///
   /// Updates a Job.
@@ -363,6 +383,15 @@ class JobsClient {
       google::cloud::run::v2::UpdateJobRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::UpdateJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Job.
@@ -395,6 +424,10 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -435,6 +468,15 @@ class JobsClient {
       google::cloud::run::v2::DeleteJobRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::DeleteJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Triggers creation of a new Execution of this Job.
@@ -467,6 +509,10 @@ class JobsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RunJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, Options opts = {});
 
   // clang-format off
@@ -505,6 +551,14 @@ class JobsClient {
   // clang-format on
   future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
       google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RunJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
+
+  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

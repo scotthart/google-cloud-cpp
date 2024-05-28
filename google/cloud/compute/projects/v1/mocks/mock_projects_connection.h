@@ -53,10 +53,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartDisableXpnHost,
+      (google::cloud::cpp::compute::projects::v1::DisableXpnHostRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDisableXpnHost,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DisableXpnResource,
               (google::cloud::cpp::compute::projects::v1::
                    DisableXpnResourceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDisableXpnResource,
+              (google::cloud::cpp::compute::projects::v1::
+                   DisableXpnResourceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDisableXpnResource,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -66,10 +88,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartEnableXpnHost,
+      (google::cloud::cpp::compute::projects::v1::EnableXpnHostRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitEnableXpnHost,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               EnableXpnResource,
               (google::cloud::cpp::compute::projects::v1::
                    EnableXpnResourceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartEnableXpnResource,
+              (google::cloud::cpp::compute::projects::v1::
+                   EnableXpnResourceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitEnableXpnResource,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -102,6 +146,17 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartMoveDisk,
+              (google::cloud::cpp::compute::projects::v1::MoveDiskRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitMoveDisk,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       MoveInstance,
@@ -109,10 +164,32 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartMoveInstance,
+      (google::cloud::cpp::compute::projects::v1::MoveInstanceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitMoveInstance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetCloudArmorTier,
               (google::cloud::cpp::compute::projects::v1::
                    SetCloudArmorTierRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetCloudArmorTier,
+              (google::cloud::cpp::compute::projects::v1::
+                   SetCloudArmorTierRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetCloudArmorTier,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -121,16 +198,49 @@ class MockProjectsConnection : public compute_projects_v1::ProjectsConnection {
                    SetCommonInstanceMetadataRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetCommonInstanceMetadata,
+              (google::cloud::cpp::compute::projects::v1::
+                   SetCommonInstanceMetadataRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetCommonInstanceMetadata,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetDefaultNetworkTier,
               (google::cloud::cpp::compute::projects::v1::
                    SetDefaultNetworkTierRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetDefaultNetworkTier,
+              (google::cloud::cpp::compute::projects::v1::
+                   SetDefaultNetworkTierRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetDefaultNetworkTier,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetUsageExportBucket,
               (google::cloud::cpp::compute::projects::v1::
                    SetUsageExportBucketRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetUsageExportBucket,
+              (google::cloud::cpp::compute::projects::v1::
+                   SetUsageExportBucketRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetUsageExportBucket,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

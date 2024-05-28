@@ -64,16 +64,43 @@ class MockDataprocMetastoreFederationConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFederation,
+      (google::cloud::metastore::v1::CreateFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
+              AwaitCreateFederation,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Federation>>,
       UpdateFederation,
       (google::cloud::metastore::v1::UpdateFederationRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFederation,
+      (google::cloud::metastore::v1::UpdateFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Federation>>,
+              AwaitUpdateFederation,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteFederation,
       (google::cloud::metastore::v1::DeleteFederationRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFederation,
+      (google::cloud::metastore::v1::DeleteFederationRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+              AwaitDeleteFederation,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

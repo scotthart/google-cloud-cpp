@@ -60,6 +60,16 @@ class MockContactCenterInsightsConnection
            UploadConversationRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUploadConversation,
+              (google::cloud::contactcenterinsights::v1::
+                   UploadConversationRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::Conversation>>,
+      AwaitUploadConversation,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Conversation>,
               UpdateConversation,
               (google::cloud::contactcenterinsights::v1::
@@ -93,6 +103,17 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateAnalysis,
+      (google::cloud::contactcenterinsights::v1::CreateAnalysisRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::Analysis>>,
+      AwaitCreateAnalysis, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::Analysis>, GetAnalysis,
       (google::cloud::contactcenterinsights::v1::GetAnalysisRequest const&
            request),
@@ -117,12 +138,34 @@ class MockContactCenterInsightsConnection
                    BulkAnalyzeConversationsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBulkAnalyzeConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkAnalyzeConversationsResponse>>,
+              AwaitBulkAnalyzeConversations,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   BulkDeleteConversationsResponse>>,
               BulkDeleteConversations,
               (google::cloud::contactcenterinsights::v1::
                    BulkDeleteConversationsRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBulkDeleteConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkDeleteConversationsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkDeleteConversationsResponse>>,
+              AwaitBulkDeleteConversations,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   IngestConversationsResponse>>,
@@ -131,6 +174,17 @@ class MockContactCenterInsightsConnection
                    IngestConversationsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartIngestConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   IngestConversationsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  IngestConversationsResponse>>,
+              AwaitIngestConversations,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   ExportInsightsDataResponse>>,
               ExportInsightsData,
@@ -138,11 +192,32 @@ class MockContactCenterInsightsConnection
                    ExportInsightsDataRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartExportInsightsData,
+              (google::cloud::contactcenterinsights::v1::
+                   ExportInsightsDataRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  ExportInsightsDataResponse>>,
+              AwaitExportInsightsData,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
       CreateIssueModel,
       (google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateIssueModel,
+      (google::cloud::contactcenterinsights::v1::CreateIssueModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::contactcenterinsights::v1::IssueModel>>,
+      AwaitCreateIssueModel, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -176,11 +251,35 @@ class MockContactCenterInsightsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteIssueModel,
+      (google::cloud::contactcenterinsights::v1::DeleteIssueModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::DeleteIssueModelMetadata>>,
+      AwaitDeleteIssueModel, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,
       DeployIssueModel,
       (google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeployIssueModel,
+      (google::cloud::contactcenterinsights::v1::DeployIssueModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::contactcenterinsights::v1::DeployIssueModelResponse>>,
+      AwaitDeployIssueModel, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
@@ -189,6 +288,16 @@ class MockContactCenterInsightsConnection
               (google::cloud::contactcenterinsights::v1::
                    UndeployIssueModelRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUndeployIssueModel,
+              (google::cloud::contactcenterinsights::v1::
+                   UndeployIssueModelRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  UndeployIssueModelResponse>>,
+              AwaitUndeployIssueModel,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::contactcenterinsights::v1::Issue>,
               GetIssue,

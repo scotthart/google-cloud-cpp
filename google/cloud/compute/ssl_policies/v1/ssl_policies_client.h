@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SSL_POLICIES_V1_SSL_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/ssl_policies/v1/ssl_policies_rest_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -207,6 +209,11 @@ class SslPoliciesClient {
       std::string const& project, std::string const& ssl_policy,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& ssl_policy,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified SSL policy. The SSL policy resource can be deleted
@@ -246,6 +253,17 @@ class SslPoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           DeleteSslPolicyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          DeleteSslPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteSslPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -345,6 +363,12 @@ class SslPoliciesClient {
       google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Returns the specified SSL policy resource.
@@ -382,6 +406,17 @@ class SslPoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           InsertSslPolicyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          InsertSslPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertSslPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -563,6 +598,12 @@ class SslPoliciesClient {
       google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& ssl_policy,
+      google::cloud::cpp::compute::v1::SslPolicy const& ssl_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified SSL policy with the data included in the request.
@@ -600,6 +641,17 @@ class SslPoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
       google::cloud::cpp::compute::ssl_policies::v1::
           PatchSslPolicyRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSslPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::ssl_policies::v1::
+          PatchSslPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchSslPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

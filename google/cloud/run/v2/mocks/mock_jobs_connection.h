@@ -50,6 +50,13 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (google::cloud::run::v2::CreateJobRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateJob,
+              (google::cloud::run::v2::CreateJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, AwaitCreateJob,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::run::v2::Job>, GetJob,
               (google::cloud::run::v2::GetJobRequest const& request),
               (override));
@@ -61,13 +68,34 @@ class MockJobsConnection : public run_v2::JobsConnection {
               (google::cloud::run::v2::UpdateJobRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateJob,
+              (google::cloud::run::v2::UpdateJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, AwaitUpdateJob,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, DeleteJob,
               (google::cloud::run::v2::DeleteJobRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteJob,
+              (google::cloud::run::v2::DeleteJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Job>>, AwaitDeleteJob,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, RunJob,
               (google::cloud::run::v2::RunJobRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartRunJob,
+              (google::cloud::run::v2::RunJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Execution>>, AwaitRunJob,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

@@ -51,6 +51,14 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
               (google::cloud::asset::v1::ExportAssetsRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartExportAssets,
+              (google::cloud::asset::v1::ExportAssetsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::asset::v1::ExportAssetsResponse>>,
+              AwaitExportAssets,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::cloud::asset::v1::Asset>), ListAssets,
               (google::cloud::asset::v1::ListAssetsRequest request),
               (override));
@@ -104,6 +112,19 @@ class MockAssetServiceConnection : public asset_v1::AssetServiceConnection {
       (google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartAnalyzeIamPolicyLongrunning,
+      (google::cloud::asset::v1::AnalyzeIamPolicyLongrunningRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::asset::v1::AnalyzeIamPolicyLongrunningResponse>>,
+      AwaitAnalyzeIamPolicyLongrunning,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse>,
               AnalyzeMove,

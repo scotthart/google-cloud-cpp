@@ -67,10 +67,27 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
               (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartTrainAgent,
+              (google::cloud::dialogflow::v2::TrainAgentRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, AwaitTrainAgent,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
       ExportAgent,
       (google::cloud::dialogflow::v2::ExportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportAgent,
+      (google::cloud::dialogflow::v2::ExportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ExportAgentResponse>>,
+      AwaitExportAgent, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -79,9 +96,25 @@ class MockAgentsConnection : public dialogflow_es::AgentsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportAgent,
+      (google::cloud::dialogflow::v2::ImportAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, AwaitImportAgent,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, RestoreAgent,
       (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRestoreAgent,
+      (google::cloud::dialogflow::v2::RestoreAgentRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, AwaitRestoreAgent,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ValidationResult>,
               GetValidationResult,

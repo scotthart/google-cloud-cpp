@@ -79,6 +79,16 @@ class MockTranslationServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartBatchTranslateText,
+              (google::cloud::translation::v3::BatchTranslateTextRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>,
+      AwaitBatchTranslateText,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
@@ -88,10 +98,31 @@ class MockTranslationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchTranslateDocument,
+      (google::cloud::translation::v3::BatchTranslateDocumentRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::translation::v3::BatchTranslateDocumentResponse>>,
+      AwaitBatchTranslateDocument,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::translation::v3::Glossary>>,
       CreateGlossary,
       (google::cloud::translation::v3::CreateGlossaryRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateGlossary,
+      (google::cloud::translation::v3::CreateGlossaryRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::translation::v3::Glossary>>,
+              AwaitCreateGlossary,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::translation::v3::Glossary>),
               ListGlossaries,
@@ -107,6 +138,16 @@ class MockTranslationServiceConnection
       future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
       DeleteGlossary,
       (google::cloud::translation::v3::DeleteGlossaryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteGlossary,
+      (google::cloud::translation::v3::DeleteGlossaryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>,
+      AwaitDeleteGlossary, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

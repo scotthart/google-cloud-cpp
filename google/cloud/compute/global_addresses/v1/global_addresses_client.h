@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_GLOBAL_ADDRESSES_V1_GLOBAL_ADDRESSES_CLIENT_H
 
 #include "google/cloud/compute/global_addresses/v1/global_addresses_rest_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -121,6 +123,11 @@ class GlobalAddressesClient {
       std::string const& project, std::string const& address,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& address,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified address resource.
@@ -158,6 +165,17 @@ class GlobalAddressesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
       google::cloud::cpp::compute::global_addresses::v1::
           DeleteAddressRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAddress(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::
+          DeleteAddressRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteAddress(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -257,6 +275,12 @@ class GlobalAddressesClient {
       google::cloud::cpp::compute::v1::Address const& address_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project,
+      google::cloud::cpp::compute::v1::Address const& address_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates an address resource in the specified project by using the data
@@ -295,6 +319,17 @@ class GlobalAddressesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
       google::cloud::cpp::compute::global_addresses::v1::
           InsertAddressRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertAddress(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::
+          InsertAddressRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertAddress(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -411,6 +446,13 @@ class GlobalAddressesClient {
           global_addresses_move_request_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& address,
+      google::cloud::cpp::compute::v1::GlobalAddressesMoveRequest const&
+          global_addresses_move_request_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Moves the specified address resource from one project to another project.
@@ -450,6 +492,17 @@ class GlobalAddressesClient {
           request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Move(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::MoveRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Move(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a GlobalAddress. To learn more about labels, read the
@@ -483,6 +536,13 @@ class GlobalAddressesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& resource,
       google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
           global_set_labels_request_resource,
@@ -526,6 +586,17 @@ class GlobalAddressesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::global_addresses::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

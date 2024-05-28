@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_CLIENT_H
 
 #include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -373,6 +375,16 @@ class StorageTransferServiceClient {
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> RunTransferJob(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::storagetransfer::v1::RunTransferJobRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::storagetransfer::v1::TransferOperation>>
+  RunTransferJob(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
