@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_EDGECONTAINER_V1_EDGE_CONTAINER_CLIENT_H
 
 #include "google/cloud/edgecontainer/v1/edge_container_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -254,6 +256,12 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::Cluster const& cluster,
       std::string const& cluster_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::edgecontainer::v1::Cluster const& cluster,
+      std::string const& cluster_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new Cluster in a given project and location.
@@ -292,6 +300,15 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> CreateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single Cluster.
@@ -327,6 +344,11 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
+      google::cloud::edgecontainer::v1::Cluster const& cluster,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::edgecontainer::v1::Cluster const& cluster,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -368,6 +390,15 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpdateCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Upgrades a single cluster.
@@ -400,6 +431,13 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      std::string const& name, std::string const& target_version,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest::Schedule
+          schedule,
+      Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& name, std::string const& target_version,
       google::cloud::edgecontainer::v1::UpgradeClusterRequest::Schedule
           schedule,
@@ -443,6 +481,15 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpgradeCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpgradeClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::Cluster>> UpgradeCluster(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single Cluster.
@@ -474,6 +521,10 @@ class EdgeContainerClient {
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteCluster(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -513,6 +564,16 @@ class EdgeContainerClient {
   DeleteCluster(
       google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteCluster(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteClusterRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+  DeleteCluster(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -796,6 +857,12 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
       std::string const& node_pool_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::edgecontainer::v1::NodePool const& node_pool,
+      std::string const& node_pool_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new NodePool in a given project and location.
@@ -834,6 +901,15 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> CreateNodePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Updates the parameters of a single NodePool.
@@ -869,6 +945,11 @@ class EdgeContainerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
+      google::cloud::edgecontainer::v1::NodePool const& node_pool,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> UpdateNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       google::cloud::edgecontainer::v1::NodePool const& node_pool,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
@@ -910,6 +991,15 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> UpdateNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::UpdateNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::NodePool>> UpdateNodePool(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single NodePool.
@@ -941,6 +1031,10 @@ class EdgeContainerClient {
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteNodePool(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -980,6 +1074,16 @@ class EdgeContainerClient {
   DeleteNodePool(
       google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteNodePool(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteNodePoolRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+  DeleteNodePool(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1280,6 +1384,12 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::VpnConnection const& vpn_connection,
       std::string const& vpn_connection_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateVpnConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::edgecontainer::v1::VpnConnection const& vpn_connection,
+      std::string const& vpn_connection_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new VPN connection in a given project and location.
@@ -1320,6 +1430,17 @@ class EdgeContainerClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateVpnConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::CreateVpnConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>
+  CreateVpnConnection(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single VPN connection.
@@ -1351,6 +1472,10 @@ class EdgeContainerClient {
   // clang-format on
   future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
   DeleteVpnConnection(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteVpnConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1391,6 +1516,17 @@ class EdgeContainerClient {
       google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteVpnConnection(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::edgecontainer::v1::DeleteVpnConnectionRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::edgecontainer::v1::OperationMetadata>>
+  DeleteVpnConnection(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///

@@ -62,15 +62,42 @@ class MockFunctionServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFunction,
+      (google::cloud::functions::v2::CreateFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::Function>>,
+              AwaitCreateFunction,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v2::Function>>, UpdateFunction,
       (google::cloud::functions::v2::UpdateFunctionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFunction,
+      (google::cloud::functions::v2::UpdateFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::Function>>,
+              AwaitUpdateFunction,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
       DeleteFunction,
       (google::cloud::functions::v2::DeleteFunctionRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFunction,
+      (google::cloud::functions::v2::DeleteFunctionRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::functions::v2::OperationMetadata>>,
+              AwaitDeleteFunction,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::functions::v2::GenerateUploadUrlResponse>,

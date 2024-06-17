@@ -71,6 +71,18 @@ class MockAppConnectionsServiceConnection
            CreateAppConnectionRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateAppConnection,
+              (google::cloud::beyondcorp::appconnections::v1::
+                   CreateAppConnectionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
+      AwaitCreateAppConnection,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
@@ -79,12 +91,35 @@ class MockAppConnectionsServiceConnection
            UpdateAppConnectionRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateAppConnection,
+              (google::cloud::beyondcorp::appconnections::v1::
+                   UpdateAppConnectionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::beyondcorp::appconnections::v1::AppConnection>>,
+      AwaitUpdateAppConnection,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
                                   AppConnectionOperationMetadata>>,
               DeleteAppConnection,
               (google::cloud::beyondcorp::appconnections::v1::
                    DeleteAppConnectionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteAppConnection,
+              (google::cloud::beyondcorp::appconnections::v1::
+                   DeleteAppConnectionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appconnections::v1::
+                                  AppConnectionOperationMetadata>>,
+              AwaitDeleteAppConnection,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::beyondcorp::appconnections::v1::

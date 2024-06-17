@@ -66,6 +66,17 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConnectionProfile,
+      (google::cloud::datastream::v1::CreateConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
+      AwaitCreateConnectionProfile,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
       (google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
@@ -73,11 +84,33 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateConnectionProfile,
+      (google::cloud::datastream::v1::UpdateConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::ConnectionProfile>>,
+      AwaitUpdateConnectionProfile,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteConnectionProfile,
       (google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConnectionProfile,
+      (google::cloud::datastream::v1::DeleteConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      AwaitDeleteConnectionProfile,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<
@@ -101,14 +134,42 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateStream,
+      (google::cloud::datastream::v1::CreateStreamRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
+              AwaitCreateStream,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Stream>>, UpdateStream,
       (google::cloud::datastream::v1::UpdateStreamRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateStream,
+      (google::cloud::datastream::v1::UpdateStreamRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Stream>>,
+              AwaitUpdateStream,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteStream,
       (google::cloud::datastream::v1::DeleteStreamRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteStream,
+      (google::cloud::datastream::v1::DeleteStreamRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      AwaitDeleteStream, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -149,6 +210,17 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreatePrivateConnection,
+      (google::cloud::datastream::v1::CreatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::PrivateConnection>>,
+      AwaitCreatePrivateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::datastream::v1::PrivateConnection>,
               GetPrivateConnection,
               (google::cloud::datastream::v1::GetPrivateConnectionRequest const&
@@ -169,9 +241,29 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeletePrivateConnection,
+      (google::cloud::datastream::v1::DeletePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      AwaitDeletePrivateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::datastream::v1::Route>>, CreateRoute,
       (google::cloud::datastream::v1::CreateRouteRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateRoute,
+      (google::cloud::datastream::v1::CreateRouteRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::datastream::v1::Route>>,
+              AwaitCreateRoute,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::datastream::v1::Route>, GetRoute,
               (google::cloud::datastream::v1::GetRouteRequest const& request),
@@ -185,6 +277,16 @@ class MockDatastreamConnection : public datastream_v1::DatastreamConnection {
       future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
       DeleteRoute,
       (google::cloud::datastream::v1::DeleteRouteRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteRoute,
+      (google::cloud::datastream::v1::DeleteRouteRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::datastream::v1::OperationMetadata>>,
+      AwaitDeleteRoute, (google::longrunning::Operation const& operation),
       (override));
 };
 

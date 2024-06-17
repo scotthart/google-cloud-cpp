@@ -57,14 +57,38 @@ class MockVersionsConnection : public appengine_v1::VersionsConnection {
               (google::appengine::v1::CreateVersionRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateVersion,
+              (google::appengine::v1::CreateVersionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
+              AwaitCreateVersion,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>, UpdateVersion,
               (google::appengine::v1::UpdateVersionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateVersion,
+              (google::appengine::v1::UpdateVersionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Version>>,
+              AwaitUpdateVersion,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
               DeleteVersion,
               (google::appengine::v1::DeleteVersionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteVersion,
+              (google::appengine::v1::DeleteVersionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+              AwaitDeleteVersion,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

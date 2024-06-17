@@ -66,6 +66,17 @@ class MockImageAnnotatorConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartAsyncBatchAnnotateImages,
+              (google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>,
+              AwaitAsyncBatchAnnotateImages,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
@@ -73,6 +84,18 @@ class MockImageAnnotatorConnection
       (google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartAsyncBatchAnnotateFiles,
+              (google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateFilesResponse>>,
+      AwaitAsyncBatchAnnotateFiles,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

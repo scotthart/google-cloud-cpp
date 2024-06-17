@@ -53,6 +53,17 @@ class MockMachineImagesConnection
                    DeleteMachineImageRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteMachineImage,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   DeleteMachineImageRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteMachineImage,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::MachineImage>,
               GetMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::
@@ -68,6 +79,17 @@ class MockMachineImagesConnection
               InsertMachineImage,
               (google::cloud::cpp::compute::machine_images::v1::
                    InsertMachineImageRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertMachineImage,
+              (google::cloud::cpp::compute::machine_images::v1::
+                   InsertMachineImageRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertMachineImage,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

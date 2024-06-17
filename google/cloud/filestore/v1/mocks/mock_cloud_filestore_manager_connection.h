@@ -62,9 +62,27 @@ class MockCloudFilestoreManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateInstance,
+      (google::cloud::filestore::v1::CreateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
+              AwaitCreateInstance,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, UpdateInstance,
       (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateInstance,
+      (google::cloud::filestore::v1::UpdateInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
+              AwaitUpdateInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, RestoreInstance,
@@ -72,15 +90,42 @@ class MockCloudFilestoreManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRestoreInstance,
+      (google::cloud::filestore::v1::RestoreInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
+              AwaitRestoreInstance,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Instance>>, RevertInstance,
       (google::cloud::filestore::v1::RevertInstanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRevertInstance,
+      (google::cloud::filestore::v1::RevertInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Instance>>,
+              AwaitRevertInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteInstance,
+      (google::cloud::filestore::v1::DeleteInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
+              AwaitDeleteInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Snapshot>),
               ListSnapshots,
@@ -97,15 +142,42 @@ class MockCloudFilestoreManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateSnapshot,
+      (google::cloud::filestore::v1::CreateSnapshotRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
+              AwaitCreateSnapshot,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>,
       DeleteSnapshot,
       (google::cloud::filestore::v1::DeleteSnapshotRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteSnapshot,
+      (google::cloud::filestore::v1::DeleteSnapshotRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
+              AwaitDeleteSnapshot,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Snapshot>>, UpdateSnapshot,
       (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateSnapshot,
+      (google::cloud::filestore::v1::UpdateSnapshotRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Snapshot>>,
+              AwaitUpdateSnapshot,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::filestore::v1::Backup>), ListBackups,
               (google::cloud::filestore::v1::ListBackupsRequest request),
@@ -121,14 +193,41 @@ class MockCloudFilestoreManagerConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateBackup,
+      (google::cloud::filestore::v1::CreateBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
+              AwaitCreateBackup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::common::OperationMetadata>>, DeleteBackup,
       (google::cloud::filestore::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteBackup,
+      (google::cloud::filestore::v1::DeleteBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::common::OperationMetadata>>,
+              AwaitDeleteBackup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::filestore::v1::Backup>>, UpdateBackup,
       (google::cloud::filestore::v1::UpdateBackupRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateBackup,
+      (google::cloud::filestore::v1::UpdateBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::filestore::v1::Backup>>,
+              AwaitUpdateBackup,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

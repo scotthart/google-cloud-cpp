@@ -62,6 +62,17 @@ class MockSslPoliciesConnection
                    DeleteSslPolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteSslPolicy,
+              (google::cloud::cpp::compute::ssl_policies::v1::
+                   DeleteSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteSslPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::SslPolicy>, GetSslPolicy,
       (google::cloud::cpp::compute::ssl_policies::v1::GetSslPolicyRequest const&
@@ -72,6 +83,17 @@ class MockSslPoliciesConnection
               InsertSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
                    InsertSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertSslPolicy,
+              (google::cloud::cpp::compute::ssl_policies::v1::
+                   InsertSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertSslPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -92,6 +114,17 @@ class MockSslPoliciesConnection
               PatchSslPolicy,
               (google::cloud::cpp::compute::ssl_policies::v1::
                    PatchSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchSslPolicy,
+              (google::cloud::cpp::compute::ssl_policies::v1::
+                   PatchSslPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchSslPolicy,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

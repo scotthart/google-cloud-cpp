@@ -54,6 +54,17 @@ class MockConversationModelsConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConversationModel,
+      (google::cloud::dialogflow::v2::CreateConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>,
+      AwaitCreateConversationModel,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::dialogflow::v2::ConversationModel>,
               GetConversationModel,
               (google::cloud::dialogflow::v2::GetConversationModelRequest const&
@@ -75,6 +86,17 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConversationModel,
+      (google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeleteConversationModelOperationMetadata>>,
+              AwaitDeleteConversationModel,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           DeployConversationModelOperationMetadata>>,
       DeployConversationModel,
@@ -83,12 +105,34 @@ class MockConversationModelsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeployConversationModel,
+      (google::cloud::dialogflow::v2::DeployConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeployConversationModelOperationMetadata>>,
+              AwaitDeployConversationModel,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           UndeployConversationModelOperationMetadata>>,
       UndeployConversationModel,
       (google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeployConversationModel,
+      (google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  UndeployConversationModelOperationMetadata>>,
+              AwaitUndeployConversationModel,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>,
@@ -111,6 +155,18 @@ class MockConversationModelsConnection
       (google::cloud::dialogflow::v2::
            CreateConversationModelEvaluationRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateConversationModelEvaluation,
+              (google::cloud::dialogflow::v2::
+                   CreateConversationModelEvaluationRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>,
+      AwaitCreateConversationModelEvaluation,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

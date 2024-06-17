@@ -61,6 +61,16 @@ class MockSecurityCenterConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartBulkMuteFindings,
+              (google::cloud::securitycenter::v2::BulkMuteFindingsRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::securitycenter::v2::BulkMuteFindingsResponse>>,
+              AwaitBulkMuteFindings,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::securitycenter::v2::BigQueryExport>,
       CreateBigQueryExport,

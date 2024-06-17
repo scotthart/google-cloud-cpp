@@ -68,10 +68,27 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
       (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateMembership,
+      (google::cloud::gkehub::v1::CreateMembershipRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
+              AwaitCreateMembership,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               CreateFeature,
               (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateFeature,
+              (google::cloud::gkehub::v1::CreateFeatureRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
+              AwaitCreateFeature,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
@@ -79,20 +96,54 @@ class MockGkeHubConnection : public gkehub_v1::GkeHubConnection {
       (google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteMembership,
+      (google::cloud::gkehub::v1::DeleteMembershipRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              AwaitDeleteMembership,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
               DeleteFeature,
               (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteFeature,
+              (google::cloud::gkehub::v1::DeleteFeatureRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::OperationMetadata>>,
+              AwaitDeleteFeature,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::gkehub::v1::Membership>>, UpdateMembership,
       (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateMembership,
+      (google::cloud::gkehub::v1::UpdateMembershipRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Membership>>,
+              AwaitUpdateMembership,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
               UpdateFeature,
               (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateFeature,
+              (google::cloud::gkehub::v1::UpdateFeatureRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::gkehub::v1::Feature>>,
+              AwaitUpdateFeature,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>,

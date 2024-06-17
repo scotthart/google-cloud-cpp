@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCEMANAGER_V3_TAG_HOLDS_CLIENT_H
 
 #include "google/cloud/resourcemanager/v3/tag_holds_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -125,6 +127,12 @@ class TagHoldsClient {
       google::cloud::resourcemanager::v3::TagHold const& tag_hold,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTagHold(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::resourcemanager::v3::TagHold const& tag_hold,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a TagHold. Returns ALREADY_EXISTS if a TagHold with the same
@@ -164,6 +172,15 @@ class TagHoldsClient {
       google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateTagHold(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::CreateTagHoldRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::resourcemanager::v3::TagHold>> CreateTagHold(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a TagHold.
@@ -196,6 +213,10 @@ class TagHoldsClient {
   // clang-format on
   future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
   DeleteTagHold(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTagHold(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -235,6 +256,16 @@ class TagHoldsClient {
   DeleteTagHold(
       google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteTagHold(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::resourcemanager::v3::DeleteTagHoldRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::resourcemanager::v3::DeleteTagHoldMetadata>>
+  DeleteTagHold(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///

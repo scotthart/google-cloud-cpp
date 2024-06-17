@@ -62,6 +62,17 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartDeleteUrlMap,
+      (google::cloud::cpp::compute::url_maps::v1::DeleteUrlMapRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteUrlMap,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::UrlMap>, GetUrlMap,
       (google::cloud::cpp::compute::url_maps::v1::GetUrlMapRequest const&
            request),
@@ -75,11 +86,34 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartInsertUrlMap,
+      (google::cloud::cpp::compute::url_maps::v1::InsertUrlMapRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertUrlMap,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       InvalidateCache,
       (google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>,
+      StartInvalidateCache,
+      (google::cloud::cpp::compute::url_maps::v1::InvalidateCacheRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInvalidateCache,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::UrlMap>), ListUrlMaps,
@@ -93,11 +127,33 @@ class MockUrlMapsConnection : public compute_url_maps_v1::UrlMapsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartPatchUrlMap,
+      (google::cloud::cpp::compute::url_maps::v1::PatchUrlMapRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchUrlMap,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       UpdateUrlMap,
       (google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartUpdateUrlMap,
+      (google::cloud::cpp::compute::url_maps::v1::UpdateUrlMapRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateUrlMap,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::UrlMapsValidateResponse>,

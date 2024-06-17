@@ -72,6 +72,14 @@ class MockWebRiskServiceConnection
               SubmitUri,
               (google::cloud::webrisk::v1::SubmitUriRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartSubmitUri,
+              (google::cloud::webrisk::v1::SubmitUriRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::webrisk::v1::Submission>>,
+              AwaitSubmitUri, (google::longrunning::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DISCOVERYENGINE_V1_ENGINE_CLIENT_H
 
 #include "google/cloud/discoveryengine/v1/engine_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -134,6 +136,12 @@ class EngineServiceClient {
       google::cloud::discoveryengine::v1::Engine const& engine,
       std::string const& engine_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateEngine(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::discoveryengine::v1::Engine const& engine,
+      std::string const& engine_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a [Engine][google.cloud.discoveryengine.v1.Engine].
@@ -171,6 +179,15 @@ class EngineServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
       google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateEngine(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -214,6 +231,10 @@ class EngineServiceClient {
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
   DeleteEngine(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteEngine(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a [Engine][google.cloud.discoveryengine.v1.Engine].
@@ -253,6 +274,16 @@ class EngineServiceClient {
   DeleteEngine(
       google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteEngine(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
+  DeleteEngine(google::cloud::ExperimentalTag,
+               google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///

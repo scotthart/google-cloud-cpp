@@ -55,6 +55,18 @@ class MockDeploymentResourcePoolServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartCreateDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::CreateDeploymentResourcePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>>,
+      AwaitCreateDeploymentResourcePool,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::DeploymentResourcePool>,
       GetDeploymentResourcePool,
       (google::cloud::aiplatform::v1::GetDeploymentResourcePoolRequest const&
@@ -74,6 +86,18 @@ class MockDeploymentResourcePoolServiceConnection
       (google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartDeleteDeploymentResourcePool,
+      (google::cloud::aiplatform::v1::DeleteDeploymentResourcePoolRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteDeploymentResourcePool,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

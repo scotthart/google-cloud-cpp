@@ -112,6 +112,16 @@ class MockAdminServiceConnection : public pubsublite::AdminServiceConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartSeekSubscription,
+      (google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>,
+      AwaitSeekSubscription, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::pubsublite::v1::Reservation>, CreateReservation,
       (google::cloud::pubsublite::v1::CreateReservationRequest const& request),
       (override));

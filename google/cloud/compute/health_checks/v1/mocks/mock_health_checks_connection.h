@@ -62,6 +62,17 @@ class MockHealthChecksConnection
                    DeleteHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteHealthCheck,
+              (google::cloud::cpp::compute::health_checks::v1::
+                   DeleteHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::HealthCheck>,
               GetHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
@@ -72,6 +83,17 @@ class MockHealthChecksConnection
               InsertHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    InsertHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertHealthCheck,
+              (google::cloud::cpp::compute::health_checks::v1::
+                   InsertHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -87,10 +109,32 @@ class MockHealthChecksConnection
                    PatchHealthCheckRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchHealthCheck,
+              (google::cloud::cpp::compute::health_checks::v1::
+                   PatchHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateHealthCheck,
               (google::cloud::cpp::compute::health_checks::v1::
                    UpdateHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdateHealthCheck,
+              (google::cloud::cpp::compute::health_checks::v1::
+                   UpdateHealthCheckRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateHealthCheck,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

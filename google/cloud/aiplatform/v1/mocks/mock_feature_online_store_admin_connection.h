@@ -55,6 +55,17 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      AwaitCreateFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>,
       GetFeatureOnlineStore,
       (google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
@@ -75,6 +86,17 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>,
+      AwaitUpdateFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureOnlineStore,
       (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
@@ -82,10 +104,30 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFeatureOnlineStore,
+      (google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteFeatureOnlineStore,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
       CreateFeatureView,
       (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFeatureView,
+      (google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+              AwaitCreateFeatureView,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::FeatureView>, GetFeatureView,
@@ -104,9 +146,28 @@ class MockFeatureOnlineStoreAdminServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFeatureView,
+      (google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>,
+              AwaitUpdateFeatureView,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureView,
       (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFeatureView,
+      (google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteFeatureView, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

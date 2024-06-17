@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_SECURITY_POLICIES_V1_SECURITY_POLICIES_CLIENT_H
 
 #include "google/cloud/compute/security_policies/v1/security_policies_rest_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -125,6 +127,13 @@ class SecurityPoliciesClient {
           security_policy_rule_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& security_policy,
+      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+          security_policy_rule_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Inserts a rule into a security policy.
@@ -162,6 +171,17 @@ class SecurityPoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
       google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
           request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::AddRuleRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -282,6 +302,11 @@ class SecurityPoliciesClient {
   DeleteSecurityPolicy(std::string const& project,
                        std::string const& security_policy, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& security_policy,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified policy.
@@ -320,6 +345,18 @@ class SecurityPoliciesClient {
   DeleteSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
                            DeleteSecurityPolicyRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          DeleteSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -480,6 +517,13 @@ class SecurityPoliciesClient {
                            security_policy_resource,
                        Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project,
+      google::cloud::cpp::compute::v1::SecurityPolicy const&
+          security_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new policy in the specified project using the data included in
@@ -519,6 +563,18 @@ class SecurityPoliciesClient {
   InsertSecurityPolicy(google::cloud::cpp::compute::security_policies::v1::
                            InsertSecurityPolicyRequest const& request,
                        Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          InsertSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -706,6 +762,14 @@ class SecurityPoliciesClient {
                           security_policy_resource,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& security_policy,
+      std::string const& update_mask,
+      google::cloud::cpp::compute::v1::SecurityPolicy const&
+          security_policy_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified policy with the data included in the request. To
@@ -749,6 +813,18 @@ class SecurityPoliciesClient {
                           PatchSecurityPolicyRequest const& request,
                       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchSecurityPolicy(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchSecurityPolicyRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchSecurityPolicy(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches a rule at the specified priority. To clear fields in the rule,
@@ -782,6 +858,13 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      std::string const& project, std::string const& security_policy,
+      google::cloud::cpp::compute::v1::SecurityPolicyRule const&
+          security_policy_rule_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& security_policy,
       google::cloud::cpp::compute::v1::SecurityPolicyRule const&
           security_policy_rule_resource,
@@ -827,6 +910,17 @@ class SecurityPoliciesClient {
           PatchRuleRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          PatchRuleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a rule at the specified priority.
@@ -858,6 +952,11 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      std::string const& project, std::string const& security_policy,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& security_policy,
       Options opts = {});
 
@@ -900,6 +999,17 @@ class SecurityPoliciesClient {
           RemoveRuleRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveRule(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          RemoveRuleRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> RemoveRule(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Sets the labels on a security policy. To learn more about labels, read the
@@ -933,6 +1043,13 @@ class SecurityPoliciesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& resource,
+      google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
+          global_set_labels_request_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& resource,
       google::cloud::cpp::compute::v1::GlobalSetLabelsRequest const&
           global_set_labels_request_resource,
@@ -976,6 +1093,17 @@ class SecurityPoliciesClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
       google::cloud::cpp::compute::security_policies::v1::
           SetLabelsRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::security_policies::v1::
+          SetLabelsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
  private:

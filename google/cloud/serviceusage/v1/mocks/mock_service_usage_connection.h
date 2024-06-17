@@ -54,9 +54,29 @@ class MockServiceUsageConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartEnableService,
+      (google::api::serviceusage::v1::EnableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>,
+      AwaitEnableService, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
       DisableService,
       (google::api::serviceusage::v1::DisableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDisableService,
+      (google::api::serviceusage::v1::DisableServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>,
+      AwaitDisableService, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::api::serviceusage::v1::Service>, GetService,
@@ -75,6 +95,18 @@ class MockServiceUsageConnection
       (google::api::serviceusage::v1::BatchEnableServicesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBatchEnableServices,
+              (google::api::serviceusage::v1::BatchEnableServicesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>,
+      AwaitBatchEnableServices,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>,

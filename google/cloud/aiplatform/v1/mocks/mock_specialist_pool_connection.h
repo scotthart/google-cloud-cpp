@@ -53,6 +53,16 @@ class MockSpecialistPoolServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateSpecialistPool,
+              (google::cloud::aiplatform::v1::CreateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              AwaitCreateSpecialistPool,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::SpecialistPool>,
       GetSpecialistPool,
@@ -72,11 +82,32 @@ class MockSpecialistPoolServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteSpecialistPool,
+              (google::cloud::aiplatform::v1::DeleteSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteSpecialistPool,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
               UpdateSpecialistPool,
               (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateSpecialistPool,
+              (google::cloud::aiplatform::v1::UpdateSpecialistPoolRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::SpecialistPool>>,
+              AwaitUpdateSpecialistPool,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

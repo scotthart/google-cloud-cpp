@@ -64,11 +64,31 @@ class MockBackupDRConnection : public backupdr_v1::BackupDRConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateManagementServer,
+              (google::cloud::backupdr::v1::CreateManagementServerRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::ManagementServer>>,
+              AwaitCreateManagementServer,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
               DeleteManagementServer,
               (google::cloud::backupdr::v1::DeleteManagementServerRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteManagementServer,
+              (google::cloud::backupdr::v1::DeleteManagementServerRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::backupdr::v1::OperationMetadata>>,
+              AwaitDeleteManagementServer,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

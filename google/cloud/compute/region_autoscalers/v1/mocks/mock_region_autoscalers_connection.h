@@ -53,6 +53,17 @@ class MockRegionAutoscalersConnection
                    DeleteAutoscalerRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteAutoscaler,
+              (google::cloud::cpp::compute::region_autoscalers::v1::
+                   DeleteAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteAutoscaler,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Autoscaler>,
               GetAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
@@ -63,6 +74,17 @@ class MockRegionAutoscalersConnection
               InsertAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
                    InsertAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertAutoscaler,
+              (google::cloud::cpp::compute::region_autoscalers::v1::
+                   InsertAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertAutoscaler,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::Autoscaler>),
@@ -77,10 +99,32 @@ class MockRegionAutoscalersConnection
                    PatchAutoscalerRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchAutoscaler,
+              (google::cloud::cpp::compute::region_autoscalers::v1::
+                   PatchAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchAutoscaler,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               UpdateAutoscaler,
               (google::cloud::cpp::compute::region_autoscalers::v1::
                    UpdateAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdateAutoscaler,
+              (google::cloud::cpp::compute::region_autoscalers::v1::
+                   UpdateAutoscalerRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateAutoscaler,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

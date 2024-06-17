@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VPCACCESS_V1_VPC_ACCESS_CLIENT_H
 
 #include "google/cloud/vpcaccess/v1/vpc_access_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -126,6 +128,12 @@ class VpcAccessServiceClient {
       google::cloud::vpcaccess::v1::Connector const& connector,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, std::string const& connector_id,
+      google::cloud::vpcaccess::v1::Connector const& connector,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a Serverless VPC Access connector, returns an operation.
@@ -163,6 +171,15 @@ class VpcAccessServiceClient {
   future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
       google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::vpcaccess::v1::Connector>> CreateConnector(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -329,6 +346,10 @@ class VpcAccessServiceClient {
   future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
   DeleteConnector(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Serverless VPC Access connector. Returns NOT_FOUND if the
@@ -368,6 +389,16 @@ class VpcAccessServiceClient {
   DeleteConnector(
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteConnector(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
+  DeleteConnector(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
  private:
   std::shared_ptr<VpcAccessServiceConnection> connection_;

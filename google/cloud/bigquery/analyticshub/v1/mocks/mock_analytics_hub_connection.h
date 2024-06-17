@@ -132,12 +132,34 @@ class MockAnalyticsHubServiceConnection
                    SubscribeDataExchangeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartSubscribeDataExchange,
+              (google::cloud::bigquery::analyticshub::v1::
+                   SubscribeDataExchangeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
+                                  SubscribeDataExchangeResponse>>,
+              AwaitSubscribeDataExchange,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
                                   RefreshSubscriptionResponse>>,
               RefreshSubscription,
               (google::cloud::bigquery::analyticshub::v1::
                    RefreshSubscriptionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartRefreshSubscription,
+              (google::cloud::bigquery::analyticshub::v1::
+                   RefreshSubscriptionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::bigquery::analyticshub::v1::
+                                  RefreshSubscriptionResponse>>,
+              AwaitRefreshSubscription,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::bigquery::analyticshub::v1::Subscription>,
@@ -174,6 +196,17 @@ class MockAnalyticsHubServiceConnection
       (google::cloud::bigquery::analyticshub::v1::
            DeleteSubscriptionRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteSubscription,
+              (google::cloud::bigquery::analyticshub::v1::
+                   DeleteSubscriptionRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::bigquery::analyticshub::v1::OperationMetadata>>,
+      AwaitDeleteSubscription,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

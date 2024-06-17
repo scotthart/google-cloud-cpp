@@ -53,6 +53,15 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateConnection,
+              (google::devtools::cloudbuild::v2::CreateConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+              AwaitCreateConnection,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::devtools::cloudbuild::v2::Connection>, GetConnection,
       (google::devtools::cloudbuild::v2::GetConnectionRequest const& request),
@@ -70,11 +79,30 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateConnection,
+              (google::devtools::cloudbuild::v2::UpdateConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Connection>>,
+              AwaitUpdateConnection,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
       DeleteConnection,
       (google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteConnection,
+              (google::devtools::cloudbuild::v2::DeleteConnectionRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      AwaitDeleteConnection, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
@@ -83,6 +111,15 @@ class MockRepositoryManagerConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateRepository,
+              (google::devtools::cloudbuild::v2::CreateRepositoryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::devtools::cloudbuild::v2::Repository>>,
+              AwaitCreateRepository,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<
           google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
@@ -90,6 +127,18 @@ class MockRepositoryManagerConnection
       (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchCreateRepositories,
+      (google::devtools::cloudbuild::v2::BatchCreateRepositoriesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::devtools::cloudbuild::v2::BatchCreateRepositoriesResponse>>,
+      AwaitBatchCreateRepositories,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::devtools::cloudbuild::v2::Repository>, GetRepository,
@@ -107,6 +156,16 @@ class MockRepositoryManagerConnection
       DeleteRepository,
       (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteRepository,
+              (google::devtools::cloudbuild::v2::DeleteRepositoryRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::devtools::cloudbuild::v2::OperationMetadata>>,
+      AwaitDeleteRepository, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

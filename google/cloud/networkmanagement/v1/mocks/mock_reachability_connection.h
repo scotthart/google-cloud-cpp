@@ -68,12 +68,34 @@ class MockReachabilityServiceConnection
            CreateConnectivityTestRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateConnectivityTest,
+              (google::cloud::networkmanagement::v1::
+                   CreateConnectivityTestRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      AwaitCreateConnectivityTest,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
       UpdateConnectivityTest,
       (google::cloud::networkmanagement::v1::
            UpdateConnectivityTestRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateConnectivityTest,
+              (google::cloud::networkmanagement::v1::
+                   UpdateConnectivityTestRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      AwaitUpdateConnectivityTest,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
@@ -83,11 +105,33 @@ class MockReachabilityServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRerunConnectivityTest,
+      (google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>,
+      AwaitRerunConnectivityTest,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
       DeleteConnectivityTest,
       (google::cloud::networkmanagement::v1::
            DeleteConnectivityTestRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteConnectivityTest,
+              (google::cloud::networkmanagement::v1::
+                   DeleteConnectivityTestRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networkmanagement::v1::OperationMetadata>>,
+      AwaitDeleteConnectivityTest,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

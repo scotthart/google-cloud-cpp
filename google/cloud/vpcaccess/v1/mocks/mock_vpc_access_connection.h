@@ -54,6 +54,15 @@ class MockVpcAccessServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConnector,
+      (google::cloud::vpcaccess::v1::CreateConnectorRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::Connector>>,
+              AwaitCreateConnector,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::vpcaccess::v1::Connector>, GetConnector,
       (google::cloud::vpcaccess::v1::GetConnectorRequest const& request),
       (override));
@@ -68,6 +77,15 @@ class MockVpcAccessServiceConnection
       DeleteConnector,
       (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConnector,
+      (google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>,
+              AwaitDeleteConnector,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

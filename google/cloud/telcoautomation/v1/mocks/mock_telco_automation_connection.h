@@ -69,12 +69,35 @@ class MockTelcoAutomationConnection
            CreateOrchestrationClusterRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateOrchestrationCluster,
+              (google::cloud::telcoautomation::v1::
+                   CreateOrchestrationClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::telcoautomation::v1::OrchestrationCluster>>,
+      AwaitCreateOrchestrationCluster,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteOrchestrationCluster,
       (google::cloud::telcoautomation::v1::
            DeleteOrchestrationClusterRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteOrchestrationCluster,
+              (google::cloud::telcoautomation::v1::
+                   DeleteOrchestrationClusterRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
+      AwaitDeleteOrchestrationCluster,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::telcoautomation::v1::EdgeSlm>),
               ListEdgeSlms,
@@ -93,9 +116,28 @@ class MockTelcoAutomationConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateEdgeSlm,
+      (google::cloud::telcoautomation::v1::CreateEdgeSlmRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::telcoautomation::v1::EdgeSlm>>,
+              AwaitCreateEdgeSlm,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
       DeleteEdgeSlm,
       (google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteEdgeSlm,
+      (google::cloud::telcoautomation::v1::DeleteEdgeSlmRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::telcoautomation::v1::OperationMetadata>>,
+      AwaitDeleteEdgeSlm, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(StatusOr<google::cloud::telcoautomation::v1::Blueprint>,

@@ -55,6 +55,17 @@ class MockConversationDatasetsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConversationDataset,
+      (google::cloud::dialogflow::v2::CreateConversationDatasetRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>,
+      AwaitCreateConversationDataset,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::ConversationDataset>,
       GetConversationDataset,
       (google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
@@ -76,12 +87,34 @@ class MockConversationDatasetsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConversationDataset,
+      (google::cloud::dialogflow::v2::DeleteConversationDatasetRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  DeleteConversationDatasetOperationMetadata>>,
+              AwaitDeleteConversationDataset,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::v2::
                           ImportConversationDataOperationResponse>>,
       ImportConversationData,
       (google::cloud::dialogflow::v2::ImportConversationDataRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportConversationData,
+      (google::cloud::dialogflow::v2::ImportConversationDataRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::dialogflow::v2::
+                                  ImportConversationDataOperationResponse>>,
+              AwaitImportConversationData,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

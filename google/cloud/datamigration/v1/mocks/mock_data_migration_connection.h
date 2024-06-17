@@ -64,10 +64,28 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateMigrationJob,
+      (google::cloud::clouddms::v1::CreateMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitCreateMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       UpdateMigrationJob,
       (google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateMigrationJob,
+      (google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitUpdateMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
@@ -76,10 +94,28 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteMigrationJob,
+      (google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+              AwaitDeleteMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       StartMigrationJob,
       (google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartStartMigrationJob,
+      (google::cloud::clouddms::v1::StartMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitStartMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
@@ -88,10 +124,28 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartStopMigrationJob,
+      (google::cloud::clouddms::v1::StopMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitStopMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       ResumeMigrationJob,
       (google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartResumeMigrationJob,
+      (google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitResumeMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
@@ -100,16 +154,43 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartPromoteMigrationJob,
+      (google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitPromoteMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       VerifyMigrationJob,
       (google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartVerifyMigrationJob,
+      (google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitVerifyMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
       RestartMigrationJob,
       (google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRestartMigrationJob,
+      (google::cloud::clouddms::v1::RestartMigrationJobRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>,
+              AwaitRestartMigrationJob,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::SshScript>, GenerateSshScript,
@@ -142,11 +223,31 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConnectionProfile,
+      (google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
+              AwaitCreateConnectionProfile,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
       UpdateConnectionProfile,
       (google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateConnectionProfile,
+      (google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>,
+              AwaitUpdateConnectionProfile,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
@@ -156,11 +257,31 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConnectionProfile,
+      (google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+              AwaitDeleteConnectionProfile,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
       CreatePrivateConnection,
       (google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreatePrivateConnection,
+      (google::cloud::clouddms::v1::CreatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::PrivateConnection>>,
+              AwaitCreatePrivateConnection,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::PrivateConnection>,
@@ -180,6 +301,16 @@ class MockDataMigrationServiceConnection
       (google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeletePrivateConnection,
+      (google::cloud::clouddms::v1::DeletePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+              AwaitDeletePrivateConnection,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>,
               GetConversionWorkspace,
@@ -201,6 +332,17 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateConversionWorkspace,
+      (google::cloud::clouddms::v1::CreateConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitCreateConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       UpdateConversionWorkspace,
       (google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
@@ -208,11 +350,32 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateConversionWorkspace,
+      (google::cloud::clouddms::v1::UpdateConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitUpdateConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
       DeleteConversionWorkspace,
       (google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteConversionWorkspace,
+      (google::cloud::clouddms::v1::DeleteConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>,
+              AwaitDeleteConversionWorkspace,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::clouddms::v1::MappingRule>, CreateMappingRule,
@@ -242,10 +405,31 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartSeedConversionWorkspace,
+      (google::cloud::clouddms::v1::SeedConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitSeedConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ImportMappingRules,
       (google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportMappingRules,
+      (google::cloud::clouddms::v1::ImportMappingRulesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitImportMappingRules,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
@@ -255,11 +439,33 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartConvertConversionWorkspace,
+      (google::cloud::clouddms::v1::ConvertConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitConvertConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       CommitConversionWorkspace,
       (google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCommitConversionWorkspace,
+      (google::cloud::clouddms::v1::CommitConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitCommitConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
@@ -269,11 +475,34 @@ class MockDataMigrationServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartRollbackConversionWorkspace,
+      (google::cloud::clouddms::v1::RollbackConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitRollbackConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
       ApplyConversionWorkspace,
       (google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartApplyConversionWorkspace,
+      (google::cloud::clouddms::v1::ApplyConversionWorkspaceRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::clouddms::v1::ConversionWorkspace>>,
+      AwaitApplyConversionWorkspace,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::clouddms::v1::DatabaseEntity>),

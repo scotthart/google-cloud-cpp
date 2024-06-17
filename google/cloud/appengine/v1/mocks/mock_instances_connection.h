@@ -59,9 +59,25 @@ class MockInstancesConnection : public appengine_v1::InstancesConnection {
               (google::appengine::v1::DeleteInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteInstance,
+              (google::appengine::v1::DeleteInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::OperationMetadataV1>>,
+              AwaitDeleteInstance,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::appengine::v1::Instance>>, DebugInstance,
               (google::appengine::v1::DebugInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDebugInstance,
+              (google::appengine::v1::DebugInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::appengine::v1::Instance>>,
+              AwaitDebugInstance,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

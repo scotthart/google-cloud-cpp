@@ -50,6 +50,13 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (google::api::apikeys::v2::CreateKeyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateKey,
+              (google::api::apikeys::v2::CreateKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, AwaitCreateKey,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::api::apikeys::v2::Key>), ListKeys,
               (google::api::apikeys::v2::ListKeysRequest request), (override));
 
@@ -66,13 +73,34 @@ class MockApiKeysConnection : public apikeys_v2::ApiKeysConnection {
               (google::api::apikeys::v2::UpdateKeyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateKey,
+              (google::api::apikeys::v2::UpdateKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, AwaitUpdateKey,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, DeleteKey,
               (google::api::apikeys::v2::DeleteKeyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteKey,
+              (google::api::apikeys::v2::DeleteKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, AwaitDeleteKey,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, UndeleteKey,
               (google::api::apikeys::v2::UndeleteKeyRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUndeleteKey,
+              (google::api::apikeys::v2::UndeleteKeyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::api::apikeys::v2::Key>>, AwaitUndeleteKey,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::api::apikeys::v2::LookupKeyResponse>, LookupKey,
               (google::api::apikeys::v2::LookupKeyRequest const& request),

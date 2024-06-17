@@ -62,12 +62,34 @@ class MockSiteSearchEngineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateTargetSite,
+      (google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
+              AwaitCreateTargetSite,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>,
       BatchCreateTargetSites,
       (google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchCreateTargetSites,
+      (google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>,
+      AwaitBatchCreateTargetSites,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::discoveryengine::v1::TargetSite>, GetTargetSite,
@@ -82,11 +104,33 @@ class MockSiteSearchEngineServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateTargetSite,
+      (google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>,
+              AwaitUpdateTargetSite,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>,
       DeleteTargetSite,
       (google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteTargetSite,
+      (google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>,
+      AwaitDeleteTargetSite, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -102,6 +146,17 @@ class MockSiteSearchEngineServiceConnection
                    EnableAdvancedSiteSearchRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartEnableAdvancedSiteSearch,
+              (google::cloud::discoveryengine::v1::
+                   EnableAdvancedSiteSearchRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  EnableAdvancedSiteSearchResponse>>,
+              AwaitEnableAdvancedSiteSearch,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
                                   DisableAdvancedSiteSearchResponse>>,
               DisableAdvancedSiteSearch,
@@ -109,10 +164,31 @@ class MockSiteSearchEngineServiceConnection
                    DisableAdvancedSiteSearchRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDisableAdvancedSiteSearch,
+              (google::cloud::discoveryengine::v1::
+                   DisableAdvancedSiteSearchRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::discoveryengine::v1::
+                                  DisableAdvancedSiteSearchResponse>>,
+              AwaitDisableAdvancedSiteSearch,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>,
       RecrawlUris,
       (google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRecrawlUris,
+      (google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>,
+      AwaitRecrawlUris, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -122,6 +198,18 @@ class MockSiteSearchEngineServiceConnection
       (google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchVerifyTargetSites,
+      (google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>,
+      AwaitBatchVerifyTargetSites,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::discoveryengine::v1::TargetSite>),

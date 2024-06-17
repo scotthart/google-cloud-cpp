@@ -82,9 +82,28 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateNetwork,
+      (google::cloud::edgenetwork::v1::CreateNetworkRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Network>>,
+              AwaitCreateNetwork,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteNetwork,
       (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteNetwork,
+      (google::cloud::edgenetwork::v1::DeleteNetworkRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      AwaitDeleteNetwork, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Subnet>),
@@ -102,14 +121,42 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateSubnet,
+      (google::cloud::edgenetwork::v1::CreateSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+              AwaitCreateSubnet,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>, UpdateSubnet,
       (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateSubnet,
+      (google::cloud::edgenetwork::v1::UpdateSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Subnet>>,
+              AwaitUpdateSubnet,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteSubnet,
       (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteSubnet,
+      (google::cloud::edgenetwork::v1::DeleteSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      AwaitDeleteSubnet, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -151,12 +198,34 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
            CreateInterconnectAttachmentRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateInterconnectAttachment,
+              (google::cloud::edgenetwork::v1::
+                   CreateInterconnectAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::InterconnectAttachment>>,
+      AwaitCreateInterconnectAttachment,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteInterconnectAttachment,
       (google::cloud::edgenetwork::v1::
            DeleteInterconnectAttachmentRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteInterconnectAttachment,
+              (google::cloud::edgenetwork::v1::
+                   DeleteInterconnectAttachmentRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      AwaitDeleteInterconnectAttachment,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::edgenetwork::v1::Router>),
               ListRouters,
@@ -179,14 +248,42 @@ class MockEdgeNetworkConnection : public edgenetwork_v1::EdgeNetworkConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateRouter,
+      (google::cloud::edgenetwork::v1::CreateRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+              AwaitCreateRouter,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::Router>>, UpdateRouter,
       (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateRouter,
+      (google::cloud::edgenetwork::v1::UpdateRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::edgenetwork::v1::Router>>,
+              AwaitUpdateRouter,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
       DeleteRouter,
       (google::cloud::edgenetwork::v1::DeleteRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteRouter,
+      (google::cloud::edgenetwork::v1::DeleteRouterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::edgenetwork::v1::OperationMetadata>>,
+      AwaitDeleteRouter, (google::longrunning::Operation const& operation),
       (override));
 };
 

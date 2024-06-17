@@ -68,12 +68,34 @@ class MockMetricsScopesConnection
            CreateMonitoredProjectRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateMonitoredProject,
+              (google::monitoring::metricsscope::v1::
+                   CreateMonitoredProjectRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>,
+      AwaitCreateMonitoredProject,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
       DeleteMonitoredProject,
       (google::monitoring::metricsscope::v1::
            DeleteMonitoredProjectRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteMonitoredProject,
+              (google::monitoring::metricsscope::v1::
+                   DeleteMonitoredProjectRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::monitoring::metricsscope::v1::OperationMetadata>>,
+      AwaitDeleteMonitoredProject,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

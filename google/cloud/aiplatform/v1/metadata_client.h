@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_AIPLATFORM_V1_METADATA_CLIENT_H
 
 #include "google/cloud/aiplatform/v1/metadata_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -133,6 +135,12 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
       std::string const& metadata_store_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::aiplatform::v1::MetadataStore const& metadata_store,
+      std::string const& metadata_store_id, Options opts = {});
+
   // clang-format off
   ///
   /// Initializes a MetadataStore, including allocation of resources.
@@ -171,6 +179,16 @@ class MetadataServiceClient {
   CreateMetadataStore(
       google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> CreateMetadataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::CreateMetadataStoreRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::MetadataStore>>
+  CreateMetadataStore(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -342,6 +360,10 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
   DeleteMetadataStore(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single MetadataStore and all its child resources (Artifacts,
@@ -382,6 +404,17 @@ class MetadataServiceClient {
   DeleteMetadataStore(
       google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteMetadataStore(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteMetadataStoreRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::aiplatform::v1::DeleteMetadataStoreOperationMetadata>>
+  DeleteMetadataStore(google::cloud::ExperimentalTag,
+                      google::longrunning::Operation const& operation,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -682,6 +715,10 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteArtifact(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteArtifact(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an Artifact.
@@ -721,6 +758,16 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteArtifact(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteArtifactRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteArtifact(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Purges Artifacts.
@@ -754,6 +801,10 @@ class MetadataServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
   PurgeArtifacts(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -793,6 +844,16 @@ class MetadataServiceClient {
   PurgeArtifacts(
       google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeArtifacts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeArtifactsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PurgeArtifactsResponse>>
+  PurgeArtifacts(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1092,6 +1153,10 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteContext(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteContext(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a stored Context.
@@ -1131,6 +1196,16 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteContextRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteContext(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteContextRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteContext(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
+
   // clang-format off
   ///
   /// Purges Contexts.
@@ -1164,6 +1239,10 @@ class MetadataServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
   PurgeContexts(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeContexts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1203,6 +1282,16 @@ class MetadataServiceClient {
   PurgeContexts(
       google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeContexts(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeContextsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PurgeContextsResponse>>
+  PurgeContexts(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -1788,6 +1877,10 @@ class MetadataServiceClient {
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
   DeleteExecution(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes an Execution.
@@ -1827,6 +1920,16 @@ class MetadataServiceClient {
       google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteExecution(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteExecutionRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
+  DeleteExecution(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
+
   // clang-format off
   ///
   /// Purges Executions.
@@ -1860,6 +1963,10 @@ class MetadataServiceClient {
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
   PurgeExecutions(std::string const& parent, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeExecutions(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1899,6 +2006,16 @@ class MetadataServiceClient {
   PurgeExecutions(
       google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> PurgeExecutions(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::aiplatform::v1::PurgeExecutionsRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::aiplatform::v1::PurgeExecutionsResponse>>
+  PurgeExecutions(google::cloud::ExperimentalTag,
+                  google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///

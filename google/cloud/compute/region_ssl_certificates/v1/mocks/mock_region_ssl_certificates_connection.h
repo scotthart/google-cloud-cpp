@@ -55,6 +55,17 @@ class MockRegionSslCertificatesConnection
                    DeleteSslCertificateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteSslCertificate,
+              (google::cloud::cpp::compute::region_ssl_certificates::v1::
+                   DeleteSslCertificateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteSslCertificate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::SslCertificate>,
               GetSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
@@ -65,6 +76,17 @@ class MockRegionSslCertificatesConnection
               InsertSslCertificate,
               (google::cloud::cpp::compute::region_ssl_certificates::v1::
                    InsertSslCertificateRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertSslCertificate,
+              (google::cloud::cpp::compute::region_ssl_certificates::v1::
+                   InsertSslCertificateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertSslCertificate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::SslCertificate>),

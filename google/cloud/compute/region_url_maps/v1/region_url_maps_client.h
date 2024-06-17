@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_COMPUTE_REGION_URL_MAPS_V1_REGION_URL_MAPS_CLIENT_H
 
 #include "google/cloud/compute/region_url_maps/v1/region_url_maps_rest_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -121,6 +123,11 @@ class RegionUrlMapsClient {
       std::string const& project, std::string const& region,
       std::string const& url_map, Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& region,
+      std::string const& url_map, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the specified UrlMap resource.
@@ -158,6 +165,17 @@ class RegionUrlMapsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
           DeleteUrlMapRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          DeleteUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -259,6 +277,12 @@ class RegionUrlMapsClient {
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& region,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Creates a UrlMap resource in the specified project using the data included
@@ -297,6 +321,17 @@ class RegionUrlMapsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
           InsertUrlMapRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          InsertUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off
@@ -419,6 +454,13 @@ class RegionUrlMapsClient {
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& project, std::string const& region,
+      std::string const& url_map,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Patches the specified UrlMap resource with the data included in the
@@ -460,6 +502,17 @@ class RegionUrlMapsClient {
           PatchUrlMapRequest const& request,
       Options opts = {});
 
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          PatchUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Updates the specified UrlMap resource with the data included in the
@@ -494,6 +547,13 @@ class RegionUrlMapsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
+      std::string const& project, std::string const& region,
+      std::string const& url_map,
+      google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
       std::string const& project, std::string const& region,
       std::string const& url_map,
       google::cloud::cpp::compute::v1::UrlMap const& url_map_resource,
@@ -537,6 +597,17 @@ class RegionUrlMapsClient {
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
       google::cloud::cpp::compute::region_url_maps::v1::
           UpdateUrlMapRequest const& request,
+      Options opts = {});
+
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateUrlMap(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::cpp::compute::region_url_maps::v1::
+          UpdateUrlMapRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateUrlMap(
+      google::cloud::ExperimentalTag,
+      google::cloud::cpp::compute::v1::Operation const& operation,
       Options opts = {});
 
   // clang-format off

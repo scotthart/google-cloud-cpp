@@ -68,12 +68,32 @@ class MockAppGatewaysServiceConnection
            CreateAppGatewayRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateAppGateway,
+              (google::cloud::beyondcorp::appgateways::v1::
+                   CreateAppGatewayRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>,
+      AwaitCreateAppGateway, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
                                   AppGatewayOperationMetadata>>,
               DeleteAppGateway,
               (google::cloud::beyondcorp::appgateways::v1::
                    DeleteAppGatewayRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteAppGateway,
+              (google::cloud::beyondcorp::appgateways::v1::
+                   DeleteAppGatewayRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::beyondcorp::appgateways::v1::
+                                  AppGatewayOperationMetadata>>,
+              AwaitDeleteAppGateway,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

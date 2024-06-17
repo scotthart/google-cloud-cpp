@@ -54,6 +54,17 @@ class MockNodeGroupsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartAddNodes,
+      (google::cloud::cpp::compute::node_groups::v1::AddNodesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddNodes,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<
           std::pair<std::string,
                     google::cloud::cpp::compute::v1::NodeGroupsScopedList>>),
@@ -68,11 +79,33 @@ class MockNodeGroupsConnection
                    DeleteNodeGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteNodeGroup,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   DeleteNodeGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteNodeGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, DeleteNodes,
       (google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartDeleteNodes,
+      (google::cloud::cpp::compute::node_groups::v1::DeleteNodesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteNodes,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::NodeGroup>, GetNodeGroup,
@@ -92,6 +125,17 @@ class MockNodeGroupsConnection
                    InsertNodeGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertNodeGroup,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   InsertNodeGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertNodeGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::NodeGroup>), ListNodeGroups,
       (google::cloud::cpp::compute::node_groups::v1::ListNodeGroupsRequest
@@ -109,10 +153,32 @@ class MockNodeGroupsConnection
                    PatchNodeGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchNodeGroup,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   PatchNodeGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchNodeGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               PerformMaintenance,
               (google::cloud::cpp::compute::node_groups::v1::
                    PerformMaintenanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPerformMaintenance,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   PerformMaintenanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPerformMaintenance,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -127,10 +193,32 @@ class MockNodeGroupsConnection
                    SetNodeTemplateRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetNodeTemplate,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   SetNodeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetNodeTemplate,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SimulateMaintenanceEvent,
               (google::cloud::cpp::compute::node_groups::v1::
                    SimulateMaintenanceEventRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSimulateMaintenanceEvent,
+              (google::cloud::cpp::compute::node_groups::v1::
+                   SimulateMaintenanceEventRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSimulateMaintenanceEvent,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

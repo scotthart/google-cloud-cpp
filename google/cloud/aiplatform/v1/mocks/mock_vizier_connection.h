@@ -77,6 +77,16 @@ class MockVizierServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartSuggestTrials,
+      (google::cloud::aiplatform::v1::SuggestTrialsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::SuggestTrialsResponse>>,
+      AwaitSuggestTrials, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::Trial>, CreateTrial,
       (google::cloud::aiplatform::v1::CreateTrialRequest const& request),
       (override));
@@ -112,6 +122,19 @@ class MockVizierServiceConnection
       (google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartCheckTrialEarlyStoppingState,
+      (google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::CheckTrialEarlyStoppingStateResponse>>,
+      AwaitCheckTrialEarlyStoppingState,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Trial>, StopTrial,
               (google::cloud::aiplatform::v1::StopTrialRequest const& request),

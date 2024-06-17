@@ -61,15 +61,42 @@ class MockWorkflowsConnection : public workflows_v1::WorkflowsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateWorkflow,
+      (google::cloud::workflows::v1::CreateWorkflowRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
+              AwaitCreateWorkflow,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
       DeleteWorkflow,
       (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteWorkflow,
+      (google::cloud::workflows::v1::DeleteWorkflowRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::OperationMetadata>>,
+              AwaitDeleteWorkflow,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::workflows::v1::Workflow>>, UpdateWorkflow,
       (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateWorkflow,
+      (google::cloud::workflows::v1::UpdateWorkflowRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::workflows::v1::Workflow>>,
+              AwaitUpdateWorkflow,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

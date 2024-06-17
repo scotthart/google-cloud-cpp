@@ -53,6 +53,17 @@ class MockInstanceGroupsConnection
                    AddInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartAddInstances,
+              (google::cloud::cpp::compute::instance_groups::v1::
+                   AddInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::
                                               InstanceGroupsScopedList>>),
@@ -67,6 +78,17 @@ class MockInstanceGroupsConnection
                    DeleteInstanceGroupRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteInstanceGroup,
+              (google::cloud::cpp::compute::instance_groups::v1::
+                   DeleteInstanceGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteInstanceGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::InstanceGroup>,
               GetInstanceGroup,
               (google::cloud::cpp::compute::instance_groups::v1::
@@ -77,6 +99,17 @@ class MockInstanceGroupsConnection
               InsertInstanceGroup,
               (google::cloud::cpp::compute::instance_groups::v1::
                    InsertInstanceGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertInstanceGroup,
+              (google::cloud::cpp::compute::instance_groups::v1::
+                   InsertInstanceGroupRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertInstanceGroup,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD((StreamRange<google::cloud::cpp::compute::v1::InstanceGroup>),
@@ -98,10 +131,32 @@ class MockInstanceGroupsConnection
                    RemoveInstancesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveInstances,
+              (google::cloud::cpp::compute::instance_groups::v1::
+                   RemoveInstancesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveInstances,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               SetNamedPorts,
               (google::cloud::cpp::compute::instance_groups::v1::
                    SetNamedPortsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetNamedPorts,
+              (google::cloud::cpp::compute::instance_groups::v1::
+                   SetNamedPortsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetNamedPorts,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

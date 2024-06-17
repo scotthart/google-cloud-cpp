@@ -58,6 +58,17 @@ class MockInstanceSettingsConnection
               (google::cloud::cpp::compute::instance_settings::v1::
                    PatchInstanceSettingsRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchInstanceSettings,
+              (google::cloud::cpp::compute::instance_settings::v1::
+                   PatchInstanceSettingsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchInstanceSettings,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

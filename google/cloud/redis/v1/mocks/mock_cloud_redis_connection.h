@@ -65,41 +65,107 @@ class MockCloudRedisConnection : public redis_v1::CloudRedisConnection {
               (google::cloud::redis::v1::CreateInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateInstance,
+              (google::cloud::redis::v1::CreateInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitCreateInstance,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               UpdateInstance,
               (google::cloud::redis::v1::UpdateInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateInstance,
+              (google::cloud::redis::v1::UpdateInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitUpdateInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               UpgradeInstance,
               (google::cloud::redis::v1::UpgradeInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpgradeInstance,
+              (google::cloud::redis::v1::UpgradeInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitUpgradeInstance,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               ImportInstance,
               (google::cloud::redis::v1::ImportInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartImportInstance,
+              (google::cloud::redis::v1::ImportInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitImportInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               ExportInstance,
               (google::cloud::redis::v1::ExportInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartExportInstance,
+              (google::cloud::redis::v1::ExportInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitExportInstance,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::v1::Instance>>, FailoverInstance,
       (google::cloud::redis::v1::FailoverInstanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartFailoverInstance,
+      (google::cloud::redis::v1::FailoverInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitFailoverInstance,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
               DeleteInstance,
               (google::cloud::redis::v1::DeleteInstanceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteInstance,
+              (google::cloud::redis::v1::DeleteInstanceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::OperationMetadata>>,
+              AwaitDeleteInstance,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::redis::v1::Instance>>,
       RescheduleMaintenance,
       (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRescheduleMaintenance,
+      (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
+              AwaitRescheduleMaintenance,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,6 +54,18 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>,
+      StartAddResourcePolicies,
+      (google::cloud::cpp::compute::disks::v1::AddResourcePoliciesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitAddResourcePolicies,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
+  MOCK_METHOD(
       (StreamRange<std::pair<
            std::string, google::cloud::cpp::compute::v1::DisksScopedList>>),
       AggregatedListDisks,
@@ -67,6 +79,17 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartBulkInsert,
+              (google::cloud::cpp::compute::disks::v1::BulkInsertRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitBulkInsert,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
       CreateSnapshot,
@@ -74,10 +97,32 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartCreateSnapshot,
+      (google::cloud::cpp::compute::disks::v1::CreateSnapshotRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitCreateSnapshot,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               DeleteDisk,
               (google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteDisk,
+              (google::cloud::cpp::compute::disks::v1::DeleteDiskRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteDisk,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -97,6 +142,17 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertDisk,
+              (google::cloud::cpp::compute::disks::v1::InsertDiskRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertDisk,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       (StreamRange<google::cloud::cpp::compute::v1::Disk>), ListDisks,
       (google::cloud::cpp::compute::disks::v1::ListDisksRequest request),
@@ -108,10 +164,31 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
                    RemoveResourcePoliciesRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartRemoveResourcePolicies,
+              (google::cloud::cpp::compute::disks::v1::
+                   RemoveResourcePoliciesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitRemoveResourcePolicies,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::cpp::compute::v1::Operation>>, Resize,
       (google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartResize,
+      (google::cloud::cpp::compute::disks::v1::ResizeRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitResize,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
@@ -124,10 +201,31 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
       (google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::cloud::cpp::compute::v1::Operation>, StartSetLabels,
+      (google::cloud::cpp::compute::disks::v1::SetLabelsRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StartAsyncReplication,
               (google::cloud::cpp::compute::disks::v1::
                    StartAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartStartAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StartAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitStartAsyncReplication,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
@@ -136,10 +234,32 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
                    StopAsyncReplicationRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartStopAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StopAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitStopAsyncReplication,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               StopGroupAsyncReplication,
               (google::cloud::cpp::compute::disks::v1::
                    StopGroupAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartStopGroupAsyncReplication,
+              (google::cloud::cpp::compute::disks::v1::
+                   StopGroupAsyncReplicationRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitStopGroupAsyncReplication,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -153,6 +273,17 @@ class MockDisksConnection : public compute_disks_v1::DisksConnection {
               UpdateDisk,
               (google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
                    request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartUpdateDisk,
+              (google::cloud::cpp::compute::disks::v1::UpdateDiskRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitUpdateDisk,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 };
 

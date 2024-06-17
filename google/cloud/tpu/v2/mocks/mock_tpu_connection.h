@@ -57,22 +57,58 @@ class MockTpuConnection : public tpu_v2::TpuConnection {
               (google::cloud::tpu::v2::CreateNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateNode,
+              (google::cloud::tpu::v2::CreateNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, AwaitCreateNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
               DeleteNode,
               (google::cloud::tpu::v2::DeleteNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteNode,
+              (google::cloud::tpu::v2::DeleteNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>,
+              AwaitDeleteNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StopNode,
               (google::cloud::tpu::v2::StopNodeRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStopNode,
+              (google::cloud::tpu::v2::StopNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, AwaitStopNode,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, StartNode,
               (google::cloud::tpu::v2::StartNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStartNode,
+              (google::cloud::tpu::v2::StartNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, AwaitStartNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, UpdateNode,
               (google::cloud::tpu::v2::UpdateNodeRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateNode,
+              (google::cloud::tpu::v2::UpdateNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v2::Node>>, AwaitUpdateNode,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>,

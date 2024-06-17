@@ -54,6 +54,15 @@ class MockFeatureRegistryServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFeatureGroup,
+      (google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
+              AwaitCreateFeatureGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::FeatureGroup>, GetFeatureGroup,
       (google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request),
       (override));
@@ -70,15 +79,43 @@ class MockFeatureRegistryServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFeatureGroup,
+      (google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>,
+              AwaitUpdateFeatureGroup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeatureGroup,
       (google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFeatureGroup,
+      (google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteFeatureGroup,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::Feature>>, CreateFeature,
       (google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFeature,
+      (google::cloud::aiplatform::v1::CreateFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
+              AwaitCreateFeature,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::Feature>, GetFeature,
               (google::cloud::aiplatform::v1::GetFeatureRequest const& request),
@@ -95,9 +132,28 @@ class MockFeatureRegistryServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFeature,
+      (google::cloud::aiplatform::v1::UpdateFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::Feature>>,
+              AwaitUpdateFeature,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
       DeleteFeature,
       (google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFeature,
+      (google::cloud::aiplatform::v1::DeleteFeatureRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteFeature, (google::longrunning::Operation const& operation),
       (override));
 };
 

@@ -57,21 +57,56 @@ class MockTpuConnection : public tpu_v1::TpuConnection {
               (google::cloud::tpu::v1::CreateNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateNode,
+              (google::cloud::tpu::v1::CreateNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, AwaitCreateNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, DeleteNode,
               (google::cloud::tpu::v1::DeleteNodeRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteNode,
+              (google::cloud::tpu::v1::DeleteNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, AwaitDeleteNode,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, ReimageNode,
               (google::cloud::tpu::v1::ReimageNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartReimageNode,
+              (google::cloud::tpu::v1::ReimageNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, AwaitReimageNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StopNode,
               (google::cloud::tpu::v1::StopNodeRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStopNode,
+              (google::cloud::tpu::v1::StopNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, AwaitStopNode,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, StartNode,
               (google::cloud::tpu::v1::StartNodeRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartStartNode,
+              (google::cloud::tpu::v1::StartNodeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::tpu::v1::Node>>, AwaitStartNode,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::tpu::v1::TensorFlowVersion>),
               ListTensorFlowVersions,

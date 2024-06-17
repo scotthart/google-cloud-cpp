@@ -134,9 +134,28 @@ class MockProductSearchConnection : public vision_v1::ProductSearchConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportProductSets,
+      (google::cloud::vision::v1::ImportProductSetsRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vision::v1::ImportProductSetsResponse>>,
+      AwaitImportProductSets, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
       PurgeProducts,
       (google::cloud::vision::v1::PurgeProductsRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartPurgeProducts,
+              (google::cloud::vision::v1::PurgeProductsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vision::v1::BatchOperationMetadata>>,
+      AwaitPurgeProducts, (google::longrunning::Operation const& operation),
       (override));
 };
 

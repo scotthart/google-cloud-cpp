@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATACATALOG_LINEAGE_V1_LINEAGE_CLIENT_H
 
 #include "google/cloud/datacatalog/lineage/v1/lineage_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -450,6 +452,10 @@ class LineageClient {
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteProcess(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the process with the specified name.
@@ -489,6 +495,17 @@ class LineageClient {
       google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteProcess(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteProcessRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteProcess(google::cloud::ExperimentalTag,
+                google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -777,6 +794,10 @@ class LineageClient {
   future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
   DeleteRun(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> DeleteRun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Deletes the run with the specified name.
@@ -815,6 +836,15 @@ class LineageClient {
   DeleteRun(
       google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRun(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::datacatalog::lineage::v1::DeleteRunRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::datacatalog::lineage::v1::OperationMetadata>>
+  DeleteRun(google::cloud::ExperimentalTag,
+            google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

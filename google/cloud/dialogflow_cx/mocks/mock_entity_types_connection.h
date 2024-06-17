@@ -83,11 +83,35 @@ class MockEntityTypesConnection : public dialogflow_cx::EntityTypesConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ExportEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::ExportEntityTypesResponse>>,
+      AwaitExportEntityTypes, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
       ImportEntityTypes,
       (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportEntityTypes,
+      (google::cloud::dialogflow::cx::v3::ImportEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::ImportEntityTypesResponse>>,
+      AwaitImportEntityTypes, (google::longrunning::Operation const& operation),
       (override));
 };
 

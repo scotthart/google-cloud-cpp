@@ -75,6 +75,27 @@ NetworkEndpointGroupsClient::AttachNetworkEndpoints(
   return connection_->AttachNetworkEndpoints(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::AttachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& project, std::string const& zone,
+    std::string const& network_endpoint_group,
+    google::cloud::cpp::compute::v1::
+        NetworkEndpointGroupsAttachEndpointsRequest const&
+            network_endpoint_groups_attach_endpoints_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_endpoint_groups::v1::
+      AttachNetworkEndpointsRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_network_endpoint_group(network_endpoint_group);
+  *request.mutable_network_endpoint_groups_attach_endpoints_request_resource() =
+      network_endpoint_groups_attach_endpoints_request_resource;
+  return connection_->AttachNetworkEndpoints(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsClient::AttachNetworkEndpoints(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -82,6 +103,26 @@ NetworkEndpointGroupsClient::AttachNetworkEndpoints(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->AttachNetworkEndpoints(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::AttachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        AttachNetworkEndpointsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AttachNetworkEndpoints(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEndpointGroupsClient::AttachNetworkEndpoints(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AttachNetworkEndpoints(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -97,6 +138,21 @@ NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
   return connection_->DeleteNetworkEndpointGroup(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& project, std::string const& zone,
+    std::string const& network_endpoint_group, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_endpoint_groups::v1::
+      DeleteNetworkEndpointGroupRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_network_endpoint_group(network_endpoint_group);
+  return connection_->DeleteNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -104,6 +160,26 @@ NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteNetworkEndpointGroup(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        DeleteNetworkEndpointGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEndpointGroupsClient::DeleteNetworkEndpointGroup(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
@@ -125,6 +201,27 @@ NetworkEndpointGroupsClient::DetachNetworkEndpoints(
   return connection_->DetachNetworkEndpoints(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::DetachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& project, std::string const& zone,
+    std::string const& network_endpoint_group,
+    google::cloud::cpp::compute::v1::
+        NetworkEndpointGroupsDetachEndpointsRequest const&
+            network_endpoint_groups_detach_endpoints_request_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_endpoint_groups::v1::
+      DetachNetworkEndpointsRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  request.set_network_endpoint_group(network_endpoint_group);
+  *request.mutable_network_endpoint_groups_detach_endpoints_request_resource() =
+      network_endpoint_groups_detach_endpoints_request_resource;
+  return connection_->DetachNetworkEndpoints(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsClient::DetachNetworkEndpoints(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -132,6 +229,26 @@ NetworkEndpointGroupsClient::DetachNetworkEndpoints(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DetachNetworkEndpoints(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::DetachNetworkEndpoints(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        DetachNetworkEndpointsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DetachNetworkEndpoints(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEndpointGroupsClient::DetachNetworkEndpoints(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DetachNetworkEndpoints(google::cloud::ExperimentalTag{},
+                                             operation);
 }
 
 StatusOr<google::cloud::cpp::compute::v1::NetworkEndpointGroup>
@@ -172,6 +289,24 @@ NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
   return connection_->InsertNetworkEndpointGroup(request);
 }
 
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    std::string const& project, std::string const& zone,
+    google::cloud::cpp::compute::v1::NetworkEndpointGroup const&
+        network_endpoint_group_resource,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::cpp::compute::network_endpoint_groups::v1::
+      InsertNetworkEndpointGroupRequest request;
+  request.set_project(project);
+  request.set_zone(zone);
+  *request.mutable_network_endpoint_group_resource() =
+      network_endpoint_group_resource;
+  return connection_->InsertNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
 future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
 NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
     google::cloud::cpp::compute::network_endpoint_groups::v1::
@@ -179,6 +314,26 @@ NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->InsertNetworkEndpointGroup(request);
+}
+
+StatusOr<google::cloud::cpp::compute::v1::Operation>
+NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
+    google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+    google::cloud::cpp::compute::network_endpoint_groups::v1::
+        InsertNetworkEndpointGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, google::cloud::NoAwaitTag{}, request);
+}
+
+future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+NetworkEndpointGroupsClient::InsertNetworkEndpointGroup(
+    google::cloud::ExperimentalTag,
+    google::cloud::cpp::compute::v1::Operation const& operation, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->InsertNetworkEndpointGroup(
+      google::cloud::ExperimentalTag{}, operation);
 }
 
 StreamRange<google::cloud::cpp::compute::v1::NetworkEndpointGroup>

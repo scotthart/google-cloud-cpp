@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_OPTIMIZATION_V1_FLEET_ROUTING_CLIENT_H
 
 #include "google/cloud/optimization/v1/fleet_routing_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -194,6 +196,16 @@ class FleetRoutingClient {
   BatchOptimizeTours(
       google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> BatchOptimizeTours(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::optimization::v1::BatchOptimizeToursRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>
+  BatchOptimizeTours(google::cloud::ExperimentalTag,
+                     google::longrunning::Operation const& operation,
+                     Options opts = {});
 
  private:
   std::shared_ptr<FleetRoutingConnection> connection_;

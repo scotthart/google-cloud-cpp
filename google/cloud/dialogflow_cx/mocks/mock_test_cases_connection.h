@@ -79,11 +79,33 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRunTestCase,
+      (google::cloud::dialogflow::cx::v3::RunTestCaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>,
+      AwaitRunTestCase, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
       BatchRunTestCases,
       (google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchRunTestCases,
+      (google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>,
+      AwaitBatchRunTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -101,12 +123,34 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartImportTestCases,
+              (google::cloud::dialogflow::cx::v3::ImportTestCasesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>,
+      AwaitImportTestCases, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
       ExportTestCases,
       (google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartExportTestCases,
+              (google::cloud::dialogflow::cx::v3::ExportTestCasesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>,
+      AwaitExportTestCases, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

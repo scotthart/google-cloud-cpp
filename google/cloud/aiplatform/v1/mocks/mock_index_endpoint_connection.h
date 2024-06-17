@@ -53,6 +53,16 @@ class MockIndexEndpointServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateIndexEndpoint,
+              (google::cloud::aiplatform::v1::CreateIndexEndpointRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>>,
+              AwaitCreateIndexEndpoint,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::IndexEndpoint>, GetIndexEndpoint,
       (google::cloud::aiplatform::v1::GetIndexEndpointRequest const& request),
@@ -77,10 +87,31 @@ class MockIndexEndpointServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteIndexEndpoint,
+              (google::cloud::aiplatform::v1::DeleteIndexEndpointRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteIndexEndpoint,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
       DeployIndex,
       (google::cloud::aiplatform::v1::DeployIndexRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeployIndex,
+      (google::cloud::aiplatform::v1::DeployIndexRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeployIndexResponse>>,
+      AwaitDeployIndex, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -90,12 +121,34 @@ class MockIndexEndpointServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeployIndex,
+      (google::cloud::aiplatform::v1::UndeployIndexRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::UndeployIndexResponse>>,
+      AwaitUndeployIndex, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
       MutateDeployedIndex,
       (google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartMutateDeployedIndex,
+              (google::cloud::aiplatform::v1::MutateDeployedIndexRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::aiplatform::v1::MutateDeployedIndexResponse>>,
+      AwaitMutateDeployedIndex,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

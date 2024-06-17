@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SECURESOURCEMANAGER_V1_SECURE_SOURCE_MANAGER_CLIENT_H
 
 #include "google/cloud/securesourcemanager/v1/secure_source_manager_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -275,6 +277,12 @@ class SecureSourceManagerClient {
       google::cloud::securesourcemanager::v1::Instance const& instance,
       std::string const& instance_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::Instance const& instance,
+      std::string const& instance_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new instance in a given project and location.
@@ -315,6 +323,17 @@ class SecureSourceManagerClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Instance>>
+  CreateInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single instance.
@@ -346,6 +365,10 @@ class SecureSourceManagerClient {
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -386,6 +409,17 @@ class SecureSourceManagerClient {
       google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteInstance(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteInstanceRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteInstance(google::cloud::ExperimentalTag,
+                 google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -571,6 +605,12 @@ class SecureSourceManagerClient {
       google::cloud::securesourcemanager::v1::Repository const& repository,
       std::string const& repository_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::securesourcemanager::v1::Repository const& repository,
+      std::string const& repository_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new repository in a given project and location.
@@ -613,6 +653,17 @@ class SecureSourceManagerClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::CreateRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::Repository>>
+  CreateRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a Repository.
@@ -648,6 +699,10 @@ class SecureSourceManagerClient {
   // clang-format on
   future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
   DeleteRepository(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -690,6 +745,17 @@ class SecureSourceManagerClient {
       google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteRepository(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::securesourcemanager::v1::DeleteRepositoryRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::securesourcemanager::v1::OperationMetadata>>
+  DeleteRepository(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///

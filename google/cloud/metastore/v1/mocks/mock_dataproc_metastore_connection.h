@@ -62,15 +62,42 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateService,
+      (google::cloud::metastore::v1::CreateServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Service>>,
+              AwaitCreateService,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Service>>, UpdateService,
       (google::cloud::metastore::v1::UpdateServiceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateService,
+      (google::cloud::metastore::v1::UpdateServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Service>>,
+              AwaitUpdateService,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteService,
       (google::cloud::metastore::v1::DeleteServiceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteService,
+      (google::cloud::metastore::v1::DeleteServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+              AwaitDeleteService,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::metastore::v1::MetadataImport>),
@@ -89,11 +116,31 @@ class MockDataprocMetastoreConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateMetadataImport,
+              (google::cloud::metastore::v1::CreateMetadataImportRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
+              AwaitCreateMetadataImport,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
               UpdateMetadataImport,
               (google::cloud::metastore::v1::UpdateMetadataImportRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateMetadataImport,
+              (google::cloud::metastore::v1::UpdateMetadataImportRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataImport>>,
+              AwaitUpdateMetadataImport,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::MetadataExport>>,
@@ -102,9 +149,27 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportMetadata,
+      (google::cloud::metastore::v1::ExportMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::MetadataExport>>,
+              AwaitExportMetadata,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::Restore>>, RestoreService,
       (google::cloud::metastore::v1::RestoreServiceRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRestoreService,
+      (google::cloud::metastore::v1::RestoreServiceRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Restore>>,
+              AwaitRestoreService,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::metastore::v1::Backup>), ListBackups,
               (google::cloud::metastore::v1::ListBackupsRequest request),
@@ -120,15 +185,43 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateBackup,
+      (google::cloud::metastore::v1::CreateBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::Backup>>,
+              AwaitCreateBackup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
       DeleteBackup,
       (google::cloud::metastore::v1::DeleteBackupRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteBackup,
+      (google::cloud::metastore::v1::DeleteBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>,
+              AwaitDeleteBackup,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
       QueryMetadata,
       (google::cloud::metastore::v1::QueryMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartQueryMetadata,
+      (google::cloud::metastore::v1::QueryMetadataRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::metastore::v1::QueryMetadataResponse>>,
+      AwaitQueryMetadata, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -139,12 +232,36 @@ class MockDataprocMetastoreConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartMoveTableToDatabase,
+      (google::cloud::metastore::v1::MoveTableToDatabaseRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::metastore::v1::MoveTableToDatabaseResponse>>,
+      AwaitMoveTableToDatabase,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,
       AlterMetadataResourceLocation,
       (google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>,
+      StartAlterMetadataResourceLocation,
+      (google::cloud::metastore::v1::AlterMetadataResourceLocationRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::metastore::v1::AlterMetadataResourceLocationResponse>>,
+      AwaitAlterMetadataResourceLocation,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

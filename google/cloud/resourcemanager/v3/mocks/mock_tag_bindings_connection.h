@@ -61,11 +61,33 @@ class MockTagBindingsConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateTagBinding,
+      (google::cloud::resourcemanager::v3::CreateTagBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::TagBinding>>,
+              AwaitCreateTagBinding,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
       DeleteTagBinding,
       (google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteTagBinding,
+      (google::cloud::resourcemanager::v3::DeleteTagBindingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::resourcemanager::v3::DeleteTagBindingMetadata>>,
+      AwaitDeleteTagBinding, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(

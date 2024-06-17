@@ -53,6 +53,16 @@ class MockManagedIdentitiesServiceConnection
                    CreateMicrosoftAdDomainRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateMicrosoftAdDomain,
+              (google::cloud::managedidentities::v1::
+                   CreateMicrosoftAdDomainRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitCreateMicrosoftAdDomain,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<
           google::cloud::managedidentities::v1::ResetAdminPasswordResponse>,
@@ -77,11 +87,30 @@ class MockManagedIdentitiesServiceConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateDomain,
+              (google::cloud::managedidentities::v1::UpdateDomainRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitUpdateDomain,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
       DeleteDomain,
       (google::cloud::managedidentities::v1::DeleteDomainRequest const&
            request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteDomain,
+              (google::cloud::managedidentities::v1::DeleteDomainRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::managedidentities::v1::OpMetadata>>,
+      AwaitDeleteDomain, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(
@@ -91,6 +120,15 @@ class MockManagedIdentitiesServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAttachTrust,
+      (google::cloud::managedidentities::v1::AttachTrustRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitAttachTrust,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       ReconfigureTrust,
       (google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
@@ -98,16 +136,44 @@ class MockManagedIdentitiesServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartReconfigureTrust,
+      (google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitReconfigureTrust,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
       DetachTrust,
       (google::cloud::managedidentities::v1::DetachTrustRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDetachTrust,
+      (google::cloud::managedidentities::v1::DetachTrustRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitDetachTrust,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
               ValidateTrust,
               (google::cloud::managedidentities::v1::ValidateTrustRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartValidateTrust,
+              (google::cloud::managedidentities::v1::ValidateTrustRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::managedidentities::v1::Domain>>,
+              AwaitValidateTrust,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

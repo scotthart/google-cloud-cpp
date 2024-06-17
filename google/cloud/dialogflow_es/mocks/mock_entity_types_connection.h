@@ -80,25 +80,77 @@ class MockEntityTypesConnection : public dialogflow_es::EntityTypesConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchUpdateEntityTypes,
+      (google::cloud::dialogflow::v2::BatchUpdateEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>,
+      AwaitBatchUpdateEntityTypes,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntityTypes,
       (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartBatchDeleteEntityTypes,
+      (google::cloud::dialogflow::v2::BatchDeleteEntityTypesRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+              AwaitBatchDeleteEntityTypes,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchCreateEntities,
               (google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBatchCreateEntities,
+              (google::cloud::dialogflow::v2::BatchCreateEntitiesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+              AwaitBatchCreateEntities,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchUpdateEntities,
               (google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBatchUpdateEntities,
+              (google::cloud::dialogflow::v2::BatchUpdateEntitiesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+              AwaitBatchUpdateEntities,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, BatchDeleteEntities,
               (google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartBatchDeleteEntities,
+              (google::cloud::dialogflow::v2::BatchDeleteEntitiesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>,
+              AwaitBatchDeleteEntities,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

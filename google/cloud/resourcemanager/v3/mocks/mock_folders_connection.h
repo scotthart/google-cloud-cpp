@@ -68,10 +68,28 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateFolder,
+      (google::cloud::resourcemanager::v3::CreateFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              AwaitCreateFolder,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       UpdateFolder,
       (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateFolder,
+      (google::cloud::resourcemanager::v3::UpdateFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              AwaitUpdateFolder,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>, MoveFolder,
@@ -79,16 +97,43 @@ class MockFoldersConnection : public resourcemanager_v3::FoldersConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartMoveFolder,
+      (google::cloud::resourcemanager::v3::MoveFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              AwaitMoveFolder,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
       DeleteFolder,
       (google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteFolder,
+      (google::cloud::resourcemanager::v3::DeleteFolderRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              AwaitDeleteFolder,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
               UndeleteFolder,
               (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUndeleteFolder,
+              (google::cloud::resourcemanager::v3::UndeleteFolderRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::resourcemanager::v3::Folder>>,
+              AwaitUndeleteFolder,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

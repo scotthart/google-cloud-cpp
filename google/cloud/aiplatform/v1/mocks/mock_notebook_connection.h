@@ -54,6 +54,17 @@ class MockNotebookServiceConnection
            CreateNotebookRuntimeTemplateRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateNotebookRuntimeTemplate,
+              (google::cloud::aiplatform::v1::
+                   CreateNotebookRuntimeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>>,
+      AwaitCreateNotebookRuntimeTemplate,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>,
       GetNotebookRuntimeTemplate,
@@ -75,6 +86,17 @@ class MockNotebookServiceConnection
            DeleteNotebookRuntimeTemplateRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteNotebookRuntimeTemplate,
+              (google::cloud::aiplatform::v1::
+                   DeleteNotebookRuntimeTemplateRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteNotebookRuntimeTemplate,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::aiplatform::v1::NotebookRuntimeTemplate>,
               UpdateNotebookRuntimeTemplate,
               (google::cloud::aiplatform::v1::
@@ -87,6 +109,16 @@ class MockNotebookServiceConnection
       (google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAssignNotebookRuntime,
+      (google::cloud::aiplatform::v1::AssignNotebookRuntimeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>>,
+              AwaitAssignNotebookRuntime,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::aiplatform::v1::NotebookRuntime>,
@@ -108,6 +140,17 @@ class MockNotebookServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteNotebookRuntime,
+      (google::cloud::aiplatform::v1::DeleteNotebookRuntimeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>,
+      AwaitDeleteNotebookRuntime,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<
           google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,
       UpgradeNotebookRuntime,
@@ -115,12 +158,35 @@ class MockNotebookServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpgradeNotebookRuntime,
+      (google::cloud::aiplatform::v1::UpgradeNotebookRuntimeRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<
+          google::cloud::aiplatform::v1::UpgradeNotebookRuntimeResponse>>,
+      AwaitUpgradeNotebookRuntime,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<
                   google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>,
               StartNotebookRuntime,
               (google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartStartNotebookRuntime,
+              (google::cloud::aiplatform::v1::StartNotebookRuntimeRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<
+                  google::cloud::aiplatform::v1::StartNotebookRuntimeResponse>>,
+              AwaitStartNotebookRuntime,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

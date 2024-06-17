@@ -56,13 +56,34 @@ class MockPoliciesConnection : public iam_v2::PoliciesConnection {
               (google::iam::v2::CreatePolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreatePolicy,
+              (google::iam::v2::CreatePolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, AwaitCreatePolicy,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, UpdatePolicy,
               (google::iam::v2::UpdatePolicyRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdatePolicy,
+              (google::iam::v2::UpdatePolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, AwaitUpdatePolicy,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, DeletePolicy,
               (google::iam::v2::DeletePolicyRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeletePolicy,
+              (google::iam::v2::DeletePolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::iam::v2::Policy>>, AwaitDeletePolicy,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

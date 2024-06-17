@@ -62,10 +62,32 @@ class MockSubnetworksConnection
                    DeleteSubnetworkRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteSubnetwork,
+              (google::cloud::cpp::compute::subnetworks::v1::
+                   DeleteSubnetworkRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteSubnetwork,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
               ExpandIpCidrRange,
               (google::cloud::cpp::compute::subnetworks::v1::
                    ExpandIpCidrRangeRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartExpandIpCidrRange,
+              (google::cloud::cpp::compute::subnetworks::v1::
+                   ExpandIpCidrRangeRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitExpandIpCidrRange,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -84,6 +106,17 @@ class MockSubnetworksConnection
               InsertSubnetwork,
               (google::cloud::cpp::compute::subnetworks::v1::
                    InsertSubnetworkRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertSubnetwork,
+              (google::cloud::cpp::compute::subnetworks::v1::
+                   InsertSubnetworkRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertSubnetwork,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -105,6 +138,17 @@ class MockSubnetworksConnection
                    PatchSubnetworkRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartPatchSubnetwork,
+              (google::cloud::cpp::compute::subnetworks::v1::
+                   PatchSubnetworkRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitPatchSubnetwork,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(
       StatusOr<google::cloud::cpp::compute::v1::Policy>, SetIamPolicy,
       (google::cloud::cpp::compute::subnetworks::v1::SetIamPolicyRequest const&
@@ -115,6 +159,17 @@ class MockSubnetworksConnection
               SetPrivateIpGoogleAccess,
               (google::cloud::cpp::compute::subnetworks::v1::
                    SetPrivateIpGoogleAccessRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetPrivateIpGoogleAccess,
+              (google::cloud::cpp::compute::subnetworks::v1::
+                   SetPrivateIpGoogleAccessRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetPrivateIpGoogleAccess,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

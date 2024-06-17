@@ -73,10 +73,28 @@ class MockProductServiceConnection
       (google::cloud::retail::v2::PurgeProductsRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartPurgeProducts,
+              (google::cloud::retail::v2::PurgeProductsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>,
+      AwaitPurgeProducts, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
       ImportProducts,
       (google::cloud::retail::v2::ImportProductsRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartImportProducts,
+              (google::cloud::retail::v2::ImportProductsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>,
+      AwaitImportProducts, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
@@ -84,11 +102,29 @@ class MockProductServiceConnection
               (google::cloud::retail::v2::SetInventoryRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartSetInventory,
+              (google::cloud::retail::v2::SetInventoryRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>,
+              AwaitSetInventory,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
       AddFulfillmentPlaces,
       (google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAddFulfillmentPlaces,
+      (google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>,
+      AwaitAddFulfillmentPlaces,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<
@@ -98,6 +134,18 @@ class MockProductServiceConnection
            request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartRemoveFulfillmentPlaces,
+              (google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>,
+      AwaitRemoveFulfillmentPlaces,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
       AddLocalInventories,
@@ -105,11 +153,32 @@ class MockProductServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartAddLocalInventories,
+      (google::cloud::retail::v2::AddLocalInventoriesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>,
+      AwaitAddLocalInventories,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<
           StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
       RemoveLocalInventories,
       (google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRemoveLocalInventories,
+      (google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>,
+      AwaitRemoveLocalInventories,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

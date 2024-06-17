@@ -68,6 +68,17 @@ class MockNetworkSecurityConnection
            CreateAuthorizationPolicyRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateAuthorizationPolicy,
+              (google::cloud::networksecurity::v1::
+                   CreateAuthorizationPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
+      AwaitCreateAuthorizationPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
       UpdateAuthorizationPolicy,
@@ -75,12 +86,34 @@ class MockNetworkSecurityConnection
            UpdateAuthorizationPolicyRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateAuthorizationPolicy,
+              (google::cloud::networksecurity::v1::
+                   UpdateAuthorizationPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::AuthorizationPolicy>>,
+      AwaitUpdateAuthorizationPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteAuthorizationPolicy,
       (google::cloud::networksecurity::v1::
            DeleteAuthorizationPolicyRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteAuthorizationPolicy,
+              (google::cloud::networksecurity::v1::
+                   DeleteAuthorizationPolicyRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      AwaitDeleteAuthorizationPolicy,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::networksecurity::v1::ServerTlsPolicy>),
@@ -104,6 +137,17 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateServerTlsPolicy,
+      (google::cloud::networksecurity::v1::CreateServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      AwaitCreateServerTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
       UpdateServerTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
@@ -111,11 +155,33 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateServerTlsPolicy,
+      (google::cloud::networksecurity::v1::UpdateServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ServerTlsPolicy>>,
+      AwaitUpdateServerTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteServerTlsPolicy,
       (google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteServerTlsPolicy,
+      (google::cloud::networksecurity::v1::DeleteServerTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      AwaitDeleteServerTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::networksecurity::v1::ClientTlsPolicy>),
@@ -139,6 +205,17 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateClientTlsPolicy,
+      (google::cloud::networksecurity::v1::CreateClientTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      AwaitCreateClientTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
       UpdateClientTlsPolicy,
       (google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
@@ -146,11 +223,33 @@ class MockNetworkSecurityConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateClientTlsPolicy,
+      (google::cloud::networksecurity::v1::UpdateClientTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::ClientTlsPolicy>>,
+      AwaitUpdateClientTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
       DeleteClientTlsPolicy,
       (google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteClientTlsPolicy,
+      (google::cloud::networksecurity::v1::DeleteClientTlsPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::networksecurity::v1::OperationMetadata>>,
+      AwaitDeleteClientTlsPolicy,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -54,6 +54,17 @@ class MockExternalVpnGatewaysConnection
                    DeleteExternalVpnGatewayRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartDeleteExternalVpnGateway,
+              (google::cloud::cpp::compute::external_vpn_gateways::v1::
+                   DeleteExternalVpnGatewayRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitDeleteExternalVpnGateway,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
+              (override));
+
   MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::ExternalVpnGateway>,
               GetExternalVpnGateway,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
@@ -64,6 +75,17 @@ class MockExternalVpnGatewaysConnection
               InsertExternalVpnGateway,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    InsertExternalVpnGatewayRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartInsertExternalVpnGateway,
+              (google::cloud::cpp::compute::external_vpn_gateways::v1::
+                   InsertExternalVpnGatewayRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitInsertExternalVpnGateway,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(
@@ -77,6 +99,17 @@ class MockExternalVpnGatewaysConnection
               SetLabels,
               (google::cloud::cpp::compute::external_vpn_gateways::v1::
                    SetLabelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::cpp::compute::v1::Operation>,
+              StartSetLabels,
+              (google::cloud::cpp::compute::external_vpn_gateways::v1::
+                   SetLabelsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::cpp::compute::v1::Operation>>,
+              AwaitSetLabels,
+              (google::cloud::cpp::compute::v1::Operation const& operation),
               (override));
 
   MOCK_METHOD(

@@ -53,6 +53,15 @@ class MockCloudChannelReportsServiceConnection
       (google::cloud::channel::v1::RunReportJobRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartRunReportJob,
+              (google::cloud::channel::v1::RunReportJobRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::channel::v1::RunReportJobResponse>>,
+      AwaitRunReportJob, (google::longrunning::Operation const& operation),
+      (override));
+
   MOCK_METHOD((StreamRange<google::cloud::channel::v1::Row>),
               FetchReportResults,
               (google::cloud::channel::v1::FetchReportResultsRequest request),

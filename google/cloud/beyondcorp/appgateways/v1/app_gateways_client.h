@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BEYONDCORP_APPGATEWAYS_V1_APP_GATEWAYS_CLIENT_H
 
 #include "google/cloud/beyondcorp/appgateways/v1/app_gateways_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -279,6 +281,12 @@ class AppGatewaysServiceClient {
       google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
       std::string const& app_gateway_id, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::beyondcorp::appgateways::v1::AppGateway const& app_gateway,
+      std::string const& app_gateway_id, Options opts = {});
+
   // clang-format off
   ///
   /// Creates a new AppGateway in a given project and location.
@@ -319,6 +327,17 @@ class AppGatewaysServiceClient {
           request,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> CreateAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::CreateAppGatewayRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>
+  CreateAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
+
   // clang-format off
   ///
   /// Deletes a single AppGateway.
@@ -352,6 +371,10 @@ class AppGatewaysServiceClient {
   future<StatusOr<
       google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
   DeleteAppGateway(std::string const& name, Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -393,6 +416,18 @@ class AppGatewaysServiceClient {
       google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> DeleteAppGateway(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::beyondcorp::appgateways::v1::DeleteAppGatewayRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<
+      google::cloud::beyondcorp::appgateways::v1::AppGatewayOperationMetadata>>
+  DeleteAppGateway(google::cloud::ExperimentalTag,
+                   google::longrunning::Operation const& operation,
+                   Options opts = {});
 
  private:
   std::shared_ptr<AppGatewaysServiceConnection> connection_;

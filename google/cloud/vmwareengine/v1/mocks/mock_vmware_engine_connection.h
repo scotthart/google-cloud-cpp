@@ -64,11 +64,29 @@ class MockVmwareEngineConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreatePrivateCloud,
+              (google::cloud::vmwareengine::v1::CreatePrivateCloudRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitCreatePrivateCloud,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               UpdatePrivateCloud,
               (google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
                    request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdatePrivateCloud,
+              (google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitUpdatePrivateCloud,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
               DeletePrivateCloud,
@@ -76,12 +94,31 @@ class MockVmwareEngineConnection
                    request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeletePrivateCloud,
+              (google::cloud::vmwareengine::v1::DeletePrivateCloudRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitDeletePrivateCloud,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       UndeletePrivateCloud,
       (google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUndeletePrivateCloud,
+      (google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitUndeletePrivateCloud,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::Cluster>),
               ListClusters,
@@ -99,14 +136,42 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateCluster,
+      (google::cloud::vmwareengine::v1::CreateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>,
+              AwaitCreateCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>, UpdateCluster,
       (google::cloud::vmwareengine::v1::UpdateClusterRequest const& request),
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateCluster,
+      (google::cloud::vmwareengine::v1::UpdateClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>,
+              AwaitUpdateCluster,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteCluster,
       (google::cloud::vmwareengine::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteCluster,
+      (google::cloud::vmwareengine::v1::DeleteClusterRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteCluster, (google::longrunning::Operation const& operation),
       (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::Node>), ListNodes,
@@ -143,6 +208,17 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateExternalAddress,
+      (google::cloud::vmwareengine::v1::CreateExternalAddressRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
+      AwaitCreateExternalAddress,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
       UpdateExternalAddress,
       (google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
@@ -150,11 +226,33 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateExternalAddress,
+      (google::cloud::vmwareengine::v1::UpdateExternalAddressRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::ExternalAddress>>,
+      AwaitUpdateExternalAddress,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAddress,
       (google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteExternalAddress,
+      (google::cloud::vmwareengine::v1::DeleteExternalAddressRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteExternalAddress,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::Subnet>),
               ListSubnets,
@@ -170,6 +268,15 @@ class MockVmwareEngineConnection
       future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>, UpdateSubnet,
       (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateSubnet,
+      (google::cloud::vmwareengine::v1::UpdateSubnetRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::Subnet>>,
+              AwaitUpdateSubnet,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::vmwareengine::v1::ExternalAccessRule>),
@@ -192,6 +299,17 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateExternalAccessRule,
+      (google::cloud::vmwareengine::v1::CreateExternalAccessRuleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
+      AwaitCreateExternalAccessRule,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
       UpdateExternalAccessRule,
       (google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
@@ -199,11 +317,33 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateExternalAccessRule,
+      (google::cloud::vmwareengine::v1::UpdateExternalAccessRuleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::ExternalAccessRule>>,
+      AwaitUpdateExternalAccessRule,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteExternalAccessRule,
       (google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteExternalAccessRule,
+      (google::cloud::vmwareengine::v1::DeleteExternalAccessRuleRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteExternalAccessRule,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::vmwareengine::v1::LoggingServer>),
@@ -225,6 +365,16 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateLoggingServer,
+      (google::cloud::vmwareengine::v1::CreateLoggingServerRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
+              AwaitCreateLoggingServer,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
       UpdateLoggingServer,
       (google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
@@ -232,11 +382,32 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateLoggingServer,
+      (google::cloud::vmwareengine::v1::UpdateLoggingServerRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::LoggingServer>>,
+              AwaitUpdateLoggingServer,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteLoggingServer,
       (google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteLoggingServer,
+      (google::cloud::vmwareengine::v1::DeleteLoggingServerRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteLoggingServer,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::NodeType>),
               ListNodeTypes,
@@ -269,11 +440,31 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartResetNsxCredentials,
+      (google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitResetNsxCredentials,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
       ResetVcenterCredentials,
       (google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartResetVcenterCredentials,
+      (google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>,
+              AwaitResetVcenterCredentials,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>,
@@ -287,6 +478,16 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateDnsForwarding,
+      (google::cloud::vmwareengine::v1::UpdateDnsForwardingRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::DnsForwarding>>,
+              AwaitUpdateDnsForwarding,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>,
               GetNetworkPeering,
@@ -308,6 +509,16 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateNetworkPeering,
+      (google::cloud::vmwareengine::v1::CreateNetworkPeeringRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
+              AwaitCreateNetworkPeering,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPeering,
       (google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
@@ -315,11 +526,32 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteNetworkPeering,
+      (google::cloud::vmwareengine::v1::DeleteNetworkPeeringRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteNetworkPeering,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
       UpdateNetworkPeering,
       (google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateNetworkPeering,
+      (google::cloud::vmwareengine::v1::UpdateNetworkPeeringRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPeering>>,
+              AwaitUpdateNetworkPeering,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>),
@@ -333,6 +565,17 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateHcxActivationKey,
+      (google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>,
+      AwaitCreateHcxActivationKey,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>),
@@ -367,6 +610,16 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateNetworkPolicy,
+      (google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
+              AwaitCreateNetworkPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
       UpdateNetworkPolicy,
       (google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
@@ -374,11 +627,32 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateNetworkPolicy,
+      (google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>,
+              AwaitUpdateNetworkPolicy,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteNetworkPolicy,
       (google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteNetworkPolicy,
+      (google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteNetworkPolicy,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       (StreamRange<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>),
@@ -402,6 +676,18 @@ class MockVmwareEngineConnection
            CreateManagementDnsZoneBindingRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartCreateManagementDnsZoneBinding,
+              (google::cloud::vmwareengine::v1::
+                   CreateManagementDnsZoneBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
+      AwaitCreateManagementDnsZoneBinding,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<
           StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
@@ -410,12 +696,35 @@ class MockVmwareEngineConnection
            UpdateManagementDnsZoneBindingRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartUpdateManagementDnsZoneBinding,
+              (google::cloud::vmwareengine::v1::
+                   UpdateManagementDnsZoneBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
+      AwaitUpdateManagementDnsZoneBinding,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteManagementDnsZoneBinding,
       (google::cloud::vmwareengine::v1::
            DeleteManagementDnsZoneBindingRequest const& request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartDeleteManagementDnsZoneBinding,
+              (google::cloud::vmwareengine::v1::
+                   DeleteManagementDnsZoneBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteManagementDnsZoneBinding,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<
@@ -425,12 +734,35 @@ class MockVmwareEngineConnection
            RepairManagementDnsZoneBindingRequest const& request),
       (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+              StartRepairManagementDnsZoneBinding,
+              (google::cloud::vmwareengine::v1::
+                   RepairManagementDnsZoneBindingRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      future<
+          StatusOr<google::cloud::vmwareengine::v1::ManagementDnsZoneBinding>>,
+      AwaitRepairManagementDnsZoneBinding,
+      (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
       CreateVmwareEngineNetwork,
       (google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateVmwareEngineNetwork,
+      (google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
+      AwaitCreateVmwareEngineNetwork,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
@@ -440,11 +772,33 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdateVmwareEngineNetwork,
+      (google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>,
+      AwaitUpdateVmwareEngineNetwork,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeleteVmwareEngineNetwork,
       (google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeleteVmwareEngineNetwork,
+      (google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeleteVmwareEngineNetwork,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>,
@@ -468,6 +822,17 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreatePrivateConnection,
+      (google::cloud::vmwareengine::v1::CreatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
+      AwaitCreatePrivateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>,
       GetPrivateConnection,
       (google::cloud::vmwareengine::v1::GetPrivateConnectionRequest const&
@@ -488,11 +853,33 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartUpdatePrivateConnection,
+      (google::cloud::vmwareengine::v1::UpdatePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::PrivateConnection>>,
+      AwaitUpdatePrivateConnection,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
       DeletePrivateConnection,
       (google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartDeletePrivateConnection,
+      (google::cloud::vmwareengine::v1::DeletePrivateConnectionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>,
+      AwaitDeletePrivateConnection,
+      (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::vmwareengine::v1::PeeringRoute>),
               ListPrivateConnectionPeeringRoutes,
@@ -508,6 +895,17 @@ class MockVmwareEngineConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartGrantDnsBindPermission,
+      (google::cloud::vmwareengine::v1::GrantDnsBindPermissionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
+      AwaitGrantDnsBindPermission,
+      (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>,
       GetDnsBindPermission,
       (google::cloud::vmwareengine::v1::GetDnsBindPermissionRequest const&
@@ -520,6 +918,17 @@ class MockVmwareEngineConnection
       (google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartRevokeDnsBindPermission,
+      (google::cloud::vmwareengine::v1::RevokeDnsBindPermissionRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::vmwareengine::v1::DnsBindPermission>>,
+      AwaitRevokeDnsBindPermission,
+      (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

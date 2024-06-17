@@ -58,6 +58,15 @@ class MockSimulatorConnection : public policysimulator_v1::SimulatorConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartCreateReplay,
+      (google::cloud::policysimulator::v1::CreateReplayRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::policysimulator::v1::Replay>>,
+              AwaitCreateReplay,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       (StreamRange<google::cloud::policysimulator::v1::ReplayResult>),
       ListReplayResults,
       (google::cloud::policysimulator::v1::ListReplayResultsRequest request),

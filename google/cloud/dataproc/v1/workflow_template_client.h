@@ -20,6 +20,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DATAPROC_V1_WORKFLOW_TEMPLATE_CLIENT_H
 
 #include "google/cloud/dataproc/v1/workflow_template_connection.h"
+#include "google/cloud/await_tag.h"
+#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -297,6 +299,10 @@ class WorkflowTemplateServiceClient {
   future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
   InstantiateWorkflowTemplate(std::string const& name, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name, Options opts = {});
+
   // clang-format off
   ///
   /// Instantiates a template and begins execution.
@@ -366,6 +372,11 @@ class WorkflowTemplateServiceClient {
       std::string const& name,
       std::map<std::string, std::string> const& parameters, Options opts = {});
 
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& name,
+      std::map<std::string, std::string> const& parameters, Options opts = {});
+
   // clang-format off
   ///
   /// Instantiates a template and begins execution.
@@ -429,6 +440,17 @@ class WorkflowTemplateServiceClient {
       google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
           request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> InstantiateWorkflowTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&
+          request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateWorkflowTemplate(google::cloud::ExperimentalTag,
+                              google::longrunning::Operation const& operation,
+                              Options opts = {});
 
   // clang-format off
   ///
@@ -507,6 +529,12 @@ class WorkflowTemplateServiceClient {
       google::cloud::dataproc::v1::WorkflowTemplate const& template_,
       Options opts = {});
 
+  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      std::string const& parent,
+      google::cloud::dataproc::v1::WorkflowTemplate const& template_,
+      Options opts = {});
+
   // clang-format off
   ///
   /// Instantiates a template and begins execution.
@@ -578,6 +606,17 @@ class WorkflowTemplateServiceClient {
       google::cloud::dataproc::v1::
           InstantiateInlineWorkflowTemplateRequest const& request,
       Options opts = {});
+
+  StatusOr<google::longrunning::Operation> InstantiateInlineWorkflowTemplate(
+      google::cloud::ExperimentalTag, google::cloud::NoAwaitTag,
+      google::cloud::dataproc::v1::
+          InstantiateInlineWorkflowTemplateRequest const& request,
+      Options opts = {});
+
+  future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
+  InstantiateInlineWorkflowTemplate(
+      google::cloud::ExperimentalTag,
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///

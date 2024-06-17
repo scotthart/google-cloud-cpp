@@ -54,6 +54,12 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   CreateDatabase,
   (google::test::admin::database::v1::CreateDatabaseRequest const& request), (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartCreateDatabase, (google::test::admin::database::v1::CreateDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
+  AwaitCreateDatabase, (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::test::admin::database::v1::Database>,
   GetDatabase,
   (google::test::admin::database::v1::GetDatabaseRequest const& request), (override));
@@ -61,6 +67,12 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>,
   UpdateDatabaseDdl,
   (google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartUpdateDatabaseDdl, (google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>,
+  AwaitUpdateDatabaseDdl, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(Status,
   DropDatabase,
@@ -86,6 +98,12 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   CreateBackup,
   (google::test::admin::database::v1::CreateBackupRequest const& request), (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartCreateBackup, (google::test::admin::database::v1::CreateBackupRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Backup>>,
+  AwaitCreateBackup, (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::test::admin::database::v1::Backup>,
   GetBackup,
   (google::test::admin::database::v1::GetBackupRequest const& request), (override));
@@ -106,6 +124,12 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   RestoreDatabase,
   (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartRestoreDatabase, (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
+  AwaitRestoreDatabase, (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD((StreamRange<google::longrunning::Operation>),
   ListDatabaseOperations,
   (google::test::admin::database::v1::ListDatabaseOperationsRequest request), (override));
@@ -117,6 +141,12 @@ class MockGoldenThingAdminConnection : public golden_v1::GoldenThingAdminConnect
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   LongRunningWithoutRouting,
   (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  StartLongRunningWithoutRouting, (google::test::admin::database::v1::RestoreDatabaseRequest const& request), (override));
+
+  MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
+  AwaitLongRunningWithoutRouting, (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(future<StatusOr<google::test::admin::database::v1::Database>>,
   AsyncGetDatabase,

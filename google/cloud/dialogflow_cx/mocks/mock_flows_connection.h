@@ -76,6 +76,14 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartTrainFlow,
+      (google::cloud::dialogflow::cx::v3::TrainFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(future<StatusOr<google::protobuf::Struct>>, AwaitTrainFlow,
+              (google::longrunning::Operation const& operation), (override));
+
+  MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>,
       ValidateFlow,
       (google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request),
@@ -95,9 +103,29 @@ class MockFlowsConnection : public dialogflow_cx::FlowsConnection {
       (override));
 
   MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartImportFlow,
+      (google::cloud::dialogflow::cx::v3::ImportFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>,
+      AwaitImportFlow, (google::longrunning::Operation const& operation),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
       ExportFlow,
       (google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::longrunning::Operation>, StartExportFlow,
+      (google::cloud::dialogflow::cx::v3::ExportFlowRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>,
+      AwaitExportFlow, (google::longrunning::Operation const& operation),
       (override));
 };
 

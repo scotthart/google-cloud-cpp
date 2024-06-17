@@ -58,6 +58,14 @@ class MockRevisionsConnection : public run_v2::RevisionsConnection {
               DeleteRevision,
               (google::cloud::run::v2::DeleteRevisionRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteRevision,
+              (google::cloud::run::v2::DeleteRevisionRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Revision>>,
+              AwaitDeleteRevision,
+              (google::longrunning::Operation const& operation), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

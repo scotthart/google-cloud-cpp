@@ -50,6 +50,14 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::CreateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartCreateService,
+              (google::cloud::run::v2::CreateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+              AwaitCreateService,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(StatusOr<google::cloud::run::v2::Service>, GetService,
               (google::cloud::run::v2::GetServiceRequest const& request),
               (override));
@@ -62,9 +70,25 @@ class MockServicesConnection : public run_v2::ServicesConnection {
               (google::cloud::run::v2::UpdateServiceRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartUpdateService,
+              (google::cloud::run::v2::UpdateServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+              AwaitUpdateService,
+              (google::longrunning::Operation const& operation), (override));
+
   MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>, DeleteService,
               (google::cloud::run::v2::DeleteServiceRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>, StartDeleteService,
+              (google::cloud::run::v2::DeleteServiceRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::run::v2::Service>>,
+              AwaitDeleteService,
+              (google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,
               (google::iam::v1::GetIamPolicyRequest const& request),

@@ -108,6 +108,37 @@ class DatabaseAdminClientTest
   std::string test_iam_service_account_;
 };
 
+TEST_F(DatabaseAdminClientTest, DatabaseStartAwaitSuccess) {
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_
+                                 << " already exists, this is unexpected as "
+                                    "the database id is selected at random.";
+
+  std::cout << __func__ << " StartCreateDatabase: " << database_.database_id()
+            << "\n";
+
+  auto operation = client_.CreateDatabase(
+      ExperimentalTag{}, NoAwaitTag{}, database_.instance().FullName(),
+      absl::StrCat("CREATE DATABASE `", database_.database_id(), "`"));
+  ASSERT_STATUS_OK(operation);
+  std::cout << __func__ << ": operation=" << operation->DebugString() << "\n";
+
+  std::cout << __func__ << " AwaitCreateBackup" << std::endl;
+  auto backup = client_.CreateBackup(ExperimentalTag{}, *operation).get();
+  EXPECT_THAT(backup, StatusIs(StatusCode::kInvalidArgument));
+
+  std::cout << __func__ << " AwaitCreateDatabase\n";
+  auto database = client_.CreateDatabase(ExperimentalTag{}, *operation).get();
+  EXPECT_THAT(database->name(), EndsWith(database_.database_id()));
+
+  EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
+  std::cout << __func__ << ": database=" << database->DebugString() << "\n";
+
+  std::cout << __func__ << " DropDatabase\n";
+  auto drop_status = client_.DropDatabase(database_.FullName());
+  EXPECT_STATUS_OK(drop_status);
+  EXPECT_FALSE(DatabaseExists()) << "Database " << database_;
+}
+
 /// @test Verify the basic CRUD operations for databases work.
 TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   // We test Client::ListDatabases() by verifying that (a) it does not return
