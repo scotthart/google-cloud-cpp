@@ -88,6 +88,9 @@ std::string Namespace(std::string const& product_path,
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters);
 
+StatusOr<std::vector<std::pair<std::string, std::string>>>
+ProcessWrapperCommandLineArgs(std::string const& parameters);
+
 /**
  * Change all occurrences of @p from to @p to within @p s.
  *

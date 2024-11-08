@@ -292,6 +292,16 @@ ProcessCommandLineArgs(std::string const& parameters) {
   return command_line_args;
 }
 
+StatusOr<std::vector<std::pair<std::string, std::string>>>
+ProcessWrapperCommandLineArgs(std::string const& parameters) {
+  std::vector<std::pair<std::string, std::string>> command_line_args;
+  google::protobuf::compiler::ParseGeneratorParameter(parameters,
+                                                      &command_line_args);
+
+  ProcessArgCopyrightYear(command_line_args);
+  return command_line_args;
+}
+
 std::string SafeReplaceAll(absl::string_view s, absl::string_view from,
                            absl::string_view to) {
   if (absl::StrContains(s, to)) {
