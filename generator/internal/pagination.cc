@@ -218,7 +218,7 @@ void AssignPaginationMethodVars(
     if (pagination_info->range_output_map_key_type.has_value()) {
       method_vars["range_output_type"] = absl::StrCat(
           "std::pair<",
-          CppTypeToString(pagination_info->range_output_map_key_type.value()),
+          CppTypeToString(*pagination_info->range_output_map_key_type.value()),
           ", ",
           ProtoNameToCppName(pagination_info->range_output_type->full_name()),
           ">");

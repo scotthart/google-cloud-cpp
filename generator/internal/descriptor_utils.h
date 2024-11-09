@@ -94,7 +94,7 @@ bool CheckParameterCommentSubstitutions();
 /**
  * Emit fully namespace qualified type name of field.
  */
-std::string CppTypeToString(google::protobuf::FieldDescriptor const* field);
+std::string CppTypeToString(google::protobuf::FieldDescriptor const& field);
 
 }  // namespace generator_internal
 }  // namespace cloud

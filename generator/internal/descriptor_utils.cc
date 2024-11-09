@@ -82,31 +82,32 @@ void SetMethodSignatureMethodVars(
       if (parameter_descriptor->is_map()) {
         cpp_type = absl::StrFormat(
             "std::map<%s, %s> const&",
-            CppTypeToString(parameter_descriptor->message_type()->map_key()),
-            CppTypeToString(parameter_descriptor->message_type()->map_value()));
+            CppTypeToString(*parameter_descriptor->message_type()->map_key()),
+            CppTypeToString(
+                *parameter_descriptor->message_type()->map_value()));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->is_repeated()) {
         cpp_type = absl::StrFormat("std::vector<%s> const&",
-                                   CppTypeToString(parameter_descriptor));
+                                   CppTypeToString(*parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
-        cpp_type =
-            absl::StrFormat("%s const&", CppTypeToString(parameter_descriptor));
+        cpp_type = absl::StrFormat("%s const&",
+                                   CppTypeToString(*parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = %s;\n", parameter_name, parameter_name);
       } else {
         switch (parameter_descriptor->cpp_type()) {
           case FieldDescriptor::CPPTYPE_STRING:
             cpp_type = absl::StrFormat("%s const&",
-                                       CppTypeToString(parameter_descriptor));
+                                       CppTypeToString(*parameter_descriptor));
             break;
           default:
-            cpp_type = CppTypeToString(parameter_descriptor);
+            cpp_type = CppTypeToString(*parameter_descriptor);
         }
         method_request_setters += absl::StrFormat(
             "  request.set_%s(%s);\n", parameter_name, parameter_name);
@@ -557,31 +558,31 @@ VarsDictionary GetMethodVars(
 
 }  // namespace
 
-std::string CppTypeToString(FieldDescriptor const* field) {
-  switch (field->cpp_type()) {
+std::string CppTypeToString(FieldDescriptor const& field) {
+  switch (field.cpp_type()) {
     case FieldDescriptor::CPPTYPE_INT32:
     case FieldDescriptor::CPPTYPE_INT64:
     case FieldDescriptor::CPPTYPE_UINT32:
     case FieldDescriptor::CPPTYPE_UINT64:
-      return std::string("std::") + std::string(field->cpp_type_name()) + "_t";
+      return std::string("std::") + std::string(field.cpp_type_name()) + "_t";
 
     case FieldDescriptor::CPPTYPE_DOUBLE:
     case FieldDescriptor::CPPTYPE_FLOAT:
     case FieldDescriptor::CPPTYPE_BOOL:
-      return std::string(field->cpp_type_name());
+      return std::string(field.cpp_type_name());
     case FieldDescriptor::CPPTYPE_ENUM:
-      return ProtoNameToCppName(field->enum_type()->full_name());
+      return ProtoNameToCppName(field.enum_type()->full_name());
 
     case FieldDescriptor::CPPTYPE_STRING:
-      return std::string("std::") + std::string(field->cpp_type_name());
+      return std::string("std::") + std::string(field.cpp_type_name());
 
     case FieldDescriptor::CPPTYPE_MESSAGE:
-      return ProtoNameToCppName(field->message_type()->full_name());
+      return ProtoNameToCppName(field.message_type()->full_name());
   }
-  GCP_LOG(FATAL) << "FieldDescriptor " << field->cpp_type_name()
+  GCP_LOG(FATAL) << "FieldDescriptor " << field.cpp_type_name()
                  << " not handled";
   /*NOTREACHED*/
-  return field->cpp_type_name();
+  return field.cpp_type_name();
 }
 
 std::string FormatMethodCommentsMethodSignature(

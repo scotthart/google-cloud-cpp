@@ -32,7 +32,8 @@ class WrapperGenerator {
  public:
   WrapperGenerator(google::protobuf::FileDescriptor const* file,
                    google::protobuf::compiler::GeneratorContext* context,
-                   VarsDictionary vars);
+                   VarsDictionary file_vars,
+                   std::map<std::string, VarsDictionary> message_vars);
 
   Status Generate();
 
@@ -59,7 +60,8 @@ class WrapperGenerator {
   google::protobuf::compiler::GeneratorContext* context_;
   Printer header_;
   Printer cc_;
-  VarsDictionary vars_;
+  VarsDictionary file_vars_;
+  std::map<std::string, VarsDictionary> message_vars_;
   std::string namespace_;
 };
 

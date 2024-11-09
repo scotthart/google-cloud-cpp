@@ -270,7 +270,7 @@ std::string Namespace(std::string const& product_path, NamespaceType ns_type) {
 
 void GenerateLocalIncludes(Printer& p, std::vector<std::string> local_includes,
                            FileType file_type) {
-  if (file_type == FileType::kCcFile) {
+  if (file_type == FileType::kCcFile && local_includes.size() > 1) {
     std::sort(local_includes.begin() + 1, local_includes.end());
   } else {
     std::sort(local_includes.begin(), local_includes.end());
