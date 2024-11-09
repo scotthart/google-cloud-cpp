@@ -268,8 +268,8 @@ std::string Namespace(std::string const& product_path, NamespaceType ns_type) {
   return ns;
 }
 
-void GenerateLocalIncludes(
-    Printer& p, std::vector<std::string> local_includes, FileType file_type) {
+void GenerateLocalIncludes(Printer& p, std::vector<std::string> local_includes,
+                           FileType file_type) {
   if (file_type == FileType::kCcFile) {
     std::sort(local_includes.begin() + 1, local_includes.end());
   } else {
@@ -280,18 +280,18 @@ void GenerateLocalIncludes(
   }
 }
 
-void GenerateSystemIncludes(
-    Printer& p, std::vector<std::string> system_includes) {
+void GenerateSystemIncludes(Printer& p,
+                            std::vector<std::string> system_includes) {
   std::sort(system_includes.begin(), system_includes.end());
   for (auto const& include : system_includes) {
     p.Print(SystemInclude(include));
   }
 }
 
-
-StatusOr<std::string> OpenNamespaces(
-    Printer& p, NamespaceType ns_type, std::string const& product_path_var,
-    VarsDictionary const& vars, std::string const& ns_documentation) {
+StatusOr<std::string> OpenNamespaces(Printer& p, NamespaceType ns_type,
+                                     std::string const& product_path_var,
+                                     VarsDictionary const& vars,
+                                     std::string const& ns_documentation) {
   auto product_path = vars.find(product_path_var);
   if (product_path == vars.end()) {
     return internal::InternalError(product_path_var + " not found in vars",
@@ -311,9 +311,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
   return namespace_value;
 }
 
-void CloseNamespaces(
-    Printer& p, bool define_backwards_compatibility_namespace_alias,
-    std::string const& namespace_value) {
+void CloseNamespaces(Printer& p,
+                     bool define_backwards_compatibility_namespace_alias,
+                     std::string const& namespace_value) {
   p.Print(R"""(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
   // TODO(#7463) - remove backwards compatibility namespaces
@@ -328,7 +328,6 @@ namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls))"""
 )""",
           "namespace", namespace_value);
 }
-
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters) {

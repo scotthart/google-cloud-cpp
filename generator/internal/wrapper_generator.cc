@@ -103,7 +103,8 @@ void WrapperGenerator::HeaderPrint(std::string const& text) {
   header_.Print(vars_, text);
 }
 
-void WrapperGenerator::HeaderPrint(VarsDictionary const& vars, std::string const& text) {
+void WrapperGenerator::HeaderPrint(VarsDictionary const& vars,
+                                   std::string const& text) {
   VarsDictionary merged{vars_};
   merged.insert(vars.begin(), vars.end());
   header_.Print(merged, text);
@@ -113,7 +114,8 @@ void WrapperGenerator::CcPrint(std::string const& text) {
   cc_.Print(vars_, text);
 }
 
-void WrapperGenerator::CcPrint(VarsDictionary const& vars, std::string const& text) {
+void WrapperGenerator::CcPrint(VarsDictionary const& vars,
+                               std::string const& text) {
   VarsDictionary merged{vars_};
   merged.insert(vars.begin(), vars.end());
   cc_.Print(merged, text);
@@ -135,8 +137,6 @@ Status WrapperGenerator::GenerateHeader() {
 
   auto result = HeaderOpenNamespaces(NamespaceType::kNormal);
   if (!result.ok()) return result;
-
-
 
   for (int i = 0; i < file_->message_type_count(); ++i) {
     auto text = HeaderWrapMessage(*file_->message_type(i));
@@ -168,7 +168,6 @@ Status WrapperGenerator::GenerateCc() {
 
   auto result = CcOpenNamespaces(NamespaceType::kNormal);
   if (!result.ok()) return result;
-
 
   CcCloseNamespaces();
 
@@ -209,7 +208,8 @@ void WrapperGenerator::CcSystemIncludes(
 }
 
 Status WrapperGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
-  auto namespace_value = OpenNamespaces(header_, ns_type, "product_path", vars_);
+  auto namespace_value =
+      OpenNamespaces(header_, ns_type, "product_path", vars_);
   if (!namespace_value.ok()) return std::move(namespace_value).status();
   namespace_ = *namespace_value;
   return {};
@@ -226,8 +226,9 @@ Status WrapperGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   return {};
 }
 
-void WrapperGenerator::CcCloseNamespaces() { CloseNamespaces(cc_, false, namespace_); }
-
+void WrapperGenerator::CcCloseNamespaces() {
+  CloseNamespaces(cc_, false, namespace_);
+}
 
 StatusOr<WrapperGenerator> MakeWrapperGenerator(
     google::protobuf::FileDescriptor const* file,
@@ -244,7 +245,6 @@ StatusOr<WrapperGenerator> MakeWrapperGenerator(
   vars["product_internal_namespace"] =
       Namespace(vars["product_path"], NamespaceType::kInternal);
   vars["proto_file_name"] = file->name();
-
 
   vars["header_file_path"] =
       absl::StrCat(WrapperFilePath(*file, vars["product_path"]), ".h");

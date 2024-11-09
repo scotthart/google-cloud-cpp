@@ -240,17 +240,19 @@ class ServiceCodeGenerator : public GeneratorInterface {
  private:
   void SetMethods();
 
-//  static void GenerateLocalIncludes(Printer& p,
-//                                    std::vector<std::string> local_includes,
-//                                    FileType file_type = FileType::kHeaderFile);
-//  static void GenerateSystemIncludes(Printer& p,
-//                                     std::vector<std::string> system_includes);
+  //  static void GenerateLocalIncludes(Printer& p,
+  //                                    std::vector<std::string> local_includes,
+  //                                    FileType file_type =
+  //                                    FileType::kHeaderFile);
+  //  static void GenerateSystemIncludes(Printer& p,
+  //                                     std::vector<std::string>
+  //                                     system_includes);
 
-//  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
-//                        std::string const& product_path_var,
-//                        std::string const& ns_documentation = "");
-//  void CloseNamespaces(Printer& p,
-//                       bool define_backwards_compatibility_namespace_alias);
+  //  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
+  //                        std::string const& product_path_var,
+  //                        std::string const& ns_documentation = "");
+  //  void CloseNamespaces(Printer& p,
+  //                       bool define_backwards_compatibility_namespace_alias);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
   VarsDictionary service_vars_;

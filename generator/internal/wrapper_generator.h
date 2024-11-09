@@ -34,13 +34,9 @@ class WrapperGenerator {
                    google::protobuf::compiler::GeneratorContext* context,
                    VarsDictionary vars);
 
-
-
-
   Status Generate();
 
  private:
-
   void HeaderPrint(std::string const& text);
   void HeaderPrint(VarsDictionary const& vars, std::string const& text);
   void CcPrint(std::string const& text);
@@ -58,7 +54,6 @@ class WrapperGenerator {
 
   Status GenerateHeader();
   Status GenerateCc();
-
 
   google::protobuf::FileDescriptor const* file_;
   google::protobuf::compiler::GeneratorContext* context_;

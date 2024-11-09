@@ -81,16 +81,16 @@ enum class FileType { kHeaderFile, kCcFile };
 
 void GenerateLocalIncludes(Printer& p, std::vector<std::string> local_includes,
                            FileType file_type = FileType::kHeaderFile);
-void GenerateSystemIncludes(
-    Printer& p, std::vector<std::string> system_includes);
+void GenerateSystemIncludes(Printer& p,
+                            std::vector<std::string> system_includes);
 
-  StatusOr<std::string> OpenNamespaces(Printer& p, NamespaceType ns_type,
-                        std::string const& product_path_var,
-                        VarsDictionary const& vars,
-                        std::string const& ns_documentation = "");
-  void CloseNamespaces(Printer& p,
-                       bool define_backwards_compatibility_namespace_alias,
-                       std::string const& namespace_value);
+StatusOr<std::string> OpenNamespaces(Printer& p, NamespaceType ns_type,
+                                     std::string const& product_path_var,
+                                     VarsDictionary const& vars,
+                                     std::string const& ns_documentation = "");
+void CloseNamespaces(Printer& p,
+                     bool define_backwards_compatibility_namespace_alias,
+                     std::string const& namespace_value);
 
 /**
  * Validates command line arguments passed to the microgenerator.

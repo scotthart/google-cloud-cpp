@@ -312,7 +312,8 @@ void ServiceCodeGenerator::CcSystemIncludes(
 }
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
-  auto namespace_value = OpenNamespaces(header_, ns_type, "product_path", service_vars_);
+  auto namespace_value =
+      OpenNamespaces(header_, ns_type, "product_path", service_vars_);
   if (!namespace_value.ok()) return std::move(namespace_value).status();
   namespace_ = *namespace_value;
   return {};
@@ -320,34 +321,38 @@ Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
 
 Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
     NamespaceType ns_type, std::string const& ns_documentation) {
-  auto namespace_value = OpenNamespaces(header_, ns_type, "forwarding_product_path",
-                                        service_vars_,
-                        ns_documentation);
+  auto namespace_value =
+      OpenNamespaces(header_, ns_type, "forwarding_product_path", service_vars_,
+                     ns_documentation);
   if (!namespace_value.ok()) return std::move(namespace_value).status();
   namespace_ = *namespace_value;
   return {};
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
-  CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_, namespace_);
+  CloseNamespaces(header_, define_backwards_compatibility_namespace_alias_,
+                  namespace_);
 }
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
-  auto namespace_value = OpenNamespaces(cc_, ns_type, "product_path", service_vars_);
+  auto namespace_value =
+      OpenNamespaces(cc_, ns_type, "product_path", service_vars_);
   if (!namespace_value.ok()) return std::move(namespace_value).status();
   namespace_ = *namespace_value;
   return {};
 }
 
 Status ServiceCodeGenerator::CcOpenForwardingNamespaces(NamespaceType ns_type) {
-  auto namespace_value = OpenNamespaces(cc_, ns_type, "forwarding_product_path",
-                                        service_vars_);
+  auto namespace_value =
+      OpenNamespaces(cc_, ns_type, "forwarding_product_path", service_vars_);
   if (!namespace_value.ok()) return std::move(namespace_value).status();
   namespace_ = *namespace_value;
   return {};
 }
 
-void ServiceCodeGenerator::CcCloseNamespaces() { CloseNamespaces(cc_, false, namespace_); }
+void ServiceCodeGenerator::CcCloseNamespaces() {
+  CloseNamespaces(cc_, false, namespace_);
+}
 
 void ServiceCodeGenerator::HeaderPrint(std::string const& text) {
   header_.Print(service_vars_, text);
@@ -397,63 +402,65 @@ void ServiceCodeGenerator::CcPrintMethod(
   cc_.Print(line, file, MergeServiceAndMethodVars(method), text);
 }
 
-//void ServiceCodeGenerator::GenerateLocalIncludes(
-//    Printer& p, std::vector<std::string> local_includes, FileType file_type) {
-//  if (file_type == FileType::kCcFile) {
-//    std::sort(local_includes.begin() + 1, local_includes.end());
-//  } else {
-//    std::sort(local_includes.begin(), local_includes.end());
-//  }
-//  for (auto const& include : local_includes) {
-//    p.Print(LocalInclude(include));
-//  }
-//}
+// void ServiceCodeGenerator::GenerateLocalIncludes(
+//     Printer& p, std::vector<std::string> local_includes, FileType file_type)
+//     {
+//   if (file_type == FileType::kCcFile) {
+//     std::sort(local_includes.begin() + 1, local_includes.end());
+//   } else {
+//     std::sort(local_includes.begin(), local_includes.end());
+//   }
+//   for (auto const& include : local_includes) {
+//     p.Print(LocalInclude(include));
+//   }
+// }
 
-//void ServiceCodeGenerator::GenerateSystemIncludes(
-//    Printer& p, std::vector<std::string> system_includes) {
-//  std::sort(system_includes.begin(), system_includes.end());
-//  for (auto const& include : system_includes) {
-//    p.Print(SystemInclude(include));
-//  }
-//}
+// void ServiceCodeGenerator::GenerateSystemIncludes(
+//     Printer& p, std::vector<std::string> system_includes) {
+//   std::sort(system_includes.begin(), system_includes.end());
+//   for (auto const& include : system_includes) {
+//     p.Print(SystemInclude(include));
+//   }
+// }
 
-//Status ServiceCodeGenerator::OpenNamespaces(
-//    Printer& p, NamespaceType ns_type, std::string const& product_path_var,
-//    std::string const& ns_documentation) {
-//  auto result = service_vars_.find(product_path_var);
-//  if (result == service_vars_.end()) {
-//    return internal::InternalError(product_path_var + " not found in vars",
-//                                   GCP_ERROR_INFO());
-//  }
-//  namespace_ = Namespace(service_vars_[product_path_var], ns_type);
-//  p.Print(R"""(
-//namespace google {
-//namespace cloud {)""");
-//  p.Print(service_vars_, ns_documentation);
-//  p.Print(R"""(
-//namespace $namespace$ {
-//GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+// Status ServiceCodeGenerator::OpenNamespaces(
+//     Printer& p, NamespaceType ns_type, std::string const& product_path_var,
+//     std::string const& ns_documentation) {
+//   auto result = service_vars_.find(product_path_var);
+//   if (result == service_vars_.end()) {
+//     return internal::InternalError(product_path_var + " not found in vars",
+//                                    GCP_ERROR_INFO());
+//   }
+//   namespace_ = Namespace(service_vars_[product_path_var], ns_type);
+//   p.Print(R"""(
+// namespace google {
+// namespace cloud {)""");
+//   p.Print(service_vars_, ns_documentation);
+//   p.Print(R"""(
+// namespace $namespace$ {
+// GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 //)""",
-//          "namespace", namespace_);
-//  return {};
-//}
+//           "namespace", namespace_);
+//   return {};
+// }
 
-//void ServiceCodeGenerator::CloseNamespaces(
-//    Printer& p, bool define_backwards_compatibility_namespace_alias) {
-//  p.Print(R"""(
-//GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
-//  // TODO(#7463) - remove backwards compatibility namespaces
-//  if (define_backwards_compatibility_namespace_alias) {
-//    p.Print(R"""(
-//namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls))""");
-//  }
-//  p.Print(R"""(
-//}  // namespace $namespace$
-//}  // namespace cloud
-//}  // namespace google
+// void ServiceCodeGenerator::CloseNamespaces(
+//     Printer& p, bool define_backwards_compatibility_namespace_alias) {
+//   p.Print(R"""(
+// GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END)""");
+//   // TODO(#7463) - remove backwards compatibility namespaces
+//   if (define_backwards_compatibility_namespace_alias) {
+//     p.Print(R"""(
+// namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; //
+// NOLINT(misc-unused-alias-decls))""");
+//   }
+//   p.Print(R"""(
+// }  // namespace $namespace$
+// }  // namespace cloud
+// }  // namespace google
 //)""",
-//          "namespace", namespace_);
-//}
+//           "namespace", namespace_);
+// }
 
 Status ServiceCodeGenerator::Generate() {
   auto result = GenerateHeader();
