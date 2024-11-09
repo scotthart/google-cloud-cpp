@@ -15,14 +15,14 @@
 #include "generator/wrapper_plugin.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
-#include "generator/internal/generator_interface.h"
-#include "generator/internal/make_generators.h"
+#include "generator/internal/wrapper_generator.h"
+// #include "generator/internal/generator_interface.h"
+// #include "generator/internal/make_generators.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/status_or.h"
 #include "absl/strings/str_split.h"
-#include "absl/strings/str_join.h"
 #include <google/api/client.pb.h>
 #include <future>
 #include <string>
@@ -32,49 +32,10 @@ namespace google {
 namespace cloud {
 namespace generator {
 
-
-void HeaderWrapField(google::protobuf::FieldDescriptor const& field) {
-
-}
-
-StatusOr<std::pair<generator_internal::VarsDictionary, std::string>> HeaderWrapMessage(
-    google::protobuf::Descriptor const& message) {
-  std::vector<std::string> text;
-  generator_internal::VarsDictionary vars;
-  vars["class_name"] = generator_internal::ProtoNameToCppName(message.name());
-  vars["message_full_name"] = generator_internal::ProtoNameToCppName(message.full_name());
-
-  text.push_back(R"""(
-class $class_name$ {
- public:
-  $class_name$() = default;
-  // converting constructors
-  $class_name$($message_full_name$ const& message);
-  $class_name$($message_full_name$ && message);
-  // conversion operators
-  operator $message_full_name$() const&;
-  operator $message_full_name$() &&;)""");
-
-  for (int i = 0; i < message.field_count(); ++i) {
-    auto const* field = message.field(i);
-    HeaderWrapField(*field);
-
-  }
-
-  text.push_back(R"""(
- private:
-  $message_full_name$ message_;
-};)""");
-
-  return {{vars, absl::StrJoin(text, "\n")}};
-
-}
-
-bool WrapperPlugin::Generate(google::protobuf::FileDescriptor const* file,
-                         std::string const& parameters,
-                         google::protobuf::compiler::GeneratorContext* context,
-                         std::string* error) const {
-
+bool WrapperPlugin::Generate(
+    google::protobuf::FileDescriptor const* file, std::string const& parameters,
+    google::protobuf::compiler::GeneratorContext* context,
+    std::string* error) const {
   StatusOr<std::vector<std::pair<std::string, std::string>>> command_line_args =
       generator_internal::ProcessWrapperCommandLineArgs(parameters);
   if (!command_line_args.ok()) {
@@ -82,15 +43,14 @@ bool WrapperPlugin::Generate(google::protobuf::FileDescriptor const* file,
     return false;
   }
 
-  generator_internal::Printer p(context, file->name() + ".wrapper.h");
-  for (int i = 0; i < file->message_type_count(); ++i) {
-    auto text = HeaderWrapMessage(*file->message_type(i));
-//    auto message = file->message_type(i);
-//    p.Print(message->full_name());
-    p.Print(text->first, text->second);
-    p.Print("\n");
-
+  auto wg = generator_internal::MakeWrapperGenerator(file, context,
+                                                     *command_line_args);
+  if (!wg) {
+    *error = wg.status().message();
+    return false;
   }
+
+  wg->Generate();
 
   return true;
 

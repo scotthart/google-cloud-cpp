@@ -34,8 +34,6 @@ add_library(
     google_cloud_cpp_generator # cmake-format: sort
     generator.cc
     generator.h
-    wrapper_plugin.cc
-    wrapper_plugin.h
     internal/auth_decorator_generator.cc
     internal/auth_decorator_generator.h
     internal/client_generator.cc
@@ -145,7 +143,11 @@ add_library(
     internal/tracing_connection_generator.cc
     internal/tracing_connection_generator.h
     internal/tracing_stub_generator.cc
-    internal/tracing_stub_generator.h)
+    internal/tracing_stub_generator.h
+    internal/wrapper_generator.cc
+    internal/wrapper_generator.h
+    wrapper_plugin.cc
+    wrapper_plugin.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(

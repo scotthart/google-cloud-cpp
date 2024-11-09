@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_WRAPPER_GENERATOR_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_WRAPPER_GENERATOR_H
 
 #include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
@@ -28,6 +28,52 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
+class WrapperGenerator {
+ public:
+  WrapperGenerator(google::protobuf::FileDescriptor const* file,
+                   google::protobuf::compiler::GeneratorContext* context,
+                   VarsDictionary vars);
+
+
+
+
+  Status Generate();
+
+ private:
+
+  void HeaderPrint(std::string const& text);
+  void HeaderPrint(VarsDictionary const& vars, std::string const& text);
+  void CcPrint(std::string const& text);
+  void CcPrint(VarsDictionary const& vars, std::string const& text);
+
+  void HeaderLocalIncludes(std::vector<std::string> const& local_includes);
+  void CcLocalIncludes(std::vector<std::string> const& local_includes);
+  void HeaderSystemIncludes(std::vector<std::string> const& system_includes);
+  void CcSystemIncludes(std::vector<std::string> const& system_includes);
+
+  Status HeaderOpenNamespaces(NamespaceType ns_type);
+  void HeaderCloseNamespaces();
+  Status CcOpenNamespaces(NamespaceType ns_type);
+  void CcCloseNamespaces();
+
+  Status GenerateHeader();
+  Status GenerateCc();
+
+
+  google::protobuf::FileDescriptor const* file_;
+  google::protobuf::compiler::GeneratorContext* context_;
+  Printer header_;
+  Printer cc_;
+  VarsDictionary vars_;
+  std::string namespace_;
+};
+
+StatusOr<WrapperGenerator> MakeWrapperGenerator(
+    google::protobuf::FileDescriptor const* file,
+    google::protobuf::compiler::GeneratorContext* context,
+    std::vector<std::pair<std::string, std::string>> const& command_line_args);
+
+#if 0
 class ServiceCodeGenerator : public GeneratorInterface {
  public:
   ServiceCodeGenerator(
@@ -240,17 +286,18 @@ class ServiceCodeGenerator : public GeneratorInterface {
  private:
   void SetMethods();
 
-//  static void GenerateLocalIncludes(Printer& p,
-//                                    std::vector<std::string> local_includes,
-//                                    FileType file_type = FileType::kHeaderFile);
-//  static void GenerateSystemIncludes(Printer& p,
-//                                     std::vector<std::string> system_includes);
+  enum class FileType { kHeaderFile, kCcFile };
+  static void GenerateLocalIncludes(Printer& p,
+                                    std::vector<std::string> local_includes,
+                                    FileType file_type = FileType::kHeaderFile);
+  static void GenerateSystemIncludes(Printer& p,
+                                     std::vector<std::string> system_includes);
 
-//  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
-//                        std::string const& product_path_var,
-//                        std::string const& ns_documentation = "");
-//  void CloseNamespaces(Printer& p,
-//                       bool define_backwards_compatibility_namespace_alias);
+  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
+                        std::string const& product_path_var,
+                        std::string const& ns_documentation = "");
+  void CloseNamespaces(Printer& p,
+                       bool define_backwards_compatibility_namespace_alias);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;
   VarsDictionary service_vars_;
@@ -263,9 +310,10 @@ class ServiceCodeGenerator : public GeneratorInterface {
   Printer cc_;
   std::vector<MixinMethod> mixin_methods_;
 };
+#endif
 
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_WRAPPER_GENERATOR_H

@@ -18,7 +18,6 @@
 
 google_cloud_cpp_generator_hdrs = [
     "generator.h",
-    "wrapper_plugin.h",
     "internal/auth_decorator_generator.h",
     "internal/client_generator.h",
     "internal/codegen_utils.h",
@@ -76,11 +75,12 @@ google_cloud_cpp_generator_hdrs = [
     "internal/stub_rest_generator.h",
     "internal/tracing_connection_generator.h",
     "internal/tracing_stub_generator.h",
+    "internal/wrapper_generator.h",
+    "wrapper_plugin.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
     "generator.cc",
-    "wrapper_plugin.cc",
     "internal/auth_decorator_generator.cc",
     "internal/client_generator.cc",
     "internal/codegen_utils.cc",
@@ -134,4 +134,6 @@ google_cloud_cpp_generator_srcs = [
     "internal/stub_rest_generator.cc",
     "internal/tracing_connection_generator.cc",
     "internal/tracing_stub_generator.cc",
+    "internal/wrapper_generator.cc",
+    "wrapper_plugin.cc",
 ]
