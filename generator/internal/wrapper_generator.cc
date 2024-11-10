@@ -217,9 +217,7 @@ std::string FieldCppType(google::protobuf::FieldDescriptor const& field) {
   return return_type;
 }
 
-StatusOr<std::string> FormatMutators(
-    google::protobuf::FieldDescriptor const& field,
-    absl::string_view field_cpp_name, absl::string_view field_cpp_type) {
+bool IsPod(google::protobuf::FieldDescriptor const& field) {
   static auto* const kSupportedWellKnownValueTypes = [] {
     auto types_set = std::make_unique<std::unordered_set<std::string>>();
     types_set->insert("google.protobuf.BoolValue");
@@ -233,7 +231,6 @@ StatusOr<std::string> FormatMutators(
     return types_set.release();
   }();
 
-  std::vector<std::string> mutator_text;
   bool is_pod =
       field.cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_MESSAGE &&
       field.cpp_type() != google::protobuf::FieldDescriptor::CPPTYPE_STRING;
@@ -247,19 +244,85 @@ StatusOr<std::string> FormatMutators(
     is_pod = true;
   }
 
-  if (field.is_repeated()) {
+  return is_pod;
+}
+
+StatusOr<std::string> FormatAccessors(
+    google::protobuf::FieldDescriptor const& field,
+    absl::string_view field_cpp_name) {
+  std::vector<std::string> accessor_text;
+  auto field_cpp_type = FieldCppType(field);
+  bool const is_pod = IsPod(field);
+
+  if (field.is_map()) {
+  } else if (field.is_repeated()) {
+    accessor_text.push_back(
+        absl::StrFormat("  %s const& %s(std::size_t index) const;",
+                        field_cpp_type, field_cpp_name));
+    std::string repeated_cpp_type;
+    if (is_pod) {
+      accessor_text.push_back(
+          "  // TODO: create wrapper class for RepeatedField");
+      repeated_cpp_type =
+          absl::StrCat("google::protobuf::RepeatedField<", field_cpp_type, ">");
+    } else {
+      accessor_text.push_back(
+          "  // TODO: create wrapper class for RepeatedPtrField");
+      repeated_cpp_type = absl::StrCat("google::protobuf::RepeatedPtrField<",
+                                       field_cpp_type, ">");
+    }
+    accessor_text.push_back(absl::StrFormat("  %s const& %s() const;",
+                                            repeated_cpp_type, field_cpp_name));
+  } else {
+    accessor_text.push_back(
+        absl::StrFormat("  %s %s() const;", field_cpp_type, field_cpp_name));
+  }
+
+  return absl::StrJoin(accessor_text, "\n");
+}
+
+StatusOr<std::string> FormatMutators(
+    google::protobuf::FieldDescriptor const& field,
+    absl::string_view field_cpp_name) {
+  std::vector<std::string> mutator_text;
+  auto field_cpp_type = FieldCppType(field);
+  bool const is_pod = IsPod(field);
+
+  if (field.is_map()) {
+  } else if (field.is_repeated()) {
+    mutator_text.push_back(
+        absl::StrFormat("  %s& Append%s();", field_cpp_type,
+                        CapitalizeFirstLetter(field.camelcase_name())));
+    mutator_text.push_back(
+        absl::StrFormat("  $class_name$& Append%s(%s const& %s);",
+                        CapitalizeFirstLetter(field.camelcase_name()),
+                        field_cpp_type, field_cpp_name));
+    mutator_text.push_back(
+        absl::StrFormat("  $class_name$& Append%s(%s && %s);",
+                        CapitalizeFirstLetter(field.camelcase_name()),
+                        field_cpp_type, field_cpp_name));
+    std::string repeated_cpp_type;
+    if (is_pod) {
+      repeated_cpp_type =
+          absl::StrCat("google::protobuf::RepeatedField<", field_cpp_type, ">");
+    } else {
+      repeated_cpp_type = absl::StrCat("google::protobuf::RepeatedPtrField<",
+                                       field_cpp_type, ">");
+    }
+    mutator_text.push_back(absl::StrFormat("  %s& mutable_%s();",
+                                           repeated_cpp_type, field_cpp_name));
   } else {
     if (is_pod) {
-      mutator_text.push_back(
-          absl::StrFormat("  $message_full_name$& set_%s(%s %s);",
-                          field_cpp_name, field_cpp_type, field_cpp_name));
+      mutator_text.push_back(absl::StrFormat("  $class_name$& set_%s(%s %s);",
+                                             field_cpp_name, field_cpp_type,
+                                             field_cpp_name));
     } else {
       mutator_text.push_back(
-          absl::StrFormat("  $message_full_name$& set_%s(%s const& %s);",
+          absl::StrFormat("  $class_name$& set_%s(%s const& %s);",
                           field_cpp_name, field_cpp_type, field_cpp_name));
       mutator_text.push_back(
-          absl::StrFormat("  $message_full_name$& set_%s(%s && %s);",
-                          field_cpp_name, field_cpp_type, field_cpp_name));
+          absl::StrFormat("  $class_name$& set_%s(%s && %s);", field_cpp_name,
+                          field_cpp_type, field_cpp_name));
     }
   }
 
@@ -270,16 +333,16 @@ StatusOr<std::string> HeaderWrapField(
     google::protobuf::FieldDescriptor const& field) {
   std::vector<std::string> message_text;
   auto field_cpp_name = ProtoNameToCppName(field.name());
-  auto field_cpp_type = FieldCppType(field);
   message_text.push_back(absl::StrCat("\n  // ", field_cpp_name));
-  message_text.push_back(
-      absl::StrFormat("  %s %s() const;", field_cpp_type, field_cpp_name));
+  auto accessors = FormatAccessors(field, field_cpp_name);
+  if (!accessors) return std::move(accessors).status();
+  message_text.push_back(*accessors);
 
   auto field_behavior =
       field.options().GetRepeatedExtension(google::api::field_behavior);
   if (!internal::Contains(field_behavior,
                           google::api::FieldBehavior::OUTPUT_ONLY)) {
-    auto mutators = FormatMutators(field, field_cpp_name, field_cpp_type);
+    auto mutators = FormatMutators(field, field_cpp_name);
     if (!mutators) return std::move(mutators).status();
     message_text.push_back(*mutators);
   }

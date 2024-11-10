@@ -240,6 +240,13 @@ std::string CamelCaseToSnakeCase(absl::string_view input) {
   return output;
 }
 
+std::string CapitalizeFirstLetter(absl::string_view str) {
+  std::string output(str);
+  output[0] = static_cast<unsigned char>(
+      std::toupper(static_cast<unsigned char>(output[0])));
+  return output;
+}
+
 std::string ServiceNameToFilePath(absl::string_view service_name) {
   std::vector<absl::string_view> components = absl::StrSplit(service_name, '.');
   absl::ConsumeSuffix(&components.back(), "Service");

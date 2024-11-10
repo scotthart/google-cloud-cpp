@@ -63,6 +63,8 @@ std::string ServiceNameToFilePath(absl::string_view service_name);
  */
 std::string ProtoNameToCppName(absl::string_view proto_name);
 
+std::string CapitalizeFirstLetter(absl::string_view str);
+
 enum class NamespaceType { kNormal, kInternal, kMocks };
 
 /**
