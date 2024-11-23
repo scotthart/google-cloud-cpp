@@ -28,4 +28,5 @@
 #include "google/cloud/bigquerycontrol/v2/job_connection.cc"
 #include "google/cloud/bigquerycontrol/v2/job_connection_idempotency_policy.cc"
 #include "google/cloud/bigquerycontrol/v2/job_rest_connection.cc"
+#include "google/cloud/bigquerycontrol/v2/job.cc"
 // NOLINTEND(bugprone-suspicious-include)
