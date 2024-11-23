@@ -150,6 +150,21 @@ void WrapperGenerator::CcCloseNamespaces() {
   CloseNamespaces(cc_, false, namespace_);
 }
 
+bool WrapperGenerator::HasRepeatedField() const {
+  if (has_repeated_field_.has_value()) return *has_repeated_field_;
+  has_repeated_field_ = false;
+  for (int i = 0; i < file_->message_type_count(); ++i) {
+    auto message = file_->message_type(i);
+    for (int j = 0; j < message->field_count(); ++j) {
+      if (message->field(j)->is_repeated() && !message->field(j)->is_map()) {
+        has_repeated_field_ = true;
+        return *has_repeated_field_;
+      }
+    }
+  }
+  return *has_repeated_field_;
+}
+
 StatusOr<std::map<std::string, VarsDictionary>> CreateMessageVars(
     google::protobuf::FileDescriptor const& file,
     VarsDictionary const& file_vars) {
@@ -261,17 +276,13 @@ StatusOr<std::string> FormatAccessors(
                         field_cpp_type, field_cpp_name));
     std::string repeated_cpp_type;
     if (is_pod) {
-      accessor_text.push_back(
-          "  // TODO: create wrapper class for RepeatedField");
       repeated_cpp_type =
-          absl::StrCat("google::protobuf::RepeatedField<", field_cpp_type, ">");
+          absl::StrCat("google::cloud::RepeatedField<", field_cpp_type, ">");
     } else {
-      accessor_text.push_back(
-          "  // TODO: create wrapper class for RepeatedPtrField");
-      repeated_cpp_type = absl::StrCat("google::protobuf::RepeatedPtrField<",
-                                       field_cpp_type, ">");
+      repeated_cpp_type =
+          absl::StrCat("google::cloud::RepeatedPtrField<", field_cpp_type, ">");
     }
-    accessor_text.push_back(absl::StrFormat("  %s const& %s() const;",
+    accessor_text.push_back(absl::StrFormat("  %s const& %s() const ABSL_ATTRIBUTE_LIFETIME_BOUND;",
                                             repeated_cpp_type, field_cpp_name));
   } else {
     accessor_text.push_back(
@@ -395,7 +406,9 @@ Status WrapperGenerator::GenerateHeader() {
 
 )""");
 
-  HeaderLocalIncludes({"google/cloud/version.h"});
+  HeaderLocalIncludes(
+      {"google/cloud/version.h",
+       HasRepeatedField() ? "google/cloud/repeated_field.h" : ""});
   HeaderSystemIncludes({file_vars_["proto_header_path"]});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kNormal);

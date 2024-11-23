@@ -53,6 +53,8 @@ class WrapperGenerator {
   Status CcOpenNamespaces(NamespaceType ns_type);
   void CcCloseNamespaces();
 
+  bool HasRepeatedField() const;
+
   Status GenerateHeader();
   Status GenerateCc();
 
@@ -63,6 +65,7 @@ class WrapperGenerator {
   VarsDictionary file_vars_;
   std::map<std::string, VarsDictionary> message_vars_;
   std::string namespace_;
+  mutable absl::optional<bool> has_repeated_field_;
 };
 
 StatusOr<WrapperGenerator> MakeWrapperGenerator(

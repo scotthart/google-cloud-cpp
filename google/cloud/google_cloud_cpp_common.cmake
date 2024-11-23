@@ -165,6 +165,7 @@ add_library(
     polling_policy.h
     project.cc
     project.h
+    repeated_field.h
     retry_policy.h
     rpc_metadata.h
     status.cc

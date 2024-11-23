@@ -105,6 +105,7 @@ google_cloud_cpp_common_hdrs = [
     "options.h",
     "polling_policy.h",
     "project.h",
+    "repeated_field.h",
     "retry_policy.h",
     "rpc_metadata.h",
     "status.h",

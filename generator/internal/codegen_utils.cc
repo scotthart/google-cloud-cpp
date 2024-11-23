@@ -398,11 +398,11 @@ std::string CopyrightLicenseFileHeader() {
   return kHeader;
 }
 
-std::string CapitalizeFirstLetter(std::string str) {
-  str[0] = static_cast<unsigned char>(
-      std::toupper(static_cast<unsigned char>(str[0])));
-  return str;
-}
+// std::string CapitalizeFirstLetter(std::string str) {
+//   str[0] = static_cast<unsigned char>(
+//       std::toupper(static_cast<unsigned char>(str[0])));
+//   return str;
+// }
 
 std::string FormatCommentBlock(std::string const& comment,
                                std::size_t indent_level,

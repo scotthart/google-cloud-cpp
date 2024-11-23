@@ -131,7 +131,7 @@ std::string CopyrightLicenseFileHeader();
 std::string CurrentCopyrightYear();
 
 // Returns a copy of the input string with the first letter capitalized.
-std::string CapitalizeFirstLetter(std::string str);
+// std::string CapitalizeFirstLetter(std::string str);
 
 // Creates a formatted comment block from the provided string.
 std::string FormatCommentBlock(std::string const& comment,
