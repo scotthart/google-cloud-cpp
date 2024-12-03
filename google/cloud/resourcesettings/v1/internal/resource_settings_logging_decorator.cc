@@ -32,20 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ResourceSettingsServiceLogging::ResourceSettingsServiceLogging(
     std::shared_ptr<ResourceSettingsServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceLogging::ListSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcesettings::v1::ListSettingsRequest const&
+                 request) {
         return child_->ListSettings(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,13 +50,12 @@ ResourceSettingsServiceLogging::ListSettings(
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceLogging::GetSetting(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcesettings::v1::GetSettingRequest const&
+                 request) {
         return child_->GetSetting(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -67,13 +63,12 @@ ResourceSettingsServiceLogging::GetSetting(
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceLogging::UpdateSetting(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::resourcesettings::v1::UpdateSettingRequest const&
+                 request) {
         return child_->UpdateSetting(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

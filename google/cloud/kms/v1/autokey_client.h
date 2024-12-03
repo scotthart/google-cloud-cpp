@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_KMS_V1_AUTOKEY_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/kms/v1/autokey_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -40,20 +40,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Provides interfaces for using [Cloud KMS
 /// Autokey](https://cloud.google.com/kms/help/autokey) to provision new
 /// [CryptoKeys][google.cloud.kms.v1.CryptoKey], ready for Customer Managed
-/// Encryption Key (CMEK) use, on-demand. To support certain client tooling, this
-/// feature is modeled around a [KeyHandle][google.cloud.kms.v1.KeyHandle]
-/// resource: creating a [KeyHandle][google.cloud.kms.v1.KeyHandle] in a resource
-/// project and given location triggers Cloud KMS Autokey to provision a
-/// [CryptoKey][google.cloud.kms.v1.CryptoKey] in the configured key project and
-/// the same location.
+/// Encryption Key (CMEK) use, on-demand. To support certain client tooling,
+/// this feature is modeled around a [KeyHandle][google.cloud.kms.v1.KeyHandle]
+/// resource: creating a [KeyHandle][google.cloud.kms.v1.KeyHandle] in a
+/// resource project and given location triggers Cloud KMS Autokey to provision
+/// a [CryptoKey][google.cloud.kms.v1.CryptoKey] in the configured key project
+/// and the same location.
 ///
 /// Prior to use in a given resource project,
 /// [UpdateAutokeyConfig][google.cloud.kms.v1.AutokeyAdmin.UpdateAutokeyConfig]
 /// should have been called on an ancestor folder, setting the key project where
 /// Cloud KMS Autokey should create new
-/// [CryptoKeys][google.cloud.kms.v1.CryptoKey]. See documentation for additional
-/// prerequisites. To check what key project, if any, is currently configured on
-/// a resource project's ancestor folder, see
+/// [CryptoKeys][google.cloud.kms.v1.CryptoKey]. See documentation for
+/// additional prerequisites. To check what key project, if any, is currently
+/// configured on a resource project's ancestor folder, see
 /// [ShowEffectiveAutokeyConfig][google.cloud.kms.v1.AutokeyAdmin.ShowEffectiveAutokeyConfig].
 ///
 /// @par Equality
@@ -79,11 +79,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
+/// [google.cloud.kms.v1.KeyHandle]:
+/// @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
 ///
 class AutokeyClient {
  public:
-  explicit AutokeyClient(std::shared_ptr<AutokeyConnection> connection, Options opts = {});
+  explicit AutokeyClient(std::shared_ptr<AutokeyConnection> connection,
+                         Options opts = {});
   ~AutokeyClient();
 
   ///@{
@@ -145,8 +147,10 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-  CreateKeyHandle(std::string const& parent, google::cloud::kms::v1::KeyHandle const& key_handle, std::string const& key_handle_id, Options opts = {});
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
+      std::string const& parent,
+      google::cloud::kms::v1::KeyHandle const& key_handle,
+      std::string const& key_handle_id, Options opts = {});
 
   // clang-format off
   ///
@@ -159,8 +163,10 @@ class AutokeyClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateKeyHandle(NoAwaitTag, std::string const& parent, google::cloud::kms::v1::KeyHandle const& key_handle, std::string const& key_handle_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::kms::v1::KeyHandle const& key_handle,
+      std::string const& key_handle_id, Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +208,9 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-  CreateKeyHandle(google::cloud::kms::v1::CreateKeyHandleRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
+      google::cloud::kms::v1::CreateKeyHandleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -216,8 +223,9 @@ class AutokeyClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateKeyHandle(NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateKeyHandle(
+      NoAwaitTag, google::cloud::kms::v1::CreateKeyHandleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -228,8 +236,8 @@ class AutokeyClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::kms::v1::KeyHandle>>
-  CreateKeyHandle(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::kms::v1::KeyHandle>> CreateKeyHandle(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -255,8 +263,8 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyHandle>
-  GetKeyHandle(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -285,8 +293,9 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.KeyHandle]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L128}
   ///
   // clang-format on
-  StatusOr<google::cloud::kms::v1::KeyHandle>
-  GetKeyHandle(google::cloud::kms::v1::GetKeyHandleRequest const& request, Options opts = {});
+  StatusOr<google::cloud::kms::v1::KeyHandle> GetKeyHandle(
+      google::cloud::kms::v1::GetKeyHandleRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +330,8 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L173}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::KeyHandle>
-  ListKeyHandles(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -360,8 +369,8 @@ class AutokeyClient {
   /// [google.cloud.kms.v1.ListKeyHandlesRequest]: @googleapis_reference_link{google/cloud/kms/v1/autokey.proto#L173}
   ///
   // clang-format on
-  StreamRange<google::cloud::kms::v1::KeyHandle>
-  ListKeyHandles(google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts = {});
+  StreamRange<google::cloud::kms::v1::KeyHandle> ListKeyHandles(
+      google::cloud::kms::v1::ListKeyHandlesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -399,8 +408,8 @@ class AutokeyClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -429,8 +438,9 @@ class AutokeyClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -462,8 +472,8 @@ class AutokeyClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -494,8 +504,8 @@ class AutokeyClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -530,8 +540,9 @@ class AutokeyClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -557,8 +568,8 @@ class AutokeyClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -589,8 +600,9 @@ class AutokeyClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<AutokeyConnection> connection_;

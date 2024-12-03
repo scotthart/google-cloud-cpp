@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEBACKUP_V1_BACKUP_FOR_GKE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEBACKUP_V1_BACKUP_FOR_GKE_CLIENT_H
 
-#include "google/cloud/future.h"
 #include "google/cloud/gkebackup/v1/backup_for_gke_connection.h"
+#include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,7 +65,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BackupForGKEClient {
  public:
-  explicit BackupForGKEClient(std::shared_ptr<BackupForGKEConnection> connection, Options opts = {});
+  explicit BackupForGKEClient(
+      std::shared_ptr<BackupForGKEConnection> connection, Options opts = {});
   ~BackupForGKEClient();
 
   ///@{
@@ -78,10 +79,12 @@ class BackupForGKEClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(BackupForGKEClient const& a, BackupForGKEClient const& b) {
+  friend bool operator==(BackupForGKEClient const& a,
+                         BackupForGKEClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BackupForGKEClient const& a, BackupForGKEClient const& b) {
+  friend bool operator!=(BackupForGKEClient const& a,
+                         BackupForGKEClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,8 +128,10 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  CreateBackupPlan(std::string const& parent, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
+      std::string const& backup_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -139,8 +144,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBackupPlan(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, std::string const& backup_plan_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
+      std::string const& backup_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +183,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.CreateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L359}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  CreateBackupPlan(google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -190,8 +198,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBackupPlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +212,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  CreateBackupPlan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> CreateBackupPlan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -237,8 +247,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::BackupPlan>
-  ListBackupPlans(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -276,8 +286,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.ListBackupPlansRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L384}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::BackupPlan>
-  ListBackupPlans(google::cloud::gkebackup::v1::ListBackupPlansRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::BackupPlan> ListBackupPlans(
+      google::cloud::gkebackup::v1::ListBackupPlansRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -302,8 +313,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::BackupPlan>
-  GetBackupPlan(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -332,8 +343,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.GetBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L434}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::BackupPlan>
-  GetBackupPlan(google::cloud::gkebackup::v1::GetBackupPlanRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
+      google::cloud::gkebackup::v1::GetBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -374,8 +386,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  UpdateBackupPlan(google::cloud::gkebackup::v1::BackupPlan const& backup_plan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
+      google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -388,8 +401,9 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::BackupPlan const& backup_plan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      NoAwaitTag, google::cloud::gkebackup::v1::BackupPlan const& backup_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -425,8 +439,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateBackupPlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L446}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  UpdateBackupPlan(google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -439,8 +454,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateBackupPlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -451,8 +468,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>>
-  UpdateBackupPlan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::BackupPlan>> UpdateBackupPlan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -498,8 +515,8 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackupPlan(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -536,7 +553,9 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteBackupPlan(google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request, Options opts = {});
+  DeleteBackupPlan(
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -549,8 +568,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackupPlan(NoAwaitTag, google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackupPlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -562,7 +583,8 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteBackupPlan(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteBackupPlan(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +625,10 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  CreateBackup(std::string const& parent, google::cloud::gkebackup::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
 
   // clang-format off
   ///
@@ -617,8 +641,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBackup(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::Backup const& backup, std::string const& backup_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::Backup const& backup,
+      std::string const& backup_id, Options opts = {});
 
   // clang-format off
   ///
@@ -654,8 +680,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.CreateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L482}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  CreateBackup(google::cloud::gkebackup::v1::CreateBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -668,8 +695,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateBackup(NoAwaitTag, google::cloud::gkebackup::v1::CreateBackupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +709,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  CreateBackup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> CreateBackup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -715,8 +744,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::Backup>
-  ListBackups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -754,8 +783,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.ListBackupsRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L507}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::Backup>
-  ListBackups(google::cloud::gkebackup::v1::ListBackupsRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::Backup> ListBackups(
+      google::cloud::gkebackup::v1::ListBackupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -780,8 +810,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::Backup>
-  GetBackup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -810,8 +840,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.GetBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L553}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::Backup>
-  GetBackup(google::cloud::gkebackup::v1::GetBackupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
+      google::cloud::gkebackup::v1::GetBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -851,8 +882,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  UpdateBackup(google::cloud::gkebackup::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
+      google::cloud::gkebackup::v1::Backup const& backup,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -865,8 +897,9 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateBackup(NoAwaitTag, google::cloud::gkebackup::v1::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      NoAwaitTag, google::cloud::gkebackup::v1::Backup const& backup,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -902,8 +935,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateBackupRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L565}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  UpdateBackup(google::cloud::gkebackup::v1::UpdateBackupRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -916,8 +950,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateBackup(NoAwaitTag, google::cloud::gkebackup::v1::UpdateBackupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateBackup(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -928,8 +964,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Backup>>
-  UpdateBackup(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Backup>> UpdateBackup(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -975,8 +1011,9 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackup(NoAwaitTag,
+                                                        std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1013,7 +1050,8 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request, Options opts = {});
+  DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1026,8 +1064,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteBackup(NoAwaitTag, google::cloud::gkebackup::v1::DeleteBackupRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteBackup(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1039,7 +1079,8 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteBackup(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteBackup(google::longrunning::Operation const& operation,
+               Options opts = {});
 
   // clang-format off
   ///
@@ -1073,8 +1114,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
-  ListVolumeBackups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::VolumeBackup> ListVolumeBackups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1112,8 +1153,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::VolumeBackup>
-  ListVolumeBackups(google::cloud::gkebackup::v1::ListVolumeBackupsRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::VolumeBackup> ListVolumeBackups(
+      google::cloud::gkebackup::v1::ListVolumeBackupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1138,8 +1180,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
-  GetVolumeBackup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1168,8 +1210,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeBackup]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::VolumeBackup>
-  GetVolumeBackup(google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
+      google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1210,8 +1253,10 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  CreateRestorePlan(std::string const& parent, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, std::string const& restore_plan_id, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
+      std::string const& restore_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1269,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRestorePlan(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, std::string const& restore_plan_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRestorePlan(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
+      std::string const& restore_plan_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1261,8 +1308,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  CreateRestorePlan(google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1275,8 +1323,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRestorePlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1287,8 +1337,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  CreateRestorePlan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> CreateRestorePlan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1322,8 +1372,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::RestorePlan>
-  ListRestorePlans(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::RestorePlan> ListRestorePlans(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1361,8 +1411,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::RestorePlan>
-  ListRestorePlans(google::cloud::gkebackup::v1::ListRestorePlansRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::RestorePlan> ListRestorePlans(
+      google::cloud::gkebackup::v1::ListRestorePlansRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1387,8 +1438,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::RestorePlan>
-  GetRestorePlan(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1417,8 +1468,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.RestorePlan]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore_plan.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::RestorePlan>
-  GetRestorePlan(google::cloud::gkebackup::v1::GetRestorePlanRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
+      google::cloud::gkebackup::v1::GetRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1458,8 +1510,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  UpdateRestorePlan(google::cloud::gkebackup::v1::RestorePlan const& restore_plan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
+      google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1472,8 +1525,9 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::RestorePlan const& restore_plan, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRestorePlan(
+      NoAwaitTag, google::cloud::gkebackup::v1::RestorePlan const& restore_plan,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1509,8 +1563,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateRestorePlanRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L751}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  UpdateRestorePlan(google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1523,8 +1578,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRestorePlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1535,8 +1592,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>>
-  UpdateRestorePlan(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::RestorePlan>> UpdateRestorePlan(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1582,8 +1639,8 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRestorePlan(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRestorePlan(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1620,7 +1677,9 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteRestorePlan(google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request, Options opts = {});
+  DeleteRestorePlan(
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1633,8 +1692,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRestorePlan(NoAwaitTag, google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRestorePlan(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1646,7 +1707,8 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteRestorePlan(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRestorePlan(google::longrunning::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -1687,8 +1749,10 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  CreateRestore(std::string const& parent, google::cloud::gkebackup::v1::Restore const& restore, std::string const& restore_id, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
+      std::string const& parent,
+      google::cloud::gkebackup::v1::Restore const& restore,
+      std::string const& restore_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1701,8 +1765,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRestore(NoAwaitTag, std::string const& parent, google::cloud::gkebackup::v1::Restore const& restore, std::string const& restore_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRestore(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::gkebackup::v1::Restore const& restore,
+      std::string const& restore_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1738,8 +1804,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  CreateRestore(google::cloud::gkebackup::v1::CreateRestoreRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1752,8 +1819,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateRestore(NoAwaitTag, google::cloud::gkebackup::v1::CreateRestoreRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateRestore(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1764,8 +1833,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  CreateRestore(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> CreateRestore(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1799,8 +1868,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::Restore>
-  ListRestores(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1838,8 +1907,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::Restore>
-  ListRestores(google::cloud::gkebackup::v1::ListRestoresRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::Restore> ListRestores(
+      google::cloud::gkebackup::v1::ListRestoresRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1864,8 +1934,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::Restore>
-  GetRestore(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1894,8 +1964,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.Restore]: @googleapis_reference_link{google/cloud/gkebackup/v1/restore.proto#L34}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::Restore>
-  GetRestore(google::cloud::gkebackup::v1::GetRestoreRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
+      google::cloud::gkebackup::v1::GetRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1935,8 +2006,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  UpdateRestore(google::cloud::gkebackup::v1::Restore const& restore, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
+      google::cloud::gkebackup::v1::Restore const& restore,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1949,8 +2021,9 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRestore(NoAwaitTag, google::cloud::gkebackup::v1::Restore const& restore, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRestore(
+      NoAwaitTag, google::cloud::gkebackup::v1::Restore const& restore,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1986,8 +2059,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.UpdateRestoreRequest]: @googleapis_reference_link{google/cloud/gkebackup/v1/gkebackup.proto#L877}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  UpdateRestore(google::cloud::gkebackup::v1::UpdateRestoreRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2000,8 +2074,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateRestore(NoAwaitTag, google::cloud::gkebackup::v1::UpdateRestoreRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateRestore(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2012,8 +2088,8 @@ class BackupForGKEClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::gkebackup::v1::Restore>>
-  UpdateRestore(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::gkebackup::v1::Restore>> UpdateRestore(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2059,8 +2135,8 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRestore(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRestore(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2097,7 +2173,9 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteRestore(google::cloud::gkebackup::v1::DeleteRestoreRequest const& request, Options opts = {});
+  DeleteRestore(
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2110,8 +2188,10 @@ class BackupForGKEClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteRestore(NoAwaitTag, google::cloud::gkebackup::v1::DeleteRestoreRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteRestore(
+      NoAwaitTag,
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2123,7 +2203,8 @@ class BackupForGKEClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkebackup::v1::OperationMetadata>>
-  DeleteRestore(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteRestore(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -2157,8 +2238,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
-  ListVolumeRestores(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2196,8 +2277,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkebackup::v1::VolumeRestore>
-  ListVolumeRestores(google::cloud::gkebackup::v1::ListVolumeRestoresRequest request, Options opts = {});
+  StreamRange<google::cloud::gkebackup::v1::VolumeRestore> ListVolumeRestores(
+      google::cloud::gkebackup::v1::ListVolumeRestoresRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2222,8 +2304,8 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
-  GetVolumeRestore(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2252,8 +2334,9 @@ class BackupForGKEClient {
   /// [google.cloud.gkebackup.v1.VolumeRestore]: @googleapis_reference_link{google/cloud/gkebackup/v1/volume.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
-  GetVolumeRestore(google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request, Options opts = {});
+  StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
+      google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2310,7 +2393,10 @@ class BackupForGKEClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
-  GetBackupIndexDownloadUrl(google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request, Options opts = {});
+  GetBackupIndexDownloadUrl(
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2348,8 +2434,8 @@ class BackupForGKEClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2378,8 +2464,9 @@ class BackupForGKEClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2411,8 +2498,8 @@ class BackupForGKEClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2443,8 +2530,8 @@ class BackupForGKEClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2479,8 +2566,9 @@ class BackupForGKEClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2515,8 +2603,8 @@ class BackupForGKEClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2555,8 +2643,8 @@ class BackupForGKEClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2582,8 +2670,8 @@ class BackupForGKEClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2614,8 +2702,9 @@ class BackupForGKEClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2639,8 +2728,7 @@ class BackupForGKEClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2669,8 +2757,9 @@ class BackupForGKEClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2704,8 +2793,7 @@ class BackupForGKEClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2744,8 +2832,9 @@ class BackupForGKEClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<BackupForGKEConnection> connection_;

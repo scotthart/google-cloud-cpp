@@ -32,33 +32,36 @@ ModelGardenServiceTracingStub::ModelGardenServiceTracingStub(
     std::shared_ptr<ModelGardenServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::aiplatform::v1::PublisherModel> ModelGardenServiceTracingStub::GetPublisherModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::PublisherModel>
+ModelGardenServiceTracingStub::GetPublisherModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "GetPublisherModel");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "GetPublisherModel");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->GetPublisherModel(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->GetPublisherModel(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> ModelGardenServiceTracingStub::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+ModelGardenServiceTracingStub::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "ListLocations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location> ModelGardenServiceTracingStub::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location>
+ModelGardenServiceTracingStub::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "GetLocation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -66,10 +69,10 @@ StatusOr<google::cloud::location::Location> ModelGardenServiceTracingStub::GetLo
 }
 
 StatusOr<google::iam::v1::Policy> ModelGardenServiceTracingStub::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "SetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "SetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -77,43 +80,46 @@ StatusOr<google::iam::v1::Policy> ModelGardenServiceTracingStub::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> ModelGardenServiceTracingStub::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "GetIamPolicy");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "GetIamPolicy");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetIamPolicy(context, options, request));
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> ModelGardenServiceTracingStub::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+ModelGardenServiceTracingStub::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "TestIamPermissions");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "TestIamPermissions");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(context, *span,
-                           child_->TestIamPermissions(context, options, request));
+  return internal::EndSpan(
+      context, *span, child_->TestIamPermissions(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> ModelGardenServiceTracingStub::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+ModelGardenServiceTracingStub::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "ListOperations");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ModelGardenServiceTracingStub::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ModelGardenServiceTracingStub::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "GetOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -121,10 +127,10 @@ StatusOr<google::longrunning::Operation> ModelGardenServiceTracingStub::GetOpera
 }
 
 Status ModelGardenServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -132,21 +138,22 @@ Status ModelGardenServiceTracingStub::DeleteOperation(
 }
 
 Status ModelGardenServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "CancelOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->CancelOperation(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation> ModelGardenServiceTracingStub::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation>
+ModelGardenServiceTracingStub::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.aiplatform.v1.ModelGardenService", "WaitOperation");
+  auto span = internal::MakeSpanGrpc(
+      "google.cloud.aiplatform.v1.ModelGardenService", "WaitOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

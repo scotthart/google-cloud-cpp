@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CLIENT_H
 
+#include "google/cloud/storageinsights/v1/storage_insights_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storageinsights/v1/storage_insights_connection.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -62,7 +62,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class StorageInsightsClient {
  public:
-  explicit StorageInsightsClient(std::shared_ptr<StorageInsightsConnection> connection, Options opts = {});
+  explicit StorageInsightsClient(
+      std::shared_ptr<StorageInsightsConnection> connection, Options opts = {});
   ~StorageInsightsClient();
 
   ///@{
@@ -75,10 +76,12 @@ class StorageInsightsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(StorageInsightsClient const& a, StorageInsightsClient const& b) {
+  friend bool operator==(StorageInsightsClient const& a,
+                         StorageInsightsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(StorageInsightsClient const& a, StorageInsightsClient const& b) {
+  friend bool operator!=(StorageInsightsClient const& a,
+                         StorageInsightsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -154,7 +157,9 @@ class StorageInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-  ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request, Options opts = {});
+  ListReportConfigs(
+      google::cloud::storageinsights::v1::ListReportConfigsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -178,8 +183,8 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  GetReportConfig(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -208,8 +213,9 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
+      google::cloud::storageinsights::v1::GetReportConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -234,8 +240,10 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  CreateReportConfig(std::string const& parent, google::cloud::storageinsights::v1::ReportConfig const& report_config, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
+      std::string const& parent,
+      google::cloud::storageinsights::v1::ReportConfig const& report_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -264,8 +272,10 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportConfig]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L452}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
+      google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +304,9 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  UpdateReportConfig(google::cloud::storageinsights::v1::ReportConfig const& report_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
+      google::cloud::storageinsights::v1::ReportConfig const& report_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -324,8 +335,10 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.UpdateReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L183}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
+      google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -346,8 +359,7 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L212}
   ///
   // clang-format on
-  Status
-  DeleteReportConfig(std::string const& name, Options opts = {});
+  Status DeleteReportConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -373,8 +385,10 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.DeleteReportConfigRequest]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L212}
   ///
   // clang-format on
-  Status
-  DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request, Options opts = {});
+  Status DeleteReportConfig(
+      google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -447,7 +461,9 @@ class StorageInsightsClient {
   ///
   // clang-format on
   StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-  ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request, Options opts = {});
+  ListReportDetails(
+      google::cloud::storageinsights::v1::ListReportDetailsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -471,8 +487,8 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-  GetReportDetail(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -501,8 +517,9 @@ class StorageInsightsClient {
   /// [google.cloud.storageinsights.v1.ReportDetail]: @googleapis_reference_link{google/cloud/storageinsights/v1/storageinsights.proto#L243}
   ///
   // clang-format on
-  StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-  GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request, Options opts = {});
+  StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
+      google::cloud::storageinsights::v1::GetReportDetailRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -540,8 +557,8 @@ class StorageInsightsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -570,8 +587,9 @@ class StorageInsightsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +624,8 @@ class StorageInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -646,8 +664,8 @@ class StorageInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,8 +691,8 @@ class StorageInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -705,8 +723,9 @@ class StorageInsightsClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -730,8 +749,7 @@ class StorageInsightsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -760,8 +778,9 @@ class StorageInsightsClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -795,8 +814,7 @@ class StorageInsightsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -835,8 +853,9 @@ class StorageInsightsClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<StorageInsightsConnection> connection_;

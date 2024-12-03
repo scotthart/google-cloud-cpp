@@ -31,9 +31,9 @@ AlloyDBAdminAuth::AlloyDBAdminAuth(
     std::shared_ptr<AlloyDBAdminStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::alloydb::v1::ListClustersResponse> AlloyDBAdminAuth::ListClusters(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ListClustersResponse>
+AlloyDBAdminAuth::ListClusters(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListClustersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -41,8 +41,7 @@ StatusOr<google::cloud::alloydb::v1::ListClustersResponse> AlloyDBAdminAuth::Lis
 }
 
 StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminAuth::GetCluster(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -51,28 +50,27 @@ StatusOr<google::cloud::alloydb::v1::Cluster> AlloyDBAdminAuth::GetCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::CreateClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateCluster(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::CreateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::CreateClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateCluster(context, options, request);
@@ -80,28 +78,27 @@ AlloyDBAdminAuth::CreateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateCluster(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::UpdateCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateCluster(context, options, request);
@@ -109,28 +106,27 @@ AlloyDBAdminAuth::UpdateCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncDeleteCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteCluster(cq, *std::move(context),
+                                         std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::DeleteCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteCluster(context, options, request);
@@ -138,28 +134,27 @@ AlloyDBAdminAuth::DeleteCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncPromoteCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncPromoteCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncPromoteCluster(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::PromoteCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::PromoteCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::PromoteClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->PromoteCluster(context, options, request);
@@ -167,28 +162,27 @@ AlloyDBAdminAuth::PromoteCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncSwitchoverCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncSwitchoverCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncSwitchoverCluster(cq, *std::move(context),
+                                             std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::SwitchoverCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::SwitchoverCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::SwitchoverClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->SwitchoverCluster(context, options, request);
@@ -196,28 +190,27 @@ AlloyDBAdminAuth::SwitchoverCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncRestoreCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestoreCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRestoreCluster(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::RestoreCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::RestoreCluster(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestoreClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestoreCluster(context, options, request);
@@ -225,36 +218,36 @@ AlloyDBAdminAuth::RestoreCluster(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateSecondaryCluster(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSecondaryCluster(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateSecondaryCluster(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminAuth::CreateSecondaryCluster(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryClusterRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSecondaryCluster(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ListInstancesResponse> AlloyDBAdminAuth::ListInstances(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ListInstancesResponse>
+AlloyDBAdminAuth::ListInstances(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -262,8 +255,7 @@ StatusOr<google::cloud::alloydb::v1::ListInstancesResponse> AlloyDBAdminAuth::Li
 }
 
 StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminAuth::GetInstance(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -272,28 +264,27 @@ StatusOr<google::cloud::alloydb::v1::Instance> AlloyDBAdminAuth::GetInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::CreateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateInstance(context, options, request);
@@ -301,28 +292,28 @@ AlloyDBAdminAuth::CreateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateSecondaryInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateSecondaryInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateSecondaryInstance(cq, *std::move(context),
+                                                   std::move(options), request);
       });
 }
 
 StatusOr<google::longrunning::Operation>
 AlloyDBAdminAuth::CreateSecondaryInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateSecondaryInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateSecondaryInstance(context, options, request);
@@ -330,28 +321,27 @@ AlloyDBAdminAuth::CreateSecondaryInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncBatchCreateInstances(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncBatchCreateInstances(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncBatchCreateInstances(cq, *std::move(context),
+                                                std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::BatchCreateInstances(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::BatchCreateInstances(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::BatchCreateInstancesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->BatchCreateInstances(context, options, request);
@@ -359,28 +349,27 @@ AlloyDBAdminAuth::BatchCreateInstances(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::UpdateInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateInstance(context, options, request);
@@ -388,28 +377,27 @@ AlloyDBAdminAuth::UpdateInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncDeleteInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteInstance(cq, *std::move(context),
+                                          std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::DeleteInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteInstance(context, options, request);
@@ -417,28 +405,27 @@ AlloyDBAdminAuth::DeleteInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncFailoverInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncFailoverInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncFailoverInstance(cq, *std::move(context),
+                                            std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::FailoverInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::FailoverInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::FailoverInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->FailoverInstance(context, options, request);
@@ -446,28 +433,27 @@ AlloyDBAdminAuth::FailoverInstance(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncInjectFault(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncInjectFault(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncInjectFault(cq, *std::move(context),
+                                       std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::InjectFault(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::InjectFaultRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::InjectFault(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::InjectFaultRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->InjectFault(context, options, request);
@@ -475,45 +461,44 @@ AlloyDBAdminAuth::InjectFault(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncRestartInstance(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncRestartInstance(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncRestartInstance(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::RestartInstance(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::RestartInstance(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::RestartInstanceRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RestartInstance(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse> AlloyDBAdminAuth::ExecuteSql(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ExecuteSqlResponse>
+AlloyDBAdminAuth::ExecuteSql(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ExecuteSqlRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ExecuteSql(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> AlloyDBAdminAuth::ListBackups(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ListBackupsResponse>
+AlloyDBAdminAuth::ListBackups(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListBackupsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -521,8 +506,7 @@ StatusOr<google::cloud::alloydb::v1::ListBackupsResponse> AlloyDBAdminAuth::List
 }
 
 StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminAuth::GetBackup(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -531,28 +515,27 @@ StatusOr<google::cloud::alloydb::v1::Backup> AlloyDBAdminAuth::GetBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncCreateBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::CreateBackupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateBackup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateBackup(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::CreateBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::CreateBackupRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::CreateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::CreateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateBackup(context, options, request);
@@ -560,28 +543,27 @@ AlloyDBAdminAuth::CreateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncUpdateBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateBackup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateBackup(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::UpdateBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::UpdateBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::UpdateBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateBackup(context, options, request);
@@ -589,63 +571,64 @@ AlloyDBAdminAuth::UpdateBackup(
 
 future<StatusOr<google::longrunning::Operation>>
 AlloyDBAdminAuth::AsyncDeleteBackup(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteBackup(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteBackup(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-AlloyDBAdminAuth::DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
+StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::DeleteBackup(
+    grpc::ClientContext& context, Options options,
+    google::cloud::alloydb::v1::DeleteBackupRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteBackup(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse> AlloyDBAdminAuth::ListSupportedDatabaseFlags(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const& request) {
+StatusOr<google::cloud::alloydb::v1::ListSupportedDatabaseFlagsResponse>
+AlloyDBAdminAuth::ListSupportedDatabaseFlags(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::ListSupportedDatabaseFlagsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSupportedDatabaseFlags(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse> AlloyDBAdminAuth::GenerateClientCertificate(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::alloydb::v1::GenerateClientCertificateRequest const& request) {
+StatusOr<google::cloud::alloydb::v1::GenerateClientCertificateResponse>
+AlloyDBAdminAuth::GenerateClientCertificate(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::alloydb::v1::GenerateClientCertificateRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateClientCertificate(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ConnectionInfo> AlloyDBAdminAuth::GetConnectionInfo(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ConnectionInfo>
+AlloyDBAdminAuth::GetConnectionInfo(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetConnectionInfoRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetConnectionInfo(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ListUsersResponse> AlloyDBAdminAuth::ListUsers(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ListUsersResponse>
+AlloyDBAdminAuth::ListUsers(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListUsersRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -653,8 +636,7 @@ StatusOr<google::cloud::alloydb::v1::ListUsersResponse> AlloyDBAdminAuth::ListUs
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::GetUser(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::GetUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -662,8 +644,7 @@ StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::GetUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::CreateUser(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::CreateUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -671,8 +652,7 @@ StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::CreateUser(
 }
 
 StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::UpdateUser(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::UpdateUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -680,26 +660,25 @@ StatusOr<google::cloud::alloydb::v1::User> AlloyDBAdminAuth::UpdateUser(
 }
 
 Status AlloyDBAdminAuth::DeleteUser(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::DeleteUserRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteUser(context, options, request);
 }
 
-StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse> AlloyDBAdminAuth::ListDatabases(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::alloydb::v1::ListDatabasesResponse>
+AlloyDBAdminAuth::ListDatabases(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::alloydb::v1::ListDatabasesRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListDatabases(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> AlloyDBAdminAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+AlloyDBAdminAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -707,17 +686,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> AlloyDBAdminAuth::ListL
 }
 
 StatusOr<google::cloud::location::Location> AlloyDBAdminAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> AlloyDBAdminAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+AlloyDBAdminAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -725,8 +703,7 @@ StatusOr<google::longrunning::ListOperationsResponse> AlloyDBAdminAuth::ListOper
 }
 
 StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -734,8 +711,7 @@ StatusOr<google::longrunning::Operation> AlloyDBAdminAuth::GetOperation(
 }
 
 Status AlloyDBAdminAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -743,8 +719,7 @@ Status AlloyDBAdminAuth::DeleteOperation(
 }
 
 Status AlloyDBAdminAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -758,15 +733,16 @@ AlloyDBAdminAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -775,13 +751,14 @@ future<Status> AlloyDBAdminAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

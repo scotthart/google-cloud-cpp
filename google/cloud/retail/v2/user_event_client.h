@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_USER_EVENT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_USER_EVENT_CLIENT_H
 
+#include "google/cloud/retail/v2/user_event_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/retail/v2/user_event_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,7 +64,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class UserEventServiceClient {
  public:
-  explicit UserEventServiceClient(std::shared_ptr<UserEventServiceConnection> connection, Options opts = {});
+  explicit UserEventServiceClient(
+      std::shared_ptr<UserEventServiceConnection> connection,
+      Options opts = {});
   ~UserEventServiceClient();
 
   ///@{
@@ -77,10 +79,12 @@ class UserEventServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(UserEventServiceClient const& a, UserEventServiceClient const& b) {
+  friend bool operator==(UserEventServiceClient const& a,
+                         UserEventServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(UserEventServiceClient const& a, UserEventServiceClient const& b) {
+  friend bool operator!=(UserEventServiceClient const& a,
+                         UserEventServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -112,8 +116,9 @@ class UserEventServiceClient {
   /// [google.cloud.retail.v2.WriteUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::UserEvent>
-  WriteUserEvent(google::cloud::retail::v2::WriteUserEventRequest const& request, Options opts = {});
+  StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
+      google::cloud::retail::v2::WriteUserEventRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -146,8 +151,9 @@ class UserEventServiceClient {
   /// [google.cloud.retail.v2.CollectUserEventRequest]: @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L136}
   ///
   // clang-format on
-  StatusOr<google::api::HttpBody>
-  CollectUserEvent(google::cloud::retail::v2::CollectUserEventRequest const& request, Options opts = {});
+  StatusOr<google::api::HttpBody> CollectUserEvent(
+      google::cloud::retail::v2::CollectUserEventRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -187,7 +193,9 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::cloud::retail::v2::PurgeUserEventsRequest const& request, Options opts = {});
+  PurgeUserEvents(
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +208,10 @@ class UserEventServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  PurgeUserEvents(NoAwaitTag, google::cloud::retail::v2::PurgeUserEventsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> PurgeUserEvents(
+      NoAwaitTag,
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -213,7 +223,8 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
-  PurgeUserEvents(google::longrunning::Operation const& operation, Options opts = {});
+  PurgeUserEvents(google::longrunning::Operation const& operation,
+                  Options opts = {});
 
   // clang-format off
   ///
@@ -256,7 +267,9 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(google::cloud::retail::v2::ImportUserEventsRequest const& request, Options opts = {});
+  ImportUserEvents(
+      google::cloud::retail::v2::ImportUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -269,8 +282,10 @@ class UserEventServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportUserEvents(NoAwaitTag, google::cloud::retail::v2::ImportUserEventsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportUserEvents(
+      NoAwaitTag,
+      google::cloud::retail::v2::ImportUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -282,7 +297,8 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
-  ImportUserEvents(google::longrunning::Operation const& operation, Options opts = {});
+  ImportUserEvents(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -326,7 +342,9 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(google::cloud::retail::v2::RejoinUserEventsRequest const& request, Options opts = {});
+  RejoinUserEvents(
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -339,8 +357,10 @@ class UserEventServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  RejoinUserEvents(NoAwaitTag, google::cloud::retail::v2::RejoinUserEventsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> RejoinUserEvents(
+      NoAwaitTag,
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -352,7 +372,8 @@ class UserEventServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
-  RejoinUserEvents(google::longrunning::Operation const& operation, Options opts = {});
+  RejoinUserEvents(google::longrunning::Operation const& operation,
+                   Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +408,8 @@ class UserEventServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -427,8 +448,8 @@ class UserEventServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +475,8 @@ class UserEventServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -486,8 +507,9 @@ class UserEventServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<UserEventServiceConnection> connection_;

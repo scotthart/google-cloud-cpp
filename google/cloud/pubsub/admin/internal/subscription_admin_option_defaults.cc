@@ -17,10 +17,10 @@
 // source: google/pubsub/v1/pubsub.proto
 
 #include "google/cloud/pubsub/admin/internal/subscription_admin_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/pubsub/admin/subscription_admin_connection.h"
 #include "google/cloud/pubsub/admin/subscription_admin_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -42,16 +42,22 @@ Options SubscriptionAdminDefaultOptions(Options options) {
   if (!options.has<pubsub_admin::SubscriptionAdminRetryPolicyOption>()) {
     options.set<pubsub_admin::SubscriptionAdminRetryPolicyOption>(
         pubsub_admin::SubscriptionAdminLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
   if (!options.has<pubsub_admin::SubscriptionAdminBackoffPolicyOption>()) {
     options.set<pubsub_admin::SubscriptionAdminBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+        ExponentialBackoffPolicy(
+            std::chrono::seconds(0), std::chrono::seconds(1),
+            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+            .clone());
   }
-  if (!options.has<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>(
-        pubsub_admin::MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy());
+  if (!options.has<
+          pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<pubsub_admin::SubscriptionAdminConnectionIdempotencyPolicyOption>(
+            pubsub_admin::
+                MakeDefaultSubscriptionAdminConnectionIdempotencyPolicy());
   }
 
   return options;

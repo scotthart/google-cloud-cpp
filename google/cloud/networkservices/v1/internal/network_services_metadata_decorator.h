@@ -40,382 +40,402 @@ class NetworkServicesMetadata : public NetworkServicesStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse> ListEndpointPolicies(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListEndpointPoliciesRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListEndpointPoliciesResponse>
+  ListEndpointPolicies(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListEndpointPoliciesRequest const&
+          request) override;
 
-  StatusOr<google::cloud::networkservices::v1::EndpointPolicy> GetEndpointPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetEndpointPolicyRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::EndpointPolicy>
+  GetEndpointPolicy(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetEndpointPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateEndpointPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const& request) override;
+      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateEndpointPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateEndpointPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateEndpointPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> UpdateEndpointPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateEndpointPolicyRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteEndpointPolicy(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteEndpointPolicy(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteEndpointPolicyRequest const&
+          request) override;
 
-  StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse> ListGateways(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListGatewaysRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListGatewaysResponse>
+  ListGateways(grpc::ClientContext& context, Options const& options,
+               google::cloud::networkservices::v1::ListGatewaysRequest const&
+                   request) override;
 
   StatusOr<google::cloud::networkservices::v1::Gateway> GetGateway(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetGatewayRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetGatewayRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateGatewayRequest const& request) override;
+      google::cloud::networkservices::v1::CreateGatewayRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateGatewayRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateGatewayRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateGatewayRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateGatewayRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateGatewayRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGateway(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteGatewayRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteGatewayRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteGateway(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteGatewayRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteGatewayRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse> ListGrpcRoutes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListGrpcRoutesResponse>
+  ListGrpcRoutes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListGrpcRoutesRequest const& request)
+      override;
 
   StatusOr<google::cloud::networkservices::v1::GrpcRoute> GetGrpcRoute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetGrpcRouteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetGrpcRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateGrpcRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) override;
+      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateGrpcRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateGrpcRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateGrpcRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateGrpcRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateGrpcRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteGrpcRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteGrpcRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteGrpcRouteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse> ListHttpRoutes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListHttpRoutesRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListHttpRoutesResponse>
+  ListHttpRoutes(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListHttpRoutesRequest const& request)
+      override;
 
   StatusOr<google::cloud::networkservices::v1::HttpRoute> GetHttpRoute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetHttpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetHttpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateHttpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateHttpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateHttpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateHttpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateHttpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateHttpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteHttpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteHttpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteHttpRouteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse> ListTcpRoutes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListTcpRoutesRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListTcpRoutesResponse>
+  ListTcpRoutes(grpc::ClientContext& context, Options const& options,
+                google::cloud::networkservices::v1::ListTcpRoutesRequest const&
+                    request) override;
 
   StatusOr<google::cloud::networkservices::v1::TcpRoute> GetTcpRoute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetTcpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetTcpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTcpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateTcpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateTcpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTcpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateTcpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateTcpRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTcpRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteTcpRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteTcpRouteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse> ListTlsRoutes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListTlsRoutesRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListTlsRoutesResponse>
+  ListTlsRoutes(grpc::ClientContext& context, Options const& options,
+                google::cloud::networkservices::v1::ListTlsRoutesRequest const&
+                    request) override;
 
   StatusOr<google::cloud::networkservices::v1::TlsRoute> GetTlsRoute(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetTlsRouteRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetTlsRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateTlsRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) override;
+      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateTlsRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateTlsRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateTlsRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateTlsRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateTlsRouteRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteTlsRoute(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteTlsRoute(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteTlsRouteRequest const& request)
+      override;
 
-  StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse> ListServiceBindings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListServiceBindingsRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ListServiceBindingsResponse>
+  ListServiceBindings(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListServiceBindingsRequest const&
+          request) override;
 
-  StatusOr<google::cloud::networkservices::v1::ServiceBinding> GetServiceBinding(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetServiceBindingRequest const& request) override;
+  StatusOr<google::cloud::networkservices::v1::ServiceBinding>
+  GetServiceBinding(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetServiceBindingRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateServiceBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateServiceBindingRequest const& request) override;
+      google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> CreateServiceBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateServiceBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateServiceBindingRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteServiceBinding(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteServiceBindingRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+          request) override;
 
   StatusOr<google::longrunning::Operation> DeleteServiceBinding(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteServiceBindingRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteServiceBindingRequest const&
+          request) override;
 
   StatusOr<google::cloud::networkservices::v1::ListMeshesResponse> ListMeshes(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::ListMeshesRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::ListMeshesRequest const& request)
+      override;
 
   StatusOr<google::cloud::networkservices::v1::Mesh> GetMesh(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::networkservices::v1::GetMeshRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::networkservices::v1::GetMeshRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMesh(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateMeshRequest const& request) override;
+      google::cloud::networkservices::v1::CreateMeshRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateMesh(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateMeshRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::CreateMeshRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateMesh(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateMeshRequest const& request) override;
+      google::cloud::networkservices::v1::UpdateMeshRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateMesh(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateMeshRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::UpdateMeshRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteMesh(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteMeshRequest const& request) override;
+      google::cloud::networkservices::v1::DeleteMeshRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteMesh(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteMeshRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::networkservices::v1::DeleteMeshRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -431,8 +451,7 @@ class NetworkServicesMetadata : public NetworkServicesStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

@@ -26,11 +26,17 @@ namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use resourcesettings_v1::MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcesettings_v1::MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// resourcesettings_v1::MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicy directly.
-using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings

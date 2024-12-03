@@ -31,10 +31,11 @@ GatewayControlAuth::GatewayControlAuth(
     std::shared_ptr<GatewayControlStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GatewayControlAuth::GenerateCredentials(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
+GatewayControlAuth::GenerateCredentials(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GenerateCredentials(context, options, request);

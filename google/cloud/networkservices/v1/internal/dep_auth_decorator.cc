@@ -31,19 +31,21 @@ DepServiceAuth::DepServiceAuth(
     std::shared_ptr<DepServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse> DepServiceAuth::ListLbTrafficExtensions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const& request) {
+StatusOr<google::cloud::networkservices::v1::ListLbTrafficExtensionsResponse>
+DepServiceAuth::ListLbTrafficExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbTrafficExtensionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLbTrafficExtensions(context, options, request);
 }
 
-StatusOr<google::cloud::networkservices::v1::LbTrafficExtension> DepServiceAuth::GetLbTrafficExtension(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const& request) {
+StatusOr<google::cloud::networkservices::v1::LbTrafficExtension>
+DepServiceAuth::GetLbTrafficExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbTrafficExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLbTrafficExtension(context, options, request);
@@ -51,14 +53,16 @@ StatusOr<google::cloud::networkservices::v1::LbTrafficExtension> DepServiceAuth:
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncCreateLbTrafficExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -70,9 +74,9 @@ DepServiceAuth::AsyncCreateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceAuth::CreateLbTrafficExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbTrafficExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateLbTrafficExtension(context, options, request);
@@ -80,14 +84,16 @@ DepServiceAuth::CreateLbTrafficExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncUpdateLbTrafficExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -99,9 +105,9 @@ DepServiceAuth::AsyncUpdateLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceAuth::UpdateLbTrafficExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbTrafficExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateLbTrafficExtension(context, options, request);
@@ -109,14 +115,16 @@ DepServiceAuth::UpdateLbTrafficExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncDeleteLbTrafficExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
@@ -128,27 +136,29 @@ DepServiceAuth::AsyncDeleteLbTrafficExtension(
 
 StatusOr<google::longrunning::Operation>
 DepServiceAuth::DeleteLbTrafficExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbTrafficExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteLbTrafficExtension(context, options, request);
 }
 
-StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse> DepServiceAuth::ListLbRouteExtensions(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const& request) {
+StatusOr<google::cloud::networkservices::v1::ListLbRouteExtensionsResponse>
+DepServiceAuth::ListLbRouteExtensions(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::ListLbRouteExtensionsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListLbRouteExtensions(context, options, request);
 }
 
-StatusOr<google::cloud::networkservices::v1::LbRouteExtension> DepServiceAuth::GetLbRouteExtension(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const& request) {
+StatusOr<google::cloud::networkservices::v1::LbRouteExtension>
+DepServiceAuth::GetLbRouteExtension(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::networkservices::v1::GetLbRouteExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLbRouteExtension(context, options, request);
@@ -156,28 +166,29 @@ StatusOr<google::cloud::networkservices::v1::LbRouteExtension> DepServiceAuth::G
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncCreateLbRouteExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncCreateLbRouteExtension(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCreateLbRouteExtension(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DepServiceAuth::CreateLbRouteExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const& request) {
+StatusOr<google::longrunning::Operation> DepServiceAuth::CreateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::CreateLbRouteExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateLbRouteExtension(context, options, request);
@@ -185,28 +196,29 @@ DepServiceAuth::CreateLbRouteExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncUpdateLbRouteExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncUpdateLbRouteExtension(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncUpdateLbRouteExtension(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DepServiceAuth::UpdateLbRouteExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const& request) {
+StatusOr<google::longrunning::Operation> DepServiceAuth::UpdateLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::UpdateLbRouteExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateLbRouteExtension(context, options, request);
@@ -214,36 +226,37 @@ DepServiceAuth::UpdateLbRouteExtension(
 
 future<StatusOr<google::longrunning::Operation>>
 DepServiceAuth::AsyncDeleteLbRouteExtension(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncDeleteLbRouteExtension(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncDeleteLbRouteExtension(cq, *std::move(context),
+                                                  std::move(options), request);
       });
 }
 
-StatusOr<google::longrunning::Operation>
-DepServiceAuth::DeleteLbRouteExtension(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const& request) {
+StatusOr<google::longrunning::Operation> DepServiceAuth::DeleteLbRouteExtension(
+    grpc::ClientContext& context, Options options,
+    google::cloud::networkservices::v1::DeleteLbRouteExtensionRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteLbRouteExtension(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> DepServiceAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+DepServiceAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -251,8 +264,7 @@ StatusOr<google::cloud::location::ListLocationsResponse> DepServiceAuth::ListLoc
 }
 
 StatusOr<google::cloud::location::Location> DepServiceAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -260,8 +272,7 @@ StatusOr<google::cloud::location::Location> DepServiceAuth::GetLocation(
 }
 
 StatusOr<google::iam::v1::Policy> DepServiceAuth::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -269,26 +280,25 @@ StatusOr<google::iam::v1::Policy> DepServiceAuth::SetIamPolicy(
 }
 
 StatusOr<google::iam::v1::Policy> DepServiceAuth::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetIamPolicy(context, options, request);
 }
 
-StatusOr<google::iam::v1::TestIamPermissionsResponse> DepServiceAuth::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DepServiceAuth::TestIamPermissions(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->TestIamPermissions(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> DepServiceAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+DepServiceAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -296,8 +306,7 @@ StatusOr<google::longrunning::ListOperationsResponse> DepServiceAuth::ListOperat
 }
 
 StatusOr<google::longrunning::Operation> DepServiceAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -305,8 +314,7 @@ StatusOr<google::longrunning::Operation> DepServiceAuth::GetOperation(
 }
 
 Status DepServiceAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -314,8 +322,7 @@ Status DepServiceAuth::DeleteOperation(
 }
 
 Status DepServiceAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -329,15 +336,16 @@ DepServiceAuth::AsyncGetOperation(
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) {
           return make_ready_future(ReturnType(std::move(context).status()));
         }
-        return child->AsyncGetOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncGetOperation(cq, *std::move(context),
+                                        std::move(options), request);
       });
 }
 
@@ -346,13 +354,14 @@ future<Status> DepServiceAuth::AsyncCancelOperation(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::longrunning::CancelOperationRequest const& request) {
-  return auth_->AsyncConfigureContext(std::move(context)).then(
-      [cq, child = child_, options = std::move(options), request](
-          future<StatusOr<std::shared_ptr<grpc::ClientContext>>> f) mutable {
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child = child_, options = std::move(options),
+             request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
+                          f) mutable {
         auto context = f.get();
         if (!context) return make_ready_future(std::move(context).status());
-        return child->AsyncCancelOperation(
-            cq, *std::move(context), std::move(options), request);
+        return child->AsyncCancelOperation(cq, *std::move(context),
+                                           std::move(options), request);
       });
 }
 

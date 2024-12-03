@@ -26,19 +26,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-RowAccessPolicyServiceConnectionIdempotencyPolicy::~RowAccessPolicyServiceConnectionIdempotencyPolicy() = default;
+RowAccessPolicyServiceConnectionIdempotencyPolicy::
+    ~RowAccessPolicyServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
 RowAccessPolicyServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency RowAccessPolicyServiceConnectionIdempotencyPolicy::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest) {  // NOLINT
+Idempotency
+RowAccessPolicyServiceConnectionIdempotencyPolicy::ListRowAccessPolicies(
+    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<RowAccessPolicyServiceConnectionIdempotencyPolicy>
-    MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy() {
+MakeDefaultRowAccessPolicyServiceConnectionIdempotencyPolicy() {
   return std::make_unique<RowAccessPolicyServiceConnectionIdempotencyPolicy>();
 }
 

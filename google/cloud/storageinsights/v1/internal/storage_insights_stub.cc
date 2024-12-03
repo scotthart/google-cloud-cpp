@@ -32,171 +32,160 @@ StorageInsightsStub::~StorageInsightsStub() = default;
 
 StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
 DefaultStorageInsightsStub::ListReportConfigs(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
-    google::cloud::storageinsights::v1::ListReportConfigsResponse response;
-    auto status =
-        grpc_stub_->ListReportConfigs(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+        request) {
+  google::cloud::storageinsights::v1::ListReportConfigsResponse response;
+  auto status = grpc_stub_->ListReportConfigs(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::GetReportConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-    google::cloud::storageinsights::v1::ReportConfig response;
-    auto status =
-        grpc_stub_->GetReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
+  google::cloud::storageinsights::v1::ReportConfig response;
+  auto status = grpc_stub_->GetReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::CreateReportConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
-    google::cloud::storageinsights::v1::ReportConfig response;
-    auto status =
-        grpc_stub_->CreateReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+        request) {
+  google::cloud::storageinsights::v1::ReportConfig response;
+  auto status = grpc_stub_->CreateReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
 DefaultStorageInsightsStub::UpdateReportConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
-    google::cloud::storageinsights::v1::ReportConfig response;
-    auto status =
-        grpc_stub_->UpdateReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+        request) {
+  google::cloud::storageinsights::v1::ReportConfig response;
+  auto status = grpc_stub_->UpdateReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultStorageInsightsStub::DeleteReportConfig(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        grpc_stub_->DeleteReportConfig(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultStorageInsightsStub::DeleteReportConfig(
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteReportConfig(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
 DefaultStorageInsightsStub::ListReportDetails(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
-    google::cloud::storageinsights::v1::ListReportDetailsResponse response;
-    auto status =
-        grpc_stub_->ListReportDetails(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+        request) {
+  google::cloud::storageinsights::v1::ListReportDetailsResponse response;
+  auto status = grpc_stub_->ListReportDetails(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
 DefaultStorageInsightsStub::GetReportDetail(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-    google::cloud::storageinsights::v1::ReportDetail response;
-    auto status =
-        grpc_stub_->GetReportDetail(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
+  google::cloud::storageinsights::v1::ReportDetail response;
+  auto status = grpc_stub_->GetReportDetail(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 DefaultStorageInsightsStub::ListLocations(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::ListLocationsRequest const& request) {
-    google::cloud::location::ListLocationsResponse response;
-    auto status =
-        locations_stub_->ListLocations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::ListLocationsRequest const& request) {
+  google::cloud::location::ListLocationsResponse response;
+  auto status = locations_stub_->ListLocations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::cloud::location::Location>
 DefaultStorageInsightsStub::GetLocation(
-  grpc::ClientContext& context, Options const&,
-  google::cloud::location::GetLocationRequest const& request) {
-    google::cloud::location::Location response;
-    auto status =
-        locations_stub_->GetLocation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::cloud::location::GetLocationRequest const& request) {
+  google::cloud::location::Location response;
+  auto status = locations_stub_->GetLocation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 DefaultStorageInsightsStub::ListOperations(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::ListOperationsRequest const& request) {
-    google::longrunning::ListOperationsResponse response;
-    auto status =
-        operations_stub_->ListOperations(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::ListOperationsRequest const& request) {
+  google::longrunning::ListOperationsResponse response;
+  auto status = operations_stub_->ListOperations(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
 StatusOr<google::longrunning::Operation>
 DefaultStorageInsightsStub::GetOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::GetOperationRequest const& request) {
-    google::longrunning::Operation response;
-    auto status =
-        operations_stub_->GetOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return response;
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::GetOperationRequest const& request) {
+  google::longrunning::Operation response;
+  auto status = operations_stub_->GetOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
 }
 
-Status
-DefaultStorageInsightsStub::DeleteOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::DeleteOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->DeleteOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultStorageInsightsStub::DeleteOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::DeleteOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->DeleteOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
-Status
-DefaultStorageInsightsStub::CancelOperation(
-  grpc::ClientContext& context, Options const&,
-  google::longrunning::CancelOperationRequest const& request) {
-    google::protobuf::Empty response;
-    auto status =
-        operations_stub_->CancelOperation(&context, request, &response);
-    if (!status.ok()) {
-      return google::cloud::MakeStatusFromRpcError(status);
-    }
-    return google::cloud::Status();
+Status DefaultStorageInsightsStub::CancelOperation(
+    grpc::ClientContext& context, Options const&,
+    google::longrunning::CancelOperationRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = operations_stub_->CancelOperation(&context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

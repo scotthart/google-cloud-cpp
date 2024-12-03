@@ -17,17 +17,17 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub_factory.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_auth_decorator.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_logging_decorator.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_metadata_decorator.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_tracing_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_auth_decorator.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_logging_decorator.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_metadata_decorator.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_tracing_stub.h"
 #include <google/cloud/resourcesettings/v1/resource_settings.grpc.pb.h>
 #include <memory>
 #include <utility>
@@ -41,24 +41,25 @@ std::shared_ptr<ResourceSettingsServiceStub>
 CreateDefaultResourceSettingsServiceStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(
-    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
-  auto service_grpc_stub = google::cloud::resourcesettings::v1::ResourceSettingsService::NewStub(channel);
+  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
+                                     internal::MakeChannelArguments(options));
+  auto service_grpc_stub =
+      google::cloud::resourcesettings::v1::ResourceSettingsService::NewStub(
+          channel);
   std::shared_ptr<ResourceSettingsServiceStub> stub =
-    std::make_shared<DefaultResourceSettingsServiceStub>(std::move(service_grpc_stub));
+      std::make_shared<DefaultResourceSettingsServiceStub>(
+          std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<ResourceSettingsServiceAuth>(
-        std::move(auth), std::move(stub));
+    stub = std::make_shared<ResourceSettingsServiceAuth>(std::move(auth),
+                                                         std::move(stub));
   }
   stub = std::make_shared<ResourceSettingsServiceMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(
-      options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<ResourceSettingsServiceLogging>(
-        std::move(stub),
-        options.get<GrpcTracingOptionsOption>(),
+        std::move(stub), options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

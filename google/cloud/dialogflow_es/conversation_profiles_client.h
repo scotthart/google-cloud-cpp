@@ -63,27 +63,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.ConversationProfile]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L193}
+/// [google.cloud.dialogflow.v2.ConversationProfile]:
+/// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L193}
 ///
 class ConversationProfilesClient {
  public:
-  explicit ConversationProfilesClient(std::shared_ptr<ConversationProfilesConnection> connection, Options opts = {});
+  explicit ConversationProfilesClient(
+      std::shared_ptr<ConversationProfilesConnection> connection,
+      Options opts = {});
   ~ConversationProfilesClient();
 
   ///@{
   /// @name Copy and move support
   ConversationProfilesClient(ConversationProfilesClient const&) = default;
-  ConversationProfilesClient& operator=(ConversationProfilesClient const&) = default;
+  ConversationProfilesClient& operator=(ConversationProfilesClient const&) =
+      default;
   ConversationProfilesClient(ConversationProfilesClient&&) = default;
   ConversationProfilesClient& operator=(ConversationProfilesClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConversationProfilesClient const& a, ConversationProfilesClient const& b) {
+  friend bool operator==(ConversationProfilesClient const& a,
+                         ConversationProfilesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConversationProfilesClient const& a, ConversationProfilesClient const& b) {
+  friend bool operator!=(ConversationProfilesClient const& a,
+                         ConversationProfilesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -160,7 +166,9 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationProfile>
-  ListConversationProfiles(google::cloud::dialogflow::v2::ListConversationProfilesRequest request, Options opts = {});
+  ListConversationProfiles(
+      google::cloud::dialogflow::v2::ListConversationProfilesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -216,7 +224,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  GetConversationProfile(google::cloud::dialogflow::v2::GetConversationProfileRequest const& request, Options opts = {});
+  GetConversationProfile(
+      google::cloud::dialogflow::v2::GetConversationProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -249,7 +260,11 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  CreateConversationProfile(std::string const& parent, google::cloud::dialogflow::v2::ConversationProfile const& conversation_profile, Options opts = {});
+  CreateConversationProfile(
+      std::string const& parent,
+      google::cloud::dialogflow::v2::ConversationProfile const&
+          conversation_profile,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -285,7 +300,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  CreateConversationProfile(google::cloud::dialogflow::v2::CreateConversationProfileRequest const& request, Options opts = {});
+  CreateConversationProfile(
+      google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -317,7 +335,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  UpdateConversationProfile(google::cloud::dialogflow::v2::ConversationProfile const& conversation_profile, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateConversationProfile(
+      google::cloud::dialogflow::v2::ConversationProfile const&
+          conversation_profile,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -353,7 +374,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
-  UpdateConversationProfile(google::cloud::dialogflow::v2::UpdateConversationProfileRequest const& request, Options opts = {});
+  UpdateConversationProfile(
+      google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -375,8 +399,7 @@ class ConversationProfilesClient {
   /// [google.cloud.dialogflow.v2.DeleteConversationProfileRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L347}
   ///
   // clang-format on
-  Status
-  DeleteConversationProfile(std::string const& name, Options opts = {});
+  Status DeleteConversationProfile(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -402,8 +425,10 @@ class ConversationProfilesClient {
   /// [google.cloud.dialogflow.v2.DeleteConversationProfileRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_profile.proto#L347}
   ///
   // clang-format on
-  Status
-  DeleteConversationProfile(google::cloud::dialogflow::v2::DeleteConversationProfileRequest const& request, Options opts = {});
+  Status DeleteConversationProfile(
+      google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -454,7 +479,8 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(std::string const& conversation_profile, Options opts = {});
+  SetSuggestionFeatureConfig(std::string const& conversation_profile,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -467,8 +493,8 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SetSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, Options opts = {});
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      NoAwaitTag, std::string const& conversation_profile, Options opts = {});
 
   // clang-format off
   ///
@@ -522,7 +548,12 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::HumanAgentAssistantConfig::SuggestionFeatureConfig const& suggestion_feature_config, Options opts = {});
+  SetSuggestionFeatureConfig(
+      std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+          SuggestionFeatureConfig const& suggestion_feature_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -535,8 +566,12 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SetSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::HumanAgentAssistantConfig::SuggestionFeatureConfig const& suggestion_feature_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      NoAwaitTag, std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::HumanAgentAssistantConfig::
+          SuggestionFeatureConfig const& suggestion_feature_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -591,7 +626,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request, Options opts = {});
+  SetSuggestionFeatureConfig(
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -604,8 +642,11 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  SetSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> SetSuggestionFeatureConfig(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::SetSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -617,7 +658,8 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  SetSuggestionFeatureConfig(google::longrunning::Operation const& operation, Options opts = {});
+  SetSuggestionFeatureConfig(google::longrunning::Operation const& operation,
+                             Options opts = {});
 
   // clang-format off
   ///
@@ -661,7 +703,8 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(std::string const& conversation_profile, Options opts = {});
+  ClearSuggestionFeatureConfig(std::string const& conversation_profile,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +717,8 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ClearSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, Options opts = {});
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      NoAwaitTag, std::string const& conversation_profile, Options opts = {});
 
   // clang-format off
   ///
@@ -722,7 +765,12 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::SuggestionFeature::Type suggestion_feature_type, Options opts = {});
+  ClearSuggestionFeatureConfig(
+      std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::SuggestionFeature::Type
+          suggestion_feature_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -735,8 +783,12 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ClearSuggestionFeatureConfig(NoAwaitTag, std::string const& conversation_profile, google::cloud::dialogflow::v2::Participant::Role participant_role, google::cloud::dialogflow::v2::SuggestionFeature::Type suggestion_feature_type, Options opts = {});
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      NoAwaitTag, std::string const& conversation_profile,
+      google::cloud::dialogflow::v2::Participant::Role participant_role,
+      google::cloud::dialogflow::v2::SuggestionFeature::Type
+          suggestion_feature_type,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -784,7 +836,10 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request, Options opts = {});
+  ClearSuggestionFeatureConfig(
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -797,8 +852,11 @@ class ConversationProfilesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ClearSuggestionFeatureConfig(NoAwaitTag, google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ClearSuggestionFeatureConfig(
+      NoAwaitTag,
+      google::cloud::dialogflow::v2::ClearSuggestionFeatureConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -810,7 +868,8 @@ class ConversationProfilesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>
-  ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation, Options opts = {});
+  ClearSuggestionFeatureConfig(google::longrunning::Operation const& operation,
+                               Options opts = {});
 
   // clang-format off
   ///
@@ -848,8 +907,8 @@ class ConversationProfilesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -878,8 +937,9 @@ class ConversationProfilesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -914,8 +974,8 @@ class ConversationProfilesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -954,8 +1014,8 @@ class ConversationProfilesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -981,8 +1041,8 @@ class ConversationProfilesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1013,8 +1073,9 @@ class ConversationProfilesClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1048,8 +1109,7 @@ class ConversationProfilesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1088,8 +1148,9 @@ class ConversationProfilesClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ConversationProfilesConnection> connection_;

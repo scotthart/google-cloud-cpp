@@ -24,10 +24,10 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <google/cloud/gkebackup/v1/gkebackup.grpc.pb.h>
 #include <google/cloud/location/locations.grpc.pb.h>
 #include <google/iam/v1/iam_policy.grpc.pb.h>
 #include <google/longrunning/operations.grpc.pb.h>
-#include <google/cloud/gkebackup/v1/gkebackup.grpc.pb.h>
 #include <memory>
 #include <utility>
 
@@ -40,47 +40,46 @@ class BackupForGKEStub {
  public:
   virtual ~BackupForGKEStub() = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackupPlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateBackupPlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse> ListBackupPlans(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
+  ListBackupPlans(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupPlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateBackupPlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupPlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteBackupPlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
@@ -90,18 +89,16 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::CreateBackupRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse>
+  ListBackups(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListBackupsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
@@ -111,8 +108,7 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateBackup(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::UpdateBackupRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
@@ -122,62 +118,66 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::DeleteBackupRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::DeleteBackupRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse> ListVolumeBackups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
+  ListVolumeBackups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListVolumeBackupsRequest const&
+          request) = 0;
 
   virtual StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRestorePlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncCreateRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) = 0;
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse> ListRestorePlans(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
+  ListRestorePlans(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestorePlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpdateRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) = 0;
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const&
+          request) = 0;
 
-  virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRestorePlan(
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncDeleteRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) = 0;
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&
+          request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) = 0;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncCreateRestore(
       google::cloud::CompletionQueue& cq,
@@ -186,18 +186,16 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateRestore(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::CreateRestoreRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse> ListRestores(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse>
+  ListRestores(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListRestoresRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetRestoreRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestore(
@@ -207,8 +205,7 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateRestore(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRestore(
@@ -218,74 +215,69 @@ class BackupForGKEStub {
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> DeleteRestore(
-      grpc::ClientContext& context,
-      Options options,
+      grpc::ClientContext& context, Options options,
       google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse> ListVolumeRestores(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) = 0;
+  virtual StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
+  ListVolumeRestores(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListVolumeRestoresRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::gkebackup::v1::VolumeRestore>
+  GetVolumeRestore(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) = 0;
 
-  virtual StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse> GetBackupIndexDownloadUrl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request) = 0;
+  virtual StatusOr<
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) = 0;
 
-  virtual StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::cloud::location::ListLocationsResponse>
+  ListLocations(
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) = 0;
 
   virtual Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
+      google::cloud::internal::ImmutableOptions options,
       google::longrunning::GetOperationRequest const& request) = 0;
 
   virtual future<Status> AsyncCancelOperation(
@@ -298,10 +290,13 @@ class BackupForGKEStub {
 class DefaultBackupForGKEStub : public BackupForGKEStub {
  public:
   DefaultBackupForGKEStub(
-      std::unique_ptr<google::cloud::gkebackup::v1::BackupForGKE::StubInterface> grpc_stub,
+      std::unique_ptr<google::cloud::gkebackup::v1::BackupForGKE::StubInterface>
+          grpc_stub,
       std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub,
-      std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub,
-      std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub)
+      std::unique_ptr<google::cloud::location::Locations::StubInterface>
+          locations_stub,
+      std::unique_ptr<google::longrunning::Operations::StubInterface>
+          operations_stub)
       : grpc_stub_(std::move(grpc_stub)),
         iampolicy_stub_(std::move(iampolicy_stub)),
         locations_stub_(std::move(locations_stub)),
@@ -311,242 +306,245 @@ class DefaultBackupForGKEStub : public BackupForGKEStub {
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) override;
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse> ListBackupPlans(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListBackupPlansRequest const& request) override;
+  StatusOr<google::cloud::gkebackup::v1::ListBackupPlansResponse>
+  ListBackupPlans(grpc::ClientContext& context, Options const& options,
+                  google::cloud::gkebackup::v1::ListBackupPlansRequest const&
+                      request) override;
 
   StatusOr<google::cloud::gkebackup::v1::BackupPlan> GetBackupPlan(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetBackupPlanRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupPlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackupPlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) override;
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackupPlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) override;
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteBackupPlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::CreateBackupRequest const& request) override;
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::CreateBackupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateBackupRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkebackup::v1::ListBackupsResponse> ListBackups(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::cloud::gkebackup::v1::Backup> GetBackup(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetBackupRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::UpdateBackupRequest const& request) override;
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::UpdateBackupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateBackupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteBackup(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::DeleteBackupRequest const& request) override;
+      google::cloud::gkebackup::v1::DeleteBackupRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteBackup(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::DeleteBackupRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteBackupRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse> ListVolumeBackups(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request) override;
+  StatusOr<google::cloud::gkebackup::v1::ListVolumeBackupsResponse>
+  ListVolumeBackups(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListVolumeBackupsRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkebackup::v1::VolumeBackup> GetVolumeBackup(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) override;
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse> ListRestorePlans(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListRestorePlansRequest const& request) override;
+  StatusOr<google::cloud::gkebackup::v1::ListRestorePlansResponse>
+  ListRestorePlans(grpc::ClientContext& context, Options const& options,
+                   google::cloud::gkebackup::v1::ListRestorePlansRequest const&
+                       request) override;
 
   StatusOr<google::cloud::gkebackup::v1::RestorePlan> GetRestorePlan(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetRestorePlanRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetRestorePlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) override;
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRestorePlan(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) override;
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteRestorePlan(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateRestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::CreateRestoreRequest const& request) override;
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> CreateRestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::CreateRestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::CreateRestoreRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkebackup::v1::ListRestoresResponse> ListRestores(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListRestoresRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListRestoresRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkebackup::v1::Restore> GetRestore(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::gkebackup::v1::GetRestoreRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateRestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) override;
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateRestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRestore(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) override;
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> DeleteRestore(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse> ListVolumeRestores(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request) override;
+  StatusOr<google::cloud::gkebackup::v1::ListVolumeRestoresResponse>
+  ListVolumeRestores(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::ListVolumeRestoresRequest const& request)
+      override;
 
   StatusOr<google::cloud::gkebackup::v1::VolumeRestore> GetVolumeRestore(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request)
+      override;
 
-  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse> GetBackupIndexDownloadUrl(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request) override;
+  StatusOr<google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlResponse>
+  GetBackupIndexDownloadUrl(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
+          request) override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
@@ -562,10 +560,13 @@ class DefaultBackupForGKEStub : public BackupForGKEStub {
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::gkebackup::v1::BackupForGKE::StubInterface> grpc_stub_;
+  std::unique_ptr<google::cloud::gkebackup::v1::BackupForGKE::StubInterface>
+      grpc_stub_;
   std::unique_ptr<google::iam::v1::IAMPolicy::StubInterface> iampolicy_stub_;
-  std::unique_ptr<google::cloud::location::Locations::StubInterface> locations_stub_;
-  std::unique_ptr<google::longrunning::Operations::StubInterface> operations_stub_;
+  std::unique_ptr<google::cloud::location::Locations::StubInterface>
+      locations_stub_;
+  std::unique_ptr<google::longrunning::Operations::StubInterface>
+      operations_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

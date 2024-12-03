@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CONNECTION_H
 
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_retry_traits.h"
+#include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_retry_traits.h"
-#include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,7 +43,8 @@ class ResourceSettingsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
 };
 
 /**
- * A retry policy for `ResourceSettingsServiceConnection` based on counting errors.
+ * A retry policy for `ResourceSettingsServiceConnection` based on counting
+ * errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -52,7 +53,8 @@ class ResourceSettingsServiceRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ResourceSettingsServiceLimitedErrorCountRetryPolicy : public ResourceSettingsServiceRetryPolicy {
+class ResourceSettingsServiceLimitedErrorCountRetryPolicy
+    : public ResourceSettingsServiceRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -61,15 +63,18 @@ class ResourceSettingsServiceLimitedErrorCountRetryPolicy : public ResourceSetti
    * @note Disable the retry loop by providing an instance of this policy with
    *     @p maximum_failures == 0.
    */
-  explicit ResourceSettingsServiceLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+  explicit ResourceSettingsServiceLimitedErrorCountRetryPolicy(
+      int maximum_failures)
+      : impl_(maximum_failures) {}
 
   ResourceSettingsServiceLimitedErrorCountRetryPolicy(
       ResourceSettingsServiceLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : ResourceSettingsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ResourceSettingsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
   ResourceSettingsServiceLimitedErrorCountRetryPolicy(
       ResourceSettingsServiceLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : ResourceSettingsServiceLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : ResourceSettingsServiceLimitedErrorCountRetryPolicy(
+            rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -81,7 +86,8 @@ class ResourceSettingsServiceLimitedErrorCountRetryPolicy : public ResourceSetti
     return impl_.IsPermanentFailure(status);
   }
   std::unique_ptr<ResourceSettingsServiceRetryPolicy> clone() const override {
-    return std::make_unique<ResourceSettingsServiceLimitedErrorCountRetryPolicy>(
+    return std::make_unique<
+        ResourceSettingsServiceLimitedErrorCountRetryPolicy>(
         maximum_failures());
   }
 
@@ -89,7 +95,9 @@ class ResourceSettingsServiceLimitedErrorCountRetryPolicy : public ResourceSetti
   using BaseType = ResourceSettingsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<resourcesettings_v1_internal::ResourceSettingsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      resourcesettings_v1_internal::ResourceSettingsServiceRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +110,8 @@ class ResourceSettingsServiceLimitedErrorCountRetryPolicy : public ResourceSetti
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class ResourceSettingsServiceLimitedTimeRetryPolicy : public ResourceSettingsServiceRetryPolicy {
+class ResourceSettingsServiceLimitedTimeRetryPolicy
+    : public ResourceSettingsServiceRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +136,14 @@ class ResourceSettingsServiceLimitedTimeRetryPolicy : public ResourceSettingsSer
   template <typename DurationRep, typename DurationPeriod>
   explicit ResourceSettingsServiceLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  ResourceSettingsServiceLimitedTimeRetryPolicy(ResourceSettingsServiceLimitedTimeRetryPolicy&& rhs) noexcept
-    : ResourceSettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  ResourceSettingsServiceLimitedTimeRetryPolicy(ResourceSettingsServiceLimitedTimeRetryPolicy const& rhs) noexcept
-    : ResourceSettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ResourceSettingsServiceLimitedTimeRetryPolicy(
+      ResourceSettingsServiceLimitedTimeRetryPolicy&& rhs) noexcept
+      : ResourceSettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  ResourceSettingsServiceLimitedTimeRetryPolicy(
+      ResourceSettingsServiceLimitedTimeRetryPolicy const& rhs) noexcept
+      : ResourceSettingsServiceLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,20 +165,24 @@ class ResourceSettingsServiceLimitedTimeRetryPolicy : public ResourceSettingsSer
   using BaseType = ResourceSettingsServiceRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<resourcesettings_v1_internal::ResourceSettingsServiceRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      resourcesettings_v1_internal::ResourceSettingsServiceRetryTraits>
+      impl_;
 };
 
 /**
- * The `ResourceSettingsServiceConnection` object for `ResourceSettingsServiceClient`.
+ * The `ResourceSettingsServiceConnection` object for
+ * `ResourceSettingsServiceClient`.
  *
  * This interface defines virtual methods for each of the user-facing overload
- * sets in `ResourceSettingsServiceClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `ResourceSettingsServiceClient`.
+ * sets in `ResourceSettingsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ResourceSettingsServiceClient`.
  *
  * To create a concrete instance, see `MakeResourceSettingsServiceConnection()`.
  *
- * For mocking, see `resourcesettings_v1_mocks::MockResourceSettingsServiceConnection`.
+ * For mocking, see
+ * `resourcesettings_v1_mocks::MockResourceSettingsServiceConnection`.
  */
 class ResourceSettingsServiceConnection {
  public:
@@ -176,38 +191,42 @@ class ResourceSettingsServiceConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::resourcesettings::v1::Setting>
-  ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request);
+  ListSettings(
+      google::cloud::resourcesettings::v1::ListSettingsRequest request);
 
-  virtual StatusOr<google::cloud::resourcesettings::v1::Setting>
-  GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request);
+  virtual StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request);
 
-  virtual StatusOr<google::cloud::resourcesettings::v1::Setting>
-  UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
+  virtual StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `ResourceSettingsServiceConnection`.
+ * A factory function to construct an object of type
+ * `ResourceSettingsServiceConnection`.
  *
  * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of ResourceSettingsServiceClient.
+ * should be passed as an argument to the constructor of
+ * ResourceSettingsServiceClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `ResourceSettingsServiceConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `ResourceSettingsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcesettings_v1::ResourceSettingsServicePolicyOptionList`
+ * -
+ * `google::cloud::resourcesettings_v1::ResourceSettingsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `ResourceSettingsServiceConnection` created by
- * this function.
+ * @param options (optional) Configure the `ResourceSettingsServiceConnection`
+ * created by this function.
  */
-std::shared_ptr<ResourceSettingsServiceConnection> MakeResourceSettingsServiceConnection(
-    Options options = {});
+std::shared_ptr<ResourceSettingsServiceConnection>
+MakeResourceSettingsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_v1

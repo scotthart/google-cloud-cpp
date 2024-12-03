@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_OPTIONS_H
 
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -55,7 +55,8 @@ struct ResourceSettingsServiceBackoffPolicyOption {
  * @ingroup google-cloud-resourcesettings-options
  */
 struct ResourceSettingsServiceConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>;
+  using Type =
+      std::shared_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>;
 };
 
 /**

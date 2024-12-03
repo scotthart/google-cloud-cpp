@@ -36,12 +36,15 @@ class RowAccessPolicyServiceTracingConnection
   ~RowAccessPolicyServiceTracingConnection() override = default;
 
   explicit RowAccessPolicyServiceTracingConnection(
-    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> child);
+      std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
   StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-  ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) override;
+  ListRowAccessPolicies(
+      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request)
+      override;
 
  private:
   std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> child_;

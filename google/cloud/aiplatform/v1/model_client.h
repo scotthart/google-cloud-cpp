@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ModelServiceClient {
  public:
-  explicit ModelServiceClient(std::shared_ptr<ModelServiceConnection> connection, Options opts = {});
+  explicit ModelServiceClient(
+      std::shared_ptr<ModelServiceConnection> connection, Options opts = {});
   ~ModelServiceClient();
 
   ///@{
@@ -77,10 +78,12 @@ class ModelServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ModelServiceClient const& a, ModelServiceClient const& b) {
+  friend bool operator==(ModelServiceClient const& a,
+                         ModelServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ModelServiceClient const& a, ModelServiceClient const& b) {
+  friend bool operator!=(ModelServiceClient const& a,
+                         ModelServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -117,7 +120,9 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(std::string const& parent, google::cloud::aiplatform::v1::Model const& model, Options opts = {});
+  UploadModel(std::string const& parent,
+              google::cloud::aiplatform::v1::Model const& model,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -130,8 +135,9 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UploadModel(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Model const& model, Options opts = {});
+  StatusOr<google::longrunning::Operation> UploadModel(
+      NoAwaitTag, std::string const& parent,
+      google::cloud::aiplatform::v1::Model const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -168,7 +174,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request, Options opts = {});
+  UploadModel(google::cloud::aiplatform::v1::UploadModelRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -181,8 +188,10 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UploadModel(NoAwaitTag, google::cloud::aiplatform::v1::UploadModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UploadModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UploadModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -194,7 +203,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::UploadModelResponse>>
-  UploadModel(google::longrunning::Operation const& operation, Options opts = {});
+  UploadModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -229,8 +239,8 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  GetModel(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +269,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  GetModel(google::cloud::aiplatform::v1::GetModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> GetModel(
+      google::cloud::aiplatform::v1::GetModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -294,8 +305,8 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModels(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +344,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModels(google::cloud::aiplatform::v1::ListModelsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModels(
+      google::cloud::aiplatform::v1::ListModelsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -367,8 +379,8 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModelVersions(std::string const& name, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -406,8 +418,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Model>
-  ListModelVersions(google::cloud::aiplatform::v1::ListModelVersionsRequest request, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Model> ListModelVersions(
+      google::cloud::aiplatform::v1::ListModelVersionsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -452,8 +465,9 @@ class ModelServiceClient {
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  UpdateModel(google::cloud::aiplatform::v1::Model const& model, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
+      google::cloud::aiplatform::v1::Model const& model,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -482,8 +496,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateModelRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L476}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  UpdateModel(google::cloud::aiplatform::v1::UpdateModelRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> UpdateModel(
+      google::cloud::aiplatform::v1::UpdateModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -515,7 +530,8 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L655}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
   UpdateExplanationDataset(std::string const& model, Options opts = {});
 
   // clang-format off
@@ -529,8 +545,8 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateExplanationDataset(NoAwaitTag, std::string const& model, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      NoAwaitTag, std::string const& model, Options opts = {});
 
   // clang-format off
   ///
@@ -566,8 +582,12 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.UpdateExplanationDatasetResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L655}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request, Options opts = {});
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -580,8 +600,11 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateExplanationDataset(NoAwaitTag, google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateExplanationDataset(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -592,8 +615,10 @@ class ModelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
-  UpdateExplanationDataset(google::longrunning::Operation const& operation, Options opts = {});
+  future<
+      StatusOr<google::cloud::aiplatform::v1::UpdateExplanationDatasetResponse>>
+  UpdateExplanationDataset(google::longrunning::Operation const& operation,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -646,8 +671,9 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(NoAwaitTag,
+                                                       std::string const& name,
+                                                       Options opts = {});
 
   // clang-format off
   ///
@@ -691,7 +717,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request, Options opts = {});
+  DeleteModel(google::cloud::aiplatform::v1::DeleteModelRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -704,8 +731,10 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModel(NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -717,7 +746,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModel(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -772,8 +802,8 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModelVersion(NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -817,7 +847,9 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request, Options opts = {});
+  DeleteModelVersion(
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -830,8 +862,10 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  DeleteModelVersion(NoAwaitTag, google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> DeleteModelVersion(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -843,7 +877,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteModelVersion(google::longrunning::Operation const& operation, Options opts = {});
+  DeleteModelVersion(google::longrunning::Operation const& operation,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -882,8 +917,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  MergeVersionAliases(std::string const& name, std::vector<std::string> const& version_aliases, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
+      std::string const& name, std::vector<std::string> const& version_aliases,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -912,8 +948,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L38}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Model>
-  MergeVersionAliases(google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Model> MergeVersionAliases(
+      google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -952,7 +989,11 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(std::string const& name, google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const& output_config, Options opts = {});
+  ExportModel(
+      std::string const& name,
+      google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
+          output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -965,8 +1006,11 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag, std::string const& name, google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const& output_config, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag, std::string const& name,
+      google::cloud::aiplatform::v1::ExportModelRequest::OutputConfig const&
+          output_config,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1007,7 +1051,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request, Options opts = {});
+  ExportModel(google::cloud::aiplatform::v1::ExportModelRequest const& request,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -1020,8 +1065,10 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ExportModel(NoAwaitTag, google::cloud::aiplatform::v1::ExportModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ExportModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::ExportModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1033,7 +1080,8 @@ class ModelServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportModelResponse>>
-  ExportModel(google::longrunning::Operation const& operation, Options opts = {});
+  ExportModel(google::longrunning::Operation const& operation,
+              Options opts = {});
 
   // clang-format off
   ///
@@ -1074,8 +1122,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L235}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(std::string const& parent, std::string const& source_model, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
+      std::string const& parent, std::string const& source_model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1088,8 +1137,9 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CopyModel(NoAwaitTag, std::string const& parent, std::string const& source_model, Options opts = {});
+  StatusOr<google::longrunning::Operation> CopyModel(
+      NoAwaitTag, std::string const& parent, std::string const& source_model,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1131,8 +1181,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.Model.metadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/model.proto#L235}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(google::cloud::aiplatform::v1::CopyModelRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
+      google::cloud::aiplatform::v1::CopyModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1145,8 +1196,10 @@ class ModelServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CopyModel(NoAwaitTag, google::cloud::aiplatform::v1::CopyModelRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CopyModel(
+      NoAwaitTag,
+      google::cloud::aiplatform::v1::CopyModelRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1157,8 +1210,8 @@ class ModelServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>>
-  CopyModel(google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::CopyModelResponse>> CopyModel(
+      google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1185,7 +1238,10 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  ImportModelEvaluation(std::string const& parent, google::cloud::aiplatform::v1::ModelEvaluation const& model_evaluation, Options opts = {});
+  ImportModelEvaluation(
+      std::string const& parent,
+      google::cloud::aiplatform::v1::ModelEvaluation const& model_evaluation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1215,7 +1271,10 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  ImportModelEvaluation(google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request, Options opts = {});
+  ImportModelEvaluation(
+      google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1242,8 +1301,13 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.BatchImportModelEvaluationSlicesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L767}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-  BatchImportModelEvaluationSlices(std::string const& parent, std::vector<google::cloud::aiplatform::v1::ModelEvaluationSlice> const& model_evaluation_slices, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+  BatchImportModelEvaluationSlices(
+      std::string const& parent,
+      std::vector<google::cloud::aiplatform::v1::ModelEvaluationSlice> const&
+          model_evaluation_slices,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1272,8 +1336,12 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.BatchImportModelEvaluationSlicesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L767}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
-  BatchImportModelEvaluationSlices(google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+  BatchImportModelEvaluationSlices(
+      google::cloud::aiplatform::v1::
+          BatchImportModelEvaluationSlicesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1300,8 +1368,13 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.BatchImportEvaluatedAnnotationsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L794}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-  BatchImportEvaluatedAnnotations(std::string const& parent, std::vector<google::cloud::aiplatform::v1::EvaluatedAnnotation> const& evaluated_annotations, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
+  BatchImportEvaluatedAnnotations(
+      std::string const& parent,
+      std::vector<google::cloud::aiplatform::v1::EvaluatedAnnotation> const&
+          evaluated_annotations,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1330,8 +1403,12 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.BatchImportEvaluatedAnnotationsResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_service.proto#L794}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
-  BatchImportEvaluatedAnnotations(google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
+  BatchImportEvaluatedAnnotations(
+      google::cloud::aiplatform::v1::
+          BatchImportEvaluatedAnnotationsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1357,8 +1434,8 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  GetModelEvaluation(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1387,8 +1464,9 @@ class ModelServiceClient {
   /// [google.cloud.aiplatform.v1.ModelEvaluation]: @googleapis_reference_link{google/cloud/aiplatform/v1/model_evaluation.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
-  GetModelEvaluation(google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ModelEvaluation> GetModelEvaluation(
+      google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1462,7 +1540,9 @@ class ModelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluation>
-  ListModelEvaluations(google::cloud::aiplatform::v1::ListModelEvaluationsRequest request, Options opts = {});
+  ListModelEvaluations(
+      google::cloud::aiplatform::v1::ListModelEvaluationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1519,7 +1599,10 @@ class ModelServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  GetModelEvaluationSlice(google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request, Options opts = {});
+  GetModelEvaluationSlice(
+      google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1594,7 +1677,9 @@ class ModelServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::ModelEvaluationSlice>
-  ListModelEvaluationSlices(google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request, Options opts = {});
+  ListModelEvaluationSlices(
+      google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1632,8 +1717,8 @@ class ModelServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1662,8 +1747,9 @@ class ModelServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1695,8 +1781,8 @@ class ModelServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1727,8 +1813,8 @@ class ModelServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1763,8 +1849,9 @@ class ModelServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1799,8 +1886,8 @@ class ModelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -1839,8 +1926,8 @@ class ModelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1866,8 +1953,8 @@ class ModelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -1898,8 +1985,9 @@ class ModelServiceClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1923,8 +2011,7 @@ class ModelServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1953,8 +2040,9 @@ class ModelServiceClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1988,8 +2076,7 @@ class ModelServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2028,8 +2115,9 @@ class ModelServiceClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2066,8 +2154,9 @@ class ModelServiceClient {
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> WaitOperation(
+      google::longrunning::WaitOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ModelServiceConnection> connection_;

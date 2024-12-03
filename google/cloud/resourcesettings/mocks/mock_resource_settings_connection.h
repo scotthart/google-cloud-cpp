@@ -30,8 +30,10 @@ namespace cloud {
 namespace resourcesettings_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use resourcesettings_v1_mocks::MockResourceSettingsServiceConnection directly.
-using ::google::cloud::resourcesettings_v1_mocks::MockResourceSettingsServiceConnection;
+/// @deprecated Use
+/// resourcesettings_v1_mocks::MockResourceSettingsServiceConnection directly.
+using ::google::cloud::resourcesettings_v1_mocks::
+    MockResourceSettingsServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_mocks

@@ -31,72 +31,76 @@ StorageInsightsAuth::StorageInsightsAuth(
     std::shared_ptr<StorageInsightsStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse> StorageInsightsAuth::ListReportConfigs(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
+StorageInsightsAuth::ListReportConfigs(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReportConfigs(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::GetReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::GetReportConfig(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::CreateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::CreateReportConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->CreateReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsAuth::UpdateReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+StorageInsightsAuth::UpdateReportConfig(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateReportConfig(context, options, request);
 }
 
 Status StorageInsightsAuth::DeleteReportConfig(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteReportConfig(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse> StorageInsightsAuth::ListReportDetails(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
+StorageInsightsAuth::ListReportDetails(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+        request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListReportDetails(context, options, request);
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportDetail> StorageInsightsAuth::GetReportDetail(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportDetail>
+StorageInsightsAuth::GetReportDetail(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetReportDetail(context, options, request);
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse> StorageInsightsAuth::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse>
+StorageInsightsAuth::ListLocations(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -104,17 +108,16 @@ StatusOr<google::cloud::location::ListLocationsResponse> StorageInsightsAuth::Li
 }
 
 StatusOr<google::cloud::location::Location> StorageInsightsAuth::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetLocation(context, options, request);
 }
 
-StatusOr<google::longrunning::ListOperationsResponse> StorageInsightsAuth::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse>
+StorageInsightsAuth::ListOperations(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -122,8 +125,7 @@ StatusOr<google::longrunning::ListOperationsResponse> StorageInsightsAuth::ListO
 }
 
 StatusOr<google::longrunning::Operation> StorageInsightsAuth::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -131,8 +133,7 @@ StatusOr<google::longrunning::Operation> StorageInsightsAuth::GetOperation(
 }
 
 Status StorageInsightsAuth::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
@@ -140,8 +141,7 @@ Status StorageInsightsAuth::DeleteOperation(
 }
 
 Status StorageInsightsAuth::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

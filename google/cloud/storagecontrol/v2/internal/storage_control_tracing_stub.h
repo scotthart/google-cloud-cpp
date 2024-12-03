@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_TRACING_STUB_H
 
+#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -39,60 +39,59 @@ class StorageControlTracingStub : public StorageControlStub {
   explicit StorageControlTracingStub(std::shared_ptr<StorageControlStub> child);
 
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::CreateFolderRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::CreateFolderRequest const& request)
+      override;
 
-  Status DeleteFolder(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::DeleteFolderRequest const& request) override;
+  Status DeleteFolder(grpc::ClientContext& context, Options const& options,
+                      google::storage::control::v2::DeleteFolderRequest const&
+                          request) override;
 
   StatusOr<google::storage::control::v2::Folder> GetFolder(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::GetFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::ListFoldersResponse> ListFolders(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::storage::control::v2::ListFoldersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRenameFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::storage::control::v2::RenameFolderRequest const& request) override;
+      google::storage::control::v2::RenameFolderRequest const& request)
+      override;
 
   StatusOr<google::longrunning::Operation> RenameFolder(
-      grpc::ClientContext& context,
-      Options options,
-      google::storage::control::v2::RenameFolderRequest const& request) override;
+      grpc::ClientContext& context, Options options,
+      google::storage::control::v2::RenameFolderRequest const& request)
+      override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::GetStorageLayoutRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetStorageLayoutRequest const& request)
+      override;
 
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::CreateManagedFolderRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::CreateManagedFolderRequest const& request)
+      override;
 
   Status DeleteManagedFolder(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::DeleteManagedFolderRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::DeleteManagedFolderRequest const& request)
+      override;
 
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::GetManagedFolderRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::GetManagedFolderRequest const& request)
+      override;
 
-  StatusOr<google::storage::control::v2::ListManagedFoldersResponse> ListManagedFolders(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::storage::control::v2::ListManagedFoldersRequest const& request) override;
+  StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
+  ListManagedFolders(
+      grpc::ClientContext& context, Options const& options,
+      google::storage::control::v2::ListManagedFoldersRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -108,7 +107,8 @@ class StorageControlTracingStub : public StorageControlStub {
 
  private:
   std::shared_ptr<StorageControlStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

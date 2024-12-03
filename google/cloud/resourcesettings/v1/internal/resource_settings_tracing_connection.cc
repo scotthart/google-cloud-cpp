@@ -29,29 +29,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-ResourceSettingsServiceTracingConnection::ResourceSettingsServiceTracingConnection(
-    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection> child)
+ResourceSettingsServiceTracingConnection::
+    ResourceSettingsServiceTracingConnection(
+        std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceTracingConnection::ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request) {
-  auto span = internal::MakeSpan("resourcesettings_v1::ResourceSettingsServiceConnection::ListSettings");
+ResourceSettingsServiceTracingConnection::ListSettings(
+    google::cloud::resourcesettings::v1::ListSettingsRequest request) {
+  auto span = internal::MakeSpan(
+      "resourcesettings_v1::ResourceSettingsServiceConnection::ListSettings");
   internal::OTelScope scope(span);
   auto sr = child_->ListSettings(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::resourcesettings::v1::Setting>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::resourcesettings::v1::Setting>(std::move(span),
+                                                    std::move(sr));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceTracingConnection::GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  auto span = internal::MakeSpan("resourcesettings_v1::ResourceSettingsServiceConnection::GetSetting");
+ResourceSettingsServiceTracingConnection::GetSetting(
+    google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "resourcesettings_v1::ResourceSettingsServiceConnection::GetSetting");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetSetting(request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceTracingConnection::UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  auto span = internal::MakeSpan("resourcesettings_v1::ResourceSettingsServiceConnection::UpdateSetting");
+ResourceSettingsServiceTracingConnection::UpdateSetting(
+    google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
+  auto span = internal::MakeSpan(
+      "resourcesettings_v1::ResourceSettingsServiceConnection::UpdateSetting");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateSetting(request));
 }
@@ -60,10 +69,12 @@ ResourceSettingsServiceTracingConnection::UpdateSetting(google::cloud::resources
 
 std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceTracingConnection(
-    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection> conn) {
+    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<ResourceSettingsServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<ResourceSettingsServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

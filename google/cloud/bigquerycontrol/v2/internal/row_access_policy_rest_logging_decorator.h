@@ -34,16 +34,20 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RowAccessPolicyServiceRestLogging : public RowAccessPolicyServiceRestStub {
+class RowAccessPolicyServiceRestLogging
+    : public RowAccessPolicyServiceRestStub {
  public:
   ~RowAccessPolicyServiceRestLogging() override = default;
-  RowAccessPolicyServiceRestLogging(std::shared_ptr<RowAccessPolicyServiceRestStub> child,
-                       TracingOptions tracing_options,
-                       std::set<std::string> components);
+  RowAccessPolicyServiceRestLogging(
+      std::shared_ptr<RowAccessPolicyServiceRestStub> child,
+      TracingOptions tracing_options, std::set<std::string> components);
 
-  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
+  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
+  ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request)
+      override;
 
  private:
   std::shared_ptr<RowAccessPolicyServiceRestStub> child_;

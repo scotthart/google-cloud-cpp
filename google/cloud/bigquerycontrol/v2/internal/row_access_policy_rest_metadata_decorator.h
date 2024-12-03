@@ -32,16 +32,20 @@ namespace cloud {
 namespace bigquerycontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class RowAccessPolicyServiceRestMetadata : public RowAccessPolicyServiceRestStub {
+class RowAccessPolicyServiceRestMetadata
+    : public RowAccessPolicyServiceRestStub {
  public:
   ~RowAccessPolicyServiceRestMetadata() override = default;
   explicit RowAccessPolicyServiceRestMetadata(
       std::shared_ptr<RowAccessPolicyServiceRestStub> child,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
+  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
+  ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) override;
+      Options const& options,
+      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request)
+      override;
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,

@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_STORAGE_INSIGHTS_CONNECTION_H
 
+#include "google/cloud/storageinsights/v1/internal/storage_insights_retry_traits.h"
+#include "google/cloud/storageinsights/v1/storage_insights_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storageinsights/v1/internal/storage_insights_retry_traits.h"
-#include "google/cloud/storageinsights/v1/storage_insights_connection_idempotency_policy.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <google/cloud/storageinsights/v1/storageinsights.pb.h>
@@ -52,7 +52,8 @@ class StorageInsightsRetryPolicy : public ::google::cloud::RetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StorageInsightsLimitedErrorCountRetryPolicy : public StorageInsightsRetryPolicy {
+class StorageInsightsLimitedErrorCountRetryPolicy
+    : public StorageInsightsRetryPolicy {
  public:
   /**
    * Create an instance that tolerates up to @p maximum_failures transient
@@ -62,14 +63,14 @@ class StorageInsightsLimitedErrorCountRetryPolicy : public StorageInsightsRetryP
    *     @p maximum_failures == 0.
    */
   explicit StorageInsightsLimitedErrorCountRetryPolicy(int maximum_failures)
-    : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {}
 
   StorageInsightsLimitedErrorCountRetryPolicy(
       StorageInsightsLimitedErrorCountRetryPolicy&& rhs) noexcept
-    : StorageInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
   StorageInsightsLimitedErrorCountRetryPolicy(
       StorageInsightsLimitedErrorCountRetryPolicy const& rhs) noexcept
-    : StorageInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
+      : StorageInsightsLimitedErrorCountRetryPolicy(rhs.maximum_failures()) {}
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
@@ -89,7 +90,9 @@ class StorageInsightsLimitedErrorCountRetryPolicy : public StorageInsightsRetryP
   using BaseType = StorageInsightsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedErrorCountRetryPolicy<storageinsights_v1_internal::StorageInsightsRetryTraits> impl_;
+  google::cloud::internal::LimitedErrorCountRetryPolicy<
+      storageinsights_v1_internal::StorageInsightsRetryTraits>
+      impl_;
 };
 
 /**
@@ -102,7 +105,8 @@ class StorageInsightsLimitedErrorCountRetryPolicy : public StorageInsightsRetryP
  * In this class the following status codes are treated as transient errors:
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
  */
-class StorageInsightsLimitedTimeRetryPolicy : public StorageInsightsRetryPolicy {
+class StorageInsightsLimitedTimeRetryPolicy
+    : public StorageInsightsRetryPolicy {
  public:
   /**
    * Constructor given a `std::chrono::duration<>` object.
@@ -127,12 +131,14 @@ class StorageInsightsLimitedTimeRetryPolicy : public StorageInsightsRetryPolicy 
   template <typename DurationRep, typename DurationPeriod>
   explicit StorageInsightsLimitedTimeRetryPolicy(
       std::chrono::duration<DurationRep, DurationPeriod> maximum_duration)
-    : impl_(maximum_duration) {}
+      : impl_(maximum_duration) {}
 
-  StorageInsightsLimitedTimeRetryPolicy(StorageInsightsLimitedTimeRetryPolicy&& rhs) noexcept
-    : StorageInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
-  StorageInsightsLimitedTimeRetryPolicy(StorageInsightsLimitedTimeRetryPolicy const& rhs) noexcept
-    : StorageInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageInsightsLimitedTimeRetryPolicy(
+      StorageInsightsLimitedTimeRetryPolicy&& rhs) noexcept
+      : StorageInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
+  StorageInsightsLimitedTimeRetryPolicy(
+      StorageInsightsLimitedTimeRetryPolicy const& rhs) noexcept
+      : StorageInsightsLimitedTimeRetryPolicy(rhs.maximum_duration()) {}
 
   std::chrono::milliseconds maximum_duration() const {
     return impl_.maximum_duration();
@@ -154,7 +160,9 @@ class StorageInsightsLimitedTimeRetryPolicy : public StorageInsightsRetryPolicy 
   using BaseType = StorageInsightsRetryPolicy;
 
  private:
-  google::cloud::internal::LimitedTimeRetryPolicy<storageinsights_v1_internal::StorageInsightsRetryTraits> impl_;
+  google::cloud::internal::LimitedTimeRetryPolicy<
+      storageinsights_v1_internal::StorageInsightsRetryTraits>
+      impl_;
 };
 
 /**
@@ -176,54 +184,66 @@ class StorageInsightsConnection {
   virtual Options options() { return Options{}; }
 
   virtual StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-  ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request);
+  ListReportConfigs(
+      google::cloud::storageinsights::v1::ListReportConfigsRequest request);
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request);
+  GetReportConfig(
+      google::cloud::storageinsights::v1::GetReportConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request);
+  CreateReportConfig(
+      google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+          request);
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-  UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request);
+  UpdateReportConfig(
+      google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+          request);
 
-  virtual Status
-  DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request);
+  virtual Status DeleteReportConfig(
+      google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+          request);
 
   virtual StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-  ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request);
+  ListReportDetails(
+      google::cloud::storageinsights::v1::ListReportDetailsRequest request);
 
   virtual StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-  GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request);
+  GetReportDetail(
+      google::cloud::storageinsights::v1::GetReportDetailRequest const&
+          request);
 
-  virtual StreamRange<google::cloud::location::Location>
-  ListLocations(google::cloud::location::ListLocationsRequest request);
+  virtual StreamRange<google::cloud::location::Location> ListLocations(
+      google::cloud::location::ListLocationsRequest request);
 
-  virtual StatusOr<google::cloud::location::Location>
-  GetLocation(google::cloud::location::GetLocationRequest const& request);
+  virtual StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::location::GetLocationRequest const& request);
 
-  virtual StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request);
+  virtual StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request);
 
-  virtual StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request);
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request);
 
-  virtual Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
+  virtual Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request);
 
-  virtual Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request);
+  virtual Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request);
 };
 
 /**
- * A factory function to construct an object of type `StorageInsightsConnection`.
+ * A factory function to construct an object of type
+ * `StorageInsightsConnection`.
  *
  * The returned connection object should not be used directly; instead it
  * should be passed as an argument to the constructor of StorageInsightsClient.
  *
  * The optional @p options argument may be used to configure aspects of the
- * returned `StorageInsightsConnection`. Expected options are any of the types in
- * the following option lists:
+ * returned `StorageInsightsConnection`. Expected options are any of the types
+ * in the following option lists:
  *
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
@@ -233,8 +253,8 @@ class StorageInsightsConnection {
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
  *
- * @param options (optional) Configure the `StorageInsightsConnection` created by
- * this function.
+ * @param options (optional) Configure the `StorageInsightsConnection` created
+ * by this function.
  */
 std::shared_ptr<StorageInsightsConnection> MakeStorageInsightsConnection(
     Options options = {});

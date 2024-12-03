@@ -31,52 +31,44 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ModelServiceLogging::ModelServiceLogging(
-    std::shared_ptr<ModelServiceStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<ModelServiceStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncUploadModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::UploadModelRequest const& request) {
-        return child_->AsyncUploadModel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncUploadModel(cq, std::move(context),
+                                        std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::UploadModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UploadModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceLogging::UploadModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UploadModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UploadModelRequest const& request) {
         return child_->UploadModel(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceLogging::GetModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceLogging::GetModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::GetModelRequest const& request) {
         return child_->GetModel(context, options, request);
       },
@@ -85,12 +77,10 @@ ModelServiceLogging::GetModel(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelsResponse>
 ModelServiceLogging::ListModels(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ListModelsRequest const& request) {
         return child_->ListModels(context, options, request);
       },
@@ -99,26 +89,22 @@ ModelServiceLogging::ListModels(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelVersionsResponse>
 ModelServiceLogging::ListModelVersions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListModelVersionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListModelVersionsRequest const&
+                 request) {
         return child_->ListModelVersions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::Model>
-ModelServiceLogging::UpdateModel(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::aiplatform::v1::Model> ModelServiceLogging::UpdateModel(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::UpdateModelRequest const& request) {
         return child_->UpdateModel(context, options, request);
       },
@@ -127,15 +113,18 @@ ModelServiceLogging::UpdateModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncUpdateExplanationDataset(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::shared_ptr<grpc::ClientContext> context,
-             google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) {
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::shared_ptr<grpc::ClientContext> context,
+          google::cloud::internal::ImmutableOptions options,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request) {
         return child_->AsyncUpdateExplanationDataset(
             cq, std::move(context), std::move(options), request);
       },
@@ -145,13 +134,14 @@ ModelServiceLogging::AsyncUpdateExplanationDataset(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceLogging::UpdateExplanationDataset(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::UpdateExplanationDatasetRequest const&
+              request) {
         return child_->UpdateExplanationDataset(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -159,30 +149,27 @@ ModelServiceLogging::UpdateExplanationDataset(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncDeleteModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
-        return child_->AsyncDeleteModel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncDeleteModel(cq, std::move(context),
+                                        std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::DeleteModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceLogging::DeleteModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::DeleteModelRequest const& request) {
         return child_->DeleteModel(context, options, request);
       },
@@ -191,17 +178,18 @@ ModelServiceLogging::DeleteModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncDeleteModelVersion(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
-             google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
-        return child_->AsyncDeleteModelVersion(
-            cq, std::move(context), std::move(options), request);
+             google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
+                 request) {
+        return child_->AsyncDeleteModelVersion(cq, std::move(context),
+                                               std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -209,13 +197,12 @@ ModelServiceLogging::AsyncDeleteModelVersion(
 
 StatusOr<google::longrunning::Operation>
 ModelServiceLogging::DeleteModelVersion(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::DeleteModelVersionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::DeleteModelVersionRequest const&
+                 request) {
         return child_->DeleteModelVersion(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -223,13 +210,12 @@ ModelServiceLogging::DeleteModelVersion(
 
 StatusOr<google::cloud::aiplatform::v1::Model>
 ModelServiceLogging::MergeVersionAliases(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::MergeVersionAliasesRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::MergeVersionAliasesRequest const&
+                 request) {
         return child_->MergeVersionAliases(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -237,30 +223,27 @@ ModelServiceLogging::MergeVersionAliases(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncExportModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::ExportModelRequest const& request) {
-        return child_->AsyncExportModel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncExportModel(cq, std::move(context),
+                                        std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::ExportModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::ExportModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceLogging::ExportModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::ExportModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::ExportModelRequest const& request) {
         return child_->ExportModel(context, options, request);
       },
@@ -269,30 +252,27 @@ ModelServiceLogging::ExportModel(
 
 future<StatusOr<google::longrunning::Operation>>
 ModelServiceLogging::AsyncCopyModel(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::cloud::aiplatform::v1::CopyModelRequest const& request) {
-        return child_->AsyncCopyModel(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCopyModel(cq, std::move(context),
+                                      std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::CopyModel(
-      grpc::ClientContext& context,
-      Options options,
-      google::cloud::aiplatform::v1::CopyModelRequest const& request) {
+StatusOr<google::longrunning::Operation> ModelServiceLogging::CopyModel(
+    grpc::ClientContext& context, Options options,
+    google::cloud::aiplatform::v1::CopyModelRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::aiplatform::v1::CopyModelRequest const& request) {
         return child_->CopyModel(context, options, request);
       },
@@ -301,55 +281,57 @@ ModelServiceLogging::CopyModel(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 ModelServiceLogging::ImportModelEvaluation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ImportModelEvaluationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ImportModelEvaluationRequest const&
+                 request) {
         return child_->ImportModelEvaluation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
+StatusOr<
+    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesResponse>
 ModelServiceLogging::BatchImportModelEvaluationSlices(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::
+        BatchImportModelEvaluationSlicesRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::BatchImportModelEvaluationSlicesRequest const& request) {
-        return child_->BatchImportModelEvaluationSlices(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 BatchImportModelEvaluationSlicesRequest const& request) {
+        return child_->BatchImportModelEvaluationSlices(context, options,
+                                                        request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsResponse>
 ModelServiceLogging::BatchImportEvaluatedAnnotations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::BatchImportEvaluatedAnnotationsRequest const& request) {
-        return child_->BatchImportEvaluatedAnnotations(context, options, request);
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::
+                 BatchImportEvaluatedAnnotationsRequest const& request) {
+        return child_->BatchImportEvaluatedAnnotations(context, options,
+                                                       request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluation>
 ModelServiceLogging::GetModelEvaluation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetModelEvaluationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::GetModelEvaluationRequest const&
+                 request) {
         return child_->GetModelEvaluation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -357,13 +339,12 @@ ModelServiceLogging::GetModelEvaluation(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationsResponse>
 ModelServiceLogging::ListModelEvaluations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListModelEvaluationsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::aiplatform::v1::ListModelEvaluationsRequest const&
+                 request) {
         return child_->ListModelEvaluations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -371,13 +352,14 @@ ModelServiceLogging::ListModelEvaluations(
 
 StatusOr<google::cloud::aiplatform::v1::ModelEvaluationSlice>
 ModelServiceLogging::GetModelEvaluationSlice(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::GetModelEvaluationSliceRequest const&
+              request) {
         return child_->GetModelEvaluationSlice(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -385,13 +367,14 @@ ModelServiceLogging::GetModelEvaluationSlice(
 
 StatusOr<google::cloud::aiplatform::v1::ListModelEvaluationSlicesResponse>
 ModelServiceLogging::ListModelEvaluationSlices(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::aiplatform::v1::ListModelEvaluationSlicesRequest const&
+              request) {
         return child_->ListModelEvaluationSlices(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -399,54 +382,43 @@ ModelServiceLogging::ListModelEvaluationSlices(
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 ModelServiceLogging::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::ListLocationsRequest const& request) {
         return child_->ListLocations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::cloud::location::Location>
-ModelServiceLogging::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::cloud::location::Location> ModelServiceLogging::GetLocation(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::cloud::location::GetLocationRequest const& request) {
         return child_->GetLocation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-ModelServiceLogging::SetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ModelServiceLogging::SetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::SetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::iam::v1::Policy>
-ModelServiceLogging::GetIamPolicy(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::iam::v1::Policy> ModelServiceLogging::GetIamPolicy(
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::GetIamPolicyRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, options, request);
       },
@@ -455,12 +427,10 @@ ModelServiceLogging::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ModelServiceLogging::TestIamPermissions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::iam::v1::TestIamPermissionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, options, request);
       },
@@ -469,68 +439,54 @@ ModelServiceLogging::TestIamPermissions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ModelServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ModelServiceLogging::GetOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ModelServiceLogging::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ModelServiceLogging::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::DeleteOperationRequest const& request) {
         return child_->DeleteOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ModelServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ModelServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-ModelServiceLogging::WaitOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::longrunning::Operation> ModelServiceLogging::WaitOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::WaitOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::WaitOperationRequest const& request) {
         return child_->WaitOperation(context, options, request);
       },
@@ -548,8 +504,8 @@ ModelServiceLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -565,8 +521,8 @@ future<Status> ModelServiceLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

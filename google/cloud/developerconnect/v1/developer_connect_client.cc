@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DeveloperConnectClient::DeveloperConnectClient(
     std::shared_ptr<DeveloperConnectConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DeveloperConnectClient::~DeveloperConnectClient() = default;
 
 StreamRange<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectClient::ListConnections(std::string const& parent, Options opts) {
+DeveloperConnectClient::ListConnections(std::string const& parent,
+                                        Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::ListConnectionsRequest request;
   request.set_parent(parent);
@@ -41,7 +42,9 @@ DeveloperConnectClient::ListConnections(std::string const& parent, Options opts)
 }
 
 StreamRange<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectClient::ListConnections(google::cloud::developerconnect::v1::ListConnectionsRequest request, Options opts) {
+DeveloperConnectClient::ListConnections(
+    google::cloud::developerconnect::v1::ListConnectionsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConnections(std::move(request));
 }
@@ -55,13 +58,18 @@ DeveloperConnectClient::GetConnection(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::developerconnect::v1::Connection>
-DeveloperConnectClient::GetConnection(google::cloud::developerconnect::v1::GetConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::GetConnection(
+    google::cloud::developerconnect::v1::GetConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConnection(request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::CreateConnection(std::string const& parent, google::cloud::developerconnect::v1::Connection const& connection, std::string const& connection_id, Options opts) {
+DeveloperConnectClient::CreateConnection(
+    std::string const& parent,
+    google::cloud::developerconnect::v1::Connection const& connection,
+    std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::CreateConnectionRequest request;
   request.set_parent(parent);
@@ -71,7 +79,10 @@ DeveloperConnectClient::CreateConnection(std::string const& parent, google::clou
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::CreateConnection(NoAwaitTag, std::string const& parent, google::cloud::developerconnect::v1::Connection const& connection, std::string const& connection_id, Options opts) {
+DeveloperConnectClient::CreateConnection(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::developerconnect::v1::Connection const& connection,
+    std::string const& connection_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::CreateConnectionRequest request;
   request.set_parent(parent);
@@ -81,25 +92,33 @@ DeveloperConnectClient::CreateConnection(NoAwaitTag, std::string const& parent, 
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::CreateConnection(google::cloud::developerconnect::v1::CreateConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::CreateConnection(
+    google::cloud::developerconnect::v1::CreateConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::CreateConnection(NoAwaitTag, google::cloud::developerconnect::v1::CreateConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::CreateConnection(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::CreateConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::CreateConnection(google::longrunning::Operation const& operation, Options opts) {
+DeveloperConnectClient::CreateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::UpdateConnection(google::cloud::developerconnect::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+DeveloperConnectClient::UpdateConnection(
+    google::cloud::developerconnect::v1::Connection const& connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
@@ -108,7 +127,10 @@ DeveloperConnectClient::UpdateConnection(google::cloud::developerconnect::v1::Co
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::UpdateConnection(NoAwaitTag, google::cloud::developerconnect::v1::Connection const& connection, google::protobuf::FieldMask const& update_mask, Options opts) {
+DeveloperConnectClient::UpdateConnection(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::Connection const& connection,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::UpdateConnectionRequest request;
   *request.mutable_connection() = connection;
@@ -117,25 +139,32 @@ DeveloperConnectClient::UpdateConnection(NoAwaitTag, google::cloud::developercon
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::UpdateConnection(google::cloud::developerconnect::v1::UpdateConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::UpdateConnection(
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::UpdateConnection(NoAwaitTag, google::cloud::developerconnect::v1::UpdateConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::UpdateConnection(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::UpdateConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::Connection>>
-DeveloperConnectClient::UpdateConnection(google::longrunning::Operation const& operation, Options opts) {
+DeveloperConnectClient::UpdateConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteConnection(std::string const& name, Options opts) {
+DeveloperConnectClient::DeleteConnection(std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteConnectionRequest request;
   request.set_name(name);
@@ -143,7 +172,8 @@ DeveloperConnectClient::DeleteConnection(std::string const& name, Options opts) 
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteConnection(NoAwaitTag, std::string const& name, Options opts) {
+DeveloperConnectClient::DeleteConnection(NoAwaitTag, std::string const& name,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteConnectionRequest request;
   request.set_name(name);
@@ -151,25 +181,35 @@ DeveloperConnectClient::DeleteConnection(NoAwaitTag, std::string const& name, Op
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteConnection(google::cloud::developerconnect::v1::DeleteConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::DeleteConnection(
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteConnection(NoAwaitTag, google::cloud::developerconnect::v1::DeleteConnectionRequest const& request, Options opts) {
+DeveloperConnectClient::DeleteConnection(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteConnectionRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteConnection(google::longrunning::Operation const& operation, Options opts) {
+DeveloperConnectClient::DeleteConnection(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteConnection(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-DeveloperConnectClient::CreateGitRepositoryLink(std::string const& parent, google::cloud::developerconnect::v1::GitRepositoryLink const& git_repository_link, std::string const& git_repository_link_id, Options opts) {
+DeveloperConnectClient::CreateGitRepositoryLink(
+    std::string const& parent,
+    google::cloud::developerconnect::v1::GitRepositoryLink const&
+        git_repository_link,
+    std::string const& git_repository_link_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest request;
   request.set_parent(parent);
@@ -179,7 +219,11 @@ DeveloperConnectClient::CreateGitRepositoryLink(std::string const& parent, googl
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::CreateGitRepositoryLink(NoAwaitTag, std::string const& parent, google::cloud::developerconnect::v1::GitRepositoryLink const& git_repository_link, std::string const& git_repository_link_id, Options opts) {
+DeveloperConnectClient::CreateGitRepositoryLink(
+    NoAwaitTag, std::string const& parent,
+    google::cloud::developerconnect::v1::GitRepositoryLink const&
+        git_repository_link,
+    std::string const& git_repository_link_id, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest request;
   request.set_parent(parent);
@@ -189,25 +233,34 @@ DeveloperConnectClient::CreateGitRepositoryLink(NoAwaitTag, std::string const& p
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-DeveloperConnectClient::CreateGitRepositoryLink(google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request, Options opts) {
+DeveloperConnectClient::CreateGitRepositoryLink(
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGitRepositoryLink(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::CreateGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const& request, Options opts) {
+DeveloperConnectClient::CreateGitRepositoryLink(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::CreateGitRepositoryLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>>
-DeveloperConnectClient::CreateGitRepositoryLink(google::longrunning::Operation const& operation, Options opts) {
+DeveloperConnectClient::CreateGitRepositoryLink(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateGitRepositoryLink(operation);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteGitRepositoryLink(std::string const& name, Options opts) {
+DeveloperConnectClient::DeleteGitRepositoryLink(std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest request;
   request.set_name(name);
@@ -215,7 +268,9 @@ DeveloperConnectClient::DeleteGitRepositoryLink(std::string const& name, Options
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteGitRepositoryLink(NoAwaitTag, std::string const& name, Options opts) {
+DeveloperConnectClient::DeleteGitRepositoryLink(NoAwaitTag,
+                                                std::string const& name,
+                                                Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest request;
   request.set_name(name);
@@ -223,25 +278,34 @@ DeveloperConnectClient::DeleteGitRepositoryLink(NoAwaitTag, std::string const& n
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteGitRepositoryLink(google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request, Options opts) {
+DeveloperConnectClient::DeleteGitRepositoryLink(
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGitRepositoryLink(request);
 }
 
 StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::DeleteGitRepositoryLink(NoAwaitTag, google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const& request, Options opts) {
+DeveloperConnectClient::DeleteGitRepositoryLink(
+    NoAwaitTag,
+    google::cloud::developerconnect::v1::DeleteGitRepositoryLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGitRepositoryLink(NoAwaitTag{}, request);
 }
 
 future<StatusOr<google::cloud::developerconnect::v1::OperationMetadata>>
-DeveloperConnectClient::DeleteGitRepositoryLink(google::longrunning::Operation const& operation, Options opts) {
+DeveloperConnectClient::DeleteGitRepositoryLink(
+    google::longrunning::Operation const& operation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteGitRepositoryLink(operation);
 }
 
 StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectClient::ListGitRepositoryLinks(std::string const& parent, Options opts) {
+DeveloperConnectClient::ListGitRepositoryLinks(std::string const& parent,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request;
   request.set_parent(parent);
@@ -249,13 +313,16 @@ DeveloperConnectClient::ListGitRepositoryLinks(std::string const& parent, Option
 }
 
 StreamRange<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectClient::ListGitRepositoryLinks(google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request, Options opts) {
+DeveloperConnectClient::ListGitRepositoryLinks(
+    google::cloud::developerconnect::v1::ListGitRepositoryLinksRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListGitRepositoryLinks(std::move(request));
 }
 
 StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectClient::GetGitRepositoryLink(std::string const& name, Options opts) {
+DeveloperConnectClient::GetGitRepositoryLink(std::string const& name,
+                                             Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest request;
   request.set_name(name);
@@ -263,13 +330,17 @@ DeveloperConnectClient::GetGitRepositoryLink(std::string const& name, Options op
 }
 
 StatusOr<google::cloud::developerconnect::v1::GitRepositoryLink>
-DeveloperConnectClient::GetGitRepositoryLink(google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const& request, Options opts) {
+DeveloperConnectClient::GetGitRepositoryLink(
+    google::cloud::developerconnect::v1::GetGitRepositoryLinkRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetGitRepositoryLink(request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-DeveloperConnectClient::FetchReadWriteToken(std::string const& git_repository_link, Options opts) {
+DeveloperConnectClient::FetchReadWriteToken(
+    std::string const& git_repository_link, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::FetchReadWriteTokenRequest request;
   request.set_git_repository_link(git_repository_link);
@@ -277,13 +348,17 @@ DeveloperConnectClient::FetchReadWriteToken(std::string const& git_repository_li
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadWriteTokenResponse>
-DeveloperConnectClient::FetchReadWriteToken(google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const& request, Options opts) {
+DeveloperConnectClient::FetchReadWriteToken(
+    google::cloud::developerconnect::v1::FetchReadWriteTokenRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchReadWriteToken(request);
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-DeveloperConnectClient::FetchReadToken(std::string const& git_repository_link, Options opts) {
+DeveloperConnectClient::FetchReadToken(std::string const& git_repository_link,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::FetchReadTokenRequest request;
   request.set_git_repository_link(git_repository_link);
@@ -291,27 +366,35 @@ DeveloperConnectClient::FetchReadToken(std::string const& git_repository_link, O
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchReadTokenResponse>
-DeveloperConnectClient::FetchReadToken(google::cloud::developerconnect::v1::FetchReadTokenRequest const& request, Options opts) {
+DeveloperConnectClient::FetchReadToken(
+    google::cloud::developerconnect::v1::FetchReadTokenRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchReadToken(request);
 }
 
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-DeveloperConnectClient::FetchLinkableGitRepositories(std::string const& connection, Options opts) {
+DeveloperConnectClient::FetchLinkableGitRepositories(
+    std::string const& connection, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request;
+  google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
+      request;
   request.set_connection(connection);
   return connection_->FetchLinkableGitRepositories(request);
 }
 
 StreamRange<google::cloud::developerconnect::v1::LinkableGitRepository>
-DeveloperConnectClient::FetchLinkableGitRepositories(google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest request, Options opts) {
+DeveloperConnectClient::FetchLinkableGitRepositories(
+    google::cloud::developerconnect::v1::FetchLinkableGitRepositoriesRequest
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchLinkableGitRepositories(std::move(request));
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-DeveloperConnectClient::FetchGitHubInstallations(std::string const& connection, Options opts) {
+DeveloperConnectClient::FetchGitHubInstallations(std::string const& connection,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest request;
   request.set_connection(connection);
@@ -319,13 +402,18 @@ DeveloperConnectClient::FetchGitHubInstallations(std::string const& connection, 
 }
 
 StatusOr<google::cloud::developerconnect::v1::FetchGitHubInstallationsResponse>
-DeveloperConnectClient::FetchGitHubInstallations(google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const& request, Options opts) {
+DeveloperConnectClient::FetchGitHubInstallations(
+    google::cloud::developerconnect::v1::FetchGitHubInstallationsRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchGitHubInstallations(request);
 }
 
-StreamRange<std::string>
-DeveloperConnectClient::FetchGitRefs(std::string const& git_repository_link, google::cloud::developerconnect::v1::FetchGitRefsRequest::RefType ref_type, Options opts) {
+StreamRange<std::string> DeveloperConnectClient::FetchGitRefs(
+    std::string const& git_repository_link,
+    google::cloud::developerconnect::v1::FetchGitRefsRequest::RefType ref_type,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::developerconnect::v1::FetchGitRefsRequest request;
   request.set_git_repository_link(git_repository_link);
@@ -333,26 +421,30 @@ DeveloperConnectClient::FetchGitRefs(std::string const& git_repository_link, goo
   return connection_->FetchGitRefs(request);
 }
 
-StreamRange<std::string>
-DeveloperConnectClient::FetchGitRefs(google::cloud::developerconnect::v1::FetchGitRefsRequest request, Options opts) {
+StreamRange<std::string> DeveloperConnectClient::FetchGitRefs(
+    google::cloud::developerconnect::v1::FetchGitRefsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->FetchGitRefs(std::move(request));
 }
 
 StreamRange<google::cloud::location::Location>
-DeveloperConnectClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+DeveloperConnectClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-DeveloperConnectClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> DeveloperConnectClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-DeveloperConnectClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+DeveloperConnectClient::ListOperations(std::string const& name,
+                                       std::string const& filter,
+                                       Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -361,49 +453,50 @@ DeveloperConnectClient::ListOperations(std::string const& name, std::string cons
 }
 
 StreamRange<google::longrunning::Operation>
-DeveloperConnectClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+DeveloperConnectClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-DeveloperConnectClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> DeveloperConnectClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-DeveloperConnectClient::DeleteOperation(std::string const& name, Options opts) {
+Status DeveloperConnectClient::DeleteOperation(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-DeveloperConnectClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status DeveloperConnectClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-DeveloperConnectClient::CancelOperation(std::string const& name, Options opts) {
+Status DeveloperConnectClient::CancelOperation(std::string const& name,
+                                               Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-DeveloperConnectClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status DeveloperConnectClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

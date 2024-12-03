@@ -27,19 +27,28 @@ namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use resourcesettings_v1::MakeResourceSettingsServiceConnection directly.
-using ::google::cloud::resourcesettings_v1::MakeResourceSettingsServiceConnection;
+/// @deprecated Use resourcesettings_v1::MakeResourceSettingsServiceConnection
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    MakeResourceSettingsServiceConnection;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceConnection directly.
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceConnection
+/// directly.
 using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceConnection;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceLimitedErrorCountRetryPolicy directly.
-using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceLimitedErrorCountRetryPolicy;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceLimitedErrorCountRetryPolicy
+/// directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceLimitedErrorCountRetryPolicy;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceLimitedTimeRetryPolicy directly.
-using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceLimitedTimeRetryPolicy;
+/// @deprecated Use
+/// resourcesettings_v1::ResourceSettingsServiceLimitedTimeRetryPolicy directly.
+using ::google::cloud::resourcesettings_v1::
+    ResourceSettingsServiceLimitedTimeRetryPolicy;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceRetryPolicy directly.
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceRetryPolicy
+/// directly.
 using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

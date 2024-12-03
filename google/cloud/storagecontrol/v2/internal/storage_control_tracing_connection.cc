@@ -34,37 +34,45 @@ StorageControlTracingConnection::StorageControlTracingConnection(
     : child_(std::move(child)) {}
 
 StatusOr<google::storage::control::v2::Folder>
-StorageControlTracingConnection::CreateFolder(google::storage::control::v2::CreateFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::CreateFolder");
+StorageControlTracingConnection::CreateFolder(
+    google::storage::control::v2::CreateFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateFolder(request));
 }
 
-Status
-StorageControlTracingConnection::DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::DeleteFolder");
+Status StorageControlTracingConnection::DeleteFolder(
+    google::storage::control::v2::DeleteFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteFolder(request));
 }
 
 StatusOr<google::storage::control::v2::Folder>
-StorageControlTracingConnection::GetFolder(google::storage::control::v2::GetFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::GetFolder");
+StorageControlTracingConnection::GetFolder(
+    google::storage::control::v2::GetFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetFolder(request));
 }
 
 StreamRange<google::storage::control::v2::Folder>
-StorageControlTracingConnection::ListFolders(google::storage::control::v2::ListFoldersRequest request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::ListFolders");
+StorageControlTracingConnection::ListFolders(
+    google::storage::control::v2::ListFoldersRequest request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ListFolders");
   internal::OTelScope scope(span);
   auto sr = child_->ListFolders(std::move(request));
   return internal::MakeTracedStreamRange<google::storage::control::v2::Folder>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
-StorageControlTracingConnection::RenameFolder(google::storage::control::v2::RenameFolderRequest const& request) {
+StorageControlTracingConnection::RenameFolder(
+    google::storage::control::v2::RenameFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   internal::OTelScope scope(span);
@@ -73,12 +81,12 @@ StorageControlTracingConnection::RenameFolder(google::storage::control::v2::Rena
 
 StatusOr<google::longrunning::Operation>
 StorageControlTracingConnection::RenameFolder(
-    NoAwaitTag, google::storage::control::v2::RenameFolderRequest const& request) {
+    NoAwaitTag,
+    google::storage::control::v2::RenameFolderRequest const& request) {
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->RenameFolder(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->RenameFolder(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::storage::control::v2::Folder>>
@@ -87,45 +95,54 @@ StorageControlTracingConnection::RenameFolder(
   auto span = internal::MakeSpan(
       "storagecontrol_v2::StorageControlConnection::RenameFolder");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->RenameFolder(operation));
+  return internal::EndSpan(std::move(span), child_->RenameFolder(operation));
 }
 
 StatusOr<google::storage::control::v2::StorageLayout>
-StorageControlTracingConnection::GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::GetStorageLayout");
+StorageControlTracingConnection::GetStorageLayout(
+    google::storage::control::v2::GetStorageLayoutRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetStorageLayout");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetStorageLayout(request));
 }
 
 StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlTracingConnection::CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::CreateManagedFolder");
+StorageControlTracingConnection::CreateManagedFolder(
+    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::CreateManagedFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateManagedFolder(request));
 }
 
-Status
-StorageControlTracingConnection::DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::DeleteManagedFolder");
+Status StorageControlTracingConnection::DeleteManagedFolder(
+    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::DeleteManagedFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteManagedFolder(request));
 }
 
 StatusOr<google::storage::control::v2::ManagedFolder>
-StorageControlTracingConnection::GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::GetManagedFolder");
+StorageControlTracingConnection::GetManagedFolder(
+    google::storage::control::v2::GetManagedFolderRequest const& request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::GetManagedFolder");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetManagedFolder(request));
 }
 
 StreamRange<google::storage::control::v2::ManagedFolder>
-StorageControlTracingConnection::ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request) {
-  auto span = internal::MakeSpan("storagecontrol_v2::StorageControlConnection::ListManagedFolders");
+StorageControlTracingConnection::ListManagedFolders(
+    google::storage::control::v2::ListManagedFoldersRequest request) {
+  auto span = internal::MakeSpan(
+      "storagecontrol_v2::StorageControlConnection::ListManagedFolders");
   internal::OTelScope scope(span);
   auto sr = child_->ListManagedFolders(std::move(request));
-  return internal::MakeTracedStreamRange<google::storage::control::v2::ManagedFolder>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::storage::control::v2::ManagedFolder>(std::move(span),
+                                                   std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

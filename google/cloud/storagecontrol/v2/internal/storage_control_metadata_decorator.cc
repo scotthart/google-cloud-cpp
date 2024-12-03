@@ -48,14 +48,14 @@ StorageControlMetadata::StorageControlMetadata(
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlMetadata::CreateFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -66,22 +66,22 @@ StorageControlMetadata::CreateFolder(
   return child_->CreateFolder(context, options, request);
 }
 
-Status
-StorageControlMetadata::DeleteFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageControlMetadata::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::DeleteFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::DeleteFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DeleteFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::DeleteFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -95,20 +95,21 @@ StorageControlMetadata::DeleteFolder(
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlMetadata::GetFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::GetFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::GetFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::GetFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::GetFolderRequest const& request)
+                 -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -122,14 +123,14 @@ StorageControlMetadata::GetFolder(
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 StorageControlMetadata::ListFolders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -149,14 +150,16 @@ StorageControlMetadata::AsyncRenameFolder(
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::RenameFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::RenameFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::RenameFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::RenameFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -165,26 +168,26 @@ StorageControlMetadata::AsyncRenameFolder(
   } else {
     SetMetadata(*context, *options, absl::StrJoin(params, "&"));
   }
-  return child_->AsyncRenameFolder(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncRenameFolder(cq, std::move(context), std::move(options),
+                                   request);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageControlMetadata::RenameFolder(
-    grpc::ClientContext& context,
-    Options options,
+StatusOr<google::longrunning::Operation> StorageControlMetadata::RenameFolder(
+    grpc::ClientContext& context, Options options,
     google::storage::control::v2::RenameFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::RenameFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::RenameFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::RenameFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::RenameFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -198,20 +201,21 @@ StorageControlMetadata::RenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlMetadata::GetStorageLayout(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::GetStorageLayoutRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::GetStorageLayoutRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::GetStorageLayoutRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::GetStorageLayoutRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -225,14 +229,14 @@ StorageControlMetadata::GetStorageLayout(
 
 StatusOr<google::storage::control::v2::ManagedFolder>
 StorageControlMetadata::CreateManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateManagedFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -243,22 +247,22 @@ StorageControlMetadata::CreateManagedFolder(
   return child_->CreateManagedFolder(context, options, request);
 }
 
-Status
-StorageControlMetadata::DeleteManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageControlMetadata::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteManagedFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::DeleteManagedFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::DeleteManagedFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::DeleteManagedFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::DeleteManagedFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -272,20 +276,21 @@ StorageControlMetadata::DeleteManagedFolder(
 
 StatusOr<google::storage::control::v2::ManagedFolder>
 StorageControlMetadata::GetManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetManagedFolderRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
-  static auto* bucket_matcher = []{
-    return new google::cloud::internal::RoutingMatcher<google::storage::control::v2::GetManagedFolderRequest>{
-      "bucket=", {
-      {[](google::storage::control::v2::GetManagedFolderRequest const& request) -> std::string const& {
-        return request.name();
-      },
-      std::regex{"(projects/[^/]+/buckets/[^/]+)/.*", std::regex::optimize}},
-      }};
+  static auto* bucket_matcher = [] {
+    return new google::cloud::internal::RoutingMatcher<
+        google::storage::control::v2::GetManagedFolderRequest>{
+        "bucket=",
+        {
+            {[](google::storage::control::v2::GetManagedFolderRequest const&
+                    request) -> std::string const& { return request.name(); },
+             std::regex{"(projects/[^/]+/buckets/[^/]+)/.*",
+                        std::regex::optimize}},
+        }};
   }();
   bucket_matcher->AppendParam(request, params);
 
@@ -299,14 +304,14 @@ StorageControlMetadata::GetManagedFolder(
 
 StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
 StorageControlMetadata::ListManagedFolders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListManagedFoldersRequest const& request) {
   std::vector<std::string> params;
   params.reserve(1);
 
   if (!request.parent().empty()) {
-    params.push_back(absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
+    params.push_back(
+        absl::StrCat("bucket=", internal::UrlEncode(request.parent())));
   }
 
   if (params.empty()) {
@@ -325,8 +330,8 @@ StorageControlMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> StorageControlMetadata::AsyncCancelOperation(
@@ -336,21 +341,21 @@ future<Status> StorageControlMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void StorageControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                         Options const& options,
+                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void StorageControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                         Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -46,19 +46,19 @@ CloudRedisClusterMetadata::CloudRedisClusterMetadata(
 
 StatusOr<google::cloud::redis::cluster::v1::ListClustersResponse>
 CloudRedisClusterMetadata::ListClusters(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::ListClustersRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListClusters(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::Cluster>
 CloudRedisClusterMetadata::GetCluster(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::redis::cluster::v1::GetClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetCluster(context, options, request);
 }
 
@@ -68,17 +68,20 @@ CloudRedisClusterMetadata::AsyncUpdateCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("cluster.name=", internal::UrlEncode(request.cluster().name())));
-  return child_->AsyncUpdateCluster(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
+  return child_->AsyncUpdateCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterMetadata::UpdateCluster(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::redis::cluster::v1::UpdateClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("cluster.name=", internal::UrlEncode(request.cluster().name())));
+  SetMetadata(context, options,
+              absl::StrCat("cluster.name=",
+                           internal::UrlEncode(request.cluster().name())));
   return child_->UpdateCluster(context, options, request);
 }
 
@@ -88,17 +91,18 @@ CloudRedisClusterMetadata::AsyncDeleteCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncDeleteCluster(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
+  return child_->AsyncDeleteCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterMetadata::DeleteCluster(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::redis::cluster::v1::DeleteClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteCluster(context, options, request);
 }
 
@@ -108,80 +112,80 @@ CloudRedisClusterMetadata::AsyncCreateCluster(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
-  SetMetadata(*context, *options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
-  return child_->AsyncCreateCluster(
-      cq, std::move(context), std::move(options), request);
+  SetMetadata(*context, *options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  return child_->AsyncCreateCluster(cq, std::move(context), std::move(options),
+                                    request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterMetadata::CreateCluster(
-    grpc::ClientContext& context,
-    Options options,
+    grpc::ClientContext& context, Options options,
     google::cloud::redis::cluster::v1::CreateClusterRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->CreateCluster(context, options, request);
 }
 
 StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>
 CloudRedisClusterMetadata::GetClusterCertificateAuthority(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::redis::cluster::v1::
+        GetClusterCertificateAuthorityRequest const& request) {
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetClusterCertificateAuthority(context, options, request);
 }
 
 StatusOr<google::cloud::location::ListLocationsResponse>
 CloudRedisClusterMetadata::ListLocations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListLocations(context, options, request);
 }
 
 StatusOr<google::cloud::location::Location>
 CloudRedisClusterMetadata::GetLocation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetLocation(context, options, request);
 }
 
 StatusOr<google::longrunning::ListOperationsResponse>
 CloudRedisClusterMetadata::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->ListOperations(context, options, request);
 }
 
 StatusOr<google::longrunning::Operation>
 CloudRedisClusterMetadata::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetOperation(context, options, request);
 }
 
-Status
-CloudRedisClusterMetadata::DeleteOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudRedisClusterMetadata::DeleteOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->DeleteOperation(context, options, request);
 }
 
-Status
-CloudRedisClusterMetadata::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status CloudRedisClusterMetadata::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->CancelOperation(context, options, request);
 }
 
@@ -193,8 +197,8 @@ CloudRedisClusterMetadata::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncGetOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncGetOperation(cq, std::move(context), std::move(options),
+                                   request);
 }
 
 future<Status> CloudRedisClusterMetadata::AsyncCancelOperation(
@@ -204,21 +208,21 @@ future<Status> CloudRedisClusterMetadata::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   SetMetadata(*context, *options,
               absl::StrCat("name=", internal::UrlEncode(request.name())));
-  return child_->AsyncCancelOperation(
-      cq, std::move(context), std::move(options), request);
+  return child_->AsyncCancelOperation(cq, std::move(context),
+                                      std::move(options), request);
 }
 
 void CloudRedisClusterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+                                            Options const& options,
+                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void CloudRedisClusterMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                            Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_AUTH_DECORATOR_H
 
-#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
+#include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <set>
@@ -38,20 +38,20 @@ class ResourceSettingsServiceAuth : public ResourceSettingsServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<ResourceSettingsServiceStub> child);
 
-  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) override;
+  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
+  ListSettings(grpc::ClientContext& context, Options const& options,
+               google::cloud::resourcesettings::v1::ListSettingsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
+      override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
+      override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ADMIN_INSTANCE_ADMIN_CLIENT_H
 
+#include "google/cloud/spanner/admin/instance_admin_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/spanner/admin/instance_admin_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -86,7 +86,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstanceAdminClient {
  public:
-  explicit InstanceAdminClient(std::shared_ptr<InstanceAdminConnection> connection, Options opts = {});
+  explicit InstanceAdminClient(
+      std::shared_ptr<InstanceAdminConnection> connection, Options opts = {});
   ~InstanceAdminClient();
 
   ///@{
@@ -99,10 +100,12 @@ class InstanceAdminClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(InstanceAdminClient const& a, InstanceAdminClient const& b) {
+  friend bool operator==(InstanceAdminClient const& a,
+                         InstanceAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(InstanceAdminClient const& a, InstanceAdminClient const& b) {
+  friend bool operator!=(InstanceAdminClient const& a,
+                         InstanceAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -180,7 +183,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-  ListInstanceConfigs(google::spanner::admin::instance::v1::ListInstanceConfigsRequest request, Options opts = {});
+  ListInstanceConfigs(
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -236,7 +241,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
-  GetInstanceConfig(google::spanner::admin::instance::v1::GetInstanceConfigRequest const& request, Options opts = {});
+  GetInstanceConfig(
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -324,7 +332,11 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(std::string const& parent, google::spanner::admin::instance::v1::InstanceConfig const& instance_config, std::string const& instance_config_id, Options opts = {});
+  CreateInstanceConfig(
+      std::string const& parent,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      std::string const& instance_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -337,8 +349,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstanceConfig(NoAwaitTag, std::string const& parent, google::spanner::admin::instance::v1::InstanceConfig const& instance_config, std::string const& instance_config_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      NoAwaitTag, std::string const& parent,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      std::string const& instance_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -421,7 +436,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request, Options opts = {});
+  CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -434,8 +452,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstanceConfig(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -447,7 +468,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  CreateInstanceConfig(google::longrunning::Operation const& operation, Options opts = {});
+  CreateInstanceConfig(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -542,7 +564,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(google::spanner::admin::instance::v1::InstanceConfig const& instance_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -555,8 +580,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::InstanceConfig const& instance_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::InstanceConfig const&
+          instance_config,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -643,7 +671,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request, Options opts = {});
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -656,8 +687,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstanceConfig(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstanceConfig(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -669,7 +703,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
-  UpdateInstanceConfig(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateInstanceConfig(google::longrunning::Operation const& operation,
+                       Options opts = {});
 
   // clang-format off
   ///
@@ -700,8 +735,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
   ///
   // clang-format on
-  Status
-  DeleteInstanceConfig(std::string const& name, Options opts = {});
+  Status DeleteInstanceConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -735,8 +769,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstanceConfig.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L730}
   ///
   // clang-format on
-  Status
-  DeleteInstanceConfig(google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const& request, Options opts = {});
+  Status DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -781,8 +817,8 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1262}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListInstanceConfigOperations(std::string const& parent, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -831,8 +867,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstanceConfigOperationsRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1262}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListInstanceConfigOperations(google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -866,8 +904,8 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1388}
   ///
   // clang-format on
-  StreamRange<google::spanner::admin::instance::v1::Instance>
-  ListInstances(std::string const& parent, Options opts = {});
+  StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -905,8 +943,9 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstancesRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1388}
   ///
   // clang-format on
-  StreamRange<google::spanner::admin::instance::v1::Instance>
-  ListInstances(google::spanner::admin::instance::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::spanner::admin::instance::v1::Instance> ListInstances(
+      google::spanner::admin::instance::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -980,7 +1019,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StreamRange<google::spanner::admin::instance::v1::InstancePartition>
-  ListInstancePartitions(google::spanner::admin::instance::v1::ListInstancePartitionsRequest request, Options opts = {});
+  ListInstancePartitions(
+      google::spanner::admin::instance::v1::ListInstancePartitionsRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1005,8 +1047,8 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
   ///
   // clang-format on
-  StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(std::string const& name, Options opts = {});
+  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1035,8 +1077,9 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.Instance]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L938}
   ///
   // clang-format on
-  StatusOr<google::spanner::admin::instance::v1::Instance>
-  GetInstance(google::spanner::admin::instance::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      google::spanner::admin::instance::v1::GetInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1111,7 +1154,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(std::string const& parent, std::string const& instance_id, google::spanner::admin::instance::v1::Instance const& instance, Options opts = {});
+  CreateInstance(std::string const& parent, std::string const& instance_id,
+                 google::spanner::admin::instance::v1::Instance const& instance,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1124,8 +1169,10 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, std::string const& parent, std::string const& instance_id, google::spanner::admin::instance::v1::Instance const& instance, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag, std::string const& parent, std::string const& instance_id,
+      google::spanner::admin::instance::v1::Instance const& instance,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1199,7 +1246,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::spanner::admin::instance::v1::CreateInstanceRequest const& request, Options opts = {});
+  CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1212,8 +1262,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstance(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1225,7 +1278,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  CreateInstance(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1311,7 +1365,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance, google::protobuf::FieldMask const& field_mask, Options opts = {});
+  UpdateInstance(google::spanner::admin::instance::v1::Instance const& instance,
+                 google::protobuf::FieldMask const& field_mask,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1324,8 +1380,10 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::spanner::admin::instance::v1::Instance const& instance, google::protobuf::FieldMask const& field_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::Instance const& instance,
+      google::protobuf::FieldMask const& field_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1407,7 +1465,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::spanner::admin::instance::v1::UpdateInstanceRequest const& request, Options opts = {});
+  UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1420,8 +1481,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstance(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1433,7 +1497,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  UpdateInstance(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateInstance(google::longrunning::Operation const& operation,
+                 Options opts = {});
 
   // clang-format off
   ///
@@ -1465,8 +1530,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1476}
   ///
   // clang-format on
-  Status
-  DeleteInstance(std::string const& name, Options opts = {});
+  Status DeleteInstance(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1502,8 +1566,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.DeleteInstanceRequest]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1476}
   ///
   // clang-format on
-  Status
-  DeleteInstance(google::spanner::admin::instance::v1::DeleteInstanceRequest const& request, Options opts = {});
+  Status DeleteInstance(
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1537,8 +1603,9 @@ class InstanceAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L103}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -1560,8 +1627,9 @@ class InstanceAdminClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1595,8 +1663,8 @@ class InstanceAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest.resource]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L103}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1626,8 +1694,8 @@ class InstanceAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -1661,8 +1729,8 @@ class InstanceAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1696,8 +1764,9 @@ class InstanceAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      std::string const& resource, std::vector<std::string> const& permissions,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1731,8 +1800,9 @@ class InstanceAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1789,7 +1859,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   StatusOr<google::spanner::admin::instance::v1::InstancePartition>
-  GetInstancePartition(google::spanner::admin::instance::v1::GetInstancePartitionRequest const& request, Options opts = {});
+  GetInstancePartition(
+      google::spanner::admin::instance::v1::GetInstancePartitionRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1869,7 +1942,11 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(std::string const& parent, google::spanner::admin::instance::v1::InstancePartition const& instance_partition, std::string const& instance_partition_id, Options opts = {});
+  CreateInstancePartition(
+      std::string const& parent,
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      std::string const& instance_partition_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1882,8 +1959,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstancePartition(NoAwaitTag, std::string const& parent, google::spanner::admin::instance::v1::InstancePartition const& instance_partition, std::string const& instance_partition_id, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      NoAwaitTag, std::string const& parent,
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      std::string const& instance_partition_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1960,7 +2040,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request, Options opts = {});
+  CreateInstancePartition(google::spanner::admin::instance::v1::
+                              CreateInstancePartitionRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -1973,8 +2055,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  CreateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::CreateInstancePartitionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> CreateInstancePartition(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          CreateInstancePartitionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1986,7 +2071,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  CreateInstancePartition(google::longrunning::Operation const& operation, Options opts = {});
+  CreateInstancePartition(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -2016,8 +2102,7 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
   ///
   // clang-format on
-  Status
-  DeleteInstancePartition(std::string const& name, Options opts = {});
+  Status DeleteInstancePartition(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2050,8 +2135,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.InstancePartition.name]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1592}
   ///
   // clang-format on
-  Status
-  DeleteInstancePartition(google::spanner::admin::instance::v1::DeleteInstancePartitionRequest const& request, Options opts = {});
+  Status DeleteInstancePartition(
+      google::spanner::admin::instance::v1::
+          DeleteInstancePartitionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2142,7 +2229,10 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(google::spanner::admin::instance::v1::InstancePartition const& instance_partition, google::protobuf::FieldMask const& field_mask, Options opts = {});
+  UpdateInstancePartition(
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      google::protobuf::FieldMask const& field_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2155,8 +2245,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::InstancePartition const& instance_partition, google::protobuf::FieldMask const& field_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::InstancePartition const&
+          instance_partition,
+      google::protobuf::FieldMask const& field_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2242,7 +2335,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request, Options opts = {});
+  UpdateInstancePartition(google::spanner::admin::instance::v1::
+                              UpdateInstancePartitionRequest const& request,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -2255,8 +2350,11 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  UpdateInstancePartition(NoAwaitTag, google::spanner::admin::instance::v1::UpdateInstancePartitionRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> UpdateInstancePartition(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::
+          UpdateInstancePartitionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2268,7 +2366,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::InstancePartition>>
-  UpdateInstancePartition(google::longrunning::Operation const& operation, Options opts = {});
+  UpdateInstancePartition(google::longrunning::Operation const& operation,
+                          Options opts = {});
 
   // clang-format off
   ///
@@ -2318,8 +2417,8 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1847}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListInstancePartitionOperations(std::string const& parent, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2373,8 +2472,10 @@ class InstanceAdminClient {
   /// [google.spanner.admin.instance.v1.ListInstancePartitionOperationsRequest.parent]: @googleapis_reference_link{google/spanner/admin/instance/v1/spanner_instance_admin.proto#L1847}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListInstancePartitionOperations(google::spanner::admin::instance::v1::ListInstancePartitionOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListInstancePartitionOperations(
+      google::spanner::admin::instance::v1::
+          ListInstancePartitionOperationsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2477,7 +2578,9 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
-  MoveInstance(google::spanner::admin::instance::v1::MoveInstanceRequest const& request, Options opts = {});
+  MoveInstance(
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2490,8 +2593,10 @@ class InstanceAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  MoveInstance(NoAwaitTag, google::spanner::admin::instance::v1::MoveInstanceRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> MoveInstance(
+      NoAwaitTag,
+      google::spanner::admin::instance::v1::MoveInstanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2503,7 +2608,8 @@ class InstanceAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::spanner::admin::instance::v1::MoveInstanceResponse>>
-  MoveInstance(google::longrunning::Operation const& operation, Options opts = {});
+  MoveInstance(google::longrunning::Operation const& operation,
+               Options opts = {});
 
  private:
   std::shared_ptr<InstanceAdminConnection> connection_;
@@ -2511,7 +2617,7 @@ class InstanceAdminClient {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS; // NOLINT(misc-unused-alias-decls)
+namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
 }  // namespace cloud
 }  // namespace google

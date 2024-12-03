@@ -64,7 +64,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class InstancesClient {
  public:
-  explicit InstancesClient(std::shared_ptr<InstancesConnection> connection, Options opts = {});
+  explicit InstancesClient(std::shared_ptr<InstancesConnection> connection,
+                           Options opts = {});
   ~InstancesClient();
 
   ///@{
@@ -118,8 +119,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L682}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAccessConfig(std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::AccessConfig const& access_config_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::AccessConfig const&
+          access_config_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -132,8 +137,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddAccessConfig(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::AccessConfig const& access_config_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::AccessConfig const&
+          access_config_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -169,8 +178,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.AddAccessConfigRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L682}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAccessConfig(google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +194,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddAccessConfig(NoAwaitTag, google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddAccessConfig(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::AddAccessConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +209,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddAccessConfig(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AddAccessConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -233,7 +248,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesAddResourcePoliciesRequest const& instances_add_resource_policies_request_resource, Options opts = {});
+  AddResourcePolicies(std::string const& project, std::string const& zone,
+                      std::string const& instance,
+                      google::cloud::cpp::compute::v1::
+                          InstancesAddResourcePoliciesRequest const&
+                              instances_add_resource_policies_request_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -246,8 +266,13 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesAddResourcePoliciesRequest const& instances_add_resource_policies_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesAddResourcePoliciesRequest const&
+              instances_add_resource_policies_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -286,7 +311,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request, Options opts = {});
+  AddResourcePolicies(google::cloud::cpp::compute::instances::v1::
+                          AddResourcePoliciesRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -299,8 +326,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AddResourcePolicies(NoAwaitTag, google::cloud::cpp::compute::instances::v1::AddResourcePoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AddResourcePolicies(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          AddResourcePoliciesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -312,7 +342,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AddResourcePolicies(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  AddResourcePolicies(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -350,7 +382,8 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L720}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::InstancesScopedList>>
   AggregatedListInstances(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -394,8 +427,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.InstancesScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L720}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::InstancesScopedList>>
-  AggregatedListInstances(google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest request, Options opts = {});
+  StreamRange<std::pair<std::string,
+                        google::cloud::cpp::compute::v1::InstancesScopedList>>
+  AggregatedListInstances(
+      google::cloud::cpp::compute::instances::v1::AggregatedListInstancesRequest
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -432,8 +469,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L843}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AttachDisk(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::AttachedDisk const& attached_disk_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::AttachedDisk const&
+          attached_disk_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -446,8 +487,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AttachDisk(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::AttachedDisk const& attached_disk_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::AttachedDisk const&
+          attached_disk_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -486,8 +531,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.AttachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L843}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AttachDisk(google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -500,8 +547,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  AttachDisk(NoAwaitTag, google::cloud::cpp::compute::instances::v1::AttachDiskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> AttachDisk(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::AttachDiskRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -512,8 +562,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  AttachDisk(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> AttachDisk(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -547,8 +598,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L885}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::BulkInsertInstanceResource const& bulk_insert_instance_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -561,8 +615,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::BulkInsertInstanceResource const& bulk_insert_instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::BulkInsertInstanceResource const&
+          bulk_insert_instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -599,8 +656,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.BulkInsertRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L885}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -613,8 +672,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  BulkInsert(NoAwaitTag, google::cloud::cpp::compute::instances::v1::BulkInsertRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> BulkInsert(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::BulkInsertRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -625,8 +687,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  BulkInsert(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> BulkInsert(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -660,8 +723,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L959}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstance(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -674,8 +738,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -712,8 +777,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.DeleteInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L959}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstance(google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -726,8 +793,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteInstance(NoAwaitTag, google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::DeleteInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -738,8 +808,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -775,7 +846,10 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAccessConfig(std::string const& project, std::string const& zone, std::string const& instance, std::string const& access_config, std::string const& network_interface, Options opts = {});
+  DeleteAccessConfig(std::string const& project, std::string const& zone,
+                     std::string const& instance,
+                     std::string const& access_config,
+                     std::string const& network_interface, Options opts = {});
 
   // clang-format off
   ///
@@ -788,8 +862,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAccessConfig(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, std::string const& access_config, std::string const& network_interface, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& access_config,
+      std::string const& network_interface, Options opts = {});
 
   // clang-format off
   ///
@@ -826,7 +902,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAccessConfig(google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request, Options opts = {});
+  DeleteAccessConfig(google::cloud::cpp::compute::instances::v1::
+                         DeleteAccessConfigRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -839,8 +917,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DeleteAccessConfig(NoAwaitTag, google::cloud::cpp::compute::instances::v1::DeleteAccessConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteAccessConfig(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          DeleteAccessConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -852,7 +933,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DeleteAccessConfig(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  DeleteAccessConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -887,8 +970,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L992}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DetachDisk(std::string const& project, std::string const& zone, std::string const& instance, std::string const& device_name, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& device_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -901,8 +986,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DetachDisk(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, std::string const& device_name, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& device_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -938,8 +1025,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.DetachDiskRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L992}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DetachDisk(google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -952,8 +1041,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  DetachDisk(NoAwaitTag, google::cloud::cpp::compute::instances::v1::DetachDiskRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> DetachDisk(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::DetachDiskRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -964,8 +1056,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  DetachDisk(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DetachDisk(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +1085,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L93}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Instance>
-  GetInstance(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1023,8 +1117,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L93}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Instance>
-  GetInstance(google::cloud::cpp::compute::instances::v1::GetInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Instance> GetInstance(
+      google::cloud::cpp::compute::instances::v1::GetInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1052,8 +1148,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(std::string const& project, std::string const& zone,
+                        std::string const& instance,
+                        std::string const& network_interface,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -1083,8 +1183,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.InstancesGetEffectiveFirewallsResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L675}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
-  GetEffectiveFirewalls(google::cloud::cpp::compute::instances::v1::GetEffectiveFirewallsRequest const& request, Options opts = {});
+  StatusOr<
+      google::cloud::cpp::compute::v1::InstancesGetEffectiveFirewallsResponse>
+  GetEffectiveFirewalls(google::cloud::cpp::compute::instances::v1::
+                            GetEffectiveFirewallsRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -1111,8 +1214,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
-  GetGuestAttributes(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1142,8 +1246,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.GuestAttributes]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L51}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes>
-  GetGuestAttributes(google::cloud::cpp::compute::instances::v1::GetGuestAttributesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::GuestAttributes> GetGuestAttributes(
+      google::cloud::cpp::compute::instances::v1::
+          GetGuestAttributesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1171,8 +1277,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1203,8 +1310,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  GetIamPolicy(google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> GetIamPolicy(
+      google::cloud::cpp::compute::instances::v1::GetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1231,8 +1340,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L913}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Screenshot>
-  GetScreenshot(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1262,8 +1372,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Screenshot]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L913}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Screenshot>
-  GetScreenshot(google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Screenshot> GetScreenshot(
+      google::cloud::cpp::compute::instances::v1::GetScreenshotRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1291,7 +1403,8 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
-  GetSerialPortOutput(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  GetSerialPortOutput(std::string const& project, std::string const& zone,
+                      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1322,7 +1435,9 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::SerialPortOutput>
-  GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::GetSerialPortOutputRequest const& request, Options opts = {});
+  GetSerialPortOutput(google::cloud::cpp::compute::instances::v1::
+                          GetSerialPortOutputRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -1350,7 +1465,9 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
-  GetShieldedInstanceIdentity(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  GetShieldedInstanceIdentity(std::string const& project,
+                              std::string const& zone,
+                              std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1381,7 +1498,10 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::ShieldedInstanceIdentity>
-  GetShieldedInstanceIdentity(google::cloud::cpp::compute::instances::v1::GetShieldedInstanceIdentityRequest const& request, Options opts = {});
+  GetShieldedInstanceIdentity(
+      google::cloud::cpp::compute::instances::v1::
+          GetShieldedInstanceIdentityRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1415,8 +1535,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1159}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstance(std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Instance const& instance_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1429,8 +1551,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstance(NoAwaitTag, std::string const& project, std::string const& zone, google::cloud::cpp::compute::v1::Instance const& instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1467,8 +1591,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.InsertInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1159}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstance(google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1481,8 +1607,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  InsertInstance(NoAwaitTag, google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::InsertInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1493,8 +1622,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  InsertInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1529,8 +1659,8 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Instance>
-  ListInstances(std::string const& project, std::string const& zone, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
+      std::string const& project, std::string const& zone, Options opts = {});
 
   // clang-format off
   ///
@@ -1569,8 +1699,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Instance]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L93}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Instance>
-  ListInstances(google::cloud::cpp::compute::instances::v1::ListInstancesRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Instance> ListInstances(
+      google::cloud::cpp::compute::instances::v1::ListInstancesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1610,8 +1741,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L876}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Reference>
-  ListReferrers(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1653,8 +1785,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Reference]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_021.proto#L876}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Reference>
-  ListReferrers(google::cloud::cpp::compute::instances::v1::ListReferrersRequest request, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Reference> ListReferrers(
+      google::cloud::cpp::compute::instances::v1::ListReferrersRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1688,7 +1821,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  PerformMaintenance(std::string const& project, std::string const& zone,
+                     std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1701,8 +1835,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1739,7 +1874,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const& request, Options opts = {});
+  PerformMaintenance(google::cloud::cpp::compute::instances::v1::
+                         PerformMaintenanceRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -1752,8 +1889,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  PerformMaintenance(NoAwaitTag, google::cloud::cpp::compute::instances::v1::PerformMaintenanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> PerformMaintenance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          PerformMaintenanceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1765,7 +1905,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  PerformMaintenance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  PerformMaintenance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1800,7 +1942,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesRemoveResourcePoliciesRequest const& instances_remove_resource_policies_request_resource, Options opts = {});
+  RemoveResourcePolicies(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesRemoveResourcePoliciesRequest const&
+              instances_remove_resource_policies_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1813,8 +1961,13 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesRemoveResourcePoliciesRequest const& instances_remove_resource_policies_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesRemoveResourcePoliciesRequest const&
+              instances_remove_resource_policies_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1851,7 +2004,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request, Options opts = {});
+  RemoveResourcePolicies(google::cloud::cpp::compute::instances::v1::
+                             RemoveResourcePoliciesRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1864,8 +2019,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  RemoveResourcePolicies(NoAwaitTag, google::cloud::cpp::compute::instances::v1::RemoveResourcePoliciesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> RemoveResourcePolicies(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          RemoveResourcePoliciesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1877,7 +2035,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  RemoveResourcePolicies(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  RemoveResourcePolicies(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1911,8 +2071,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1429}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Reset(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1925,8 +2086,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Reset(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -1963,8 +2125,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.ResetRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1429}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Reset(google::cloud::cpp::compute::instances::v1::ResetRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1977,8 +2140,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Reset(NoAwaitTag, google::cloud::cpp::compute::instances::v1::ResetRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Reset(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::ResetRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1989,8 +2154,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Reset(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Reset(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2024,8 +2190,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1462}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resume(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -2038,8 +2205,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resume(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -2076,8 +2244,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.ResumeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1462}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resume(google::cloud::cpp::compute::instances::v1::ResumeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2090,8 +2259,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Resume(NoAwaitTag, google::cloud::cpp::compute::instances::v1::ResumeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Resume(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::ResumeRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2102,8 +2273,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Resume(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Resume(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2127,8 +2299,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1495}
   ///
   // clang-format on
-  Status
-  SendDiagnosticInterrupt(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  Status SendDiagnosticInterrupt(std::string const& project,
+                                 std::string const& zone,
+                                 std::string const& instance,
+                                 Options opts = {});
 
   // clang-format off
   ///
@@ -2155,8 +2329,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SendDiagnosticInterruptRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1495}
   ///
   // clang-format on
-  Status
-  SendDiagnosticInterrupt(google::cloud::cpp::compute::instances::v1::SendDiagnosticInterruptRequest const& request, Options opts = {});
+  Status SendDiagnosticInterrupt(
+      google::cloud::cpp::compute::instances::v1::
+          SendDiagnosticInterruptRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2190,7 +2366,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDeletionProtection(std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
+  SetDeletionProtection(std::string const& project, std::string const& zone,
+                        std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -2203,8 +2380,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDeletionProtection(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -2241,7 +2419,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDeletionProtection(google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request, Options opts = {});
+  SetDeletionProtection(google::cloud::cpp::compute::instances::v1::
+                            SetDeletionProtectionRequest const& request,
+                        Options opts = {});
 
   // clang-format off
   ///
@@ -2254,8 +2434,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDeletionProtection(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetDeletionProtectionRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDeletionProtection(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetDeletionProtectionRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2267,7 +2450,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDeletionProtection(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetDeletionProtection(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2304,7 +2489,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDiskAutoDelete(std::string const& project, std::string const& zone, std::string const& instance, bool auto_delete, std::string const& device_name, Options opts = {});
+  SetDiskAutoDelete(std::string const& project, std::string const& zone,
+                    std::string const& instance, bool auto_delete,
+                    std::string const& device_name, Options opts = {});
 
   // clang-format off
   ///
@@ -2317,8 +2504,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDiskAutoDelete(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, bool auto_delete, std::string const& device_name, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, bool auto_delete,
+      std::string const& device_name, Options opts = {});
 
   // clang-format off
   ///
@@ -2355,7 +2544,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request, Options opts = {});
+  SetDiskAutoDelete(google::cloud::cpp::compute::instances::v1::
+                        SetDiskAutoDeleteRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -2368,8 +2559,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetDiskAutoDelete(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetDiskAutoDeleteRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetDiskAutoDelete(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetDiskAutoDeleteRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2381,7 +2575,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetDiskAutoDelete(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetDiskAutoDelete(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -2410,8 +2605,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const& zone_set_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::ZoneSetPolicyRequest const&
+          zone_set_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2442,8 +2641,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.v1.Policy]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_007.proto#L178}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Policy>
-  SetIamPolicy(google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Policy> SetIamPolicy(
+      google::cloud::cpp::compute::instances::v1::SetIamPolicyRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2478,8 +2679,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1605}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetLabelsRequest const& instances_set_labels_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetLabelsRequest const&
+          instances_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2492,8 +2697,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetLabelsRequest const& instances_set_labels_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetLabelsRequest const&
+          instances_set_labels_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2530,8 +2739,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetLabelsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1605}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2544,8 +2755,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetLabels(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetLabelsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetLabels(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetLabelsRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2556,8 +2770,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetLabels(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetLabels(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2593,7 +2808,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineResources(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMachineResourcesRequest const& instances_set_machine_resources_request_resource, Options opts = {});
+  SetMachineResources(std::string const& project, std::string const& zone,
+                      std::string const& instance,
+                      google::cloud::cpp::compute::v1::
+                          InstancesSetMachineResourcesRequest const&
+                              instances_set_machine_resources_request_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2606,8 +2826,13 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMachineResources(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMachineResourcesRequest const& instances_set_machine_resources_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesSetMachineResourcesRequest const&
+              instances_set_machine_resources_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2645,7 +2870,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineResources(google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request, Options opts = {});
+  SetMachineResources(google::cloud::cpp::compute::instances::v1::
+                          SetMachineResourcesRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -2658,8 +2885,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMachineResources(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetMachineResourcesRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineResources(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetMachineResourcesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2671,7 +2901,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineResources(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetMachineResources(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2706,8 +2938,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineType(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const& instances_set_machine_type_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const&
+          instances_set_machine_type_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2720,8 +2956,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMachineType(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const& instances_set_machine_type_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMachineTypeRequest const&
+          instances_set_machine_type_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2758,8 +2998,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetMachineTypeRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1681}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineType(google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2772,8 +3014,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMachineType(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMachineType(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetMachineTypeRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2784,8 +3029,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMachineType(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMachineType(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2820,8 +3066,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1719}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMetadata(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2834,8 +3083,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMetadata(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Metadata const& metadata_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Metadata const& metadata_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2872,8 +3124,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetMetadataRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1719}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMetadata(google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2886,8 +3140,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMetadata(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetMetadataRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMetadata(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetMetadataRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2898,8 +3155,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMetadata(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetMetadata(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2936,7 +3194,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMinCpuPlatform(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const& instances_set_min_cpu_platform_request_resource, Options opts = {});
+  SetMinCpuPlatform(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const&
+          instances_set_min_cpu_platform_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2949,8 +3212,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMinCpuPlatform(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const& instances_set_min_cpu_platform_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetMinCpuPlatformRequest const&
+          instances_set_min_cpu_platform_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2989,7 +3256,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMinCpuPlatform(google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request, Options opts = {});
+  SetMinCpuPlatform(google::cloud::cpp::compute::instances::v1::
+                        SetMinCpuPlatformRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3002,8 +3271,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetMinCpuPlatform(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetMinCpuPlatformRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetMinCpuPlatform(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetMinCpuPlatformRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3015,7 +3287,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetMinCpuPlatform(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetMinCpuPlatform(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3049,8 +3322,12 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1794}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetName(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetNameRequest const& instances_set_name_request_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetNameRequest const&
+          instances_set_name_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3063,8 +3340,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetName(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetNameRequest const& instances_set_name_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetNameRequest const&
+          instances_set_name_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3100,8 +3381,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetNameRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1794}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetName(google::cloud::cpp::compute::instances::v1::SetNameRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3114,8 +3396,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetName(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetNameRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetName(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetNameRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3126,8 +3410,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetName(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetName(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3165,8 +3450,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1832}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetScheduling(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3179,8 +3467,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetScheduling(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Scheduling const& scheduling_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3220,8 +3511,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetSchedulingRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1832}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetScheduling(google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3234,8 +3527,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetScheduling(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetScheduling(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetSchedulingRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3246,8 +3542,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetScheduling(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetScheduling(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3284,7 +3581,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const& instances_set_security_policy_request_resource, Options opts = {});
+  SetSecurityPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const&
+          instances_set_security_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3297,8 +3599,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const& instances_set_security_policy_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetSecurityPolicyRequest const&
+          instances_set_security_policy_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3336,7 +3642,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::instances::v1::
+                        SetSecurityPolicyRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3349,8 +3657,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetSecurityPolicy(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetSecurityPolicyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetSecurityPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetSecurityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3362,7 +3673,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetSecurityPolicy(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3398,7 +3710,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetServiceAccount(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const& instances_set_service_account_request_resource, Options opts = {});
+  SetServiceAccount(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const&
+          instances_set_service_account_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3411,8 +3728,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetServiceAccount(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const& instances_set_service_account_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::InstancesSetServiceAccountRequest const&
+          instances_set_service_account_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3450,7 +3771,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetServiceAccount(google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request, Options opts = {});
+  SetServiceAccount(google::cloud::cpp::compute::instances::v1::
+                        SetServiceAccountRequest const& request,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3463,8 +3786,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetServiceAccount(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetServiceAccountRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetServiceAccount(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetServiceAccountRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3476,7 +3802,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetServiceAccount(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetServiceAccount(google::cloud::cpp::compute::v1::Operation const& operation,
+                    Options opts = {});
 
   // clang-format off
   ///
@@ -3513,7 +3840,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetShieldedInstanceIntegrityPolicy(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const& shielded_instance_integrity_policy_resource, Options opts = {});
+  SetShieldedInstanceIntegrityPolicy(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const&
+          shielded_instance_integrity_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3527,7 +3859,12 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetShieldedInstanceIntegrityPolicy(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const& shielded_instance_integrity_policy_resource, Options opts = {});
+  SetShieldedInstanceIntegrityPolicy(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceIntegrityPolicy const&
+          shielded_instance_integrity_policy_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3566,7 +3903,10 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetShieldedInstanceIntegrityPolicy(google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request, Options opts = {});
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3580,7 +3920,11 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetShieldedInstanceIntegrityPolicy(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetShieldedInstanceIntegrityPolicyRequest const& request, Options opts = {});
+  SetShieldedInstanceIntegrityPolicy(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SetShieldedInstanceIntegrityPolicyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3592,7 +3936,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetShieldedInstanceIntegrityPolicy(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SetShieldedInstanceIntegrityPolicy(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3627,8 +3973,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1984}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTags(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Tags const& tags_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Tags const& tags_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3641,8 +3990,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetTags(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Tags const& tags_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Tags const& tags_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3679,8 +4031,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SetTagsRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L1984}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTags(google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3693,8 +4046,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SetTags(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SetTags(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SetTagsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3705,8 +4060,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SetTags(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> SetTags(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3741,7 +4097,8 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  SimulateMaintenanceEvent(std::string const& project, std::string const& zone,
+                           std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -3754,8 +4111,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SimulateMaintenanceEvent(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -3793,7 +4151,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request, Options opts = {});
+  SimulateMaintenanceEvent(google::cloud::cpp::compute::instances::v1::
+                               SimulateMaintenanceEventRequest const& request,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -3806,8 +4166,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  SimulateMaintenanceEvent(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SimulateMaintenanceEventRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> SimulateMaintenanceEvent(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          SimulateMaintenanceEventRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3819,7 +4182,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  SimulateMaintenanceEvent(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  SimulateMaintenanceEvent(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3853,8 +4218,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2059}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Start(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -3867,8 +4233,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Start(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -3905,8 +4272,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.StartRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2059}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Start(google::cloud::cpp::compute::instances::v1::StartRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3919,8 +4287,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Start(NoAwaitTag, google::cloud::cpp::compute::instances::v1::StartRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Start(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::StartRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3931,8 +4301,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Start(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Start(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3968,7 +4339,13 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StartWithEncryptionKey(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesStartWithEncryptionKeyRequest const& instances_start_with_encryption_key_request_resource, Options opts = {});
+  StartWithEncryptionKey(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesStartWithEncryptionKeyRequest const&
+              instances_start_with_encryption_key_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -3981,8 +4358,13 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StartWithEncryptionKey(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::InstancesStartWithEncryptionKeyRequest const& instances_start_with_encryption_key_request_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::
+          InstancesStartWithEncryptionKeyRequest const&
+              instances_start_with_encryption_key_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4020,7 +4402,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StartWithEncryptionKey(google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request, Options opts = {});
+  StartWithEncryptionKey(google::cloud::cpp::compute::instances::v1::
+                             StartWithEncryptionKeyRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -4033,8 +4417,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  StartWithEncryptionKey(NoAwaitTag, google::cloud::cpp::compute::instances::v1::StartWithEncryptionKeyRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> StartWithEncryptionKey(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          StartWithEncryptionKeyRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4046,7 +4433,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  StartWithEncryptionKey(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  StartWithEncryptionKey(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4084,8 +4473,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2130}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Stop(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -4098,8 +4488,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Stop(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -4140,8 +4531,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.StopRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2130}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Stop(google::cloud::cpp::compute::instances::v1::StopRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4154,8 +4546,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Stop(NoAwaitTag, google::cloud::cpp::compute::instances::v1::StopRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Stop(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::StopRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4166,8 +4560,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Stop(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Stop(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4206,8 +4601,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2168}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Suspend(std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -4220,8 +4616,9 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Suspend(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, Options opts = {});
 
   // clang-format off
   ///
@@ -4263,8 +4660,9 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.SuspendRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2168}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Suspend(google::cloud::cpp::compute::instances::v1::SuspendRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4277,8 +4675,10 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  Suspend(NoAwaitTag, google::cloud::cpp::compute::instances::v1::SuspendRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> Suspend(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::SuspendRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4289,8 +4689,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  Suspend(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> Suspend(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4319,7 +4720,12 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(std::string const& project, std::string const& zone, std::string const& resource, google::cloud::cpp::compute::v1::TestPermissionsRequest const& test_permissions_request_resource, Options opts = {});
+  TestIamPermissions(
+      std::string const& project, std::string const& zone,
+      std::string const& resource,
+      google::cloud::cpp::compute::v1::TestPermissionsRequest const&
+          test_permissions_request_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4350,7 +4756,9 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::TestPermissionsResponse>
-  TestIamPermissions(google::cloud::cpp::compute::instances::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  TestIamPermissions(google::cloud::cpp::compute::instances::v1::
+                         TestIamPermissionsRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -4386,8 +4794,11 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2302}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstance(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Instance const& instance_resource, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4400,8 +4811,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateInstance(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::Instance const& instance_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::Instance const& instance_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4439,8 +4853,10 @@ class InstancesClient {
   /// [google.cloud.cpp.compute.instances.v1.UpdateInstanceRequest]: @cloud_cpp_reference_link{google/cloud/compute/instances/v1/instances.proto#L2302}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstance(google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4453,8 +4869,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateInstance(NoAwaitTag, google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateInstance(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::UpdateInstanceRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4465,8 +4884,9 @@ class InstancesClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateInstance(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateInstance(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4504,7 +4924,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAccessConfig(std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::AccessConfig const& access_config_resource, Options opts = {});
+  UpdateAccessConfig(std::string const& project, std::string const& zone,
+                     std::string const& instance,
+                     std::string const& network_interface,
+                     google::cloud::cpp::compute::v1::AccessConfig const&
+                         access_config_resource,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -4517,8 +4942,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAccessConfig(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::AccessConfig const& access_config_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::AccessConfig const&
+          access_config_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4557,7 +4986,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request, Options opts = {});
+  UpdateAccessConfig(google::cloud::cpp::compute::instances::v1::
+                         UpdateAccessConfigRequest const& request,
+                     Options opts = {});
 
   // clang-format off
   ///
@@ -4570,8 +5001,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateAccessConfig(NoAwaitTag, google::cloud::cpp::compute::instances::v1::UpdateAccessConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateAccessConfig(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateAccessConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4583,7 +5017,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateAccessConfig(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  UpdateAccessConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4620,7 +5056,11 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisplayDevice(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::DisplayDevice const& display_device_resource, Options opts = {});
+  UpdateDisplayDevice(std::string const& project, std::string const& zone,
+                      std::string const& instance,
+                      google::cloud::cpp::compute::v1::DisplayDevice const&
+                          display_device_resource,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -4633,8 +5073,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateDisplayDevice(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::DisplayDevice const& display_device_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::DisplayDevice const&
+          display_device_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4673,7 +5117,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisplayDevice(google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request, Options opts = {});
+  UpdateDisplayDevice(google::cloud::cpp::compute::instances::v1::
+                          UpdateDisplayDeviceRequest const& request,
+                      Options opts = {});
 
   // clang-format off
   ///
@@ -4686,8 +5132,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateDisplayDevice(NoAwaitTag, google::cloud::cpp::compute::instances::v1::UpdateDisplayDeviceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateDisplayDevice(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateDisplayDeviceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4699,7 +5148,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateDisplayDevice(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  UpdateDisplayDevice(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4739,7 +5190,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateNetworkInterface(std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::NetworkInterface const& network_interface_resource, Options opts = {});
+  UpdateNetworkInterface(
+      std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::NetworkInterface const&
+          network_interface_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4752,8 +5208,12 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateNetworkInterface(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, std::string const& network_interface, google::cloud::cpp::compute::v1::NetworkInterface const& network_interface_resource, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance, std::string const& network_interface,
+      google::cloud::cpp::compute::v1::NetworkInterface const&
+          network_interface_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4794,7 +5254,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateNetworkInterface(google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request, Options opts = {});
+  UpdateNetworkInterface(google::cloud::cpp::compute::instances::v1::
+                             UpdateNetworkInterfaceRequest const& request,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -4807,8 +5269,11 @@ class InstancesClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateNetworkInterface(NoAwaitTag, google::cloud::cpp::compute::instances::v1::UpdateNetworkInterfaceRequest const& request, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateNetworkInterface(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateNetworkInterfaceRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4820,7 +5285,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateNetworkInterface(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  UpdateNetworkInterface(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4857,7 +5324,12 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateShieldedInstanceConfig(std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::ShieldedInstanceConfig const& shielded_instance_config_resource, Options opts = {});
+  UpdateShieldedInstanceConfig(
+      std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceConfig const&
+          shielded_instance_config_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4871,7 +5343,12 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateShieldedInstanceConfig(NoAwaitTag, std::string const& project, std::string const& zone, std::string const& instance, google::cloud::cpp::compute::v1::ShieldedInstanceConfig const& shielded_instance_config_resource, Options opts = {});
+  UpdateShieldedInstanceConfig(
+      NoAwaitTag, std::string const& project, std::string const& zone,
+      std::string const& instance,
+      google::cloud::cpp::compute::v1::ShieldedInstanceConfig const&
+          shielded_instance_config_resource,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4910,7 +5387,10 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateShieldedInstanceConfig(google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request, Options opts = {});
+  UpdateShieldedInstanceConfig(
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4924,7 +5404,11 @@ class InstancesClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::Operation>
-  UpdateShieldedInstanceConfig(NoAwaitTag, google::cloud::cpp::compute::instances::v1::UpdateShieldedInstanceConfigRequest const& request, Options opts = {});
+  UpdateShieldedInstanceConfig(
+      NoAwaitTag,
+      google::cloud::cpp::compute::instances::v1::
+          UpdateShieldedInstanceConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -4936,7 +5420,9 @@ class InstancesClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
-  UpdateShieldedInstanceConfig(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
+  UpdateShieldedInstanceConfig(
+      google::cloud::cpp::compute::v1::Operation const& operation,
+      Options opts = {});
 
  private:
   std::shared_ptr<InstancesConnection> connection_;

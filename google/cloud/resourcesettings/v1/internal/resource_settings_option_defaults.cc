@@ -17,10 +17,10 @@
 // source: google/cloud/resourcesettings/v1/resource_settings.proto
 
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_option_defaults.h"
-#include "google/cloud/internal/populate_common_options.h"
-#include "google/cloud/internal/populate_grpc_options.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_options.h"
+#include "google/cloud/internal/populate_common_options.h"
+#include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 #include <utility>
 
@@ -39,19 +39,29 @@ Options ResourceSettingsServiceDefaultOptions(Options options) {
       "", "GOOGLE_CLOUD_CPP_RESOURCE_SETTINGS_SERVICE_AUTHORITY",
       "resourcesettings.googleapis.com");
   options = internal::PopulateGrpcOptions(std::move(options));
-  if (!options.has<resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()) {
+  if (!options.has<
+          resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>()) {
     options.set<resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption>(
         resourcesettings_v1::ResourceSettingsServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30)).clone());
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>()) {
-    options.set<resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(0), std::chrono::seconds(1),
-            std::chrono::minutes(5), kBackoffScaling, kBackoffScaling).clone());
+  if (!options.has<
+          resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>()) {
+    options
+        .set<resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(
+                std::chrono::seconds(0), std::chrono::seconds(1),
+                std::chrono::minutes(5), kBackoffScaling, kBackoffScaling)
+                .clone());
   }
-  if (!options.has<resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption>(
-        resourcesettings_v1::MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          resourcesettings_v1::
+              ResourceSettingsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<resourcesettings_v1::
+                    ResourceSettingsServiceConnectionIdempotencyPolicyOption>(
+        resourcesettings_v1::
+            MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy());
   }
 
   return options;

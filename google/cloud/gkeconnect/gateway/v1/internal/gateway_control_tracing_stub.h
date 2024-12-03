@@ -38,14 +38,16 @@ class GatewayControlTracingStub : public GatewayControlStub {
 
   explicit GatewayControlTracingStub(std::shared_ptr<GatewayControlStub> child);
 
-  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
+  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
+  GenerateCredentials(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+          request) override;
 
  private:
   std::shared_ptr<GatewayControlStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

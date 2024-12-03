@@ -34,23 +34,28 @@ ManagedKafkaTracingConnection::ManagedKafkaTracingConnection(
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::managedkafka::v1::Cluster>
-ManagedKafkaTracingConnection::ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListClusters");
+ManagedKafkaTracingConnection::ListClusters(
+    google::cloud::managedkafka::v1::ListClustersRequest request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::ListClusters");
   internal::OTelScope scope(span);
   auto sr = child_->ListClusters(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::managedkafka::v1::Cluster>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::managedkafka::v1::Cluster>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::managedkafka::v1::Cluster>
-ManagedKafkaTracingConnection::GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetCluster");
+ManagedKafkaTracingConnection::GetCluster(
+    google::cloud::managedkafka::v1::GetClusterRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetCluster");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaTracingConnection::CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+ManagedKafkaTracingConnection::CreateCluster(
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
   internal::OTelScope scope(span);
@@ -59,12 +64,12 @@ ManagedKafkaTracingConnection::CreateCluster(google::cloud::managedkafka::v1::Cr
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::CreateCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::CreateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->CreateCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->CreateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -73,12 +78,12 @@ ManagedKafkaTracingConnection::CreateCluster(
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::CreateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->CreateCluster(operation));
+  return internal::EndSpan(std::move(span), child_->CreateCluster(operation));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
-ManagedKafkaTracingConnection::UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+ManagedKafkaTracingConnection::UpdateCluster(
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
   internal::OTelScope scope(span);
@@ -87,12 +92,12 @@ ManagedKafkaTracingConnection::UpdateCluster(google::cloud::managedkafka::v1::Up
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::UpdateCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::UpdateClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->UpdateCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->UpdateCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::Cluster>>
@@ -101,12 +106,12 @@ ManagedKafkaTracingConnection::UpdateCluster(
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::UpdateCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->UpdateCluster(operation));
+  return internal::EndSpan(std::move(span), child_->UpdateCluster(operation));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
-ManagedKafkaTracingConnection::DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+ManagedKafkaTracingConnection::DeleteCluster(
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
   internal::OTelScope scope(span);
@@ -115,12 +120,12 @@ ManagedKafkaTracingConnection::DeleteCluster(google::cloud::managedkafka::v1::De
 
 StatusOr<google::longrunning::Operation>
 ManagedKafkaTracingConnection::DeleteCluster(
-    NoAwaitTag, google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
+    NoAwaitTag,
+    google::cloud::managedkafka::v1::DeleteClusterRequest const& request) {
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
   opentelemetry::trace::Scope scope(span);
-  return internal::EndSpan(*span, child_->DeleteCluster(
-      NoAwaitTag{}, request));
+  return internal::EndSpan(*span, child_->DeleteCluster(NoAwaitTag{}, request));
 }
 
 future<StatusOr<google::cloud::managedkafka::v1::OperationMetadata>>
@@ -129,119 +134,147 @@ ManagedKafkaTracingConnection::DeleteCluster(
   auto span = internal::MakeSpan(
       "managedkafka_v1::ManagedKafkaConnection::DeleteCluster");
   internal::OTelScope scope(span);
-  return internal::EndSpan(std::move(span),
-      child_->DeleteCluster(operation));
+  return internal::EndSpan(std::move(span), child_->DeleteCluster(operation));
 }
 
 StreamRange<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaTracingConnection::ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListTopics");
+ManagedKafkaTracingConnection::ListTopics(
+    google::cloud::managedkafka::v1::ListTopicsRequest request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListTopics");
   internal::OTelScope scope(span);
   auto sr = child_->ListTopics(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::managedkafka::v1::Topic>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::managedkafka::v1::Topic>(std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaTracingConnection::GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetTopic");
+ManagedKafkaTracingConnection::GetTopic(
+    google::cloud::managedkafka::v1::GetTopicRequest const& request) {
+  auto span =
+      internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetTopic(request));
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaTracingConnection::CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::CreateTopic");
+ManagedKafkaTracingConnection::CreateTopic(
+    google::cloud::managedkafka::v1::CreateTopicRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::CreateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CreateTopic(request));
 }
 
 StatusOr<google::cloud::managedkafka::v1::Topic>
-ManagedKafkaTracingConnection::UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::UpdateTopic");
+ManagedKafkaTracingConnection::UpdateTopic(
+    google::cloud::managedkafka::v1::UpdateTopicRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::UpdateTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateTopic(request));
 }
 
-Status
-ManagedKafkaTracingConnection::DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::DeleteTopic");
+Status ManagedKafkaTracingConnection::DeleteTopic(
+    google::cloud::managedkafka::v1::DeleteTopicRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::DeleteTopic");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteTopic(request));
 }
 
 StreamRange<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaTracingConnection::ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListConsumerGroups");
+ManagedKafkaTracingConnection::ListConsumerGroups(
+    google::cloud::managedkafka::v1::ListConsumerGroupsRequest request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::ListConsumerGroups");
   internal::OTelScope scope(span);
   auto sr = child_->ListConsumerGroups(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::managedkafka::v1::ConsumerGroup>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::managedkafka::v1::ConsumerGroup>(std::move(span),
+                                                      std::move(sr));
 }
 
 StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaTracingConnection::GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetConsumerGroup");
+ManagedKafkaTracingConnection::GetConsumerGroup(
+    google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::GetConsumerGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetConsumerGroup(request));
 }
 
 StatusOr<google::cloud::managedkafka::v1::ConsumerGroup>
-ManagedKafkaTracingConnection::UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::UpdateConsumerGroup");
+ManagedKafkaTracingConnection::UpdateConsumerGroup(
+    google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::UpdateConsumerGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->UpdateConsumerGroup(request));
 }
 
-Status
-ManagedKafkaTracingConnection::DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::DeleteConsumerGroup");
+Status ManagedKafkaTracingConnection::DeleteConsumerGroup(
+    google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
+        request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::DeleteConsumerGroup");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteConsumerGroup(request));
 }
 
 StreamRange<google::cloud::location::Location>
-ManagedKafkaTracingConnection::ListLocations(google::cloud::location::ListLocationsRequest request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListLocations");
+ManagedKafkaTracingConnection::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::ListLocations");
   internal::OTelScope scope(span);
   auto sr = child_->ListLocations(std::move(request));
   return internal::MakeTracedStreamRange<google::cloud::location::Location>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::cloud::location::Location>
-ManagedKafkaTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetLocation");
+ManagedKafkaTracingConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetLocation(request));
 }
 
 StreamRange<google::longrunning::Operation>
-ManagedKafkaTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::ListOperations");
+ManagedKafkaTracingConnection::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::ListOperations");
   internal::OTelScope scope(span);
   auto sr = child_->ListOperations(std::move(request));
   return internal::MakeTracedStreamRange<google::longrunning::Operation>(
-        std::move(span), std::move(sr));
+      std::move(span), std::move(sr));
 }
 
 StatusOr<google::longrunning::Operation>
-ManagedKafkaTracingConnection::GetOperation(google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::GetOperation");
+ManagedKafkaTracingConnection::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
-Status
-ManagedKafkaTracingConnection::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::DeleteOperation");
+Status ManagedKafkaTracingConnection::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->DeleteOperation(request));
 }
 
-Status
-ManagedKafkaTracingConnection::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpan("managedkafka_v1::ManagedKafkaConnection::CancelOperation");
+Status ManagedKafkaTracingConnection::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
+  auto span = internal::MakeSpan(
+      "managedkafka_v1::ManagedKafkaConnection::CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->CancelOperation(request));
 }

@@ -21,13 +21,13 @@
 
 #include "google/cloud/datacatalog/v1/data_catalog_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
-#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -67,7 +67,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataCatalogClient {
  public:
-  explicit DataCatalogClient(std::shared_ptr<DataCatalogConnection> connection, Options opts = {});
+  explicit DataCatalogClient(std::shared_ptr<DataCatalogConnection> connection,
+                             Options opts = {});
   ~DataCatalogClient();
 
   ///@{
@@ -80,10 +81,12 @@ class DataCatalogClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataCatalogClient const& a, DataCatalogClient const& b) {
+  friend bool operator==(DataCatalogClient const& a,
+                         DataCatalogClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataCatalogClient const& a, DataCatalogClient const& b) {
+  friend bool operator!=(DataCatalogClient const& a,
+                         DataCatalogClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -150,7 +153,9 @@ class DataCatalogClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest::Scope const& scope, std::string const& query, Options opts = {});
+  SearchCatalog(
+      google::cloud::datacatalog::v1::SearchCatalogRequest::Scope const& scope,
+      std::string const& query, Options opts = {});
 
   // clang-format off
   ///
@@ -203,7 +208,8 @@ class DataCatalogClient {
   ///
   // clang-format on
   StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request, Options opts = {});
+  SearchCatalog(google::cloud::datacatalog::v1::SearchCatalogRequest request,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -263,8 +269,10 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1711}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  CreateEntryGroup(std::string const& parent, std::string const& entry_group_id, google::cloud::datacatalog::v1::EntryGroup const& entry_group, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
+      std::string const& parent, std::string const& entry_group_id,
+      google::cloud::datacatalog::v1::EntryGroup const& entry_group,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -319,8 +327,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.EntryGroup]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1711}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  CreateEntryGroup(google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
+      google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -344,8 +353,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L846}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  GetEntryGroup(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -370,8 +379,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L846}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  GetEntryGroup(std::string const& name, google::protobuf::FieldMask const& read_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
+      std::string const& name, google::protobuf::FieldMask const& read_mask,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -400,8 +410,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L846}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  GetEntryGroup(google::cloud::datacatalog::v1::GetEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
+      google::cloud::datacatalog::v1::GetEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -430,8 +441,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L832}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  UpdateEntryGroup(google::cloud::datacatalog::v1::EntryGroup const& entry_group, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
+      google::cloud::datacatalog::v1::EntryGroup const& entry_group,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +477,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L832}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  UpdateEntryGroup(google::cloud::datacatalog::v1::EntryGroup const& entry_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
+      google::cloud::datacatalog::v1::EntryGroup const& entry_group,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -500,8 +513,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L832}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryGroup>
-  UpdateEntryGroup(google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
+      google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -527,8 +541,7 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L861}
   ///
   // clang-format on
-  Status
-  DeleteEntryGroup(std::string const& name, Options opts = {});
+  Status DeleteEntryGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +572,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteEntryGroupRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L861}
   ///
   // clang-format on
-  Status
-  DeleteEntryGroup(google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request, Options opts = {});
+  Status DeleteEntryGroup(
+      google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -595,8 +609,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L876}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-  ListEntryGroups(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -634,8 +648,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L876}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-  ListEntryGroups(google::cloud::datacatalog::v1::ListEntryGroupsRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
+      google::cloud::datacatalog::v1::ListEntryGroupsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -678,8 +693,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1068}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  CreateEntry(std::string const& parent, std::string const& entry_id, google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
+      std::string const& parent, std::string const& entry_id,
+      google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
 
   // clang-format off
   ///
@@ -718,8 +734,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Entry]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1068}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  CreateEntry(google::cloud::datacatalog::v1::CreateEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> CreateEntry(
+      google::cloud::datacatalog::v1::CreateEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -748,8 +765,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L936}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  UpdateEntry(google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
+      google::cloud::datacatalog::v1::Entry const& entry, Options opts = {});
 
   // clang-format off
   ///
@@ -781,8 +798,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L936}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  UpdateEntry(google::cloud::datacatalog::v1::Entry const& entry, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
+      google::cloud::datacatalog::v1::Entry const& entry,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -816,8 +834,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L936}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  UpdateEntry(google::cloud::datacatalog::v1::UpdateEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> UpdateEntry(
+      google::cloud::datacatalog::v1::UpdateEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -848,8 +867,7 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L974}
   ///
   // clang-format on
-  Status
-  DeleteEntry(std::string const& name, Options opts = {});
+  Status DeleteEntry(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -885,8 +903,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L974}
   ///
   // clang-format on
-  Status
-  DeleteEntry(google::cloud::datacatalog::v1::DeleteEntryRequest const& request, Options opts = {});
+  Status DeleteEntry(
+      google::cloud::datacatalog::v1::DeleteEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -910,8 +929,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L986}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  GetEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -940,8 +959,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.GetEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L986}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  GetEntry(google::cloud::datacatalog::v1::GetEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> GetEntry(
+      google::cloud::datacatalog::v1::GetEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -972,8 +992,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.LookupEntryRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L998}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Entry>
-  LookupEntry(google::cloud::datacatalog::v1::LookupEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Entry> LookupEntry(
+      google::cloud::datacatalog::v1::LookupEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1013,8 +1034,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2082}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::Entry>
-  ListEntries(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1057,8 +1078,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2082}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::Entry>
-  ListEntries(google::cloud::datacatalog::v1::ListEntriesRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
+      google::cloud::datacatalog::v1::ListEntriesRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1092,8 +1114,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2223}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::EntryOverview>
-  ModifyEntryOverview(google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1127,8 +1150,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2238}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Contacts>
-  ModifyEntryContacts(google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1164,8 +1188,10 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  CreateTagTemplate(std::string const& parent, std::string const& tag_template_id, google::cloud::datacatalog::v1::TagTemplate const& tag_template, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
+      std::string const& parent, std::string const& tag_template_id,
+      google::cloud::datacatalog::v1::TagTemplate const& tag_template,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1199,8 +1225,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  CreateTagTemplate(google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> CreateTagTemplate(
+      google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1224,8 +1251,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  GetTagTemplate(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1254,8 +1281,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.TagTemplate]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L147}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  GetTagTemplate(google::cloud::datacatalog::v1::GetTagTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> GetTagTemplate(
+      google::cloud::datacatalog::v1::GetTagTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1287,8 +1315,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1781}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(google::cloud::datacatalog::v1::TagTemplate const& tag_template, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
+      google::cloud::datacatalog::v1::TagTemplate const& tag_template,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1329,8 +1358,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1781}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(google::cloud::datacatalog::v1::TagTemplate const& tag_template, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
+      google::cloud::datacatalog::v1::TagTemplate const& tag_template,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1367,8 +1397,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1781}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::TagTemplate>
-  UpdateTagTemplate(google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::TagTemplate> UpdateTagTemplate(
+      google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1396,8 +1427,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1799}
   ///
   // clang-format on
-  Status
-  DeleteTagTemplate(std::string const& name, bool force, Options opts = {});
+  Status DeleteTagTemplate(std::string const& name, bool force,
+                           Options opts = {});
 
   // clang-format off
   ///
@@ -1427,8 +1458,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1799}
   ///
   // clang-format on
-  Status
-  DeleteTagTemplate(google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request, Options opts = {});
+  Status DeleteTagTemplate(
+      google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1467,7 +1499,11 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  CreateTagTemplateField(std::string const& parent, std::string const& tag_template_field_id, google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field, Options opts = {});
+  CreateTagTemplateField(std::string const& parent,
+                         std::string const& tag_template_field_id,
+                         google::cloud::datacatalog::v1::TagTemplateField const&
+                             tag_template_field,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1501,7 +1537,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  CreateTagTemplateField(google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const& request, Options opts = {});
+  CreateTagTemplateField(
+      google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1534,7 +1573,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(std::string const& name, google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field, Options opts = {});
+  UpdateTagTemplateField(std::string const& name,
+                         google::cloud::datacatalog::v1::TagTemplateField const&
+                             tag_template_field,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1583,7 +1625,11 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(std::string const& name, google::cloud::datacatalog::v1::TagTemplateField const& tag_template_field, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateTagTemplateField(std::string const& name,
+                         google::cloud::datacatalog::v1::TagTemplateField const&
+                             tag_template_field,
+                         google::protobuf::FieldMask const& update_mask,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1620,7 +1666,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  UpdateTagTemplateField(google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const& request, Options opts = {});
+  UpdateTagTemplateField(
+      google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1651,7 +1700,9 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateField(std::string const& name, std::string const& new_tag_template_field_id, Options opts = {});
+  RenameTagTemplateField(std::string const& name,
+                         std::string const& new_tag_template_field_id,
+                         Options opts = {});
 
   // clang-format off
   ///
@@ -1685,7 +1736,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateField(google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const& request, Options opts = {});
+  RenameTagTemplateField(
+      google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1714,7 +1768,9 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateFieldEnumValue(std::string const& name, std::string const& new_enum_value_display_name, Options opts = {});
+  RenameTagTemplateFieldEnumValue(
+      std::string const& name, std::string const& new_enum_value_display_name,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1746,7 +1802,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
-  RenameTagTemplateFieldEnumValue(google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest const& request, Options opts = {});
+  RenameTagTemplateFieldEnumValue(
+      google::cloud::datacatalog::v1::
+          RenameTagTemplateFieldEnumValueRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1775,8 +1834,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1959}
   ///
   // clang-format on
-  Status
-  DeleteTagTemplateField(std::string const& name, bool force, Options opts = {});
+  Status DeleteTagTemplateField(std::string const& name, bool force,
+                                Options opts = {});
 
   // clang-format off
   ///
@@ -1807,8 +1866,10 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1959}
   ///
   // clang-format on
-  Status
-  DeleteTagTemplateField(google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const& request, Options opts = {});
+  Status DeleteTagTemplateField(
+      google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1852,8 +1913,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  CreateTag(std::string const& parent, google::cloud::datacatalog::v1::Tag const& tag, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
+      std::string const& parent, google::cloud::datacatalog::v1::Tag const& tag,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1895,8 +1957,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Tag]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  CreateTag(google::cloud::datacatalog::v1::CreateTagRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Tag> CreateTag(
+      google::cloud::datacatalog::v1::CreateTagRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -1920,8 +1983,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1837}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  UpdateTag(google::cloud::datacatalog::v1::Tag const& tag, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
+      google::cloud::datacatalog::v1::Tag const& tag, Options opts = {});
 
   // clang-format off
   ///
@@ -1951,8 +2014,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1837}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  UpdateTag(google::cloud::datacatalog::v1::Tag const& tag, google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
+      google::cloud::datacatalog::v1::Tag const& tag,
+      google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1981,8 +2045,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1837}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::Tag>
-  UpdateTag(google::cloud::datacatalog::v1::UpdateTagRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::Tag> UpdateTag(
+      google::cloud::datacatalog::v1::UpdateTagRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2003,8 +2068,7 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1852}
   ///
   // clang-format on
-  Status
-  DeleteTag(std::string const& name, Options opts = {});
+  Status DeleteTag(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2030,8 +2094,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1852}
   ///
   // clang-format on
-  Status
-  DeleteTag(google::cloud::datacatalog::v1::DeleteTagRequest const& request, Options opts = {});
+  Status DeleteTag(
+      google::cloud::datacatalog::v1::DeleteTagRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2073,8 +2138,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L72}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::Tag>
-  ListTags(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2116,8 +2181,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.Tag.column]: @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L72}
   ///
   // clang-format on
-  StreamRange<google::cloud::datacatalog::v1::Tag>
-  ListTags(google::cloud::datacatalog::v1::ListTagsRequest request, Options opts = {});
+  StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
+      google::cloud::datacatalog::v1::ListTagsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2168,7 +2234,9 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(google::cloud::datacatalog::v1::ReconcileTagsRequest const& request, Options opts = {});
+  ReconcileTags(
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2181,8 +2249,10 @@ class DataCatalogClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ReconcileTags(NoAwaitTag, google::cloud::datacatalog::v1::ReconcileTagsRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ReconcileTags(
+      NoAwaitTag,
+      google::cloud::datacatalog::v1::ReconcileTagsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2194,7 +2264,8 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ReconcileTagsResponse>>
-  ReconcileTags(google::longrunning::Operation const& operation, Options opts = {});
+  ReconcileTags(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -2220,8 +2291,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2135}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
-  StarEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2252,8 +2323,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.StarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2135}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
-  StarEntry(google::cloud::datacatalog::v1::StarEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2279,8 +2351,8 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2152}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-  UnstarEntry(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2311,8 +2383,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2152}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
-  UnstarEntry(google::cloud::datacatalog::v1::UnstarEntryRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2357,8 +2430,9 @@ class DataCatalogClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& resource, google::iam::v1::Policy const& policy,
+      Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -2380,8 +2454,9 @@ class DataCatalogClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
+                                                 IamUpdater const& updater,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -2426,8 +2501,8 @@ class DataCatalogClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2472,8 +2547,8 @@ class DataCatalogClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(std::string const& resource, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
+                                                 Options opts = {});
 
   // clang-format off
   ///
@@ -2522,8 +2597,8 @@ class DataCatalogClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2565,8 +2640,9 @@ class DataCatalogClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2622,7 +2698,9 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(google::cloud::datacatalog::v1::ImportEntriesRequest const& request, Options opts = {});
+  ImportEntries(
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2635,8 +2713,10 @@ class DataCatalogClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  ImportEntries(NoAwaitTag, google::cloud::datacatalog::v1::ImportEntriesRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> ImportEntries(
+      NoAwaitTag,
+      google::cloud::datacatalog::v1::ImportEntriesRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2648,7 +2728,8 @@ class DataCatalogClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::datacatalog::v1::ImportEntriesResponse>>
-  ImportEntries(google::longrunning::Operation const& operation, Options opts = {});
+  ImportEntries(google::longrunning::Operation const& operation,
+                Options opts = {});
 
   // clang-format off
   ///
@@ -2678,8 +2759,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.SetConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2336}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-  SetConfig(google::cloud::datacatalog::v1::SetConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::MigrationConfig> SetConfig(
+      google::cloud::datacatalog::v1::SetConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2710,8 +2792,9 @@ class DataCatalogClient {
   /// [google.cloud.datacatalog.v1.RetrieveConfigRequest]: @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L2352}
   ///
   // clang-format on
-  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig>
-  RetrieveConfig(google::cloud::datacatalog::v1::RetrieveConfigRequest const& request, Options opts = {});
+  StatusOr<google::cloud::datacatalog::v1::OrganizationConfig> RetrieveConfig(
+      google::cloud::datacatalog::v1::RetrieveConfigRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2745,7 +2828,10 @@ class DataCatalogClient {
   ///
   // clang-format on
   StatusOr<google::cloud::datacatalog::v1::MigrationConfig>
-  RetrieveEffectiveConfig(google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const& request, Options opts = {});
+  RetrieveEffectiveConfig(
+      google::cloud::datacatalog::v1::RetrieveEffectiveConfigRequest const&
+          request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2780,8 +2866,8 @@ class DataCatalogClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -2820,8 +2906,8 @@ class DataCatalogClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation>
-  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation> ListOperations(
+      google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2847,8 +2933,8 @@ class DataCatalogClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
+                                                        Options opts = {});
 
   // clang-format off
   ///
@@ -2879,8 +2965,9 @@ class DataCatalogClient {
   /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation>
-  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
+  StatusOr<google::longrunning::Operation> GetOperation(
+      google::longrunning::GetOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2904,8 +2991,7 @@ class DataCatalogClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(std::string const& name, Options opts = {});
+  Status DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2934,8 +3020,9 @@ class DataCatalogClient {
   /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status
-  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
+  Status DeleteOperation(
+      google::longrunning::DeleteOperationRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -2969,8 +3056,7 @@ class DataCatalogClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(std::string const& name, Options opts = {});
+  Status CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3009,8 +3095,9 @@ class DataCatalogClient {
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status
-  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
+  Status CancelOperation(
+      google::longrunning::CancelOperationRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<DataCatalogConnection> connection_;

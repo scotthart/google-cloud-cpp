@@ -26,27 +26,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ResourceSettingsServiceConnectionIdempotencyPolicy::~ResourceSettingsServiceConnectionIdempotencyPolicy() = default;
+ResourceSettingsServiceConnectionIdempotencyPolicy::
+    ~ResourceSettingsServiceConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
 ResourceSettingsServiceConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>(*this);
+  return std::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>(
+      *this);
 }
 
-Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest) {  // NOLINT
+Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::ListSettings(
+    google::cloud::resourcesettings::v1::ListSettingsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const&) {
+Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::GetSetting(
+    google::cloud::resourcesettings::v1::GetSettingRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const&) {
+Idempotency ResourceSettingsServiceConnectionIdempotencyPolicy::UpdateSetting(
+    google::cloud::resourcesettings::v1::UpdateSettingRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>
-    MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy() {
+MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy() {
   return std::make_unique<ResourceSettingsServiceConnectionIdempotencyPolicy>();
 }
 

@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_RESOURCE_SETTINGS_CLIENT_H
 
+#include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
-#include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -34,8 +34,8 @@ namespace resourcesettings_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// An interface to interact with resource settings and setting values throughout
-/// the resource hierarchy.
+/// An interface to interact with resource settings and setting values
+/// throughout the resource hierarchy.
 ///
 /// Services may surface a number of settings for users to control how their
 /// resources behave. Values of settings applied on a given Cloud resource are
@@ -73,29 +73,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-class
- GOOGLE_CLOUD_CPP_DEPRECATED(
-      "ResourceSettingsService has been deprecated and will be turned down in the future."
-)
-ResourceSettingsServiceClient {
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "ResourceSettingsService has been deprecated and will be turned down in "
+    "the future.") ResourceSettingsServiceClient {
  public:
-  explicit ResourceSettingsServiceClient(std::shared_ptr<ResourceSettingsServiceConnection> connection, Options opts = {});
+  explicit ResourceSettingsServiceClient(
+      std::shared_ptr<ResourceSettingsServiceConnection> connection,
+      Options opts = {});
   ~ResourceSettingsServiceClient();
 
   ///@{
   /// @name Copy and move support
   ResourceSettingsServiceClient(ResourceSettingsServiceClient const&) = default;
-  ResourceSettingsServiceClient& operator=(ResourceSettingsServiceClient const&) = default;
+  ResourceSettingsServiceClient& operator=(
+      ResourceSettingsServiceClient const&) = default;
   ResourceSettingsServiceClient(ResourceSettingsServiceClient&&) = default;
-  ResourceSettingsServiceClient& operator=(ResourceSettingsServiceClient&&) = default;
+  ResourceSettingsServiceClient& operator=(ResourceSettingsServiceClient&&) =
+      default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ResourceSettingsServiceClient const& a, ResourceSettingsServiceClient const& b) {
+  friend bool operator==(ResourceSettingsServiceClient const& a,
+                         ResourceSettingsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ResourceSettingsServiceClient const& a, ResourceSettingsServiceClient const& b) {
+  friend bool operator!=(ResourceSettingsServiceClient const& a,
+                         ResourceSettingsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -137,8 +141,8 @@ ResourceSettingsServiceClient {
   /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcesettings::v1::Setting>
-  ListSettings(std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
+      std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -176,8 +180,9 @@ ResourceSettingsServiceClient {
   /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
-  StreamRange<google::cloud::resourcesettings::v1::Setting>
-  ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request, Options opts = {});
+  StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
+      google::cloud::resourcesettings::v1::ListSettingsRequest request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -206,8 +211,8 @@ ResourceSettingsServiceClient {
   /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcesettings::v1::Setting>
-  GetSetting(std::string const& name, Options opts = {});
+  StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
+      std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -239,8 +244,9 @@ ResourceSettingsServiceClient {
   /// [google.cloud.resourcesettings.v1.Setting]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L112}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcesettings::v1::Setting>
-  GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request,
+      Options opts = {});
 
   // clang-format off
   ///
@@ -284,8 +290,9 @@ ResourceSettingsServiceClient {
   /// [google.cloud.resourcesettings.v1.UpdateSettingRequest]: @googleapis_reference_link{google/cloud/resourcesettings/v1/resource_settings.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::resourcesettings::v1::Setting>
-  UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request, Options opts = {});
+  StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request,
+      Options opts = {});
 
  private:
   std::shared_ptr<ResourceSettingsServiceConnection> connection_;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_METADATA_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_METADATA_DECORATOR_H
 
-#include "google/cloud/options.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
+#include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <map>
 #include <memory>
@@ -39,24 +39,23 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
       std::multimap<std::string, std::string> fixed_metadata,
       std::string api_client_header = "");
 
-  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) override;
+  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
+  ListSettings(grpc::ClientContext& context, Options const& options,
+               google::cloud::resourcesettings::v1::ListSettingsRequest const&
+                   request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
+      override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
+      override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context,
-                   Options const& options,
+  void SetMetadata(grpc::ClientContext& context, Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

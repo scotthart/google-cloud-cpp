@@ -29,27 +29,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-RowAccessPolicyServiceTracingConnection::RowAccessPolicyServiceTracingConnection(
-    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> child)
+RowAccessPolicyServiceTracingConnection::
+    RowAccessPolicyServiceTracingConnection(
+        std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
+            child)
     : child_(std::move(child)) {}
 
 StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceTracingConnection::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
-  auto span = internal::MakeSpan("bigquerycontrol_v2::RowAccessPolicyServiceConnection::ListRowAccessPolicies");
+RowAccessPolicyServiceTracingConnection::ListRowAccessPolicies(
+    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request) {
+  auto span = internal::MakeSpan(
+      "bigquerycontrol_v2::RowAccessPolicyServiceConnection::"
+      "ListRowAccessPolicies");
   internal::OTelScope scope(span);
   auto sr = child_->ListRowAccessPolicies(std::move(request));
-  return internal::MakeTracedStreamRange<google::cloud::bigquery::v2::RowAccessPolicy>(
-        std::move(span), std::move(sr));
+  return internal::MakeTracedStreamRange<
+      google::cloud::bigquery::v2::RowAccessPolicy>(std::move(span),
+                                                    std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
 MakeRowAccessPolicyServiceTracingConnection(
-    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection> conn) {
+    std::shared_ptr<bigquerycontrol_v2::RowAccessPolicyServiceConnection>
+        conn) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   if (internal::TracingEnabled(conn->options())) {
-    conn = std::make_shared<RowAccessPolicyServiceTracingConnection>(std::move(conn));
+    conn = std::make_shared<RowAccessPolicyServiceTracingConnection>(
+        std::move(conn));
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return conn;

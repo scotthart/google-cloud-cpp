@@ -31,21 +31,19 @@ namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 GatewayControlLogging::GatewayControlLogging(
-    std::shared_ptr<GatewayControlStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<GatewayControlStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 GatewayControlLogging::GenerateCredentials(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::gkeconnect::gateway::v1::
+                 GenerateCredentialsRequest const& request) {
         return child_->GenerateCredentials(context, options, request);
       },
       context, options, request, __func__, tracing_options_);

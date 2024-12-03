@@ -31,48 +31,38 @@ namespace storagecontrol_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StorageControlLogging::StorageControlLogging(
-    std::shared_ptr<StorageControlStub> child,
-    TracingOptions tracing_options,
+    std::shared_ptr<StorageControlStub> child, TracingOptions tracing_options,
     std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::storage::control::v2::Folder>
 StorageControlLogging::CreateFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::CreateFolderRequest const& request) {
         return child_->CreateFolder(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageControlLogging::DeleteFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageControlLogging::DeleteFolder(
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::DeleteFolderRequest const& request) {
         return child_->DeleteFolder(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-StatusOr<google::storage::control::v2::Folder>
-StorageControlLogging::GetFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+StatusOr<google::storage::control::v2::Folder> StorageControlLogging::GetFolder(
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::GetFolderRequest const& request) {
         return child_->GetFolder(context, options, request);
       },
@@ -81,12 +71,10 @@ StorageControlLogging::GetFolder(
 
 StatusOr<google::storage::control::v2::ListFoldersResponse>
 StorageControlLogging::ListFolders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListFoldersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::ListFoldersRequest const& request) {
         return child_->ListFolders(context, options, request);
       },
@@ -95,30 +83,27 @@ StorageControlLogging::ListFolders(
 
 future<StatusOr<google::longrunning::Operation>>
 StorageControlLogging::AsyncRenameFolder(
-      google::cloud::CompletionQueue& cq,
-      std::shared_ptr<grpc::ClientContext> context,
-      google::cloud::internal::ImmutableOptions options,
-      google::storage::control::v2::RenameFolderRequest const& request) {
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](google::cloud::CompletionQueue& cq,
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::storage::control::v2::RenameFolderRequest const& request) {
-        return child_->AsyncRenameFolder(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncRenameFolder(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageControlLogging::RenameFolder(
-      grpc::ClientContext& context,
-      Options options,
-      google::storage::control::v2::RenameFolderRequest const& request) {
+StatusOr<google::longrunning::Operation> StorageControlLogging::RenameFolder(
+    grpc::ClientContext& context, Options options,
+    google::storage::control::v2::RenameFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::storage::control::v2::RenameFolderRequest const& request) {
         return child_->RenameFolder(context, options, request);
       },
@@ -127,13 +112,12 @@ StorageControlLogging::RenameFolder(
 
 StatusOr<google::storage::control::v2::StorageLayout>
 StorageControlLogging::GetStorageLayout(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetStorageLayoutRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::control::v2::GetStorageLayoutRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetStorageLayoutRequest const&
+                 request) {
         return child_->GetStorageLayout(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -141,27 +125,24 @@ StorageControlLogging::GetStorageLayout(
 
 StatusOr<google::storage::control::v2::ManagedFolder>
 StorageControlLogging::CreateManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::CreateManagedFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::control::v2::CreateManagedFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::CreateManagedFolderRequest const&
+                 request) {
         return child_->CreateManagedFolder(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-StorageControlLogging::DeleteManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+Status StorageControlLogging::DeleteManagedFolder(
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::DeleteManagedFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::DeleteManagedFolderRequest const&
+                 request) {
         return child_->DeleteManagedFolder(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -169,13 +150,12 @@ StorageControlLogging::DeleteManagedFolder(
 
 StatusOr<google::storage::control::v2::ManagedFolder>
 StorageControlLogging::GetManagedFolder(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::GetManagedFolderRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::control::v2::GetManagedFolderRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::GetManagedFolderRequest const&
+                 request) {
         return child_->GetManagedFolder(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -183,13 +163,12 @@ StorageControlLogging::GetManagedFolder(
 
 StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
 StorageControlLogging::ListManagedFolders(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::storage::control::v2::ListManagedFoldersRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::storage::control::v2::ListManagedFoldersRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::storage::control::v2::ListManagedFoldersRequest const&
+                 request) {
         return child_->ListManagedFolders(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -206,8 +185,8 @@ StorageControlLogging::AsyncGetOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::GetOperationRequest const& request) {
-        return child_->AsyncGetOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncGetOperation(cq, std::move(context),
+                                         std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);
@@ -223,8 +202,8 @@ future<Status> StorageControlLogging::AsyncCancelOperation(
              std::shared_ptr<grpc::ClientContext> context,
              google::cloud::internal::ImmutableOptions options,
              google::longrunning::CancelOperationRequest const& request) {
-        return child_->AsyncCancelOperation(
-            cq, std::move(context), std::move(options), request);
+        return child_->AsyncCancelOperation(cq, std::move(context),
+                                            std::move(options), request);
       },
       cq, std::move(context), std::move(options), request, __func__,
       tracing_options_);

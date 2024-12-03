@@ -36,36 +36,50 @@ class CloudControlsPartnerCoreTracingConnection
   ~CloudControlsPartnerCoreTracingConnection() override = default;
 
   explicit CloudControlsPartnerCoreTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection> child);
+      std::shared_ptr<
+          cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload>
-  GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Workload> GetWorkload(
+      google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload>
-  ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request) override;
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Workload> ListWorkloads(
+      google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest request)
+      override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer>
-  GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Customer> GetCustomer(
+      google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&
+          request) override;
 
-  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer>
-  ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request) override;
+  StreamRange<google::cloud::cloudcontrolspartner::v1::Customer> ListCustomers(
+      google::cloud::cloudcontrolspartner::v1::ListCustomersRequest request)
+      override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::EkmConnections>
-  GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const& request) override;
+  GetEkmConnections(
+      google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&
+          request) override;
 
   StatusOr<google::cloud::cloudcontrolspartner::v1::PartnerPermissions>
-  GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const& request) override;
+  GetPartnerPermissions(
+      google::cloud::cloudcontrolspartner::v1::
+          GetPartnerPermissionsRequest const& request) override;
 
   StreamRange<google::cloud::cloudcontrolspartner::v1::AccessApprovalRequest>
-  ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest request) override;
+  ListAccessApprovalRequests(
+      google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest
+          request) override;
 
-  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner>
-  GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request) override;
+  StatusOr<google::cloud::cloudcontrolspartner::v1::Partner> GetPartner(
+      google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const& request)
+      override;
 
  private:
-  std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection> child_;
+  std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -78,7 +92,8 @@ class CloudControlsPartnerCoreTracingConnection
  */
 std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
 MakeCloudControlsPartnerCoreTracingConnection(
-    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection> conn);
+    std::shared_ptr<cloudcontrolspartner_v1::CloudControlsPartnerCoreConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudcontrolspartner_v1_internal

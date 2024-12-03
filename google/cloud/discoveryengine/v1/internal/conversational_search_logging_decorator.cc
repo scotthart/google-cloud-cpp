@@ -32,20 +32,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ConversationalSearchServiceLogging::ConversationalSearchServiceLogging(
     std::shared_ptr<ConversationalSearchServiceStub> child,
-    TracingOptions tracing_options,
-    std::set<std::string> const&)
-    : child_(std::move(child)),
-      tracing_options_(std::move(tracing_options)) {}
+    TracingOptions tracing_options, std::set<std::string> const&)
+    : child_(std::move(child)), tracing_options_(std::move(tracing_options)) {}
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceLogging::ConverseConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ConverseConversationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::ConverseConversationRequest const&
+              request) {
         return child_->ConverseConversation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -53,27 +52,28 @@ ConversationalSearchServiceLogging::ConverseConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::CreateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::CreateConversationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::CreateConversationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::CreateConversationRequest const&
+              request) {
         return child_->CreateConversation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ConversationalSearchServiceLogging::DeleteConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
+Status ConversationalSearchServiceLogging::DeleteConversation(
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::DeleteConversationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::DeleteConversationRequest const&
+              request) {
         return child_->DeleteConversation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -81,13 +81,14 @@ ConversationalSearchServiceLogging::DeleteConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::UpdateConversation(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::UpdateConversationRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::UpdateConversationRequest const&
+              request) {
         return child_->UpdateConversation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -95,13 +96,12 @@ ConversationalSearchServiceLogging::UpdateConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::Conversation>
 ConversationalSearchServiceLogging::GetConversation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::GetConversationRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::GetConversationRequest const&
+                 request) {
         return child_->GetConversation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -109,13 +109,13 @@ ConversationalSearchServiceLogging::GetConversation(
 
 StatusOr<google::cloud::discoveryengine::v1::ListConversationsResponse>
 ConversationalSearchServiceLogging::ListConversations(
-    grpc::ClientContext& context,
-    Options const& options,
-    google::cloud::discoveryengine::v1::ListConversationsRequest const& request) {
+    grpc::ClientContext& context, Options const& options,
+    google::cloud::discoveryengine::v1::ListConversationsRequest const&
+        request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ListConversationsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ListConversationsRequest const&
+                 request) {
         return child_->ListConversations(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -123,13 +123,12 @@ ConversationalSearchServiceLogging::ListConversations(
 
 StatusOr<google::cloud::discoveryengine::v1::AnswerQueryResponse>
 ConversationalSearchServiceLogging::AnswerQuery(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::AnswerQueryRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::AnswerQueryRequest const&
+                 request) {
         return child_->AnswerQuery(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -137,13 +136,12 @@ ConversationalSearchServiceLogging::AnswerQuery(
 
 StatusOr<google::cloud::discoveryengine::v1::Answer>
 ConversationalSearchServiceLogging::GetAnswer(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
+      [this](
+          grpc::ClientContext& context, Options const& options,
+          google::cloud::discoveryengine::v1::GetAnswerRequest const& request) {
         return child_->GetAnswer(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -151,27 +149,24 @@ ConversationalSearchServiceLogging::GetAnswer(
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceLogging::CreateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::CreateSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::CreateSessionRequest const&
+                 request) {
         return child_->CreateSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ConversationalSearchServiceLogging::DeleteSession(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConversationalSearchServiceLogging::DeleteSession(
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::DeleteSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::DeleteSessionRequest const&
+                 request) {
         return child_->DeleteSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -179,13 +174,12 @@ ConversationalSearchServiceLogging::DeleteSession(
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceLogging::UpdateSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::UpdateSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::UpdateSessionRequest const&
+                 request) {
         return child_->UpdateSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -193,13 +187,12 @@ ConversationalSearchServiceLogging::UpdateSession(
 
 StatusOr<google::cloud::discoveryengine::v1::Session>
 ConversationalSearchServiceLogging::GetSession(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::GetSessionRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::GetSessionRequest const&
+                 request) {
         return child_->GetSession(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -207,13 +200,12 @@ ConversationalSearchServiceLogging::GetSession(
 
 StatusOr<google::cloud::discoveryengine::v1::ListSessionsResponse>
 ConversationalSearchServiceLogging::ListSessions(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
-             google::cloud::discoveryengine::v1::ListSessionsRequest const& request) {
+      [this](grpc::ClientContext& context, Options const& options,
+             google::cloud::discoveryengine::v1::ListSessionsRequest const&
+                 request) {
         return child_->ListSessions(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
@@ -221,12 +213,10 @@ ConversationalSearchServiceLogging::ListSessions(
 
 StatusOr<google::longrunning::ListOperationsResponse>
 ConversationalSearchServiceLogging::ListOperations(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::ListOperationsRequest const& request) {
         return child_->ListOperations(context, options, request);
       },
@@ -235,26 +225,21 @@ ConversationalSearchServiceLogging::ListOperations(
 
 StatusOr<google::longrunning::Operation>
 ConversationalSearchServiceLogging::GetOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::GetOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, options, request);
       },
       context, options, request, __func__, tracing_options_);
 }
 
-Status
-ConversationalSearchServiceLogging::CancelOperation(
-    grpc::ClientContext& context,
-    Options const& options,
+Status ConversationalSearchServiceLogging::CancelOperation(
+    grpc::ClientContext& context, Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
   return google::cloud::internal::LogWrapper(
-      [this](grpc::ClientContext& context,
-             Options const& options,
+      [this](grpc::ClientContext& context, Options const& options,
              google::longrunning::CancelOperationRequest const& request) {
         return child_->CancelOperation(context, options, request);
       },

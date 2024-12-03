@@ -36,21 +36,26 @@ class ResourceSettingsServiceTracingConnection
   ~ResourceSettingsServiceTracingConnection() override = default;
 
   explicit ResourceSettingsServiceTracingConnection(
-    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection> child);
+      std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
+          child);
 
   Options options() override { return child_->options(); }
 
-  StreamRange<google::cloud::resourcesettings::v1::Setting>
-  ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request) override;
+  StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
+      google::cloud::resourcesettings::v1::ListSettingsRequest request)
+      override;
 
-  StatusOr<google::cloud::resourcesettings::v1::Setting>
-  GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
+  StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
+      override;
 
-  StatusOr<google::cloud::resourcesettings::v1::Setting>
-  UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
+  StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
+      override;
 
  private:
-  std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection> child_;
+  std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
+      child_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -63,7 +68,8 @@ class ResourceSettingsServiceTracingConnection
  */
 std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceTracingConnection(
-    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection> conn);
+    std::shared_ptr<resourcesettings_v1::ResourceSettingsServiceConnection>
+        conn);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_v1_internal

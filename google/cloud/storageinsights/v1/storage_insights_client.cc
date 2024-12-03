@@ -28,12 +28,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 StorageInsightsClient::StorageInsightsClient(
     std::shared_ptr<StorageInsightsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(std::move(opts),
-      connection_->options())) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 StorageInsightsClient::~StorageInsightsClient() = default;
 
 StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::ListReportConfigs(std::string const& parent, Options opts) {
+StorageInsightsClient::ListReportConfigs(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storageinsights::v1::ListReportConfigsRequest request;
   request.set_parent(parent);
@@ -41,7 +42,9 @@ StorageInsightsClient::ListReportConfigs(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request, Options opts) {
+StorageInsightsClient::ListReportConfigs(
+    google::cloud::storageinsights::v1::ListReportConfigsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReportConfigs(std::move(request));
 }
@@ -55,13 +58,18 @@ StorageInsightsClient::GetReportConfig(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request, Options opts) {
+StorageInsightsClient::GetReportConfig(
+    google::cloud::storageinsights::v1::GetReportConfigRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReportConfig(request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::CreateReportConfig(std::string const& parent, google::cloud::storageinsights::v1::ReportConfig const& report_config, Options opts) {
+StorageInsightsClient::CreateReportConfig(
+    std::string const& parent,
+    google::cloud::storageinsights::v1::ReportConfig const& report_config,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storageinsights::v1::CreateReportConfigRequest request;
   request.set_parent(parent);
@@ -70,13 +78,18 @@ StorageInsightsClient::CreateReportConfig(std::string const& parent, google::clo
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request, Options opts) {
+StorageInsightsClient::CreateReportConfig(
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateReportConfig(request);
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::UpdateReportConfig(google::cloud::storageinsights::v1::ReportConfig const& report_config, google::protobuf::FieldMask const& update_mask, Options opts) {
+StorageInsightsClient::UpdateReportConfig(
+    google::cloud::storageinsights::v1::ReportConfig const& report_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storageinsights::v1::UpdateReportConfigRequest request;
   *request.mutable_report_config() = report_config;
@@ -85,27 +98,33 @@ StorageInsightsClient::UpdateReportConfig(google::cloud::storageinsights::v1::Re
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsClient::UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request, Options opts) {
+StorageInsightsClient::UpdateReportConfig(
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateReportConfig(request);
 }
 
-Status
-StorageInsightsClient::DeleteReportConfig(std::string const& name, Options opts) {
+Status StorageInsightsClient::DeleteReportConfig(std::string const& name,
+                                                 Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storageinsights::v1::DeleteReportConfigRequest request;
   request.set_name(name);
   return connection_->DeleteReportConfig(request);
 }
 
-Status
-StorageInsightsClient::DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request, Options opts) {
+Status StorageInsightsClient::DeleteReportConfig(
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+        request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteReportConfig(request);
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsClient::ListReportDetails(std::string const& parent, Options opts) {
+StorageInsightsClient::ListReportDetails(std::string const& parent,
+                                         Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::storageinsights::v1::ListReportDetailsRequest request;
   request.set_parent(parent);
@@ -113,7 +132,9 @@ StorageInsightsClient::ListReportDetails(std::string const& parent, Options opts
 }
 
 StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsClient::ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request, Options opts) {
+StorageInsightsClient::ListReportDetails(
+    google::cloud::storageinsights::v1::ListReportDetailsRequest request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListReportDetails(std::move(request));
 }
@@ -127,25 +148,29 @@ StorageInsightsClient::GetReportDetail(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsClient::GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request, Options opts) {
+StorageInsightsClient::GetReportDetail(
+    google::cloud::storageinsights::v1::GetReportDetailRequest const& request,
+    Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetReportDetail(request);
 }
 
 StreamRange<google::cloud::location::Location>
-StorageInsightsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
+StorageInsightsClient::ListLocations(
+    google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location>
-StorageInsightsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location> StorageInsightsClient::GetLocation(
+    google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
 StreamRange<google::longrunning::Operation>
-StorageInsightsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
+StorageInsightsClient::ListOperations(std::string const& name,
+                                      std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -154,49 +179,50 @@ StorageInsightsClient::ListOperations(std::string const& name, std::string const
 }
 
 StreamRange<google::longrunning::Operation>
-StorageInsightsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
+StorageInsightsClient::ListOperations(
+    google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsClient::GetOperation(std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation> StorageInsightsClient::GetOperation(
+    std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation> StorageInsightsClient::GetOperation(
+    google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status
-StorageInsightsClient::DeleteOperation(std::string const& name, Options opts) {
+Status StorageInsightsClient::DeleteOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::DeleteOperationRequest request;
   request.set_name(name);
   return connection_->DeleteOperation(request);
 }
 
-Status
-StorageInsightsClient::DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts) {
+Status StorageInsightsClient::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteOperation(request);
 }
 
-Status
-StorageInsightsClient::CancelOperation(std::string const& name, Options opts) {
+Status StorageInsightsClient::CancelOperation(std::string const& name,
+                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status
-StorageInsightsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status StorageInsightsClient::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

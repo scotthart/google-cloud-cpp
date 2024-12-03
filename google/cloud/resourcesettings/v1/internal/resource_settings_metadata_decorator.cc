@@ -46,42 +46,43 @@ ResourceSettingsServiceMetadata::ResourceSettingsServiceMetadata(
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 ResourceSettingsServiceMetadata::ListSettings(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("parent=", internal::UrlEncode(request.parent())));
+  SetMetadata(context, options,
+              absl::StrCat("parent=", internal::UrlEncode(request.parent())));
   return child_->ListSettings(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::GetSetting(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
+  SetMetadata(context, options,
+              absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GetSetting(context, options, request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceMetadata::UpdateSetting(
-    grpc::ClientContext& context,
-    Options const& options,
+    grpc::ClientContext& context, Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  SetMetadata(context, options, absl::StrCat("setting.name=", internal::UrlEncode(request.setting().name())));
+  SetMetadata(context, options,
+              absl::StrCat("setting.name=",
+                           internal::UrlEncode(request.setting().name())));
   return child_->UpdateSetting(context, options, request);
 }
 
-void ResourceSettingsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options,
-                                        std::string const& request_params) {
+void ResourceSettingsServiceMetadata::SetMetadata(
+    grpc::ClientContext& context, Options const& options,
+    std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void ResourceSettingsServiceMetadata::SetMetadata(grpc::ClientContext& context,
-                                        Options const& options) {
-  google::cloud::internal::SetMetadata(
-      context, options, fixed_metadata_, api_client_header_);
+                                                  Options const& options) {
+  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
+                                       api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

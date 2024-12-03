@@ -32,67 +32,78 @@ namespace aiplatform_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>
-retry_policy(Options const& options) {
-  return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()->clone();
+std::unique_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy> retry_policy(
+    Options const& options) {
+  return options.get<aiplatform_v1::ModelGardenServiceRetryPolicyOption>()
+      ->clone();
 }
 
-std::unique_ptr<BackoffPolicy>
-backoff_policy(Options const& options) {
-  return options.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()->clone();
+std::unique_ptr<BackoffPolicy> backoff_policy(Options const& options) {
+  return options.get<aiplatform_v1::ModelGardenServiceBackoffPolicyOption>()
+      ->clone();
 }
 
 std::unique_ptr<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicy>
 idempotency_policy(Options const& options) {
-  return options.get<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicyOption>()->clone();
+  return options
+      .get<aiplatform_v1::ModelGardenServiceConnectionIdempotencyPolicyOption>()
+      ->clone();
 }
 
-} // namespace
+}  // namespace
 
 ModelGardenServiceConnectionImpl::ModelGardenServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
     std::shared_ptr<aiplatform_v1_internal::ModelGardenServiceStub> stub,
     Options options)
-  : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(
-        std::move(options),
-        ModelGardenServiceConnection::options())) {}
+    : background_(std::move(background)),
+      stub_(std::move(stub)),
+      options_(internal::MergeOptions(
+          std::move(options), ModelGardenServiceConnection::options())) {}
 
 StatusOr<google::cloud::aiplatform::v1::PublisherModel>
-ModelGardenServiceConnectionImpl::GetPublisherModel(google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+ModelGardenServiceConnectionImpl::GetPublisherModel(
+    google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
       idempotency_policy(*current)->GetPublisherModel(request),
       [this](grpc::ClientContext& context, Options const& options,
-             google::cloud::aiplatform::v1::GetPublisherModelRequest const& request) {
+             google::cloud::aiplatform::v1::GetPublisherModelRequest const&
+                 request) {
         return stub_->GetPublisherModel(context, options, request);
       },
       *current, request, __func__);
 }
 
 StreamRange<google::cloud::location::Location>
-ModelGardenServiceConnectionImpl::ListLocations(google::cloud::location::ListLocationsRequest request) {
+ModelGardenServiceConnectionImpl::ListLocations(
+    google::cloud::location::ListLocationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListLocations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::cloud::location::Location>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::location::Location>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::cloud::location::ListLocationsRequest const& r) {
+          Options const& options,
+          google::cloud::location::ListLocationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
-            [stub](grpc::ClientContext& context, Options const& options,
-                   google::cloud::location::ListLocationsRequest const& request) {
+            [stub](
+                grpc::ClientContext& context, Options const& options,
+                google::cloud::location::ListLocationsRequest const& request) {
               return stub->ListLocations(context, options, request);
             },
             options, r, function_name);
       },
       [](google::cloud::location::ListLocationsResponse r) {
-        std::vector<google::cloud::location::Location> result(r.locations().size());
+        std::vector<google::cloud::location::Location> result(
+            r.locations().size());
         auto& messages = *r.mutable_locations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -100,7 +111,8 @@ ModelGardenServiceConnectionImpl::ListLocations(google::cloud::location::ListLoc
 }
 
 StatusOr<google::cloud::location::Location>
-ModelGardenServiceConnectionImpl::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+ModelGardenServiceConnectionImpl::GetLocation(
+    google::cloud::location::GetLocationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -113,7 +125,8 @@ ModelGardenServiceConnectionImpl::GetLocation(google::cloud::location::GetLocati
 }
 
 StatusOr<google::iam::v1::Policy>
-ModelGardenServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
+ModelGardenServiceConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -126,7 +139,8 @@ ModelGardenServiceConnectionImpl::SetIamPolicy(google::iam::v1::SetIamPolicyRequ
 }
 
 StatusOr<google::iam::v1::Policy>
-ModelGardenServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+ModelGardenServiceConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -139,7 +153,8 @@ ModelGardenServiceConnectionImpl::GetIamPolicy(google::iam::v1::GetIamPolicyRequ
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
-ModelGardenServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
+ModelGardenServiceConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -152,17 +167,21 @@ ModelGardenServiceConnectionImpl::TestIamPermissions(google::iam::v1::TestIamPer
 }
 
 StreamRange<google::longrunning::Operation>
-ModelGardenServiceConnectionImpl::ListOperations(google::longrunning::ListOperationsRequest request) {
+ModelGardenServiceConnectionImpl::ListOperations(
+    google::longrunning::ListOperationsRequest request) {
   request.clear_page_token();
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto idempotency = idempotency_policy(*current)->ListOperations(request);
   char const* function_name = __func__;
-  return google::cloud::internal::MakePaginationRange<StreamRange<google::longrunning::Operation>>(
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::longrunning::Operation>>(
       current, std::move(request),
       [idempotency, function_name, stub = stub_,
-       retry = std::shared_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>(retry_policy(*current)),
+       retry = std::shared_ptr<aiplatform_v1::ModelGardenServiceRetryPolicy>(
+           retry_policy(*current)),
        backoff = std::shared_ptr<BackoffPolicy>(backoff_policy(*current))](
-          Options const& options, google::longrunning::ListOperationsRequest const& r) {
+          Options const& options,
+          google::longrunning::ListOperationsRequest const& r) {
         return google::cloud::internal::RetryLoop(
             retry->clone(), backoff->clone(), idempotency,
             [stub](grpc::ClientContext& context, Options const& options,
@@ -172,7 +191,8 @@ ModelGardenServiceConnectionImpl::ListOperations(google::longrunning::ListOperat
             options, r, function_name);
       },
       [](google::longrunning::ListOperationsResponse r) {
-        std::vector<google::longrunning::Operation> result(r.operations().size());
+        std::vector<google::longrunning::Operation> result(
+            r.operations().size());
         auto& messages = *r.mutable_operations();
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
@@ -180,7 +200,8 @@ ModelGardenServiceConnectionImpl::ListOperations(google::longrunning::ListOperat
 }
 
 StatusOr<google::longrunning::Operation>
-ModelGardenServiceConnectionImpl::GetOperation(google::longrunning::GetOperationRequest const& request) {
+ModelGardenServiceConnectionImpl::GetOperation(
+    google::longrunning::GetOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -192,8 +213,8 @@ ModelGardenServiceConnectionImpl::GetOperation(google::longrunning::GetOperation
       *current, request, __func__);
 }
 
-Status
-ModelGardenServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOperationRequest const& request) {
+Status ModelGardenServiceConnectionImpl::DeleteOperation(
+    google::longrunning::DeleteOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -205,8 +226,8 @@ ModelGardenServiceConnectionImpl::DeleteOperation(google::longrunning::DeleteOpe
       *current, request, __func__);
 }
 
-Status
-ModelGardenServiceConnectionImpl::CancelOperation(google::longrunning::CancelOperationRequest const& request) {
+Status ModelGardenServiceConnectionImpl::CancelOperation(
+    google::longrunning::CancelOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -219,7 +240,8 @@ ModelGardenServiceConnectionImpl::CancelOperation(google::longrunning::CancelOpe
 }
 
 StatusOr<google::longrunning::Operation>
-ModelGardenServiceConnectionImpl::WaitOperation(google::longrunning::WaitOperationRequest const& request) {
+ModelGardenServiceConnectionImpl::WaitOperation(
+    google::longrunning::WaitOperationRequest const& request) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   return google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),

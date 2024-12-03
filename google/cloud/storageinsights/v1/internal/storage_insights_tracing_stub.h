@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_TRACING_STUB_H
 
+#include "google/cloud/storageinsights/v1/internal/storage_insights_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
-#include "google/cloud/storageinsights/v1/internal/storage_insights_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,76 +36,74 @@ class StorageInsightsTracingStub : public StorageInsightsStub {
  public:
   ~StorageInsightsTracingStub() override = default;
 
-  explicit StorageInsightsTracingStub(std::shared_ptr<StorageInsightsStub> child);
+  explicit StorageInsightsTracingStub(
+      std::shared_ptr<StorageInsightsStub> child);
 
-  StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse> ListReportConfigs(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) override;
+  StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
+  ListReportConfigs(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::ListReportConfigsRequest const&
+          request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::GetReportConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::GetReportConfigRequest const& request)
+      override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::CreateReportConfigRequest const&
+          request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
+          request) override;
 
   Status DeleteReportConfig(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
+          request) override;
 
-  StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse> ListReportDetails(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) override;
+  StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
+  ListReportDetails(
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::ListReportDetailsRequest const&
+          request) override;
 
   StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
-      grpc::ClientContext& context,
-      Options const& options,
-      google::cloud::storageinsights::v1::GetReportDetailRequest const& request) override;
+      grpc::ClientContext& context, Options const& options,
+      google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
+      override;
 
   StatusOr<google::cloud::location::ListLocationsResponse> ListLocations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::ListLocationsRequest const& request) override;
 
   StatusOr<google::cloud::location::Location> GetLocation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::cloud::location::GetLocationRequest const& request) override;
 
   StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::ListOperationsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::GetOperationRequest const& request) override;
 
   Status DeleteOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::DeleteOperationRequest const& request) override;
 
   Status CancelOperation(
-      grpc::ClientContext& context,
-      Options const& options,
+      grpc::ClientContext& context, Options const& options,
       google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<StorageInsightsStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
+      propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

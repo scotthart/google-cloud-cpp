@@ -17,14 +17,14 @@
 // source: google/cloud/discoveryengine/v1/conversational_search_service.proto
 
 #include "google/cloud/discoveryengine/v1/conversational_search_connection.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/common_options.h"
-#include "google/cloud/credentials.h"
 #include "google/cloud/discoveryengine/v1/conversational_search_options.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_connection_impl.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_option_defaults.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_stub_factory.h"
 #include "google/cloud/discoveryengine/v1/internal/conversational_search_tracing_connection.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
@@ -36,7 +36,8 @@ namespace cloud {
 namespace discoveryengine_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-ConversationalSearchServiceConnection::~ConversationalSearchServiceConnection() = default;
+ConversationalSearchServiceConnection::
+    ~ConversationalSearchServiceConnection() = default;
 
 StatusOr<google::cloud::discoveryengine::v1::ConverseConversationResponse>
 ConversationalSearchServiceConnection::ConverseConversation(
@@ -50,8 +51,7 @@ ConversationalSearchServiceConnection::CreateConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConversationalSearchServiceConnection::DeleteConversation(
+Status ConversationalSearchServiceConnection::DeleteConversation(
     google::cloud::discoveryengine::v1::DeleteConversationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -68,8 +68,10 @@ ConversationalSearchServiceConnection::GetConversation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Conversation> ConversationalSearchServiceConnection::ListConversations(
-    google::cloud::discoveryengine::v1::ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Conversation>
+ConversationalSearchServiceConnection::ListConversations(
+    google::cloud::discoveryengine::v1::
+        ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Conversation>>();
 }
@@ -92,8 +94,7 @@ ConversationalSearchServiceConnection::CreateSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConversationalSearchServiceConnection::DeleteSession(
+Status ConversationalSearchServiceConnection::DeleteSession(
     google::cloud::discoveryengine::v1::DeleteSessionRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
@@ -110,14 +111,18 @@ ConversationalSearchServiceConnection::GetSession(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::discoveryengine::v1::Session> ConversationalSearchServiceConnection::ListSessions(
-    google::cloud::discoveryengine::v1::ListSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::cloud::discoveryengine::v1::Session>
+ConversationalSearchServiceConnection::ListSessions(
+    google::cloud::discoveryengine::v1::
+        ListSessionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::discoveryengine::v1::Session>>();
 }
 
-StreamRange<google::longrunning::Operation> ConversationalSearchServiceConnection::ListOperations(
-    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StreamRange<google::longrunning::Operation>
+ConversationalSearchServiceConnection::ListOperations(
+    google::longrunning::
+        ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
@@ -128,26 +133,30 @@ ConversationalSearchServiceConnection::GetOperation(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-Status
-ConversationalSearchServiceConnection::CancelOperation(
+Status ConversationalSearchServiceConnection::CancelOperation(
     google::longrunning::CancelOperationRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-std::shared_ptr<ConversationalSearchServiceConnection> MakeConversationalSearchServiceConnection(
-    Options options) {
+std::shared_ptr<ConversationalSearchServiceConnection>
+MakeConversationalSearchServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
-      UnifiedCredentialsOptionList,
-      ConversationalSearchServicePolicyOptionList>(options, __func__);
-  options = discoveryengine_v1_internal::ConversationalSearchServiceDefaultOptions(
-      std::move(options));
+                                 UnifiedCredentialsOptionList,
+                                 ConversationalSearchServicePolicyOptionList>(
+      options, __func__);
+  options =
+      discoveryengine_v1_internal::ConversationalSearchServiceDefaultOptions(
+          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto auth = internal::CreateAuthenticationStrategy(background->cq(), options);
-  auto stub = discoveryengine_v1_internal::CreateDefaultConversationalSearchServiceStub(
-    std::move(auth), options);
-  return discoveryengine_v1_internal::MakeConversationalSearchServiceTracingConnection(
-      std::make_shared<discoveryengine_v1_internal::ConversationalSearchServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options)));
+  auto stub =
+      discoveryengine_v1_internal::CreateDefaultConversationalSearchServiceStub(
+          std::move(auth), options);
+  return discoveryengine_v1_internal::
+      MakeConversationalSearchServiceTracingConnection(
+          std::make_shared<discoveryengine_v1_internal::
+                               ConversationalSearchServiceConnectionImpl>(
+              std::move(background), std::move(stub), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
