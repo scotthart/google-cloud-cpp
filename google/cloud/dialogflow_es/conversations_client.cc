@@ -28,15 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConversationsClient::ConversationsClient(
     std::shared_ptr<ConversationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ConversationsClient::~ConversationsClient() = default;
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::CreateConversation(
-    std::string const& parent,
-    google::cloud::dialogflow::v2::Conversation const& conversation,
-    Options opts) {
+ConversationsClient::CreateConversation(std::string const& parent, google::cloud::dialogflow::v2::Conversation const& conversation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CreateConversationRequest request;
   request.set_parent(parent);
@@ -45,16 +42,13 @@ ConversationsClient::CreateConversation(
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::CreateConversation(
-    google::cloud::dialogflow::v2::CreateConversationRequest const& request,
-    Options opts) {
+ConversationsClient::CreateConversation(google::cloud::dialogflow::v2::CreateConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateConversation(request);
 }
 
 StreamRange<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::ListConversations(std::string const& parent,
-                                       Options opts) {
+ConversationsClient::ListConversations(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::ListConversationsRequest request;
   request.set_parent(parent);
@@ -62,9 +56,7 @@ ConversationsClient::ListConversations(std::string const& parent,
 }
 
 StreamRange<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::ListConversations(
-    google::cloud::dialogflow::v2::ListConversationsRequest request,
-    Options opts) {
+ConversationsClient::ListConversations(google::cloud::dialogflow::v2::ListConversationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListConversations(std::move(request));
 }
@@ -78,16 +70,13 @@ ConversationsClient::GetConversation(std::string const& name, Options opts) {
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::GetConversation(
-    google::cloud::dialogflow::v2::GetConversationRequest const& request,
-    Options opts) {
+ConversationsClient::GetConversation(google::cloud::dialogflow::v2::GetConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetConversation(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::CompleteConversation(std::string const& name,
-                                          Options opts) {
+ConversationsClient::CompleteConversation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::CompleteConversationRequest request;
   request.set_name(name);
@@ -95,9 +84,7 @@ ConversationsClient::CompleteConversation(std::string const& name,
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
-ConversationsClient::CompleteConversation(
-    google::cloud::dialogflow::v2::CompleteConversationRequest const& request,
-    Options opts) {
+ConversationsClient::CompleteConversation(google::cloud::dialogflow::v2::CompleteConversationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CompleteConversation(request);
 }
@@ -111,15 +98,13 @@ ConversationsClient::ListMessages(std::string const& parent, Options opts) {
 }
 
 StreamRange<google::cloud::dialogflow::v2::Message>
-ConversationsClient::ListMessages(
-    google::cloud::dialogflow::v2::ListMessagesRequest request, Options opts) {
+ConversationsClient::ListMessages(google::cloud::dialogflow::v2::ListMessagesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListMessages(std::move(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
-ConversationsClient::SuggestConversationSummary(std::string const& conversation,
-                                                Options opts) {
+ConversationsClient::SuggestConversationSummary(std::string const& conversation, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::dialogflow::v2::SuggestConversationSummaryRequest request;
   request.set_conversation(conversation);
@@ -127,55 +112,43 @@ ConversationsClient::SuggestConversationSummary(std::string const& conversation,
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
-ConversationsClient::SuggestConversationSummary(
-    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
-        request,
-    Options opts) {
+ConversationsClient::SuggestConversationSummary(google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SuggestConversationSummary(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSummaryResponse>
-ConversationsClient::GenerateStatelessSummary(
-    google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const&
-        request,
-    Options opts) {
+ConversationsClient::GenerateStatelessSummary(google::cloud::dialogflow::v2::GenerateStatelessSummaryRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateStatelessSummary(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::GenerateStatelessSuggestionResponse>
-ConversationsClient::GenerateStatelessSuggestion(
-    google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const&
-        request,
-    Options opts) {
+ConversationsClient::GenerateStatelessSuggestion(google::cloud::dialogflow::v2::GenerateStatelessSuggestionRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateStatelessSuggestion(request);
 }
 
 StatusOr<google::cloud::dialogflow::v2::SearchKnowledgeResponse>
-ConversationsClient::SearchKnowledge(
-    google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request,
-    Options opts) {
+ConversationsClient::SearchKnowledge(google::cloud::dialogflow::v2::SearchKnowledgeRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->SearchKnowledge(request);
 }
 
 StreamRange<google::cloud::location::Location>
-ConversationsClient::ListLocations(
-    google::cloud::location::ListLocationsRequest request, Options opts) {
+ConversationsClient::ListLocations(google::cloud::location::ListLocationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListLocations(std::move(request));
 }
 
-StatusOr<google::cloud::location::Location> ConversationsClient::GetLocation(
-    google::cloud::location::GetLocationRequest const& request, Options opts) {
+StatusOr<google::cloud::location::Location>
+ConversationsClient::GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetLocation(request);
 }
 
-StreamRange<google::longrunning::Operation> ConversationsClient::ListOperations(
-    std::string const& name, std::string const& filter, Options opts) {
+StreamRange<google::longrunning::Operation>
+ConversationsClient::ListOperations(std::string const& name, std::string const& filter, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::ListOperationsRequest request;
   request.set_name(name);
@@ -183,36 +156,36 @@ StreamRange<google::longrunning::Operation> ConversationsClient::ListOperations(
   return connection_->ListOperations(request);
 }
 
-StreamRange<google::longrunning::Operation> ConversationsClient::ListOperations(
-    google::longrunning::ListOperationsRequest request, Options opts) {
+StreamRange<google::longrunning::Operation>
+ConversationsClient::ListOperations(google::longrunning::ListOperationsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListOperations(std::move(request));
 }
 
-StatusOr<google::longrunning::Operation> ConversationsClient::GetOperation(
-    std::string const& name, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConversationsClient::GetOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::GetOperationRequest request;
   request.set_name(name);
   return connection_->GetOperation(request);
 }
 
-StatusOr<google::longrunning::Operation> ConversationsClient::GetOperation(
-    google::longrunning::GetOperationRequest const& request, Options opts) {
+StatusOr<google::longrunning::Operation>
+ConversationsClient::GetOperation(google::longrunning::GetOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetOperation(request);
 }
 
-Status ConversationsClient::CancelOperation(std::string const& name,
-                                            Options opts) {
+Status
+ConversationsClient::CancelOperation(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::longrunning::CancelOperationRequest request;
   request.set_name(name);
   return connection_->CancelOperation(request);
 }
 
-Status ConversationsClient::CancelOperation(
-    google::longrunning::CancelOperationRequest const& request, Options opts) {
+Status
+ConversationsClient::CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CancelOperation(request);
 }

@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class CloudDeployClient {
  public:
-  explicit CloudDeployClient(std::shared_ptr<CloudDeployConnection> connection,
-                             Options opts = {});
+  explicit CloudDeployClient(std::shared_ptr<CloudDeployConnection> connection, Options opts = {});
   ~CloudDeployClient();
 
   ///@{
@@ -79,12 +78,10 @@ class CloudDeployClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(CloudDeployClient const& a,
-                         CloudDeployClient const& b) {
+  friend bool operator==(CloudDeployClient const& a, CloudDeployClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(CloudDeployClient const& a,
-                         CloudDeployClient const& b) {
+  friend bool operator!=(CloudDeployClient const& a, CloudDeployClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -161,9 +158,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   StreamRange<google::cloud::deploy::v1::DeliveryPipeline>
-  ListDeliveryPipelines(
-      google::cloud::deploy::v1::ListDeliveryPipelinesRequest request,
-      Options opts = {});
+  ListDeliveryPipelines(google::cloud::deploy::v1::ListDeliveryPipelinesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -188,8 +183,8 @@ class CloudDeployClient {
   /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1009}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
+  GetDeliveryPipeline(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -218,9 +213,8 @@ class CloudDeployClient {
   /// [google.cloud.deploy.v1.GetDeliveryPipelineRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1009}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::DeliveryPipeline> GetDeliveryPipeline(
-      google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
+  GetDeliveryPipeline(google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -255,10 +249,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(
-      std::string const& parent,
-      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
-      std::string const& delivery_pipeline_id, Options opts = {});
+  CreateDeliveryPipeline(std::string const& parent, google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline, std::string const& delivery_pipeline_id, Options opts = {});
 
   // clang-format off
   ///
@@ -271,10 +262,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
-      std::string const& delivery_pipeline_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDeliveryPipeline(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline, std::string const& delivery_pipeline_id, Options opts = {});
 
   // clang-format off
   ///
@@ -311,9 +300,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request,
-      Options opts = {});
+  CreateDeliveryPipeline(google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -326,10 +313,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDeliveryPipeline(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDeliveryPipeline(NoAwaitTag, google::cloud::deploy::v1::CreateDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -341,8 +326,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  CreateDeliveryPipeline(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreateDeliveryPipeline(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -379,9 +363,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(
-      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDeliveryPipeline(google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -394,10 +376,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      NoAwaitTag,
-      google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDeliveryPipeline(NoAwaitTag, google::cloud::deploy::v1::DeliveryPipeline const& delivery_pipeline, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -434,9 +414,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request,
-      Options opts = {});
+  UpdateDeliveryPipeline(google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -449,10 +427,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDeliveryPipeline(
-      NoAwaitTag,
-      google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDeliveryPipeline(NoAwaitTag, google::cloud::deploy::v1::UpdateDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -464,8 +440,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
-  UpdateDeliveryPipeline(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  UpdateDeliveryPipeline(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -494,7 +469,7 @@ class CloudDeployClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.deploy.v1.DeleteDeliveryPipelineRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1097}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -511,8 +486,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDeliveryPipeline(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -545,13 +520,11 @@ class CloudDeployClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.deploy.v1.DeleteDeliveryPipelineRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1097}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeliveryPipeline(
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request,
-      Options opts = {});
+  DeleteDeliveryPipeline(google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -564,10 +537,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDeliveryPipeline(
-      NoAwaitTag,
-      google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDeliveryPipeline(NoAwaitTag, google::cloud::deploy::v1::DeleteDeliveryPipelineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -579,8 +550,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeliveryPipeline(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeleteDeliveryPipeline(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -610,12 +580,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListTargetsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1492}
+  /// [google.cloud.deploy.v1.ListTargetsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1497}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Target> ListTargets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Target>
+  ListTargets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -649,12 +619,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListTargetsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1492}
+  /// [google.cloud.deploy.v1.ListTargetsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1497}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Target> ListTargets(
-      google::cloud::deploy::v1::ListTargetsRequest request, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Target>
+  ListTargets(google::cloud::deploy::v1::ListTargetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -682,9 +652,8 @@ class CloudDeployClient {
   /// [google.cloud.deploy.v1.RollbackTargetResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1197}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
-      std::string const& name, std::string const& target_id,
-      std::string const& rollout_id, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+  RollbackTarget(std::string const& name, std::string const& target_id, std::string const& rollout_id, Options opts = {});
 
   // clang-format off
   ///
@@ -713,9 +682,8 @@ class CloudDeployClient {
   /// [google.cloud.deploy.v1.RollbackTargetResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1197}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse> RollbackTarget(
-      google::cloud::deploy::v1::RollbackTargetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::RollbackTargetResponse>
+  RollbackTarget(google::cloud::deploy::v1::RollbackTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -736,12 +704,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1538}
+  /// [google.cloud.deploy.v1.GetTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1543}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Target> GetTarget(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Target>
+  GetTarget(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -766,13 +734,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1538}
+  /// [google.cloud.deploy.v1.GetTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1543}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Target> GetTarget(
-      google::cloud::deploy::v1::GetTargetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Target>
+  GetTarget(google::cloud::deploy::v1::GetTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -803,14 +770,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1550}
+  /// [google.cloud.deploy.v1.CreateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1555}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      std::string const& parent,
-      google::cloud::deploy::v1::Target const& target,
-      std::string const& target_id, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  CreateTarget(std::string const& parent, google::cloud::deploy::v1::Target const& target, std::string const& target_id, Options opts = {});
 
   // clang-format off
   ///
@@ -823,10 +788,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTarget(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::Target const& target,
-      std::string const& target_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTarget(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::Target const& target, std::string const& target_id, Options opts = {});
 
   // clang-format off
   ///
@@ -858,13 +821,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1550}
+  /// [google.cloud.deploy.v1.CreateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1555}
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      google::cloud::deploy::v1::CreateTargetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  CreateTarget(google::cloud::deploy::v1::CreateTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -877,9 +839,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTarget(
-      NoAwaitTag, google::cloud::deploy::v1::CreateTargetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTarget(NoAwaitTag, google::cloud::deploy::v1::CreateTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -890,8 +851,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> CreateTarget(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  CreateTarget(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -924,12 +885,11 @@ class CloudDeployClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
-  /// [google.cloud.deploy.v1.UpdateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1588}
+  /// [google.cloud.deploy.v1.UpdateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1593}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      google::cloud::deploy::v1::Target const& target,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  UpdateTarget(google::cloud::deploy::v1::Target const& target, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -942,9 +902,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTarget(
-      NoAwaitTag, google::cloud::deploy::v1::Target const& target,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTarget(NoAwaitTag, google::cloud::deploy::v1::Target const& target, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -977,12 +936,11 @@ class CloudDeployClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.deploy.v1.Target]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1206}
-  /// [google.cloud.deploy.v1.UpdateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1588}
+  /// [google.cloud.deploy.v1.UpdateTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1593}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      google::cloud::deploy::v1::UpdateTargetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  UpdateTarget(google::cloud::deploy::v1::UpdateTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -995,9 +953,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTarget(
-      NoAwaitTag, google::cloud::deploy::v1::UpdateTargetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTarget(NoAwaitTag, google::cloud::deploy::v1::UpdateTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1008,8 +965,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Target>> UpdateTarget(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Target>>
+  UpdateTarget(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1037,12 +994,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1625}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1630}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteTarget(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1055,9 +1012,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTarget(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTarget(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1089,13 +1045,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1625}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteTargetRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1630}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
-      google::cloud::deploy::v1::DeleteTargetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteTarget(google::cloud::deploy::v1::DeleteTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1108,9 +1063,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTarget(
-      NoAwaitTag, google::cloud::deploy::v1::DeleteTargetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTarget(NoAwaitTag, google::cloud::deploy::v1::DeleteTargetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1121,8 +1075,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>> DeleteTarget(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
+  DeleteTarget(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1152,8 +1106,8 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.ListCustomTargetTypesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1810}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.ListCustomTargetTypesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1815}
   ///
   // clang-format on
   StreamRange<google::cloud::deploy::v1::CustomTargetType>
@@ -1191,14 +1145,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.ListCustomTargetTypesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1810}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.ListCustomTargetTypesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1815}
   ///
   // clang-format on
   StreamRange<google::cloud::deploy::v1::CustomTargetType>
-  ListCustomTargetTypes(
-      google::cloud::deploy::v1::ListCustomTargetTypesRequest request,
-      Options opts = {});
+  ListCustomTargetTypes(google::cloud::deploy::v1::ListCustomTargetTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1219,12 +1171,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.GetCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1856}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.GetCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1861}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::CustomTargetType>
+  GetCustomTargetType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1249,13 +1201,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.GetCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1856}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.GetCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1861}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::CustomTargetType> GetCustomTargetType(
-      google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::CustomTargetType>
+  GetCustomTargetType(google::cloud::deploy::v1::GetCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1285,15 +1236,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1868}
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
+  /// [google.cloud.deploy.v1.CreateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1873}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(
-      std::string const& parent,
-      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
-      std::string const& custom_target_type_id, Options opts = {});
+  CreateCustomTargetType(std::string const& parent, google::cloud::deploy::v1::CustomTargetType const& custom_target_type, std::string const& custom_target_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1306,10 +1254,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
-      std::string const& custom_target_type_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCustomTargetType(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::CustomTargetType const& custom_target_type, std::string const& custom_target_type_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1341,14 +1287,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1868}
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
+  /// [google.cloud.deploy.v1.CreateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1873}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(
-      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
-      Options opts = {});
+  CreateCustomTargetType(google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1361,10 +1305,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCustomTargetType(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCustomTargetType(NoAwaitTag, google::cloud::deploy::v1::CreateCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1376,8 +1318,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  CreateCustomTargetType(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  CreateCustomTargetType(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1409,14 +1350,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.UpdateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1906}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.UpdateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1911}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(
-      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateCustomTargetType(google::cloud::deploy::v1::CustomTargetType const& custom_target_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1429,10 +1368,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CustomTargetType const& custom_target_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCustomTargetType(NoAwaitTag, google::cloud::deploy::v1::CustomTargetType const& custom_target_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1464,14 +1401,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1669}
-  /// [google.cloud.deploy.v1.UpdateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1906}
+  /// [google.cloud.deploy.v1.CustomTargetType]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1674}
+  /// [google.cloud.deploy.v1.UpdateCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1911}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(
-      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
-      Options opts = {});
+  UpdateCustomTargetType(google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1484,10 +1419,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCustomTargetType(
-      NoAwaitTag,
-      google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCustomTargetType(NoAwaitTag, google::cloud::deploy::v1::UpdateCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1499,8 +1432,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::CustomTargetType>>
-  UpdateCustomTargetType(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  UpdateCustomTargetType(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1528,8 +1460,8 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1944}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1949}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -1546,8 +1478,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCustomTargetType(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1579,14 +1511,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1944}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteCustomTargetTypeRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1949}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteCustomTargetType(
-      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
-      Options opts = {});
+  DeleteCustomTargetType(google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1599,10 +1529,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCustomTargetType(
-      NoAwaitTag,
-      google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCustomTargetType(NoAwaitTag, google::cloud::deploy::v1::DeleteCustomTargetTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1614,8 +1542,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteCustomTargetType(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  DeleteCustomTargetType(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1645,12 +1572,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListReleasesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2747}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.ListReleasesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2752}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Release> ListReleases(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Release>
+  ListReleases(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1684,13 +1611,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListReleasesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2747}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.ListReleasesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2752}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Release> ListReleases(
-      google::cloud::deploy::v1::ListReleasesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Release>
+  ListReleases(google::cloud::deploy::v1::ListReleasesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1711,12 +1637,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2793}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.GetReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2798}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Release> GetRelease(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Release>
+  GetRelease(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1741,13 +1667,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2793}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.GetReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2798}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Release> GetRelease(
-      google::cloud::deploy::v1::GetReleaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Release>
+  GetRelease(google::cloud::deploy::v1::GetReleaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1778,14 +1703,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2805}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.CreateReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2810}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      std::string const& parent,
-      google::cloud::deploy::v1::Release const& release,
-      std::string const& release_id, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Release>>
+  CreateRelease(std::string const& parent, google::cloud::deploy::v1::Release const& release, std::string const& release_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1798,10 +1721,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRelease(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::Release const& release,
-      std::string const& release_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRelease(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::Release const& release, std::string const& release_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1833,13 +1754,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2805}
-  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2257}
+  /// [google.cloud.deploy.v1.CreateReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2810}
+  /// [google.cloud.deploy.v1.Release]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2262}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      google::cloud::deploy::v1::CreateReleaseRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Release>>
+  CreateRelease(google::cloud::deploy::v1::CreateReleaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1852,10 +1772,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRelease(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateReleaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRelease(NoAwaitTag, google::cloud::deploy::v1::CreateReleaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1866,8 +1784,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Release>> CreateRelease(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Release>>
+  CreateRelease(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1888,12 +1806,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AbandonReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3595}
-  /// [google.cloud.deploy.v1.AbandonReleaseResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3607}
+  /// [google.cloud.deploy.v1.AbandonReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3601}
+  /// [google.cloud.deploy.v1.AbandonReleaseResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3613}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
+  AbandonRelease(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1918,13 +1836,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AbandonReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3595}
-  /// [google.cloud.deploy.v1.AbandonReleaseResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3607}
+  /// [google.cloud.deploy.v1.AbandonReleaseRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3601}
+  /// [google.cloud.deploy.v1.AbandonReleaseResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3613}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse> AbandonRelease(
-      google::cloud::deploy::v1::AbandonReleaseRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
+  AbandonRelease(google::cloud::deploy::v1::AbandonReleaseRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1954,14 +1871,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2497}
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
+  /// [google.cloud.deploy.v1.CreateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2502}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
-      std::string const& parent,
-      google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
-      std::string const& deploy_policy_id, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  CreateDeployPolicy(std::string const& parent, google::cloud::deploy::v1::DeployPolicy const& deploy_policy, std::string const& deploy_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1974,10 +1889,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
-      std::string const& deploy_policy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDeployPolicy(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::DeployPolicy const& deploy_policy, std::string const& deploy_policy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2009,13 +1922,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2497}
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
+  /// [google.cloud.deploy.v1.CreateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2502}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
-      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  CreateDeployPolicy(google::cloud::deploy::v1::CreateDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2028,10 +1940,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDeployPolicy(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateDeployPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDeployPolicy(NoAwaitTag, google::cloud::deploy::v1::CreateDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2042,8 +1952,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> CreateDeployPolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  CreateDeployPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2075,13 +1985,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.UpdateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2534}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.UpdateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2539}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
-      google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  UpdateDeployPolicy(google::cloud::deploy::v1::DeployPolicy const& deploy_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2094,9 +2003,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
-      NoAwaitTag, google::cloud::deploy::v1::DeployPolicy const& deploy_policy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDeployPolicy(NoAwaitTag, google::cloud::deploy::v1::DeployPolicy const& deploy_policy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2128,13 +2036,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.UpdateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2534}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.UpdateDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2539}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
-      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  UpdateDeployPolicy(google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2147,10 +2054,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDeployPolicy(
-      NoAwaitTag,
-      google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDeployPolicy(NoAwaitTag, google::cloud::deploy::v1::UpdateDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2161,8 +2066,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>> UpdateDeployPolicy(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::DeployPolicy>>
+  UpdateDeployPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2190,8 +2095,8 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2571}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2576}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -2208,8 +2113,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDeployPolicy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2241,14 +2146,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2571}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2576}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeployPolicy(
-      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request,
-      Options opts = {});
+  DeleteDeployPolicy(google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2261,10 +2164,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDeployPolicy(
-      NoAwaitTag,
-      google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDeployPolicy(NoAwaitTag, google::cloud::deploy::v1::DeleteDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2276,8 +2177,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteDeployPolicy(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeleteDeployPolicy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2307,12 +2207,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.ListDeployPoliciesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2611}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.ListDeployPoliciesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2616}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::DeployPolicy> ListDeployPolicies(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::DeployPolicy>
+  ListDeployPolicies(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2346,13 +2246,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.ListDeployPoliciesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2611}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.ListDeployPoliciesRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2616}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::DeployPolicy> ListDeployPolicies(
-      google::cloud::deploy::v1::ListDeployPoliciesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::deploy::v1::DeployPolicy>
+  ListDeployPolicies(google::cloud::deploy::v1::ListDeployPoliciesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2373,12 +2272,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.GetDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2656}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.GetDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2661}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::DeployPolicy>
+  GetDeployPolicy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2403,13 +2302,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1987}
-  /// [google.cloud.deploy.v1.GetDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2656}
+  /// [google.cloud.deploy.v1.DeployPolicy]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L1992}
+  /// [google.cloud.deploy.v1.GetDeployPolicyRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2661}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::DeployPolicy> GetDeployPolicy(
-      google::cloud::deploy::v1::GetDeployPolicyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::DeployPolicy>
+  GetDeployPolicy(google::cloud::deploy::v1::GetDeployPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2430,12 +2328,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ApproveRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3457}
-  /// [google.cloud.deploy.v1.ApproveRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3481}
+  /// [google.cloud.deploy.v1.ApproveRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3463}
+  /// [google.cloud.deploy.v1.ApproveRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3487}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
+  ApproveRollout(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2460,13 +2358,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ApproveRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3457}
-  /// [google.cloud.deploy.v1.ApproveRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3481}
+  /// [google.cloud.deploy.v1.ApproveRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3463}
+  /// [google.cloud.deploy.v1.ApproveRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3487}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse> ApproveRollout(
-      google::cloud::deploy::v1::ApproveRolloutRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
+  ApproveRollout(google::cloud::deploy::v1::ApproveRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2488,12 +2385,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3484}
-  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3508}
+  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3490}
+  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3514}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
-      std::string const& name, std::string const& phase_id, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+  AdvanceRollout(std::string const& name, std::string const& phase_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2518,13 +2415,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3484}
-  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3508}
+  /// [google.cloud.deploy.v1.AdvanceRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3490}
+  /// [google.cloud.deploy.v1.AdvanceRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3514}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse> AdvanceRollout(
-      google::cloud::deploy::v1::AdvanceRolloutRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AdvanceRolloutResponse>
+  AdvanceRollout(google::cloud::deploy::v1::AdvanceRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2545,12 +2441,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CancelRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3511}
-  /// [google.cloud.deploy.v1.CancelRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3532}
+  /// [google.cloud.deploy.v1.CancelRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3517}
+  /// [google.cloud.deploy.v1.CancelRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3538}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+  CancelRollout(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2575,13 +2471,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CancelRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3511}
-  /// [google.cloud.deploy.v1.CancelRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3532}
+  /// [google.cloud.deploy.v1.CancelRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3517}
+  /// [google.cloud.deploy.v1.CancelRolloutResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3538}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse> CancelRollout(
-      google::cloud::deploy::v1::CancelRolloutRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::CancelRolloutResponse>
+  CancelRollout(google::cloud::deploy::v1::CancelRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2610,12 +2505,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListRolloutsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3319}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.ListRolloutsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3324}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Rollout>
+  ListRollouts(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2649,13 +2544,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.ListRolloutsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3319}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.ListRolloutsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3324}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Rollout> ListRollouts(
-      google::cloud::deploy::v1::ListRolloutsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Rollout>
+  ListRollouts(google::cloud::deploy::v1::ListRolloutsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2676,12 +2570,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3364}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.GetRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3369}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Rollout>
+  GetRollout(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2706,13 +2600,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3364}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.GetRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3369}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Rollout> GetRollout(
-      google::cloud::deploy::v1::GetRolloutRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Rollout>
+  GetRollout(google::cloud::deploy::v1::GetRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2743,14 +2636,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3376}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.CreateRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3381}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      std::string const& parent,
-      google::cloud::deploy::v1::Rollout const& rollout,
-      std::string const& rollout_id, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Rollout>>
+  CreateRollout(std::string const& parent, google::cloud::deploy::v1::Rollout const& rollout, std::string const& rollout_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2763,10 +2654,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRollout(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::Rollout const& rollout,
-      std::string const& rollout_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRollout(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::Rollout const& rollout, std::string const& rollout_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2798,13 +2687,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CreateRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3376}
-  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2854}
+  /// [google.cloud.deploy.v1.CreateRolloutRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3381}
+  /// [google.cloud.deploy.v1.Rollout]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L2859}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      google::cloud::deploy::v1::CreateRolloutRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Rollout>>
+  CreateRollout(google::cloud::deploy::v1::CreateRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2817,10 +2705,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateRollout(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateRolloutRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateRollout(NoAwaitTag, google::cloud::deploy::v1::CreateRolloutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2831,8 +2717,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Rollout>> CreateRollout(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Rollout>>
+  CreateRollout(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2855,13 +2741,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.IgnoreJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3535}
-  /// [google.cloud.deploy.v1.IgnoreJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3562}
+  /// [google.cloud.deploy.v1.IgnoreJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3541}
+  /// [google.cloud.deploy.v1.IgnoreJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3568}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
-      std::string const& rollout, std::string const& phase_id,
-      std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+  IgnoreJob(std::string const& rollout, std::string const& phase_id, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2886,13 +2771,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.IgnoreJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3535}
-  /// [google.cloud.deploy.v1.IgnoreJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3562}
+  /// [google.cloud.deploy.v1.IgnoreJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3541}
+  /// [google.cloud.deploy.v1.IgnoreJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3568}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse> IgnoreJob(
-      google::cloud::deploy::v1::IgnoreJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::IgnoreJobResponse>
+  IgnoreJob(google::cloud::deploy::v1::IgnoreJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2915,13 +2799,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.RetryJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3565}
-  /// [google.cloud.deploy.v1.RetryJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3592}
+  /// [google.cloud.deploy.v1.RetryJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3571}
+  /// [google.cloud.deploy.v1.RetryJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3598}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
-      std::string const& rollout, std::string const& phase_id,
-      std::string const& job_id, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::RetryJobResponse>
+  RetryJob(std::string const& rollout, std::string const& phase_id, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2946,13 +2829,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.RetryJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3565}
-  /// [google.cloud.deploy.v1.RetryJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3592}
+  /// [google.cloud.deploy.v1.RetryJobRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3571}
+  /// [google.cloud.deploy.v1.RetryJobResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3598}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::RetryJobResponse> RetryJob(
-      google::cloud::deploy::v1::RetryJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::RetryJobResponse>
+  RetryJob(google::cloud::deploy::v1::RetryJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2981,12 +2863,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3612}
-  /// [google.cloud.deploy.v1.ListJobRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3916}
+  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3618}
+  /// [google.cloud.deploy.v1.ListJobRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3922}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::JobRun>
+  ListJobRuns(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3020,12 +2902,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3612}
-  /// [google.cloud.deploy.v1.ListJobRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3916}
+  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3618}
+  /// [google.cloud.deploy.v1.ListJobRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3922}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::JobRun> ListJobRuns(
-      google::cloud::deploy::v1::ListJobRunsRequest request, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::JobRun>
+  ListJobRuns(google::cloud::deploy::v1::ListJobRunsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3046,12 +2928,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3961}
-  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3612}
+  /// [google.cloud.deploy.v1.GetJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3967}
+  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3618}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::cloud::deploy::v1::JobRun>
+  GetJobRun(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3076,13 +2958,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.GetJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3961}
-  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3612}
+  /// [google.cloud.deploy.v1.GetJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3967}
+  /// [google.cloud.deploy.v1.JobRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3618}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::JobRun> GetJobRun(
-      google::cloud::deploy::v1::GetJobRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::JobRun>
+  GetJobRun(google::cloud::deploy::v1::GetJobRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3103,12 +2984,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.TerminateJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3973}
-  /// [google.cloud.deploy.v1.TerminateJobRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3994}
+  /// [google.cloud.deploy.v1.TerminateJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3979}
+  /// [google.cloud.deploy.v1.TerminateJobRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4000}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+  TerminateJobRun(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3133,13 +3014,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.TerminateJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3973}
-  /// [google.cloud.deploy.v1.TerminateJobRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3994}
+  /// [google.cloud.deploy.v1.TerminateJobRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3979}
+  /// [google.cloud.deploy.v1.TerminateJobRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4000}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse> TerminateJobRun(
-      google::cloud::deploy::v1::TerminateJobRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::TerminateJobRunResponse>
+  TerminateJobRun(google::cloud::deploy::v1::TerminateJobRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3159,12 +3039,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Config]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3997}
-  /// [google.cloud.deploy.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4030}
+  /// [google.cloud.deploy.v1.Config]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4003}
+  /// [google.cloud.deploy.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4036}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Config> GetConfig(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Config>
+  GetConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3189,13 +3069,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Config]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3997}
-  /// [google.cloud.deploy.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4030}
+  /// [google.cloud.deploy.v1.Config]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4003}
+  /// [google.cloud.deploy.v1.GetConfigRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4036}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Config> GetConfig(
-      google::cloud::deploy::v1::GetConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Config>
+  GetConfig(google::cloud::deploy::v1::GetConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3226,14 +3105,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.CreateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4290}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.CreateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4363}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
-      std::string const& parent,
-      google::cloud::deploy::v1::Automation const& automation,
-      std::string const& automation_id, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  CreateAutomation(std::string const& parent, google::cloud::deploy::v1::Automation const& automation, std::string const& automation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3246,10 +3123,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAutomation(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::deploy::v1::Automation const& automation,
-      std::string const& automation_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAutomation(NoAwaitTag, std::string const& parent, google::cloud::deploy::v1::Automation const& automation, std::string const& automation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -3281,13 +3156,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.CreateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4290}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.CreateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4363}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
-      google::cloud::deploy::v1::CreateAutomationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  CreateAutomation(google::cloud::deploy::v1::CreateAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3300,10 +3174,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAutomation(
-      NoAwaitTag,
-      google::cloud::deploy::v1::CreateAutomationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAutomation(NoAwaitTag, google::cloud::deploy::v1::CreateAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3314,8 +3186,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> CreateAutomation(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  CreateAutomation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3347,13 +3219,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.UpdateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4328}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.UpdateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4401}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
-      google::cloud::deploy::v1::Automation const& automation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  UpdateAutomation(google::cloud::deploy::v1::Automation const& automation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3366,9 +3237,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAutomation(
-      NoAwaitTag, google::cloud::deploy::v1::Automation const& automation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAutomation(NoAwaitTag, google::cloud::deploy::v1::Automation const& automation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -3400,13 +3270,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.UpdateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4328}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.UpdateAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4401}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
-      google::cloud::deploy::v1::UpdateAutomationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  UpdateAutomation(google::cloud::deploy::v1::UpdateAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3419,10 +3288,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAutomation(
-      NoAwaitTag,
-      google::cloud::deploy::v1::UpdateAutomationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAutomation(NoAwaitTag, google::cloud::deploy::v1::UpdateAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3433,8 +3300,8 @@ class CloudDeployClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::deploy::v1::Automation>> UpdateAutomation(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::deploy::v1::Automation>>
+  UpdateAutomation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3462,8 +3329,8 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4365}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4438}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
@@ -3480,8 +3347,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAutomation(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAutomation(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3513,14 +3380,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.DeleteAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4365}
-  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3427}
+  /// [google.cloud.deploy.v1.DeleteAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4438}
+  /// [google.cloud.deploy.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L3432}
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(
-      google::cloud::deploy::v1::DeleteAutomationRequest const& request,
-      Options opts = {});
+  DeleteAutomation(google::cloud::deploy::v1::DeleteAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3533,10 +3398,8 @@ class CloudDeployClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAutomation(
-      NoAwaitTag,
-      google::cloud::deploy::v1::DeleteAutomationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAutomation(NoAwaitTag, google::cloud::deploy::v1::DeleteAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3548,8 +3411,7 @@ class CloudDeployClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::deploy::v1::OperationMetadata>>
-  DeleteAutomation(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteAutomation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -3570,12 +3432,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.GetAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4452}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.GetAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4525}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Automation>
+  GetAutomation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3600,13 +3462,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.GetAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4452}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.GetAutomationRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4525}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::Automation> GetAutomation(
-      google::cloud::deploy::v1::GetAutomationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::Automation>
+  GetAutomation(google::cloud::deploy::v1::GetAutomationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3637,12 +3498,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.ListAutomationsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4406}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.ListAutomationsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4479}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Automation> ListAutomations(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Automation>
+  ListAutomations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3676,13 +3537,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4047}
-  /// [google.cloud.deploy.v1.ListAutomationsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4406}
+  /// [google.cloud.deploy.v1.Automation]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4053}
+  /// [google.cloud.deploy.v1.ListAutomationsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4479}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::Automation> ListAutomations(
-      google::cloud::deploy::v1::ListAutomationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::deploy::v1::Automation>
+  ListAutomations(google::cloud::deploy::v1::ListAutomationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3703,12 +3563,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4467}
-  /// [google.cloud.deploy.v1.GetAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4736}
+  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4540}
+  /// [google.cloud.deploy.v1.GetAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4828}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AutomationRun>
+  GetAutomationRun(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -3733,13 +3593,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4467}
-  /// [google.cloud.deploy.v1.GetAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4736}
+  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4540}
+  /// [google.cloud.deploy.v1.GetAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4828}
   ///
   // clang-format on
-  StatusOr<google::cloud::deploy::v1::AutomationRun> GetAutomationRun(
-      google::cloud::deploy::v1::GetAutomationRunRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::deploy::v1::AutomationRun>
+  GetAutomationRun(google::cloud::deploy::v1::GetAutomationRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3770,12 +3629,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4467}
-  /// [google.cloud.deploy.v1.ListAutomationRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4690}
+  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4540}
+  /// [google.cloud.deploy.v1.ListAutomationRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4782}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::AutomationRun> ListAutomationRuns(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::deploy::v1::AutomationRun>
+  ListAutomationRuns(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -3809,13 +3668,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4467}
-  /// [google.cloud.deploy.v1.ListAutomationRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4690}
+  /// [google.cloud.deploy.v1.AutomationRun]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4540}
+  /// [google.cloud.deploy.v1.ListAutomationRunsRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4782}
   ///
   // clang-format on
-  StreamRange<google::cloud::deploy::v1::AutomationRun> ListAutomationRuns(
-      google::cloud::deploy::v1::ListAutomationRunsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::deploy::v1::AutomationRun>
+  ListAutomationRuns(google::cloud::deploy::v1::ListAutomationRunsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3839,8 +3697,8 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CancelAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4748}
-  /// [google.cloud.deploy.v1.CancelAutomationRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4760}
+  /// [google.cloud.deploy.v1.CancelAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4840}
+  /// [google.cloud.deploy.v1.CancelAutomationRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4852}
   ///
   // clang-format on
   StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
@@ -3872,14 +3730,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.deploy.v1.CancelAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4748}
-  /// [google.cloud.deploy.v1.CancelAutomationRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4760}
+  /// [google.cloud.deploy.v1.CancelAutomationRunRequest]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4840}
+  /// [google.cloud.deploy.v1.CancelAutomationRunResponse]: @googleapis_reference_link{google/cloud/deploy/v1/cloud_deploy.proto#L4852}
   ///
   // clang-format on
   StatusOr<google::cloud::deploy::v1::CancelAutomationRunResponse>
-  CancelAutomationRun(
-      google::cloud::deploy::v1::CancelAutomationRunRequest const& request,
-      Options opts = {});
+  CancelAutomationRun(google::cloud::deploy::v1::CancelAutomationRunRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3917,8 +3773,8 @@ class CloudDeployClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -3947,9 +3803,8 @@ class CloudDeployClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -3981,8 +3836,8 @@ class CloudDeployClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4013,8 +3868,8 @@ class CloudDeployClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4049,22 +3904,13 @@ class CloudDeployClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -4090,25 +3936,17 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -4138,12 +3976,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -4165,12 +4003,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4197,13 +4035,12 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4224,10 +4061,11 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4253,12 +4091,11 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -4270,8 +4107,9 @@ class CloudDeployClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -4285,13 +4123,14 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -4303,8 +4142,9 @@ class CloudDeployClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -4323,15 +4163,14 @@ class CloudDeployClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<CloudDeployConnection> connection_;

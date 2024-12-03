@@ -46,25 +46,24 @@ GatewayControlMetadata::GatewayControlMetadata(
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 GatewayControlMetadata::GenerateCredentials(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
-  SetMetadata(context, options,
-              absl::StrCat("name=", internal::UrlEncode(request.name())));
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+  SetMetadata(context, options, absl::StrCat("name=", internal::UrlEncode(request.name())));
   return child_->GenerateCredentials(context, options, request);
 }
 
 void GatewayControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options,
-                                         std::string const& request_params) {
+                                        Options const& options,
+                                        std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
   SetMetadata(context, options);
 }
 
 void GatewayControlMetadata::SetMetadata(grpc::ClientContext& context,
-                                         Options const& options) {
-  google::cloud::internal::SetMetadata(context, options, fixed_metadata_,
-                                       api_client_header_);
+                                        Options const& options) {
+  google::cloud::internal::SetMetadata(
+      context, options, fixed_metadata_, api_client_header_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

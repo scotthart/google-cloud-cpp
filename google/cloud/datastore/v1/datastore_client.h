@@ -36,11 +36,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Each RPC normalizes the partition IDs of the keys in its input entities,
 /// and always returns entities with keys with normalized partition IDs.
-/// This applies to all keys and entities, including those in values, except
-/// keys with both an empty path and an empty or unset partition ID.
-/// Normalization of input keys sets the project ID (if not already set) to the
-/// project ID from the request.
-///
+/// This applies to all keys and entities, including those in values, except keys
+/// with both an empty path and an empty or unset partition ID. Normalization of
+/// input keys sets the project ID (if not already set) to the project ID from
+/// the request.
+/// 
 ///
 /// @par Equality
 ///
@@ -67,8 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatastoreClient {
  public:
-  explicit DatastoreClient(std::shared_ptr<DatastoreConnection> connection,
-                           Options opts = {});
+  explicit DatastoreClient(std::shared_ptr<DatastoreConnection> connection, Options opts = {});
   ~DatastoreClient();
 
   ///@{
@@ -113,10 +112,8 @@ class DatastoreClient {
   /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L187}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      std::string const& project_id,
-      google::datastore::v1::ReadOptions const& read_options,
-      std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
+  StatusOr<google::datastore::v1::LookupResponse>
+  Lookup(std::string const& project_id, google::datastore::v1::ReadOptions const& read_options, std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
 
   // clang-format off
   ///
@@ -145,8 +142,8 @@ class DatastoreClient {
   /// [google.datastore.v1.LookupResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L187}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::LookupResponse> Lookup(
-      google::datastore::v1::LookupRequest const& request, Options opts = {});
+  StatusOr<google::datastore::v1::LookupResponse>
+  Lookup(google::datastore::v1::LookupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -175,8 +172,8 @@ class DatastoreClient {
   /// [google.datastore.v1.RunQueryResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L259}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::RunQueryResponse> RunQuery(
-      google::datastore::v1::RunQueryRequest const& request, Options opts = {});
+  StatusOr<google::datastore::v1::RunQueryResponse>
+  RunQuery(google::datastore::v1::RunQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -206,9 +203,7 @@ class DatastoreClient {
   ///
   // clang-format on
   StatusOr<google::datastore::v1::RunAggregationQueryResponse>
-  RunAggregationQuery(
-      google::datastore::v1::RunAggregationQueryRequest const& request,
-      Options opts = {});
+  RunAggregationQuery(google::datastore::v1::RunAggregationQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +227,8 @@ class DatastoreClient {
   /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L358}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      std::string const& project_id, Options opts = {});
+  StatusOr<google::datastore::v1::BeginTransactionResponse>
+  BeginTransaction(std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -262,9 +257,8 @@ class DatastoreClient {
   /// [google.datastore.v1.BeginTransactionResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L358}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::BeginTransactionResponse> BeginTransaction(
-      google::datastore::v1::BeginTransactionRequest const& request,
-      Options opts = {});
+  StatusOr<google::datastore::v1::BeginTransactionResponse>
+  BeginTransaction(google::datastore::v1::BeginTransactionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -307,12 +301,8 @@ class DatastoreClient {
   /// [google.datastore.v1.Datastore.BeginTransaction]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L89}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::CommitResponse> Commit(
-      std::string const& project_id,
-      google::datastore::v1::CommitRequest::Mode mode,
-      std::string const& transaction,
-      std::vector<google::datastore::v1::Mutation> const& mutations,
-      Options opts = {});
+  StatusOr<google::datastore::v1::CommitResponse>
+  Commit(std::string const& project_id, google::datastore::v1::CommitRequest::Mode mode, std::string const& transaction, std::vector<google::datastore::v1::Mutation> const& mutations, Options opts = {});
 
   // clang-format off
   ///
@@ -351,11 +341,8 @@ class DatastoreClient {
   /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L443}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::CommitResponse> Commit(
-      std::string const& project_id,
-      google::datastore::v1::CommitRequest::Mode mode,
-      std::vector<google::datastore::v1::Mutation> const& mutations,
-      Options opts = {});
+  StatusOr<google::datastore::v1::CommitResponse>
+  Commit(std::string const& project_id, google::datastore::v1::CommitRequest::Mode mode, std::vector<google::datastore::v1::Mutation> const& mutations, Options opts = {});
 
   // clang-format off
   ///
@@ -385,8 +372,8 @@ class DatastoreClient {
   /// [google.datastore.v1.CommitResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L443}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::CommitResponse> Commit(
-      google::datastore::v1::CommitRequest const& request, Options opts = {});
+  StatusOr<google::datastore::v1::CommitResponse>
+  Commit(google::datastore::v1::CommitRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -413,9 +400,8 @@ class DatastoreClient {
   /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L382}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      std::string const& project_id, std::string const& transaction,
-      Options opts = {});
+  StatusOr<google::datastore::v1::RollbackResponse>
+  Rollback(std::string const& project_id, std::string const& transaction, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +430,8 @@ class DatastoreClient {
   /// [google.datastore.v1.RollbackResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L382}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::RollbackResponse> Rollback(
-      google::datastore::v1::RollbackRequest const& request, Options opts = {});
+  StatusOr<google::datastore::v1::RollbackResponse>
+  Rollback(google::datastore::v1::RollbackRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -472,9 +458,8 @@ class DatastoreClient {
   /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      std::string const& project_id,
-      std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
+  StatusOr<google::datastore::v1::AllocateIdsResponse>
+  AllocateIds(std::string const& project_id, std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
 
   // clang-format off
   ///
@@ -504,9 +489,8 @@ class DatastoreClient {
   /// [google.datastore.v1.AllocateIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L475}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::AllocateIdsResponse> AllocateIds(
-      google::datastore::v1::AllocateIdsRequest const& request,
-      Options opts = {});
+  StatusOr<google::datastore::v1::AllocateIdsResponse>
+  AllocateIds(google::datastore::v1::AllocateIdsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -533,9 +517,8 @@ class DatastoreClient {
   /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L500}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      std::string const& project_id,
-      std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
+  StatusOr<google::datastore::v1::ReserveIdsResponse>
+  ReserveIds(std::string const& project_id, std::vector<google::datastore::v1::Key> const& keys, Options opts = {});
 
   // clang-format off
   ///
@@ -565,22 +548,13 @@ class DatastoreClient {
   /// [google.datastore.v1.ReserveIdsResponse]: @googleapis_reference_link{google/datastore/v1/datastore.proto#L500}
   ///
   // clang-format on
-  StatusOr<google::datastore::v1::ReserveIdsResponse> ReserveIds(
-      google::datastore::v1::ReserveIdsRequest const& request,
-      Options opts = {});
+  StatusOr<google::datastore::v1::ReserveIdsResponse>
+  ReserveIds(google::datastore::v1::ReserveIdsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -606,25 +580,17 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -654,12 +620,12 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -681,12 +647,12 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -713,13 +679,12 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -740,10 +705,11 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -769,12 +735,11 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -786,8 +751,9 @@ class DatastoreClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -801,13 +767,14 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -819,8 +786,9 @@ class DatastoreClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -839,15 +807,14 @@ class DatastoreClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DatastoreConnection> connection_;

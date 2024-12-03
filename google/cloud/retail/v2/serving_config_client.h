@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SERVING_CONFIG_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_SERVING_CONFIG_CLIENT_H
 
-#include "google/cloud/retail/v2/serving_config_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/serving_config_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -61,28 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ServingConfigServiceClient {
  public:
-  explicit ServingConfigServiceClient(
-      std::shared_ptr<ServingConfigServiceConnection> connection,
-      Options opts = {});
+  explicit ServingConfigServiceClient(std::shared_ptr<ServingConfigServiceConnection> connection, Options opts = {});
   ~ServingConfigServiceClient();
 
   ///@{
   /// @name Copy and move support
   ServingConfigServiceClient(ServingConfigServiceClient const&) = default;
-  ServingConfigServiceClient& operator=(ServingConfigServiceClient const&) =
-      default;
+  ServingConfigServiceClient& operator=(ServingConfigServiceClient const&) = default;
   ServingConfigServiceClient(ServingConfigServiceClient&&) = default;
   ServingConfigServiceClient& operator=(ServingConfigServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ServingConfigServiceClient const& a,
-                         ServingConfigServiceClient const& b) {
+  friend bool operator==(ServingConfigServiceClient const& a, ServingConfigServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ServingConfigServiceClient const& a,
-                         ServingConfigServiceClient const& b) {
+  friend bool operator!=(ServingConfigServiceClient const& a, ServingConfigServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,10 +115,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      std::string const& parent,
-      google::cloud::retail::v2::ServingConfig const& serving_config,
-      std::string const& serving_config_id, Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  CreateServingConfig(std::string const& parent, google::cloud::retail::v2::ServingConfig const& serving_config, std::string const& serving_config_id, Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +149,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> CreateServingConfig(
-      google::cloud::retail::v2::CreateServingConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  CreateServingConfig(google::cloud::retail::v2::CreateServingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -182,7 +174,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.DeleteServingConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/serving_config_service.proto#L159}
   ///
   // clang-format on
-  Status DeleteServingConfig(std::string const& name, Options opts = {});
+  Status
+  DeleteServingConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -210,9 +203,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.DeleteServingConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/serving_config_service.proto#L159}
   ///
   // clang-format on
-  Status DeleteServingConfig(
-      google::cloud::retail::v2::DeleteServingConfigRequest const& request,
-      Options opts = {});
+  Status
+  DeleteServingConfig(google::cloud::retail::v2::DeleteServingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -244,9 +236,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.UpdateServingConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/serving_config_service.proto#L144}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      google::cloud::retail::v2::ServingConfig const& serving_config,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  UpdateServingConfig(google::cloud::retail::v2::ServingConfig const& serving_config, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -275,9 +266,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.UpdateServingConfigRequest]: @googleapis_reference_link{google/cloud/retail/v2/serving_config_service.proto#L144}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> UpdateServingConfig(
-      google::cloud::retail::v2::UpdateServingConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  UpdateServingConfig(google::cloud::retail::v2::UpdateServingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -304,8 +294,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  GetServingConfig(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -336,9 +326,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> GetServingConfig(
-      google::cloud::retail::v2::GetServingConfigRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  GetServingConfig(google::cloud::retail::v2::GetServingConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -372,8 +361,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::ServingConfig> ListServingConfigs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::retail::v2::ServingConfig>
+  ListServingConfigs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -411,9 +400,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::ServingConfig> ListServingConfigs(
-      google::cloud::retail::v2::ListServingConfigsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::retail::v2::ServingConfig>
+  ListServingConfigs(google::cloud::retail::v2::ListServingConfigsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,8 +432,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      std::string const& serving_config, Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  AddControl(std::string const& serving_config, Options opts = {});
 
   // clang-format off
   ///
@@ -480,9 +468,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> AddControl(
-      google::cloud::retail::v2::AddControlRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  AddControl(google::cloud::retail::v2::AddControlRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -510,8 +497,8 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      std::string const& serving_config, Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  RemoveControl(std::string const& serving_config, Options opts = {});
 
   // clang-format off
   ///
@@ -543,22 +530,13 @@ class ServingConfigServiceClient {
   /// [google.cloud.retail.v2.ServingConfig]: @googleapis_reference_link{google/cloud/retail/v2/serving_config.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::ServingConfig> RemoveControl(
-      google::cloud::retail::v2::RemoveControlRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::ServingConfig>
+  RemoveControl(google::cloud::retail::v2::RemoveControlRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -584,25 +562,17 @@ class ServingConfigServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -632,12 +602,12 @@ class ServingConfigServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -659,12 +629,12 @@ class ServingConfigServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -691,13 +661,12 @@ class ServingConfigServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ServingConfigServiceConnection> connection_;

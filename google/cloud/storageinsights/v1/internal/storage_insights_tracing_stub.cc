@@ -32,136 +32,121 @@ StorageInsightsTracingStub::StorageInsightsTracingStub(
     std::shared_ptr<StorageInsightsStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse>
-StorageInsightsTracingStub::ListReportConfigs(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::ListReportConfigsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "ListReportConfigs");
+StatusOr<google::cloud::storageinsights::v1::ListReportConfigsResponse> StorageInsightsTracingStub::ListReportConfigs(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::ListReportConfigsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "ListReportConfigs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListReportConfigs(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListReportConfigs(context, options, request));
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingStub::GetReportConfig(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsTracingStub::GetReportConfig(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storageinsights::v1::GetReportConfigRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "GetReportConfig");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "GetReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetReportConfig(context, options, request));
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingStub::CreateReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "CreateReportConfig");
+StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsTracingStub::CreateReportConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "CreateReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->CreateReportConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->CreateReportConfig(context, options, request));
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportConfig>
-StorageInsightsTracingStub::UpdateReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "UpdateReportConfig");
+StatusOr<google::cloud::storageinsights::v1::ReportConfig> StorageInsightsTracingStub::UpdateReportConfig(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "UpdateReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->UpdateReportConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->UpdateReportConfig(context, options, request));
 }
 
 Status StorageInsightsTracingStub::DeleteReportConfig(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "DeleteReportConfig");
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "DeleteReportConfig");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->DeleteReportConfig(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->DeleteReportConfig(context, options, request));
 }
 
-StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse>
-StorageInsightsTracingStub::ListReportDetails(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::storageinsights::v1::ListReportDetailsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "ListReportDetails");
+StatusOr<google::cloud::storageinsights::v1::ListReportDetailsResponse> StorageInsightsTracingStub::ListReportDetails(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::storageinsights::v1::ListReportDetailsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "ListReportDetails");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->ListReportDetails(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->ListReportDetails(context, options, request));
 }
 
-StatusOr<google::cloud::storageinsights::v1::ReportDetail>
-StorageInsightsTracingStub::GetReportDetail(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::storageinsights::v1::ReportDetail> StorageInsightsTracingStub::GetReportDetail(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::storageinsights::v1::GetReportDetailRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "GetReportDetail");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "GetReportDetail");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetReportDetail(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-StorageInsightsTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> StorageInsightsTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-StorageInsightsTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> StorageInsightsTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-StorageInsightsTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> StorageInsightsTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListOperations(context, options, request));
 }
 
-StatusOr<google::longrunning::Operation>
-StorageInsightsTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::Operation> StorageInsightsTracingStub::GetOperation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -169,10 +154,10 @@ StorageInsightsTracingStub::GetOperation(
 }
 
 Status StorageInsightsTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -180,10 +165,10 @@ Status StorageInsightsTracingStub::DeleteOperation(
 }
 
 Status StorageInsightsTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.storageinsights.v1.StorageInsights", "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.storageinsights.v1.StorageInsights", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,

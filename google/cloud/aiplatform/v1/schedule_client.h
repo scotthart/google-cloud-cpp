@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ScheduleServiceClient {
  public:
-  explicit ScheduleServiceClient(
-      std::shared_ptr<ScheduleServiceConnection> connection, Options opts = {});
+  explicit ScheduleServiceClient(std::shared_ptr<ScheduleServiceConnection> connection, Options opts = {});
   ~ScheduleServiceClient();
 
   ///@{
@@ -79,12 +78,10 @@ class ScheduleServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ScheduleServiceClient const& a,
-                         ScheduleServiceClient const& b) {
+  friend bool operator==(ScheduleServiceClient const& a, ScheduleServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ScheduleServiceClient const& a,
-                         ScheduleServiceClient const& b) {
+  friend bool operator!=(ScheduleServiceClient const& a, ScheduleServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -109,14 +106,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L129}
+  /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L130}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Schedule const& schedule,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  CreateSchedule(std::string const& parent, google::cloud::aiplatform::v1::Schedule const& schedule, Options opts = {});
 
   // clang-format off
   ///
@@ -141,13 +136,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L129}
+  /// [google.cloud.aiplatform.v1.CreateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L130}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> CreateSchedule(
-      google::cloud::aiplatform::v1::CreateScheduleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  CreateSchedule(google::cloud::aiplatform::v1::CreateScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -177,7 +171,7 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L248}
+  /// [google.cloud.aiplatform.v1.DeleteScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -194,8 +188,8 @@ class ScheduleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSchedule(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSchedule(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -228,13 +222,11 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L248}
+  /// [google.cloud.aiplatform.v1.DeleteScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L249}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
-      Options opts = {});
+  DeleteSchedule(google::cloud::aiplatform::v1::DeleteScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -247,10 +239,8 @@ class ScheduleServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSchedule(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteScheduleRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSchedule(NoAwaitTag, google::cloud::aiplatform::v1::DeleteScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -262,8 +252,7 @@ class ScheduleServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSchedule(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  DeleteSchedule(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -285,12 +274,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L145}
+  /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L146}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  GetSchedule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -315,13 +304,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L145}
+  /// [google.cloud.aiplatform.v1.GetScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L146}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> GetSchedule(
-      google::cloud::aiplatform::v1::GetScheduleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  GetSchedule(google::cloud::aiplatform::v1::GetScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -351,12 +339,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L159}
+  /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L160}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Schedule>
+  ListSchedules(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -390,13 +378,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L159}
+  /// [google.cloud.aiplatform.v1.ListSchedulesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L160}
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Schedule> ListSchedules(
-      google::cloud::aiplatform::v1::ListSchedulesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Schedule>
+  ListSchedules(google::cloud::aiplatform::v1::ListSchedulesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -419,11 +406,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L262}
+  /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L263}
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status PauseSchedule(std::string const& name, Options opts = {});
+  Status
+  PauseSchedule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -449,13 +437,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L262}
+  /// [google.cloud.aiplatform.v1.PauseScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L263}
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status PauseSchedule(
-      google::cloud::aiplatform::v1::PauseScheduleRequest const& request,
-      Options opts = {});
+  Status
+  PauseSchedule(google::cloud::aiplatform::v1::PauseScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +452,9 @@ class ScheduleServiceClient {
   ///
   /// When the Schedule is resumed, new runs will be scheduled starting from the
   /// next execution time after the current time based on the time_specification
-  /// in the Schedule. If [Schedule.catchUp][] is set up true, all
-  /// missed runs will be scheduled for backfill first.
+  /// in the Schedule. If
+  /// [Schedule.catch_up][google.cloud.aiplatform.v1.Schedule.catch_up] is set up
+  /// true, all missed runs will be scheduled for backfill first.
   ///
   /// @param name  Required. The name of the Schedule resource to be resumed.
   ///  Format:
@@ -482,11 +470,13 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
+  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L277}
+  /// [google.cloud.aiplatform.v1.Schedule.catch_up]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L170}
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status ResumeSchedule(std::string const& name, Options opts = {});
+  Status
+  ResumeSchedule(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -496,8 +486,9 @@ class ScheduleServiceClient {
   ///
   /// When the Schedule is resumed, new runs will be scheduled starting from the
   /// next execution time after the current time based on the time_specification
-  /// in the Schedule. If [Schedule.catchUp][] is set up true, all
-  /// missed runs will be scheduled for backfill first.
+  /// in the Schedule. If
+  /// [Schedule.catch_up][google.cloud.aiplatform.v1.Schedule.catch_up] is set up
+  /// true, all missed runs will be scheduled for backfill first.
   ///
   /// @param name  Required. The name of the Schedule resource to be resumed.
   ///  Format:
@@ -518,13 +509,13 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
+  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L277}
   /// [google.cloud.aiplatform.v1.Schedule.catch_up]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L170}
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status ResumeSchedule(std::string const& name, bool catch_up,
-                        Options opts = {});
+  Status
+  ResumeSchedule(std::string const& name, bool catch_up, Options opts = {});
 
   // clang-format off
   ///
@@ -534,8 +525,9 @@ class ScheduleServiceClient {
   ///
   /// When the Schedule is resumed, new runs will be scheduled starting from the
   /// next execution time after the current time based on the time_specification
-  /// in the Schedule. If [Schedule.catchUp][] is set up true, all
-  /// missed runs will be scheduled for backfill first.
+  /// in the Schedule. If
+  /// [Schedule.catch_up][google.cloud.aiplatform.v1.Schedule.catch_up] is set up
+  /// true, all missed runs will be scheduled for backfill first.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -554,13 +546,13 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L276}
+  /// [google.cloud.aiplatform.v1.ResumeScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L277}
+  /// [google.cloud.aiplatform.v1.Schedule.catch_up]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L170}
   /// [google.cloud.aiplatform.v1.Schedule.state]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L131}
   ///
   // clang-format on
-  Status ResumeSchedule(
-      google::cloud::aiplatform::v1::ResumeScheduleRequest const& request,
-      Options opts = {});
+  Status
+  ResumeSchedule(google::cloud::aiplatform::v1::ResumeScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,13 +586,12 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L298}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      google::cloud::aiplatform::v1::Schedule const& schedule,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  UpdateSchedule(google::cloud::aiplatform::v1::Schedule const& schedule, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -632,12 +623,11 @@ class ScheduleServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Schedule]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule.proto#L35}
-  /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.UpdateScheduleRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/schedule_service.proto#L298}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Schedule> UpdateSchedule(
-      google::cloud::aiplatform::v1::UpdateScheduleRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Schedule>
+  UpdateSchedule(google::cloud::aiplatform::v1::UpdateScheduleRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -675,8 +665,8 @@ class ScheduleServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -705,9 +695,8 @@ class ScheduleServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -739,8 +728,8 @@ class ScheduleServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -771,8 +760,8 @@ class ScheduleServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -807,22 +796,13 @@ class ScheduleServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -848,25 +828,17 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -896,12 +868,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -923,12 +895,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -955,13 +927,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -982,10 +953,11 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1011,12 +983,11 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1028,8 +999,9 @@ class ScheduleServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1043,13 +1015,14 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1061,8 +1034,9 @@ class ScheduleServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1081,15 +1055,14 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1122,13 +1095,12 @@ class ScheduleServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ScheduleServiceConnection> connection_;

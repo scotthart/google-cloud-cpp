@@ -34,24 +34,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ResourceSettingsServiceLogging : public ResourceSettingsServiceStub {
  public:
   ~ResourceSettingsServiceLogging() override = default;
-  ResourceSettingsServiceLogging(
-      std::shared_ptr<ResourceSettingsServiceStub> child,
-      TracingOptions tracing_options, std::set<std::string> const& components);
+  ResourceSettingsServiceLogging(std::shared_ptr<ResourceSettingsServiceStub> child,
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context, Options const& options,
-               google::cloud::resourcesettings::v1::ListSettingsRequest const&
-                   request) override;
+  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
 
  private:
   std::shared_ptr<ResourceSettingsServiceStub> child_;

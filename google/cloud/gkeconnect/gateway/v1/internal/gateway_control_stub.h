@@ -35,32 +35,25 @@ class GatewayControlStub {
  public:
   virtual ~GatewayControlStub() = 0;
 
-  virtual StatusOr<
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) = 0;
+  virtual StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) = 0;
 };
 
 class DefaultGatewayControlStub : public GatewayControlStub {
  public:
   explicit DefaultGatewayControlStub(
-      std::unique_ptr<
-          google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) override;
+  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
 
  private:
-  std::unique_ptr<
-      google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::gkeconnect::gateway::v1::GatewayControl::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

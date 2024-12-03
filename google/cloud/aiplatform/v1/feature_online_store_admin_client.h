@@ -65,31 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeatureOnlineStoreAdminServiceClient {
  public:
-  explicit FeatureOnlineStoreAdminServiceClient(
-      std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection,
-      Options opts = {});
+  explicit FeatureOnlineStoreAdminServiceClient(std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection, Options opts = {});
   ~FeatureOnlineStoreAdminServiceClient();
 
   ///@{
   /// @name Copy and move support
-  FeatureOnlineStoreAdminServiceClient(
-      FeatureOnlineStoreAdminServiceClient const&) = default;
-  FeatureOnlineStoreAdminServiceClient& operator=(
-      FeatureOnlineStoreAdminServiceClient const&) = default;
-  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient&&) =
-      default;
-  FeatureOnlineStoreAdminServiceClient& operator=(
-      FeatureOnlineStoreAdminServiceClient&&) = default;
+  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient const&) = default;
+  FeatureOnlineStoreAdminServiceClient& operator=(FeatureOnlineStoreAdminServiceClient const&) = default;
+  FeatureOnlineStoreAdminServiceClient(FeatureOnlineStoreAdminServiceClient&&) = default;
+  FeatureOnlineStoreAdminServiceClient& operator=(FeatureOnlineStoreAdminServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeatureOnlineStoreAdminServiceClient const& a,
-                         FeatureOnlineStoreAdminServiceClient const& b) {
+  friend bool operator==(FeatureOnlineStoreAdminServiceClient const& a, FeatureOnlineStoreAdminServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeatureOnlineStoreAdminServiceClient const& a,
-                         FeatureOnlineStoreAdminServiceClient const& b) {
+  friend bool operator!=(FeatureOnlineStoreAdminServiceClient const& a, FeatureOnlineStoreAdminServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -134,11 +126,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      std::string const& feature_online_store_id, Options opts = {});
+  CreateFeatureOnlineStore(std::string const& parent, google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, std::string const& feature_online_store_id, Options opts = {});
 
   // clang-format off
   ///
@@ -151,11 +139,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      std::string const& feature_online_store_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureOnlineStore(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, std::string const& feature_online_store_id, Options opts = {});
 
   // clang-format off
   ///
@@ -192,10 +177,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  CreateFeatureOnlineStore(google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -208,11 +190,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureOnlineStore(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureOnlineStore(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -224,8 +203,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  CreateFeatureOnlineStore(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  CreateFeatureOnlineStore(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -280,10 +258,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  GetFeatureOnlineStore(
-      google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  GetFeatureOnlineStore(google::cloud::aiplatform::v1::GetFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -358,9 +333,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureOnlineStore>
-  ListFeatureOnlineStores(
-      google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request,
-      Options opts = {});
+  ListFeatureOnlineStores(google::cloud::aiplatform::v1::ListFeatureOnlineStoresRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -409,10 +382,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -425,11 +395,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::FeatureOnlineStore const&
-          feature_online_store,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureOnlineStore(NoAwaitTag, google::cloud::aiplatform::v1::FeatureOnlineStore const& feature_online_store, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -466,10 +433,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(
-      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  UpdateFeatureOnlineStore(google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -482,11 +446,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureOnlineStore(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureOnlineStore(NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -498,8 +459,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureOnlineStore>>
-  UpdateFeatureOnlineStore(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  UpdateFeatureOnlineStore(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -537,8 +497,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(std::string const& name, bool force,
-                           Options opts = {});
+  DeleteFeatureOnlineStore(std::string const& name, bool force, Options opts = {});
 
   // clang-format off
   ///
@@ -551,8 +510,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      NoAwaitTag, std::string const& name, bool force, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureOnlineStore(NoAwaitTag, std::string const& name, bool force, Options opts = {});
 
   // clang-format off
   ///
@@ -590,10 +549,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(
-      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  DeleteFeatureOnlineStore(google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -606,11 +562,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureOnlineStore(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureOnlineStore(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureOnlineStoreRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -622,8 +575,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureOnlineStore(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  DeleteFeatureOnlineStore(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -665,10 +617,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      std::string const& feature_view_id, Options opts = {});
+  CreateFeatureView(std::string const& parent, google::cloud::aiplatform::v1::FeatureView const& feature_view, std::string const& feature_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -681,10 +630,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureView(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      std::string const& feature_view_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureView(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::FeatureView const& feature_view, std::string const& feature_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -721,9 +668,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(
-      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
-      Options opts = {});
+  CreateFeatureView(google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -736,10 +681,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureView(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureView(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -751,8 +694,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  CreateFeatureView(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CreateFeatureView(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -778,8 +720,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L382}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -808,9 +750,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.GetFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L382}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureView> GetFeatureView(
-      google::cloud::aiplatform::v1::GetFeatureViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureView>
+  GetFeatureView(google::cloud::aiplatform::v1::GetFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -845,8 +786,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L396}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureView>
+  ListFeatureViews(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -884,9 +825,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.aiplatform.v1.ListFeatureViewsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L396}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureView> ListFeatureViews(
-      google::cloud::aiplatform::v1::ListFeatureViewsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureView>
+  ListFeatureViews(google::cloud::aiplatform::v1::ListFeatureViewsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -914,6 +854,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///    * `feature_registry_source.feature_groups`
   ///    * `sync_config`
   ///    * `sync_config.cron`
+  ///    * `optimized_config.automatic_resources`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A [`future`] that becomes satisfied when the LRO
@@ -939,9 +880,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeatureView(google::cloud::aiplatform::v1::FeatureView const& feature_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -954,10 +893,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::FeatureView const& feature_view,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureView(NoAwaitTag, google::cloud::aiplatform::v1::FeatureView const& feature_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -994,9 +931,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(
-      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
-      Options opts = {});
+  UpdateFeatureView(google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1009,10 +944,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureView(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureView(NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1024,8 +957,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureView>>
-  UpdateFeatureView(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  UpdateFeatureView(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1054,7 +986,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L497}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L499}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1072,8 +1004,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureView(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1105,14 +1037,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L497}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L499}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(
-      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
-      Options opts = {});
+  DeleteFeatureView(google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1125,10 +1055,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureView(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureView(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1140,8 +1068,7 @@ class FeatureOnlineStoreAdminServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureView(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteFeatureView(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1162,8 +1089,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L535}
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L537}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L550}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
@@ -1192,14 +1119,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L535}
-  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L548}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L537}
+  /// [google.cloud.aiplatform.v1.SyncFeatureViewResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L550}
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::SyncFeatureViewResponse>
-  SyncFeatureView(
-      google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request,
-      Options opts = {});
+  SyncFeatureView(google::cloud::aiplatform::v1::SyncFeatureViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1222,11 +1147,11 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L556}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L558}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
+  GetFeatureViewSync(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1252,12 +1177,11 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L556}
+  /// [google.cloud.aiplatform.v1.GetFeatureViewSyncRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L558}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync> GetFeatureViewSync(
-      google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureViewSync>
+  GetFeatureViewSync(google::cloud::aiplatform::v1::GetFeatureViewSyncRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1289,7 +1213,7 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L570}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L572}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
@@ -1328,13 +1252,11 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureViewSync]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_view_sync.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L570}
+  /// [google.cloud.aiplatform.v1.ListFeatureViewSyncsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_online_store_admin_service.proto#L572}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::FeatureViewSync>
-  ListFeatureViewSyncs(
-      google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request,
-      Options opts = {});
+  ListFeatureViewSyncs(google::cloud::aiplatform::v1::ListFeatureViewSyncsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1372,8 +1294,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1402,9 +1324,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1436,8 +1357,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1468,8 +1389,8 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1504,22 +1425,13 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1545,25 +1457,17 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1593,12 +1497,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1620,12 +1524,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1652,13 +1556,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1679,10 +1582,11 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1708,12 +1612,11 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1725,8 +1628,9 @@ class FeatureOnlineStoreAdminServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1740,13 +1644,14 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1758,8 +1663,9 @@ class FeatureOnlineStoreAdminServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1778,15 +1684,14 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1819,13 +1724,12 @@ class FeatureOnlineStoreAdminServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<FeatureOnlineStoreAdminServiceConnection> connection_;

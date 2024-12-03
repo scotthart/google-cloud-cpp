@@ -19,10 +19,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_LOOKUP_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SERVICEDIRECTORY_V1_LOOKUP_CLIENT_H
 
-#include "google/cloud/servicedirectory/v1/lookup_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/servicedirectory/v1/lookup_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <map>
@@ -62,8 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LookupServiceClient {
  public:
-  explicit LookupServiceClient(
-      std::shared_ptr<LookupServiceConnection> connection, Options opts = {});
+  explicit LookupServiceClient(std::shared_ptr<LookupServiceConnection> connection, Options opts = {});
   ~LookupServiceClient();
 
   ///@{
@@ -76,12 +75,10 @@ class LookupServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LookupServiceClient const& a,
-                         LookupServiceClient const& b) {
+  friend bool operator==(LookupServiceClient const& a, LookupServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LookupServiceClient const& a,
-                         LookupServiceClient const& b) {
+  friend bool operator!=(LookupServiceClient const& a, LookupServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -111,15 +108,13 @@ class LookupServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L54}
-  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L109}
-  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L36}
+  /// [google.cloud.servicedirectory.v1.ResolveServiceRequest]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L53}
+  /// [google.cloud.servicedirectory.v1.ResolveServiceResponse]: @googleapis_reference_link{google/cloud/servicedirectory/v1/lookup_service.proto#L108}
+  /// [google.cloud.servicedirectory.v1.Service]: @googleapis_reference_link{google/cloud/servicedirectory/v1/service.proto#L35}
   ///
   // clang-format on
   StatusOr<google::cloud::servicedirectory::v1::ResolveServiceResponse>
-  ResolveService(
-      google::cloud::servicedirectory::v1::ResolveServiceRequest const& request,
-      Options opts = {});
+  ResolveService(google::cloud::servicedirectory::v1::ResolveServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -157,8 +152,8 @@ class LookupServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,9 +182,8 @@ class LookupServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LookupServiceConnection> connection_;

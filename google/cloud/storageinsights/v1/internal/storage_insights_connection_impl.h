@@ -19,15 +19,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGEINSIGHTS_V1_INTERNAL_STORAGE_INSIGHTS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/storageinsights/v1/internal/storage_insights_retry_traits.h"
 #include "google/cloud/storageinsights/v1/internal/storage_insights_stub.h"
 #include "google/cloud/storageinsights/v1/storage_insights_connection.h"
 #include "google/cloud/storageinsights/v1/storage_insights_connection_idempotency_policy.h"
 #include "google/cloud/storageinsights/v1/storage_insights_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -43,57 +43,50 @@ class StorageInsightsConnectionImpl
   ~StorageInsightsConnectionImpl() override = default;
 
   StorageInsightsConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<storageinsights_v1_internal::StorageInsightsStub> stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<storageinsights_v1_internal::StorageInsightsStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
   StreamRange<google::cloud::storageinsights::v1::ReportConfig>
-  ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest
-                        request) override;
+  ListReportConfigs(google::cloud::storageinsights::v1::ListReportConfigsRequest request) override;
 
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig> GetReportConfig(
-      google::cloud::storageinsights::v1::GetReportConfigRequest const& request)
-      override;
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+  GetReportConfig(google::cloud::storageinsights::v1::GetReportConfigRequest const& request) override;
 
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig> CreateReportConfig(
-      google::cloud::storageinsights::v1::CreateReportConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+  CreateReportConfig(google::cloud::storageinsights::v1::CreateReportConfigRequest const& request) override;
 
-  StatusOr<google::cloud::storageinsights::v1::ReportConfig> UpdateReportConfig(
-      google::cloud::storageinsights::v1::UpdateReportConfigRequest const&
-          request) override;
+  StatusOr<google::cloud::storageinsights::v1::ReportConfig>
+  UpdateReportConfig(google::cloud::storageinsights::v1::UpdateReportConfigRequest const& request) override;
 
-  Status DeleteReportConfig(
-      google::cloud::storageinsights::v1::DeleteReportConfigRequest const&
-          request) override;
+  Status
+  DeleteReportConfig(google::cloud::storageinsights::v1::DeleteReportConfigRequest const& request) override;
 
   StreamRange<google::cloud::storageinsights::v1::ReportDetail>
-  ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest
-                        request) override;
+  ListReportDetails(google::cloud::storageinsights::v1::ListReportDetailsRequest request) override;
 
-  StatusOr<google::cloud::storageinsights::v1::ReportDetail> GetReportDetail(
-      google::cloud::storageinsights::v1::GetReportDetailRequest const& request)
-      override;
+  StatusOr<google::cloud::storageinsights::v1::ReportDetail>
+  GetReportDetail(google::cloud::storageinsights::v1::GetReportDetailRequest const& request) override;
 
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request) override;
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request) override;
 
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request) override;
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
 
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request) override;
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
 
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request) override;
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request) override;
 
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request) override;
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request) override;
 
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request) override;
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;

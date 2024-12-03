@@ -36,74 +36,71 @@ class ManagedKafkaConnectionIdempotencyPolicy {
   virtual ~ManagedKafkaConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency ListClusters(
-      google::cloud::managedkafka::v1::ListClustersRequest request);
+  virtual google::cloud::Idempotency
+  ListClusters(google::cloud::managedkafka::v1::ListClustersRequest request);
 
-  virtual google::cloud::Idempotency GetCluster(
-      google::cloud::managedkafka::v1::GetClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  GetCluster(google::cloud::managedkafka::v1::GetClusterRequest const& request);
 
-  virtual google::cloud::Idempotency CreateCluster(
-      google::cloud::managedkafka::v1::CreateClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateCluster(google::cloud::managedkafka::v1::CreateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateCluster(
-      google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateCluster(google::cloud::managedkafka::v1::UpdateClusterRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteCluster(
-      google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteCluster(google::cloud::managedkafka::v1::DeleteClusterRequest const& request);
 
-  virtual google::cloud::Idempotency ListTopics(
-      google::cloud::managedkafka::v1::ListTopicsRequest request);
+  virtual google::cloud::Idempotency
+  ListTopics(google::cloud::managedkafka::v1::ListTopicsRequest request);
 
-  virtual google::cloud::Idempotency GetTopic(
-      google::cloud::managedkafka::v1::GetTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  GetTopic(google::cloud::managedkafka::v1::GetTopicRequest const& request);
 
-  virtual google::cloud::Idempotency CreateTopic(
-      google::cloud::managedkafka::v1::CreateTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateTopic(google::cloud::managedkafka::v1::CreateTopicRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateTopic(
-      google::cloud::managedkafka::v1::UpdateTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateTopic(google::cloud::managedkafka::v1::UpdateTopicRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteTopic(
-      google::cloud::managedkafka::v1::DeleteTopicRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteTopic(google::cloud::managedkafka::v1::DeleteTopicRequest const& request);
 
-  virtual google::cloud::Idempotency ListConsumerGroups(
-      google::cloud::managedkafka::v1::ListConsumerGroupsRequest request);
+  virtual google::cloud::Idempotency
+  ListConsumerGroups(google::cloud::managedkafka::v1::ListConsumerGroupsRequest request);
 
-  virtual google::cloud::Idempotency GetConsumerGroup(
-      google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request);
+  virtual google::cloud::Idempotency
+  GetConsumerGroup(google::cloud::managedkafka::v1::GetConsumerGroupRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateConsumerGroup(
-      google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  UpdateConsumerGroup(google::cloud::managedkafka::v1::UpdateConsumerGroupRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteConsumerGroup(
-      google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  DeleteConsumerGroup(google::cloud::managedkafka::v1::DeleteConsumerGroupRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<ManagedKafkaConnectionIdempotencyPolicy>
-MakeDefaultManagedKafkaConnectionIdempotencyPolicy();
+    MakeDefaultManagedKafkaConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedkafka_v1

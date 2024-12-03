@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_STORAGE_CONTROL_CLIENT_H
 
-#include "google/cloud/storagecontrol/v2/storage_control_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storagecontrol/v2/storage_control_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -63,8 +63,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class StorageControlClient {
  public:
-  explicit StorageControlClient(
-      std::shared_ptr<StorageControlConnection> connection, Options opts = {});
+  explicit StorageControlClient(std::shared_ptr<StorageControlConnection> connection, Options opts = {});
   ~StorageControlClient();
 
   ///@{
@@ -77,12 +76,10 @@ class StorageControlClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(StorageControlClient const& a,
-                         StorageControlClient const& b) {
+  friend bool operator==(StorageControlClient const& a, StorageControlClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(StorageControlClient const& a,
-                         StorageControlClient const& b) {
+  friend bool operator!=(StorageControlClient const& a, StorageControlClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,10 +117,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      std::string const& parent,
-      google::storage::control::v2::Folder const& folder,
-      std::string const& folder_id, Options opts = {});
+  StatusOr<google::storage::control::v2::Folder>
+  CreateFolder(std::string const& parent, google::storage::control::v2::Folder const& folder, std::string const& folder_id, Options opts = {});
 
   // clang-format off
   ///
@@ -153,9 +148,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.Folder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L171}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      google::storage::control::v2::CreateFolderRequest const& request,
-      Options opts = {});
+  StatusOr<google::storage::control::v2::Folder>
+  CreateFolder(google::storage::control::v2::CreateFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -178,7 +172,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
   ///
   // clang-format on
-  Status DeleteFolder(std::string const& name, Options opts = {});
+  Status
+  DeleteFolder(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -205,9 +200,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.DeleteFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L269}
   ///
   // clang-format on
-  Status DeleteFolder(
-      google::storage::control::v2::DeleteFolderRequest const& request,
-      Options opts = {});
+  Status
+  DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -233,8 +227,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::Folder> GetFolder(
-      std::string const& name, Options opts = {});
+  StatusOr<google::storage::control::v2::Folder>
+  GetFolder(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -264,9 +258,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.GetFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L206}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::Folder> GetFolder(
-      google::storage::control::v2::GetFolderRequest const& request,
-      Options opts = {});
+  StatusOr<google::storage::control::v2::Folder>
+  GetFolder(google::storage::control::v2::GetFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -301,8 +294,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
   ///
   // clang-format on
-  StreamRange<google::storage::control::v2::Folder> ListFolders(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::storage::control::v2::Folder>
+  ListFolders(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -341,9 +334,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ListFoldersRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L295}
   ///
   // clang-format on
-  StreamRange<google::storage::control::v2::Folder> ListFolders(
-      google::storage::control::v2::ListFoldersRequest request,
-      Options opts = {});
+  StreamRange<google::storage::control::v2::Folder>
+  ListFolders(google::storage::control::v2::ListFoldersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -379,9 +371,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
   ///
   // clang-format on
-  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      std::string const& name, std::string const& destination_folder_id,
-      Options opts = {});
+  future<StatusOr<google::storage::control::v2::Folder>>
+  RenameFolder(std::string const& name, std::string const& destination_folder_id, Options opts = {});
 
   // clang-format off
   ///
@@ -394,9 +385,8 @@ class StorageControlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RenameFolder(
-      NoAwaitTag, std::string const& name,
-      std::string const& destination_folder_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RenameFolder(NoAwaitTag, std::string const& name, std::string const& destination_folder_id, Options opts = {});
 
   // clang-format off
   ///
@@ -435,9 +425,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.RenameFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L354}
   ///
   // clang-format on
-  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      google::storage::control::v2::RenameFolderRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::storage::control::v2::Folder>>
+  RenameFolder(google::storage::control::v2::RenameFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -450,10 +439,8 @@ class StorageControlClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RenameFolder(
-      NoAwaitTag,
-      google::storage::control::v2::RenameFolderRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RenameFolder(NoAwaitTag, google::storage::control::v2::RenameFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -464,8 +451,8 @@ class StorageControlClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::storage::control::v2::Folder>> RenameFolder(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::storage::control::v2::Folder>>
+  RenameFolder(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -490,8 +477,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      std::string const& name, Options opts = {});
+  StatusOr<google::storage::control::v2::StorageLayout>
+  GetStorageLayout(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -520,9 +507,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.StorageLayout]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L423}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      google::storage::control::v2::GetStorageLayoutRequest const& request,
-      Options opts = {});
+  StatusOr<google::storage::control::v2::StorageLayout>
+  GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -552,10 +538,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
-      std::string const& parent,
-      google::storage::control::v2::ManagedFolder const& managed_folder,
-      std::string const& managed_folder_id, Options opts = {});
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  CreateManagedFolder(std::string const& parent, google::storage::control::v2::ManagedFolder const& managed_folder, std::string const& managed_folder_id, Options opts = {});
 
   // clang-format off
   ///
@@ -584,9 +568,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
-      google::storage::control::v2::CreateManagedFolderRequest const& request,
-      Options opts = {});
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -609,7 +592,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
   ///
   // clang-format on
-  Status DeleteManagedFolder(std::string const& name, Options opts = {});
+  Status
+  DeleteManagedFolder(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -635,9 +619,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.DeleteManagedFolderRequest]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L573}
   ///
   // clang-format on
-  Status DeleteManagedFolder(
-      google::storage::control::v2::DeleteManagedFolderRequest const& request,
-      Options opts = {});
+  Status
+  DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -663,8 +646,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
-      std::string const& name, Options opts = {});
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  GetManagedFolder(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -693,9 +676,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
-      google::storage::control::v2::GetManagedFolderRequest const& request,
-      Options opts = {});
+  StatusOr<google::storage::control::v2::ManagedFolder>
+  GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -728,8 +710,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::storage::control::v2::ManagedFolder>
+  ListManagedFolders(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -767,9 +749,8 @@ class StorageControlClient {
   /// [google.storage.control.v2.ManagedFolder]: @googleapis_reference_link{google/storage/control/v2/storage_control.proto#L489}
   ///
   // clang-format on
-  StreamRange<google::storage::control::v2::ManagedFolder> ListManagedFolders(
-      google::storage::control::v2::ListManagedFoldersRequest request,
-      Options opts = {});
+  StreamRange<google::storage::control::v2::ManagedFolder>
+  ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request, Options opts = {});
 
  private:
   std::shared_ptr<StorageControlConnection> connection_;

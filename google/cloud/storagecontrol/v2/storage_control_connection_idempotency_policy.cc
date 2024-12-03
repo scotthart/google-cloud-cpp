@@ -26,76 +26,64 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-StorageControlConnectionIdempotencyPolicy::
-    ~StorageControlConnectionIdempotencyPolicy() = default;
+StorageControlConnectionIdempotencyPolicy::~StorageControlConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
 StorageControlConnectionIdempotencyPolicy::clone() const {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::CreateFolder(
-    google::storage::control::v2::CreateFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateFolder(google::storage::control::v2::CreateFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolder(
-    google::storage::control::v2::DeleteFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::GetFolder(
-    google::storage::control::v2::GetFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::GetFolder(google::storage::control::v2::GetFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::ListFolders(
-    google::storage::control::v2::ListFoldersRequest) {  // NOLINT
+Idempotency StorageControlConnectionIdempotencyPolicy::ListFolders(google::storage::control::v2::ListFoldersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(
-    google::storage::control::v2::RenameFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::RenameFolder(google::storage::control::v2::RenameFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(
-    google::storage::control::v2::GetStorageLayoutRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::CreateManagedFolder(
-    google::storage::control::v2::CreateManagedFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::DeleteManagedFolder(
-    google::storage::control::v2::DeleteManagedFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::GetManagedFolder(
-    google::storage::control::v2::GetManagedFolderRequest const& request) {
+Idempotency StorageControlConnectionIdempotencyPolicy::GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request) {
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(
-    google::storage::control::v2::ListManagedFoldersRequest
-        request) {  // NOLINT
+Idempotency StorageControlConnectionIdempotencyPolicy::ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request) { // NOLINT
   if (!request.request_id().empty()) return Idempotency::kIdempotent;
   return Idempotency::kNonIdempotent;
 }
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
-MakeDefaultStorageControlConnectionIdempotencyPolicy() {
+    MakeDefaultStorageControlConnectionIdempotencyPolicy() {
   return std::make_unique<StorageControlConnectionIdempotencyPolicy>();
 }
 

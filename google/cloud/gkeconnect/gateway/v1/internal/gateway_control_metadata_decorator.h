@@ -34,18 +34,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class GatewayControlMetadata : public GatewayControlStub {
  public:
   ~GatewayControlMetadata() override = default;
-  GatewayControlMetadata(std::shared_ptr<GatewayControlStub> child,
-                         std::multimap<std::string, std::string> fixed_metadata,
-                         std::string api_client_header = "");
+  GatewayControlMetadata(
+      std::shared_ptr<GatewayControlStub> child,
+      std::multimap<std::string, std::string> fixed_metadata,
+      std::string api_client_header = "");
 
-  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) override;
+  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
 
  private:
-  void SetMetadata(grpc::ClientContext& context, Options const& options,
+  void SetMetadata(grpc::ClientContext& context,
+                   Options const& options,
                    std::string const& request_params);
   void SetMetadata(grpc::ClientContext& context, Options const& options);
 

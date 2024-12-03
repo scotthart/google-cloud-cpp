@@ -62,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.discoveryengine.v1.Engine]:
-/// @googleapis_reference_link{google/cloud/discoveryengine/v1/engine.proto#L35}
+/// [google.cloud.discoveryengine.v1.Engine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine.proto#L35}
 ///
 class EngineServiceClient {
  public:
-  explicit EngineServiceClient(
-      std::shared_ptr<EngineServiceConnection> connection, Options opts = {});
+  explicit EngineServiceClient(std::shared_ptr<EngineServiceConnection> connection, Options opts = {});
   ~EngineServiceClient();
 
   ///@{
@@ -81,12 +79,10 @@ class EngineServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EngineServiceClient const& a,
-                         EngineServiceClient const& b) {
+  friend bool operator==(EngineServiceClient const& a, EngineServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EngineServiceClient const& a,
-                         EngineServiceClient const& b) {
+  friend bool operator!=(EngineServiceClient const& a, EngineServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -130,10 +126,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.Engine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::Engine const& engine,
-      std::string const& engine_id, Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+  CreateEngine(std::string const& parent, google::cloud::discoveryengine::v1::Engine const& engine, std::string const& engine_id, Options opts = {});
 
   // clang-format off
   ///
@@ -146,10 +140,8 @@ class EngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEngine(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::discoveryengine::v1::Engine const& engine,
-      std::string const& engine_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEngine(NoAwaitTag, std::string const& parent, google::cloud::discoveryengine::v1::Engine const& engine, std::string const& engine_id, Options opts = {});
 
   // clang-format off
   ///
@@ -185,9 +177,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.Engine]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine.proto#L35}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+  CreateEngine(google::cloud::discoveryengine::v1::CreateEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -200,10 +191,8 @@ class EngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEngine(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateEngineRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEngine(NoAwaitTag, google::cloud::discoveryengine::v1::CreateEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -214,8 +203,8 @@ class EngineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::discoveryengine::v1::Engine>> CreateEngine(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::Engine>>
+  CreateEngine(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -270,9 +259,8 @@ class EngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEngine(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEngine(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -310,9 +298,7 @@ class EngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
-      Options opts = {});
+  DeleteEngine(google::cloud::discoveryengine::v1::DeleteEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -325,10 +311,8 @@ class EngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEngine(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteEngineRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEngine(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -340,8 +324,7 @@ class EngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteEngineMetadata>>
-  DeleteEngine(google::longrunning::Operation const& operation,
-               Options opts = {});
+  DeleteEngine(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +360,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
-      google::cloud::discoveryengine::v1::Engine const& engine,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Engine>
+  UpdateEngine(google::cloud::discoveryengine::v1::Engine const& engine, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -408,9 +390,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L225}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Engine> UpdateEngine(
-      google::cloud::discoveryengine::v1::UpdateEngineRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Engine>
+  UpdateEngine(google::cloud::discoveryengine::v1::UpdateEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -436,8 +417,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.GetEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Engine>
+  GetEngine(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -466,9 +447,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.GetEngineRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L175}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Engine> GetEngine(
-      google::cloud::discoveryengine::v1::GetEngineRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Engine>
+  GetEngine(google::cloud::discoveryengine::v1::GetEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -503,8 +483,8 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.ListEnginesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L190}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Engine>
+  ListEngines(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -543,22 +523,13 @@ class EngineServiceClient {
   /// [google.cloud.discoveryengine.v1.ListEnginesRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/engine_service.proto#L190}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Engine> ListEngines(
-      google::cloud::discoveryengine::v1::ListEnginesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Engine>
+  ListEngines(google::cloud::discoveryengine::v1::ListEnginesRequest request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -584,25 +555,17 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -632,12 +595,12 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -659,12 +622,12 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -691,13 +654,12 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -709,8 +671,9 @@ class EngineServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -724,13 +687,14 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -742,8 +706,9 @@ class EngineServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -762,15 +727,14 @@ class EngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EngineServiceConnection> connection_;

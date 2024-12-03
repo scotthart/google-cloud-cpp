@@ -28,14 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RowAccessPolicyServiceClient::RowAccessPolicyServiceClient(
     std::shared_ptr<RowAccessPolicyServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 RowAccessPolicyServiceClient::~RowAccessPolicyServiceClient() = default;
 
 StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-RowAccessPolicyServiceClient::ListRowAccessPolicies(
-    google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request,
-    Options opts) {
+RowAccessPolicyServiceClient::ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListRowAccessPolicies(std::move(request));
 }

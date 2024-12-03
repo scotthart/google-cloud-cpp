@@ -32,18 +32,15 @@ GatewayControlTracingStub::GatewayControlTracingStub(
     std::shared_ptr<GatewayControlStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-GatewayControlTracingStub::GenerateCredentials(
-    grpc::ClientContext& context, Options const& options,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.gkeconnect.gateway.v1.GatewayControl",
-      "GenerateCredentials");
+StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GatewayControlTracingStub::GenerateCredentials(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.gkeconnect.gateway.v1.GatewayControl", "GenerateCredentials");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
-  return internal::EndSpan(
-      context, *span, child_->GenerateCredentials(context, options, request));
+  return internal::EndSpan(context, *span,
+                           child_->GenerateCredentials(context, options, request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

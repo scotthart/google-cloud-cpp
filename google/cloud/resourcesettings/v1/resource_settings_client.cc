@@ -28,13 +28,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ResourceSettingsServiceClient::ResourceSettingsServiceClient(
     std::shared_ptr<ResourceSettingsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 ResourceSettingsServiceClient::~ResourceSettingsServiceClient() = default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceClient::ListSettings(std::string const& parent,
-                                            Options opts) {
+ResourceSettingsServiceClient::ListSettings(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcesettings::v1::ListSettingsRequest request;
   request.set_parent(parent);
@@ -42,16 +41,13 @@ ResourceSettingsServiceClient::ListSettings(std::string const& parent,
 }
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceClient::ListSettings(
-    google::cloud::resourcesettings::v1::ListSettingsRequest request,
-    Options opts) {
+ResourceSettingsServiceClient::ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListSettings(std::move(request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceClient::GetSetting(std::string const& name,
-                                          Options opts) {
+ResourceSettingsServiceClient::GetSetting(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   google::cloud::resourcesettings::v1::GetSettingRequest request;
   request.set_name(name);
@@ -59,17 +55,13 @@ ResourceSettingsServiceClient::GetSetting(std::string const& name,
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceClient::GetSetting(
-    google::cloud::resourcesettings::v1::GetSettingRequest const& request,
-    Options opts) {
+ResourceSettingsServiceClient::GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GetSetting(request);
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceClient::UpdateSetting(
-    google::cloud::resourcesettings::v1::UpdateSettingRequest const& request,
-    Options opts) {
+ResourceSettingsServiceClient::UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateSetting(request);
 }

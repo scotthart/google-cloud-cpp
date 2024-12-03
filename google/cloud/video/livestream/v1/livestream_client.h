@@ -19,13 +19,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_VIDEO_LIVESTREAM_V1_LIVESTREAM_CLIENT_H
 
-#include "google/cloud/video/livestream/v1/livestream_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/video/livestream/v1/livestream_connection.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -39,8 +39,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Using Live Stream API, you can generate live streams in the various
 /// renditions and streaming formats. The streaming format include HTTP Live
-/// Streaming (HLS) and Dynamic Adaptive Streaming over HTTP (DASH). You can
-/// send a source stream in the various ways, including Real-Time Messaging
+/// Streaming (HLS) and Dynamic Adaptive Streaming over HTTP (DASH). You can send
+/// a source stream in the various ways, including Real-Time Messaging
 /// Protocol (RTMP) and Secure Reliable Transport (SRT).
 ///
 /// @par Equality
@@ -68,9 +68,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class LivestreamServiceClient {
  public:
-  explicit LivestreamServiceClient(
-      std::shared_ptr<LivestreamServiceConnection> connection,
-      Options opts = {});
+  explicit LivestreamServiceClient(std::shared_ptr<LivestreamServiceConnection> connection, Options opts = {});
   ~LivestreamServiceClient();
 
   ///@{
@@ -83,12 +81,10 @@ class LivestreamServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(LivestreamServiceClient const& a,
-                         LivestreamServiceClient const& b) {
+  friend bool operator==(LivestreamServiceClient const& a, LivestreamServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(LivestreamServiceClient const& a,
-                         LivestreamServiceClient const& b) {
+  friend bool operator!=(LivestreamServiceClient const& a, LivestreamServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -128,10 +124,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L447}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
-      std::string const& parent,
-      google::cloud::video::livestream::v1::Channel const& channel,
-      std::string const& channel_id, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  CreateChannel(std::string const& parent, google::cloud::video::livestream::v1::Channel const& channel, std::string const& channel_id, Options opts = {});
 
   // clang-format off
   ///
@@ -144,10 +138,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateChannel(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::video::livestream::v1::Channel const& channel,
-      std::string const& channel_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateChannel(NoAwaitTag, std::string const& parent, google::cloud::video::livestream::v1::Channel const& channel, std::string const& channel_id, Options opts = {});
 
   // clang-format off
   ///
@@ -184,9 +176,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L447}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
-      google::cloud::video::livestream::v1::CreateChannelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  CreateChannel(google::cloud::video::livestream::v1::CreateChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,10 +190,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateChannel(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateChannel(NoAwaitTag, google::cloud::video::livestream::v1::CreateChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +202,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> CreateChannel(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  CreateChannel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -248,8 +237,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L482}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Channel>
+  ListChannels(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -287,9 +276,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListChannelsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L482}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Channel> ListChannels(
-      google::cloud::video::livestream::v1::ListChannelsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Channel>
+  ListChannels(google::cloud::video::livestream::v1::ListChannelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -314,8 +302,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L524}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Channel>
+  GetChannel(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -344,9 +332,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L524}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Channel> GetChannel(
-      google::cloud::video::livestream::v1::GetChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Channel>
+  GetChannel(google::cloud::video::livestream::v1::GetChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -392,8 +379,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteChannel(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteChannel(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -430,9 +417,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel(
-      google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
-      Options opts = {});
+  DeleteChannel(google::cloud::video::livestream::v1::DeleteChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -445,10 +430,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteChannel(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteChannel(NoAwaitTag, google::cloud::video::livestream::v1::DeleteChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -460,8 +443,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteChannel(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteChannel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -512,9 +494,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L569}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
-      google::cloud::video::livestream::v1::Channel const& channel,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  UpdateChannel(google::cloud::video::livestream::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -527,9 +508,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateChannel(
-      NoAwaitTag, google::cloud::video::livestream::v1::Channel const& channel,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateChannel(NoAwaitTag, google::cloud::video::livestream::v1::Channel const& channel, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -565,9 +545,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdateChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L569}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
-      google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  UpdateChannel(google::cloud::video::livestream::v1::UpdateChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -580,10 +559,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateChannel(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdateChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateChannel(NoAwaitTag, google::cloud::video::livestream::v1::UpdateChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -594,8 +571,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Channel>> UpdateChannel(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Channel>>
+  UpdateChannel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -628,8 +605,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L612}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StartChannel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -643,9 +619,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartChannel(NoAwaitTag,
-                                                        std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartChannel(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -682,11 +657,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.StartChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L612}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(
-      google::cloud::video::livestream::v1::StartChannelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::cloud::video::livestream::v1::StartChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -699,10 +671,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartChannel(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::StartChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartChannel(NoAwaitTag, google::cloud::video::livestream::v1::StartChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -713,10 +683,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StartChannel(google::longrunning::Operation const& operation,
-               Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StartChannel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -749,8 +717,7 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L639}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
   StopChannel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -764,9 +731,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StopChannel(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StopChannel(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -803,11 +769,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.StopChannelRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L639}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(
-      google::cloud::video::livestream::v1::StopChannelRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::cloud::video::livestream::v1::StopChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -820,10 +783,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StopChannel(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::StopChannelRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StopChannel(NoAwaitTag, google::cloud::video::livestream::v1::StopChannelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -834,10 +795,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
-  StopChannel(google::longrunning::Operation const& operation,
-              Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::ChannelOperationResponse>>
+  StopChannel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -873,10 +832,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
-      std::string const& parent,
-      google::cloud::video::livestream::v1::Input const& input,
-      std::string const& input_id, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  CreateInput(std::string const& parent, google::cloud::video::livestream::v1::Input const& input, std::string const& input_id, Options opts = {});
 
   // clang-format off
   ///
@@ -889,10 +846,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInput(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::video::livestream::v1::Input const& input,
-      std::string const& input_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInput(NoAwaitTag, std::string const& parent, google::cloud::video::livestream::v1::Input const& input, std::string const& input_id, Options opts = {});
 
   // clang-format off
   ///
@@ -928,9 +883,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
-      google::cloud::video::livestream::v1::CreateInputRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  CreateInput(google::cloud::video::livestream::v1::CreateInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -943,10 +897,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateInput(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateInputRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateInput(NoAwaitTag, google::cloud::video::livestream::v1::CreateInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -957,8 +909,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> CreateInput(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  CreateInput(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +944,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L701}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Input>
+  ListInputs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1031,9 +983,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListInputsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L701}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Input> ListInputs(
-      google::cloud::video::livestream::v1::ListInputsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Input>
+  ListInputs(google::cloud::video::livestream::v1::ListInputsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1058,8 +1009,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Input>
+  GetInput(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1088,9 +1039,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Input]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Input> GetInput(
-      google::cloud::video::livestream::v1::GetInputRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Input>
+  GetInput(google::cloud::video::livestream::v1::GetInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,9 +1086,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInput(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInput(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1175,9 +1124,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(
-      google::cloud::video::livestream::v1::DeleteInputRequest const& request,
-      Options opts = {});
+  DeleteInput(google::cloud::video::livestream::v1::DeleteInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1190,10 +1137,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteInput(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteInputRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteInput(NoAwaitTag, google::cloud::video::livestream::v1::DeleteInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1205,8 +1150,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteInput(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeleteInput(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1249,9 +1193,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L782}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
-      google::cloud::video::livestream::v1::Input const& input,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  UpdateInput(google::cloud::video::livestream::v1::Input const& input, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1264,9 +1207,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInput(
-      NoAwaitTag, google::cloud::video::livestream::v1::Input const& input,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInput(NoAwaitTag, google::cloud::video::livestream::v1::Input const& input, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1302,9 +1244,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdateInputRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L782}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
-      google::cloud::video::livestream::v1::UpdateInputRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  UpdateInput(google::cloud::video::livestream::v1::UpdateInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1317,10 +1258,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateInput(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdateInputRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateInput(NoAwaitTag, google::cloud::video::livestream::v1::UpdateInputRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1331,8 +1270,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Input>> UpdateInput(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Input>>
+  UpdateInput(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1361,10 +1300,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
-      std::string const& parent,
-      google::cloud::video::livestream::v1::Event const& event,
-      std::string const& event_id, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Event>
+  CreateEvent(std::string const& parent, google::cloud::video::livestream::v1::Event const& event, std::string const& event_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1393,9 +1330,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Event]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L472}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Event> CreateEvent(
-      google::cloud::video::livestream::v1::CreateEventRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Event>
+  CreateEvent(google::cloud::video::livestream::v1::CreateEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1429,8 +1365,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L852}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Event>
+  ListEvents(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1468,9 +1404,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListEventsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L852}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Event> ListEvents(
-      google::cloud::video::livestream::v1::ListEventsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Event>
+  ListEvents(google::cloud::video::livestream::v1::ListEventsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1495,8 +1430,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L894}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Event>
+  GetEvent(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1525,9 +1460,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L894}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Event> GetEvent(
-      google::cloud::video::livestream::v1::GetEventRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Event>
+  GetEvent(google::cloud::video::livestream::v1::GetEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1549,7 +1483,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L906}
   ///
   // clang-format on
-  Status DeleteEvent(std::string const& name, Options opts = {});
+  Status
+  DeleteEvent(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1575,9 +1510,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.DeleteEventRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L906}
   ///
   // clang-format on
-  Status DeleteEvent(
-      google::cloud::video::livestream::v1::DeleteEventRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEvent(google::cloud::video::livestream::v1::DeleteEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1610,8 +1544,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L936}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Clip>
+  ListClips(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1649,9 +1583,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListClipsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L936}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Clip> ListClips(
-      google::cloud::video::livestream::v1::ListClipsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Clip>
+  ListClips(google::cloud::video::livestream::v1::ListClipsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1676,8 +1609,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L972}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Clip>
+  GetClip(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1706,9 +1639,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L972}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Clip> GetClip(
-      google::cloud::video::livestream::v1::GetClipRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Clip>
+  GetClip(google::cloud::video::livestream::v1::GetClipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1745,10 +1677,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L982}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
-      std::string const& parent,
-      google::cloud::video::livestream::v1::Clip const& clip,
-      std::string const& clip_id, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>>
+  CreateClip(std::string const& parent, google::cloud::video::livestream::v1::Clip const& clip, std::string const& clip_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1761,10 +1691,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateClip(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::video::livestream::v1::Clip const& clip,
-      std::string const& clip_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateClip(NoAwaitTag, std::string const& parent, google::cloud::video::livestream::v1::Clip const& clip, std::string const& clip_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1800,9 +1728,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateClipRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L982}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
-      google::cloud::video::livestream::v1::CreateClipRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>>
+  CreateClip(google::cloud::video::livestream::v1::CreateClipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1815,10 +1742,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateClip(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateClipRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateClip(NoAwaitTag, google::cloud::video::livestream::v1::CreateClipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1829,8 +1754,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Clip>> CreateClip(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Clip>>
+  CreateClip(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1877,9 +1802,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteClip(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteClip(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1917,9 +1841,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip(
-      google::cloud::video::livestream::v1::DeleteClipRequest const& request,
-      Options opts = {});
+  DeleteClip(google::cloud::video::livestream::v1::DeleteClipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1932,10 +1854,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteClip(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteClipRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteClip(NoAwaitTag, google::cloud::video::livestream::v1::DeleteClipRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1947,8 +1867,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteClip(google::longrunning::Operation const& operation,
-             Options opts = {});
+  DeleteClip(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1985,10 +1904,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
-      std::string const& parent,
-      google::cloud::video::livestream::v1::Asset const& asset,
-      std::string const& asset_id, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+  CreateAsset(std::string const& parent, google::cloud::video::livestream::v1::Asset const& asset, std::string const& asset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2001,10 +1918,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAsset(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::video::livestream::v1::Asset const& asset,
-      std::string const& asset_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAsset(NoAwaitTag, std::string const& parent, google::cloud::video::livestream::v1::Asset const& asset, std::string const& asset_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2041,9 +1956,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.CreateAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
-      google::cloud::video::livestream::v1::CreateAssetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+  CreateAsset(google::cloud::video::livestream::v1::CreateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2056,10 +1970,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAsset(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::CreateAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAsset(NoAwaitTag, google::cloud::video::livestream::v1::CreateAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2070,8 +1982,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Asset>> CreateAsset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Asset>>
+  CreateAsset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2117,9 +2029,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAsset(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAsset(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2156,9 +2067,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset(
-      google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
-      Options opts = {});
+  DeleteAsset(google::cloud::video::livestream::v1::DeleteAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2171,10 +2080,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAsset(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::DeleteAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAsset(NoAwaitTag, google::cloud::video::livestream::v1::DeleteAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2186,8 +2093,7 @@ class LivestreamServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
-  DeleteAsset(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeleteAsset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2212,8 +2118,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L435}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Asset>
+  GetAsset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2242,9 +2148,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.GetAssetRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L435}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Asset> GetAsset(
-      google::cloud::video::livestream::v1::GetAssetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Asset>
+  GetAsset(google::cloud::video::livestream::v1::GetAssetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2278,8 +2183,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L398}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Asset>
+  ListAssets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2317,9 +2222,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.ListAssetsRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L398}
   ///
   // clang-format on
-  StreamRange<google::cloud::video::livestream::v1::Asset> ListAssets(
-      google::cloud::video::livestream::v1::ListAssetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::video::livestream::v1::Asset>
+  ListAssets(google::cloud::video::livestream::v1::ListAssetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2344,8 +2248,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Pool>
+  GetPool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2374,9 +2278,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.Pool]: @googleapis_reference_link{google/cloud/video/livestream/v1/resources.proto#L893}
   ///
   // clang-format on
-  StatusOr<google::cloud::video::livestream::v1::Pool> GetPool(
-      google::cloud::video::livestream::v1::GetPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::video::livestream::v1::Pool>
+  GetPool(google::cloud::video::livestream::v1::GetPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2414,9 +2317,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1083}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
-      google::cloud::video::livestream::v1::Pool const& pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(google::cloud::video::livestream::v1::Pool const& pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2429,9 +2331,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePool(
-      NoAwaitTag, google::cloud::video::livestream::v1::Pool const& pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePool(NoAwaitTag, google::cloud::video::livestream::v1::Pool const& pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2467,9 +2368,8 @@ class LivestreamServiceClient {
   /// [google.cloud.video.livestream.v1.UpdatePoolRequest]: @googleapis_reference_link{google/cloud/video/livestream/v1/service.proto#L1083}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
-      google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(google::cloud::video::livestream::v1::UpdatePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2482,10 +2382,8 @@ class LivestreamServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdatePool(
-      NoAwaitTag,
-      google::cloud::video::livestream::v1::UpdatePoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdatePool(NoAwaitTag, google::cloud::video::livestream::v1::UpdatePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2496,8 +2394,8 @@ class LivestreamServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::video::livestream::v1::Pool>> UpdatePool(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::video::livestream::v1::Pool>>
+  UpdatePool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2535,8 +2433,8 @@ class LivestreamServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2565,22 +2463,13 @@ class LivestreamServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -2606,25 +2495,17 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2654,12 +2535,12 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2681,12 +2562,12 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2713,13 +2594,12 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2740,10 +2620,11 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2769,12 +2650,11 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2786,8 +2666,9 @@ class LivestreamServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2801,13 +2682,14 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2819,8 +2701,9 @@ class LivestreamServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2839,15 +2722,14 @@ class LivestreamServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<LivestreamServiceConnection> connection_;

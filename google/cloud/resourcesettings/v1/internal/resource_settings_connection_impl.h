@@ -19,14 +19,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_CONNECTION_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_CONNECTION_IMPL_H
 
+#include "google/cloud/background_threads.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/options.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_retry_traits.h"
 #include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_connection_idempotency_policy.h"
 #include "google/cloud/resourcesettings/v1/resource_settings_options.h"
-#include "google/cloud/background_threads.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
@@ -43,29 +43,24 @@ class ResourceSettingsServiceConnectionImpl
   ~ResourceSettingsServiceConnectionImpl() override = default;
 
   ResourceSettingsServiceConnectionImpl(
-      std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcesettings_v1_internal::ResourceSettingsServiceStub>
-          stub,
-      Options options);
+    std::unique_ptr<google::cloud::BackgroundThreads> background,
+    std::shared_ptr<resourcesettings_v1_internal::ResourceSettingsServiceStub> stub,
+    Options options);
 
   Options options() override { return options_; }
 
-  StreamRange<google::cloud::resourcesettings::v1::Setting> ListSettings(
-      google::cloud::resourcesettings::v1::ListSettingsRequest request)
-      override;
+  StreamRange<google::cloud::resourcesettings::v1::Setting>
+  ListSettings(google::cloud::resourcesettings::v1::ListSettingsRequest request) override;
 
-  StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcesettings::v1::Setting>
+  GetSetting(google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
 
-  StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
-      override;
+  StatusOr<google::cloud::resourcesettings::v1::Setting>
+  UpdateSetting(google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
 
  private:
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcesettings_v1_internal::ResourceSettingsServiceStub>
-      stub_;
+  std::shared_ptr<resourcesettings_v1_internal::ResourceSettingsServiceStub> stub_;
   Options options_;
 };
 

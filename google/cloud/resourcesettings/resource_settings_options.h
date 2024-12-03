@@ -28,26 +28,17 @@ namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// @deprecated Use
-/// resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption directly.
-using ::google::cloud::resourcesettings_v1::
-    ResourceSettingsServiceBackoffPolicyOption;
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceBackoffPolicyOption;
 
-/// @deprecated Use
-/// resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption
-/// directly.
-using ::google::cloud::resourcesettings_v1::
-    ResourceSettingsServiceConnectionIdempotencyPolicyOption;
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceConnectionIdempotencyPolicyOption;
 
-/// @deprecated Use resourcesettings_v1::ResourceSettingsServicePolicyOptionList
-/// directly.
-using ::google::cloud::resourcesettings_v1::
-    ResourceSettingsServicePolicyOptionList;
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServicePolicyOptionList directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServicePolicyOptionList;
 
-/// @deprecated Use
-/// resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption directly.
-using ::google::cloud::resourcesettings_v1::
-    ResourceSettingsServiceRetryPolicyOption;
+/// @deprecated Use resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption directly.
+using ::google::cloud::resourcesettings_v1::ResourceSettingsServiceRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings

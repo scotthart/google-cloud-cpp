@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RUN_V2_JOBS_CLIENT_H
 
-#include "google/cloud/run/v2/jobs_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/run/v2/jobs_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class JobsClient {
  public:
-  explicit JobsClient(std::shared_ptr<JobsConnection> connection,
-                      Options opts = {});
+  explicit JobsClient(std::shared_ptr<JobsConnection> connection, Options opts = {});
   ~JobsClient();
 
   ///@{
@@ -120,9 +119,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
-      std::string const& parent, google::cloud::run::v2::Job const& job,
-      std::string const& job_id, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  CreateJob(std::string const& parent, google::cloud::run::v2::Job const& job, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -135,10 +133,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateJob(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::run::v2::Job const& job, std::string const& job_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateJob(NoAwaitTag, std::string const& parent, google::cloud::run::v2::Job const& job, std::string const& job_id, Options opts = {});
 
   // clang-format off
   ///
@@ -174,9 +170,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
-      google::cloud::run::v2::CreateJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  CreateJob(google::cloud::run::v2::CreateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -189,9 +184,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateJob(
-      NoAwaitTag, google::cloud::run::v2::CreateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateJob(NoAwaitTag, google::cloud::run::v2::CreateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -202,8 +196,8 @@ class JobsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> CreateJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  CreateJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -229,8 +223,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Job> GetJob(std::string const& name,
-                                               Options opts = {});
+  StatusOr<google::cloud::run::v2::Job>
+  GetJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -259,8 +253,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  StatusOr<google::cloud::run::v2::Job> GetJob(
-      google::cloud::run::v2::GetJobRequest const& request, Options opts = {});
+  StatusOr<google::cloud::run::v2::Job>
+  GetJob(google::cloud::run::v2::GetJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -295,8 +289,8 @@ class JobsClient {
   /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L230}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Job> ListJobs(std::string const& parent,
-                                                    Options opts = {});
+  StreamRange<google::cloud::run::v2::Job>
+  ListJobs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -334,8 +328,8 @@ class JobsClient {
   /// [google.cloud.run.v2.ListJobsRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L230}
   ///
   // clang-format on
-  StreamRange<google::cloud::run::v2::Job> ListJobs(
-      google::cloud::run::v2::ListJobsRequest request, Options opts = {});
+  StreamRange<google::cloud::run::v2::Job>
+  ListJobs(google::cloud::run::v2::ListJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -366,8 +360,8 @@ class JobsClient {
   /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L215}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
-      google::cloud::run::v2::Job const& job, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  UpdateJob(google::cloud::run::v2::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -380,8 +374,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateJob(
-      NoAwaitTag, google::cloud::run::v2::Job const& job, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateJob(NoAwaitTag, google::cloud::run::v2::Job const& job, Options opts = {});
 
   // clang-format off
   ///
@@ -417,9 +411,8 @@ class JobsClient {
   /// [google.cloud.run.v2.UpdateJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L215}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
-      google::cloud::run::v2::UpdateJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  UpdateJob(google::cloud::run::v2::UpdateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -432,9 +425,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateJob(
-      NoAwaitTag, google::cloud::run::v2::UpdateJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateJob(NoAwaitTag, google::cloud::run::v2::UpdateJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -445,8 +437,8 @@ class JobsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> UpdateJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  UpdateJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -479,8 +471,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  DeleteJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -493,9 +485,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -531,9 +522,8 @@ class JobsClient {
   /// [google.cloud.run.v2.Job]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L336}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
-      google::cloud::run::v2::DeleteJobRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  DeleteJob(google::cloud::run::v2::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -546,9 +536,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteJob(
-      NoAwaitTag, google::cloud::run::v2::DeleteJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteJob(NoAwaitTag, google::cloud::run::v2::DeleteJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -559,8 +548,8 @@ class JobsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Job>> DeleteJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Job>>
+  DeleteJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +582,8 @@ class JobsClient {
   /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L280}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>>
+  RunJob(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -607,9 +596,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunJob(NoAwaitTag,
-                                                  std::string const& name,
-                                                  Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunJob(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -645,8 +633,8 @@ class JobsClient {
   /// [google.cloud.run.v2.RunJobRequest]: @googleapis_reference_link{google/cloud/run/v2/job.proto#L280}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
-      google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>>
+  RunJob(google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -659,9 +647,8 @@ class JobsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunJob(
-      NoAwaitTag, google::cloud::run::v2::RunJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunJob(NoAwaitTag, google::cloud::run::v2::RunJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -672,8 +659,8 @@ class JobsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::run::v2::Execution>> RunJob(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::run::v2::Execution>>
+  RunJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -703,8 +690,8 @@ class JobsClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -734,8 +721,8 @@ class JobsClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -766,22 +753,13 @@ class JobsClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -807,25 +785,17 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -855,12 +825,12 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -882,12 +852,12 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -914,13 +884,12 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -941,10 +910,11 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -970,12 +940,11 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1008,13 +977,12 @@ class JobsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<JobsConnection> connection_;

@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_METASTORE_V1_DATAPROC_METASTORE_FEDERATION_CLIENT_H
 
-#include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/metastore/v1/dataproc_metastore_federation_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -76,31 +76,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataprocMetastoreFederationClient {
  public:
-  explicit DataprocMetastoreFederationClient(
-      std::shared_ptr<DataprocMetastoreFederationConnection> connection,
-      Options opts = {});
+  explicit DataprocMetastoreFederationClient(std::shared_ptr<DataprocMetastoreFederationConnection> connection, Options opts = {});
   ~DataprocMetastoreFederationClient();
 
   ///@{
   /// @name Copy and move support
-  DataprocMetastoreFederationClient(DataprocMetastoreFederationClient const&) =
-      default;
-  DataprocMetastoreFederationClient& operator=(
-      DataprocMetastoreFederationClient const&) = default;
-  DataprocMetastoreFederationClient(DataprocMetastoreFederationClient&&) =
-      default;
-  DataprocMetastoreFederationClient& operator=(
-      DataprocMetastoreFederationClient&&) = default;
+  DataprocMetastoreFederationClient(DataprocMetastoreFederationClient const&) = default;
+  DataprocMetastoreFederationClient& operator=(DataprocMetastoreFederationClient const&) = default;
+  DataprocMetastoreFederationClient(DataprocMetastoreFederationClient&&) = default;
+  DataprocMetastoreFederationClient& operator=(DataprocMetastoreFederationClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataprocMetastoreFederationClient const& a,
-                         DataprocMetastoreFederationClient const& b) {
+  friend bool operator==(DataprocMetastoreFederationClient const& a, DataprocMetastoreFederationClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataprocMetastoreFederationClient const& a,
-                         DataprocMetastoreFederationClient const& b) {
+  friend bool operator!=(DataprocMetastoreFederationClient const& a, DataprocMetastoreFederationClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -138,8 +130,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L213}
   ///
   // clang-format on
-  StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::metastore::v1::Federation>
+  ListFederations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -177,9 +169,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.ListFederationsRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L213}
   ///
   // clang-format on
-  StreamRange<google::cloud::metastore::v1::Federation> ListFederations(
-      google::cloud::metastore::v1::ListFederationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::metastore::v1::Federation>
+  ListFederations(google::cloud::metastore::v1::ListFederationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -206,8 +197,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L263}
   ///
   // clang-format on
-  StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::metastore::v1::Federation>
+  GetFederation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -236,9 +227,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.GetFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L263}
   ///
   // clang-format on
-  StatusOr<google::cloud::metastore::v1::Federation> GetFederation(
-      google::cloud::metastore::v1::GetFederationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::metastore::v1::Federation>
+  GetFederation(google::cloud::metastore::v1::GetFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -281,10 +271,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
-      std::string const& parent,
-      google::cloud::metastore::v1::Federation const& federation,
-      std::string const& federation_id, Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  CreateFederation(std::string const& parent, google::cloud::metastore::v1::Federation const& federation, std::string const& federation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -297,10 +285,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFederation(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::metastore::v1::Federation const& federation,
-      std::string const& federation_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFederation(NoAwaitTag, std::string const& parent, google::cloud::metastore::v1::Federation const& federation, std::string const& federation_id, Options opts = {});
 
   // clang-format off
   ///
@@ -336,9 +322,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.Federation]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L112}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
-      google::cloud::metastore::v1::CreateFederationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  CreateFederation(google::cloud::metastore::v1::CreateFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -351,10 +336,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::CreateFederationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFederation(NoAwaitTag, google::cloud::metastore::v1::CreateFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -365,8 +348,8 @@ class DataprocMetastoreFederationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> CreateFederation(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  CreateFederation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -405,9 +388,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L318}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
-      google::cloud::metastore::v1::Federation const& federation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  UpdateFederation(google::cloud::metastore::v1::Federation const& federation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -420,9 +402,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFederation(
-      NoAwaitTag, google::cloud::metastore::v1::Federation const& federation,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFederation(NoAwaitTag, google::cloud::metastore::v1::Federation const& federation, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -458,9 +439,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.metastore.v1.UpdateFederationRequest]: @googleapis_reference_link{google/cloud/metastore/v1/metastore_federation.proto#L318}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
-      google::cloud::metastore::v1::UpdateFederationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  UpdateFederation(google::cloud::metastore::v1::UpdateFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -473,10 +453,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::UpdateFederationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFederation(NoAwaitTag, google::cloud::metastore::v1::UpdateFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -487,8 +465,8 @@ class DataprocMetastoreFederationClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::metastore::v1::Federation>> UpdateFederation(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::metastore::v1::Federation>>
+  UpdateFederation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -536,8 +514,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFederation(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFederation(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -574,9 +552,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(
-      google::cloud::metastore::v1::DeleteFederationRequest const& request,
-      Options opts = {});
+  DeleteFederation(google::cloud::metastore::v1::DeleteFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -589,10 +565,8 @@ class DataprocMetastoreFederationClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFederation(
-      NoAwaitTag,
-      google::cloud::metastore::v1::DeleteFederationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFederation(NoAwaitTag, google::cloud::metastore::v1::DeleteFederationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -604,8 +578,7 @@ class DataprocMetastoreFederationClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::metastore::v1::OperationMetadata>>
-  DeleteFederation(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteFederation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -643,8 +616,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -673,9 +646,8 @@ class DataprocMetastoreFederationClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -707,8 +679,8 @@ class DataprocMetastoreFederationClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -739,8 +711,8 @@ class DataprocMetastoreFederationClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -775,22 +747,13 @@ class DataprocMetastoreFederationClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -816,25 +779,17 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -864,12 +819,12 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -891,12 +846,12 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -923,13 +878,12 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -950,10 +904,11 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -979,12 +934,11 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -996,8 +950,9 @@ class DataprocMetastoreFederationClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1011,13 +966,14 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1029,8 +985,9 @@ class DataprocMetastoreFederationClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1049,15 +1006,14 @@ class DataprocMetastoreFederationClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataprocMetastoreFederationConnection> connection_;

@@ -21,13 +21,13 @@
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_connection.h"
 #include "google/cloud/future.h"
-#include "google/cloud/iam_updater.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include "google/cloud/iam_updater.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
 #include <memory>
@@ -41,7 +41,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 /// Service for creating, configuring, and deleting Cloud Bigtable tables.
 ///
-///
+/// 
 /// Provides access to the table schemas only, not the data stored within
 /// the tables.
 ///
@@ -70,28 +70,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class BigtableTableAdminClient {
  public:
-  explicit BigtableTableAdminClient(
-      std::shared_ptr<BigtableTableAdminConnection> connection,
-      Options opts = {});
+  explicit BigtableTableAdminClient(std::shared_ptr<BigtableTableAdminConnection> connection, Options opts = {});
   ~BigtableTableAdminClient();
 
   ///@{
   /// @name Copy and move support
   BigtableTableAdminClient(BigtableTableAdminClient const&) = default;
-  BigtableTableAdminClient& operator=(BigtableTableAdminClient const&) =
-      default;
+  BigtableTableAdminClient& operator=(BigtableTableAdminClient const&) = default;
   BigtableTableAdminClient(BigtableTableAdminClient&&) = default;
   BigtableTableAdminClient& operator=(BigtableTableAdminClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(BigtableTableAdminClient const& a,
-                         BigtableTableAdminClient const& b) {
+  friend bool operator==(BigtableTableAdminClient const& a, BigtableTableAdminClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(BigtableTableAdminClient const& a,
-                         BigtableTableAdminClient const& b) {
+  friend bool operator!=(BigtableTableAdminClient const& a, BigtableTableAdminClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,9 +120,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> CreateTable(
-      std::string const& parent, std::string const& table_id,
-      google::bigtable::admin::v2::Table const& table, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  CreateTable(std::string const& parent, std::string const& table_id, google::bigtable::admin::v2::Table const& table, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +152,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> CreateTable(
-      google::bigtable::admin::v2::CreateTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  CreateTable(google::bigtable::admin::v2::CreateTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -194,8 +187,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::Table> ListTables(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::Table>
+  ListTables(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -233,9 +226,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::Table> ListTables(
-      google::bigtable::admin::v2::ListTablesRequest request,
-      Options opts = {});
+  StreamRange<google::bigtable::admin::v2::Table>
+  ListTables(google::bigtable::admin::v2::ListTablesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,8 +253,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> GetTable(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  GetTable(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -291,9 +283,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> GetTable(
-      google::bigtable::admin::v2::GetTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  GetTable(google::bigtable::admin::v2::GetTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -337,9 +328,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L677}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::bigtable::admin::v2::Table const& table,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UpdateTable(google::bigtable::admin::v2::Table const& table, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -352,9 +342,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTable(
-      NoAwaitTag, google::bigtable::admin::v2::Table const& table,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTable(NoAwaitTag, google::bigtable::admin::v2::Table const& table, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +379,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UpdateTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L677}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::bigtable::admin::v2::UpdateTableRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UpdateTable(google::bigtable::admin::v2::UpdateTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -405,10 +393,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTable(NoAwaitTag, google::bigtable::admin::v2::UpdateTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -419,8 +405,8 @@ class BigtableTableAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UpdateTable(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -443,7 +429,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L713}
   ///
   // clang-format on
-  Status DeleteTable(std::string const& name, Options opts = {});
+  Status
+  DeleteTable(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -469,9 +456,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L713}
   ///
   // clang-format on
-  Status DeleteTable(
-      google::bigtable::admin::v2::DeleteTableRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTable(google::bigtable::admin::v2::DeleteTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -504,8 +490,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L727}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UndeleteTable(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -518,8 +504,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteTable(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteTable(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -555,9 +541,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UndeleteTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L727}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::bigtable::admin::v2::UndeleteTableRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UndeleteTable(google::bigtable::admin::v2::UndeleteTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -570,10 +555,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeleteTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UndeleteTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeleteTable(NoAwaitTag, google::bigtable::admin::v2::UndeleteTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -584,8 +567,8 @@ class BigtableTableAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  UndeleteTable(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -624,10 +607,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(
-      std::string const& parent,
-      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
-      std::string const& authorized_view_id, Options opts = {});
+  CreateAuthorizedView(std::string const& parent, google::bigtable::admin::v2::AuthorizedView const& authorized_view, std::string const& authorized_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -640,10 +620,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      NoAwaitTag, std::string const& parent,
-      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
-      std::string const& authorized_view_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAuthorizedView(NoAwaitTag, std::string const& parent, google::bigtable::admin::v2::AuthorizedView const& authorized_view, std::string const& authorized_view_id, Options opts = {});
 
   // clang-format off
   ///
@@ -680,9 +658,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
-      Options opts = {});
+  CreateAuthorizedView(google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -695,10 +671,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAuthorizedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAuthorizedView(NoAwaitTag, google::bigtable::admin::v2::CreateAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -710,8 +684,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  CreateAuthorizedView(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateAuthorizedView(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -746,8 +719,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.ListAuthorizedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1318}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::AuthorizedView>
+  ListAuthorizedViews(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -785,9 +758,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.ListAuthorizedViewsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1318}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::AuthorizedView> ListAuthorizedViews(
-      google::bigtable::admin::v2::ListAuthorizedViewsRequest request,
-      Options opts = {});
+  StreamRange<google::bigtable::admin::v2::AuthorizedView>
+  ListAuthorizedViews(google::bigtable::admin::v2::ListAuthorizedViewsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -813,8 +785,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.GetAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1362}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
-      std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AuthorizedView>
+  GetAuthorizedView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -843,9 +815,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.GetAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1362}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::AuthorizedView> GetAuthorizedView(
-      google::bigtable::admin::v2::GetAuthorizedViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::AuthorizedView>
+  GetAuthorizedView(google::bigtable::admin::v2::GetAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -887,9 +858,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(
-      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAuthorizedView(google::bigtable::admin::v2::AuthorizedView const& authorized_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -902,10 +871,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::AuthorizedView const& authorized_view,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthorizedView(NoAwaitTag, google::bigtable::admin::v2::AuthorizedView const& authorized_view, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -942,9 +909,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
-      Options opts = {});
+  UpdateAuthorizedView(google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -957,10 +922,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAuthorizedView(
-      NoAwaitTag,
-      google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAuthorizedView(NoAwaitTag, google::bigtable::admin::v2::UpdateAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -972,8 +935,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::AuthorizedView>>
-  UpdateAuthorizedView(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  UpdateAuthorizedView(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -996,7 +958,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1418}
   ///
   // clang-format on
-  Status DeleteAuthorizedView(std::string const& name, Options opts = {});
+  Status
+  DeleteAuthorizedView(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1022,9 +985,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteAuthorizedViewRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1418}
   ///
   // clang-format on
-  Status DeleteAuthorizedView(
-      google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request,
-      Options opts = {});
+  Status
+  DeleteAuthorizedView(google::bigtable::admin::v2::DeleteAuthorizedViewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1057,11 +1019,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
-      std::string const& name,
-      std::vector<google::bigtable::admin::v2::ModifyColumnFamiliesRequest::
-                      Modification> const& modifications,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  ModifyColumnFamilies(std::string const& name, std::vector<google::bigtable::admin::v2::ModifyColumnFamiliesRequest::Modification> const& modifications, Options opts = {});
 
   // clang-format off
   ///
@@ -1093,9 +1052,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
-      google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Table>
+  ModifyColumnFamilies(google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1123,9 +1081,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DropRowRangeRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L592}
   ///
   // clang-format on
-  Status DropRowRange(
-      google::bigtable::admin::v2::DropRowRangeRequest const& request,
-      Options opts = {});
+  Status
+  DropRowRange(google::bigtable::admin::v2::DropRowRangeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1188,10 +1145,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
-  GenerateConsistencyToken(
-      google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
-          request,
-      Options opts = {});
+  GenerateConsistencyToken(google::bigtable::admin::v2::GenerateConsistencyTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1221,8 +1175,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
-  CheckConsistency(std::string const& name,
-                   std::string const& consistency_token, Options opts = {});
+  CheckConsistency(std::string const& name, std::string const& consistency_token, Options opts = {});
 
   // clang-format off
   ///
@@ -1254,9 +1207,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>
-  CheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
-      Options opts = {});
+  CheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1302,14 +1253,13 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L440}
   /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1060}
   /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1035}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      std::string const& parent, std::string const& backup_id,
-      google::bigtable::admin::v2::Backup const& backup, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CreateBackup(std::string const& parent, std::string const& backup_id, google::bigtable::admin::v2::Backup const& backup, Options opts = {});
 
   // clang-format off
   ///
@@ -1322,9 +1272,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackup(
-      NoAwaitTag, std::string const& parent, std::string const& backup_id,
-      google::bigtable::admin::v2::Backup const& backup, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackup(NoAwaitTag, std::string const& parent, std::string const& backup_id, google::bigtable::admin::v2::Backup const& backup, Options opts = {});
 
   // clang-format off
   ///
@@ -1366,14 +1315,13 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.Backup]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L440}
   /// [google.bigtable.admin.v2.CreateBackupMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1060}
   /// [google.bigtable.admin.v2.CreateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1035}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::bigtable::admin::v2::CreateBackupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CreateBackup(google::bigtable::admin::v2::CreateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1386,10 +1334,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateBackup(
-      NoAwaitTag,
-      google::bigtable::admin::v2::CreateBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateBackup(NoAwaitTag, google::bigtable::admin::v2::CreateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1400,8 +1346,8 @@ class BigtableTableAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CreateBackup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CreateBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1427,8 +1373,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1095}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Backup>
+  GetBackup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1457,9 +1403,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.GetBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1095}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
-      google::bigtable::admin::v2::GetBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Backup>
+  GetBackup(google::bigtable::admin::v2::GetBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1492,9 +1437,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1076}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
-      google::bigtable::admin::v2::Backup const& backup,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Backup>
+  UpdateBackup(google::bigtable::admin::v2::Backup const& backup, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1523,9 +1467,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.UpdateBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1076}
   ///
   // clang-format on
-  StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
-      google::bigtable::admin::v2::UpdateBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::bigtable::admin::v2::Backup>
+  UpdateBackup(google::bigtable::admin::v2::UpdateBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1548,7 +1491,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1109}
   ///
   // clang-format on
-  Status DeleteBackup(std::string const& name, Options opts = {});
+  Status
+  DeleteBackup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1574,9 +1518,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.DeleteBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1109}
   ///
   // clang-format on
-  Status DeleteBackup(
-      google::bigtable::admin::v2::DeleteBackupRequest const& request,
-      Options opts = {});
+  Status
+  DeleteBackup(google::bigtable::admin::v2::DeleteBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1613,8 +1556,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1123}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::bigtable::admin::v2::Backup>
+  ListBackups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1653,9 +1596,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.ListBackupsRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1123}
   ///
   // clang-format on
-  StreamRange<google::bigtable::admin::v2::Backup> ListBackups(
-      google::bigtable::admin::v2::ListBackupsRequest request,
-      Options opts = {});
+  StreamRange<google::bigtable::admin::v2::Backup>
+  ListBackups(google::bigtable::admin::v2::ListBackupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1696,14 +1638,13 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.RestoreTableMetadata]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L469}
   /// [google.bigtable.admin.v2.RestoreTableRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L441}
   /// [google.bigtable.admin.v2.Table]: @googleapis_reference_link{google/bigtable/admin/v2/table.proto#L63}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::bigtable::admin::v2::RestoreTableRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  RestoreTable(google::bigtable::admin::v2::RestoreTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1716,10 +1657,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreTable(
-      NoAwaitTag,
-      google::bigtable::admin::v2::RestoreTableRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreTable(NoAwaitTag, google::bigtable::admin::v2::RestoreTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1730,8 +1669,8 @@ class BigtableTableAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Table>> RestoreTable(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Table>>
+  RestoreTable(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1783,10 +1722,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1220}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      std::string const& parent, std::string const& backup_id,
-      std::string const& source_backup,
-      google::protobuf::Timestamp const& expire_time, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CopyBackup(std::string const& parent, std::string const& backup_id, std::string const& source_backup, google::protobuf::Timestamp const& expire_time, Options opts = {});
 
   // clang-format off
   ///
@@ -1799,10 +1736,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CopyBackup(
-      NoAwaitTag, std::string const& parent, std::string const& backup_id,
-      std::string const& source_backup,
-      google::protobuf::Timestamp const& expire_time, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CopyBackup(NoAwaitTag, std::string const& parent, std::string const& backup_id, std::string const& source_backup, google::protobuf::Timestamp const& expire_time, Options opts = {});
 
   // clang-format off
   ///
@@ -1839,9 +1774,8 @@ class BigtableTableAdminClient {
   /// [google.bigtable.admin.v2.CopyBackupRequest]: @googleapis_reference_link{google/bigtable/admin/v2/bigtable_table_admin.proto#L1220}
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::bigtable::admin::v2::CopyBackupRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CopyBackup(google::bigtable::admin::v2::CopyBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1854,9 +1788,8 @@ class BigtableTableAdminClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CopyBackup(
-      NoAwaitTag, google::bigtable::admin::v2::CopyBackupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CopyBackup(NoAwaitTag, google::bigtable::admin::v2::CopyBackupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1867,8 +1800,8 @@ class BigtableTableAdminClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::bigtable::admin::v2::Backup>> CopyBackup(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::bigtable::admin::v2::Backup>>
+  CopyBackup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1895,8 +1828,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(std::string const& resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1927,8 +1860,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1958,9 +1891,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      std::string const& resource, google::iam::v1::Policy const& policy,
-      Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, google::iam::v1::Policy const& policy, Options opts = {});
 
   /**
    * Updates the IAM policy for @p resource using an optimistic concurrency
@@ -1982,9 +1914,8 @@ class BigtableTableAdminClient {
    *    backoff policies.
    * @return google::iam::v1::Policy
    */
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
-                                                 IamUpdater const& updater,
-                                                 Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(std::string const& resource, IamUpdater const& updater, Options opts = {});
 
   // clang-format off
   ///
@@ -2014,8 +1945,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2045,9 +1976,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      std::string const& resource, std::vector<std::string> const& permissions,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(std::string const& resource, std::vector<std::string> const& permissions, Options opts = {});
 
   // clang-format off
   ///
@@ -2077,9 +2007,8 @@ class BigtableTableAdminClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2109,9 +2038,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-  AsyncCheckConsistency(std::string const& name,
-                        std::string const& consistency_token,
-                        Options opts = {});
+  AsyncCheckConsistency(std::string const& name, std::string const& consistency_token, Options opts = {});
 
   // clang-format off
   ///
@@ -2143,9 +2070,7 @@ class BigtableTableAdminClient {
   ///
   // clang-format on
   future<StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse>>
-  AsyncCheckConsistency(
-      google::bigtable::admin::v2::CheckConsistencyRequest const& request,
-      Options opts = {});
+  AsyncCheckConsistency(google::bigtable::admin::v2::CheckConsistencyRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<BigtableTableAdminConnection> connection_;

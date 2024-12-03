@@ -33,10 +33,10 @@ BatchServiceTracingStub::BatchServiceTracingStub(
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingStub::CreateJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::CreateJobRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "CreateJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "CreateJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -44,10 +44,10 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingStub::CreateJob(
 }
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingStub::GetJob(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::GetJobRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetJob");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -56,35 +56,34 @@ StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingStub::GetJob(
 
 future<StatusOr<google::longrunning::Operation>>
 BatchServiceTracingStub::AsyncDeleteJob(
-    google::cloud::CompletionQueue& cq,
-    std::shared_ptr<grpc::ClientContext> context,
-    google::cloud::internal::ImmutableOptions options,
-    google::cloud::batch::v1::DeleteJobRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteJob");
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::cloud::batch::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteJob");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
   auto f = child_->AsyncDeleteJob(cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
-StatusOr<google::longrunning::Operation> BatchServiceTracingStub::DeleteJob(
-    grpc::ClientContext& context, Options options,
-    google::cloud::batch::v1::DeleteJobRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteJob");
+StatusOr<google::longrunning::Operation>
+BatchServiceTracingStub::DeleteJob(
+      grpc::ClientContext& context,
+      Options options,
+      google::cloud::batch::v1::DeleteJobRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteJob");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->DeleteJob(context, options, request));
 }
 
-StatusOr<google::cloud::batch::v1::ListJobsResponse>
-BatchServiceTracingStub::ListJobs(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::batch::v1::ListJobsResponse> BatchServiceTracingStub::ListJobs(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::ListJobsRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListJobs");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListJobs");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -92,58 +91,54 @@ BatchServiceTracingStub::ListJobs(
 }
 
 StatusOr<google::cloud::batch::v1::Task> BatchServiceTracingStub::GetTask(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::GetTaskRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetTask");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetTask");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetTask(context, options, request));
 }
 
-StatusOr<google::cloud::batch::v1::ListTasksResponse>
-BatchServiceTracingStub::ListTasks(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::batch::v1::ListTasksResponse> BatchServiceTracingStub::ListTasks(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::batch::v1::ListTasksRequest const& request) {
-  auto span =
-      internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListTasks");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListTasks");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListTasks(context, options, request));
 }
 
-StatusOr<google::cloud::location::ListLocationsResponse>
-BatchServiceTracingStub::ListLocations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::ListLocationsResponse> BatchServiceTracingStub::ListLocations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::ListLocationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "ListLocations");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListLocations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListLocations(context, options, request));
 }
 
-StatusOr<google::cloud::location::Location>
-BatchServiceTracingStub::GetLocation(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::location::Location> BatchServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::location::GetLocationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "GetLocation");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetLocation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetLocation(context, options, request));
 }
 
-StatusOr<google::longrunning::ListOperationsResponse>
-BatchServiceTracingStub::ListOperations(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::longrunning::ListOperationsResponse> BatchServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::ListOperationsRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "ListOperations");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "ListOperations");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -151,10 +146,10 @@ BatchServiceTracingStub::ListOperations(
 }
 
 StatusOr<google::longrunning::Operation> BatchServiceTracingStub::GetOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::GetOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "GetOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "GetOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -162,10 +157,10 @@ StatusOr<google::longrunning::Operation> BatchServiceTracingStub::GetOperation(
 }
 
 Status BatchServiceTracingStub::DeleteOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::DeleteOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "DeleteOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "DeleteOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -173,10 +168,10 @@ Status BatchServiceTracingStub::DeleteOperation(
 }
 
 Status BatchServiceTracingStub::CancelOperation(
-    grpc::ClientContext& context, Options const& options,
+    grpc::ClientContext& context,
+    Options const& options,
     google::longrunning::CancelOperationRequest const& request) {
-  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService",
-                                     "CancelOperation");
+  auto span = internal::MakeSpanGrpc("google.cloud.batch.v1.BatchService", "CancelOperation");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -193,7 +188,8 @@ BatchServiceTracingStub::AsyncGetOperation(
       internal::MakeSpanGrpc("google.longrunning.Operations", "GetOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f = child_->AsyncGetOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncGetOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
@@ -206,8 +202,8 @@ future<Status> BatchServiceTracingStub::AsyncCancelOperation(
                                      "CancelOperation");
   internal::OTelScope scope(span);
   internal::InjectTraceContext(*context, *propagator_);
-  auto f =
-      child_->AsyncCancelOperation(cq, context, std::move(options), request);
+  auto f = child_->AsyncCancelOperation(
+      cq, context, std::move(options), request);
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 

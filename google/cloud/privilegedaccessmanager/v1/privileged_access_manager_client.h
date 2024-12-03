@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PRIVILEGEDACCESSMANAGER_V1_PRIVILEGED_ACCESS_MANAGER_CLIENT_H
 
-#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/privilegedaccessmanager/v1/privileged_access_manager_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -55,8 +55,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///   get the privileged access specified in an entitlement for some duration.
 ///
 ///   After the approval workflow as specified in the entitlement is satisfied,
-///   the specified access is given to the requester. The access is
-///   automatically taken back after the requested duration is over.
+///   the specified access is given to the requester. The access is automatically
+///   taken back after the requested duration is over.
 ///
 /// @par Equality
 ///
@@ -83,36 +83,30 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PrivilegedAccessManagerClient {
  public:
-  explicit PrivilegedAccessManagerClient(
-      std::shared_ptr<PrivilegedAccessManagerConnection> connection,
-      Options opts = {});
+  explicit PrivilegedAccessManagerClient(std::shared_ptr<PrivilegedAccessManagerConnection> connection, Options opts = {});
   ~PrivilegedAccessManagerClient();
 
   ///@{
   /// @name Copy and move support
   PrivilegedAccessManagerClient(PrivilegedAccessManagerClient const&) = default;
-  PrivilegedAccessManagerClient& operator=(
-      PrivilegedAccessManagerClient const&) = default;
+  PrivilegedAccessManagerClient& operator=(PrivilegedAccessManagerClient const&) = default;
   PrivilegedAccessManagerClient(PrivilegedAccessManagerClient&&) = default;
-  PrivilegedAccessManagerClient& operator=(PrivilegedAccessManagerClient&&) =
-      default;
+  PrivilegedAccessManagerClient& operator=(PrivilegedAccessManagerClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(PrivilegedAccessManagerClient const& a,
-                         PrivilegedAccessManagerClient const& b) {
+  friend bool operator==(PrivilegedAccessManagerClient const& a, PrivilegedAccessManagerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PrivilegedAccessManagerClient const& a,
-                         PrivilegedAccessManagerClient const& b) {
+  friend bool operator!=(PrivilegedAccessManagerClient const& a, PrivilegedAccessManagerClient const& b) {
     return !(a == b);
   }
   ///@}
 
   // clang-format off
   ///
-  /// CheckOnboardingStatus reports the onboarding status for a
+  /// `CheckOnboardingStatus` reports the onboarding status for a
   /// project/folder/organization. Any findings reported by this API need to be
   /// fixed before PAM can be used on the resource.
   ///
@@ -135,15 +129,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CheckOnboardingStatusRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L333}
-  /// [google.cloud.privilegedaccessmanager.v1.CheckOnboardingStatusResponse]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L349}
+  /// [google.cloud.privilegedaccessmanager.v1.CheckOnboardingStatusRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L334}
+  /// [google.cloud.privilegedaccessmanager.v1.CheckOnboardingStatusResponse]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L350}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
-  CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::
-                            CheckOnboardingStatusRequest const& request,
-                        Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusResponse>
+  CheckOnboardingStatus(google::cloud::privilegedaccessmanager::v1::CheckOnboardingStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -172,8 +163,8 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
-  /// [google.cloud.privilegedaccessmanager.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L606}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
+  /// [google.cloud.privilegedaccessmanager.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L607}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
@@ -211,15 +202,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
-  /// [google.cloud.privilegedaccessmanager.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L606}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
+  /// [google.cloud.privilegedaccessmanager.v1.ListEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L607}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  ListEntitlements(
-      google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest
-          request,
-      Options opts = {});
+  ListEntitlements(google::cloud::privilegedaccessmanager::v1::ListEntitlementsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -254,15 +242,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
-  /// [google.cloud.privilegedaccessmanager.v1.SearchEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L642}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
+  /// [google.cloud.privilegedaccessmanager.v1.SearchEntitlementsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L643}
   ///
   // clang-format on
   StreamRange<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  SearchEntitlements(
-      google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest
-          request,
-      Options opts = {});
+  SearchEntitlements(google::cloud::privilegedaccessmanager::v1::SearchEntitlementsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,8 +267,8 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
-  /// [google.cloud.privilegedaccessmanager.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L691}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
+  /// [google.cloud.privilegedaccessmanager.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
@@ -312,15 +297,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
-  /// [google.cloud.privilegedaccessmanager.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L691}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
+  /// [google.cloud.privilegedaccessmanager.v1.GetEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L692}
   ///
   // clang-format on
   StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>
-  GetEntitlement(
-      google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const&
-          request,
-      Options opts = {});
+  GetEntitlement(google::cloud::privilegedaccessmanager::v1::GetEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -362,16 +344,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L702}
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L703}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(
-      std::string const& parent,
-      google::cloud::privilegedaccessmanager::v1::Entitlement const&
-          entitlement,
-      std::string const& entitlement_id, Options opts = {});
+  CreateEntitlement(std::string const& parent, google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement, std::string const& entitlement_id, Options opts = {});
 
   // clang-format off
   ///
@@ -384,11 +362,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::privilegedaccessmanager::v1::Entitlement const&
-          entitlement,
-      std::string const& entitlement_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag, std::string const& parent, google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement, std::string const& entitlement_id, Options opts = {});
 
   // clang-format off
   ///
@@ -421,14 +396,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L702}
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L703}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        CreateEntitlementRequest const& request,
-                    Options opts = {});
+  CreateEntitlement(google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -441,11 +414,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateEntitlement(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          CreateEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::CreateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,13 +427,12 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  CreateEntitlement(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CreateEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
   /// Deletes a single entitlement. This method can only be called when there
-  /// are no in-progress (ACTIVE/ACTIVATING/REVOKING) grants under the
+  /// are no in-progress (`ACTIVE`/`ACTIVATING`/`REVOKING`) grants under the
   /// entitlement.
   ///
   /// @param name  Required. Name of the resource.
@@ -487,8 +456,8 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.DeleteEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L747}
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.DeleteEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L748}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
@@ -505,13 +474,13 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEntitlement(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
   /// Deletes a single entitlement. This method can only be called when there
-  /// are no in-progress (ACTIVE/ACTIVATING/REVOKING) grants under the
+  /// are no in-progress (`ACTIVE`/`ACTIVATING`/`REVOKING`) grants under the
   /// entitlement.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
@@ -540,14 +509,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.DeleteEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L747}
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.DeleteEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L748}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        DeleteEntitlementRequest const& request,
-                    Options opts = {});
+  DeleteEntitlement(google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -560,11 +527,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteEntitlement(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          DeleteEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::DeleteEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -576,8 +540,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  DeleteEntitlement(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -632,15 +595,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   /// [google.cloud.privilegedaccessmanager.v1.UpdateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L778}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(
-      google::cloud::privilegedaccessmanager::v1::Entitlement const&
-          entitlement,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -653,11 +613,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::Entitlement const&
-          entitlement,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::Entitlement const& entitlement, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -708,14 +665,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L380}
+  /// [google.cloud.privilegedaccessmanager.v1.Entitlement]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L381}
   /// [google.cloud.privilegedaccessmanager.v1.UpdateEntitlementRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L778}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::
-                        UpdateEntitlementRequest const& request,
-                    Options opts = {});
+  UpdateEntitlement(google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -728,11 +683,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateEntitlement(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::
-          UpdateEntitlementRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateEntitlement(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::UpdateEntitlementRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -744,8 +696,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Entitlement>>
-  UpdateEntitlement(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  UpdateEntitlement(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -774,12 +725,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
-  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1047}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
+  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1045}
   ///
   // clang-format on
-  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> ListGrants(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
+  ListGrants(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -813,13 +764,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
-  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1047}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
+  /// [google.cloud.privilegedaccessmanager.v1.ListGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1045}
   ///
   // clang-format on
-  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> ListGrants(
-      google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
+  ListGrants(google::cloud::privilegedaccessmanager::v1::ListGrantsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -854,13 +804,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
-  /// [google.cloud.privilegedaccessmanager.v1.SearchGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1083}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
+  /// [google.cloud.privilegedaccessmanager.v1.SearchGrantsRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1081}
   ///
   // clang-format on
-  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant> SearchGrants(
-      google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::privilegedaccessmanager::v1::Grant>
+  SearchGrants(google::cloud::privilegedaccessmanager::v1::SearchGrantsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -880,12 +829,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1134}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1132}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  GetGrant(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -910,18 +859,17 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1134}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.GetGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1132}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> GetGrant(
-      google::cloud::privilegedaccessmanager::v1::GetGrantRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  GetGrant(google::cloud::privilegedaccessmanager::v1::GetGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
-  /// Creates a new grant in a given project and location.
+  /// Creates a new grant in a given project/folder/organization and
+  /// location.
   ///
   /// @param parent  Required. Name of the parent entitlement for which this grant is being
   ///  requested.
@@ -939,18 +887,17 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1191}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1189}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> CreateGrant(
-      std::string const& parent,
-      google::cloud::privilegedaccessmanager::v1::Grant const& grant,
-      Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  CreateGrant(std::string const& parent, google::cloud::privilegedaccessmanager::v1::Grant const& grant, Options opts = {});
 
   // clang-format off
   ///
-  /// Creates a new grant in a given project and location.
+  /// Creates a new grant in a given project/folder/organization and
+  /// location.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -971,14 +918,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1191}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.CreateGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1189}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> CreateGrant(
-      google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  CreateGrant(google::cloud::privilegedaccessmanager::v1::CreateGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1005,14 +950,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.ApproveGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1145}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.ApproveGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1143}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> ApproveGrant(
-      google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  ApproveGrant(google::cloud::privilegedaccessmanager::v1::ApproveGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,14 +982,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.DenyGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1161}
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
+  /// [google.cloud.privilegedaccessmanager.v1.DenyGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1159}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
   ///
   // clang-format on
-  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant> DenyGrant(
-      google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>
+  DenyGrant(google::cloud::privilegedaccessmanager::v1::DenyGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1079,15 +1020,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L799}
-  /// [google.cloud.privilegedaccessmanager.v1.RevokeGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1177}
+  /// [google.cloud.privilegedaccessmanager.v1.Grant]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L797}
+  /// [google.cloud.privilegedaccessmanager.v1.RevokeGrantRequest]: @googleapis_reference_link{google/cloud/privilegedaccessmanager/v1/privilegedaccessmanager.proto#L1175}
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request,
-      Options opts = {});
+  RevokeGrant(google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1100,11 +1038,8 @@ class PrivilegedAccessManagerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RevokeGrant(
-      NoAwaitTag,
-      google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RevokeGrant(NoAwaitTag, google::cloud::privilegedaccessmanager::v1::RevokeGrantRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1116,8 +1051,7 @@ class PrivilegedAccessManagerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::privilegedaccessmanager::v1::Grant>>
-  RevokeGrant(google::longrunning::Operation const& operation,
-              Options opts = {});
+  RevokeGrant(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1155,8 +1089,8 @@ class PrivilegedAccessManagerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1185,22 +1119,13 @@ class PrivilegedAccessManagerClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1226,25 +1151,17 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1274,12 +1191,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1301,12 +1218,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1333,13 +1250,12 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1360,10 +1276,11 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1389,12 +1306,11 @@ class PrivilegedAccessManagerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PrivilegedAccessManagerConnection> connection_;

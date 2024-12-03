@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGETRANSFER_V1_STORAGE_TRANSFER_CLIENT_H
 
-#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/storagetransfer/v1/storage_transfer_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -65,29 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class StorageTransferServiceClient {
  public:
-  explicit StorageTransferServiceClient(
-      std::shared_ptr<StorageTransferServiceConnection> connection,
-      Options opts = {});
+  explicit StorageTransferServiceClient(std::shared_ptr<StorageTransferServiceConnection> connection, Options opts = {});
   ~StorageTransferServiceClient();
 
   ///@{
   /// @name Copy and move support
   StorageTransferServiceClient(StorageTransferServiceClient const&) = default;
-  StorageTransferServiceClient& operator=(StorageTransferServiceClient const&) =
-      default;
+  StorageTransferServiceClient& operator=(StorageTransferServiceClient const&) = default;
   StorageTransferServiceClient(StorageTransferServiceClient&&) = default;
-  StorageTransferServiceClient& operator=(StorageTransferServiceClient&&) =
-      default;
+  StorageTransferServiceClient& operator=(StorageTransferServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(StorageTransferServiceClient const& a,
-                         StorageTransferServiceClient const& b) {
+  friend bool operator==(StorageTransferServiceClient const& a, StorageTransferServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(StorageTransferServiceClient const& a,
-                         StorageTransferServiceClient const& b) {
+  friend bool operator!=(StorageTransferServiceClient const& a, StorageTransferServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -127,10 +121,7 @@ class StorageTransferServiceClient {
   ///
   // clang-format on
   StatusOr<google::storagetransfer::v1::GoogleServiceAccount>
-  GetGoogleServiceAccount(
-      google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
-          request,
-      Options opts = {});
+  GetGoogleServiceAccount(google::storagetransfer::v1::GetGoogleServiceAccountRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -159,9 +150,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::TransferJob> CreateTransferJob(
-      google::storagetransfer::v1::CreateTransferJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::TransferJob>
+  CreateTransferJob(google::storagetransfer::v1::CreateTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,9 +191,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.UpdateTransferJobRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L197}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::TransferJob> UpdateTransferJob(
-      google::storagetransfer::v1::UpdateTransferJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::TransferJob>
+  UpdateTransferJob(google::storagetransfer::v1::UpdateTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,9 +221,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::TransferJob> GetTransferJob(
-      google::storagetransfer::v1::GetTransferJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::TransferJob>
+  GetTransferJob(google::storagetransfer::v1::GetTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,9 +260,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.TransferJob]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L980}
   ///
   // clang-format on
-  StreamRange<google::storagetransfer::v1::TransferJob> ListTransferJobs(
-      google::storagetransfer::v1::ListTransferJobsRequest request,
-      Options opts = {});
+  StreamRange<google::storagetransfer::v1::TransferJob>
+  ListTransferJobs(google::storagetransfer::v1::ListTransferJobsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -300,9 +287,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.PauseTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L287}
   ///
   // clang-format on
-  Status PauseTransferOperation(
-      google::storagetransfer::v1::PauseTransferOperationRequest const& request,
-      Options opts = {});
+  Status
+  PauseTransferOperation(google::storagetransfer::v1::PauseTransferOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -328,10 +314,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.ResumeTransferOperationRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L293}
   ///
   // clang-format on
-  Status ResumeTransferOperation(
-      google::storagetransfer::v1::ResumeTransferOperationRequest const&
-          request,
-      Options opts = {});
+  Status
+  ResumeTransferOperation(google::storagetransfer::v1::ResumeTransferOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -371,9 +355,7 @@ class StorageTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(
-      google::storagetransfer::v1::RunTransferJobRequest const& request,
-      Options opts = {});
+  RunTransferJob(google::storagetransfer::v1::RunTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -386,10 +368,8 @@ class StorageTransferServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RunTransferJob(
-      NoAwaitTag,
-      google::storagetransfer::v1::RunTransferJobRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RunTransferJob(NoAwaitTag, google::storagetransfer::v1::RunTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -401,8 +381,7 @@ class StorageTransferServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::storagetransfer::v1::TransferOperation>>
-  RunTransferJob(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  RunTransferJob(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -430,9 +409,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.TransferJob.Status.DELETED]: @googleapis_reference_link{google/storagetransfer/v1/transfer_types.proto#L996}
   ///
   // clang-format on
-  Status DeleteTransferJob(
-      google::storagetransfer::v1::DeleteTransferJobRequest const& request,
-      Options opts = {});
+  Status
+  DeleteTransferJob(google::storagetransfer::v1::DeleteTransferJobRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -471,10 +449,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
-      std::string const& project_id,
-      google::storagetransfer::v1::AgentPool const& agent_pool,
-      std::string const& agent_pool_id, Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  CreateAgentPool(std::string const& project_id, google::storagetransfer::v1::AgentPool const& agent_pool, std::string const& agent_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -503,9 +479,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.CreateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
-      google::storagetransfer::v1::CreateAgentPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  CreateAgentPool(google::storagetransfer::v1::CreateAgentPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -550,9 +525,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L334}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
-      google::storagetransfer::v1::AgentPool const& agent_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  UpdateAgentPool(google::storagetransfer::v1::AgentPool const& agent_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -581,9 +555,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.UpdateAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L334}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
-      google::storagetransfer::v1::UpdateAgentPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  UpdateAgentPool(google::storagetransfer::v1::UpdateAgentPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -607,8 +580,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
-      std::string const& name, Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  GetAgentPool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -637,9 +610,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.GetAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L359}
   ///
   // clang-format on
-  StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
-      google::storagetransfer::v1::GetAgentPoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::storagetransfer::v1::AgentPool>
+  GetAgentPool(google::storagetransfer::v1::GetAgentPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -672,8 +644,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L371}
   ///
   // clang-format on
-  StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
-      std::string const& project_id, Options opts = {});
+  StreamRange<google::storagetransfer::v1::AgentPool>
+  ListAgentPools(std::string const& project_id, Options opts = {});
 
   // clang-format off
   ///
@@ -711,9 +683,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.ListAgentPoolsRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L371}
   ///
   // clang-format on
-  StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
-      google::storagetransfer::v1::ListAgentPoolsRequest request,
-      Options opts = {});
+  StreamRange<google::storagetransfer::v1::AgentPool>
+  ListAgentPools(google::storagetransfer::v1::ListAgentPoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -734,7 +705,8 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L365}
   ///
   // clang-format on
-  Status DeleteAgentPool(std::string const& name, Options opts = {});
+  Status
+  DeleteAgentPool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -760,22 +732,13 @@ class StorageTransferServiceClient {
   /// [google.storagetransfer.v1.DeleteAgentPoolRequest]: @googleapis_reference_link{google/storagetransfer/v1/transfer.proto#L365}
   ///
   // clang-format on
-  Status DeleteAgentPool(
-      google::storagetransfer::v1::DeleteAgentPoolRequest const& request,
-      Options opts = {});
+  Status
+  DeleteAgentPool(google::storagetransfer::v1::DeleteAgentPoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -801,25 +764,17 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -849,12 +804,12 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -876,12 +831,12 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -908,13 +863,12 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -926,8 +880,9 @@ class StorageTransferServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -941,13 +896,14 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -959,8 +915,9 @@ class StorageTransferServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -979,15 +936,14 @@ class StorageTransferServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<StorageTransferServiceConnection> connection_;

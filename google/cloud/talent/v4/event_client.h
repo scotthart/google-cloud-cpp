@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TALENT_V4_EVENT_CLIENT_H
 
-#include "google/cloud/talent/v4/event_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/talent/v4/event_connection.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -61,8 +61,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EventServiceClient {
  public:
-  explicit EventServiceClient(
-      std::shared_ptr<EventServiceConnection> connection, Options opts = {});
+  explicit EventServiceClient(std::shared_ptr<EventServiceConnection> connection, Options opts = {});
   ~EventServiceClient();
 
   ///@{
@@ -75,12 +74,10 @@ class EventServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EventServiceClient const& a,
-                         EventServiceClient const& b) {
+  friend bool operator==(EventServiceClient const& a, EventServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EventServiceClient const& a,
-                         EventServiceClient const& b) {
+  friend bool operator!=(EventServiceClient const& a, EventServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -118,10 +115,8 @@ class EventServiceClient {
   /// [google.cloud.talent.v4.CreateClientEventRequest]: @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      std::string const& parent,
-      google::cloud::talent::v4::ClientEvent const& client_event,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::ClientEvent>
+  CreateClientEvent(std::string const& parent, google::cloud::talent::v4::ClientEvent const& client_event, Options opts = {});
 
   // clang-format off
   ///
@@ -156,9 +151,8 @@ class EventServiceClient {
   /// [google.cloud.talent.v4.CreateClientEventRequest]: @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   ///
   // clang-format on
-  StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::talent::v4::ClientEvent>
+  CreateClientEvent(google::cloud::talent::v4::CreateClientEventRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -180,12 +174,12 @@ class EventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,13 +206,12 @@ class EventServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EventServiceConnection> connection_;

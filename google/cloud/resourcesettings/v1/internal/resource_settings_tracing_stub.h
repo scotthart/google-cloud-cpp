@@ -19,9 +19,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_TRACING_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RESOURCESETTINGS_V1_INTERNAL_RESOURCE_SETTINGS_TRACING_STUB_H
 
-#include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/options.h"
+#include "google/cloud/resourcesettings/v1/internal/resource_settings_stub.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -36,28 +36,26 @@ class ResourceSettingsServiceTracingStub : public ResourceSettingsServiceStub {
  public:
   ~ResourceSettingsServiceTracingStub() override = default;
 
-  explicit ResourceSettingsServiceTracingStub(
-      std::shared_ptr<ResourceSettingsServiceStub> child);
+  explicit ResourceSettingsServiceTracingStub(std::shared_ptr<ResourceSettingsServiceStub> child);
 
-  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context, Options const& options,
-               google::cloud::resourcesettings::v1::ListSettingsRequest const&
-                   request) override;
+  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
 
  private:
   std::shared_ptr<ResourceSettingsServiceStub> child_;
-  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator>
-      propagator_;
+  std::shared_ptr<opentelemetry::context::propagation::TextMapPropagator> propagator_;
 };
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -68,8 +66,7 @@ class ResourceSettingsServiceTracingStub : public ResourceSettingsServiceStub {
  * The stub is only decorated if the library has been compiled with
  * OpenTelemetry.
  */
-std::shared_ptr<ResourceSettingsServiceStub>
-MakeResourceSettingsServiceTracingStub(
+std::shared_ptr<ResourceSettingsServiceStub> MakeResourceSettingsServiceTracingStub(
     std::shared_ptr<ResourceSettingsServiceStub> stub);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

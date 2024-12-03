@@ -31,10 +31,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * A class to mock `ResourceSettingsServiceConnection`.
  *
  * Application developers may want to test their code with simulated responses,
- * including errors, from an object of type `ResourceSettingsServiceClient`. To
- * do so, construct an object of type `ResourceSettingsServiceClient` with an
- * instance of this class. Then use the Google Test framework functions to
- * program the behavior of this mock.
+ * including errors, from an object of type `ResourceSettingsServiceClient`. To do so,
+ * construct an object of type `ResourceSettingsServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,26 +42,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockResourceSettingsServiceConnection
-    : public resourcesettings_v1::ResourceSettingsServiceConnection {
+class MockResourceSettingsServiceConnection : public resourcesettings_v1::ResourceSettingsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
-  MOCK_METHOD(
-      (StreamRange<google::cloud::resourcesettings::v1::Setting>), ListSettings,
-      (google::cloud::resourcesettings::v1::ListSettingsRequest request),
-      (override));
-
-  MOCK_METHOD(
-      StatusOr<google::cloud::resourcesettings::v1::Setting>, GetSetting,
-      (google::cloud::resourcesettings::v1::GetSettingRequest const& request),
-      (override));
+  MOCK_METHOD((StreamRange<google::cloud::resourcesettings::v1::Setting>),
+  ListSettings,
+  (google::cloud::resourcesettings::v1::ListSettingsRequest request), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::resourcesettings::v1::Setting>,
-              UpdateSetting,
-              (google::cloud::resourcesettings::v1::UpdateSettingRequest const&
-                   request),
-              (override));
+  GetSetting,
+  (google::cloud::resourcesettings::v1::GetSettingRequest const& request), (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::resourcesettings::v1::Setting>,
+  UpdateSetting,
+  (google::cloud::resourcesettings::v1::UpdateSettingRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

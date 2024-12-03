@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_V2_METRICS_SERVICE_V2_CLIENT_H
 
-#include "google/cloud/logging/v2/metrics_service_v2_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/logging/v2/metrics_service_v2_connection.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
@@ -62,9 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class MetricsServiceV2Client {
  public:
-  explicit MetricsServiceV2Client(
-      std::shared_ptr<MetricsServiceV2Connection> connection,
-      Options opts = {});
+  explicit MetricsServiceV2Client(std::shared_ptr<MetricsServiceV2Connection> connection, Options opts = {});
   ~MetricsServiceV2Client();
 
   ///@{
@@ -77,12 +75,10 @@ class MetricsServiceV2Client {
 
   ///@{
   /// @name Equality
-  friend bool operator==(MetricsServiceV2Client const& a,
-                         MetricsServiceV2Client const& b) {
+  friend bool operator==(MetricsServiceV2Client const& a, MetricsServiceV2Client const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(MetricsServiceV2Client const& a,
-                         MetricsServiceV2Client const& b) {
+  friend bool operator!=(MetricsServiceV2Client const& a, MetricsServiceV2Client const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,8 +116,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::logging::v2::LogMetric>
+  ListLogMetrics(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,8 +155,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StreamRange<google::logging::v2::LogMetric> ListLogMetrics(
-      google::logging::v2::ListLogMetricsRequest request, Options opts = {});
+  StreamRange<google::logging::v2::LogMetric>
+  ListLogMetrics(google::logging::v2::ListLogMetricsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -186,8 +182,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      std::string const& metric_name, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  GetLogMetric(std::string const& metric_name, Options opts = {});
 
   // clang-format off
   ///
@@ -216,9 +212,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> GetLogMetric(
-      google::logging::v2::GetLogMetricRequest const& request,
-      Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  GetLogMetric(google::logging::v2::GetLogMetricRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -248,9 +243,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      std::string const& parent, google::logging::v2::LogMetric const& metric,
-      Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  CreateLogMetric(std::string const& parent, google::logging::v2::LogMetric const& metric, Options opts = {});
 
   // clang-format off
   ///
@@ -279,9 +273,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.LogMetric]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L97}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> CreateLogMetric(
-      google::logging::v2::CreateLogMetricRequest const& request,
-      Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  CreateLogMetric(google::logging::v2::CreateLogMetricRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,9 +305,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.UpdateLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      std::string const& metric_name,
-      google::logging::v2::LogMetric const& metric, Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  UpdateLogMetric(std::string const& metric_name, google::logging::v2::LogMetric const& metric, Options opts = {});
 
   // clang-format off
   ///
@@ -343,9 +335,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.UpdateLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L309}
   ///
   // clang-format on
-  StatusOr<google::logging::v2::LogMetric> UpdateLogMetric(
-      google::logging::v2::UpdateLogMetricRequest const& request,
-      Options opts = {});
+  StatusOr<google::logging::v2::LogMetric>
+  UpdateLogMetric(google::logging::v2::UpdateLogMetricRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -368,7 +359,8 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.DeleteLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L329}
   ///
   // clang-format on
-  Status DeleteLogMetric(std::string const& metric_name, Options opts = {});
+  Status
+  DeleteLogMetric(std::string const& metric_name, Options opts = {});
 
   // clang-format off
   ///
@@ -394,22 +386,13 @@ class MetricsServiceV2Client {
   /// [google.logging.v2.DeleteLogMetricRequest]: @googleapis_reference_link{google/logging/v2/logging_metrics.proto#L329}
   ///
   // clang-format on
-  Status DeleteLogMetric(
-      google::logging::v2::DeleteLogMetricRequest const& request,
-      Options opts = {});
+  Status
+  DeleteLogMetric(google::logging::v2::DeleteLogMetricRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -435,25 +418,17 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -483,12 +458,12 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -510,12 +485,12 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -542,13 +517,12 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -560,8 +534,9 @@ class MetricsServiceV2Client {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -575,13 +550,14 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -593,8 +569,9 @@ class MetricsServiceV2Client {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -613,15 +590,14 @@ class MetricsServiceV2Client {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<MetricsServiceV2Connection> connection_;

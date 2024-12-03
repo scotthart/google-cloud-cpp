@@ -31,27 +31,27 @@ ResourceSettingsServiceAuth::ResourceSettingsServiceAuth(
     std::shared_ptr<ResourceSettingsServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
-StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-ResourceSettingsServiceAuth::ListSettings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ResourceSettingsServiceAuth::ListSettings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->ListSettings(context, options, request);
 }
 
-StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceAuth::GetSetting(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::Setting> ResourceSettingsServiceAuth::GetSetting(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->GetSetting(context, options, request);
 }
 
-StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceAuth::UpdateSetting(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::Setting> ResourceSettingsServiceAuth::UpdateSetting(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;

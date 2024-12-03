@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_AWS_CLUSTERS_CLIENT_H
 
-#include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkemulticloud/v1/aws_clusters_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -65,8 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AwsClustersClient {
  public:
-  explicit AwsClustersClient(std::shared_ptr<AwsClustersConnection> connection,
-                             Options opts = {});
+  explicit AwsClustersClient(std::shared_ptr<AwsClustersConnection> connection, Options opts = {});
   ~AwsClustersClient();
 
   ///@{
@@ -79,12 +78,10 @@ class AwsClustersClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AwsClustersClient const& a,
-                         AwsClustersClient const& b) {
+  friend bool operator==(AwsClustersClient const& a, AwsClustersClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AwsClustersClient const& a,
-                         AwsClustersClient const& b) {
+  friend bool operator!=(AwsClustersClient const& a, AwsClustersClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -139,14 +136,11 @@ class AwsClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(
-      std::string const& parent,
-      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-      std::string const& aws_cluster_id, Options opts = {});
+  CreateAwsCluster(std::string const& parent, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, std::string const& aws_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -159,10 +153,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAwsCluster(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-      std::string const& aws_cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAwsCluster(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, std::string const& aws_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -201,13 +193,11 @@ class AwsClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.CreateAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L257}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(
-      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
-      Options opts = {});
+  CreateAwsCluster(google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -220,10 +210,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -235,8 +223,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  CreateAwsCluster(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateAwsCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -273,9 +260,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(
-      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAwsCluster(google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -288,10 +273,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::AwsCluster const& aws_cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -328,9 +311,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(
-      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
-      Options opts = {});
+  UpdateAwsCluster(google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -343,10 +324,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -358,8 +337,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>>
-  UpdateAwsCluster(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpdateAwsCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -392,8 +370,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
+  GetAwsCluster(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -423,9 +401,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GetAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L337}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster> GetAwsCluster(
-      google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
+  GetAwsCluster(google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -465,8 +442,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
+  ListAwsClusters(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -505,9 +482,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.ListAwsClustersRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L356}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster> ListAwsClusters(
-      google::cloud::gkemulticloud::v1::ListAwsClustersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
+  ListAwsClusters(google::cloud::gkemulticloud::v1::ListAwsClustersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -553,7 +529,7 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -570,8 +546,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsCluster(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -615,13 +591,11 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L398}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster(
-      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
-      Options opts = {});
+  DeleteAwsCluster(google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -634,10 +608,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAwsCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -649,8 +621,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsCluster(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteAwsCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -679,12 +650,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GenerateAwsClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L770}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
-  GenerateAwsClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAwsClusterAgentTokenRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenResponse>
+  GenerateAwsClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAwsClusterAgentTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -716,10 +683,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
-  GenerateAwsAccessToken(
-      google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
-          request,
-      Options opts = {});
+  GenerateAwsAccessToken(google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -772,14 +736,11 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(
-      std::string const& parent,
-      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-      std::string const& aws_node_pool_id, Options opts = {});
+  CreateAwsNodePool(std::string const& parent, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, std::string const& aws_node_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -792,10 +753,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-      std::string const& aws_node_pool_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAwsNodePool(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, std::string const& aws_node_pool_id, Options opts = {});
 
   // clang-format off
   ///
@@ -835,13 +794,11 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L34}
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.CreateAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L442}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(
-      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
-      Options opts = {});
+  CreateAwsNodePool(google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -854,10 +811,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -869,8 +824,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  CreateAwsNodePool(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  CreateAwsNodePool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -907,9 +861,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(
-      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAwsNodePool(google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -922,10 +874,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::AwsNodePool const& aws_node_pool, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -962,9 +912,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(
-      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
-      Options opts = {});
+  UpdateAwsNodePool(google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -977,10 +925,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +938,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  UpdateAwsNodePool(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  UpdateAwsNodePool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1051,8 +996,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RollbackAwsNodePoolUpdate(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1094,10 +1039,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate(
-      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-          request,
-      Options opts = {});
+  RollbackAwsNodePoolUpdate(google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1110,11 +1052,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RollbackAwsNodePoolUpdate(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RollbackAwsNodePoolUpdate(NoAwaitTag, google::cloud::gkemulticloud::v1::RollbackAwsNodePoolUpdateRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1126,8 +1065,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
-  RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  RollbackAwsNodePoolUpdate(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1160,8 +1098,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
+  GetAwsNodePool(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1191,9 +1129,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GetAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L549}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool> GetAwsNodePool(
-      google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
+  GetAwsNodePool(google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1236,8 +1173,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
+  ListAwsNodePools(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1278,9 +1215,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.ListAwsNodePoolsRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L568}
   ///
   // clang-format on
-  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool> ListAwsNodePools(
-      google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
+  ListAwsNodePools(google::cloud::gkemulticloud::v1::ListAwsNodePoolsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1322,7 +1258,7 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -1339,8 +1275,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsNodePool(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1380,13 +1316,11 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.AwsNodePool]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_resources.proto#L376}
   /// [google.cloud.gkemulticloud.v1.DeleteAwsNodePoolRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L611}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool(
-      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
-      Options opts = {});
+  DeleteAwsNodePool(google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1399,10 +1333,8 @@ class AwsClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAwsNodePool(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAwsNodePool(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAwsNodePoolRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1414,8 +1346,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAwsNodePool(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteAwsNodePool(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1449,10 +1380,7 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsOpenIdConfig>
-  GetAwsOpenIdConfig(
-      google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const&
-          request,
-      Options opts = {});
+  GetAwsOpenIdConfig(google::cloud::gkemulticloud::v1::GetAwsOpenIdConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1482,9 +1410,8 @@ class AwsClustersClient {
   /// [google.cloud.gkemulticloud.v1.GetAwsJsonWebKeysRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/aws_service.proto#L673}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys> GetAwsJsonWebKeys(
-      google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::AwsJsonWebKeys>
+  GetAwsJsonWebKeys(google::cloud::gkemulticloud::v1::GetAwsJsonWebKeysRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1549,23 +1476,12 @@ class AwsClustersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
-  GetAwsServerConfig(
-      google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
-          request,
-      Options opts = {});
+  GetAwsServerConfig(google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1591,25 +1507,17 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1639,12 +1547,12 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1666,12 +1574,12 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1698,13 +1606,12 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1725,10 +1632,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1754,12 +1662,11 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1771,8 +1678,9 @@ class AwsClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1786,13 +1694,14 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1804,8 +1713,9 @@ class AwsClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1824,15 +1734,14 @@ class AwsClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AwsClustersConnection> connection_;

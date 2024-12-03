@@ -26,64 +26,48 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-CloudControlsPartnerCoreConnectionIdempotencyPolicy::
-    ~CloudControlsPartnerCoreConnectionIdempotencyPolicy() = default;
+CloudControlsPartnerCoreConnectionIdempotencyPolicy::~CloudControlsPartnerCoreConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>
 CloudControlsPartnerCoreConnectionIdempotencyPolicy::clone() const {
-  return std::make_unique<CloudControlsPartnerCoreConnectionIdempotencyPolicy>(
-      *this);
+  return std::make_unique<CloudControlsPartnerCoreConnectionIdempotencyPolicy>(*this);
 }
 
-Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetWorkload(
-    google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&) {
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetWorkload(google::cloud::cloudcontrolspartner::v1::GetWorkloadRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListWorkloads(
-    google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest) {  // NOLINT
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListWorkloads(google::cloud::cloudcontrolspartner::v1::ListWorkloadsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetCustomer(
-    google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&) {
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetCustomer(google::cloud::cloudcontrolspartner::v1::GetCustomerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListCustomers(
-    google::cloud::cloudcontrolspartner::v1::ListCustomersRequest) {  // NOLINT
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListCustomers(google::cloud::cloudcontrolspartner::v1::ListCustomersRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetEkmConnections(
-    google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&) {
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetEkmConnections(google::cloud::cloudcontrolspartner::v1::GetEkmConnectionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetPartnerPermissions(
-    google::cloud::cloudcontrolspartner::v1::
-        GetPartnerPermissionsRequest const&) {
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetPartnerPermissions(google::cloud::cloudcontrolspartner::v1::GetPartnerPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency
-CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListAccessApprovalRequests(
-    google::cloud::cloudcontrolspartner::v1::
-        ListAccessApprovalRequestsRequest) {  // NOLINT
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::ListAccessApprovalRequests(google::cloud::cloudcontrolspartner::v1::ListAccessApprovalRequestsRequest) {  // NOLINT
   return Idempotency::kIdempotent;
 }
 
-Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetPartner(
-    google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&) {
+Idempotency CloudControlsPartnerCoreConnectionIdempotencyPolicy::GetPartner(google::cloud::cloudcontrolspartner::v1::GetPartnerRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<CloudControlsPartnerCoreConnectionIdempotencyPolicy>
-MakeDefaultCloudControlsPartnerCoreConnectionIdempotencyPolicy() {
-  return std::make_unique<
-      CloudControlsPartnerCoreConnectionIdempotencyPolicy>();
+    MakeDefaultCloudControlsPartnerCoreConnectionIdempotencyPolicy() {
+  return std::make_unique<CloudControlsPartnerCoreConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

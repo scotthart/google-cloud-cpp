@@ -35,14 +35,13 @@ class GatewayControlLogging : public GatewayControlStub {
  public:
   ~GatewayControlLogging() override = default;
   GatewayControlLogging(std::shared_ptr<GatewayControlStub> child,
-                        TracingOptions tracing_options,
-                        std::set<std::string> const& components);
+                       TracingOptions tracing_options,
+                       std::set<std::string> const& components);
 
-  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
-  GenerateCredentials(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-          request) override;
+  StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse> GenerateCredentials(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) override;
 
  private:
   std::shared_ptr<GatewayControlStub> child_;

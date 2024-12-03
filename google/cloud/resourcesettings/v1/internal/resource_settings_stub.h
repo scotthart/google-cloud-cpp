@@ -35,49 +35,45 @@ class ResourceSettingsServiceStub {
  public:
   virtual ~ResourceSettingsServiceStub() = 0;
 
-  virtual StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context, Options const& options,
-               google::cloud::resourcesettings::v1::ListSettingsRequest const&
-                   request) = 0;
+  virtual StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request) = 0;
 
   virtual StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const&
-          request) = 0;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) = 0;
 };
 
 class DefaultResourceSettingsServiceStub : public ResourceSettingsServiceStub {
  public:
   explicit DefaultResourceSettingsServiceStub(
-      std::unique_ptr<google::cloud::resourcesettings::v1::
-                          ResourceSettingsService::StubInterface>
-          grpc_stub)
+      std::unique_ptr<google::cloud::resourcesettings::v1::ResourceSettingsService::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 
-  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-  ListSettings(grpc::ClientContext& context, Options const& options,
-               google::cloud::resourcesettings::v1::ListSettingsRequest const&
-                   request) override;
+  StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ListSettings(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::ListSettingsRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> GetSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::GetSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::GetSettingRequest const& request) override;
 
   StatusOr<google::cloud::resourcesettings::v1::Setting> UpdateSetting(
-      grpc::ClientContext& context, Options const& options,
-      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) override;
 
  private:
-  std::unique_ptr<google::cloud::resourcesettings::v1::ResourceSettingsService::
-                      StubInterface>
-      grpc_stub_;
+  std::unique_ptr<google::cloud::resourcesettings::v1::ResourceSettingsService::StubInterface> grpc_stub_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

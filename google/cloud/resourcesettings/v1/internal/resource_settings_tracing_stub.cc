@@ -32,38 +32,33 @@ ResourceSettingsServiceTracingStub::ResourceSettingsServiceTracingStub(
     std::shared_ptr<ResourceSettingsServiceStub> child)
     : child_(std::move(child)), propagator_(internal::MakePropagator()) {}
 
-StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
-ResourceSettingsServiceTracingStub::ListSettings(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse> ResourceSettingsServiceTracingStub::ListSettings(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcesettings.v1.ResourceSettingsService",
-      "ListSettings");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcesettings.v1.ResourceSettingsService", "ListSettings");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->ListSettings(context, options, request));
 }
 
-StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceTracingStub::GetSetting(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::Setting> ResourceSettingsServiceTracingStub::GetSetting(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcesettings.v1.ResourceSettingsService", "GetSetting");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcesettings.v1.ResourceSettingsService", "GetSetting");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
                            child_->GetSetting(context, options, request));
 }
 
-StatusOr<google::cloud::resourcesettings::v1::Setting>
-ResourceSettingsServiceTracingStub::UpdateSetting(
-    grpc::ClientContext& context, Options const& options,
+StatusOr<google::cloud::resourcesettings::v1::Setting> ResourceSettingsServiceTracingStub::UpdateSetting(
+    grpc::ClientContext& context,
+    Options const& options,
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  auto span = internal::MakeSpanGrpc(
-      "google.cloud.resourcesettings.v1.ResourceSettingsService",
-      "UpdateSetting");
+  auto span = internal::MakeSpanGrpc("google.cloud.resourcesettings.v1.ResourceSettingsService", "UpdateSetting");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
   return internal::EndSpan(context, *span,
@@ -72,8 +67,7 @@ ResourceSettingsServiceTracingStub::UpdateSetting(
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-std::shared_ptr<ResourceSettingsServiceStub>
-MakeResourceSettingsServiceTracingStub(
+std::shared_ptr<ResourceSettingsServiceStub> MakeResourceSettingsServiceTracingStub(
     std::shared_ptr<ResourceSettingsServiceStub> stub) {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
   return std::make_shared<ResourceSettingsServiceTracingStub>(std::move(stub));

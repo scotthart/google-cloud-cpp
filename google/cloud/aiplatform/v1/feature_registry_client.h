@@ -65,29 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class FeatureRegistryServiceClient {
  public:
-  explicit FeatureRegistryServiceClient(
-      std::shared_ptr<FeatureRegistryServiceConnection> connection,
-      Options opts = {});
+  explicit FeatureRegistryServiceClient(std::shared_ptr<FeatureRegistryServiceConnection> connection, Options opts = {});
   ~FeatureRegistryServiceClient();
 
   ///@{
   /// @name Copy and move support
   FeatureRegistryServiceClient(FeatureRegistryServiceClient const&) = default;
-  FeatureRegistryServiceClient& operator=(FeatureRegistryServiceClient const&) =
-      default;
+  FeatureRegistryServiceClient& operator=(FeatureRegistryServiceClient const&) = default;
   FeatureRegistryServiceClient(FeatureRegistryServiceClient&&) = default;
-  FeatureRegistryServiceClient& operator=(FeatureRegistryServiceClient&&) =
-      default;
+  FeatureRegistryServiceClient& operator=(FeatureRegistryServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(FeatureRegistryServiceClient const& a,
-                         FeatureRegistryServiceClient const& b) {
+  friend bool operator==(FeatureRegistryServiceClient const& a, FeatureRegistryServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(FeatureRegistryServiceClient const& a,
-                         FeatureRegistryServiceClient const& b) {
+  friend bool operator!=(FeatureRegistryServiceClient const& a, FeatureRegistryServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -103,7 +97,7 @@ class FeatureRegistryServiceClient {
   /// @param feature_group_id  Required. The ID to use for this FeatureGroup, which will become the final
   ///  component of the FeatureGroup's resource name.
   ///  @n
-  ///  This value may be up to 60 characters, and valid characters are
+  ///  This value may be up to 128 characters, and valid characters are
   ///  `[a-z0-9_]`. The first character cannot be a number.
   ///  @n
   ///  The value must be unique within the project and location.
@@ -127,15 +121,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L165}
+  /// [google.cloud.aiplatform.v1.CreateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L179}
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
-      std::string const& feature_group_id, Options opts = {});
+  CreateFeatureGroup(std::string const& parent, google::cloud::aiplatform::v1::FeatureGroup const& feature_group, std::string const& feature_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -148,10 +139,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
-      std::string const& feature_group_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureGroup(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::FeatureGroup const& feature_group, std::string const& feature_group_id, Options opts = {});
 
   // clang-format off
   ///
@@ -183,14 +172,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L165}
+  /// [google.cloud.aiplatform.v1.CreateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L179}
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
-      Options opts = {});
+  CreateFeatureGroup(google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -203,10 +190,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeatureGroup(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -218,8 +203,7 @@ class FeatureRegistryServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  CreateFeatureGroup(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreateFeatureGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -240,11 +224,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L191}
+  /// [google.cloud.aiplatform.v1.GetFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L205}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
+  GetFeatureGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -270,12 +254,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L191}
+  /// [google.cloud.aiplatform.v1.GetFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L205}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::FeatureGroup> GetFeatureGroup(
-      google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::FeatureGroup>
+  GetFeatureGroup(google::cloud::aiplatform::v1::GetFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -307,11 +290,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListFeatureGroupsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L203}
+  /// [google.cloud.aiplatform.v1.ListFeatureGroupsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L217}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureGroup> ListFeatureGroups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
+  ListFeatureGroups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -346,12 +329,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListFeatureGroupsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L203}
+  /// [google.cloud.aiplatform.v1.ListFeatureGroupsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L217}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::FeatureGroup> ListFeatureGroups(
-      google::cloud::aiplatform::v1::ListFeatureGroupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::FeatureGroup>
+  ListFeatureGroups(google::cloud::aiplatform::v1::ListFeatureGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -395,13 +377,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L272}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(
-      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateFeatureGroup(google::cloud::aiplatform::v1::FeatureGroup const& feature_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -414,10 +394,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::FeatureGroup const& feature_group,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureGroup(NoAwaitTag, google::cloud::aiplatform::v1::FeatureGroup const& feature_group, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -450,13 +428,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.FeatureGroup]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_group.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L272}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L286}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
-      Options opts = {});
+  UpdateFeatureGroup(google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -469,10 +445,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeatureGroup(NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -484,8 +458,7 @@ class FeatureRegistryServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::FeatureGroup>>
-  UpdateFeatureGroup(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdateFeatureGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -517,7 +490,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L311}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -535,8 +508,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      NoAwaitTag, std::string const& name, bool force, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureGroup(NoAwaitTag, std::string const& name, bool force, Options opts = {});
 
   // clang-format off
   ///
@@ -568,14 +541,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureGroupRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature_registry_service.proto#L311}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
-      Options opts = {});
+  DeleteFeatureGroup(google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -588,10 +559,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeatureGroup(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeatureGroup(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -603,8 +572,7 @@ class FeatureRegistryServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeatureGroup(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeleteFeatureGroup(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -643,14 +611,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L956}
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Feature const& feature,
-      std::string const& feature_id, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, std::string const& feature_id, Options opts = {});
 
   // clang-format off
   ///
@@ -663,10 +629,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::Feature const& feature,
-      std::string const& feature_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Feature const& feature, std::string const& feature_id, Options opts = {});
 
   // clang-format off
   ///
@@ -698,13 +662,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L955}
+  /// [google.cloud.aiplatform.v1.CreateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L956}
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(google::cloud::aiplatform::v1::CreateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -717,10 +680,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateFeature(NoAwaitTag, google::cloud::aiplatform::v1::CreateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -731,8 +692,125 @@ class FeatureRegistryServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> CreateFeature(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  CreateFeature(google::longrunning::Operation const& operation, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a batch of Features in a given FeatureGroup.
+  ///
+  /// @param parent  Required. The resource name of the EntityType/FeatureGroup to create the
+  ///  batch of Features under. Format:
+  ///  `projects/{project}/locations/{location}/featurestores/{featurestore}/entityTypes/{entity_type}`
+  ///  `projects/{project}/locations/{location}/featureGroups/{feature_group}`
+  /// @param requests  Required. The request message specifying the Features to create. All
+  ///  Features must be created under the same parent EntityType / FeatureGroup.
+  ///  The `parent` field in each child request message can be omitted. If
+  ///  `parent` is set in a child request, then the value must match the `parent`
+  ///  value in this request message.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L986}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1009}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const& requests, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateFeatures
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  BatchCreateFeatures(NoAwaitTag, std::string const& parent, std::vector<google::cloud::aiplatform::v1::CreateFeatureRequest> const& requests, Options opts = {});
+
+  // clang-format off
+  ///
+  /// Creates a batch of Features in a given FeatureGroup.
+  ///
+  /// @param request Unary RPCs, such as the one wrapped by this
+  ///     function, receive a single `request` proto message which includes all
+  ///     the inputs for the RPC. In this case, the proto message is a
+  ///     [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest].
+  ///     Proto messages are converted to C++ classes by Protobuf, using the
+  ///     [Protobuf mapping rules].
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return A [`future`] that becomes satisfied when the LRO
+  ///     ([Long Running Operation]) completes or the polling policy in effect
+  ///     for this call is exhausted. The future is satisfied with an error if
+  ///     the LRO completes with an error or the polling policy is exhausted.
+  ///     In this case the [`StatusOr`] returned by the future contains the
+  ///     error. If the LRO completes successfully the value of the future
+  ///     contains the LRO's result. For this RPC the result is a
+  ///     [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse] proto message.
+  ///     The C++ class representing this message is created by Protobuf, using
+  ///     the [Protobuf mapping rules].
+  ///
+  /// [Protobuf mapping rules]: https://protobuf.dev/reference/cpp/cpp-generated/
+  /// [input iterator requirements]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+  /// [Long Running Operation]: https://google.aip.dev/151
+  /// [`std::string`]: https://en.cppreference.com/w/cpp/string/basic_string
+  /// [`future`]: @ref google::cloud::future
+  /// [`StatusOr`]: @ref google::cloud::StatusOr
+  /// [`Status`]: @ref google::cloud::Status
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L986}
+  /// [google.cloud.aiplatform.v1.BatchCreateFeaturesResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1009}
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateFeatures
+  ///
+  /// Specifying the [`NoAwaitTag`] immediately returns the
+  /// [`google::longrunning::Operation`] that corresponds to the Long Running
+  /// Operation that has been started. No polling for operation status occurs.
+  ///
+  /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
+  ///
+  // clang-format on
+  StatusOr<google::longrunning::Operation>
+  BatchCreateFeatures(NoAwaitTag, google::cloud::aiplatform::v1::BatchCreateFeaturesRequest const& request, Options opts = {});
+
+  // clang-format off
+  ///
+  /// @copybrief BatchCreateFeatures
+  ///
+  /// This method accepts a `google::longrunning::Operation` that corresponds
+  /// to a previously started Long Running Operation (LRO) and polls the status
+  /// of the LRO in the background.
+  ///
+  // clang-format on
+  future<StatusOr<google::cloud::aiplatform::v1::BatchCreateFeaturesResponse>>
+  BatchCreateFeatures(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -757,11 +835,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1018}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -787,12 +865,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1014}
+  /// [google.cloud.aiplatform.v1.GetFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1018}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Feature> GetFeature(
-      google::cloud::aiplatform::v1::GetFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Feature>
+  GetFeature(google::cloud::aiplatform::v1::GetFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -826,11 +903,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1036}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -865,12 +942,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1032}
+  /// [google.cloud.aiplatform.v1.ListFeaturesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1036}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Feature> ListFeatures(
-      google::cloud::aiplatform::v1::ListFeaturesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Feature>
+  ListFeatures(google::cloud::aiplatform::v1::ListFeaturesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -916,12 +992,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::cloud::aiplatform::v1::Feature const& feature,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(google::cloud::aiplatform::v1::Feature const& feature, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -934,9 +1009,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag, google::cloud::aiplatform::v1::Feature const& feature,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag, google::cloud::aiplatform::v1::Feature const& feature, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -969,12 +1043,11 @@ class FeatureRegistryServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Feature]: @googleapis_reference_link{google/cloud/aiplatform/v1/feature.proto#L34}
-  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1240}
+  /// [google.cloud.aiplatform.v1.UpdateFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1244}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(google::cloud::aiplatform::v1::UpdateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -987,10 +1060,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::UpdateFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateFeature(NoAwaitTag, google::cloud::aiplatform::v1::UpdateFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,8 +1072,8 @@ class FeatureRegistryServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Feature>> UpdateFeature(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Feature>>
+  UpdateFeature(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,7 +1103,7 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1273}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -1050,8 +1121,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1083,14 +1154,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1269}
+  /// [google.cloud.aiplatform.v1.DeleteFeatureRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/featurestore_service.proto#L1273}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
-      Options opts = {});
+  DeleteFeature(google::cloud::aiplatform::v1::DeleteFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1103,10 +1172,8 @@ class FeatureRegistryServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteFeature(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteFeatureRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteFeature(NoAwaitTag, google::cloud::aiplatform::v1::DeleteFeatureRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1118,8 +1185,7 @@ class FeatureRegistryServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteFeature(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteFeature(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1157,8 +1223,8 @@ class FeatureRegistryServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1187,9 +1253,8 @@ class FeatureRegistryServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1221,8 +1286,8 @@ class FeatureRegistryServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1253,8 +1318,8 @@ class FeatureRegistryServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1289,22 +1354,13 @@ class FeatureRegistryServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1330,25 +1386,17 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1378,12 +1426,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1405,12 +1453,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1437,13 +1485,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1464,10 +1511,11 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1493,12 +1541,11 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1510,8 +1557,9 @@ class FeatureRegistryServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1525,13 +1573,14 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1543,8 +1592,9 @@ class FeatureRegistryServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1563,15 +1613,14 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,13 +1653,12 @@ class FeatureRegistryServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<FeatureRegistryServiceConnection> connection_;

@@ -32,9 +32,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * Application developers may want to test their code with simulated responses,
  * including errors, from an object of type `CloudRedisClusterClient`. To do so,
- * construct an object of type `CloudRedisClusterClient` with an instance of
- * this class. Then use the Google Test framework functions to program the
- * behavior of this mock.
+ * construct an object of type `CloudRedisClusterClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
  *
  * @see [This example][bq-mock] for how to test your application with GoogleTest.
  * While the example showcases types from the BigQuery library, the underlying
@@ -42,35 +42,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @cloud_cpp_docs_link{bigquery,bigquery-read-mock}
  */
-class MockCloudRedisClusterConnection
-    : public redis_cluster_v1::CloudRedisClusterConnection {
+class MockCloudRedisClusterConnection : public redis_cluster_v1::CloudRedisClusterConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD((StreamRange<google::cloud::redis::cluster::v1::Cluster>),
-              ListClusters,
-              (google::cloud::redis::cluster::v1::ListClustersRequest request),
-              (override));
+  ListClusters,
+  (google::cloud::redis::cluster::v1::ListClustersRequest request), (override));
 
-  MOCK_METHOD(
-      StatusOr<google::cloud::redis::cluster::v1::Cluster>, GetCluster,
-      (google::cloud::redis::cluster::v1::GetClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::Cluster>,
+  GetCluster,
+  (google::cloud::redis::cluster::v1::GetClusterRequest const& request), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// UpdateCluster(Matcher<google::cloud::redis::cluster::v1::UpdateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::cloud::redis::cluster::v1::UpdateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-      UpdateCluster,
-      (google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+  UpdateCluster,
+  (google::cloud::redis::cluster::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -78,37 +72,33 @@ class MockCloudRedisClusterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, UpdateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, UpdateCluster,
-      (NoAwaitTag,
-       google::cloud::redis::cluster::v1::UpdateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  UpdateCluster, (NoAwaitTag,
+    google::cloud::redis::cluster::v1::UpdateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, UpdateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-              UpdateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  UpdateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// DeleteCluster(Matcher<google::cloud::redis::cluster::v1::DeleteClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::cloud::redis::cluster::v1::DeleteClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::protobuf::Any>>, DeleteCluster,
-      (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>,
+  DeleteCluster,
+  (google::cloud::redis::cluster::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -116,37 +106,33 @@ class MockCloudRedisClusterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, DeleteCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, DeleteCluster,
-      (NoAwaitTag,
-       google::cloud::redis::cluster::v1::DeleteClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  DeleteCluster, (NoAwaitTag,
+    google::cloud::redis::cluster::v1::DeleteClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, DeleteCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
-  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>, DeleteCluster,
-              (google::longrunning::Operation const& operation), (override));
+  MOCK_METHOD(future<StatusOr<google::protobuf::Any>>,
+  DeleteCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock,
-  /// CreateCluster(Matcher<google::cloud::redis::cluster::v1::CreateClusterRequest
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::cloud::redis::cluster::v1::CreateClusterRequest const&>(_)))
   /// @endcode
-  MOCK_METHOD(
-      future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-      CreateCluster,
-      (google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
+  CreateCluster,
+  (google::cloud::redis::cluster::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
@@ -154,52 +140,49 @@ class MockCloudRedisClusterConnection
   /// using ::testing::_;
   /// EXPECT_CALL(*mock, CreateCluster(_, _))
   /// @endcode
-  MOCK_METHOD(
-      StatusOr<google::longrunning::Operation>, CreateCluster,
-      (NoAwaitTag,
-       google::cloud::redis::cluster::v1::CreateClusterRequest const& request),
-      (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  CreateCluster, (NoAwaitTag,
+    google::cloud::redis::cluster::v1::CreateClusterRequest const& request), (override));
+
 
   /// To disambiguate calls, use:
   ///
   /// @code
   /// using ::testing::_;
   /// using ::testing::Matcher;
-  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation
-  /// const&>(_)))
+  /// EXPECT_CALL(*mock, CreateCluster(Matcher<google::longrunning::Operation const&>(_)))
   /// @endcode
   MOCK_METHOD(future<StatusOr<google::cloud::redis::cluster::v1::Cluster>>,
-              CreateCluster, (google::longrunning::Operation const& operation),
-              (override));
+  CreateCluster, (
+    google::longrunning::Operation const& operation), (override));
 
   MOCK_METHOD(StatusOr<google::cloud::redis::cluster::v1::CertificateAuthority>,
-              GetClusterCertificateAuthority,
-              (google::cloud::redis::cluster::v1::
-                   GetClusterCertificateAuthorityRequest const& request),
-              (override));
+  GetClusterCertificateAuthority,
+  (google::cloud::redis::cluster::v1::GetClusterCertificateAuthorityRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::cloud::location::Location>), ListLocations,
-              (google::cloud::location::ListLocationsRequest request),
-              (override));
+  MOCK_METHOD((StreamRange<google::cloud::location::Location>),
+  ListLocations,
+  (google::cloud::location::ListLocationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::cloud::location::Location>, GetLocation,
-              (google::cloud::location::GetLocationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::cloud::location::Location>,
+  GetLocation,
+  (google::cloud::location::GetLocationRequest const& request), (override));
 
-  MOCK_METHOD((StreamRange<google::longrunning::Operation>), ListOperations,
-              (google::longrunning::ListOperationsRequest request), (override));
+  MOCK_METHOD((StreamRange<google::longrunning::Operation>),
+  ListOperations,
+  (google::longrunning::ListOperationsRequest request), (override));
 
-  MOCK_METHOD(StatusOr<google::longrunning::Operation>, GetOperation,
-              (google::longrunning::GetOperationRequest const& request),
-              (override));
+  MOCK_METHOD(StatusOr<google::longrunning::Operation>,
+  GetOperation,
+  (google::longrunning::GetOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, DeleteOperation,
-              (google::longrunning::DeleteOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  DeleteOperation,
+  (google::longrunning::DeleteOperationRequest const& request), (override));
 
-  MOCK_METHOD(Status, CancelOperation,
-              (google::longrunning::CancelOperationRequest const& request),
-              (override));
+  MOCK_METHOD(Status,
+  CancelOperation,
+  (google::longrunning::CancelOperationRequest const& request), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

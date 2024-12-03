@@ -19,12 +19,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TPU_V2_TPU_CLIENT_H
 
-#include "google/cloud/tpu/v2/tpu_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/tpu/v2/tpu_connection.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <map>
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class TpuClient {
  public:
-  explicit TpuClient(std::shared_ptr<TpuConnection> connection,
-                     Options opts = {});
+  explicit TpuClient(std::shared_ptr<TpuConnection> connection, Options opts = {});
   ~TpuClient();
 
   ///@{
@@ -119,8 +118,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::Node> ListNodes(std::string const& parent,
-                                                      Options opts = {});
+  StreamRange<google::cloud::tpu::v2::Node>
+  ListNodes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,8 +157,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::Node> ListNodes(
-      google::cloud::tpu::v2::ListNodesRequest request, Options opts = {});
+  StreamRange<google::cloud::tpu::v2::Node>
+  ListNodes(google::cloud::tpu::v2::ListNodesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -183,8 +182,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::Node> GetNode(std::string const& name,
-                                                 Options opts = {});
+  StatusOr<google::cloud::tpu::v2::Node>
+  GetNode(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -213,8 +212,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::Node> GetNode(
-      google::cloud::tpu::v2::GetNodeRequest const& request, Options opts = {});
+  StatusOr<google::cloud::tpu::v2::Node>
+  GetNode(google::cloud::tpu::v2::GetNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -247,9 +246,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
-      std::string const& parent, google::cloud::tpu::v2::Node const& node,
-      std::string const& node_id, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  CreateNode(std::string const& parent, google::cloud::tpu::v2::Node const& node, std::string const& node_id, Options opts = {});
 
   // clang-format off
   ///
@@ -262,10 +260,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNode(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::tpu::v2::Node const& node, std::string const& node_id,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNode(NoAwaitTag, std::string const& parent, google::cloud::tpu::v2::Node const& node, std::string const& node_id, Options opts = {});
 
   // clang-format off
   ///
@@ -301,9 +297,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.Node]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L289}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
-      google::cloud::tpu::v2::CreateNodeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  CreateNode(google::cloud::tpu::v2::CreateNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -316,9 +311,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateNode(
-      NoAwaitTag, google::cloud::tpu::v2::CreateNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateNode(NoAwaitTag, google::cloud::tpu::v2::CreateNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -329,8 +323,8 @@ class TpuClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> CreateNode(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  CreateNode(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -361,8 +355,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L720}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteNode(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -375,9 +369,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNode(NoAwaitTag,
-                                                      std::string const& name,
-                                                      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNode(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -413,9 +406,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.OperationMetadata]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L720}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
-      google::cloud::tpu::v2::DeleteNodeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteNode(google::cloud::tpu::v2::DeleteNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -428,9 +420,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteNode(
-      NoAwaitTag, google::cloud::tpu::v2::DeleteNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteNode(NoAwaitTag, google::cloud::tpu::v2::DeleteNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -441,8 +432,8 @@ class TpuClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>> DeleteNode(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::OperationMetadata>>
+  DeleteNode(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -478,9 +469,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.StopNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L538}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
-      google::cloud::tpu::v2::StopNodeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  StopNode(google::cloud::tpu::v2::StopNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -493,9 +483,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StopNode(
-      NoAwaitTag, google::cloud::tpu::v2::StopNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StopNode(NoAwaitTag, google::cloud::tpu::v2::StopNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -506,8 +495,8 @@ class TpuClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> StopNode(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  StopNode(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -543,9 +532,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.StartNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L547}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
-      google::cloud::tpu::v2::StartNodeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  StartNode(google::cloud::tpu::v2::StartNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -558,9 +546,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartNode(
-      NoAwaitTag, google::cloud::tpu::v2::StartNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartNode(NoAwaitTag, google::cloud::tpu::v2::StartNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -571,8 +558,8 @@ class TpuClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> StartNode(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  StartNode(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -606,9 +593,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L556}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
-      google::cloud::tpu::v2::Node const& node,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  UpdateNode(google::cloud::tpu::v2::Node const& node, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -621,9 +607,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNode(
-      NoAwaitTag, google::cloud::tpu::v2::Node const& node,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNode(NoAwaitTag, google::cloud::tpu::v2::Node const& node, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -659,9 +644,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.UpdateNodeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L556}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
-      google::cloud::tpu::v2::UpdateNodeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  UpdateNode(google::cloud::tpu::v2::UpdateNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -674,9 +658,8 @@ class TpuClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateNode(
-      NoAwaitTag, google::cloud::tpu::v2::UpdateNodeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateNode(NoAwaitTag, google::cloud::tpu::v2::UpdateNodeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -687,8 +670,8 @@ class TpuClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::tpu::v2::Node>> UpdateNode(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::tpu::v2::Node>>
+  UpdateNode(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -718,9 +701,7 @@ class TpuClient {
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::GenerateServiceIdentityResponse>
-  GenerateServiceIdentity(
-      google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request,
-      Options opts = {});
+  GenerateServiceIdentity(google::cloud::tpu::v2::GenerateServiceIdentityRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -753,8 +734,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L622}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::tpu::v2::AcceleratorType>
+  ListAcceleratorTypes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -792,9 +773,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.ListAcceleratorTypesRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L622}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::AcceleratorType> ListAcceleratorTypes(
-      google::cloud::tpu::v2::ListAcceleratorTypesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::tpu::v2::AcceleratorType>
+  ListAcceleratorTypes(google::cloud::tpu::v2::ListAcceleratorTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -818,8 +798,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tpu::v2::AcceleratorType>
+  GetAcceleratorType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -848,9 +828,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.GetAcceleratorTypeRequest]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L610}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::AcceleratorType> GetAcceleratorType(
-      google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::tpu::v2::AcceleratorType>
+  GetAcceleratorType(google::cloud::tpu::v2::GetAcceleratorTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -883,8 +862,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::tpu::v2::RuntimeVersion>
+  ListRuntimeVersions(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -922,9 +901,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
   ///
   // clang-format on
-  StreamRange<google::cloud::tpu::v2::RuntimeVersion> ListRuntimeVersions(
-      google::cloud::tpu::v2::ListRuntimeVersionsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::tpu::v2::RuntimeVersion>
+  ListRuntimeVersions(google::cloud::tpu::v2::ListRuntimeVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -948,8 +926,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::tpu::v2::RuntimeVersion>
+  GetRuntimeVersion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -978,9 +956,8 @@ class TpuClient {
   /// [google.cloud.tpu.v2.RuntimeVersion]: @googleapis_reference_link{google/cloud/tpu/v2/cloud_tpu.proto#L658}
   ///
   // clang-format on
-  StatusOr<google::cloud::tpu::v2::RuntimeVersion> GetRuntimeVersion(
-      google::cloud::tpu::v2::GetRuntimeVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::tpu::v2::RuntimeVersion>
+  GetRuntimeVersion(google::cloud::tpu::v2::GetRuntimeVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1010,9 +987,7 @@ class TpuClient {
   ///
   // clang-format on
   StatusOr<google::cloud::tpu::v2::GetGuestAttributesResponse>
-  GetGuestAttributes(
-      google::cloud::tpu::v2::GetGuestAttributesRequest const& request,
-      Options opts = {});
+  GetGuestAttributes(google::cloud::tpu::v2::GetGuestAttributesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1050,8 +1025,8 @@ class TpuClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1080,22 +1055,13 @@ class TpuClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1121,25 +1087,17 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1169,12 +1127,12 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1196,12 +1154,12 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1228,13 +1186,12 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,10 +1212,11 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1284,12 +1242,11 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1301,8 +1258,9 @@ class TpuClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1316,13 +1274,14 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1334,8 +1293,9 @@ class TpuClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1354,15 +1314,14 @@ class TpuClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<TpuConnection> connection_;

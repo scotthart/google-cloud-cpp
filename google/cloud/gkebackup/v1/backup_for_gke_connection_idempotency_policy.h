@@ -37,115 +37,113 @@ class BackupForGKEConnectionIdempotencyPolicy {
   virtual ~BackupForGKEConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<BackupForGKEConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<BackupForGKEConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateBackupPlan(
-      google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBackupPlan(google::cloud::gkebackup::v1::CreateBackupPlanRequest const& request);
 
-  virtual google::cloud::Idempotency ListBackupPlans(
-      google::cloud::gkebackup::v1::ListBackupPlansRequest request);
+  virtual google::cloud::Idempotency
+  ListBackupPlans(google::cloud::gkebackup::v1::ListBackupPlansRequest request);
 
-  virtual google::cloud::Idempotency GetBackupPlan(
-      google::cloud::gkebackup::v1::GetBackupPlanRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBackupPlan(google::cloud::gkebackup::v1::GetBackupPlanRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBackupPlan(
-      google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateBackupPlan(google::cloud::gkebackup::v1::UpdateBackupPlanRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBackupPlan(
-      google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteBackupPlan(google::cloud::gkebackup::v1::DeleteBackupPlanRequest const& request);
 
-  virtual google::cloud::Idempotency CreateBackup(
-      google::cloud::gkebackup::v1::CreateBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateBackup(google::cloud::gkebackup::v1::CreateBackupRequest const& request);
 
-  virtual google::cloud::Idempotency ListBackups(
-      google::cloud::gkebackup::v1::ListBackupsRequest request);
+  virtual google::cloud::Idempotency
+  ListBackups(google::cloud::gkebackup::v1::ListBackupsRequest request);
 
-  virtual google::cloud::Idempotency GetBackup(
-      google::cloud::gkebackup::v1::GetBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  GetBackup(google::cloud::gkebackup::v1::GetBackupRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateBackup(
-      google::cloud::gkebackup::v1::UpdateBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateBackup(google::cloud::gkebackup::v1::UpdateBackupRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteBackup(
-      google::cloud::gkebackup::v1::DeleteBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteBackup(google::cloud::gkebackup::v1::DeleteBackupRequest const& request);
 
-  virtual google::cloud::Idempotency ListVolumeBackups(
-      google::cloud::gkebackup::v1::ListVolumeBackupsRequest request);
+  virtual google::cloud::Idempotency
+  ListVolumeBackups(google::cloud::gkebackup::v1::ListVolumeBackupsRequest request);
 
-  virtual google::cloud::Idempotency GetVolumeBackup(
-      google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request);
+  virtual google::cloud::Idempotency
+  GetVolumeBackup(google::cloud::gkebackup::v1::GetVolumeBackupRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRestorePlan(
-      google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRestorePlan(google::cloud::gkebackup::v1::CreateRestorePlanRequest const& request);
 
-  virtual google::cloud::Idempotency ListRestorePlans(
-      google::cloud::gkebackup::v1::ListRestorePlansRequest request);
+  virtual google::cloud::Idempotency
+  ListRestorePlans(google::cloud::gkebackup::v1::ListRestorePlansRequest request);
 
-  virtual google::cloud::Idempotency GetRestorePlan(
-      google::cloud::gkebackup::v1::GetRestorePlanRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRestorePlan(google::cloud::gkebackup::v1::GetRestorePlanRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRestorePlan(
-      google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRestorePlan(google::cloud::gkebackup::v1::UpdateRestorePlanRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRestorePlan(
-      google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRestorePlan(google::cloud::gkebackup::v1::DeleteRestorePlanRequest const& request);
 
-  virtual google::cloud::Idempotency CreateRestore(
-      google::cloud::gkebackup::v1::CreateRestoreRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateRestore(google::cloud::gkebackup::v1::CreateRestoreRequest const& request);
 
-  virtual google::cloud::Idempotency ListRestores(
-      google::cloud::gkebackup::v1::ListRestoresRequest request);
+  virtual google::cloud::Idempotency
+  ListRestores(google::cloud::gkebackup::v1::ListRestoresRequest request);
 
-  virtual google::cloud::Idempotency GetRestore(
-      google::cloud::gkebackup::v1::GetRestoreRequest const& request);
+  virtual google::cloud::Idempotency
+  GetRestore(google::cloud::gkebackup::v1::GetRestoreRequest const& request);
 
-  virtual google::cloud::Idempotency UpdateRestore(
-      google::cloud::gkebackup::v1::UpdateRestoreRequest const& request);
+  virtual google::cloud::Idempotency
+  UpdateRestore(google::cloud::gkebackup::v1::UpdateRestoreRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteRestore(
-      google::cloud::gkebackup::v1::DeleteRestoreRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteRestore(google::cloud::gkebackup::v1::DeleteRestoreRequest const& request);
 
-  virtual google::cloud::Idempotency ListVolumeRestores(
-      google::cloud::gkebackup::v1::ListVolumeRestoresRequest request);
+  virtual google::cloud::Idempotency
+  ListVolumeRestores(google::cloud::gkebackup::v1::ListVolumeRestoresRequest request);
 
-  virtual google::cloud::Idempotency GetVolumeRestore(
-      google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request);
+  virtual google::cloud::Idempotency
+  GetVolumeRestore(google::cloud::gkebackup::v1::GetVolumeRestoreRequest const& request);
 
-  virtual google::cloud::Idempotency GetBackupIndexDownloadUrl(
-      google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const&
-          request);
+  virtual google::cloud::Idempotency
+  GetBackupIndexDownloadUrl(google::cloud::gkebackup::v1::GetBackupIndexDownloadUrlRequest const& request);
 
-  virtual google::cloud::Idempotency ListLocations(
-      google::cloud::location::ListLocationsRequest request);
+  virtual google::cloud::Idempotency
+  ListLocations(google::cloud::location::ListLocationsRequest request);
 
-  virtual google::cloud::Idempotency GetLocation(
-      google::cloud::location::GetLocationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
 
-  virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request);
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
 
-  virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request);
+  virtual google::cloud::Idempotency
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 
-  virtual google::cloud::Idempotency ListOperations(
-      google::longrunning::ListOperationsRequest request);
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 
-  virtual google::cloud::Idempotency GetOperation(
-      google::longrunning::GetOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  GetOperation(google::longrunning::GetOperationRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request);
 
-  virtual google::cloud::Idempotency CancelOperation(
-      google::longrunning::CancelOperationRequest const& request);
+  virtual google::cloud::Idempotency
+  CancelOperation(google::longrunning::CancelOperationRequest const& request);
 };
 
 std::unique_ptr<BackupForGKEConnectionIdempotencyPolicy>
-MakeDefaultBackupForGKEConnectionIdempotencyPolicy();
+    MakeDefaultBackupForGKEConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkebackup_v1

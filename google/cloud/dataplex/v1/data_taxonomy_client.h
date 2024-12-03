@@ -65,28 +65,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DataTaxonomyServiceClient {
  public:
-  explicit DataTaxonomyServiceClient(
-      std::shared_ptr<DataTaxonomyServiceConnection> connection,
-      Options opts = {});
+  explicit DataTaxonomyServiceClient(std::shared_ptr<DataTaxonomyServiceConnection> connection, Options opts = {});
   ~DataTaxonomyServiceClient();
 
   ///@{
   /// @name Copy and move support
   DataTaxonomyServiceClient(DataTaxonomyServiceClient const&) = default;
-  DataTaxonomyServiceClient& operator=(DataTaxonomyServiceClient const&) =
-      default;
+  DataTaxonomyServiceClient& operator=(DataTaxonomyServiceClient const&) = default;
   DataTaxonomyServiceClient(DataTaxonomyServiceClient&&) = default;
   DataTaxonomyServiceClient& operator=(DataTaxonomyServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(DataTaxonomyServiceClient const& a,
-                         DataTaxonomyServiceClient const& b) {
+  friend bool operator==(DataTaxonomyServiceClient const& a, DataTaxonomyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DataTaxonomyServiceClient const& a,
-                         DataTaxonomyServiceClient const& b) {
+  friend bool operator!=(DataTaxonomyServiceClient const& a, DataTaxonomyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -130,10 +125,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(
-      std::string const& parent,
-      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
-      std::string const& data_taxonomy_id, Options opts = {});
+  CreateDataTaxonomy(std::string const& parent, google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy, std::string const& data_taxonomy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -146,10 +138,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
-      std::string const& data_taxonomy_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataTaxonomy(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy, std::string const& data_taxonomy_id, Options opts = {});
 
   // clang-format off
   ///
@@ -186,9 +176,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
-      Options opts = {});
+  CreateDataTaxonomy(google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,10 +189,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::CreateDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -216,8 +202,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  CreateDataTaxonomy(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  CreateDataTaxonomy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -250,9 +235,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(
-      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDataTaxonomy(google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +248,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::DataTaxonomy const& data_taxonomy, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -305,9 +286,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
-      Options opts = {});
+  UpdateDataTaxonomy(google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -320,10 +299,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -335,8 +312,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataTaxonomy>>
-  UpdateDataTaxonomy(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  UpdateDataTaxonomy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -383,8 +359,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataTaxonomy(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -422,9 +398,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
-      Options opts = {});
+  DeleteDataTaxonomy(google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -437,10 +411,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataTaxonomy(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataTaxonomy(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -452,8 +424,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataTaxonomy(google::longrunning::Operation const& operation,
-                     Options opts = {});
+  DeleteDataTaxonomy(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -488,8 +459,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L504}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
+  ListDataTaxonomies(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -527,9 +498,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.ListDataTaxonomiesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L504}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataTaxonomy> ListDataTaxonomies(
-      google::cloud::dataplex::v1::ListDataTaxonomiesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataTaxonomy>
+  ListDataTaxonomies(google::cloud::dataplex::v1::ListDataTaxonomiesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -554,8 +524,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L492}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
+  GetDataTaxonomy(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -584,9 +554,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.GetDataTaxonomyRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L492}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataTaxonomy> GetDataTaxonomy(
-      google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataTaxonomy>
+  GetDataTaxonomy(google::cloud::dataplex::v1::GetDataTaxonomyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -626,11 +595,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(
-      std::string const& parent,
-      google::cloud::dataplex::v1::DataAttributeBinding const&
-          data_attribute_binding,
-      std::string const& data_attribute_binding_id, Options opts = {});
+  CreateDataAttributeBinding(std::string const& parent, google::cloud::dataplex::v1::DataAttributeBinding const& data_attribute_binding, std::string const& data_attribute_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -643,11 +608,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::DataAttributeBinding const&
-          data_attribute_binding,
-      std::string const& data_attribute_binding_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttributeBinding(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::DataAttributeBinding const& data_attribute_binding, std::string const& data_attribute_binding_id, Options opts = {});
 
   // clang-format off
   ///
@@ -684,10 +646,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  CreateDataAttributeBinding(google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -700,11 +659,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -716,8 +672,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  CreateDataAttributeBinding(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  CreateDataAttributeBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -750,10 +705,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(
-      google::cloud::dataplex::v1::DataAttributeBinding const&
-          data_attribute_binding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDataAttributeBinding(google::cloud::dataplex::v1::DataAttributeBinding const& data_attribute_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -766,11 +718,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DataAttributeBinding const&
-          data_attribute_binding,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::DataAttributeBinding const& data_attribute_binding, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -807,10 +756,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  UpdateDataAttributeBinding(google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -823,11 +769,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -839,8 +782,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>>
-  UpdateDataAttributeBinding(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  UpdateDataAttributeBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -888,8 +830,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttributeBinding(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -928,10 +870,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  DeleteDataAttributeBinding(google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -944,11 +883,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataAttributeBinding(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttributeBinding(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -960,8 +896,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttributeBinding(google::longrunning::Operation const& operation,
-                             Options opts = {});
+  DeleteDataAttributeBinding(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1035,9 +970,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dataplex::v1::DataAttributeBinding>
-  ListDataAttributeBindings(
-      google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request,
-      Options opts = {});
+  ListDataAttributeBindings(google::cloud::dataplex::v1::ListDataAttributeBindingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1093,10 +1026,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dataplex::v1::DataAttributeBinding>
-  GetDataAttributeBinding(
-      google::cloud::dataplex::v1::GetDataAttributeBindingRequest const&
-          request,
-      Options opts = {});
+  GetDataAttributeBinding(google::cloud::dataplex::v1::GetDataAttributeBindingRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1136,10 +1066,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(
-      std::string const& parent,
-      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
-      std::string const& data_attribute_id, Options opts = {});
+  CreateDataAttribute(std::string const& parent, google::cloud::dataplex::v1::DataAttribute const& data_attribute, std::string const& data_attribute_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1152,10 +1079,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
-      std::string const& data_attribute_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttribute(NoAwaitTag, std::string const& parent, google::cloud::dataplex::v1::DataAttribute const& data_attribute, std::string const& data_attribute_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1192,9 +1117,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
-      Options opts = {});
+  CreateDataAttribute(google::cloud::dataplex::v1::CreateDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1207,10 +1130,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::CreateDataAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::CreateDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1222,8 +1143,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  CreateDataAttribute(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  CreateDataAttribute(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1256,9 +1176,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(
-      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateDataAttribute(google::cloud::dataplex::v1::DataAttribute const& data_attribute, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1271,10 +1189,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DataAttribute const& data_attribute,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::DataAttribute const& data_attribute, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1311,9 +1227,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
-      Options opts = {});
+  UpdateDataAttribute(google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1326,10 +1240,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::UpdateDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1341,8 +1253,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::DataAttribute>>
-  UpdateDataAttribute(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  UpdateDataAttribute(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1388,8 +1299,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttribute(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1426,9 +1337,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
-      Options opts = {});
+  DeleteDataAttribute(google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1441,10 +1350,8 @@ class DataTaxonomyServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataAttribute(
-      NoAwaitTag,
-      google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataAttribute(NoAwaitTag, google::cloud::dataplex::v1::DeleteDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1456,8 +1363,7 @@ class DataTaxonomyServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataplex::v1::OperationMetadata>>
-  DeleteDataAttribute(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  DeleteDataAttribute(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1491,8 +1397,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L617}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataAttribute>
+  ListDataAttributes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1530,9 +1436,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.ListDataAttributesRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L617}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataplex::v1::DataAttribute> ListDataAttributes(
-      google::cloud::dataplex::v1::ListDataAttributesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataplex::v1::DataAttribute>
+  ListDataAttributes(google::cloud::dataplex::v1::ListDataAttributesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1557,8 +1462,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L605}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataAttribute>
+  GetDataAttribute(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1587,9 +1492,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.dataplex.v1.GetDataAttributeRequest]: @googleapis_reference_link{google/cloud/dataplex/v1/data_taxonomy.proto#L605}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataplex::v1::DataAttribute> GetDataAttribute(
-      google::cloud::dataplex::v1::GetDataAttributeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataplex::v1::DataAttribute>
+  GetDataAttribute(google::cloud::dataplex::v1::GetDataAttributeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1627,8 +1531,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1657,9 +1561,8 @@ class DataTaxonomyServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1691,8 +1594,8 @@ class DataTaxonomyServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1723,8 +1626,8 @@ class DataTaxonomyServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1759,22 +1662,13 @@ class DataTaxonomyServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1800,25 +1694,17 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1848,12 +1734,12 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1875,12 +1761,12 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1907,13 +1793,12 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1934,10 +1819,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1963,12 +1849,11 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1980,8 +1865,9 @@ class DataTaxonomyServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1995,13 +1881,14 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2013,8 +1900,9 @@ class DataTaxonomyServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2033,15 +1921,14 @@ class DataTaxonomyServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DataTaxonomyServiceConnection> connection_;

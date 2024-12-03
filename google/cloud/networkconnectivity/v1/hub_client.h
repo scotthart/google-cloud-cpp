@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_NETWORKCONNECTIVITY_V1_HUB_CLIENT_H
 
-#include "google/cloud/networkconnectivity/v1/hub_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/networkconnectivity/v1/hub_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,8 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class HubServiceClient {
  public:
-  explicit HubServiceClient(std::shared_ptr<HubServiceConnection> connection,
-                            Options opts = {});
+  explicit HubServiceClient(std::shared_ptr<HubServiceConnection> connection, Options opts = {});
   ~HubServiceClient();
 
   ///@{
@@ -119,8 +118,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L667}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Hub>
+  ListHubs(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -158,9 +157,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.ListHubsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L667}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
-      google::cloud::networkconnectivity::v1::ListHubsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Hub>
+  ListHubs(google::cloud::networkconnectivity::v1::ListHubsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -184,8 +182,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Hub>
+  GetHub(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +212,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
-      google::cloud::networkconnectivity::v1::GetHubRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Hub>
+  GetHub(google::cloud::networkconnectivity::v1::GetHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -249,10 +246,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      std::string const& parent,
-      google::cloud::networkconnectivity::v1::Hub const& hub,
-      std::string const& hub_id, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(std::string const& parent, google::cloud::networkconnectivity::v1::Hub const& hub, std::string const& hub_id, Options opts = {});
 
   // clang-format off
   ///
@@ -265,10 +260,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateHub(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networkconnectivity::v1::Hub const& hub,
-      std::string const& hub_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateHub(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::Hub const& hub, std::string const& hub_id, Options opts = {});
 
   // clang-format off
   ///
@@ -304,9 +297,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Hub]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L338}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(google::cloud::networkconnectivity::v1::CreateHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -319,10 +311,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateHub(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -333,8 +323,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  CreateHub(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -371,9 +361,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L756}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      google::cloud::networkconnectivity::v1::Hub const& hub,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(google::cloud::networkconnectivity::v1::Hub const& hub, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -386,9 +375,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateHub(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::Hub const& hub,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateHub(NoAwaitTag, google::cloud::networkconnectivity::v1::Hub const& hub, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -425,9 +413,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L756}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(google::cloud::networkconnectivity::v1::UpdateHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -440,10 +427,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateHub(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -454,8 +439,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
+  UpdateHub(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -500,9 +485,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteHub(NoAwaitTag,
-                                                     std::string const& name,
-                                                     Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteHub(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -539,9 +523,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteHub(
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
-      Options opts = {});
+  DeleteHub(google::cloud::networkconnectivity::v1::DeleteHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -554,10 +536,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteHub(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteHubRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteHub(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteHubRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -604,8 +584,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
-      std::string const& name, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListHubSpokes(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -645,9 +625,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListHubSpokes(
-      google::cloud::networkconnectivity::v1::ListHubSpokesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListHubSpokes(google::cloud::networkconnectivity::v1::ListHubSpokesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -681,8 +660,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListSpokes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -721,9 +700,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
-      google::cloud::networkconnectivity::v1::ListSpokesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Spoke>
+  ListSpokes(google::cloud::networkconnectivity::v1::ListSpokesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -747,8 +725,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Spoke>
+  GetSpoke(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -777,9 +755,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
-      google::cloud::networkconnectivity::v1::GetSpokeRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Spoke>
+  GetSpoke(google::cloud::networkconnectivity::v1::GetSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -812,10 +789,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      std::string const& parent,
-      google::cloud::networkconnectivity::v1::Spoke const& spoke,
-      std::string const& spoke_id, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(std::string const& parent, google::cloud::networkconnectivity::v1::Spoke const& spoke, std::string const& spoke_id, Options opts = {});
 
   // clang-format off
   ///
@@ -828,10 +803,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSpoke(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::networkconnectivity::v1::Spoke const& spoke,
-      std::string const& spoke_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSpoke(NoAwaitTag, std::string const& parent, google::cloud::networkconnectivity::v1::Spoke const& spoke, std::string const& spoke_id, Options opts = {});
 
   // clang-format off
   ///
@@ -867,9 +840,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Spoke]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L422}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -882,10 +854,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -896,8 +866,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  CreateSpoke(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -933,9 +903,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L974}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      google::cloud::networkconnectivity::v1::Spoke const& spoke,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(google::cloud::networkconnectivity::v1::Spoke const& spoke, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -948,9 +917,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSpoke(
-      NoAwaitTag, google::cloud::networkconnectivity::v1::Spoke const& spoke,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::Spoke const& spoke, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -986,9 +954,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L974}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,10 +968,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1015,8 +980,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>
+  UpdateSpoke(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1051,10 +1016,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1115}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(std::string const& name, std::string const& spoke_uri,
-                 Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(std::string const& name, std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -1067,9 +1030,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RejectHubSpoke(NoAwaitTag, std::string const& name, std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -1108,12 +1070,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.RejectHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1115}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1126,11 +1084,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RejectHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RejectHubSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::RejectHubSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1141,10 +1096,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
-  RejectHubSpoke(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::RejectHubSpokeResponse>>
+  RejectHubSpoke(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1177,10 +1130,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1069}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(std::string const& name, std::string const& spoke_uri,
-                 Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(std::string const& name, std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -1193,9 +1144,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      NoAwaitTag, std::string const& name, std::string const& spoke_uri,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AcceptHubSpoke(NoAwaitTag, std::string const& name, std::string const& spoke_uri, Options opts = {});
 
   // clang-format off
   ///
@@ -1232,12 +1182,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.AcceptHubSpokeResponse]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1069}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1250,11 +1196,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AcceptHubSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AcceptHubSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::AcceptHubSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1265,10 +1208,8 @@ class HubServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
-  AcceptHubSpoke(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  future<StatusOr<google::cloud::networkconnectivity::v1::AcceptHubSpokeResponse>>
+  AcceptHubSpoke(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1313,9 +1254,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSpoke(NoAwaitTag,
-                                                       std::string const& name,
-                                                       Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSpoke(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1352,9 +1292,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
-      Options opts = {});
+  DeleteSpoke(google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1367,10 +1305,8 @@ class HubServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSpoke(
-      NoAwaitTag,
-      google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSpoke(NoAwaitTag, google::cloud::networkconnectivity::v1::DeleteSpokeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1382,8 +1318,7 @@ class HubServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
-  DeleteSpoke(google::longrunning::Operation const& operation,
-              Options opts = {});
+  DeleteSpoke(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1407,8 +1342,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+  GetRouteTable(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1437,10 +1372,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.RouteTable]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L525}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::RouteTable> GetRouteTable(
-      google::cloud::networkconnectivity::v1::GetRouteTableRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::RouteTable>
+  GetRouteTable(google::cloud::networkconnectivity::v1::GetRouteTableRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1464,8 +1397,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Route>
+  GetRoute(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1494,9 +1427,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Route> GetRoute(
-      google::cloud::networkconnectivity::v1::GetRouteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Route>
+  GetRoute(google::cloud::networkconnectivity::v1::GetRouteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1529,8 +1461,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Route>
+  ListRoutes(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1568,9 +1500,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Route]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L564}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Route> ListRoutes(
-      google::cloud::networkconnectivity::v1::ListRoutesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Route>
+  ListRoutes(google::cloud::networkconnectivity::v1::ListRoutesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1643,9 +1574,7 @@ class HubServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::networkconnectivity::v1::RouteTable>
-  ListRouteTables(
-      google::cloud::networkconnectivity::v1::ListRouteTablesRequest request,
-      Options opts = {});
+  ListRouteTables(google::cloud::networkconnectivity::v1::ListRouteTablesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1669,8 +1598,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Group>
+  GetGroup(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1699,9 +1628,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.Group]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L627}
   ///
   // clang-format on
-  StatusOr<google::cloud::networkconnectivity::v1::Group> GetGroup(
-      google::cloud::networkconnectivity::v1::GetGroupRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::networkconnectivity::v1::Group>
+  GetGroup(google::cloud::networkconnectivity::v1::GetGroupRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1734,8 +1662,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1229}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Group>
+  ListGroups(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1773,9 +1701,8 @@ class HubServiceClient {
   /// [google.cloud.networkconnectivity.v1.ListGroupsRequest]: @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L1229}
   ///
   // clang-format on
-  StreamRange<google::cloud::networkconnectivity::v1::Group> ListGroups(
-      google::cloud::networkconnectivity::v1::ListGroupsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::networkconnectivity::v1::Group>
+  ListGroups(google::cloud::networkconnectivity::v1::ListGroupsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1813,8 +1740,8 @@ class HubServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1843,9 +1770,8 @@ class HubServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1877,8 +1803,8 @@ class HubServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1909,8 +1835,8 @@ class HubServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1945,22 +1871,13 @@ class HubServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1986,25 +1903,17 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2034,12 +1943,12 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2061,12 +1970,12 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2093,13 +2002,12 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2120,10 +2028,11 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2149,12 +2058,11 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2166,8 +2074,9 @@ class HubServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2181,13 +2090,14 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2199,8 +2109,9 @@ class HubServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2219,15 +2130,14 @@ class HubServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<HubServiceConnection> connection_;

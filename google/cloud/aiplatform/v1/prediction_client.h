@@ -62,9 +62,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PredictionServiceClient {
  public:
-  explicit PredictionServiceClient(
-      std::shared_ptr<PredictionServiceConnection> connection,
-      Options opts = {});
+  explicit PredictionServiceClient(std::shared_ptr<PredictionServiceConnection> connection, Options opts = {});
   ~PredictionServiceClient();
 
   ///@{
@@ -77,12 +75,10 @@ class PredictionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PredictionServiceClient const& a,
-                         PredictionServiceClient const& b) {
+  friend bool operator==(PredictionServiceClient const& a, PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PredictionServiceClient const& a,
-                         PredictionServiceClient const& b) {
+  friend bool operator!=(PredictionServiceClient const& a, PredictionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,10 +121,8 @@ class PredictionServiceClient {
   /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L247}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances,
-      google::protobuf::Value const& parameters, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PredictResponse>
+  Predict(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, google::protobuf::Value const& parameters, Options opts = {});
 
   // clang-format off
   ///
@@ -157,9 +151,8 @@ class PredictionServiceClient {
   /// [google.cloud.aiplatform.v1.PredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L247}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::PredictResponse> Predict(
-      google::cloud::aiplatform::v1::PredictRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::PredictResponse>
+  Predict(google::cloud::aiplatform::v1::PredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -206,14 +199,13 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
+  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
   /// [google.cloud.aiplatform.v1.PredictionService.RawPredict]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L69}
   /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L284}
   ///
   // clang-format on
-  StatusOr<google::api::HttpBody> RawPredict(
-      std::string const& endpoint, google::api::HttpBody const& http_body,
-      Options opts = {});
+  StatusOr<google::api::HttpBody>
+  RawPredict(std::string const& endpoint, google::api::HttpBody const& http_body, Options opts = {});
 
   // clang-format off
   ///
@@ -248,13 +240,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
+  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
   /// [google.cloud.aiplatform.v1.RawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L284}
   ///
   // clang-format on
-  StatusOr<google::api::HttpBody> RawPredict(
-      google::cloud::aiplatform::v1::RawPredictRequest const& request,
-      Options opts = {});
+  StatusOr<google::api::HttpBody>
+  RawPredict(google::cloud::aiplatform::v1::RawPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -277,13 +268,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
+  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
   /// [google.cloud.aiplatform.v1.StreamRawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L315}
   ///
   // clang-format on
-  StreamRange<google::api::HttpBody> StreamRawPredict(
-      std::string const& endpoint, google::api::HttpBody const& http_body,
-      Options opts = {});
+  StreamRange<google::api::HttpBody>
+  StreamRawPredict(std::string const& endpoint, google::api::HttpBody const& http_body, Options opts = {});
 
   // clang-format off
   ///
@@ -308,13 +298,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L71}
+  /// [google.api.HttpBody]: @googleapis_reference_link{google/api/httpbody.proto#L70}
   /// [google.cloud.aiplatform.v1.StreamRawPredictRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L315}
   ///
   // clang-format on
-  StreamRange<google::api::HttpBody> StreamRawPredict(
-      google::cloud::aiplatform::v1::StreamRawPredictRequest const& request,
-      Options opts = {});
+  StreamRange<google::api::HttpBody>
+  StreamRawPredict(google::cloud::aiplatform::v1::StreamRawPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -344,9 +333,8 @@ class PredictionServiceClient {
   /// [google.cloud.aiplatform.v1.DirectPredictResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L352}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse> DirectPredict(
-      google::cloud::aiplatform::v1::DirectPredictRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DirectPredictResponse>
+  DirectPredict(google::cloud::aiplatform::v1::DirectPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -377,9 +365,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::DirectRawPredictResponse>
-  DirectRawPredict(
-      google::cloud::aiplatform::v1::DirectRawPredictRequest const& request,
-      Options opts = {});
+  DirectRawPredict(google::cloud::aiplatform::v1::DirectRawPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -503,9 +489,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::StreamingPredictResponse>
-  ServerStreamingPredict(
-      google::cloud::aiplatform::v1::StreamingPredictRequest const& request,
-      Options opts = {});
+  ServerStreamingPredict(google::cloud::aiplatform::v1::StreamingPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -589,11 +573,8 @@ class PredictionServiceClient {
   /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L600}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      std::string const& endpoint,
-      std::vector<google::protobuf::Value> const& instances,
-      google::protobuf::Value const& parameters,
-      std::string const& deployed_model_id, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
+  Explain(std::string const& endpoint, std::vector<google::protobuf::Value> const& instances, google::protobuf::Value const& parameters, std::string const& deployed_model_id, Options opts = {});
 
   // clang-format off
   ///
@@ -633,9 +614,8 @@ class PredictionServiceClient {
   /// [google.cloud.aiplatform.v1.ExplainResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/prediction_service.proto#L600}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::ExplainResponse> Explain(
-      google::cloud::aiplatform::v1::ExplainRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::ExplainResponse>
+  Explain(google::cloud::aiplatform::v1::ExplainRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -672,10 +652,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(
-      std::string const& model,
-      std::vector<google::cloud::aiplatform::v1::Content> const& contents,
-      Options opts = {});
+  GenerateContent(std::string const& model, std::vector<google::cloud::aiplatform::v1::Content> const& contents, Options opts = {});
 
   // clang-format off
   ///
@@ -705,9 +682,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::aiplatform::v1::GenerateContentResponse>
-  GenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request,
-      Options opts = {});
+  GenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -744,10 +719,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-  StreamGenerateContent(
-      std::string const& model,
-      std::vector<google::cloud::aiplatform::v1::Content> const& contents,
-      Options opts = {});
+  StreamGenerateContent(std::string const& model, std::vector<google::cloud::aiplatform::v1::Content> const& contents, Options opts = {});
 
   // clang-format off
   ///
@@ -777,9 +749,7 @@ class PredictionServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::GenerateContentResponse>
-  StreamGenerateContent(
-      google::cloud::aiplatform::v1::GenerateContentRequest const& request,
-      Options opts = {});
+  StreamGenerateContent(google::cloud::aiplatform::v1::GenerateContentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -817,8 +787,8 @@ class PredictionServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -847,9 +817,8 @@ class PredictionServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -881,8 +850,8 @@ class PredictionServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -913,8 +882,8 @@ class PredictionServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -949,22 +918,13 @@ class PredictionServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -990,25 +950,17 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1038,12 +990,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1065,12 +1017,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1097,13 +1049,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1124,10 +1075,11 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1153,12 +1105,11 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1170,8 +1121,9 @@ class PredictionServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1185,13 +1137,14 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1203,8 +1156,9 @@ class PredictionServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1223,15 +1177,14 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1264,13 +1217,12 @@ class PredictionServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

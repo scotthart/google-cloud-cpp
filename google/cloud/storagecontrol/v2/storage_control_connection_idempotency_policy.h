@@ -34,42 +34,41 @@ class StorageControlConnectionIdempotencyPolicy {
   virtual ~StorageControlConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<StorageControlConnectionIdempotencyPolicy> clone()
-      const;
+  virtual std::unique_ptr<StorageControlConnectionIdempotencyPolicy> clone() const;
 
-  virtual google::cloud::Idempotency CreateFolder(
-      google::storage::control::v2::CreateFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateFolder(google::storage::control::v2::CreateFolderRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteFolder(
-      google::storage::control::v2::DeleteFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteFolder(google::storage::control::v2::DeleteFolderRequest const& request);
 
-  virtual google::cloud::Idempotency GetFolder(
-      google::storage::control::v2::GetFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  GetFolder(google::storage::control::v2::GetFolderRequest const& request);
 
-  virtual google::cloud::Idempotency ListFolders(
-      google::storage::control::v2::ListFoldersRequest request);
+  virtual google::cloud::Idempotency
+  ListFolders(google::storage::control::v2::ListFoldersRequest request);
 
-  virtual google::cloud::Idempotency RenameFolder(
-      google::storage::control::v2::RenameFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  RenameFolder(google::storage::control::v2::RenameFolderRequest const& request);
 
-  virtual google::cloud::Idempotency GetStorageLayout(
-      google::storage::control::v2::GetStorageLayoutRequest const& request);
+  virtual google::cloud::Idempotency
+  GetStorageLayout(google::storage::control::v2::GetStorageLayoutRequest const& request);
 
-  virtual google::cloud::Idempotency CreateManagedFolder(
-      google::storage::control::v2::CreateManagedFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  CreateManagedFolder(google::storage::control::v2::CreateManagedFolderRequest const& request);
 
-  virtual google::cloud::Idempotency DeleteManagedFolder(
-      google::storage::control::v2::DeleteManagedFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  DeleteManagedFolder(google::storage::control::v2::DeleteManagedFolderRequest const& request);
 
-  virtual google::cloud::Idempotency GetManagedFolder(
-      google::storage::control::v2::GetManagedFolderRequest const& request);
+  virtual google::cloud::Idempotency
+  GetManagedFolder(google::storage::control::v2::GetManagedFolderRequest const& request);
 
-  virtual google::cloud::Idempotency ListManagedFolders(
-      google::storage::control::v2::ListManagedFoldersRequest request);
+  virtual google::cloud::Idempotency
+  ListManagedFolders(google::storage::control::v2::ListManagedFoldersRequest request);
 };
 
 std::unique_ptr<StorageControlConnectionIdempotencyPolicy>
-MakeDefaultStorageControlConnectionIdempotencyPolicy();
+    MakeDefaultStorageControlConnectionIdempotencyPolicy();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagecontrol_v2

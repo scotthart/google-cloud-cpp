@@ -63,29 +63,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SiteSearchEngineServiceClient {
  public:
-  explicit SiteSearchEngineServiceClient(
-      std::shared_ptr<SiteSearchEngineServiceConnection> connection,
-      Options opts = {});
+  explicit SiteSearchEngineServiceClient(std::shared_ptr<SiteSearchEngineServiceConnection> connection, Options opts = {});
   ~SiteSearchEngineServiceClient();
 
   ///@{
   /// @name Copy and move support
   SiteSearchEngineServiceClient(SiteSearchEngineServiceClient const&) = default;
-  SiteSearchEngineServiceClient& operator=(
-      SiteSearchEngineServiceClient const&) = default;
+  SiteSearchEngineServiceClient& operator=(SiteSearchEngineServiceClient const&) = default;
   SiteSearchEngineServiceClient(SiteSearchEngineServiceClient&&) = default;
-  SiteSearchEngineServiceClient& operator=(SiteSearchEngineServiceClient&&) =
-      default;
+  SiteSearchEngineServiceClient& operator=(SiteSearchEngineServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SiteSearchEngineServiceClient const& a,
-                         SiteSearchEngineServiceClient const& b) {
+  friend bool operator==(SiteSearchEngineServiceClient const& a, SiteSearchEngineServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SiteSearchEngineServiceClient const& a,
-                         SiteSearchEngineServiceClient const& b) {
+  friend bool operator!=(SiteSearchEngineServiceClient const& a, SiteSearchEngineServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -152,10 +146,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::discoveryengine::v1::SiteSearchEngine>
-  GetSiteSearchEngine(
-      google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const&
-          request,
-      Options opts = {});
+  GetSiteSearchEngine(google::cloud::discoveryengine::v1::GetSiteSearchEngineRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -191,10 +182,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::TargetSite const& target_site,
-      Options opts = {});
+  CreateTargetSite(std::string const& parent, google::cloud::discoveryengine::v1::TargetSite const& target_site, Options opts = {});
 
   // clang-format off
   ///
@@ -207,10 +195,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTargetSite(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::discoveryengine::v1::TargetSite const& target_site,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTargetSite(NoAwaitTag, std::string const& parent, google::cloud::discoveryengine::v1::TargetSite const& target_site, Options opts = {});
 
   // clang-format off
   ///
@@ -247,10 +233,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request,
-      Options opts = {});
+  CreateTargetSite(google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,11 +246,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::CreateTargetSiteRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::CreateTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -279,8 +259,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  CreateTargetSite(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  CreateTargetSite(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -318,12 +297,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites(google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -336,11 +311,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchCreateTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchCreateTargetSites(NoAwaitTag, google::cloud::discoveryengine::v1::BatchCreateTargetSitesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -351,10 +323,8 @@ class SiteSearchEngineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
-  BatchCreateTargetSites(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchCreateTargetSitesResponse>>
+  BatchCreateTargetSites(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -387,8 +357,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::TargetSite> GetTargetSite(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::TargetSite>
+  GetTargetSite(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -417,9 +387,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::TargetSite> GetTargetSite(
-      google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::TargetSite>
+  GetTargetSite(google::cloud::discoveryengine::v1::GetTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -457,9 +426,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(
-      google::cloud::discoveryengine::v1::TargetSite const& target_site,
-      Options opts = {});
+  UpdateTargetSite(google::cloud::discoveryengine::v1::TargetSite const& target_site, Options opts = {});
 
   // clang-format off
   ///
@@ -472,10 +439,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::TargetSite const& target_site,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::TargetSite const& target_site, Options opts = {});
 
   // clang-format off
   ///
@@ -512,10 +477,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request,
-      Options opts = {});
+  UpdateTargetSite(google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -528,11 +490,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::UpdateTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -544,8 +503,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::TargetSite>>
-  UpdateTargetSite(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  UpdateTargetSite(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -600,8 +558,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTargetSite(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -639,10 +597,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request,
-      Options opts = {});
+  DeleteTargetSite(google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -655,11 +610,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteTargetSite(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteTargetSite(NoAwaitTag, google::cloud::discoveryengine::v1::DeleteTargetSiteRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -671,8 +623,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::DeleteTargetSiteMetadata>>
-  DeleteTargetSite(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteTargetSite(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -711,8 +662,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::TargetSite> ListTargetSites(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::TargetSite>
+  ListTargetSites(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -750,9 +701,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.TargetSite]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine.proto#L47}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::TargetSite> ListTargetSites(
-      google::cloud::discoveryengine::v1::ListTargetSitesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::TargetSite>
+  ListTargetSites(google::cloud::discoveryengine::v1::ListTargetSitesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -788,12 +738,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.EnableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L471}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch(google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -806,11 +752,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> EnableAdvancedSiteSearch(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  EnableAdvancedSiteSearch(NoAwaitTag, google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -821,10 +764,8 @@ class SiteSearchEngineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
-  EnableAdvancedSiteSearch(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::EnableAdvancedSiteSearchResponse>>
+  EnableAdvancedSiteSearch(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -860,11 +801,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.DisableAdvancedSiteSearchResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L505}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::
-                                DisableAdvancedSiteSearchRequest const& request,
-                            Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch(google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -877,11 +815,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DisableAdvancedSiteSearch(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::
-          DisableAdvancedSiteSearchRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DisableAdvancedSiteSearch(NoAwaitTag, google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -892,10 +827,8 @@ class SiteSearchEngineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
-  DisableAdvancedSiteSearch(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::DisableAdvancedSiteSearchResponse>>
+  DisableAdvancedSiteSearch(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -932,9 +865,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
-      Options opts = {});
+  RecrawlUris(google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -947,10 +878,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RecrawlUris(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RecrawlUris(NoAwaitTag, google::cloud::discoveryengine::v1::RecrawlUrisRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -962,8 +891,7 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::RecrawlUrisResponse>>
-  RecrawlUris(google::longrunning::Operation const& operation,
-              Options opts = {});
+  RecrawlUris(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1001,12 +929,8 @@ class SiteSearchEngineServiceClient {
   /// [google.cloud.discoveryengine.v1.BatchVerifyTargetSitesResponse]: @googleapis_reference_link{google/cloud/discoveryengine/v1/site_search_engine_service.proto#L637}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites(google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1019,11 +943,8 @@ class SiteSearchEngineServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchVerifyTargetSites(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchVerifyTargetSites(NoAwaitTag, google::cloud::discoveryengine::v1::BatchVerifyTargetSitesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1034,10 +955,8 @@ class SiteSearchEngineServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
-  BatchVerifyTargetSites(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  future<StatusOr<google::cloud::discoveryengine::v1::BatchVerifyTargetSitesResponse>>
+  BatchVerifyTargetSites(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1078,23 +997,12 @@ class SiteSearchEngineServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::discoveryengine::v1::TargetSite>
-  FetchDomainVerificationStatus(
-      google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest
-          request,
-      Options opts = {});
+  FetchDomainVerificationStatus(google::cloud::discoveryengine::v1::FetchDomainVerificationStatusRequest request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1120,25 +1028,17 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1168,12 +1068,12 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1195,12 +1095,12 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1227,13 +1127,12 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1245,8 +1144,9 @@ class SiteSearchEngineServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1260,13 +1160,14 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1278,8 +1179,9 @@ class SiteSearchEngineServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1298,15 +1200,14 @@ class SiteSearchEngineServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SiteSearchEngineServiceConnection> connection_;

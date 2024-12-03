@@ -17,12 +17,12 @@
 // source: google/cloud/gkeconnect/gateway/v1/control.proto
 
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub_factory.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_auth_decorator.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_logging_decorator.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_metadata_decorator.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_stub.h"
 #include "google/cloud/gkeconnect/gateway/v1/internal/gateway_control_tracing_stub.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/opentelemetry.h"
@@ -37,26 +37,28 @@ namespace cloud {
 namespace gkeconnect_gateway_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::shared_ptr<GatewayControlStub> CreateDefaultGatewayControlStub(
+std::shared_ptr<GatewayControlStub>
+CreateDefaultGatewayControlStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     Options const& options) {
-  auto channel = auth->CreateChannel(options.get<EndpointOption>(),
-                                     internal::MakeChannelArguments(options));
-  auto service_grpc_stub =
-      google::cloud::gkeconnect::gateway::v1::GatewayControl::NewStub(channel);
+  auto channel = auth->CreateChannel(
+    options.get<EndpointOption>(), internal::MakeChannelArguments(options));
+  auto service_grpc_stub = google::cloud::gkeconnect::gateway::v1::GatewayControl::NewStub(channel);
   std::shared_ptr<GatewayControlStub> stub =
-      std::make_shared<DefaultGatewayControlStub>(std::move(service_grpc_stub));
+    std::make_shared<DefaultGatewayControlStub>(std::move(service_grpc_stub));
 
   if (auth->RequiresConfigureContext()) {
-    stub =
-        std::make_shared<GatewayControlAuth>(std::move(auth), std::move(stub));
+    stub = std::make_shared<GatewayControlAuth>(
+        std::move(auth), std::move(stub));
   }
   stub = std::make_shared<GatewayControlMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{});
-  if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+  if (internal::Contains(
+      options.get<LoggingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<GatewayControlLogging>(
-        std::move(stub), options.get<GrpcTracingOptionsOption>(),
+        std::move(stub),
+        options.get<GrpcTracingOptionsOption>(),
         options.get<LoggingComponentsOption>());
   }
   if (internal::TracingEnabled(options)) {

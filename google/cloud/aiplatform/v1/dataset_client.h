@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class DatasetServiceClient {
  public:
-  explicit DatasetServiceClient(
-      std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
+  explicit DatasetServiceClient(std::shared_ptr<DatasetServiceConnection> connection, Options opts = {});
   ~DatasetServiceClient();
 
   ///@{
@@ -78,12 +77,10 @@ class DatasetServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DatasetServiceClient const& a,
-                         DatasetServiceClient const& b) {
+  friend bool operator==(DatasetServiceClient const& a, DatasetServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DatasetServiceClient const& a,
-                         DatasetServiceClient const& b) {
+  friend bool operator!=(DatasetServiceClient const& a, DatasetServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -115,13 +112,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L274}
+  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L276}
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+  CreateDataset(std::string const& parent, google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -134,9 +130,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataset(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataset(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::Dataset const& dataset, Options opts = {});
 
   // clang-format off
   ///
@@ -168,13 +163,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L274}
+  /// [google.cloud.aiplatform.v1.CreateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L276}
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+  CreateDataset(google::cloud::aiplatform::v1::CreateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -187,10 +181,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDataset(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDataset(NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -201,8 +193,8 @@ class DatasetServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::aiplatform::v1::Dataset>> CreateDataset(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::aiplatform::v1::Dataset>>
+  CreateDataset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -223,11 +215,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L300}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  GetDataset(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -253,12 +245,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L297}
+  /// [google.cloud.aiplatform.v1.GetDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L300}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> GetDataset(
-      google::cloud::aiplatform::v1::GetDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  GetDataset(google::cloud::aiplatform::v1::GetDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -286,13 +277,12 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L312}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L315}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      google::cloud::aiplatform::v1::Dataset const& dataset,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  UpdateDataset(google::cloud::aiplatform::v1::Dataset const& dataset, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -318,12 +308,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L312}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L315}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::Dataset> UpdateDataset(
-      google::cloud::aiplatform::v1::UpdateDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::Dataset>
+  UpdateDataset(google::cloud::aiplatform::v1::UpdateDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -354,11 +343,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L344}
+  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Dataset>
+  ListDatasets(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -393,12 +382,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Dataset]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset.proto#L36}
-  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L344}
+  /// [google.cloud.aiplatform.v1.ListDatasetsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L347}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Dataset> ListDatasets(
-      google::cloud::aiplatform::v1::ListDatasetsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Dataset>
+  ListDatasets(google::cloud::aiplatform::v1::ListDatasetsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -427,7 +415,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L401}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L404}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -445,8 +433,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataset(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataset(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -478,14 +466,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L401}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L404}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
-      Options opts = {});
+  DeleteDataset(google::cloud::aiplatform::v1::DeleteDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -498,10 +484,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDataset(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDataset(NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +497,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDataset(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteDataset(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -545,15 +528,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L415}
-  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L434}
+  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L418}
+  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L437}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(std::string const& name,
-             std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
-                 import_configs,
-             Options opts = {});
+  ImportData(std::string const& name, std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const& import_configs, Options opts = {});
 
   // clang-format off
   ///
@@ -566,11 +546,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag, std::string const& name,
-      std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const&
-          import_configs,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag, std::string const& name, std::vector<google::cloud::aiplatform::v1::ImportDataConfig> const& import_configs, Options opts = {});
 
   // clang-format off
   ///
@@ -602,13 +579,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L415}
-  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L434}
+  /// [google.cloud.aiplatform.v1.ImportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L418}
+  /// [google.cloud.aiplatform.v1.ImportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L437}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request,
-             Options opts = {});
+  ImportData(google::cloud::aiplatform::v1::ImportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -621,10 +597,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportData(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::ImportDataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportData(NoAwaitTag, google::cloud::aiplatform::v1::ImportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -636,8 +610,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ImportDataResponse>>
-  ImportData(google::longrunning::Operation const& operation,
-             Options opts = {});
+  ImportData(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -667,15 +640,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L445}
-  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L462}
+  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L448}
+  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(
-      std::string const& name,
-      google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
-      Options opts = {});
+  ExportData(std::string const& name, google::cloud::aiplatform::v1::ExportDataConfig const& export_config, Options opts = {});
 
   // clang-format off
   ///
@@ -688,10 +658,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag, std::string const& name,
-      google::cloud::aiplatform::v1::ExportDataConfig const& export_config,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag, std::string const& name, google::cloud::aiplatform::v1::ExportDataConfig const& export_config, Options opts = {});
 
   // clang-format off
   ///
@@ -723,13 +691,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L445}
-  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L462}
+  /// [google.cloud.aiplatform.v1.ExportDataRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L448}
+  /// [google.cloud.aiplatform.v1.ExportDataResponse]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L465}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request,
-             Options opts = {});
+  ExportData(google::cloud::aiplatform::v1::ExportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -742,10 +709,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportData(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::ExportDataRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportData(NoAwaitTag, google::cloud::aiplatform::v1::ExportDataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -757,8 +722,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::ExportDataResponse>>
-  ExportData(google::longrunning::Operation const& operation,
-             Options opts = {});
+  ExportData(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -790,15 +754,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L488}
+  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L491}
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(
-      std::string const& parent,
-      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
-      Options opts = {});
+  CreateDatasetVersion(std::string const& parent, google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, Options opts = {});
 
   // clang-format off
   ///
@@ -811,10 +772,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDatasetVersion(NoAwaitTag, std::string const& parent, google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, Options opts = {});
 
   // clang-format off
   ///
@@ -846,14 +805,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L488}
+  /// [google.cloud.aiplatform.v1.CreateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L491}
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
-      Options opts = {});
+  CreateDatasetVersion(google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -866,10 +823,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::CreateDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -881,8 +836,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  CreateDatasetVersion(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  CreateDatasetVersion(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -908,13 +862,12 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L329}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L332}
   /// [google.protobuf.FieldMask]: @googleapis_reference_link{google/protobuf/field_mask.proto#L242}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::DatasetVersion const& dataset_version,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::DatasetVersion const& dataset_version, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -940,12 +893,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L329}
+  /// [google.cloud.aiplatform.v1.UpdateDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L332}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> UpdateDatasetVersion(
-      google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  UpdateDatasetVersion(google::cloud::aiplatform::v1::UpdateDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -974,7 +926,7 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L514}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L517}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
@@ -992,8 +944,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDatasetVersion(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1025,14 +977,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L514}
+  /// [google.cloud.aiplatform.v1.DeleteDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L517}
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
-      Options opts = {});
+  DeleteDatasetVersion(google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1045,10 +995,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::DeleteDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1060,8 +1008,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteDatasetVersion(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  DeleteDatasetVersion(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1084,11 +1031,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L532}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1114,12 +1061,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L528}
+  /// [google.cloud.aiplatform.v1.GetDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L532}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::DatasetVersion> GetDatasetVersion(
-      google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::DatasetVersion>
+  GetDatasetVersion(google::cloud::aiplatform::v1::GetDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1151,7 +1097,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L545}
+  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L549}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
@@ -1190,13 +1136,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L545}
+  /// [google.cloud.aiplatform.v1.ListDatasetVersionsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L549}
   ///
   // clang-format on
   StreamRange<google::cloud::aiplatform::v1::DatasetVersion>
-  ListDatasetVersions(
-      google::cloud::aiplatform::v1::ListDatasetVersionsRequest request,
-      Options opts = {});
+  ListDatasetVersions(google::cloud::aiplatform::v1::ListDatasetVersionsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1226,7 +1170,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L586}
+  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
@@ -1243,8 +1187,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreDatasetVersion(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1277,14 +1221,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DatasetVersion]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_version.proto#L33}
-  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L586}
+  /// [google.cloud.aiplatform.v1.RestoreDatasetVersionRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L590}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request,
-      Options opts = {});
+  RestoreDatasetVersion(google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1297,11 +1238,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreDatasetVersion(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreDatasetVersion(NoAwaitTag, google::cloud::aiplatform::v1::RestoreDatasetVersionRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1313,8 +1251,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DatasetVersion>>
-  RestoreDatasetVersion(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  RestoreDatasetVersion(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1346,11 +1283,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L607}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L611}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItem>
+  ListDataItems(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1385,12 +1322,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DataItem]: @googleapis_reference_link{google/cloud/aiplatform/v1/data_item.proto#L34}
-  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L607}
+  /// [google.cloud.aiplatform.v1.ListDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L611}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItem> ListDataItems(
-      google::cloud::aiplatform::v1::ListDataItemsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItem>
+  ListDataItems(google::cloud::aiplatform::v1::ListDataItemsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1424,13 +1360,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L763}
-  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L647}
+  /// [google.cloud.aiplatform.v1.DataItemView]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L767}
+  /// [google.cloud.aiplatform.v1.SearchDataItemsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L651}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::DataItemView> SearchDataItems(
-      google::cloud::aiplatform::v1::SearchDataItemsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::DataItemView>
+  SearchDataItems(google::cloud::aiplatform::v1::SearchDataItemsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1461,12 +1396,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L783}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L787}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
+  ListSavedQueries(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1500,13 +1435,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L783}
+  /// [google.cloud.aiplatform.v1.ListSavedQueriesRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L787}
   /// [google.cloud.aiplatform.v1.SavedQuery]: @googleapis_reference_link{google/cloud/aiplatform/v1/saved_query.proto#L34}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::SavedQuery> ListSavedQueries(
-      google::cloud::aiplatform::v1::ListSavedQueriesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::SavedQuery>
+  ListSavedQueries(google::cloud::aiplatform::v1::ListSavedQueriesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1536,7 +1470,7 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L823}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L827}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
@@ -1553,8 +1487,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSavedQuery(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1587,13 +1521,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.DeleteOperationMetadata]: @googleapis_reference_link{google/cloud/aiplatform/v1/operation.proto#L52}
-  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L823}
+  /// [google.cloud.aiplatform.v1.DeleteSavedQueryRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L827}
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
-      Options opts = {});
+  DeleteSavedQuery(google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1606,10 +1538,8 @@ class DatasetServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteSavedQuery(
-      NoAwaitTag,
-      google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteSavedQuery(NoAwaitTag, google::cloud::aiplatform::v1::DeleteSavedQueryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1621,8 +1551,7 @@ class DatasetServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::aiplatform::v1::DeleteOperationMetadata>>
-  DeleteSavedQuery(google::longrunning::Operation const& operation,
-                   Options opts = {});
+  DeleteSavedQuery(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1645,11 +1574,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L837}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L841}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
+  GetAnnotationSpec(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1675,16 +1604,17 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.AnnotationSpec]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation_spec.proto#L32}
-  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L837}
+  /// [google.cloud.aiplatform.v1.GetAnnotationSpecRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L841}
   ///
   // clang-format on
-  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec> GetAnnotationSpec(
-      google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::aiplatform::v1::AnnotationSpec>
+  GetAnnotationSpec(google::cloud::aiplatform::v1::GetAnnotationSpecRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists Annotations belongs to a dataitem
+  /// This RPC is only available in InternalDatasetService. It is only used for
+  /// exporting conversation data to CCAI Insights.
   ///
   /// @param parent  Required. The resource name of the DataItem to list Annotations from.
   ///  Format:
@@ -1712,15 +1642,17 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L854}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L858}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Annotation>
+  ListAnnotations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
   /// Lists Annotations belongs to a dataitem
+  /// This RPC is only available in InternalDatasetService. It is only used for
+  /// exporting conversation data to CCAI Insights.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1751,12 +1683,11 @@ class DatasetServiceClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.aiplatform.v1.Annotation]: @googleapis_reference_link{google/cloud/aiplatform/v1/annotation.proto#L35}
-  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L854}
+  /// [google.cloud.aiplatform.v1.ListAnnotationsRequest]: @googleapis_reference_link{google/cloud/aiplatform/v1/dataset_service.proto#L858}
   ///
   // clang-format on
-  StreamRange<google::cloud::aiplatform::v1::Annotation> ListAnnotations(
-      google::cloud::aiplatform::v1::ListAnnotationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::aiplatform::v1::Annotation>
+  ListAnnotations(google::cloud::aiplatform::v1::ListAnnotationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1794,8 +1725,8 @@ class DatasetServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1824,9 +1755,8 @@ class DatasetServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1858,8 +1788,8 @@ class DatasetServiceClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1890,8 +1820,8 @@ class DatasetServiceClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1926,22 +1856,13 @@ class DatasetServiceClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1967,25 +1888,17 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2015,12 +1928,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2042,12 +1955,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2074,13 +1987,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2101,10 +2013,11 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2130,12 +2043,11 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2147,8 +2059,9 @@ class DatasetServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2162,13 +2075,14 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2180,8 +2094,9 @@ class DatasetServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2200,15 +2115,14 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2241,13 +2155,12 @@ class DatasetServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   /// [google.longrunning.WaitOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L207}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> WaitOperation(
-      google::longrunning::WaitOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  WaitOperation(google::longrunning::WaitOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DatasetServiceConnection> connection_;

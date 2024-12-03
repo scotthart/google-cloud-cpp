@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AppHubClient {
  public:
-  explicit AppHubClient(std::shared_ptr<AppHubConnection> connection,
-                        Options opts = {});
+  explicit AppHubClient(std::shared_ptr<AppHubConnection> connection, Options opts = {});
   ~AppHubClient();
 
   ///@{
@@ -143,10 +142,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupServiceProjectAttachmentResponse>
-  LookupServiceProjectAttachment(
-      google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  LookupServiceProjectAttachment(google::cloud::apphub::v1::LookupServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -221,9 +217,7 @@ class AppHubClient {
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::ServiceProjectAttachment>
-  ListServiceProjectAttachments(
-      google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request,
-      Options opts = {});
+  ListServiceProjectAttachments(google::cloud::apphub::v1::ListServiceProjectAttachmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,11 +255,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-  CreateServiceProjectAttachment(
-      std::string const& parent,
-      google::cloud::apphub::v1::ServiceProjectAttachment const&
-          service_project_attachment,
-      std::string const& service_project_attachment_id, Options opts = {});
+  CreateServiceProjectAttachment(std::string const& parent, google::cloud::apphub::v1::ServiceProjectAttachment const& service_project_attachment, std::string const& service_project_attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -278,11 +268,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apphub::v1::ServiceProjectAttachment const&
-          service_project_attachment,
-      std::string const& service_project_attachment_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServiceProjectAttachment(NoAwaitTag, std::string const& parent, google::cloud::apphub::v1::ServiceProjectAttachment const& service_project_attachment, std::string const& service_project_attachment_id, Options opts = {});
 
   // clang-format off
   ///
@@ -319,10 +306,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-  CreateServiceProjectAttachment(
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  CreateServiceProjectAttachment(google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -335,11 +319,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateServiceProjectAttachment(
-      NoAwaitTag,
-      google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateServiceProjectAttachment(NoAwaitTag, google::cloud::apphub::v1::CreateServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -351,8 +332,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>>
-  CreateServiceProjectAttachment(
-      google::longrunning::Operation const& operation, Options opts = {});
+  CreateServiceProjectAttachment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -409,10 +389,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::ServiceProjectAttachment>
-  GetServiceProjectAttachment(
-      google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  GetServiceProjectAttachment(google::cloud::apphub::v1::GetServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +436,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteServiceProjectAttachment(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -497,10 +474,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteServiceProjectAttachment(
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  DeleteServiceProjectAttachment(google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -513,11 +487,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteServiceProjectAttachment(
-      NoAwaitTag,
-      google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteServiceProjectAttachment(NoAwaitTag, google::cloud::apphub::v1::DeleteServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -529,8 +500,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteServiceProjectAttachment(
-      google::longrunning::Operation const& operation, Options opts = {});
+  DeleteServiceProjectAttachment(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -591,10 +561,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::DetachServiceProjectAttachmentResponse>
-  DetachServiceProjectAttachment(
-      google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const&
-          request,
-      Options opts = {});
+  DetachServiceProjectAttachment(google::cloud::apphub::v1::DetachServiceProjectAttachmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -670,9 +637,7 @@ class AppHubClient {
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredService>
-  ListDiscoveredServices(
-      google::cloud::apphub::v1::ListDiscoveredServicesRequest request,
-      Options opts = {});
+  ListDiscoveredServices(google::cloud::apphub::v1::ListDiscoveredServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -698,8 +663,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L621}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apphub::v1::DiscoveredService>
+  GetDiscoveredService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -728,9 +693,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetDiscoveredServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L621}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::DiscoveredService> GetDiscoveredService(
-      google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apphub::v1::DiscoveredService>
+  GetDiscoveredService(google::cloud::apphub::v1::GetDiscoveredServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -760,8 +724,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-  LookupDiscoveredService(std::string const& parent, std::string const& uri,
-                          Options opts = {});
+  LookupDiscoveredService(std::string const& parent, std::string const& uri, Options opts = {});
 
   // clang-format off
   ///
@@ -792,9 +755,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredServiceResponse>
-  LookupDiscoveredService(
-      google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request,
-      Options opts = {});
+  LookupDiscoveredService(google::cloud::apphub::v1::LookupDiscoveredServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -829,8 +790,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Service> ListServices(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Service>
+  ListServices(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -868,9 +829,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Service> ListServices(
-      google::cloud::apphub::v1::ListServicesRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Service>
+  ListServices(google::cloud::apphub::v1::ListServicesRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -908,10 +868,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      std::string const& parent,
-      google::cloud::apphub::v1::Service const& service,
-      std::string const& service_id, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  CreateService(std::string const& parent, google::cloud::apphub::v1::Service const& service, std::string const& service_id, Options opts = {});
 
   // clang-format off
   ///
@@ -924,10 +882,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apphub::v1::Service const& service,
-      std::string const& service_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag, std::string const& parent, google::cloud::apphub::v1::Service const& service, std::string const& service_id, Options opts = {});
 
   // clang-format off
   ///
@@ -963,9 +919,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      google::cloud::apphub::v1::CreateServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  CreateService(google::cloud::apphub::v1::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -978,10 +933,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateService(
-      NoAwaitTag,
-      google::cloud::apphub::v1::CreateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateService(NoAwaitTag, google::cloud::apphub::v1::CreateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -992,8 +945,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> CreateService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  CreateService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1019,8 +972,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Service> GetService(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Service>
+  GetService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1049,9 +1002,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Service]: @googleapis_reference_link{google/cloud/apphub/v1/service.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Service> GetService(
-      google::cloud::apphub::v1::GetServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Service>
+  GetService(google::cloud::apphub::v1::GetServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1091,9 +1043,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L657}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      google::cloud::apphub::v1::Service const& service,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  UpdateService(google::cloud::apphub::v1::Service const& service, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1106,9 +1057,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag, google::cloud::apphub::v1::Service const& service,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag, google::cloud::apphub::v1::Service const& service, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1144,9 +1094,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.UpdateServiceRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L657}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      google::cloud::apphub::v1::UpdateServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  UpdateService(google::cloud::apphub::v1::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1159,10 +1108,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateService(
-      NoAwaitTag,
-      google::cloud::apphub::v1::UpdateServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateService(NoAwaitTag, google::cloud::apphub::v1::UpdateServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1173,8 +1120,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Service>> UpdateService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Service>>
+  UpdateService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1207,8 +1154,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteService(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1221,8 +1168,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1258,9 +1205,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
-      google::cloud::apphub::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteService(google::cloud::apphub::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1273,10 +1219,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteService(
-      NoAwaitTag,
-      google::cloud::apphub::v1::DeleteServiceRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteService(NoAwaitTag, google::cloud::apphub::v1::DeleteServiceRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1287,8 +1231,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteService(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteService(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1364,9 +1308,7 @@ class AppHubClient {
   ///
   // clang-format on
   StreamRange<google::cloud::apphub::v1::DiscoveredWorkload>
-  ListDiscoveredWorkloads(
-      google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request,
-      Options opts = {});
+  ListDiscoveredWorkloads(google::cloud::apphub::v1::ListDiscoveredWorkloadsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1392,8 +1334,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L986}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
+  GetDiscoveredWorkload(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1422,9 +1364,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetDiscoveredWorkloadRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L986}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::DiscoveredWorkload> GetDiscoveredWorkload(
-      google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apphub::v1::DiscoveredWorkload>
+  GetDiscoveredWorkload(google::cloud::apphub::v1::GetDiscoveredWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1395,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-  LookupDiscoveredWorkload(std::string const& parent, std::string const& uri,
-                           Options opts = {});
+  LookupDiscoveredWorkload(std::string const& parent, std::string const& uri, Options opts = {});
 
   // clang-format off
   ///
@@ -1486,9 +1426,7 @@ class AppHubClient {
   ///
   // clang-format on
   StatusOr<google::cloud::apphub::v1::LookupDiscoveredWorkloadResponse>
-  LookupDiscoveredWorkload(
-      google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request,
-      Options opts = {});
+  LookupDiscoveredWorkload(google::cloud::apphub::v1::LookupDiscoveredWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1523,8 +1461,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Workload> ListWorkloads(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Workload>
+  ListWorkloads(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -1562,9 +1500,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Workload> ListWorkloads(
-      google::cloud::apphub::v1::ListWorkloadsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Workload>
+  ListWorkloads(google::cloud::apphub::v1::ListWorkloadsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1602,10 +1539,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      std::string const& parent,
-      google::cloud::apphub::v1::Workload const& workload,
-      std::string const& workload_id, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  CreateWorkload(std::string const& parent, google::cloud::apphub::v1::Workload const& workload, std::string const& workload_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1618,10 +1553,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkload(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apphub::v1::Workload const& workload,
-      std::string const& workload_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkload(NoAwaitTag, std::string const& parent, google::cloud::apphub::v1::Workload const& workload, std::string const& workload_id, Options opts = {});
 
   // clang-format off
   ///
@@ -1657,9 +1590,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      google::cloud::apphub::v1::CreateWorkloadRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  CreateWorkload(google::cloud::apphub::v1::CreateWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1672,10 +1604,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateWorkload(
-      NoAwaitTag,
-      google::cloud::apphub::v1::CreateWorkloadRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateWorkload(NoAwaitTag, google::cloud::apphub::v1::CreateWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1686,8 +1616,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> CreateWorkload(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  CreateWorkload(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1713,8 +1643,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Workload>
+  GetWorkload(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1743,9 +1673,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Workload> GetWorkload(
-      google::cloud::apphub::v1::GetWorkloadRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Workload>
+  GetWorkload(google::cloud::apphub::v1::GetWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1785,9 +1714,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      google::cloud::apphub::v1::Workload const& workload,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  UpdateWorkload(google::cloud::apphub::v1::Workload const& workload, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1800,9 +1728,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkload(
-      NoAwaitTag, google::cloud::apphub::v1::Workload const& workload,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkload(NoAwaitTag, google::cloud::apphub::v1::Workload const& workload, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -1838,9 +1765,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.Workload]: @googleapis_reference_link{google/cloud/apphub/v1/workload.proto#L37}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  UpdateWorkload(google::cloud::apphub::v1::UpdateWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1853,10 +1779,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateWorkload(
-      NoAwaitTag,
-      google::cloud::apphub::v1::UpdateWorkloadRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateWorkload(NoAwaitTag, google::cloud::apphub::v1::UpdateWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1867,8 +1791,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Workload>> UpdateWorkload(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Workload>>
+  UpdateWorkload(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1901,8 +1825,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
-      std::string const& name, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteWorkload(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1915,8 +1839,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkload(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkload(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1952,9 +1876,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L1081}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
-      google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteWorkload(google::cloud::apphub::v1::DeleteWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1967,10 +1890,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteWorkload(
-      NoAwaitTag,
-      google::cloud::apphub::v1::DeleteWorkloadRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteWorkload(NoAwaitTag, google::cloud::apphub::v1::DeleteWorkloadRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1981,8 +1902,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>> DeleteWorkload(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
+  DeleteWorkload(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2016,8 +1937,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L716}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Application> ListApplications(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Application>
+  ListApplications(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -2055,9 +1976,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.ListApplicationsRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L716}
   ///
   // clang-format on
-  StreamRange<google::cloud::apphub::v1::Application> ListApplications(
-      google::cloud::apphub::v1::ListApplicationsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::apphub::v1::Application>
+  ListApplications(google::cloud::apphub::v1::ListApplicationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2094,10 +2014,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L753}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
-      std::string const& parent,
-      google::cloud::apphub::v1::Application const& application,
-      std::string const& application_id, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  CreateApplication(std::string const& parent, google::cloud::apphub::v1::Application const& application, std::string const& application_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2110,10 +2028,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApplication(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::apphub::v1::Application const& application,
-      std::string const& application_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApplication(NoAwaitTag, std::string const& parent, google::cloud::apphub::v1::Application const& application, std::string const& application_id, Options opts = {});
 
   // clang-format off
   ///
@@ -2149,9 +2065,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.CreateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L753}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
-      google::cloud::apphub::v1::CreateApplicationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  CreateApplication(google::cloud::apphub::v1::CreateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2164,10 +2079,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateApplication(
-      NoAwaitTag,
-      google::cloud::apphub::v1::CreateApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateApplication(NoAwaitTag, google::cloud::apphub::v1::CreateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2178,8 +2091,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> CreateApplication(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  CreateApplication(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2205,8 +2118,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L789}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Application> GetApplication(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Application>
+  GetApplication(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2235,9 +2148,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.GetApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L789}
   ///
   // clang-format on
-  StatusOr<google::cloud::apphub::v1::Application> GetApplication(
-      google::cloud::apphub::v1::GetApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::apphub::v1::Application>
+  GetApplication(google::cloud::apphub::v1::GetApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2277,9 +2189,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L802}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
-      google::cloud::apphub::v1::Application const& application,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  UpdateApplication(google::cloud::apphub::v1::Application const& application, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2292,9 +2203,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApplication(
-      NoAwaitTag, google::cloud::apphub::v1::Application const& application,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApplication(NoAwaitTag, google::cloud::apphub::v1::Application const& application, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -2330,9 +2240,8 @@ class AppHubClient {
   /// [google.cloud.apphub.v1.UpdateApplicationRequest]: @googleapis_reference_link{google/cloud/apphub/v1/apphub_service.proto#L802}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  UpdateApplication(google::cloud::apphub::v1::UpdateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2345,10 +2254,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateApplication(
-      NoAwaitTag,
-      google::cloud::apphub::v1::UpdateApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateApplication(NoAwaitTag, google::cloud::apphub::v1::UpdateApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2359,8 +2266,8 @@ class AppHubClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::apphub::v1::Application>> UpdateApplication(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::apphub::v1::Application>>
+  UpdateApplication(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2407,8 +2314,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApplication(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApplication(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2445,9 +2352,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteApplication(
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request,
-      Options opts = {});
+  DeleteApplication(google::cloud::apphub::v1::DeleteApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2460,10 +2365,8 @@ class AppHubClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteApplication(
-      NoAwaitTag,
-      google::cloud::apphub::v1::DeleteApplicationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteApplication(NoAwaitTag, google::cloud::apphub::v1::DeleteApplicationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2475,8 +2378,7 @@ class AppHubClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::apphub::v1::OperationMetadata>>
-  DeleteApplication(google::longrunning::Operation const& operation,
-                    Options opts = {});
+  DeleteApplication(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -2514,8 +2416,8 @@ class AppHubClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2544,9 +2446,8 @@ class AppHubClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2578,8 +2479,8 @@ class AppHubClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2610,8 +2511,8 @@ class AppHubClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2646,22 +2547,13 @@ class AppHubClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -2687,25 +2579,17 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2735,12 +2619,12 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -2762,12 +2646,12 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2794,13 +2678,12 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2821,10 +2704,11 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2850,12 +2734,11 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -2867,8 +2750,9 @@ class AppHubClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -2882,13 +2766,14 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -2900,8 +2785,9 @@ class AppHubClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -2920,15 +2806,14 @@ class AppHubClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AppHubConnection> connection_;

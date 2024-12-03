@@ -36,29 +36,23 @@ class RowAccessPolicyServiceRestStub {
  public:
   virtual ~RowAccessPolicyServiceRestStub() = default;
 
-  virtual StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
-  ListRowAccessPolicies(
+  virtual StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const&
-          request) = 0;
+      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) = 0;
 };
 
-class DefaultRowAccessPolicyServiceRestStub
-    : public RowAccessPolicyServiceRestStub {
+class DefaultRowAccessPolicyServiceRestStub : public RowAccessPolicyServiceRestStub {
  public:
   ~DefaultRowAccessPolicyServiceRestStub() override = default;
 
   explicit DefaultRowAccessPolicyServiceRestStub(Options options);
   DefaultRowAccessPolicyServiceRestStub(
-      std::shared_ptr<rest_internal::RestClient> service, Options options);
+      std::shared_ptr<rest_internal::RestClient> service,
+      Options options);
 
-  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse>
-  ListRowAccessPolicies(
+  StatusOr<google::cloud::bigquery::v2::ListRowAccessPoliciesResponse> ListRowAccessPolicies(
       google::cloud::rest_internal::RestContext& rest_context,
-      Options const& options,
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request)
-      override;
+      Options const& options, google::cloud::bigquery::v2::ListRowAccessPoliciesRequest const& request) override;
 
  private:
   std::shared_ptr<rest_internal::RestClient> service_;

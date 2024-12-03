@@ -62,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Agent]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
+/// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
 ///
 class AgentsClient {
  public:
-  explicit AgentsClient(std::shared_ptr<AgentsConnection> connection,
-                        Options opts = {});
+  explicit AgentsClient(std::shared_ptr<AgentsConnection> connection, Options opts = {});
   ~AgentsClient();
 
   ///@{
@@ -94,7 +92,7 @@ class AgentsClient {
   /// Returns the list of all agents in the specified location.
   ///
   /// @param parent  Required. The location to list all agents for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -117,12 +115,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L378}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L413}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Agent>
+  ListAgents(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -156,20 +154,19 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L378}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.ListAgentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L413}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Agent> ListAgents(
-      google::cloud::dialogflow::cx::v3::ListAgentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Agent>
+  ListAgents(google::cloud::dialogflow::cx::v3::ListAgentsRequest request, Options opts = {});
 
   // clang-format off
   ///
   /// Retrieves the specified agent.
   ///
   /// @param name  Required. The name of the agent.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -183,12 +180,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L410}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L445}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  GetAgent(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -213,13 +210,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L410}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L445}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> GetAgent(
-      google::cloud::dialogflow::cx::v3::GetAgentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  GetAgent(google::cloud::dialogflow::cx::v3::GetAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -230,7 +226,7 @@ class AgentsClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param parent  Required. The location to create a agent for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>`.
   /// @param agent  Required. The agent to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -245,13 +241,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L423}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L458}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Agent const& agent, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  CreateAgent(std::string const& parent, google::cloud::dialogflow::cx::v3::Agent const& agent, Options opts = {});
 
   // clang-format off
   ///
@@ -280,13 +275,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L423}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.CreateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L458}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> CreateAgent(
-      google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  CreateAgent(google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -312,13 +306,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L439}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L474}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      google::cloud::dialogflow::cx::v3::Agent const& agent,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  UpdateAgent(google::cloud::dialogflow::cx::v3::Agent const& agent, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -347,20 +340,19 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L206}
-  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L439}
+  /// [google.cloud.dialogflow.cx.v3.Agent]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.UpdateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L474}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Agent> UpdateAgent(
-      google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Agent>
+  UpdateAgent(google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Deletes the specified agent.
   ///
   /// @param name  Required. The name of the agent to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -372,10 +364,11 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L450}
+  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L485}
   ///
   // clang-format on
-  Status DeleteAgent(std::string const& name, Options opts = {});
+  Status
+  DeleteAgent(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -398,12 +391,11 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L450}
+  /// [google.cloud.dialogflow.cx.v3.DeleteAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L485}
   ///
   // clang-format on
-  Status DeleteAgent(
-      google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteAgent(google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -444,14 +436,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L463}
-  /// [google.cloud.dialogflow.cx.v3.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L530}
+  /// [google.cloud.dialogflow.cx.v3.ExportAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L498}
+  /// [google.cloud.dialogflow.cx.v3.ExportAgentResponse]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L565}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
-      Options opts = {});
+  ExportAgent(google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -464,10 +454,8 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ExportAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ExportAgent(NoAwaitTag, google::cloud::dialogflow::cx::v3::ExportAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -479,8 +467,7 @@ class AgentsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
-  ExportAgent(google::longrunning::Operation const& operation,
-              Options opts = {});
+  ExportAgent(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -528,13 +515,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L552}
+  /// [google.cloud.dialogflow.cx.v3.RestoreAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L587}
   /// [google.protobuf.Struct]: @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent(google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -547,10 +533,8 @@ class AgentsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RestoreAgent(
-      NoAwaitTag,
-      google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RestoreAgent(NoAwaitTag, google::cloud::dialogflow::cx::v3::RestoreAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -561,8 +545,8 @@ class AgentsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::protobuf::Struct>> RestoreAgent(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::protobuf::Struct>>
+  RestoreAgent(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -589,14 +573,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L642}
-  /// [google.cloud.dialogflow.cx.v3.ValidateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L609}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
+  /// [google.cloud.dialogflow.cx.v3.ValidateAgentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L644}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  ValidateAgent(
-      google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request,
-      Options opts = {});
+  ValidateAgent(google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -604,7 +586,8 @@ class AgentsClient {
   /// when ValidateAgent is called.
   ///
   /// @param name  Required. The agent name.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/validationResult`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/validationResult`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -618,8 +601,8 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L642}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L625}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
@@ -649,21 +632,19 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L642}
-  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L625}
+  /// [google.cloud.dialogflow.cx.v3.AgentValidationResult]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
+  /// [google.cloud.dialogflow.cx.v3.GetAgentValidationResultRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
-  GetAgentValidationResult(
-      google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
-          request,
-      Options opts = {});
+  GetAgentValidationResult(google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Gets the generative settings for the agent.
   ///
-  /// @param name  Required. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/generativeSettings`.
+  /// @param name  Required. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/generativeSettings`.
   /// @param language_code  Required. Language code of the generative settings.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -678,13 +659,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L32}
-  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
+  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L695}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  GetGenerativeSettings(std::string const& name,
-                        std::string const& language_code, Options opts = {});
+  GetGenerativeSettings(std::string const& name, std::string const& language_code, Options opts = {});
 
   // clang-format off
   ///
@@ -709,15 +689,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L32}
-  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L660}
+  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
+  /// [google.cloud.dialogflow.cx.v3.GetGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L695}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  GetGenerativeSettings(
-      google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const&
-          request,
-      Options opts = {});
+  GetGenerativeSettings(google::cloud::dialogflow::cx::v3::GetGenerativeSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -739,15 +716,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L32}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
+  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L712}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  UpdateGenerativeSettings(
-      google::cloud::dialogflow::cx::v3::GenerativeSettings const&
-          generative_settings,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateGenerativeSettings(google::cloud::dialogflow::cx::v3::GenerativeSettings const& generative_settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -772,15 +746,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L32}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L677}
+  /// [google.cloud.dialogflow.cx.v3.GenerativeSettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generative_settings.proto#L31}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGenerativeSettingsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/agent.proto#L712}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::GenerativeSettings>
-  UpdateGenerativeSettings(
-      google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const&
-          request,
-      Options opts = {});
+  UpdateGenerativeSettings(google::cloud::dialogflow::cx::v3::UpdateGenerativeSettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -818,8 +789,8 @@ class AgentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -848,22 +819,13 @@ class AgentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -889,25 +851,17 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -937,12 +891,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -964,12 +918,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -996,13 +950,12 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1014,8 +967,9 @@ class AgentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1029,13 +983,14 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1047,8 +1002,9 @@ class AgentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1067,15 +1023,14 @@ class AgentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AgentsConnection> connection_;

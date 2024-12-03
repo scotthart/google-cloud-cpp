@@ -65,9 +65,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ClusterControllerClient {
  public:
-  explicit ClusterControllerClient(
-      std::shared_ptr<ClusterControllerConnection> connection,
-      Options opts = {});
+  explicit ClusterControllerClient(std::shared_ptr<ClusterControllerConnection> connection, Options opts = {});
   ~ClusterControllerClient();
 
   ///@{
@@ -80,12 +78,10 @@ class ClusterControllerClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ClusterControllerClient const& a,
-                         ClusterControllerClient const& b) {
+  friend bool operator==(ClusterControllerClient const& a, ClusterControllerClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ClusterControllerClient const& a,
-                         ClusterControllerClient const& b) {
+  friend bool operator!=(ClusterControllerClient const& a, ClusterControllerClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,12 +118,11 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L160}
   /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1353}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
-      std::string const& project_id, std::string const& region,
-      google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  CreateCluster(std::string const& project_id, std::string const& region, google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
 
   // clang-format off
   ///
@@ -140,9 +135,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag, std::string const& project_id, std::string const& region,
-      google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, std::string const& project_id, std::string const& region, google::cloud::dataproc::v1::Cluster const& cluster, Options opts = {});
 
   // clang-format off
   ///
@@ -178,12 +172,11 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L160}
   /// [google.cloud.dataproc.v1.CreateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1353}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
-      google::cloud::dataproc::v1::CreateClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  CreateCluster(google::cloud::dataproc::v1::CreateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -196,10 +189,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::CreateClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateCluster(NoAwaitTag, google::cloud::dataproc::v1::CreateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -210,8 +201,8 @@ class ClusterControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  CreateCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -257,14 +248,11 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L160}
   /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1003}
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1384}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
-      std::string const& project_id, std::string const& region,
-      std::string const& cluster_name,
-      google::cloud::dataproc::v1::Cluster const& cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  UpdateCluster(std::string const& project_id, std::string const& region, std::string const& cluster_name, google::cloud::dataproc::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -277,11 +265,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag, std::string const& project_id, std::string const& region,
-      std::string const& cluster_name,
-      google::cloud::dataproc::v1::Cluster const& cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, std::string const& project_id, std::string const& region, std::string const& cluster_name, google::cloud::dataproc::v1::Cluster const& cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -321,12 +306,11 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.Cluster]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L160}
   /// [google.cloud.dataproc.v1.ClusterStatus.State]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1003}
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1384}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  UpdateCluster(google::cloud::dataproc::v1::UpdateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -339,10 +323,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateCluster(NoAwaitTag, google::cloud::dataproc::v1::UpdateClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -353,8 +335,8 @@ class ClusterControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  UpdateCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +372,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.StopClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1480}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
-      google::cloud::dataproc::v1::StopClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  StopCluster(google::cloud::dataproc::v1::StopClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -405,10 +386,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StopCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::StopClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StopCluster(NoAwaitTag, google::cloud::dataproc::v1::StopClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -419,8 +398,8 @@ class ClusterControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  StopCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -456,9 +435,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.StartClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1511}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
-      google::cloud::dataproc::v1::StartClusterRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  StartCluster(google::cloud::dataproc::v1::StartClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -471,10 +449,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> StartCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::StartClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  StartCluster(NoAwaitTag, google::cloud::dataproc::v1::StartClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -485,8 +461,8 @@ class ClusterControllerClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::dataproc::v1::Cluster>>
+  StartCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -520,12 +496,11 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L137}
   /// [google.cloud.dataproc.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1542}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(std::string const& project_id, std::string const& region,
-                std::string const& cluster_name, Options opts = {});
+  DeleteCluster(std::string const& project_id, std::string const& region, std::string const& cluster_name, Options opts = {});
 
   // clang-format off
   ///
@@ -538,9 +513,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag, std::string const& project_id, std::string const& region,
-      std::string const& cluster_name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, std::string const& project_id, std::string const& region, std::string const& cluster_name, Options opts = {});
 
   // clang-format off
   ///
@@ -576,13 +550,11 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]: @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L137}
   /// [google.cloud.dataproc.v1.DeleteClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1542}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request,
-      Options opts = {});
+  DeleteCluster(google::cloud::dataproc::v1::DeleteClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -595,10 +567,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteCluster(NoAwaitTag, google::cloud::dataproc::v1::DeleteClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -610,8 +580,7 @@ class ClusterControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
-  DeleteCluster(google::longrunning::Operation const& operation,
-                Options opts = {});
+  DeleteCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -638,9 +607,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1573}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      std::string const& project_id, std::string const& region,
-      std::string const& cluster_name, Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Cluster>
+  GetCluster(std::string const& project_id, std::string const& region, std::string const& cluster_name, Options opts = {});
 
   // clang-format off
   ///
@@ -669,9 +637,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.GetClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1573}
   ///
   // clang-format on
-  StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
-      google::cloud::dataproc::v1::GetClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dataproc::v1::Cluster>
+  GetCluster(google::cloud::dataproc::v1::GetClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -706,9 +673,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1586}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
-      std::string const& project_id, std::string const& region,
-      Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Cluster>
+  ListClusters(std::string const& project_id, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -762,9 +728,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1586}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
-      std::string const& project_id, std::string const& region,
-      std::string const& filter, Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Cluster>
+  ListClusters(std::string const& project_id, std::string const& region, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
@@ -802,9 +767,8 @@ class ClusterControllerClient {
   /// [google.cloud.dataproc.v1.ListClustersRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1586}
   ///
   // clang-format on
-  StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
-      google::cloud::dataproc::v1::ListClustersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dataproc::v1::Cluster>
+  ListClusters(google::cloud::dataproc::v1::ListClustersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -842,13 +806,12 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1634}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1684}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(std::string const& project_id, std::string const& region,
-                  std::string const& cluster_name, Options opts = {});
+  DiagnoseCluster(std::string const& project_id, std::string const& region, std::string const& cluster_name, Options opts = {});
 
   // clang-format off
   ///
@@ -861,9 +824,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      NoAwaitTag, std::string const& project_id, std::string const& region,
-      std::string const& cluster_name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DiagnoseCluster(NoAwaitTag, std::string const& project_id, std::string const& region, std::string const& cluster_name, Options opts = {});
 
   // clang-format off
   ///
@@ -903,14 +865,12 @@ class ClusterControllerClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1634}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]: @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1684}
-  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L138}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation.metadata]: @googleapis_reference_link{google/longrunning/operations.proto#L131}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
-      Options opts = {});
+  DiagnoseCluster(google::cloud::dataproc::v1::DiagnoseClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -923,10 +883,8 @@ class ClusterControllerClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DiagnoseCluster(
-      NoAwaitTag,
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DiagnoseCluster(NoAwaitTag, google::cloud::dataproc::v1::DiagnoseClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -938,8 +896,7 @@ class ClusterControllerClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
-  DiagnoseCluster(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  DiagnoseCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -971,8 +928,8 @@ class ClusterControllerClient {
   /// [google.iam.v1.SetIamPolicyRequest]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L100}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1003,8 +960,8 @@ class ClusterControllerClient {
   /// [google.iam.v1.Policy]: @googleapis_reference_link{google/iam/v1/policy.proto#L102}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1039,22 +996,13 @@ class ClusterControllerClient {
   /// [google.iam.v1.TestIamPermissionsResponse]: @googleapis_reference_link{google/iam/v1/iam_policy.proto#L153}
   ///
   // clang-format on
-  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request,
-      Options opts = {});
+  StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1080,25 +1028,17 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1128,12 +1068,12 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1155,12 +1095,12 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1187,13 +1127,12 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1214,10 +1153,11 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1243,12 +1183,11 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1260,8 +1199,9 @@ class ClusterControllerClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1275,13 +1215,14 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1293,8 +1234,9 @@ class ClusterControllerClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1313,15 +1255,14 @@ class ClusterControllerClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ClusterControllerConnection> connection_;

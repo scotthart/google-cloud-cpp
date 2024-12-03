@@ -62,29 +62,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SecuritySettingsServiceClient {
  public:
-  explicit SecuritySettingsServiceClient(
-      std::shared_ptr<SecuritySettingsServiceConnection> connection,
-      Options opts = {});
+  explicit SecuritySettingsServiceClient(std::shared_ptr<SecuritySettingsServiceConnection> connection, Options opts = {});
   ~SecuritySettingsServiceClient();
 
   ///@{
   /// @name Copy and move support
   SecuritySettingsServiceClient(SecuritySettingsServiceClient const&) = default;
-  SecuritySettingsServiceClient& operator=(
-      SecuritySettingsServiceClient const&) = default;
+  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient const&) = default;
   SecuritySettingsServiceClient(SecuritySettingsServiceClient&&) = default;
-  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient&&) =
-      default;
+  SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SecuritySettingsServiceClient const& a,
-                         SecuritySettingsServiceClient const& b) {
+  friend bool operator==(SecuritySettingsServiceClient const& a, SecuritySettingsServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SecuritySettingsServiceClient const& a,
-                         SecuritySettingsServiceClient const& b) {
+  friend bool operator!=(SecuritySettingsServiceClient const& a, SecuritySettingsServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -95,7 +89,7 @@ class SecuritySettingsServiceClient {
   ///
   /// @param parent  Required. The location to create an
   ///  [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>`.
   /// @param security_settings  Required. The security settings to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -115,11 +109,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::SecuritySettings const&
-          security_settings,
-      Options opts = {});
+  CreateSecuritySettings(std::string const& parent, google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, Options opts = {});
 
   // clang-format off
   ///
@@ -149,10 +139,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  CreateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  CreateSecuritySettings(google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -161,7 +148,8 @@ class SecuritySettingsServiceClient {
   /// returned settings may be stale by up to 1 minute.
   ///
   /// @param name  Required. Resource name of the settings.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/securitySettings/<security settings ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/securitySettings/<securitysettingsID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -212,10 +200,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  GetSecuritySettings(
-      google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  GetSecuritySettings(google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -244,10 +229,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::SecuritySettings const&
-          security_settings,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::SecuritySettings const& security_settings, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -278,17 +260,14 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  UpdateSecuritySettings(
-      google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  UpdateSecuritySettings(google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Returns the list of all security settings in the specified location.
   ///
   /// @param parent  Required. The location to list all security settings for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -355,9 +334,7 @@ class SecuritySettingsServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
-  ListSecuritySettings(
-      google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request,
-      Options opts = {});
+  ListSecuritySettings(google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -366,7 +343,8 @@ class SecuritySettingsServiceClient {
   ///
   /// @param name  Required. The name of the
   ///  [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] to
-  ///  delete. Format: `projects/<Project ID>/locations/<Location ID>/securitySettings/<Security Settings ID>`.
+  ///  delete. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/securitySettings/<SecuritySettingsID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -382,7 +360,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   // clang-format on
-  Status DeleteSecuritySettings(std::string const& name, Options opts = {});
+  Status
+  DeleteSecuritySettings(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -410,10 +389,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   // clang-format on
-  Status DeleteSecuritySettings(
-      google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteSecuritySettings(google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -451,8 +428,8 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -481,22 +458,13 @@ class SecuritySettingsServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -522,25 +490,17 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -570,12 +530,12 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -597,12 +557,12 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -629,13 +589,12 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -647,8 +606,9 @@ class SecuritySettingsServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -662,13 +622,14 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +641,9 @@ class SecuritySettingsServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -700,15 +662,14 @@ class SecuritySettingsServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SecuritySettingsServiceConnection> connection_;

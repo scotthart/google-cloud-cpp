@@ -60,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Generator]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
+/// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
 ///
 class GeneratorsClient {
  public:
-  explicit GeneratorsClient(std::shared_ptr<GeneratorsConnection> connection,
-                            Options opts = {});
+  explicit GeneratorsClient(std::shared_ptr<GeneratorsConnection> connection, Options opts = {});
   ~GeneratorsClient();
 
   ///@{
@@ -92,7 +90,7 @@ class GeneratorsClient {
   /// Returns the list of all generators in the specified agent.
   ///
   /// @param parent  Required. The agent to list all generators for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -116,11 +114,11 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L134}
+  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L164}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Generator>
+  ListGenerators(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -155,19 +153,19 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L134}
+  /// [google.cloud.dialogflow.cx.v3.ListGeneratorsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L164}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Generator> ListGenerators(
-      google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Generator>
+  ListGenerators(google::cloud::dialogflow::cx::v3::ListGeneratorsRequest request, Options opts = {});
 
   // clang-format off
   ///
   /// Retrieves the specified generator.
   ///
   /// @param name  Required. The name of the generator.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/generators/<Generator ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/generators/<GeneratorID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -182,11 +180,11 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L169}
+  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  GetGenerator(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -212,19 +210,18 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L169}
+  /// [google.cloud.dialogflow.cx.v3.GetGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L199}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> GetGenerator(
-      google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  GetGenerator(google::cloud::dialogflow::cx::v3::GetGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Creates a generator in the specified agent.
   ///
   /// @param parent  Required. The agent to create a generator for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>`.
+  ///  Format: `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>`.
   /// @param generator  Required. The generator to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -239,14 +236,12 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L186}
+  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L216}
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::Generator const& generator,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  CreateGenerator(std::string const& parent, google::cloud::dialogflow::cx::v3::Generator const& generator, Options opts = {});
 
   // clang-format off
   ///
@@ -271,13 +266,12 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L186}
+  /// [google.cloud.dialogflow.cx.v3.CreateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L216}
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> CreateGenerator(
-      google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  CreateGenerator(google::cloud::dialogflow::cx::v3::CreateGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -300,12 +294,11 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L207}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L237}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
-      google::cloud::dialogflow::cx::v3::Generator const& generator,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  UpdateGenerator(google::cloud::dialogflow::cx::v3::Generator const& generator, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -331,19 +324,19 @@ class GeneratorsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Generator]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L89}
-  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L207}
+  /// [google.cloud.dialogflow.cx.v3.UpdateGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L237}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Generator> UpdateGenerator(
-      google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Generator>
+  UpdateGenerator(google::cloud::dialogflow::cx::v3::UpdateGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Deletes the specified generators.
   ///
   /// @param name  Required. The name of the generator to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/generators/<Generator ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/generators/<GeneratorID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -355,10 +348,11 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L221}
+  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L251}
   ///
   // clang-format on
-  Status DeleteGenerator(std::string const& name, Options opts = {});
+  Status
+  DeleteGenerator(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -381,12 +375,11 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L221}
+  /// [google.cloud.dialogflow.cx.v3.DeleteGeneratorRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/generator.proto#L251}
   ///
   // clang-format on
-  Status DeleteGenerator(
-      google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request,
-      Options opts = {});
+  Status
+  DeleteGenerator(google::cloud::dialogflow::cx::v3::DeleteGeneratorRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -424,8 +417,8 @@ class GeneratorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -454,22 +447,13 @@ class GeneratorsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -495,25 +479,17 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -543,12 +519,12 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -570,12 +546,12 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -602,13 +578,12 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -620,8 +595,9 @@ class GeneratorsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -635,13 +611,14 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -653,8 +630,9 @@ class GeneratorsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -673,15 +651,14 @@ class GeneratorsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<GeneratorsConnection> connection_;

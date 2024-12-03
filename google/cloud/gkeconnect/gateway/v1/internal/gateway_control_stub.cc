@@ -32,15 +32,15 @@ GatewayControlStub::~GatewayControlStub() = default;
 
 StatusOr<google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse>
 DefaultGatewayControlStub::GenerateCredentials(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const&
-        request) {
-  google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse response;
-  auto status = grpc_stub_->GenerateCredentials(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::gkeconnect::gateway::v1::GenerateCredentialsRequest const& request) {
+    google::cloud::gkeconnect::gateway::v1::GenerateCredentialsResponse response;
+    auto status =
+        grpc_stub_->GenerateCredentials(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

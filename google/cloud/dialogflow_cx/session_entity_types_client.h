@@ -61,33 +61,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
+/// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
 ///
 class SessionEntityTypesClient {
  public:
-  explicit SessionEntityTypesClient(
-      std::shared_ptr<SessionEntityTypesConnection> connection,
-      Options opts = {});
+  explicit SessionEntityTypesClient(std::shared_ptr<SessionEntityTypesConnection> connection, Options opts = {});
   ~SessionEntityTypesClient();
 
   ///@{
   /// @name Copy and move support
   SessionEntityTypesClient(SessionEntityTypesClient const&) = default;
-  SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) =
-      default;
+  SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) = default;
   SessionEntityTypesClient(SessionEntityTypesClient&&) = default;
   SessionEntityTypesClient& operator=(SessionEntityTypesClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(SessionEntityTypesClient const& a,
-                         SessionEntityTypesClient const& b) {
+  friend bool operator==(SessionEntityTypesClient const& a, SessionEntityTypesClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(SessionEntityTypesClient const& a,
-                         SessionEntityTypesClient const& b) {
+  friend bool operator!=(SessionEntityTypesClient const& a, SessionEntityTypesClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -97,7 +91,10 @@ class SessionEntityTypesClient {
   /// Returns the list of all session entity types in the specified session.
   ///
   /// @param parent  Required. The session to list all session entity types from.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/sessions/<SessionID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/sessions/<SessionID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -166,17 +163,18 @@ class SessionEntityTypesClient {
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  ListSessionEntityTypes(
-      google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request,
-      Options opts = {});
+  ListSessionEntityTypes(google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest request, Options opts = {});
 
   // clang-format off
   ///
   /// Retrieves the specified session entity type.
   ///
   /// @param name  Required. The name of the session entity type.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`.
+  ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -191,7 +189,7 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L210}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   // clang-format on
@@ -221,22 +219,22 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
+  /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L210}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  GetSessionEntityType(
-      google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  GetSessionEntityType(google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Creates a session entity type.
   ///
   /// @param parent  Required. The session to create a session entity type for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>`.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/sessions/<SessionID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/sessions/<SessionID>`.
   ///  If `Environment ID` is not specified, we assume default 'draft'
   ///  environment.
   /// @param session_entity_type  Required. The session entity type to create.
@@ -253,16 +251,12 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
+  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L228}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  CreateSessionEntityType(
-      std::string const& parent,
-      google::cloud::dialogflow::cx::v3::SessionEntityType const&
-          session_entity_type,
-      Options opts = {});
+  CreateSessionEntityType(std::string const& parent, google::cloud::dialogflow::cx::v3::SessionEntityType const& session_entity_type, Options opts = {});
 
   // clang-format off
   ///
@@ -287,24 +281,24 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
+  /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L228}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  CreateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  CreateSessionEntityType(google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Updates the specified session entity type.
   ///
   /// @param session_entity_type  Required. The session entity type to update.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
-  ///  environment.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`.
+  ///  If `Environment ID` is not specified,
+  ///  we assume default 'draft' environment.
   /// @param update_mask  The mask to control which fields get updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
@@ -320,14 +314,11 @@ class SessionEntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L250}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::SessionEntityType const&
-          session_entity_type,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateSessionEntityType(google::cloud::dialogflow::cx::v3::SessionEntityType const& session_entity_type, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -353,23 +344,23 @@ class SessionEntityTypesClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
-  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
+  /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L250}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
-  UpdateSessionEntityType(
-      google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  UpdateSessionEntityType(google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Deletes the specified session entity type.
   ///
   /// @param name  Required. The name of the session entity type to delete.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>` or
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>/entityTypes/<Entity Type ID>`. If `Environment ID` is not specified, we assume default 'draft'
-  ///  environment.
+  ///  Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`
+  ///  or
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/sessions/<SessionID>/entityTypes/<EntityTypeID>`.
+  ///  If `Environment ID` is not specified,
+  ///  we assume default 'draft' environment.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [`Status`] object. If the request failed, the
@@ -381,10 +372,11 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L265}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L267}
   ///
   // clang-format on
-  Status DeleteSessionEntityType(std::string const& name, Options opts = {});
+  Status
+  DeleteSessionEntityType(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -407,13 +399,11 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L265}
+  /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L267}
   ///
   // clang-format on
-  Status DeleteSessionEntityType(
-      google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
-          request,
-      Options opts = {});
+  Status
+  DeleteSessionEntityType(google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -451,8 +441,8 @@ class SessionEntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -481,22 +471,13 @@ class SessionEntityTypesClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -522,25 +503,17 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -570,12 +543,12 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -597,12 +570,12 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -629,13 +602,12 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -647,8 +619,9 @@ class SessionEntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -662,13 +635,14 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -680,8 +654,9 @@ class SessionEntityTypesClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -700,15 +675,14 @@ class SessionEntityTypesClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<SessionEntityTypesConnection> connection_;

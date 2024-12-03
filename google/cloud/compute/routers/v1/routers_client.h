@@ -64,8 +64,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RoutersClient {
  public:
-  explicit RoutersClient(std::shared_ptr<RoutersConnection> connection,
-                         Options opts = {});
+  explicit RoutersClient(std::shared_ptr<RoutersConnection> connection, Options opts = {});
   ~RoutersClient();
 
   ///@{
@@ -119,8 +118,7 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1256}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::RoutersScopedList>>
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
   AggregatedListRouters(std::string const& project, Options opts = {});
 
   // clang-format off
@@ -161,12 +159,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.RoutersScopedList]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1256}
   ///
   // clang-format on
-  StreamRange<std::pair<std::string,
-                        google::cloud::cpp::compute::v1::RoutersScopedList>>
-  AggregatedListRouters(
-      google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest
-          request,
-      Options opts = {});
+  StreamRange<std::pair<std::string, google::cloud::cpp::compute::v1::RoutersScopedList>>
+  AggregatedListRouters(google::cloud::cpp::compute::routers::v1::AggregatedListRoutersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -199,9 +193,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L252}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
-      std::string const& project, std::string const& region,
-      std::string const& router, Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -214,9 +207,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& router, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRouter(NoAwaitTag, std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -252,10 +244,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.DeleteRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L252}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
-      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -268,11 +258,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> DeleteRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  DeleteRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::DeleteRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -283,9 +270,8 @@ class RoutersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> DeleteRouter(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  DeleteRouter(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -312,9 +298,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L255}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
-      std::string const& project, std::string const& region,
-      std::string const& router, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Router>
+  GetRouter(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -344,9 +329,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L255}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Router> GetRouter(
-      google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Router>
+  GetRouter(google::cloud::cpp::compute::routers::v1::GetRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -374,9 +358,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L218}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
-      std::string const& project, std::string const& region,
-      std::string const& router, Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+  GetNatIpInfo(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -406,10 +389,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.NatIpInfoResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L218}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse> GetNatIpInfo(
-      google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::NatIpInfoResponse>
+  GetNatIpInfo(google::cloud::cpp::compute::routers::v1::GetNatIpInfoRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -438,8 +419,7 @@ class RoutersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(std::string const& project, std::string const& region,
-                    std::string const& router, Options opts = {});
+  GetNatMappingInfo(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -470,10 +450,7 @@ class RoutersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::VmEndpointNatMappingsList>
-  GetNatMappingInfo(
-      google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const&
-          request,
-      Options opts = {});
+  GetNatMappingInfo(google::cloud::cpp::compute::routers::v1::GetNatMappingInfoRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -501,8 +478,7 @@ class RoutersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(std::string const& project, std::string const& region,
-                  std::string const& router, Options opts = {});
+  GetRouterStatus(std::string const& project, std::string const& region, std::string const& router, Options opts = {});
 
   // clang-format off
   ///
@@ -533,10 +509,7 @@ class RoutersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::cpp::compute::v1::RouterStatusResponse>
-  GetRouterStatus(
-      google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const&
-          request,
-      Options opts = {});
+  GetRouterStatus(google::cloud::cpp::compute::routers::v1::GetRouterStatusRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -570,10 +543,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
-      std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRouter(std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -586,10 +557,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRouter(NoAwaitTag, std::string const& project, std::string const& region, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -626,10 +595,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.InsertRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L417}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
-      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRouter(google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -642,11 +609,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> InsertRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::InsertRouterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  InsertRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::InsertRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -657,9 +621,8 @@ class RoutersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> InsertRouter(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  InsertRouter(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -694,8 +657,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L255}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
-      std::string const& project, std::string const& region, Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Router>
+  ListRouters(std::string const& project, std::string const& region, Options opts = {});
 
   // clang-format off
   ///
@@ -734,9 +697,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.Router]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L255}
   ///
   // clang-format on
-  StreamRange<google::cloud::cpp::compute::v1::Router> ListRouters(
-      google::cloud::cpp::compute::routers::v1::ListRoutersRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::cpp::compute::v1::Router>
+  ListRouters(google::cloud::cpp::compute::routers::v1::ListRoutersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -772,11 +734,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L522}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      std::string const& project, std::string const& region,
-      std::string const& router,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRouter(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -789,11 +748,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& router,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRouter(NoAwaitTag, std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -831,10 +787,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.PatchRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L522}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRouter(google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -847,11 +801,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> PatchRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::PatchRouterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  PatchRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::PatchRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -862,9 +813,8 @@ class RoutersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> PatchRouter(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  PatchRouter(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -893,11 +843,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1251}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
-      std::string const& project, std::string const& region,
-      std::string const& router,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
+  Preview(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -928,9 +875,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.v1.RoutersPreviewResponse]: @cloud_cpp_reference_link{google/cloud/compute/v1/internal/common_013.proto#L1251}
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse> Preview(
-      google::cloud::cpp::compute::routers::v1::PreviewRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::RoutersPreviewResponse>
+  Preview(google::cloud::cpp::compute::routers::v1::PreviewRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -967,11 +913,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L578}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
-      std::string const& project, std::string const& region,
-      std::string const& router,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -984,11 +927,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
-      NoAwaitTag, std::string const& project, std::string const& region,
-      std::string const& router,
-      google::cloud::cpp::compute::v1::Router const& router_resource,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRouter(NoAwaitTag, std::string const& project, std::string const& region, std::string const& router, google::cloud::cpp::compute::v1::Router const& router_resource, Options opts = {});
 
   // clang-format off
   ///
@@ -1027,10 +967,8 @@ class RoutersClient {
   /// [google.cloud.cpp.compute.routers.v1.UpdateRouterRequest]: @cloud_cpp_reference_link{google/cloud/compute/routers/v1/routers.proto#L578}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
-      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1043,11 +981,8 @@ class RoutersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::cloud::cpp::compute::v1::Operation> UpdateRouter(
-      NoAwaitTag,
-      google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::cloud::cpp::compute::v1::Operation>
+  UpdateRouter(NoAwaitTag, google::cloud::cpp::compute::routers::v1::UpdateRouterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1058,9 +993,8 @@ class RoutersClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::cpp::compute::v1::Operation>> UpdateRouter(
-      google::cloud::cpp::compute::v1::Operation const& operation,
-      Options opts = {});
+  future<StatusOr<google::cloud::cpp::compute::v1::Operation>>
+  UpdateRouter(google::cloud::cpp::compute::v1::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<RoutersConnection> connection_;

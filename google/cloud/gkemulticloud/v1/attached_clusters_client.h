@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_ATTACHED_CLUSTERS_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GKEMULTICLOUD_V1_ATTACHED_CLUSTERS_CLIENT_H
 
-#include "google/cloud/gkemulticloud/v1/attached_clusters_connection.h"
 #include "google/cloud/future.h"
+#include "google/cloud/gkemulticloud/v1/attached_clusters_connection.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -66,9 +66,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class AttachedClustersClient {
  public:
-  explicit AttachedClustersClient(
-      std::shared_ptr<AttachedClustersConnection> connection,
-      Options opts = {});
+  explicit AttachedClustersClient(std::shared_ptr<AttachedClustersConnection> connection, Options opts = {});
   ~AttachedClustersClient();
 
   ///@{
@@ -81,12 +79,10 @@ class AttachedClustersClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(AttachedClustersClient const& a,
-                         AttachedClustersClient const& b) {
+  friend bool operator==(AttachedClustersClient const& a, AttachedClustersClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(AttachedClustersClient const& a,
-                         AttachedClustersClient const& b) {
+  friend bool operator!=(AttachedClustersClient const& a, AttachedClustersClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -142,14 +138,11 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L227}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(
-      std::string const& parent,
-      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
-      std::string const& attached_cluster_id, Options opts = {});
+  CreateAttachedCluster(std::string const& parent, google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster, std::string const& attached_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -162,10 +155,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
-      std::string const& attached_cluster_id, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAttachedCluster(NoAwaitTag, std::string const& parent, google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster, std::string const& attached_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -205,14 +196,11 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.CreateAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L227}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  CreateAttachedCluster(google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -225,11 +213,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::CreateAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -241,8 +226,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  CreateAttachedCluster(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  CreateAttachedCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -293,9 +277,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(
-      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  UpdateAttachedCluster(google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -308,10 +290,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::AttachedCluster const& attached_cluster, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -349,10 +329,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  UpdateAttachedCluster(google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -365,11 +342,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UpdateAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UpdateAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::UpdateAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +355,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  UpdateAttachedCluster(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  UpdateAttachedCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -428,12 +401,11 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L263}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(std::string const& parent,
-                        std::string const& fleet_membership, Options opts = {});
+  ImportAttachedCluster(std::string const& parent, std::string const& fleet_membership, Options opts = {});
 
   // clang-format off
   ///
@@ -446,9 +418,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      NoAwaitTag, std::string const& parent,
-      std::string const& fleet_membership, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportAttachedCluster(NoAwaitTag, std::string const& parent, std::string const& fleet_membership, Options opts = {});
 
   // clang-format off
   ///
@@ -491,14 +462,11 @@ class AttachedClustersClient {
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.ImportAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L263}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  ImportAttachedCluster(google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -511,11 +479,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::ImportAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -527,8 +492,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>>
-  ImportAttachedCluster(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  ImportAttachedCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -593,10 +557,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
-  GetAttachedCluster(
-      google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  GetAttachedCluster(google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -677,9 +638,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
-  ListAttachedClusters(
-      google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request,
-      Options opts = {});
+  ListAttachedClusters(google::cloud::gkemulticloud::v1::ListAttachedClustersRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -721,7 +680,7 @@ class AttachedClustersClient {
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
@@ -738,8 +697,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAttachedCluster(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -779,14 +738,11 @@ class AttachedClustersClient {
   /// [google.cloud.gkemulticloud.v1.AttachedCluster]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_resources.proto#L33}
   /// [google.cloud.gkemulticloud.v1.DeleteAttachedClusterRequest]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L393}
   /// [google.cloud.gkemulticloud.v1.OperationMetadata]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/common_resources.proto#L80}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  DeleteAttachedCluster(google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -799,11 +755,8 @@ class AttachedClustersClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteAttachedCluster(
-      NoAwaitTag,
-      google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteAttachedCluster(NoAwaitTag, google::cloud::gkemulticloud::v1::DeleteAttachedClusterRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -815,8 +768,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::gkemulticloud::v1::OperationMetadata>>
-  DeleteAttachedCluster(google::longrunning::Operation const& operation,
-                        Options opts = {});
+  DeleteAttachedCluster(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -881,10 +833,7 @@ class AttachedClustersClient {
   ///
   // clang-format on
   StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
-  GetAttachedServerConfig(
-      google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
-          request,
-      Options opts = {});
+  GetAttachedServerConfig(google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -931,11 +880,8 @@ class AttachedClustersClient {
   /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L220}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterInstallManifestResponse>
-  GenerateAttachedClusterInstallManifest(std::string const& parent,
-                                         std::string const& attached_cluster_id,
-                                         Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
+  GenerateAttachedClusterInstallManifest(std::string const& parent, std::string const& attached_cluster_id, Options opts = {});
 
   // clang-format off
   ///
@@ -964,12 +910,8 @@ class AttachedClustersClient {
   /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterInstallManifestResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L220}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterInstallManifestResponse>
-  GenerateAttachedClusterInstallManifest(
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterInstallManifestRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestResponse>
+  GenerateAttachedClusterInstallManifest(google::cloud::gkemulticloud::v1::GenerateAttachedClusterInstallManifestRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -998,25 +940,13 @@ class AttachedClustersClient {
   /// [google.cloud.gkemulticloud.v1.GenerateAttachedClusterAgentTokenResponse]: @googleapis_reference_link{google/cloud/gkemulticloud/v1/attached_service.proto#L491}
   ///
   // clang-format on
-  StatusOr<google::cloud::gkemulticloud::v1::
-               GenerateAttachedClusterAgentTokenResponse>
-  GenerateAttachedClusterAgentToken(
-      google::cloud::gkemulticloud::v1::
-          GenerateAttachedClusterAgentTokenRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenResponse>
+  GenerateAttachedClusterAgentToken(google::cloud::gkemulticloud::v1::GenerateAttachedClusterAgentTokenRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1042,25 +972,17 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1090,12 +1012,12 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1117,12 +1039,12 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1149,13 +1071,12 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1176,10 +1097,11 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(std::string const& name, Options opts = {});
+  Status
+  DeleteOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1205,12 +1127,11 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L201}
+  /// [google.longrunning.DeleteOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L200}
   ///
   // clang-format on
-  Status DeleteOperation(
-      google::longrunning::DeleteOperationRequest const& request,
-      Options opts = {});
+  Status
+  DeleteOperation(google::longrunning::DeleteOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1222,8 +1143,9 @@ class AttachedClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1237,13 +1159,14 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1255,8 +1178,9 @@ class AttachedClustersClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1275,15 +1199,14 @@ class AttachedClustersClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<AttachedClustersConnection> connection_;

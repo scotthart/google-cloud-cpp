@@ -35,8 +35,7 @@ namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Service for managing
-/// [Deployments][google.cloud.dialogflow.cx.v3.Deployment].
+/// Service for managing [Deployments][google.cloud.dialogflow.cx.v3.Deployment].
 ///
 /// @par Equality
 ///
@@ -61,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.cx.v3.Deployment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
+/// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
 ///
 class DeploymentsClient {
  public:
-  explicit DeploymentsClient(std::shared_ptr<DeploymentsConnection> connection,
-                             Options opts = {});
+  explicit DeploymentsClient(std::shared_ptr<DeploymentsConnection> connection, Options opts = {});
   ~DeploymentsClient();
 
   ///@{
@@ -80,12 +77,10 @@ class DeploymentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DeploymentsClient const& a,
-                         DeploymentsClient const& b) {
+  friend bool operator==(DeploymentsClient const& a, DeploymentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DeploymentsClient const& a,
-                         DeploymentsClient const& b) {
+  friend bool operator!=(DeploymentsClient const& a, DeploymentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -96,7 +91,8 @@ class DeploymentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param parent  Required. The [Environment][google.cloud.dialogflow.cx.v3.Environment] to
-  ///  list all environments for. Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>`.
+  ///  list all environments for. Format:
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return a [StreamRange](@ref google::cloud::StreamRange)
@@ -123,8 +119,8 @@ class DeploymentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
+  ListDeployments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -163,9 +159,8 @@ class DeploymentsClient {
   /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
-      google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::cx::v3::Deployment>
+  ListDeployments(google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -174,7 +169,7 @@ class DeploymentsClient {
   ///
   /// @param name  Required. The name of the
   ///  [Deployment][google.cloud.dialogflow.cx.v3.Deployment]. Format:
-  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/deployments/<Deployment ID>`.
+  ///  `projects/<ProjectID>/locations/<LocationID>/agents/<AgentID>/environments/<EnvironmentID>/deployments/<DeploymentID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return the result of the RPC. The response message type
@@ -189,11 +184,11 @@ class DeploymentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L166}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
+  GetDeployment(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -220,12 +215,11 @@ class DeploymentsClient {
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
   /// [google.cloud.dialogflow.cx.v3.Deployment]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
-  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
+  /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]: @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L166}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
-      google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
+  GetDeployment(google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,8 +257,8 @@ class DeploymentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -293,22 +287,13 @@ class DeploymentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -334,25 +319,17 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -382,12 +359,12 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -409,12 +386,12 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -441,13 +418,12 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -459,8 +435,9 @@ class DeploymentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -474,13 +451,14 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -492,8 +470,9 @@ class DeploymentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -512,15 +491,14 @@ class DeploymentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DeploymentsConnection> connection_;

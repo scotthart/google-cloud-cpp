@@ -62,13 +62,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.discoveryengine.v1.Document]:
-/// @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
+/// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
 ///
 class DocumentServiceClient {
  public:
-  explicit DocumentServiceClient(
-      std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
+  explicit DocumentServiceClient(std::shared_ptr<DocumentServiceConnection> connection, Options opts = {});
   ~DocumentServiceClient();
 
   ///@{
@@ -81,12 +79,10 @@ class DocumentServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator==(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(DocumentServiceClient const& a,
-                         DocumentServiceClient const& b) {
+  friend bool operator!=(DocumentServiceClient const& a, DocumentServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -122,8 +118,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  GetDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -152,9 +148,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.GetDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L179}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> GetDocument(
-      google::cloud::discoveryengine::v1::GetDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  GetDocument(google::cloud::discoveryengine::v1::GetDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -195,8 +190,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Document>
+  ListDocuments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -234,9 +229,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.ListDocumentsRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L201}
   ///
   // clang-format on
-  StreamRange<google::cloud::discoveryengine::v1::Document> ListDocuments(
-      google::cloud::discoveryengine::v1::ListDocumentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::discoveryengine::v1::Document>
+  ListDocuments(google::cloud::discoveryengine::v1::ListDocumentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -282,10 +276,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document.name]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L107}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      std::string const& parent,
-      google::cloud::discoveryengine::v1::Document const& document,
-      std::string const& document_id, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  CreateDocument(std::string const& parent, google::cloud::discoveryengine::v1::Document const& document, std::string const& document_id, Options opts = {});
 
   // clang-format off
   ///
@@ -314,9 +306,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> CreateDocument(
-      google::cloud::discoveryengine::v1::CreateDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  CreateDocument(google::cloud::discoveryengine::v1::CreateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -352,9 +343,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest.allow_missing]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L308}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      google::cloud::discoveryengine::v1::Document const& document,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  UpdateDocument(google::cloud::discoveryengine::v1::Document const& document, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -383,9 +373,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.UpdateDocumentRequest]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document_service.proto#L292}
   ///
   // clang-format on
-  StatusOr<google::cloud::discoveryengine::v1::Document> UpdateDocument(
-      google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::Document>
+  UpdateDocument(google::cloud::discoveryengine::v1::UpdateDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -416,7 +405,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
-  Status DeleteDocument(std::string const& name, Options opts = {});
+  Status
+  DeleteDocument(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -443,9 +433,8 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
-  Status DeleteDocument(
-      google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteDocument(google::cloud::discoveryengine::v1::DeleteDocumentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -489,9 +478,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
-      Options opts = {});
+  ImportDocuments(google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -504,10 +491,8 @@ class DocumentServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::ImportDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -519,8 +504,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::ImportDocumentsResponse>>
-  ImportDocuments(google::longrunning::Operation const& operation,
-                  Options opts = {});
+  ImportDocuments(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -576,9 +560,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
-      Options opts = {});
+  PurgeDocuments(google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -591,10 +573,8 @@ class DocumentServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PurgeDocuments(
-      NoAwaitTag,
-      google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PurgeDocuments(NoAwaitTag, google::cloud::discoveryengine::v1::PurgeDocumentsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -606,8 +586,7 @@ class DocumentServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::discoveryengine::v1::PurgeDocumentsResponse>>
-  PurgeDocuments(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  PurgeDocuments(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -635,8 +614,7 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
   BatchGetDocumentsMetadata(std::string const& parent, Options opts = {});
 
   // clang-format off
@@ -669,24 +647,13 @@ class DocumentServiceClient {
   /// [google.cloud.discoveryengine.v1.Document]: @googleapis_reference_link{google/cloud/discoveryengine/v1/document.proto#L36}
   ///
   // clang-format on
-  StatusOr<
-      google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
-  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::
-                                BatchGetDocumentsMetadataRequest const& request,
-                            Options opts = {});
+  StatusOr<google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataResponse>
+  BatchGetDocumentsMetadata(google::cloud::discoveryengine::v1::BatchGetDocumentsMetadataRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -712,25 +679,17 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -760,12 +719,12 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -787,12 +746,12 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -819,13 +778,12 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -837,8 +795,9 @@ class DocumentServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -852,13 +811,14 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -870,8 +830,9 @@ class DocumentServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -890,15 +851,14 @@ class DocumentServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<DocumentServiceConnection> connection_;

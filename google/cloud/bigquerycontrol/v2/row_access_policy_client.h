@@ -61,29 +61,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class RowAccessPolicyServiceClient {
  public:
-  explicit RowAccessPolicyServiceClient(
-      std::shared_ptr<RowAccessPolicyServiceConnection> connection,
-      Options opts = {});
+  explicit RowAccessPolicyServiceClient(std::shared_ptr<RowAccessPolicyServiceConnection> connection, Options opts = {});
   ~RowAccessPolicyServiceClient();
 
   ///@{
   /// @name Copy and move support
   RowAccessPolicyServiceClient(RowAccessPolicyServiceClient const&) = default;
-  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient const&) =
-      default;
+  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient const&) = default;
   RowAccessPolicyServiceClient(RowAccessPolicyServiceClient&&) = default;
-  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient&&) =
-      default;
+  RowAccessPolicyServiceClient& operator=(RowAccessPolicyServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(RowAccessPolicyServiceClient const& a,
-                         RowAccessPolicyServiceClient const& b) {
+  friend bool operator==(RowAccessPolicyServiceClient const& a, RowAccessPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(RowAccessPolicyServiceClient const& a,
-                         RowAccessPolicyServiceClient const& b) {
+  friend bool operator!=(RowAccessPolicyServiceClient const& a, RowAccessPolicyServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -125,9 +119,7 @@ class RowAccessPolicyServiceClient {
   ///
   // clang-format on
   StreamRange<google::cloud::bigquery::v2::RowAccessPolicy>
-  ListRowAccessPolicies(
-      google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request,
-      Options opts = {});
+  ListRowAccessPolicies(google::cloud::bigquery::v2::ListRowAccessPoliciesRequest request, Options opts = {});
 
  private:
   std::shared_ptr<RowAccessPolicyServiceConnection> connection_;

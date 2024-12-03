@@ -19,11 +19,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PRODUCT_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_RETAIL_V2_PRODUCT_CLIENT_H
 
-#include "google/cloud/retail/v2/product_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/no_await_tag.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
+#include "google/cloud/retail/v2/product_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -63,13 +63,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.retail.v2.Product]:
-/// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
+/// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
 ///
 class ProductServiceClient {
  public:
-  explicit ProductServiceClient(
-      std::shared_ptr<ProductServiceConnection> connection, Options opts = {});
+  explicit ProductServiceClient(std::shared_ptr<ProductServiceConnection> connection, Options opts = {});
   ~ProductServiceClient();
 
   ///@{
@@ -82,12 +80,10 @@ class ProductServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(ProductServiceClient const& a,
-                         ProductServiceClient const& b) {
+  friend bool operator==(ProductServiceClient const& a, ProductServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ProductServiceClient const& a,
-                         ProductServiceClient const& b) {
+  friend bool operator!=(ProductServiceClient const& a, ProductServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -133,10 +129,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product.name]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L160}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      std::string const& parent,
-      google::cloud::retail::v2::Product const& product,
-      std::string const& product_id, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  CreateProduct(std::string const& parent, google::cloud::retail::v2::Product const& product, std::string const& product_id, Options opts = {});
 
   // clang-format off
   ///
@@ -165,9 +159,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> CreateProduct(
-      google::cloud::retail::v2::CreateProductRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  CreateProduct(google::cloud::retail::v2::CreateProductRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -200,8 +193,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  GetProduct(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -230,9 +223,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> GetProduct(
-      google::cloud::retail::v2::GetProductRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  GetProduct(google::cloud::retail::v2::GetProductRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -272,8 +264,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Product> ListProducts(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::retail::v2::Product>
+  ListProducts(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -311,9 +303,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  StreamRange<google::cloud::retail::v2::Product> ListProducts(
-      google::cloud::retail::v2::ListProductsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::retail::v2::Product>
+  ListProducts(google::cloud::retail::v2::ListProductsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -359,9 +350,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.UpdateProductRequest.allow_missing]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L451}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      google::cloud::retail::v2::Product const& product,
-      google::protobuf::FieldMask const& update_mask, Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  UpdateProduct(google::cloud::retail::v2::Product const& product, google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -390,9 +380,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.UpdateProductRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L421}
   ///
   // clang-format on
-  StatusOr<google::cloud::retail::v2::Product> UpdateProduct(
-      google::cloud::retail::v2::UpdateProductRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::retail::v2::Product>
+  UpdateProduct(google::cloud::retail::v2::UpdateProductRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -437,7 +426,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product.Type.VARIANT]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L73}
   ///
   // clang-format on
-  Status DeleteProduct(std::string const& name, Options opts = {});
+  Status
+  DeleteProduct(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -464,9 +454,8 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.Product]: @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
   // clang-format on
-  Status DeleteProduct(
-      google::cloud::retail::v2::DeleteProductRequest const& request,
-      Options opts = {});
+  Status
+  DeleteProduct(google::cloud::retail::v2::DeleteProductRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -523,8 +512,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request,
-                Options opts = {});
+  PurgeProducts(google::cloud::retail::v2::PurgeProductsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -537,10 +525,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> PurgeProducts(
-      NoAwaitTag,
-      google::cloud::retail::v2::PurgeProductsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  PurgeProducts(NoAwaitTag, google::cloud::retail::v2::PurgeProductsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -552,8 +538,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::PurgeProductsResponse>>
-  PurgeProducts(google::longrunning::Operation const& operation,
-                Options opts = {});
+  PurgeProducts(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -597,9 +582,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(
-      google::cloud::retail::v2::ImportProductsRequest const& request,
-      Options opts = {});
+  ImportProducts(google::cloud::retail::v2::ImportProductsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -612,10 +595,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> ImportProducts(
-      NoAwaitTag,
-      google::cloud::retail::v2::ImportProductsRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  ImportProducts(NoAwaitTag, google::cloud::retail::v2::ImportProductsRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -627,8 +608,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
-  ImportProducts(google::longrunning::Operation const& operation,
-                 Options opts = {});
+  ImportProducts(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -724,14 +704,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L588}
   /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L656}
   /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L682}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::retail::v2::Product const& inventory,
-               google::protobuf::FieldMask const& set_mask, Options opts = {});
+  SetInventory(google::cloud::retail::v2::Product const& inventory, google::protobuf::FieldMask const& set_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -744,9 +723,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SetInventory(
-      NoAwaitTag, google::cloud::retail::v2::Product const& inventory,
-      google::protobuf::FieldMask const& set_mask, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SetInventory(NoAwaitTag, google::cloud::retail::v2::Product const& inventory, google::protobuf::FieldMask const& set_mask, Options opts = {});
 
   // clang-format off
   ///
@@ -838,14 +816,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.SetInventoryRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L588}
   /// [google.cloud.retail.v2.SetInventoryRequest.set_mask]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L656}
   /// [google.cloud.retail.v2.SetInventoryResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L682}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
-               Options opts = {});
+  SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -858,9 +835,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> SetInventory(
-      NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  SetInventory(NoAwaitTag, google::cloud::retail::v2::SetInventoryRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -872,8 +848,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
-  SetInventory(google::longrunning::Operation const& operation,
-               Options opts = {});
+  SetInventory(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -943,9 +918,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
@@ -962,8 +937,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      NoAwaitTag, std::string const& product, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddFulfillmentPlaces(NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1032,15 +1007,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.AddLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L313}
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
-      Options opts = {});
+  AddFulfillmentPlaces(google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1053,10 +1026,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddFulfillmentPlaces(
-      NoAwaitTag,
-      google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::AddFulfillmentPlacesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1068,8 +1039,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
-  AddFulfillmentPlaces(google::longrunning::Operation const& operation,
-                       Options opts = {});
+  AddFulfillmentPlaces(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1139,9 +1109,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L352}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L882}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L953}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
@@ -1158,8 +1128,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      NoAwaitTag, std::string const& product, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveFulfillmentPlaces(NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1228,15 +1198,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.RemoveLocalInventories]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L352}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L882}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L953}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
-      Options opts = {});
+  RemoveFulfillmentPlaces(google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1249,10 +1217,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveFulfillmentPlaces(
-      NoAwaitTag,
-      google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveFulfillmentPlaces(NoAwaitTag, google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1264,8 +1230,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
-  RemoveFulfillmentPlaces(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  RemoveFulfillmentPlaces(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1332,9 +1297,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
@@ -1351,8 +1316,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddLocalInventories(
-      NoAwaitTag, std::string const& product, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddLocalInventories(NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1418,15 +1383,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.GetProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L58}
   /// [google.cloud.retail.v2.ProductService.ListProducts]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L66}
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
-      Options opts = {});
+  AddLocalInventories(google::cloud::retail::v2::AddLocalInventoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1439,10 +1402,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> AddLocalInventories(
-      NoAwaitTag,
-      google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  AddLocalInventories(NoAwaitTag, google::cloud::retail::v2::AddLocalInventoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1454,8 +1415,7 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
-  AddLocalInventories(google::longrunning::Operation const& operation,
-                      Options opts = {});
+  AddLocalInventories(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -1520,9 +1480,9 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L834}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L877}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
@@ -1539,8 +1499,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      NoAwaitTag, std::string const& product, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveLocalInventories(NoAwaitTag, std::string const& product, Options opts = {});
 
   // clang-format off
   ///
@@ -1604,15 +1564,13 @@ class ProductServiceClient {
   /// [google.cloud.retail.v2.ProductService.UpdateProduct]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L74}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L834}
   /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]: @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L877}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
-  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L143}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
+  /// [google.longrunning.Operation.done]: @googleapis_reference_link{google/longrunning/operations.proto#L136}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
-      Options opts = {});
+  RemoveLocalInventories(google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1625,10 +1583,8 @@ class ProductServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> RemoveLocalInventories(
-      NoAwaitTag,
-      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  RemoveLocalInventories(NoAwaitTag, google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1640,21 +1596,12 @@ class ProductServiceClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
-  RemoveLocalInventories(google::longrunning::Operation const& operation,
-                         Options opts = {});
+  RemoveLocalInventories(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1680,25 +1627,17 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1728,12 +1667,12 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1755,12 +1694,12 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1787,13 +1726,12 @@ class ProductServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ProductServiceConnection> connection_;

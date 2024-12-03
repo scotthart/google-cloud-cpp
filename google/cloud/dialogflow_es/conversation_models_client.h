@@ -64,28 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class ConversationModelsClient {
  public:
-  explicit ConversationModelsClient(
-      std::shared_ptr<ConversationModelsConnection> connection,
-      Options opts = {});
+  explicit ConversationModelsClient(std::shared_ptr<ConversationModelsConnection> connection, Options opts = {});
   ~ConversationModelsClient();
 
   ///@{
   /// @name Copy and move support
   ConversationModelsClient(ConversationModelsClient const&) = default;
-  ConversationModelsClient& operator=(ConversationModelsClient const&) =
-      default;
+  ConversationModelsClient& operator=(ConversationModelsClient const&) = default;
   ConversationModelsClient(ConversationModelsClient&&) = default;
   ConversationModelsClient& operator=(ConversationModelsClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(ConversationModelsClient const& a,
-                         ConversationModelsClient const& b) {
+  friend bool operator==(ConversationModelsClient const& a, ConversationModelsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(ConversationModelsClient const& a,
-                         ConversationModelsClient const& b) {
+  friend bool operator!=(ConversationModelsClient const& a, ConversationModelsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -126,17 +121,13 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L595}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L471}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L594}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L470}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(
-      std::string const& parent,
-      google::cloud::dialogflow::v2::ConversationModel const&
-          conversation_model,
-      Options opts = {});
+  CreateConversationModel(std::string const& parent, google::cloud::dialogflow::v2::ConversationModel const& conversation_model, Options opts = {});
 
   // clang-format off
   ///
@@ -149,11 +140,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversationModel(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dialogflow::v2::ConversationModel const&
-          conversation_model,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModel(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::ConversationModel const& conversation_model, Options opts = {});
 
   // clang-format off
   ///
@@ -194,16 +182,13 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L595}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L471}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L594}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L470}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request,
-      Options opts = {});
+  CreateConversationModel(google::cloud::dialogflow::v2::CreateConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -216,11 +201,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::CreateConversationModelRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -232,8 +214,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
-  CreateConversationModel(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  CreateConversationModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -254,8 +235,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L482}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
@@ -284,14 +265,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L483}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.GetConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L482}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
-  GetConversationModel(
-      google::cloud::dialogflow::v2::GetConversationModelRequest const& request,
-      Options opts = {});
+  GetConversationModel(google::cloud::dialogflow::v2::GetConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -321,8 +300,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L491}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L490}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
@@ -360,14 +339,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L218}
-  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L491}
+  /// [google.cloud.dialogflow.v2.ConversationModel]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
+  /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L490}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
-  ListConversationModels(
-      google::cloud::dialogflow::v2::ListConversationModelsRequest request,
-      Options opts = {});
+  ListConversationModels(google::cloud::dialogflow::v2::ListConversationModelsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -404,12 +381,11 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L663}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L662}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L516}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
   DeleteConversationModel(std::string const& name, Options opts = {});
 
   // clang-format off
@@ -423,8 +399,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      NoAwaitTag, std::string const& name, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConversationModel(NoAwaitTag, std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -465,16 +441,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L663}
-  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L517}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L662}
+  /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L516}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -487,11 +459,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeleteConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeleteConversationModelRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeleteConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::DeleteConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -502,10 +471,8 @@ class ConversationModelsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
-  DeleteConversationModel(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
+  DeleteConversationModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -549,16 +516,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L637}
-  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L525}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L636}
+  /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L524}
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(google::cloud::dialogflow::v2::DeployConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -571,11 +534,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> DeployConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::DeployConversationModelRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  DeployConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::DeployConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -586,10 +546,8 @@ class ConversationModelsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<
-      google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
-  DeployConversationModel(google::longrunning::Operation const& operation,
-                          Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
+  DeployConversationModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -633,16 +591,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L650}
-  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L533}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L649}
+  /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L532}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::
-                      UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -655,11 +609,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> UndeployConversationModel(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::UndeployConversationModelRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  UndeployConversationModel(NoAwaitTag, google::cloud::dialogflow::v2::UndeployConversationModelRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -670,10 +621,8 @@ class ConversationModelsClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::dialogflow::v2::
-                      UndeployConversationModelOperationMetadata>>
-  UndeployConversationModel(google::longrunning::Operation const& operation,
-                            Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata>>
+  UndeployConversationModel(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -694,8 +643,8 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L540}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
@@ -724,15 +673,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L540}
   ///
   // clang-format on
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  GetConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          GetConversationModelEvaluationRequest const& request,
-      Options opts = {});
+  GetConversationModelEvaluation(google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -762,13 +708,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L550}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L549}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  ListConversationModelEvaluations(std::string const& parent,
-                                   Options opts = {});
+  ListConversationModelEvaluations(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -802,15 +747,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L550}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L549}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
-  ListConversationModelEvaluations(
-      google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest
-          request,
-      Options opts = {});
+  ListConversationModelEvaluations(google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -839,16 +781,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L576}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(
-      std::string const& parent,
-      google::cloud::dialogflow::v2::ConversationModelEvaluation const&
-          conversation_model_evaluation,
-      Options opts = {});
+  CreateConversationModelEvaluation(std::string const& parent, google::cloud::dialogflow::v2::ConversationModelEvaluation const& conversation_model_evaluation, Options opts = {});
 
   // clang-format off
   ///
@@ -861,11 +799,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      NoAwaitTag, std::string const& parent,
-      google::cloud::dialogflow::v2::ConversationModelEvaluation const&
-          conversation_model_evaluation,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModelEvaluation(NoAwaitTag, std::string const& parent, google::cloud::dialogflow::v2::ConversationModelEvaluation const& conversation_model_evaluation, Options opts = {});
 
   // clang-format off
   ///
@@ -897,15 +832,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L315}
-  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L576}
+  /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L314}
+  /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L575}
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request,
-      Options opts = {});
+  CreateConversationModelEvaluation(google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -918,11 +850,8 @@ class ConversationModelsClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> CreateConversationModelEvaluation(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::
-          CreateConversationModelEvaluationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  CreateConversationModelEvaluation(NoAwaitTag, google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -934,8 +863,7 @@ class ConversationModelsClient {
   ///
   // clang-format on
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
-  CreateConversationModelEvaluation(
-      google::longrunning::Operation const& operation, Options opts = {});
+  CreateConversationModelEvaluation(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -973,8 +901,8 @@ class ConversationModelsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1003,22 +931,13 @@ class ConversationModelsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -1044,25 +963,17 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1092,12 +1003,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -1119,12 +1030,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1151,13 +1062,12 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -1169,8 +1079,9 @@ class ConversationModelsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -1184,13 +1095,14 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -1202,8 +1114,9 @@ class ConversationModelsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -1222,15 +1135,14 @@ class ConversationModelsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<ConversationModelsConnection> connection_;

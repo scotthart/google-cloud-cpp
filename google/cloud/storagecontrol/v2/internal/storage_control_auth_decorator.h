@@ -19,8 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_AUTH_DECORATOR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGECONTROL_V2_INTERNAL_STORAGE_CONTROL_AUTH_DECORATOR_H
 
-#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#include "google/cloud/storagecontrol/v2/internal/storage_control_stub.h"
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
@@ -40,59 +40,60 @@ class StorageControlAuth : public StorageControlStub {
       std::shared_ptr<StorageControlStub> child);
 
   StatusOr<google::storage::control::v2::Folder> CreateFolder(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::CreateFolderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::CreateFolderRequest const& request) override;
 
-  Status DeleteFolder(grpc::ClientContext& context, Options const& options,
-                      google::storage::control::v2::DeleteFolderRequest const&
-                          request) override;
+  Status DeleteFolder(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::DeleteFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::Folder> GetFolder(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::control::v2::GetFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::ListFoldersResponse> ListFolders(
-      grpc::ClientContext& context, Options const& options,
+      grpc::ClientContext& context,
+      Options const& options,
       google::storage::control::v2::ListFoldersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncRenameFolder(
       google::cloud::CompletionQueue& cq,
       std::shared_ptr<grpc::ClientContext> context,
       google::cloud::internal::ImmutableOptions options,
-      google::storage::control::v2::RenameFolderRequest const& request)
-      override;
+      google::storage::control::v2::RenameFolderRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RenameFolder(
-      grpc::ClientContext& context, Options options,
-      google::storage::control::v2::RenameFolderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options options,
+      google::storage::control::v2::RenameFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::StorageLayout> GetStorageLayout(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::GetStorageLayoutRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::GetStorageLayoutRequest const& request) override;
 
   StatusOr<google::storage::control::v2::ManagedFolder> CreateManagedFolder(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::CreateManagedFolderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::CreateManagedFolderRequest const& request) override;
 
   Status DeleteManagedFolder(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::DeleteManagedFolderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::DeleteManagedFolderRequest const& request) override;
 
   StatusOr<google::storage::control::v2::ManagedFolder> GetManagedFolder(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::GetManagedFolderRequest const& request)
-      override;
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::GetManagedFolderRequest const& request) override;
 
-  StatusOr<google::storage::control::v2::ListManagedFoldersResponse>
-  ListManagedFolders(
-      grpc::ClientContext& context, Options const& options,
-      google::storage::control::v2::ListManagedFoldersRequest const& request)
-      override;
+  StatusOr<google::storage::control::v2::ListManagedFoldersResponse> ListManagedFolders(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::storage::control::v2::ListManagedFoldersRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

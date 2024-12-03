@@ -64,29 +64,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class EncryptionSpecServiceClient {
  public:
-  explicit EncryptionSpecServiceClient(
-      std::shared_ptr<EncryptionSpecServiceConnection> connection,
-      Options opts = {});
+  explicit EncryptionSpecServiceClient(std::shared_ptr<EncryptionSpecServiceConnection> connection, Options opts = {});
   ~EncryptionSpecServiceClient();
 
   ///@{
   /// @name Copy and move support
   EncryptionSpecServiceClient(EncryptionSpecServiceClient const&) = default;
-  EncryptionSpecServiceClient& operator=(EncryptionSpecServiceClient const&) =
-      default;
+  EncryptionSpecServiceClient& operator=(EncryptionSpecServiceClient const&) = default;
   EncryptionSpecServiceClient(EncryptionSpecServiceClient&&) = default;
-  EncryptionSpecServiceClient& operator=(EncryptionSpecServiceClient&&) =
-      default;
+  EncryptionSpecServiceClient& operator=(EncryptionSpecServiceClient&&) = default;
   ///@}
 
   ///@{
   /// @name Equality
-  friend bool operator==(EncryptionSpecServiceClient const& a,
-                         EncryptionSpecServiceClient const& b) {
+  friend bool operator==(EncryptionSpecServiceClient const& a, EncryptionSpecServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EncryptionSpecServiceClient const& a,
-                         EncryptionSpecServiceClient const& b) {
+  friend bool operator!=(EncryptionSpecServiceClient const& a, EncryptionSpecServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -113,8 +107,8 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L68}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> GetEncryptionSpec(
-      std::string const& name, Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
+  GetEncryptionSpec(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -143,9 +137,8 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.dialogflow.v2.GetEncryptionSpecRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L68}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::EncryptionSpec> GetEncryptionSpec(
-      google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::EncryptionSpec>
+  GetEncryptionSpec(google::cloud::dialogflow::v2::GetEncryptionSpecRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -183,11 +176,8 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L111}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(
-      google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec, Options opts = {});
 
   // clang-format off
   ///
@@ -200,10 +190,8 @@ class EncryptionSpecServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InitializeEncryptionSpec(NoAwaitTag, google::cloud::dialogflow::v2::EncryptionSpec const& encryption_spec, Options opts = {});
 
   // clang-format off
   ///
@@ -243,12 +231,8 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.dialogflow.v2.InitializeEncryptionSpecResponse]: @googleapis_reference_link{google/cloud/dialogflow/v2/encryption_spec.proto#L111}
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-          request,
-      Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -261,11 +245,8 @@ class EncryptionSpecServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> InitializeEncryptionSpec(
-      NoAwaitTag,
-      google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const&
-          request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  InitializeEncryptionSpec(NoAwaitTag, google::cloud::dialogflow::v2::InitializeEncryptionSpecRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -276,10 +257,8 @@ class EncryptionSpecServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<
-      StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
-  InitializeEncryptionSpec(google::longrunning::Operation const& operation,
-                           Options opts = {});
+  future<StatusOr<google::cloud::dialogflow::v2::InitializeEncryptionSpecResponse>>
+  InitializeEncryptionSpec(google::longrunning::Operation const& operation, Options opts = {});
 
   // clang-format off
   ///
@@ -317,8 +296,8 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -347,22 +326,13 @@ class EncryptionSpecServiceClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -388,25 +358,17 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -436,12 +398,12 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -463,12 +425,12 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -495,13 +457,12 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -513,8 +474,9 @@ class EncryptionSpecServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -528,13 +490,14 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -546,8 +509,9 @@ class EncryptionSpecServiceClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -566,15 +530,14 @@ class EncryptionSpecServiceClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EncryptionSpecServiceConnection> connection_;

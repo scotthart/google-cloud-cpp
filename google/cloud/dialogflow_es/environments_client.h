@@ -60,13 +60,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// and move-construction is a relatively efficient operation, consider using
 /// such a copy when using this class from multiple threads.
 ///
-/// [google.cloud.dialogflow.v2.Environment]:
-/// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+/// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
 ///
 class EnvironmentsClient {
  public:
-  explicit EnvironmentsClient(
-      std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
+  explicit EnvironmentsClient(std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
   ///@{
@@ -79,12 +77,10 @@ class EnvironmentsClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator==(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(EnvironmentsClient const& a,
-                         EnvironmentsClient const& b) {
+  friend bool operator!=(EnvironmentsClient const& a, EnvironmentsClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -120,12 +116,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
-  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
+  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
+  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
-      std::string const& parent, Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Environment>
+  ListEnvironments(std::string const& parent, Options opts = {});
 
   // clang-format off
   ///
@@ -159,13 +155,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
-  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
+  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
+  /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L237}
   ///
   // clang-format on
-  StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
-      google::cloud::dialogflow::v2::ListEnvironmentsRequest request,
-      Options opts = {});
+  StreamRange<google::cloud::dialogflow::v2::Environment>
+  ListEnvironments(google::cloud::dialogflow::v2::ListEnvironmentsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -190,13 +185,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
-  /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L273}
+  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
+  /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L272}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
-      google::cloud::dialogflow::v2::GetEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  GetEnvironment(google::cloud::dialogflow::v2::GetEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -221,13 +215,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L292}
-  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
+  /// [google.cloud.dialogflow.v2.CreateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L291}
+  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
-      google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  CreateEnvironment(google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -263,13 +256,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
-  /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L314}
+  /// [google.cloud.dialogflow.v2.Environment]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L141}
+  /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L313}
   ///
   // clang-format on
-  StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
-      google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::dialogflow::v2::Environment>
+  UpdateEnvironment(google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -292,12 +284,11 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L332}
+  /// [google.cloud.dialogflow.v2.DeleteEnvironmentRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L331}
   ///
   // clang-format on
-  Status DeleteEnvironment(
-      google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request,
-      Options opts = {});
+  Status
+  DeleteEnvironment(google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -331,14 +322,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.cloud.dialogflow.v2.EnvironmentHistory.Entry]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L379}
-  /// [google.cloud.dialogflow.v2.GetEnvironmentHistoryRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L351}
+  /// [google.cloud.dialogflow.v2.EnvironmentHistory.Entry]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L378}
+  /// [google.cloud.dialogflow.v2.GetEnvironmentHistoryRequest]: @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L350}
   ///
   // clang-format on
   StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
-  GetEnvironmentHistory(
-      google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request,
-      Options opts = {});
+  GetEnvironmentHistory(google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -376,8 +365,8 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StreamRange<google::cloud::location::Location> ListLocations(
-      google::cloud::location::ListLocationsRequest request, Options opts = {});
+  StreamRange<google::cloud::location::Location>
+  ListLocations(google::cloud::location::ListLocationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -406,22 +395,13 @@ class EnvironmentsClient {
   /// [google.cloud.location.Location]: @googleapis_reference_link{google/cloud/location/locations.proto#L88}
   ///
   // clang-format on
-  StatusOr<google::cloud::location::Location> GetLocation(
-      google::cloud::location::GetLocationRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param name  The name of the operation's parent resource.
   /// @param filter  The standard list filter.
@@ -447,25 +427,17 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      std::string const& name, std::string const& filter, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(std::string const& name, std::string const& filter, Options opts = {});
 
   // clang-format off
   ///
   /// Lists operations that match the specified filter in the request. If the
   /// server doesn't support this method, it returns `UNIMPLEMENTED`.
-  ///
-  /// NOTE: the `name` binding allows API services to override the binding
-  /// to use different resource name schemes, such as `users/*/operations`. To
-  /// override the binding, API services can add a binding such as
-  /// `"/v1/{name=users/*}/operations"` to their service configuration.
-  /// For backwards compatibility, the default name includes the operations
-  /// collection id, however overriding users must ensure the name binding
-  /// is the parent resource, without the operations collection id.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -495,12 +467,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L171}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.ListOperationsRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L167}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StreamRange<google::longrunning::Operation> ListOperations(
-      google::longrunning::ListOperationsRequest request, Options opts = {});
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request, Options opts = {});
 
   // clang-format off
   ///
@@ -522,12 +494,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(std::string const& name,
-                                                        Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -554,13 +526,12 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L165}
-  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L128}
+  /// [google.longrunning.GetOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
+  /// [google.longrunning.Operation]: @googleapis_reference_link{google/longrunning/operations.proto#L121}
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> GetOperation(
-      google::longrunning::GetOperationRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  GetOperation(google::longrunning::GetOperationRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -572,8 +543,9 @@ class EnvironmentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param name  The name of the operation resource to be cancelled.
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -587,13 +559,14 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(std::string const& name, Options opts = {});
+  Status
+  CancelOperation(std::string const& name, Options opts = {});
 
   // clang-format off
   ///
@@ -605,8 +578,9 @@ class EnvironmentsClient {
   /// other methods to check whether the cancellation succeeded or whether the
   /// operation completed despite cancellation. On successful cancellation,
   /// the operation is not deleted; instead, it becomes an operation with
-  /// an [Operation.error][google.longrunning.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-  /// corresponding to `Code.CANCELLED`.
+  /// an [Operation.error][google.longrunning.Operation.error] value with a
+  /// [google.rpc.Status.code][google.rpc.Status.code] of `1`, corresponding to
+  /// `Code.CANCELLED`.
   ///
   /// @param request Unary RPCs, such as the one wrapped by this
   ///     function, receive a single `request` proto message which includes all
@@ -625,15 +599,14 @@ class EnvironmentsClient {
   /// [`future`]: @ref google::cloud::future
   /// [`StatusOr`]: @ref google::cloud::StatusOr
   /// [`Status`]: @ref google::cloud::Status
-  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L195}
-  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L150}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.CancelOperationRequest]: @googleapis_reference_link{google/longrunning/operations.proto#L193}
+  /// [google.longrunning.Operation.error]: @googleapis_reference_link{google/longrunning/operations.proto#L144}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   /// [google.rpc.Status.code]: @googleapis_reference_link{google/rpc/status.proto#L38}
   ///
   // clang-format on
-  Status CancelOperation(
-      google::longrunning::CancelOperationRequest const& request,
-      Options opts = {});
+  Status
+  CancelOperation(google::longrunning::CancelOperationRequest const& request, Options opts = {});
 
  private:
   std::shared_ptr<EnvironmentsConnection> connection_;

@@ -67,9 +67,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class PredictionServiceClient {
  public:
-  explicit PredictionServiceClient(
-      std::shared_ptr<PredictionServiceConnection> connection,
-      Options opts = {});
+  explicit PredictionServiceClient(std::shared_ptr<PredictionServiceConnection> connection, Options opts = {});
   ~PredictionServiceClient();
 
   ///@{
@@ -82,12 +80,10 @@ class PredictionServiceClient {
 
   ///@{
   /// @name Equality
-  friend bool operator==(PredictionServiceClient const& a,
-                         PredictionServiceClient const& b) {
+  friend bool operator==(PredictionServiceClient const& a, PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;
   }
-  friend bool operator!=(PredictionServiceClient const& a,
-                         PredictionServiceClient const& b) {
+  friend bool operator!=(PredictionServiceClient const& a, PredictionServiceClient const& b) {
     return !(a == b);
   }
   ///@}
@@ -155,10 +151,8 @@ class PredictionServiceClient {
   /// [google.cloud.automl.v1.PredictResponse]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      std::string const& name,
-      google::cloud::automl::v1::ExamplePayload const& payload,
-      std::map<std::string, std::string> const& params, Options opts = {});
+  StatusOr<google::cloud::automl::v1::PredictResponse>
+  Predict(std::string const& name, google::cloud::automl::v1::ExamplePayload const& payload, std::map<std::string, std::string> const& params, Options opts = {});
 
   // clang-format off
   ///
@@ -222,9 +216,8 @@ class PredictionServiceClient {
   /// [google.cloud.automl.v1.PredictResponse]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L164}
   ///
   // clang-format on
-  StatusOr<google::cloud::automl::v1::PredictResponse> Predict(
-      google::cloud::automl::v1::PredictRequest const& request,
-      Options opts = {});
+  StatusOr<google::cloud::automl::v1::PredictResponse>
+  Predict(google::cloud::automl::v1::PredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -275,15 +268,12 @@ class PredictionServiceClient {
   /// [google.cloud.automl.v1.BatchPredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
   /// [google.cloud.automl.v1.PredictionService.Predict]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      std::string const& name,
-      google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
-      google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
-      std::map<std::string, std::string> const& params, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
+  BatchPredict(std::string const& name, google::cloud::automl::v1::BatchPredictInputConfig const& input_config, google::cloud::automl::v1::BatchPredictOutputConfig const& output_config, std::map<std::string, std::string> const& params, Options opts = {});
 
   // clang-format off
   ///
@@ -296,11 +286,8 @@ class PredictionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchPredict(
-      NoAwaitTag, std::string const& name,
-      google::cloud::automl::v1::BatchPredictInputConfig const& input_config,
-      google::cloud::automl::v1::BatchPredictOutputConfig const& output_config,
-      std::map<std::string, std::string> const& params, Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchPredict(NoAwaitTag, std::string const& name, google::cloud::automl::v1::BatchPredictInputConfig const& input_config, google::cloud::automl::v1::BatchPredictOutputConfig const& output_config, std::map<std::string, std::string> const& params, Options opts = {});
 
   // clang-format off
   ///
@@ -349,13 +336,12 @@ class PredictionServiceClient {
   /// [google.cloud.automl.v1.BatchPredictRequest]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L202}
   /// [google.cloud.automl.v1.BatchPredictResult]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L308}
   /// [google.cloud.automl.v1.PredictionService.Predict]: @googleapis_reference_link{google/cloud/automl/v1/prediction_service.proto#L80}
-  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L160}
-  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L77}
+  /// [google.longrunning.Operation.response]: @googleapis_reference_link{google/longrunning/operations.proto#L154}
+  /// [google.longrunning.Operations.GetOperation]: @googleapis_reference_link{google/longrunning/operations.proto#L70}
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      google::cloud::automl::v1::BatchPredictRequest const& request,
-      Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
+  BatchPredict(google::cloud::automl::v1::BatchPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -368,9 +354,8 @@ class PredictionServiceClient {
   /// [`NoAwaitTag`]: @ref google::cloud::NoAwaitTag
   ///
   // clang-format on
-  StatusOr<google::longrunning::Operation> BatchPredict(
-      NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const& request,
-      Options opts = {});
+  StatusOr<google::longrunning::Operation>
+  BatchPredict(NoAwaitTag, google::cloud::automl::v1::BatchPredictRequest const& request, Options opts = {});
 
   // clang-format off
   ///
@@ -381,8 +366,8 @@ class PredictionServiceClient {
   /// of the LRO in the background.
   ///
   // clang-format on
-  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>> BatchPredict(
-      google::longrunning::Operation const& operation, Options opts = {});
+  future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
+  BatchPredict(google::longrunning::Operation const& operation, Options opts = {});
 
  private:
   std::shared_ptr<PredictionServiceConnection> connection_;

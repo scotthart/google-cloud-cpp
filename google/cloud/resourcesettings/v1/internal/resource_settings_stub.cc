@@ -32,38 +32,41 @@ ResourceSettingsServiceStub::~ResourceSettingsServiceStub() = default;
 
 StatusOr<google::cloud::resourcesettings::v1::ListSettingsResponse>
 DefaultResourceSettingsServiceStub::ListSettings(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
-  google::cloud::resourcesettings::v1::ListSettingsResponse response;
-  auto status = grpc_stub_->ListSettings(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcesettings::v1::ListSettingsRequest const& request) {
+    google::cloud::resourcesettings::v1::ListSettingsResponse response;
+    auto status =
+        grpc_stub_->ListSettings(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 DefaultResourceSettingsServiceStub::GetSetting(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  google::cloud::resourcesettings::v1::Setting response;
-  auto status = grpc_stub_->GetSetting(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
+    google::cloud::resourcesettings::v1::Setting response;
+    auto status =
+        grpc_stub_->GetSetting(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 DefaultResourceSettingsServiceStub::UpdateSetting(
-    grpc::ClientContext& context, Options const&,
-    google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  google::cloud::resourcesettings::v1::Setting response;
-  auto status = grpc_stub_->UpdateSetting(&context, request, &response);
-  if (!status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(status);
-  }
-  return response;
+  grpc::ClientContext& context, Options const&,
+  google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
+    google::cloud::resourcesettings::v1::Setting response;
+    auto status =
+        grpc_stub_->UpdateSetting(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

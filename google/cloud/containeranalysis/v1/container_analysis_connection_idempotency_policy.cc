@@ -26,8 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using ::google::cloud::Idempotency;
 
-ContainerAnalysisConnectionIdempotencyPolicy::
-    ~ContainerAnalysisConnectionIdempotencyPolicy() = default;
+ContainerAnalysisConnectionIdempotencyPolicy::~ContainerAnalysisConnectionIdempotencyPolicy() = default;
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 ContainerAnalysisConnectionIdempotencyPolicy::clone() const {
@@ -40,25 +39,20 @@ Idempotency ContainerAnalysisConnectionIdempotencyPolicy::SetIamPolicy(
                                          : Idempotency::kIdempotent;
 }
 
-Idempotency ContainerAnalysisConnectionIdempotencyPolicy::GetIamPolicy(
-    google::iam::v1::GetIamPolicyRequest const&) {
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContainerAnalysisConnectionIdempotencyPolicy::TestIamPermissions(
-    google::iam::v1::TestIamPermissionsRequest const&) {
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const&) {
   return Idempotency::kIdempotent;
 }
 
-Idempotency ContainerAnalysisConnectionIdempotencyPolicy::
-    GetVulnerabilityOccurrencesSummary(
-        google::devtools::containeranalysis::v1::
-            GetVulnerabilityOccurrencesSummaryRequest const&) {
+Idempotency ContainerAnalysisConnectionIdempotencyPolicy::GetVulnerabilityOccurrencesSummary(google::devtools::containeranalysis::v1::GetVulnerabilityOccurrencesSummaryRequest const&) {
   return Idempotency::kIdempotent;
 }
 
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
-MakeDefaultContainerAnalysisConnectionIdempotencyPolicy() {
+    MakeDefaultContainerAnalysisConnectionIdempotencyPolicy() {
   return std::make_unique<ContainerAnalysisConnectionIdempotencyPolicy>();
 }
 
