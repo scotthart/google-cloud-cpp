@@ -16,7 +16,7 @@
 
 include(GoogleCloudCppLibrary)
 
-google_cloud_cpp_add_gapic_library(gkeconnect "Connect Gateway API"
+google_cloud_cpp_add_gapic_library(gkeconnect "Connect Gateway API" REST
                                    SERVICE_DIRS "gateway/v1/")
 
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
