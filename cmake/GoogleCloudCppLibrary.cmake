@@ -148,7 +148,7 @@ endfunction ()
 function (google_cloud_cpp_add_gapic_library library display_name)
     cmake_parse_arguments(
         _opt
-        "EXPERIMENTAL;TRANSITION"
+        "EXPERIMENTAL;TRANSITION;GRPC;REST"
         ""
         "ADDITIONAL_PROTO_LISTS;BACKWARDS_COMPAT_PROTO_TARGETS;CROSS_LIB_DEPS;SERVICE_DIRS;SHARED_PROTO_DEPS"
         ${ARGN})
@@ -157,6 +157,17 @@ function (google_cloud_cpp_add_gapic_library library display_name)
             FATAL_ERROR
                 "EXPERIMENTAL and TRANSITION keywords are mutually exclusive. Only supply one."
         )
+    endif ()
+
+    if (_opt_GRPC
+        OR NOT _opt_GRPC
+        AND NOT _opt_REST)
+        list(APPEND additional_link_libraries "")
+    endif ()
+    if (_opt_REST)
+        list(APPEND additional_link_libraries "google-cloud-cpp::rest_internal")
+        list(APPEND additional_link_libraries
+             "google-cloud-cpp::rest_protobuf_internal")
     endif ()
 
     set(library_target "google_cloud_cpp_${library}")
@@ -242,7 +253,8 @@ function (google_cloud_cpp_add_gapic_library library display_name)
     target_link_libraries(
         ${library_target}
         PUBLIC google-cloud-cpp::grpc_utils google-cloud-cpp::common
-               google-cloud-cpp::${library}_protos ${shared_proto_dep_targets})
+               ${additional_link_libraries} google-cloud-cpp::${library}_protos
+               ${shared_proto_dep_targets})
     google_cloud_cpp_add_common_options(${library_target})
     set_target_properties(
         ${library_target}
