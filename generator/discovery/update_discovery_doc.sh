@@ -91,11 +91,7 @@ NEW_FILES=$(git ls-files --others --exclude-standard protos/)
 if [[ -n "${NEW_FILES}" ]]; then
   git add protos/google/cloud/compute
 
-  io::log_h2 "Formatting generated protos"
-  git ls-files -z -- '*.proto' |
-    xargs -P "$(nproc)" -n 50 -0 clang-format -i
-  git ls-files -z -- '*.proto' |
-    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
+  ci/cloudbuild/build.sh -t checkers-pr || true
 
   io::log_red "New resources defined in Discovery Document created new protos:"
   echo "${NEW_FILES}"
@@ -114,12 +110,6 @@ if [[ -n "${NEW_FILES}" ]]; then
   io::log_h2 "Adding new compute generated service code"
   git add google/cloud/compute
 
-  io::log_h2 "Formatting generated code"
-  git ls-files -z -- '*.h' '*.cc' |
-    xargs -P "$(nproc)" -n 50 -0 clang-format -i
-  git ls-files -z -- '*.h' '*.cc' |
-    xargs -r -P "$(nproc)" -n 50 -0 sed -i 's/[[:blank:]]\+$//'
-
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}"
   for i in "${proto_array[@]}"; do
     add_service_directory "${i}"
@@ -128,10 +118,13 @@ if [[ -n "${NEW_FILES}" ]]; then
   io::log_yellow "Adding new directories to ${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
   cmake -DGOOGLE_CLOUD_CPP_ENABLE=compute -S . -B ./cmake-build-debug
 
-  git commit -m"Update generator_config.textproto and service_dirs files" \
+  io::run git commit -m"Update generator_config.textproto and service_dirs files" \
     "${PROJECT_ROOT}/${GENERATOR_CONFIG_RELATIVE_PATH}" \
     "${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_CMAKE_RELATIVE_PATH}" \
     "${PROJECT_ROOT}/${COMPUTE_SERVICE_DIRS_BZL_RELATIVE_PATH}"
+
+  ci/cloudbuild/build.sh -t checkers-pr || true
 fi
 
-git commit -m"Update generated code" .
+ci/cloudbuild/build.sh -t checkers-pr || true
+io::run git commit -m"Update generated code" .
