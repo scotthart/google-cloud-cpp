@@ -58,6 +58,7 @@ google_cloud_cpp_find_proto_include_dir(PROTO_INCLUDE_DIR)
 google_cloud_cpp_load_protodeps(
     deps "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/bigquery.deps")
 
+bigquery_proto_library("v2/" "bigquery_other_protos" DEPS "${deps}")
 bigquery_proto_library("v2/internal/" "bigquery_internal_protos" DEPS "${deps}")
 
 foreach (dir IN LISTS service_dirs operation_service_dirs)
@@ -67,6 +68,7 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
         "${${short_dir}_proto_files}" DEPS bigquery_internal_protos)
     list(APPEND bigquery_proto_lib_targets "bigquery_${short_dir}_protos")
 endforeach ()
+list(APPEND bigquery_proto_lib_targets "bigquery_other_protos")
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

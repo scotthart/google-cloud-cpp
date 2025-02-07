@@ -14,6 +14,8 @@
 
 //! [START bigquerystorage_quickstart] [all]
 #include "google/cloud/bigquery/datasets/v2/datasets_client.h"
+//#include "google/cloud/bigquery/tables/v2/tables_client.h"
+//#include "google/cloud/bigquery/tabledata/v2/tabledata_client.h"
 #include "google/cloud/bigquery/jobs/v2/jobs_client.h"
 #include "google/cloud/internal/make_status.h"
 #include <google/protobuf/util/json_util.h>
@@ -141,6 +143,158 @@ ProcessRowsInArrowFormat(
 }
 #endif
 
+//void CreateDataset() {
+//  namespace datasets = ::google::cloud::bigquery_datasets_v2;
+//  namespace tables = ::google::cloud::bigquery_tables_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//
+//  auto client = datasets::DatasetsClient(datasets::MakeDatasetsConnectionRest());
+//  bigquery_proto::Dataset dataset;
+//  dataset.mutable_dataset_reference()->set_project_id("my-project");
+//  dataset.mutable_dataset_reference()->set_dataset_id("my-dataset");
+//  auto d = client.InsertDataset("my-project", dataset);
+//}
+//
+//google::cloud::cpp::bigquery::v2::TableSchema MakeSchema() {
+//  return {};
+//}
+
+//void CreateTable() {
+//  namespace datasets = ::google::cloud::bigquery_datasets_v2;
+////  namespace tables = ::google::cloud::bigquery_tables_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//
+//  auto client = tables::TablesClient(tables::MakeTablesConnectionRest());
+//  bigquery_proto::Table table;
+//  table.mutable_table_reference()->set_project_id("my-project");
+//  table.mutable_table_reference()->set_dataset_id("my-dataset");
+//  table.mutable_table_reference()->set_table_id("my-table");
+//  *table.mutable_schema() = MakeSchema();
+//  auto t = client.InsertTable("my-project", "my-dataset", table);
+//}
+
+//void CreateJob() {
+//  namespace jobs = ::google::cloud::bigquery_jobs_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//
+//  auto client = jobs::JobsClient(jobs::MakeJobsConnectionRest());
+//  bigquery_proto::JobConfigurationQuery query;
+//  query.set_query("SELECT name, state, year, sum(number) as total "
+//      "FROM bigquery-public-data.usa_names.usa_1910_2013 "
+//      "GROUP BY name, state, year");
+//  bigquery_proto::JobConfiguration config;
+//  *config.mutable_query() = query;
+//  bigquery_proto::Job job;
+//  *job.mutable_configuration() = config;
+//  auto result = client.InsertJob("my-project", job);
+//}
+//
+//struct RowStream {
+//
+//};
+//
+//struct QueryResultsMetadata {
+//  google::cloud::cpp::bigquery::v2::JobReference job_reference;
+//};
+//
+//struct QueryResults {
+//  RowStream rows;
+//  QueryResultsMetadata metadata;
+//};
+//
+//void Query() {
+//  namespace jobs = ::google::cloud::bigquery_jobs_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//  using google::cloud::StatusOr;
+//
+//  auto client = jobs::JobsClient(jobs::MakeJobsConnectionRest());
+//  bigquery_proto::QueryRequest request;
+//  request.set_query("SELECT name, state, year, sum(number) as total "
+//      "FROM bigquery-public-data.usa_names.usa_1910_2013 "
+//      "GROUP BY name, state, year");
+//  StatusOr<QueryResults> result =
+//      client.Query("my-project", request);
+//  using MyRow = std::tuple<std::string, std::string, std::int64_t, std::int64_t>;
+//  std::vector<MyRow> first_page_of_rows;
+//  for (auto& r : result->rows()) {
+//    first_page_of_rows.push_back(std::move(r));
+//  }
+//  bigquery_proto::JobReference query_results = result->metadata.job_reference;
+//}
+
+#if 0
+void ReadQueryResultsSimple() {
+  namespace jobs = ::google::cloud::bigquery_jobs_v2;
+  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+
+  auto client = jobs::JobsClient(jobs::MakeJobsConnectionRest());
+  bigquery_proto::JobReference job_reference;
+  StaturOr<QueryResults> result = client.GetQueryResults(job_reference);
+  // Definition of C++ types for the returned rows.
+  using MyRow = std::tuple<std::string, std::string, std::int64_t, std::int64_t>;
+  std::print("Name\t\t\t\tState\tYear\tTotal");
+  for (auto const& r : result->rows()) {
+    std::print("{0}\t\t\t\t{1}\t{2}\t{3}\n", r.get<0>(), r.get<1>(), r.get<2>(), r.get<3>());
+  }
+}
+#endif
+
+//void ReadQueryResultsComplicated() {
+//  namespace jobs = ::google::cloud::bigquery_jobs_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//  google::cloud::cpp::bigquery::jobs::v2::GetQueryResultsRequest request;
+////  namespace bigquery_read = ::google::cloud::bigquery::storage::v1;
+//
+//
+//  auto client = jobs::JobsClient(jobs::MakeJobsConnectionRest());
+//  bigquery_proto::JobReference job_reference;
+//  auto result = client.GetQueryResults(request);
+//  auto dictionary_memo = std::make_shared<arrow::ipc::DictionaryMemo>();
+//  arrow::io::BufferReader schema_buffer_reader(result->serialized_schema());
+//  auto schema_result = arrow::ipc::ReadSchema(
+//      &schema_buffer_reader, dictionary_memo.get());
+//  if (!schema_result.ok()) throw result.status();
+//  std::shared_ptr<arrow::Schema> schema = schema_result.ValueOrDie();
+//  StreamRange<bigquery_read::ReadRowsResponse> row_reader = result->reader();
+//  arrow::ipc::IpcReadOptions read_options;
+//  std::print("Name\t\t\t\tState\tYear\tTotal");
+//  for (auto const& row_batch : row_reader) {
+//    if (row_batch.ok()) {
+//      arrow::io::BufferReader record_buffer_reader(row_batch.serialized_record_batch());
+//      auto read_result = arrow::ipc::ReadRecordBatch(
+//          schema, dictionary_memo.get(), read_options, &record_buffer_reader);
+//      if (!read_result.ok()) throw read_result.status();
+//      std::shared_ptr<arrow::RecordBatch> record_batch = read_result.ValueOrDie();
+//      auto name = record_batch->column(0);
+//      auto state = record_batch->column(1);
+//      auto year = record_batch->column(2);
+//      auto total = record_batch->column(3);
+//      for (int i = 0; i += record_batch->num_rows(); ++i) {
+//        std::print("{0}\t\t\t\t{1}\t{2}\t{3}\n", name->GetScalar(i), state->GetScalar(i), year->GetScalar(i), total->GetScalar(i));
+//      }
+//    }
+//  }
+//
+////  std::print("Name\t\t\t\tState\tYear\tTotal");
+////  for (auto const& r : result->rows()) {
+////    std::print("{0}\t\t\t\t{1}\t{2}\t{3}\n", r.get<0>(), r.get<1>(), r.get<2>(), r.get<3>());
+////  }
+//}
+//
+//void Write() {
+//  namespace tabledata = ::google::cloud::bigquery_tabledata_v2;
+//  namespace bigquery_proto = ::google::cloud::cpp::bigquery::v2;
+//  namespace bigquery_write = ::google::cloud::bigquery::storage::v1;
+//
+//
+//  auto client = tabledata::TabledataClient(tabledata::MakeTabledataConnectionRest());
+//  std::vector<nlohmann::json> json_rows = GetMyJsonData();
+//  auto writer = client.CreateTableWriter("my-project", "my-dataset", "my-table");
+//  auto result = writer.AppendRows(json_rows);
+//  std::print("Wrote {0} rows.\n", result->rows_inserted());
+//}
+
+
 }  // namespace
 
 int main(int argc, char* argv[]) try {
@@ -215,7 +369,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::cpp::bigquery::v2::QueryRequest query_request;
 
   *query_request.mutable_default_dataset() = dataset_reference;
-  query_request.set_query("select * from usa_1910_2013");
+  query_request.set_query("select * from usa_1910_2013 limit 1");
   query_request.set_max_results(100);
   auto jobs_client = jobs::JobsClient(jobs::MakeJobsConnectionRest());
 

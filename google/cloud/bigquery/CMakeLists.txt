@@ -29,3 +29,32 @@ if (experimental-bigquery_rest IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     include(bigquery_rest.cmake)
     add_subdirectory(v2/minimal/benchmarks)
 endif ()
+
+add_library(
+    google_cloud_cpp_bigquery_enhanced # cmake-format: sort
+    enhanced/v2/bigquery_enhanced.cc
+    enhanced/v2/bigquery_enhanced.h
+)
+
+target_include_directories(
+    google_cloud_cpp_bigquery_enhanced
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
+target_link_libraries(
+    google_cloud_cpp_bigquery_enhanced PUBLIC google-cloud-cpp::rest_internal
+                                          google-cloud-cpp::common)
+google_cloud_cpp_add_common_options(google_cloud_cpp_bigquery_enhanced)
+set_target_properties(
+    google_cloud_cpp_bigquery_enhanced
+    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-bigquery_enhanced
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
+target_compile_options(google_cloud_cpp_bigquery_enhanced
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+
+add_library(google-cloud-cpp::experimental-bigquery_enhanced ALIAS
+            google_cloud_cpp_bigquery_enhanced)
+
+include(CreateBazelConfig)
+create_bazel_config(google_cloud_cpp_bigquery_enhanced YEAR "2024")

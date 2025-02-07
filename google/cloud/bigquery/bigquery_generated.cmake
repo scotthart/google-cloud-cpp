@@ -76,6 +76,7 @@ foreach (dir IN LISTS service_dirs operation_service_dirs)
     string(REPLACE "/v2/" "" short_dir "${dir}")
     list(APPEND bigquery_proto_lib_targets "bigquery_${short_dir}_protos")
 endforeach ()
+list(APPEND bigquery_proto_lib_targets "bigquery_other_protos")
 
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/protos/google/cloud/bigquery")
@@ -96,7 +97,8 @@ foreach (dir IN LISTS service_dirs)
     bigquery_service_library(
         ${dir} bigquery_${short_dir} DEPS
         google-cloud-cpp::rest_protobuf_internal
-        google-cloud-cpp::bigquery_${short_dir}_protos)
+        google-cloud-cpp::bigquery_${short_dir}_protos
+        google-cloud-cpp::bigquery_other_protos)
     list(APPEND bigquery_lib_targets "bigquery_${short_dir}")
 endforeach ()
 
