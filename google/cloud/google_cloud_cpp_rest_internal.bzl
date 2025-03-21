@@ -129,4 +129,5 @@ google_cloud_cpp_rest_internal_srcs = [
     "internal/win32/parse_service_account_p12_file.cc",
     "internal/win32/sign_using_sha256.cc",
     "internal/win32/win32_helpers.cc",
+    "rest_options.cc",
 ]

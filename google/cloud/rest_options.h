@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include "absl/types/optional.h"
 #include <chrono>
 #include <string>
 
@@ -45,10 +46,61 @@ struct RestTracingOptionsOption {
   using Type = TracingOptions;
 };
 
+/**
+ * Stores the client SSL certificate along with any other needed values to
+ * access the certificate.
+ *
+ * The data in this class is used to set various options in libcurl:
+ *  - ssl_client_cert_file: CURLOPT_SSLCERT
+ *  - ssl_key_file: CURLOPT_SSLKEY
+ *  - ssl_key_file_password: CURLOPT_KEYPASSWD
+ *  - ssl_cert_type: CURLOPT_SSLCERTTYPE - defaults to PEM
+ *
+ *  Please see https://curl.se/libcurl/c/easy_setopt_options.html for more
+ *  detailed information on the behavior of setting these options.
+ */
+class SslCertificate {
+ public:
+  enum class SslCertType { kPEM, kDER, kP12 };
+
+  SslCertificate() = default;
+  explicit SslCertificate(std::string ssl_client_cert_file);
+  SslCertificate(std::string ssl_client_cert, std::string ssl_key_file,
+                 std::string ssl_key_file_password);
+
+  std::string ssl_client_cert_file() const;
+
+  absl::optional<std::string> ssl_key_file() const;
+  absl::optional<std::string> ssl_key_file_password() const;
+
+  SslCertType ssl_cert_type() const;
+
+  SslCertificate& set_cert_type(SslCertType ssl_cert_type);
+
+  static std::string ToString(SslCertType type);
+
+ private:
+  struct SslKeyFile {
+    std::string ssl_key_file;
+    std::string ssl_key_file_password;
+  };
+  std::string ssl_client_cert_file_;
+  absl::optional<SslKeyFile> ssl_key_file_ = absl::nullopt;
+  SslCertType ssl_cert_type_ = SslCertType::kPEM;
+};
+
+/**
+ * Used to override the default client SSL certificate.
+ */
+struct SslCertificateOption {
+  using Type = SslCertificate;
+};
+
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
     ::google::cloud::OptionList<QuotaUserOption, RestTracingOptionsOption,
-                                ServerTimeoutOption, UserIpOption>;
+                                ServerTimeoutOption, SslCertificateOption,
+                                UserIpOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

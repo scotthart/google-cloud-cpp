@@ -131,6 +131,7 @@ add_library(
     internal/win32/sign_using_sha256.cc
     internal/win32/win32_helpers.cc
     internal/win32/win32_helpers.h
+    rest_options.cc
     rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal

@@ -196,6 +196,10 @@ CurlImpl::CurlImpl(CurlHandle handle,
   proxy_ = CurlOptProxy(options);
   proxy_username_ = CurlOptProxyUsername(options);
   proxy_password_ = CurlOptProxyPassword(options);
+
+  if (options.has<SslCertificateOption>()) {
+    ssl_cert_ = options.get<SslCertificateOption>();
+  }
 }
 
 CurlImpl::~CurlImpl() {
@@ -318,6 +322,26 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   if (proxy_password_) {
     status = handle_.SetOption(CURLOPT_PROXYPASSWORD, proxy_password_->c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
+  }
+
+  if (ssl_cert_) {
+    status = handle_.SetOption(CURLOPT_SSLCERT,
+                               ssl_cert_->ssl_client_cert_file().c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(
+        CURLOPT_SSLCERTTYPE,
+        SslCertificate::ToString(ssl_cert_->ssl_cert_type()).c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+    if (ssl_cert_->ssl_key_file().has_value()) {
+      status =
+          handle_.SetOption(CURLOPT_SSLKEY, ssl_cert_->ssl_key_file()->c_str());
+      if (!status.ok()) return OnTransferError(context, std::move(status));
+      if (ssl_cert_->ssl_key_file_password().has_value()) {
+        status = handle_.SetOption(CURLOPT_KEYPASSWD,
+                                   ssl_cert_->ssl_key_file_password()->c_str());
+        if (!status.ok()) return OnTransferError(context, std::move(status));
+      }
+    }
   }
 
   if (method == HttpMethod::kGet) {
