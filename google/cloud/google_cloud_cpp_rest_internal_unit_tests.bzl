@@ -66,4 +66,5 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/tracing_rest_client_test.cc",
     "internal/tracing_rest_response_test.cc",
     "internal/unified_rest_credentials_test.cc",
+    "rest_options_test.cc",
 ]

@@ -1,0 +1,73 @@
+// Copyright 2025 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/rest_options.h"
+#include <gmock/gmock.h>
+#include <string>
+#include <utility>
+
+namespace google {
+namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+
+using ::testing::Eq;
+using ::testing::IsEmpty;
+
+TEST(SslCertificateTest, Construction) {
+  SslCertificate default_constructor;
+  EXPECT_THAT(default_constructor.ssl_client_cert_filename(), IsEmpty());
+  EXPECT_THAT(default_constructor.ssl_key_filename(), Eq(absl::nullopt));
+  EXPECT_THAT(default_constructor.ssl_key_file_password(), Eq(absl::nullopt));
+  EXPECT_THAT(default_constructor.ssl_cert_type(),
+              Eq(SslCertificate::SslCertType::kPEM));
+  EXPECT_THAT(SslCertificate::ToString(
+                  default_constructor.ssl_cert_type()),
+              Eq("PEM"));
+
+  auto single_arg_constructor =
+      SslCertificate{"my-cert-filename"}.set_cert_type(
+          SslCertificate::SslCertType::kDER);
+  EXPECT_THAT(single_arg_constructor.ssl_client_cert_filename(),
+              Eq("my-cert-filename"));
+  EXPECT_THAT(single_arg_constructor.ssl_key_filename(), Eq(absl::nullopt));
+  EXPECT_THAT(single_arg_constructor.ssl_key_file_password(),
+              Eq(absl::nullopt));
+  EXPECT_THAT(single_arg_constructor.ssl_cert_type(),
+              Eq(SslCertificate::SslCertType::kDER));
+  EXPECT_THAT(SslCertificate::ToString(
+                  single_arg_constructor.ssl_cert_type()),
+              Eq("DER"));
+
+  auto multi_arg_constructor =
+      SslCertificate{"my-cert-filename", "my-ssl-key-filename",
+                                  "my-ssl-key-file-password"}
+          .set_cert_type(SslCertificate::SslCertType::kP12);
+  EXPECT_THAT(multi_arg_constructor.ssl_client_cert_filename(),
+              Eq("my-cert-filename"));
+  EXPECT_THAT(multi_arg_constructor.ssl_key_filename(),
+              Eq("my-ssl-key-filename"));
+  EXPECT_THAT(multi_arg_constructor.ssl_key_file_password(),
+              Eq("my-ssl-key-file-password"));
+  EXPECT_THAT(multi_arg_constructor.ssl_cert_type(),
+              Eq(SslCertificate::SslCertType::kP12));
+  EXPECT_THAT(SslCertificate::ToString(
+                  multi_arg_constructor.ssl_cert_type()),
+              Eq("P12"));
+}
+}  // namespace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace cloud
+}  // namespace google

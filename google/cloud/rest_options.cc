@@ -18,21 +18,21 @@
 namespace google {
 namespace cloud {
 
-SslCertificate::SslCertificate(std::string ssl_client_cert_file)
-    : ssl_client_cert_file_(std::move(ssl_client_cert_file)) {}
-SslCertificate::SslCertificate(std::string ssl_client_cert,
-                               std::string ssl_key_file,
+SslCertificate::SslCertificate(std::string ssl_client_cert_filename)
+    : ssl_client_cert_filename_(std::move(ssl_client_cert_filename)) {}
+SslCertificate::SslCertificate(std::string ssl_client_cert_filename,
+                               std::string ssl_key_filename,
                                std::string ssl_key_file_password)
-    : ssl_client_cert_file_(std::move(ssl_client_cert)),
-      ssl_key_file_(SslKeyFile{std::move(ssl_key_file),
+    : ssl_client_cert_filename_(std::move(ssl_client_cert_filename)),
+      ssl_key_file_(SslKeyFile{std::move(ssl_key_filename),
                                std::move(ssl_key_file_password)}) {}
 
-std::string SslCertificate::ssl_client_cert_file() const {
-  return ssl_client_cert_file_;
+std::string SslCertificate::ssl_client_cert_filename() const {
+  return ssl_client_cert_filename_;
 }
 
-absl::optional<std::string> SslCertificate::ssl_key_file() const {
-  if (ssl_key_file_.has_value()) return ssl_key_file_->ssl_key_file;
+absl::optional<std::string> SslCertificate::ssl_key_filename() const {
+  if (ssl_key_file_.has_value()) return ssl_key_file_->ssl_key_filename;
   return absl::nullopt;
 }
 

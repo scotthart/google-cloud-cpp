@@ -287,7 +287,8 @@ if (BUILD_TESTING)
         internal/tracing_http_payload_test.cc
         internal/tracing_rest_client_test.cc
         internal/tracing_rest_response_test.cc
-        internal/unified_rest_credentials_test.cc)
+        internal/unified_rest_credentials_test.cc
+        rest_options_test.cc)
 
     # List the emulator integration tests, then setup the targets and
     # dependencies.

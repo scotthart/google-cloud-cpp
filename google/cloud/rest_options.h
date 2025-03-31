@@ -51,8 +51,8 @@ struct RestTracingOptionsOption {
  * access the certificate.
  *
  * The data in this class is used to set various options in libcurl:
- *  - ssl_client_cert_file: CURLOPT_SSLCERT
- *  - ssl_key_file: CURLOPT_SSLKEY
+ *  - ssl_client_cert_filename: CURLOPT_SSLCERT
+ *  - ssl_key_filename: CURLOPT_SSLKEY
  *  - ssl_key_file_password: CURLOPT_KEYPASSWD
  *  - ssl_cert_type: CURLOPT_SSLCERTTYPE - defaults to PEM
  *
@@ -64,15 +64,14 @@ class SslCertificate {
   enum class SslCertType { kPEM, kDER, kP12 };
 
   SslCertificate() = default;
-  explicit SslCertificate(std::string ssl_client_cert_file);
-  SslCertificate(std::string ssl_client_cert, std::string ssl_key_file,
+  explicit SslCertificate(std::string ssl_client_cert_filename);
+  SslCertificate(std::string ssl_client_cert_filename,
+                 std::string ssl_key_filename,
                  std::string ssl_key_file_password);
 
-  std::string ssl_client_cert_file() const;
-
-  absl::optional<std::string> ssl_key_file() const;
+  std::string ssl_client_cert_filename() const;
+  absl::optional<std::string> ssl_key_filename() const;
   absl::optional<std::string> ssl_key_file_password() const;
-
   SslCertType ssl_cert_type() const;
 
   SslCertificate& set_cert_type(SslCertType ssl_cert_type);
@@ -81,10 +80,10 @@ class SslCertificate {
 
  private:
   struct SslKeyFile {
-    std::string ssl_key_file;
+    std::string ssl_key_filename;
     std::string ssl_key_file_password;
   };
-  std::string ssl_client_cert_file_;
+  std::string ssl_client_cert_filename_;
   absl::optional<SslKeyFile> ssl_key_file_ = absl::nullopt;
   SslCertType ssl_cert_type_ = SslCertType::kPEM;
 };

@@ -325,16 +325,23 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
   }
 
   if (ssl_cert_) {
-    status = handle_.SetOption(CURLOPT_SSLCERT,
-                               ssl_cert_->ssl_client_cert_file().c_str());
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYPEER, 1);
     if (!status.ok()) return OnTransferError(context, std::move(status));
+    status = handle_.SetOption(CURLOPT_SSL_VERIFYHOST, 2);
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
     status = handle_.SetOption(
         CURLOPT_SSLCERTTYPE,
         SslCertificate::ToString(ssl_cert_->ssl_cert_type()).c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
-    if (ssl_cert_->ssl_key_file().has_value()) {
-      status =
-          handle_.SetOption(CURLOPT_SSLKEY, ssl_cert_->ssl_key_file()->c_str());
+
+    status = handle_.SetOption(CURLOPT_SSLCERT,
+                               ssl_cert_->ssl_client_cert_filename().c_str());
+    if (!status.ok()) return OnTransferError(context, std::move(status));
+
+    if (ssl_cert_->ssl_key_filename().has_value()) {
+      status = handle_.SetOption(CURLOPT_SSLKEY,
+                                 ssl_cert_->ssl_key_filename()->c_str());
       if (!status.ok()) return OnTransferError(context, std::move(status));
       if (ssl_cert_->ssl_key_file_password().has_value()) {
         status = handle_.SetOption(CURLOPT_KEYPASSWD,
