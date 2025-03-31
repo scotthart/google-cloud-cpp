@@ -69,6 +69,8 @@ class SslCertificate {
                  std::string ssl_key_filename,
                  std::string ssl_key_file_password);
 
+  SslCertificate(std::string ssl_cert_blob, std::string ssl_key_blob);
+
   std::string ssl_client_cert_filename() const;
   absl::optional<std::string> ssl_key_filename() const;
   absl::optional<std::string> ssl_key_file_password() const;
@@ -94,7 +96,7 @@ class SslCertificate {
     std::vector<char> ssl_cert_blob;
     std::vector<char> ssl_key_blob;
   };
-  absl::optional<SslBlob> ssl_blob_;
+  absl::optional<SslBlob> ssl_blob_ = absl::nullopt;
 
   SslCertType ssl_cert_type_ = SslCertType::kPEM;
 };
