@@ -33,8 +33,7 @@ TEST(SslCertificateTest, Construction) {
   EXPECT_THAT(default_constructor.ssl_key_file_password(), Eq(absl::nullopt));
   EXPECT_THAT(default_constructor.ssl_cert_type(),
               Eq(SslCertificate::SslCertType::kPEM));
-  EXPECT_THAT(SslCertificate::ToString(
-                  default_constructor.ssl_cert_type()),
+  EXPECT_THAT(SslCertificate::ToString(default_constructor.ssl_cert_type()),
               Eq("PEM"));
 
   auto single_arg_constructor =
@@ -47,13 +46,12 @@ TEST(SslCertificateTest, Construction) {
               Eq(absl::nullopt));
   EXPECT_THAT(single_arg_constructor.ssl_cert_type(),
               Eq(SslCertificate::SslCertType::kDER));
-  EXPECT_THAT(SslCertificate::ToString(
-                  single_arg_constructor.ssl_cert_type()),
+  EXPECT_THAT(SslCertificate::ToString(single_arg_constructor.ssl_cert_type()),
               Eq("DER"));
 
   auto multi_arg_constructor =
       SslCertificate{"my-cert-filename", "my-ssl-key-filename",
-                                  "my-ssl-key-file-password"}
+                     "my-ssl-key-file-password"}
           .set_cert_type(SslCertificate::SslCertType::kP12);
   EXPECT_THAT(multi_arg_constructor.ssl_client_cert_filename(),
               Eq("my-cert-filename"));
@@ -63,8 +61,7 @@ TEST(SslCertificateTest, Construction) {
               Eq("my-ssl-key-file-password"));
   EXPECT_THAT(multi_arg_constructor.ssl_cert_type(),
               Eq(SslCertificate::SslCertType::kP12));
-  EXPECT_THAT(SslCertificate::ToString(
-                  multi_arg_constructor.ssl_cert_type()),
+  EXPECT_THAT(SslCertificate::ToString(multi_arg_constructor.ssl_cert_type()),
               Eq("P12"));
 }
 }  // namespace

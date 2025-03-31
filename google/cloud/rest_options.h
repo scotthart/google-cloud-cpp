@@ -76,6 +76,10 @@ class SslCertificate {
 
   SslCertificate& set_cert_type(SslCertType ssl_cert_type);
 
+  bool has_ssl_blob() const { return ssl_blob_.has_value(); }
+  std::vector<char>& ssl_cert_blob();
+  std::vector<char>& ssl_key_blob();
+
   static std::string ToString(SslCertType type);
 
  private:
@@ -85,6 +89,13 @@ class SslCertificate {
   };
   std::string ssl_client_cert_filename_;
   absl::optional<SslKeyFile> ssl_key_file_ = absl::nullopt;
+
+  struct SslBlob {
+    std::vector<char> ssl_cert_blob;
+    std::vector<char> ssl_key_blob;
+  };
+  absl::optional<SslBlob> ssl_blob_;
+
   SslCertType ssl_cert_type_ = SslCertType::kPEM;
 };
 

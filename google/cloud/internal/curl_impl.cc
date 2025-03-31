@@ -25,6 +25,7 @@
 #include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
+#include <curl/easy.h>
 #include <algorithm>
 #include <sstream>
 #include <thread>
@@ -335,19 +336,37 @@ Status CurlImpl::MakeRequest(HttpMethod method, RestContext& context,
         SslCertificate::ToString(ssl_cert_->ssl_cert_type()).c_str());
     if (!status.ok()) return OnTransferError(context, std::move(status));
 
-    status = handle_.SetOption(CURLOPT_SSLCERT,
-                               ssl_cert_->ssl_client_cert_filename().c_str());
-    if (!status.ok()) return OnTransferError(context, std::move(status));
-
-    if (ssl_cert_->ssl_key_filename().has_value()) {
-      status = handle_.SetOption(CURLOPT_SSLKEY,
-                                 ssl_cert_->ssl_key_filename()->c_str());
+    if (!ssl_cert_->ssl_client_cert_filename().empty()) {
+      status = handle_.SetOption(CURLOPT_SSLCERT,
+                                 ssl_cert_->ssl_client_cert_filename().c_str());
       if (!status.ok()) return OnTransferError(context, std::move(status));
-      if (ssl_cert_->ssl_key_file_password().has_value()) {
-        status = handle_.SetOption(CURLOPT_KEYPASSWD,
-                                   ssl_cert_->ssl_key_file_password()->c_str());
+
+      if (ssl_cert_->ssl_key_filename().has_value()) {
+        status = handle_.SetOption(CURLOPT_SSLKEY,
+                                   ssl_cert_->ssl_key_filename()->c_str());
         if (!status.ok()) return OnTransferError(context, std::move(status));
+        if (ssl_cert_->ssl_key_file_password().has_value()) {
+          status = handle_.SetOption(
+              CURLOPT_KEYPASSWD, ssl_cert_->ssl_key_file_password()->c_str());
+          if (!status.ok()) return OnTransferError(context, std::move(status));
+        }
       }
+    }
+
+    if (ssl_cert_->has_ssl_blob()) {
+      struct curl_blob ssl_cert_blob;
+      ssl_cert_blob.data = &(ssl_cert_->ssl_cert_blob()[0]);  // NOLINT
+      ssl_cert_blob.len = ssl_cert_->ssl_cert_blob().size();
+      ssl_cert_blob.flags = CURL_BLOB_COPY;
+      status = handle_.SetOption(CURLOPT_SSLCERT_BLOB, &ssl_cert_blob);
+      if (!status.ok()) return OnTransferError(context, std::move(status));
+
+      struct curl_blob ssl_key_blob;
+      ssl_key_blob.data = &(ssl_cert_->ssl_key_blob()[0]);  // NOLINT
+      ssl_key_blob.len = ssl_cert_->ssl_key_blob().size();
+      ssl_cert_blob.flags = CURL_BLOB_COPY;
+      status = handle_.SetOption(CURLOPT_SSLKEY_BLOB, &ssl_key_blob);
+      if (!status.ok()) return OnTransferError(context, std::move(status));
     }
   }
 

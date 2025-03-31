@@ -62,5 +62,13 @@ std::string SslCertificate::ToString(SslCertType type) {
   return "";
 }
 
+std::vector<char>& SslCertificate::ssl_cert_blob() {
+  return ssl_blob_->ssl_cert_blob;
+}
+
+std::vector<char>& SslCertificate::ssl_key_blob() {
+  return ssl_blob_->ssl_key_blob;
+}
+
 }  // namespace cloud
 }  // namespace google
