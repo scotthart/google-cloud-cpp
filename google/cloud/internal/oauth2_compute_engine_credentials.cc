@@ -198,6 +198,7 @@ ComputeEngineCredentials::ComputeEngineCredentials(
 
 StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  std::cout << __PRETTY_FUNCTION__ << "\n";
   // Ignore failures fetching the account metadata. We can still get a token
   // using the initial `service_account_email_` value.
   auto email = RetrieveServiceAccountInfo();

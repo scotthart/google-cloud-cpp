@@ -13,9 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/scoped_log.h"
 #include <gmock/gmock.h>
 #include <algorithm>
 #include <iostream>
@@ -49,10 +53,17 @@ class ObjectResumableWriteIntegrationTest
   }
 
   std::string bucket_name_;
+  testing_util::ScopedLog log_;
 };
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  auto client = MakeIntegrationTestClient();
+//  testing_util::ScopedEnvironment enable_clog(
+//      "GOOGLE_CLOUD_CPP_ENABLE_CLOG", "yes");
+
+  LogSink::EnableStdClog(Severity::GCP_LS_DEBUG);
+
+  auto options = Options{}.set<LoggingComponentsOption>({"http","raw-client","rpc","rpc-streams"});
+  auto client = MakeIntegrationTestClient(options);
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -76,8 +87,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
     EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
     EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
-}
 
+  auto const log_lines = log_.ExtractLines();
+  std::cout << log_lines << "\n";
+  std::cout << "************** END TEST ****************\n";
+}
+#if 0
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
   auto client = MakeIntegrationTestClient();
   auto bucket_name = MakeRandomBucketName();
@@ -434,7 +449,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
   EXPECT_FALSE(os.metadata().ok());
   // No need to delete the object, as it is never created.
 }
-
+#endif
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <memory>
 #include <utility>
 
@@ -35,6 +36,9 @@ std::shared_ptr<storage::internal::StorageConnection> DecorateConnection(
 
 std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
     Options const& opts, std::unique_ptr<storage_internal::GenericStub> stub) {
+    std::cout << __func__ << ": " <<
+      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+
   std::shared_ptr<storage::internal::StorageConnection> connection =
       storage::internal::StorageConnectionImpl::Create(std::move(stub), opts);
   if (google::cloud::internal::TracingEnabled(opts)) {
@@ -45,6 +49,9 @@ std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
 
 std::shared_ptr<storage::internal::StorageConnection> MakeStorageConnection(
     Options const& opts) {
+      std::cout << __func__ << ": " <<
+      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+
   return MakeStorageConnection(opts, MakeDefaultStorageStub(opts));
 }
 

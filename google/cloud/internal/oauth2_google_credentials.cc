@@ -26,6 +26,7 @@
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/parse_service_account_p12_file.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
 #include <iterator>
@@ -48,6 +49,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
   if (cred_type == "authorized_user") {
     auto info = ParseAuthorizedUserCredentials(contents, path);
     if (!info) return std::move(info).status();
+    std::cout << __func__ << ": create AuthorizedUserCredentials with options="
+        << absl::StrJoin(options.get<LoggingComponentsOption>(), ",") << "\n";
     return std::unique_ptr<Credentials>(
         std::make_unique<AuthorizedUserCredentials>(*info, options,
                                                     std::move(client_factory)));
@@ -109,6 +112,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromString(
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     std::string const& path, Options const& options,
     HttpClientFactory client_factory) {
+  std::cout << __func__ << "\n";
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -175,6 +179,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     Options const& options, HttpClientFactory client_factory) {
+  std::cout << __func__ << ": options=" << absl::StrJoin(options.get<LoggingComponentsOption>(), ",") << "\n";
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
   auto creds = MaybeLoadCredsFromAdcPaths(options, client_factory);

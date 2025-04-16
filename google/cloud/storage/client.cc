@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/connection_factory.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
@@ -53,12 +54,20 @@ Client::Client(Options opts)
 Client::Client(InternalOnly, Options const& opts,
                std::shared_ptr<internal::StorageConnection> connection)
     : Client(InternalOnlyNoDecorations{}, storage_internal::DecorateConnection(
-                                              opts, std::move(connection))) {}
+                                              opts, std::move(connection))) {
+      std::cout << __func__ << ": " <<
+      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+
+}
 
 /// Create a connection from @p opts, applying all decorators if needed.
 Client::Client(InternalOnly, Options const& opts)
     : Client(InternalOnlyNoDecorations{},
-             storage_internal::MakeStorageConnection(opts)) {}
+             storage_internal::MakeStorageConnection(opts)) {
+    std::cout << __func__ << ": " <<
+      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+
+}
 
 StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
 
@@ -88,6 +97,7 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
+  std::cout << __func__ << "\n";
   auto response = internal::CreateOrResume(*connection_, request);
   if (!response) {
     ObjectWriteStream error_stream(

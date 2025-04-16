@@ -40,6 +40,7 @@ CachedCredentials::~CachedCredentials() = default;
 
 StatusOr<AccessToken> CachedCredentials::GetToken(
     std::chrono::system_clock::time_point now) {
+  std::cout << __PRETTY_FUNCTION__ << "\n";
   std::lock_guard<std::mutex> lk(mu_);
   if (!ExpiringSoon(token_, now)) return token_;
   auto refreshed = impl_->GetToken(now);

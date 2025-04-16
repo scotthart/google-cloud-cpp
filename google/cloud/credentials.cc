@@ -14,6 +14,7 @@
 
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 
 namespace google {
 namespace cloud {
@@ -26,6 +27,8 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts) {
 }
 
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts) {
+  std::cout << __func__ << ": opts="
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
   return std::make_shared<internal::GoogleDefaultCredentialsConfig>(
       std::move(opts));
 }

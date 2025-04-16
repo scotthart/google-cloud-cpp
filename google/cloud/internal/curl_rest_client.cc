@@ -149,7 +149,11 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
 //           CreateCurlImpl relies heavily on member variables.
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
     RestContext& context, RestRequest const& request) {
+  std::cout << __func__ << "\n";
   auto options = internal::MergeOptions(context.options(), options_);
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(),",") << "\n";
+
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kDelete, context);
@@ -160,7 +164,11 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Delete(
 
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
     RestContext& context, RestRequest const& request) {
+  std::cout << __func__ << "\n";
   auto options = internal::MergeOptions(context.options(), options_);
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(),",") << "\n";
+
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
   auto response = (*impl)->MakeRequest(CurlImpl::HttpMethod::kGet, context);
@@ -172,6 +180,7 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Get(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
+  std::cout << __func__ << "\n";
   auto options = internal::MergeOptions(context.options(), options_);
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
@@ -185,7 +194,11 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Patch(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
+  std::cout << __func__ << "\n";
   auto options = internal::MergeOptions(context.options(), options_);
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(),",") << "\n";
+
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPost, context,
@@ -198,8 +211,12 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
     RestContext& context, RestRequest const& request,
     std::vector<std::pair<std::string, std::string>> const& form_data) {
+  std::cout << __func__ << "\n";
   context.AddHeader("content-type", "application/x-www-form-urlencoded");
   auto options = internal::MergeOptions(context.options(), options_);
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(),",") << "\n";
+
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
   std::string form_payload = absl::StrJoin(
@@ -218,7 +235,11 @@ StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Post(
 StatusOr<std::unique_ptr<RestResponse>> CurlRestClient::Put(
     RestContext& context, RestRequest const& request,
     std::vector<absl::Span<char const>> const& payload) {
+  std::cout << __func__ << "\n";
   auto options = internal::MergeOptions(context.options(), options_);
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(),",") << "\n";
+
   auto impl = CreateCurlImpl(context, request, options);
   if (!impl.ok()) return impl.status();
   Status response = MakeRequestWithPayload(CurlImpl::HttpMethod::kPut, context,

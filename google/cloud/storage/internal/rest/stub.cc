@@ -27,6 +27,7 @@
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/getenv.h"
@@ -108,6 +109,8 @@ StatusOr<ReturnType> CreateFromJson(
 
 Status AddAuthorizationHeader(Options const& options,
                               RestRequestBuilder& builder) {
+    std::cout << __func__ << ": options=" <<
+      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
   // In tests this option may not be set. And over time we want to retire it.
   if (!options.has<Oauth2CredentialsOption>()) return {};
   auto auth_header =
@@ -127,6 +130,9 @@ RestStub::RestStub(Options options)
       iam_rest_client_(rest::MakePooledRestClient(
           IamEndpoint(options_), ResolveIamAuthority(options_))) {
   rest_internal::CurlInitializeOnce(options_);
+      std::cout << __func__ << ":" << __LINE__ << ": " <<
+      absl::StrJoin(options_.get<LoggingComponentsOption>(),",") << "\n";
+
 }
 
 RestStub::RestStub(
@@ -138,6 +144,9 @@ RestStub::RestStub(
       storage_rest_client_(std::move(storage_rest_client)),
       iam_rest_client_(std::move(iam_rest_client)) {
   rest_internal::CurlInitializeOnce(options_);
+      std::cout << __func__ << ":" << __LINE__ << ": " <<
+      absl::StrJoin(options_.get<LoggingComponentsOption>(),",") << "\n";
+
 }
 
 Options RestStub::ResolveStorageAuthority(Options const& options) {
@@ -657,6 +666,10 @@ StatusOr<ObjectMetadata> RestStub::RestoreObject(
 StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
+  std::cout << __func__ << ": CurrentOptions=" <<
+      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __func__ << ": options=" <<
+      absl::StrJoin(options.get<LoggingComponentsOption>(), ",") << "\n";
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
                                           options.get<TargetApiVersionOption>(),
                                           "/b/", request.bucket_name(), "/o"));

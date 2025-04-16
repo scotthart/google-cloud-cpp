@@ -25,6 +25,7 @@ AccessTokenCredentials::AccessTokenCredentials(
 
 StatusOr<AccessToken> AccessTokenCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
+  std::cout << __PRETTY_FUNCTION__ << "\n";
   return access_token_;
 }
 

@@ -178,6 +178,8 @@ CurlImpl::CurlImpl(CurlHandle handle,
 
   logging_enabled_ = google::cloud::internal::Contains(
       options.get<LoggingComponentsOption>(), "http");
+  std::cout << __func__ << ": logging_enabled_=" <<
+      (logging_enabled_ ? "true" : "false") << "\n";
   follow_location_ = options.get<CurlFollowLocationOption>();
 
   socket_options_.recv_buffer_size_ =
@@ -238,6 +240,7 @@ CurlImpl::~CurlImpl() {
 }
 
 void CurlImpl::SetHeader(std::string const& header) {
+  std::cout << __func__ << ": header=" << header << "\n";
   if (header.empty()) return;
 
   // The API for credentials is complicated, and the authorization
@@ -300,6 +303,7 @@ void CurlImpl::SetUrl(
   };
   append_params(request.parameters());
   append_params(additional_parameters);
+  std::cout << __func__ << ": url=" << url_ << "\n";
 }
 
 std::string CurlImpl::LastClientIpAddress() const {

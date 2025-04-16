@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/connection_impl.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_retry_loop.h"
 #include "absl/strings/match.h"
@@ -535,6 +536,8 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::RestoreObject(
 StatusOr<CreateResumableUploadResponse>
 StorageConnectionImpl::CreateResumableUpload(
     ResumableUploadRequest const& request) {
+  std::cout << __func__ << ": " <<
+      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
@@ -552,6 +555,7 @@ StorageConnectionImpl::CreateResumableUpload(
 StatusOr<QueryResumableUploadResponse>
 StorageConnectionImpl::QueryResumableUpload(
     QueryResumableUploadRequest const& request) {
+  std::cout << __func__ << "\n";
   auto const idempotency = Idempotency::kIdempotent;
   return RestRetryLoop(
       current_retry_policy(), current_backoff_policy(), idempotency,

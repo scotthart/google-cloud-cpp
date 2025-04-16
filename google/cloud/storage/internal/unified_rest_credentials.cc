@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/impersonate_service_account_credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
@@ -94,6 +95,8 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
       result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
     }
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << ": cfg.options="
+          << absl::StrJoin(cfg.options().get<LoggingComponentsOption>(), ",") << "\n";
       auto credentials = oauth2_internal::GoogleDefaultCredentials(
           cfg.options(), std::move(client_factory_));
       if (credentials) {
@@ -148,8 +151,11 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
   };
 
   RestVisitor visitor([](Options const& o) {
+    std::cout << __func__ << ": client_factory called with logging options=" <<
+      absl::StrJoin(o.get<LoggingComponentsOption>(), ",") << "\n";
     return rest_internal::MakeDefaultRestClient(std::string{}, o);
   });
+
   CredentialsVisitor::dispatch(credentials, visitor);
   return std::move(visitor.result);
 }

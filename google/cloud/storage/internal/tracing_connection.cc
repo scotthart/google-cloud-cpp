@@ -461,6 +461,7 @@ std::vector<std::string> TracingConnection::InspectStackStructure() const {
 
 std::shared_ptr<storage::internal::StorageConnection> MakeTracingClient(
     std::shared_ptr<storage::internal::StorageConnection> impl) {
+  std::cout << __func__ << "\n";
   return std::make_shared<TracingConnection>(std::move(impl));
 }
 

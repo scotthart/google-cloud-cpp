@@ -70,6 +70,7 @@ CreateServiceAccountCredentialsFromJsonContents(
 
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     google::cloud::Credentials const& credentials) {
+  std::cout << __func__ << ": with DefaultRestClient\n";
   return MapCredentials(credentials, [](Options const& options) {
     return MakeDefaultRestClient("", options);
   });
@@ -78,6 +79,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     google::cloud::Credentials const& credentials,
     oauth2_internal::HttpClientFactory client_factory) {
+  std::cout << __func__ << ": with client_factory\n";
   class Visitor : public CredentialsVisitor {
    public:
     explicit Visitor(oauth2_internal::HttpClientFactory client_factory)
