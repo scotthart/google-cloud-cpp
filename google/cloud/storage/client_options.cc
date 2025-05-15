@@ -289,8 +289,8 @@ Options DefaultOptions(std::shared_ptr<oauth2::Credentials> credentials,
 }
 
 Options DefaultOptionsWithCredentials(Options opts) {
-    std::cout << __func__ << ": opts=" <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __func__ << ": opts="
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
   if (opts.has<Oauth2CredentialsOption>()) {
     std::cout << __func__ << ": opts.has<Oauth2CredentialsOption>()\n";
     auto credentials = opts.get<Oauth2CredentialsOption>();

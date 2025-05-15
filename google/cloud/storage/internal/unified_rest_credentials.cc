@@ -96,7 +96,9 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
     }
     void visit(GoogleDefaultCredentialsConfig const& cfg) override {
       std::cout << __PRETTY_FUNCTION__ << ": cfg.options="
-          << absl::StrJoin(cfg.options().get<LoggingComponentsOption>(), ",") << "\n";
+                << absl::StrJoin(cfg.options().get<LoggingComponentsOption>(),
+                                 ",")
+                << "\n";
       auto credentials = oauth2_internal::GoogleDefaultCredentials(
           cfg.options(), std::move(client_factory_));
       if (credentials) {
@@ -151,8 +153,8 @@ std::shared_ptr<oauth2::Credentials> MapCredentials(
   };
 
   RestVisitor visitor([](Options const& o) {
-    std::cout << __func__ << ": client_factory called with logging options=" <<
-      absl::StrJoin(o.get<LoggingComponentsOption>(), ",") << "\n";
+    std::cout << __func__ << ": client_factory called with logging options="
+              << absl::StrJoin(o.get<LoggingComponentsOption>(), ",") << "\n";
     return rest_internal::MakeDefaultRestClient(std::string{}, o);
   });
 

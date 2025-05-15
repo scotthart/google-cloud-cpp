@@ -19,9 +19,9 @@
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/remove_stale_buckets.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 #include <memory>
@@ -108,12 +108,12 @@ Options StorageIntegrationTest::MakeBucketTestOptions() {
 
 google::cloud::storage::Client
 StorageIntegrationTest::MakeIntegrationTestClient(bool use_grpc, Options opts) {
-  std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 
   opts = MakeTestOptions(std::move(opts));
-  std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
   if (use_grpc) {
@@ -129,8 +129,8 @@ StorageIntegrationTest::MakeIntegrationTestClient(bool use_grpc, Options opts) {
 
 google::cloud::storage::Client
 StorageIntegrationTest::MakeIntegrationTestClient(Options opts) {
-  std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 
   auto const use_grpc = UseGrpcForMedia() || UseGrpcForMetadata();
   return MakeIntegrationTestClient(use_grpc, std::move(opts));

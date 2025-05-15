@@ -103,8 +103,7 @@ Options MakeAuthOptions(Options const& options) {
         options.get<OpenTelemetryTracingOption>());
   }
   if (options.has<LoggingComponentsOption>()) {
-    opts.set<LoggingComponentsOption>(
-        options.get<LoggingComponentsOption>());
+    opts.set<LoggingComponentsOption>(options.get<LoggingComponentsOption>());
   }
   return opts;
 }

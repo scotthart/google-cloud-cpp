@@ -44,9 +44,9 @@ Options PopulateAuthOptions(Options options) {
   return MergeOptions(
       std::move(options),
       Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()));
-//  return MergeOptions(
-//      Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()),
-//      std::move(options));
+  //  return MergeOptions(
+  //      Options{}.set<LoggingComponentsOption>(DefaultTracingComponents()),
+  //      std::move(options));
 }
 
 void CredentialsVisitor::dispatch(Credentials const& credentials,

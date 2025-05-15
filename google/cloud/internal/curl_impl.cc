@@ -178,8 +178,9 @@ CurlImpl::CurlImpl(CurlHandle handle,
 
   logging_enabled_ = google::cloud::internal::Contains(
       options.get<LoggingComponentsOption>(), "http");
-  std::cout << __func__ << ": logging_enabled_=" <<
-      (logging_enabled_ ? "true" : "false") << "\n";
+  std::cout << __func__
+            << ": logging_enabled_=" << (logging_enabled_ ? "true" : "false")
+            << "\n";
   follow_location_ = options.get<CurlFollowLocationOption>();
 
   socket_options_.recv_buffer_size_ =
@@ -239,6 +240,24 @@ CurlImpl::~CurlImpl() {
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
+void CurlImpl::SetHeader(HttpHeader const& header) {
+  if (header.empty()) return;
+
+  // The API for credentials is complicated, and the authorization
+  // header can be empty. See, for example, AnonymousCredentials.
+  if (header.IsSameKey("authorization") &&
+      header.EmptyValues()) {
+    return;
+  }
+
+  auto h = std::string(header);
+
+  auto* headers = curl_slist_append(request_headers_.get(), h.c_str());
+  (void)request_headers_.release();  // Now owned by list, not us.
+  request_headers_.reset(headers);
+
+}
+
 void CurlImpl::SetHeader(std::string const& header) {
   std::cout << __func__ << ": header=" << header << "\n";
   if (header.empty()) return;
@@ -253,15 +272,52 @@ void CurlImpl::SetHeader(std::string const& header) {
 }
 
 void CurlImpl::SetHeader(std::pair<std::string, std::string> const& header) {
-  SetHeader(absl::StrCat(header.first, ": ", header.second));
+  if (header.first.empty() && header.second.empty()) return;
+
+  // The API for credentials is complicated, and the authorization
+  // header can be empty. See, for example, AnonymousCredentials.
+  if (absl::AsciiStrToLower(header.first) == "authorization" &&
+      header.second.empty()) {
+    return;
+  }
+
+  auto h = absl::StrCat(header.first, ": ", header.second);
+
+  auto* headers = curl_slist_append(request_headers_.get(), h.c_str());
+  (void)request_headers_.release();  // Now owned by list, not us.
+  request_headers_.reset(headers);
 }
 
-void CurlImpl::SetHeaders(RestContext const& context,
-                          RestRequest const& request) {
+//void CurlImpl::SetHeaders(RestContext const& context,
+//                          RestRequest const& request) {
+//  for (auto const& header : context.headers()) {
+//    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
+//  }
+//  for (auto const& header : request.headers()) {
+//    SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
+//  }
+//}
+
+void CurlImpl::SetHeaders(
+    HttpHeader const& auth_header,
+    HttpHeader const& host_header,
+    RestContext const& context, RestRequest const& request) {
+  SetHeader(auth_header);
+  SetHeader(host_header);
+  auto is_duplicate =
+      [singleton_headers = std::vector<HttpHeader>{
+           auth_header, host_header}](std::string const& h) {
+        for (auto const& header : singleton_headers) {
+          if (header.IsSameKey(h)) return true;
+        }
+        return false;
+      };
   for (auto const& header : context.headers()) {
+    if (is_duplicate(header.first)) continue;
     SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
   }
   for (auto const& header : request.headers()) {
+    if (is_duplicate(header.first)) continue;
     SetHeader(std::make_pair(header.first, absl::StrJoin(header.second, ",")));
   }
 }

@@ -15,8 +15,8 @@
 #include "google/cloud/storage/internal/generic_stub_factory.h"
 #include "google/cloud/storage/internal/logging_stub.h"
 #include "google/cloud/storage/internal/rest/stub.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/storage/options.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include <memory>
 #include <utility>
@@ -52,8 +52,8 @@ std::unique_ptr<GenericStub> DecorateStub(Options const& opts,
 
 std::unique_ptr<GenericStub> MakeDefaultStorageStub(Options opts) {
   auto const logging = RequiresLogging(opts);
-      std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 
   return DecorateStub(
       logging, std::make_unique<storage::internal::RestStub>(std::move(opts)));

@@ -18,6 +18,7 @@
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/curl_handle.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
@@ -55,18 +56,16 @@ Client::Client(InternalOnly, Options const& opts,
                std::shared_ptr<internal::StorageConnection> connection)
     : Client(InternalOnlyNoDecorations{}, storage_internal::DecorateConnection(
                                               opts, std::move(connection))) {
-      std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
-
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 }
 
 /// Create a connection from @p opts, applying all decorators if needed.
 Client::Client(InternalOnly, Options const& opts)
     : Client(InternalOnlyNoDecorations{},
              storage_internal::MakeStorageConnection(opts)) {
-    std::cout << __func__ << ": " <<
-      absl::StrJoin(opts.get<LoggingComponentsOption>(),",") << "\n";
-
+  std::cout << __func__ << ": "
+            << absl::StrJoin(opts.get<LoggingComponentsOption>(), ",") << "\n";
 }
 
 StatusOr<Client> Client::CreateDefaultClient() { return Client(Options{}); }
@@ -97,7 +96,9 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
-  std::cout << __func__ << "\n";
+  //  std::cout << __func__ << "\n";
+  std::cout << __func__ << ": RestEndpointOption="
+            << connection_->options().get<RestEndpointOption>() << "\n";
   auto response = internal::CreateOrResume(*connection_, request);
   if (!response) {
     ObjectWriteStream error_stream(
@@ -107,7 +108,18 @@ ObjectWriteStream Client::WriteObjectImpl(
     error_stream.Close();
     return error_stream;
   }
+  std::cout << __func__ << ": response->upload_id=" << response->upload_id
+            << "\n";
   auto const& current = google::cloud::internal::CurrentOptions();
+  if (connection_->options().has<RestEndpointOption>()) {
+    response->upload_id = absl::StrReplaceAll(
+        response->upload_id,
+        {{"https://storage.googleapis.com",
+          connection_->options().get<RestEndpointOption>()}});
+  }
+  std::cout << __func__ << ": response->upload_id=" << response->upload_id
+            << "\n";
+
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       current.get<UploadBufferSizeOption>());
   return ObjectWriteStream(std::make_unique<internal::ObjectWriteStreambuf>(

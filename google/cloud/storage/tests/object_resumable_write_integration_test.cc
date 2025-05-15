@@ -13,15 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/common_options.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <algorithm>
+#include <fstream>
 #include <iostream>
 #include <random>
 #include <sstream>
@@ -35,6 +36,8 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::GetEnv;
+
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
@@ -44,6 +47,16 @@ using ::testing::Not;
 class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
+  static StatusOr<std::string> ReadEnvVarFile(char const* env_var) {
+    if (!GetEnv(env_var).has_value()) {
+      return google::cloud::internal::InvalidArgumentError("Missing env var");
+    }
+    auto env = GetEnv(env_var);
+    std::string key_file = std::move(*env);
+    std::ifstream is(key_file);
+    return std::string{std::istreambuf_iterator<char>{is}, {}};
+  }
+
   void SetUp() override {
     google::cloud::storage::testing::StorageIntegrationTest::SetUp();
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -57,12 +70,23 @@ class ObjectResumableWriteIntegrationTest
 };
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-//  testing_util::ScopedEnvironment enable_clog(
-//      "GOOGLE_CLOUD_CPP_ENABLE_CLOG", "yes");
+  //  testing_util::ScopedEnvironment enable_clog(
+  //      "GOOGLE_CLOUD_CPP_ENABLE_CLOG", "yes");
 
   LogSink::EnableStdClog(Severity::GCP_LS_DEBUG);
 
-  auto options = Options{}.set<LoggingComponentsOption>({"http","raw-client","rpc","rpc-streams"});
+  auto options = Options{}.set<LoggingComponentsOption>(
+      {"http", "raw-client", "rpc", "rpc-streams"});
+  options.set<RestEndpointOption>("https://storage.mtls.googleapis.com");
+  options.set<AuthorityOption>("storage.mtls.googleapis.com");
+  auto ssl_cert_blob = ReadEnvVarFile("GOOGLE_CLOUD_CPP_CLIENT_SSL_CERT_FILE");
+  ASSERT_STATUS_OK(ssl_cert_blob);
+  auto ssl_key_blob = ReadEnvVarFile("GOOGLE_CLOUD_CPP_CLIENT_SSL_KEY_FILE");
+  ASSERT_STATUS_OK(ssl_key_blob);
+
+  experimental::SslCertificate client_ssl_cert{*ssl_cert_blob, *ssl_key_blob};
+  options.set<experimental::ClientSslCertificateOption>(client_ssl_cert);
+
   auto client = MakeIntegrationTestClient(options);
   auto object_name = MakeRandomObjectName();
 

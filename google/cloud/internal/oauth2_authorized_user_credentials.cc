@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_universe_domain.h"
-#include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
 
 namespace google {
@@ -94,14 +94,16 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
     : info_(std::move(info)),
       options_(std::move(options)),
       client_factory_(std::move(client_factory)) {
-    std::cout << __PRETTY_FUNCTION__ << ": options_=" <<
-      absl::StrJoin(options_.get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __PRETTY_FUNCTION__ << ": options_="
+            << absl::StrJoin(options_.get<LoggingComponentsOption>(), ",")
+            << "\n";
 }
 
 StatusOr<AccessToken> AuthorizedUserCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
-  std::cout << __PRETTY_FUNCTION__ << ": options_=" <<
-      absl::StrJoin(options_.get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __PRETTY_FUNCTION__ << ": options_="
+            << absl::StrJoin(options_.get<LoggingComponentsOption>(), ",")
+            << "\n";
   rest_internal::RestRequest request;
   request.SetPath(info_.token_uri);
   request.AddHeader("content-type", "application/x-www-form-urlencoded");

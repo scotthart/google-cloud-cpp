@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/credentials.h"
-#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/credentials_impl.h"
 
 namespace google {
 namespace cloud {

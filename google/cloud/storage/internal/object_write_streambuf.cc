@@ -35,6 +35,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(Status status)
     : last_status_(std::move(status)),
       max_buffer_size_(UploadChunkRequest::kChunkSizeQuantum),
       span_options_(CurrentOptions()) {
+  std::cout << __func__ << ": RestEndpointOption="
+            << span_options_.get<RestEndpointOption>() << "\n";
   current_ios_buffer_.reserve(UploadChunkRequest::kChunkSizeQuantum);
   UpdatePutArea();
 }
@@ -57,6 +59,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       hash_validator_(std::move(hash_validator)),
       auto_finalize_(auto_finalize),
       span_options_(CurrentOptions()) {
+  std::cout << __func__ << ": RestEndpointOption="
+            << span_options_.get<RestEndpointOption>() << "\n";
   current_ios_buffer_.reserve(UploadChunkRequest::kChunkSizeQuantum);
   UpdatePutArea();
 }

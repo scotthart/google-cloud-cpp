@@ -19,6 +19,7 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/internal/curl_writev.h"
+#include "google/cloud/internal/http_header.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
@@ -82,9 +83,13 @@ class CurlImpl {
   CurlImpl& operator=(CurlImpl const&) = delete;
   CurlImpl& operator=(CurlImpl&&) = default;
 
-  void SetHeader(std::string const& header);
-  void SetHeader(std::pair<std::string, std::string> const& header);
-  void SetHeaders(RestContext const& context, RestRequest const& request);
+  void SetHeader(HttpHeader const& header);
+//  void SetHeader(std::string const& header);
+  //  void SetHeader(std::pair<std::string, std::string> const& header);
+  //  void SetHeaders(RestContext const& context, RestRequest const& request);
+  void SetHeaders(HttpHeader const& auth_header,
+                  HttpHeader const& host_header,
+                  RestContext const& context, RestRequest const& request);
 
   std::string MakeEscapedString(std::string const& s);
 
@@ -112,6 +117,10 @@ class CurlImpl {
   class ReadFunctionAbortGuard;
   Status MakeRequestImpl(RestContext& context);
   StatusOr<std::size_t> ReadImpl(RestContext& context, absl::Span<char> output);
+
+  void SetHeader(std::string const& header);
+  void SetHeader(std::pair<std::string, std::string> const& header);
+//  void SetHeaders(RestContext const& context, RestRequest const& request);
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();

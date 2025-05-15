@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/curl_rest_client.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -61,7 +62,7 @@ TEST(CurlRestClientStandaloneFunctions, HostHeader) {
     Options options;
     if (!test.authority.empty()) options.set<AuthorityOption>(test.authority);
     auto const actual = CurlRestClient::HostHeader(options, test.endpoint);
-    EXPECT_EQ(test.expected, actual);
+    EXPECT_EQ(test.expected, std::string(actual));
   }
 }
 

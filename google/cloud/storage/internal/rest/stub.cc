@@ -109,8 +109,11 @@ StatusOr<ReturnType> CreateFromJson(
 
 Status AddAuthorizationHeader(Options const& options,
                               RestRequestBuilder& builder) {
-    std::cout << __func__ << ": options=" <<
-      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __func__ << ": options="
+            << absl::StrJoin(google::cloud::internal::CurrentOptions()
+                                 .get<LoggingComponentsOption>(),
+                             ",")
+            << "\n";
   // In tests this option may not be set. And over time we want to retire it.
   if (!options.has<Oauth2CredentialsOption>()) return {};
   auto auth_header =
@@ -130,9 +133,9 @@ RestStub::RestStub(Options options)
       iam_rest_client_(rest::MakePooledRestClient(
           IamEndpoint(options_), ResolveIamAuthority(options_))) {
   rest_internal::CurlInitializeOnce(options_);
-      std::cout << __func__ << ":" << __LINE__ << ": " <<
-      absl::StrJoin(options_.get<LoggingComponentsOption>(),",") << "\n";
-
+  std::cout << __func__ << ":" << __LINE__ << ": "
+            << absl::StrJoin(options_.get<LoggingComponentsOption>(), ",")
+            << "\n";
 }
 
 RestStub::RestStub(
@@ -144,9 +147,9 @@ RestStub::RestStub(
       storage_rest_client_(std::move(storage_rest_client)),
       iam_rest_client_(std::move(iam_rest_client)) {
   rest_internal::CurlInitializeOnce(options_);
-      std::cout << __func__ << ":" << __LINE__ << ": " <<
-      absl::StrJoin(options_.get<LoggingComponentsOption>(),",") << "\n";
-
+  std::cout << __func__ << ":" << __LINE__ << ": "
+            << absl::StrJoin(options_.get<LoggingComponentsOption>(), ",")
+            << "\n";
 }
 
 Options RestStub::ResolveStorageAuthority(Options const& options) {
@@ -666,10 +669,14 @@ StatusOr<ObjectMetadata> RestStub::RestoreObject(
 StatusOr<CreateResumableUploadResponse> RestStub::CreateResumableUpload(
     rest_internal::RestContext& context, Options const& options,
     ResumableUploadRequest const& request) {
-  std::cout << __func__ << ": CurrentOptions=" <<
-      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
-  std::cout << __func__ << ": options=" <<
-      absl::StrJoin(options.get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __func__ << ": CurrentOptions="
+            << absl::StrJoin(google::cloud::internal::CurrentOptions()
+                                 .get<LoggingComponentsOption>(),
+                             ",")
+            << "\n";
+  std::cout << __func__ << ": options="
+            << absl::StrJoin(options.get<LoggingComponentsOption>(), ",")
+            << "\n";
   RestRequestBuilder builder(absl::StrCat("upload/storage/",
                                           options.get<TargetApiVersionOption>(),
                                           "/b/", request.bucket_name(), "/o"));
@@ -753,6 +760,9 @@ StatusOr<EmptyResponse> RestStub::DeleteResumableUpload(
 StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
     rest_internal::RestContext& context, Options const& options,
     UploadChunkRequest const& request) {
+  std::cout << __func__
+            << ": upload_session_url()=" << request.upload_session_url()
+            << "\n";
   RestRequestBuilder builder(request.upload_session_url());
   auto auth = AddAuthorizationHeader(options, builder);
   if (!auth.ok()) return auth;
@@ -775,10 +785,20 @@ StatusOr<QueryResumableUploadResponse> RestStub::UploadChunk(
             code >= rest::HttpStatusCode::kMinNotSuccess);
   };
 
+  auto r = std::move(builder).BuildRequest();
+  std::cout << __func__ << ": r.path()=" << r.path() << "\n";
+  for (auto const& h : r.headers()) {
+    std::cout << __func__ << ": r.header=" << h.first << "="
+              << absl::StrJoin(h.second, ",") << "\n";
+  }
   return ParseFromRestResponse<QueryResumableUploadResponse>(
-      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
-                                request.payload()),
+      storage_rest_client_->Put(context, std::move(r), request.payload()),
       failure_predicate);
+
+  //  return ParseFromRestResponse<QueryResumableUploadResponse>(
+  //      storage_rest_client_->Put(context, std::move(builder).BuildRequest(),
+  //                                request.payload()),
+  //      failure_predicate);
 }
 
 StatusOr<ListBucketAclResponse> RestStub::ListBucketAcl(

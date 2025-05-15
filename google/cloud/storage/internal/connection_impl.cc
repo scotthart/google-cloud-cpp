@@ -536,8 +536,11 @@ StatusOr<ObjectMetadata> StorageConnectionImpl::RestoreObject(
 StatusOr<CreateResumableUploadResponse>
 StorageConnectionImpl::CreateResumableUpload(
     ResumableUploadRequest const& request) {
-  std::cout << __func__ << ": " <<
-      absl::StrJoin(google::cloud::internal::CurrentOptions().get<LoggingComponentsOption>(), ",") << "\n";
+  std::cout << __func__ << ": "
+            << absl::StrJoin(google::cloud::internal::CurrentOptions()
+                                 .get<LoggingComponentsOption>(),
+                             ",")
+            << "\n";
   auto const idempotency = current_idempotency_policy().IsIdempotent(request)
                                ? Idempotency::kIdempotent
                                : Idempotency::kNonIdempotent;
