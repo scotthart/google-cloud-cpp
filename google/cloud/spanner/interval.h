@@ -99,6 +99,7 @@ class Interval {
 
   static StatusOr<Interval> ParseISO8601Interval(absl::string_view str);
   static StatusOr<Interval> ParsePostgreSqlInterval(absl::string_view str);
+  static StatusOr<Interval> ParseGoogleSqlInterval(absl::string_view str);
 
   friend Interval JustifyDays(Interval);
   friend Interval JustifyHours(Interval);

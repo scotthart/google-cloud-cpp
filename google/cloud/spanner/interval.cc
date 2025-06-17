@@ -434,6 +434,10 @@ StatusOr<Interval> Interval::ParsePostgreSqlInterval(absl::string_view str) {
   return intvl;
 }
 
+StatusOr<Interval> Interval::ParseGoogleSqlInterval(absl::string_view str) {
+  return ParsePostgreSqlInterval(str);
+}
+
 bool operator==(Interval const& a, Interval const& b) {
   return Cmp<std::equal_to>(a.months_, a.days_, a.offset_,  //
                             b.months_, b.days_, b.offset_);
@@ -485,9 +489,12 @@ StatusOr<Interval> MakeInterval(absl::string_view s) {
   auto interval = Interval::ParseISO8601Interval(s);
   if (interval.ok()) return interval;
 
-  auto pg_interval =
-      Interval::ParsePostgreSqlInterval(absl::AsciiStrToLower(s));
-  if (pg_interval.ok()) return pg_interval;
+  auto gsql_interval =
+      Interval::ParseGoogleSqlInterval(absl::AsciiStrToLower(s));
+  if (gsql_interval.ok()) return gsql_interval;
+//  auto pg_interval =
+//      Interval::ParsePostgreSqlInterval(absl::AsciiStrToLower(s));
+//  if (pg_interval.ok()) return pg_interval;
 
   // We failed to parse the argument using either syntax. The most
   // informative thing to do is return a sequence of Status values,
@@ -495,7 +502,7 @@ StatusOr<Interval> MakeInterval(absl::string_view s) {
   // something together.
   return Status(interval.status().code(),
                 absl::StrFormat("%s; %s", interval.status().message(),
-                                pg_interval.status().message()),
+                                gsql_interval.status().message()),
                 interval.status().error_info());
 }
 

@@ -346,6 +346,19 @@ TEST(Interval, MakeIntervalPostgreSQL) {
   EXPECT_THAT(MakeInterval("7 dayss"), StatusIs(StatusCode::kInvalidArgument));
 }
 
+//TEST(Interval, MakeIntervalGoogleSql) {
+//  std::vector<std::pair<std::string, Interval>> test_cases = {
+//      {"", Interval()},
+//  };
+//
+//  for (auto const& tc : test_cases) {
+//    auto intvl = MakeInterval(tc.first);
+//    EXPECT_STATUS_OK(intvl) << tc.first;
+//    if (!intvl) continue;
+//    EXPECT_EQ(*intvl, tc.second);
+//  }
+//}
+
 // Output streaming of an Interval is defined to use the string conversion
 // operator, so here we simply verify that output streaming is available.
 TEST(Interval, OutputStreaming) {

@@ -496,6 +496,57 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
   EXPECT_THAT(result, IsOkAndHolds(UnorderedElementsAreArray(data)));
 }
 
+TEST_F(DataTypeIntegrationTest, SelectIntervalGoogleSql) {
+  if (UsingEmulator()) GTEST_SKIP();
+  auto tests = std::vector<std::string>{
+      R"sql(SELECT CAST('1-2 3' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('1-2 -3' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('-1-2 -3' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('1-2' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('-1-2' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('3 4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('-3 4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('3 -4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('-3 -4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('4:5:6' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('1-2 3 4:5:6.789123456' AS INTERVAL);)sql",
+      R"sql(SELECT CAST('1-2  3 4:5:6.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('1-2 3  4:5:6.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('    1-2 3 4:5:6.789123456   ' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('    1-2 3 4:5:6.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('1-2 3 4:5:6.789123456   ' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('    1-2   3   4:5:6.789123456   ' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('1-2 4:5:6.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('-2 3' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('3' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('-3' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('5:6.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('0.789123456' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('4:5:' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('4:5' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('3 4' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('4:' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('3 4:' AS INTERVAL);)sql",  // bad
+      R"sql(SELECT CAST('1-2 3 4:5:6.789123456' AS INTERVAL);)sql"
+//      R"sql()sql"
+  };
+  for (auto const& t : tests) {
+    auto s = SqlStatement(t);
+    auto r = client_->ExecuteQuery(std::move(s));
+    for (auto& row : StreamOf<std::tuple<Interval>>(r)) {
+//      ASSERT_STATUS_OK(row);
+      if (!row.ok()) {
+        std::cout << t << ":\t" << row.status().message() << "\n";
+      } else {
+        std::cout << t << ":\t" << std::get<0>(row.value()) << "\n";
+      }
+//      EXPECT_THAT(std::get<0>(row.value()), Eq(*expected_interval));
+    }
+  }
+
+}
+
 TEST_F(DataTypeIntegrationTest, SelectIntervalScalar) {
   if (UsingEmulator()) GTEST_SKIP();
   auto expected_interval = MakeInterval("1-2 3 4:5:6.789123456");
