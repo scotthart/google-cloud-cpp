@@ -48,7 +48,8 @@ void OperationContext::PreCall(grpc::ClientContext& context) {
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   auto attempt_start = clock_->Now();
   for (auto& m : stub_specific_metrics_) {
-    m->PreCall(otel_context, PreCallParams{attempt_start});
+    m->PreCall(otel_context,
+               PreCallParams{attempt_start, attempt_number_ == 0});
   }
 #endif
 

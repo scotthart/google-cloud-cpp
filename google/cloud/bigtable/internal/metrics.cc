@@ -146,8 +146,7 @@ void OperationLatency::PostCall(
 void OperationLatency::OnDone(opentelemetry::context::Context const& context,
                               OnDoneParams p) {
   data_labels_.status = StatusCodeToString(p.operation_status.code());
-  using dmilliseconds = std::chrono::duration<double, std::milli>;
-  auto operation_elapsed = std::chrono::duration_cast<dmilliseconds>(
+  auto operation_elapsed = std::chrono::duration_cast<LatencyDuration>(
       p.operation_end - operation_start_);
   operation_latencies_->Record(operation_elapsed.count(),
                                IntoMap(resource_labels_, data_labels_),
@@ -170,8 +169,10 @@ RetryCount::RetryCount(
                        .release()) {}
 
 void RetryCount::PreCall(opentelemetry::context::Context const&,
-                         PreCallParams) {
-  retry_count_->Add(1, IntoMap(resource_labels_, data_labels_));
+                         PreCallParams p) {
+  if (!p.first_attempt) {
+    retry_count_->Add(1, IntoMap(resource_labels_, data_labels_));
+  }
 }
 
 void RetryCount::PostCall(

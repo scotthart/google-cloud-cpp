@@ -94,9 +94,8 @@ class OperationContext {
   std::vector<std::shared_ptr<Metric>> stub_specific_metrics_;
   std::shared_ptr<Clock> clock_ = std::make_shared<Clock>();
   int attempt_number_ = 0;
-  std::chrono::system_clock::time_point operation_start_ =
-      std::chrono::system_clock::now();
-  std::chrono::system_clock::time_point attempt_start_;
+  Clock::time_point operation_start_ = clock_->Now();
+  Clock::time_point attempt_start_;
   bool first_response_ = true;
   //  std::chrono::system_clock::time_point element_request_;
 };

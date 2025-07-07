@@ -160,10 +160,6 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow() {
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows() {
   return std::make_shared<OperationContext>();
 }
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncReadRows() {
-  return std::make_shared<OperationContext>();
-}
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::string const& table_name, std::string const& app_profile_id) {
@@ -172,41 +168,10 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::vector<std::shared_ptr<Metric const>> v;
     v.push_back(std::make_shared<AttemptLatency>("bigtable", "", provider_));
     v.push_back(std::make_shared<OperationLatency>("bigtable", "", provider_));
-    std::lock_guard<std::mutex> lock(mu_);
     if (mutate_row_metrics_.empty()) swap(mutate_row_metrics_, v);
     return true;
   }();
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"MutateRow",
-                              "false",  // streaming
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile_id,
-                              "" /*=status*/};
-
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              mutate_row_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
-}
-
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncMutateRow(
-    std::string const& table_name,
-    std::string const& app_profile_id) {  // not currently used
-  static bool const kMetricsInitialized = [this, &table_name,
-                                           &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric const>> v;
-    v.push_back(std::make_shared<AttemptLatency>("bigtable", "", provider_));
-    v.push_back(std::make_shared<OperationLatency>("bigtable", "", provider_));
-    std::lock_guard<std::mutex> lock(mu_);
-    if (mutate_row_metrics_.empty()) swap(mutate_row_metrics_, v);
-    return true;
-  }();
-
-  // this creates a copy, we may not want to make a copy
   if (kMetricsInitialized) {
     auto resource_labels = ResourceLabelsFromTableName(table_name);
     DataLabels data_labels = {"MutateRow",
@@ -229,36 +194,6 @@ std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
     std::vector<std::shared_ptr<Metric const>> v;
     v.push_back(std::make_shared<AttemptLatency>("bigtable", "", provider_));
     v.push_back(std::make_shared<OperationLatency>("bigtable", "", provider_));
-    std::lock_guard<std::mutex> lock(mu_);
-    if (mutate_rows_metrics_.empty()) swap(mutate_rows_metrics_, v);
-    return true;
-  }();
-
-  // this creates a copy, we may not want to make a copy
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"MutateRows",
-                              "false",  // streaming
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile_id,
-                              "" /*=status*/};
-
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              mutate_rows_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
-}
-
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncMutateRows(
-    std::string const& table_name, std::string const& app_profile_id) {
-  static bool const kMetricsInitialized = [this, &table_name,
-                                           &app_profile_id]() {
-    std::vector<std::shared_ptr<Metric const>> v;
-    v.push_back(std::make_shared<AttemptLatency>("bigtable", "", provider_));
-    v.push_back(std::make_shared<OperationLatency>("bigtable", "", provider_));
-    std::lock_guard<std::mutex> lock(mu_);
     if (mutate_rows_metrics_.empty()) swap(mutate_rows_metrics_, v);
     return true;
   }();
@@ -283,26 +218,14 @@ std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::CheckAndMutateRow() {
   return std::make_shared<OperationContext>();
 }
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncCheckAndMutateRow() {
-  return std::make_shared<OperationContext>();
-}
 
 std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::SampleRowKeys() {
   return std::make_shared<OperationContext>();
 }
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncSampleRowKeys() {
-  return std::make_shared<OperationContext>();
-}
 
 std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::ReadModifyWriteRow() {
-  return std::make_shared<OperationContext>();
-}
-std::shared_ptr<OperationContext>
-MetricsOperationContextFactory::AsyncReadModifyWriteRow() {
   return std::make_shared<OperationContext>();
 }
 

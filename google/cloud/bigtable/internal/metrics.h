@@ -61,6 +61,7 @@ std::ostream& operator<<(std::ostream& os, LabelMap const& m);
 
 struct PreCallParams {
   OperationContext::Clock::time_point attempt_start;
+  bool first_attempt;
 };
 
 struct PostCallParams {
@@ -87,6 +88,7 @@ struct ElementDeliveryParams {
 // Bigtable.
 class Metric {
  public:
+  using LatencyDuration = std::chrono::duration<double, std::milli>;
   virtual ~Metric() = 0;
   virtual void PreCall(opentelemetry::context::Context const&, PreCallParams) {}
   virtual void PostCall(

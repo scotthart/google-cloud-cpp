@@ -156,7 +156,7 @@ future<Status> DataConnectionImpl::AsyncApply(std::string const& table_name,
         return idempotent_policy->is_idempotent(m);
       });
 
-  auto operation_context = operation_context_factory_->AsyncMutateRow(
+  auto operation_context = operation_context_factory_->MutateRow(
       table_name, app_profile_id(*current));
   auto retry = retry_policy(*current);
   auto backoff = backoff_policy(*current);

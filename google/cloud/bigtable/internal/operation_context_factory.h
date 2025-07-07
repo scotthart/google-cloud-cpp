@@ -47,42 +47,21 @@ class OperationContextFactory {
   virtual std::shared_ptr<OperationContext> ReadRows() {
     return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<OperationContext> AsyncReadRows() {
-    return std::make_shared<OperationContext>();
-  }
   virtual std::shared_ptr<OperationContext> MutateRow(std::string const&,
                                                       std::string const&) {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const&, std::string const&) {  // not currently used
     return std::make_shared<OperationContext>();
   }
   virtual std::shared_ptr<OperationContext> MutateRows(std::string const&,
                                                        std::string const&) {
     return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<OperationContext> AsyncMutateRows(
-      std::string const&, std::string const&) {
-    return std::make_shared<OperationContext>();
-  }
   virtual std::shared_ptr<OperationContext> CheckAndMutateRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() {
     return std::make_shared<OperationContext>();
   }
   virtual std::shared_ptr<OperationContext> SampleRowKeys() {
     return std::make_shared<OperationContext>();
   }
-  virtual std::shared_ptr<OperationContext> AsyncSampleRowKeys() {
-    return std::make_shared<OperationContext>();
-  }
-
   virtual std::shared_ptr<OperationContext> ReadModifyWriteRow() {
-    return std::make_shared<OperationContext>();
-  }
-  virtual std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() {
     return std::make_shared<OperationContext>();
   }
 };
@@ -98,18 +77,9 @@ class SimpleOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext> ReadRows() override {
     return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<OperationContext> AsyncReadRows() override {
-    return std::make_shared<OperationContext>();
-  }
 
   std::shared_ptr<OperationContext> MutateRow(std::string const&,
                                               std::string const&) override {
-    return std::make_shared<OperationContext>();
-  }
-
-  std::shared_ptr<OperationContext> AsyncMutateRow(
-      std::string const&,
-      std::string const&) override {  // not currently used
     return std::make_shared<OperationContext>();
   }
 
@@ -117,29 +87,16 @@ class SimpleOperationContextFactory : public OperationContextFactory {
                                                std::string const&) override {
     return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<OperationContext> AsyncMutateRows(
-      std::string const&, std::string const&) override {
-    return std::make_shared<OperationContext>();
-  }
 
   std::shared_ptr<OperationContext> CheckAndMutateRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() override {
     return std::make_shared<OperationContext>();
   }
 
   std::shared_ptr<OperationContext> SampleRowKeys() override {
     return std::make_shared<OperationContext>();
   }
-  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override {
-    return std::make_shared<OperationContext>();
-  }
 
   std::shared_ptr<OperationContext> ReadModifyWriteRow() override {
-    return std::make_shared<OperationContext>();
-  }
-  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override {
     return std::make_shared<OperationContext>();
   }
 };
@@ -157,12 +114,7 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   std::shared_ptr<OperationContext> ReadRow() override;
   std::shared_ptr<OperationContext> ReadRows() override;
 
-  std::shared_ptr<OperationContext> AsyncReadRows() override;
-
   std::shared_ptr<OperationContext> MutateRow(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
-  std::shared_ptr<OperationContext> AsyncMutateRow(
       std::string const& table_name,
       std::string const& app_profile_id) override;
 
@@ -170,29 +122,20 @@ class MetricsOperationContextFactory : public OperationContextFactory {
       std::string const& table_name,
       std::string const& app_profile_id) override;
 
-  std::shared_ptr<OperationContext> AsyncMutateRows(
-      std::string const& table_name,
-      std::string const& app_profile_id) override;
   std::shared_ptr<OperationContext> CheckAndMutateRow() override;
-  std::shared_ptr<OperationContext> AsyncCheckAndMutateRow() override;
 
   std::shared_ptr<OperationContext> SampleRowKeys() override;
-  std::shared_ptr<OperationContext> AsyncSampleRowKeys() override;
 
   std::shared_ptr<OperationContext> ReadModifyWriteRow() override;
-  std::shared_ptr<OperationContext> AsyncReadModifyWriteRow() override;
 
  private:
   std::shared_ptr<OperationContext::Clock> clock_ =
       std::make_shared<OperationContext::Clock>();
   std::string client_uid_;
   std::shared_ptr<opentelemetry::metrics::MeterProvider> provider_;
-  std::mutex mu_;  // This is necessary because RPC and AsyncRPC share metrics.
 
-  std::vector<std::shared_ptr<Metric const>>
-      mutate_row_metrics_;  // GUARDED_BY(mu_)
-  std::vector<std::shared_ptr<Metric const>>
-      mutate_rows_metrics_;  // GUARDED_BY(mu_)
+  std::vector<std::shared_ptr<Metric const>> mutate_row_metrics_;
+  std::vector<std::shared_ptr<Metric const>> mutate_rows_metrics_;
   // TODO: add additional Metric vectors for each service RPC.
 };
 
