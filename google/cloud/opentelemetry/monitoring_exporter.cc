@@ -36,16 +36,18 @@ Options DefaultOptions(Options o) {
   return o;
 }
 
+std::string FormatProjectFullName(google::api::MonitoredResource const& mr) {
+  return absl::StrCat("projects/", mr.labels().find("project_id")->second);
+}
+
 class MonitoringExporter final
     : public opentelemetry::sdk::metrics::PushMetricExporter {
  public:
   MonitoringExporter(
-      Project project,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
       otel_internal::MonitoredResourceFromDataFn resource_fn,
       otel_internal::ResourceFilterDataFn filter_fn, Options const& options)
-      : project_(std::move(project)),
-        client_(std::move(conn)),
+      : client_(std::move(conn)),
         formatter_(options.get<MetricNameFormatterOption>()),
         use_service_time_series_(options.get<ServiceTimeSeriesOption>()),
         mr_proto_(internal::FetchOption<MonitoredResourceOption>(options)),
@@ -56,8 +58,9 @@ class MonitoringExporter final
       Project project,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
       Options const& options)
-      : MonitoringExporter(std::move(project), std::move(conn), nullptr,
-                           nullptr, options) {}
+      : MonitoringExporter(std::move(conn), nullptr, nullptr, options) {
+    project_ = std::move(project);
+  }
 
   opentelemetry::sdk::metrics::AggregationTemporality GetAggregationTemporality(
       opentelemetry::sdk::metrics::InstrumentType) const noexcept override {
@@ -92,13 +95,16 @@ class MonitoringExporter final
     }
 
     google::api::MonitoredResource mr;
+    std::vector<google::monitoring::v3::CreateTimeSeriesRequest> requests;
     if (resource_fn_) {
       mr = resource_fn_(data);
+      requests = otel_internal::ToRequests(FormatProjectFullName(mr), mr,
+                                           std::move(tss));
     } else {
       mr = otel_internal::ToMonitoredResource(data, mr_proto_);
+      requests =
+          otel_internal::ToRequests(project_->FullName(), mr, std::move(tss));
     }
-    auto requests =
-        otel_internal::ToRequests(project_.FullName(), mr, std::move(tss));
     for (auto& request : requests) {
       auto status = use_service_time_series_
                         ? client_.CreateServiceTimeSeries(request)
@@ -120,7 +126,7 @@ class MonitoringExporter final
     return result;
   }
 
-  Project project_;
+  absl::optional<Project> project_;
   monitoring_v3::MetricServiceClient client_;
   MetricNameFormatterOption::Type formatter_;
   bool use_service_time_series_;
@@ -148,26 +154,25 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn resource_fn,
+MakeMonitoringExporter(MonitoredResourceFromDataFn resource_fn,
                        ResourceFilterDataFn filter_fn, Options options) {
   // TODO: may need to pass options to MakeMetricServiceConnection.
   auto connection = monitoring_v3::MakeMetricServiceConnection();
   options = otel::DefaultOptions(std::move(options));
   return std::make_unique<otel::MonitoringExporter>(
-      std::move(project), std::move(connection), std::move(resource_fn),
-      std::move(filter_fn), std::move(options));
+      std::move(connection), std::move(resource_fn), std::move(filter_fn),
+      std::move(options));
 }
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    Project project, MonitoredResourceFromDataFn resource_fn,
-    ResourceFilterDataFn filter_fn,
+    MonitoredResourceFromDataFn resource_fn, ResourceFilterDataFn filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options) {
   options = otel::DefaultOptions(std::move(options));
   return std::make_unique<otel::MonitoringExporter>(
-      std::move(project), std::move(conn), std::move(resource_fn),
-      std::move(filter_fn), std::move(options));
+      std::move(conn), std::move(resource_fn), std::move(filter_fn),
+      std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

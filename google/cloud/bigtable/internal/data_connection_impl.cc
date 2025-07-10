@@ -104,7 +104,15 @@ DataConnectionImpl::DataConnectionImpl(
       limiter_(std::move(limiter)),
       client_uid_(std::to_string(GetClientId())),
       options_(internal::MergeOptions(std::move(options),
-                                      DataConnection::options())) {}
+                                      DataConnection::options())) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  operation_context_factory_ =
+      std::make_unique<MetricsOperationContextFactory>(client_uid_);
+#else
+  operation_context_factory_ =
+      std::make_unique<SimpleOperationContextFactory>();
+#endif
+}
 
 Status DataConnectionImpl::Apply(std::string const& table_name,
                                  bigtable::SingleRowMutation mut) {
@@ -529,16 +537,6 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
       },
       std::move(row_set), rows_limit, std::move(filter));
   return handler->GetFuture();
-}
-
-void DataConnectionImpl::Initialize(google::cloud::Project const& project) {
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  operation_context_factory_ =
-      std::make_unique<MetricsOperationContextFactory>(project, client_uid_);
-#else
-  operation_context_factory_ =
-      std::make_unique<SimpleOperationContextFactory>();
-#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

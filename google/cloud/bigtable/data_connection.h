@@ -144,8 +144,6 @@ class DataConnection {
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
-
-  virtual void Initialize(Project const& project);
 };
 
 /**

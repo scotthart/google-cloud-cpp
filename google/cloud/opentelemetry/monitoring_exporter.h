@@ -95,13 +95,12 @@ using MonitoredResourceFromDataFn =
 using ResourceFilterDataFn = std::function<bool(std::string const&)>;
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
-MakeMonitoringExporter(Project project, MonitoredResourceFromDataFn resource_fn,
+MakeMonitoringExporter(MonitoredResourceFromDataFn resource_fn,
                        ResourceFilterDataFn filter_fn, Options options = {});
 
 std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter>
 MakeMonitoringExporter(
-    Project project, MonitoredResourceFromDataFn resource_fn,
-    ResourceFilterDataFn filter_fn,
+    MonitoredResourceFromDataFn resource_fn, ResourceFilterDataFn filter_fn,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn,
     Options options = {});
 

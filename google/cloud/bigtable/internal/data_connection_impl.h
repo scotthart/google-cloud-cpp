@@ -96,8 +96,6 @@ class DataConnectionImpl : public bigtable::DataConnection {
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override;
 
-  void Initialize(Project const& project) override;
-
  private:
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
   std::unique_ptr<BackgroundThreads> background_;

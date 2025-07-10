@@ -212,9 +212,7 @@ class Table {
         options_(google::cloud::internal::MergeOptions(std::move(options),
                                                        connection_->options())),
         metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
-            table_name_, app_profile_id())) {
-    connection_->Initialize(table_.instance().project());
-  }
+            table_name_, app_profile_id())) {}
 
   std::string const& table_name() const { return table_name_; }
   std::string const& app_profile_id() const {

@@ -68,7 +68,7 @@ opentelemetry::sdk::common::OrderedAttributeMap GrabMap(
 }
 
 MetricsOperationContextFactory::MetricsOperationContextFactory(
-    Project project, std::string client_uid,
+    std::string client_uid,
     std::shared_ptr<monitoring_v3::MetricServiceConnection> conn)
     : client_uid_(std::move(client_uid)) {
   std::cout << __func__ << std::endl;
@@ -116,10 +116,10 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
   std::unique_ptr<opentelemetry::sdk::metrics::PushMetricExporter> exporter;
   if (conn) {
     exporter = otel_internal::MakeMonitoringExporter(
-        project, resource_fn, filter_fn, std::move(conn), std::move(o));
+        resource_fn, filter_fn, std::move(conn), std::move(o));
   } else {
-    exporter = otel_internal::MakeMonitoringExporter(project, resource_fn,
-                                                     filter_fn, std::move(o));
+    exporter = otel_internal::MakeMonitoringExporter(resource_fn, filter_fn,
+                                                     std::move(o));
   }
   auto options =
       opentelemetry::sdk::metrics::PeriodicExportingMetricReaderOptions{};
@@ -147,9 +147,8 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 }
 
 MetricsOperationContextFactory::MetricsOperationContextFactory(
-    Project project, std::string client_uid)
-    : MetricsOperationContextFactory(std::move(project), std::move(client_uid),
-                                     nullptr) {}
+    std::string client_uid)
+    : MetricsOperationContextFactory(std::move(client_uid), nullptr) {}
 
 // ReadRow is a synthetic RPC and should appear in metrics as if it's a
 // different RPC than ReadRows with row_limit=1.

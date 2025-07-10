@@ -105,10 +105,10 @@ class SimpleOperationContextFactory : public OperationContextFactory {
 
 class MetricsOperationContextFactory : public OperationContextFactory {
  public:
-  MetricsOperationContextFactory(Project project, std::string client_uid);
+  MetricsOperationContextFactory(std::string client_uid);
   // Used for injecting a MockMetricsServiceConnection for testing.
   MetricsOperationContextFactory(
-      Project project, std::string client_uid,
+      std::string client_uid,
       std::shared_ptr<monitoring_v3::MetricServiceConnection> conn);
 
   std::shared_ptr<OperationContext> ReadRow() override;

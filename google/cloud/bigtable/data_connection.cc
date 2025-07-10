@@ -156,8 +156,6 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-void DataConnection::Initialize(Project const&) {}
-
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
   google::cloud::internal::CheckExpectedOptions<
       AppProfileIdOption, CommonOptionList, GrpcOptionList,
