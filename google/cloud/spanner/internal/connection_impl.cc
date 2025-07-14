@@ -229,6 +229,10 @@ class StatusOnlyResultSetSource : public spanner::ResultSourceInterface {
   absl::optional<google::spanner::v1::ResultSetStats> Stats() const override {
     return {};
   }
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    return absl::nullopt;
+  }
 
  private:
   google::cloud::Status status_;
@@ -267,6 +271,14 @@ class DmlResultSetSource : public spanner::ResultSourceInterface {
       return result_set_.stats();
     }
     return {};
+  }
+
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
+  PrecommitToken() const override {
+    if (result_set_.has_precommit_token()) {
+      return result_set_.precommit_token();
+    }
+    return absl::nullopt;
   }
 
  private:
@@ -334,7 +346,7 @@ absl::optional<T> GetRandomElement(protobuf::RepeatedPtrField<T> const& m) {
   if (m.empty()) return absl::nullopt;
   std::uniform_int_distribution<std::uint64_t> d(0, m.size() - 1);
   auto rng = internal::MakeDefaultPRNG();
-  auto index = d(rng);
+  auto index = static_cast<int>(d(rng));
   return m[index];
 }
 
@@ -804,6 +816,9 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
 
   for (;;) {
     auto reader = retry_resume_fn(request);
+    if (reader.ok()) {
+      ctx.precommit_token = (*reader)->PrecommitToken();
+    }
     if (selector->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
@@ -1104,6 +1119,9 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
           return stub->ExecuteBatchDml(context, options, request);
         },
         current, request, __func__);
+    if (response.ok() && response->has_precommit_token()) {
+      ctx.precommit_token = response->precommit_token();
+    }
     if (selector->has_begin()) {
       if (response.ok() && response->result_sets_size() > 0) {
         if (!response->result_sets(0).metadata().has_transaction()) {
@@ -1234,9 +1252,6 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     }
     case google::spanner::v1::TransactionSelector::kId: {
       request.set_transaction_id(selector->id());
-      if (ctx.precommit_token.has_value()) {
-        *request.mutable_precommit_token() = *ctx.precommit_token;
-      }
       break;
     }
     default:
@@ -1246,20 +1261,47 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   auto stub = GetStubBasedOnSessionMode(*session, ctx);
   auto const& current = internal::CurrentOptions();
-  auto response = RetryLoop(
-      RetryPolicyPrototype(current)->clone(),
-      BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
-      [&stub](grpc::ClientContext& context, Options const& options,
-              google::spanner::v1::CommitRequest const& request) {
-        RouteToLeader(context);  // always for Commit()
-        return stub->Commit(context, options, request);
-      },
-      current, request, __func__);
+
+  char const* calling_func = __func__;
+  auto retry_loop_fn =
+      [&, func = std::move(calling_func)](
+          absl::optional<
+              google::spanner::v1::MultiplexedSessionPrecommitToken> const&
+              token) {
+        if (token.has_value()) {
+          *request.mutable_precommit_token() = *token;
+        }
+
+        return RetryLoop(
+            RetryPolicyPrototype(current)->clone(),
+            BackoffPolicyPrototype(current)->clone(), Idempotency::kIdempotent,
+            [&stub](grpc::ClientContext& context, Options const& options,
+                    google::spanner::v1::CommitRequest const& request) {
+              RouteToLeader(context);  // always for Commit()
+              return stub->Commit(context, options, request);
+            },
+            current, request, func);
+      };
+
+  auto response = retry_loop_fn(ctx.precommit_token);
   if (!response) {
     auto status = std::move(response).status();
     if (IsSessionNotFound(status)) session->set_bad();
     return status;
   }
+
+  // If the CommitResponse contains a precommit token, it's a signal from the
+  // SpannerFE that it wants us to retry the commit with the new token.
+  if (response->has_precommit_token()) {
+    ctx.precommit_token = response->precommit_token();
+    response = retry_loop_fn(ctx.precommit_token);
+    if (!response) {
+      auto status = std::move(response).status();
+      if (IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
+  }
+
   spanner::CommitResult r;
   r.commit_timestamp = MakeTimestamp(response->commit_timestamp());
   if (response->has_commit_stats()) {

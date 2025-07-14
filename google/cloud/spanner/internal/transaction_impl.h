@@ -101,7 +101,8 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt};
+    TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt,
+                           absl::nullopt};
     {
       std::unique_lock<std::mutex> lock(mu_);
       ctx.seqno = ++seqno_;  // what about overflow?
@@ -110,7 +111,9 @@ class TransactionImpl {
       ctx.precommit_token = precommit_token_;
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(session_, selector_, ctx);
+        auto result = f(session_, selector_, ctx);
+        UpdatePrecommitToken(ctx.precommit_token);
+        return result;
       }
       state_ = State::kPending;
     }

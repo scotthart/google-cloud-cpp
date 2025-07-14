@@ -24,6 +24,7 @@ TransactionImpl::~TransactionImpl() = default;
 void TransactionImpl::UpdatePrecommitToken(
     absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
         token) {
+  if (!token.has_value()) return;
   if (!precommit_token_.has_value()) {
     precommit_token_ = std::move(token);
     return;
