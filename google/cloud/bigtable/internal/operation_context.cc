@@ -67,8 +67,7 @@ void OperationContext::PostCall(grpc::ClientContext const& context,
   auto attempt_end = clock_->Now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   for (auto& m : stub_specific_metrics_) {
-    m->PostCall(otel_context, context.GetServerInitialMetadata(),
-                context.GetServerTrailingMetadata(),
+    m->PostCall(otel_context, context,
                 PostCallParams{attempt_end, status});
   }
 #endif

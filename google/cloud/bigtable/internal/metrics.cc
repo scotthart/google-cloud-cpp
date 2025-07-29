@@ -99,10 +99,9 @@ void AttemptLatency::PreCall(opentelemetry::context::Context const&,
 
 void AttemptLatency::PostCall(
     opentelemetry::context::Context const& context,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& trailing_metadata,
+      grpc::ClientContext const&  client_context,
     PostCallParams p) {
-  auto cluster_zone = ProcessMetadata(trailing_metadata);
+  auto cluster_zone = ProcessMetadata(client_context.GetServerTrailingMetadata());
   resource_labels_.cluster = cluster_zone.cluster;
   resource_labels_.zone = cluster_zone.zone;
   data_labels_.status = StatusCodeToString(p.attempt_status.code());
@@ -135,10 +134,9 @@ void OperationLatency::PreCall(opentelemetry::context::Context const&,
 
 void OperationLatency::PostCall(
     opentelemetry::context::Context const& context,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& trailing_metadata,
+      grpc::ClientContext const&  client_context,
     PostCallParams p) {
-  auto cluster_zone = ProcessMetadata(trailing_metadata);
+  auto cluster_zone = ProcessMetadata(client_context.GetServerTrailingMetadata());
   resource_labels_.cluster = cluster_zone.cluster;
   resource_labels_.zone = cluster_zone.zone;
 }
@@ -177,10 +175,9 @@ void RetryCount::PreCall(opentelemetry::context::Context const&,
 
 void RetryCount::PostCall(
     opentelemetry::context::Context const& context,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& trailing_metadata,
+      grpc::ClientContext const&  client_context,
     PostCallParams p) {
-  auto cluster_zone = ProcessMetadata(trailing_metadata);
+  auto cluster_zone = ProcessMetadata(client_context.GetServerTrailingMetadata());
   resource_labels_.cluster = cluster_zone.cluster;
   resource_labels_.zone = cluster_zone.zone;
 }
@@ -208,10 +205,9 @@ void FirstResponseLatency::PreCall(opentelemetry::context::Context const&,
 
 void FirstResponseLatency::PostCall(
     opentelemetry::context::Context const& context,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-    std::multimap<grpc::string_ref, grpc::string_ref> const& trailing_metadata,
+      grpc::ClientContext const&  client_context,
     PostCallParams p) {
-  auto cluster_zone = ProcessMetadata(trailing_metadata);
+  auto cluster_zone = ProcessMetadata(client_context.GetServerTrailingMetadata());
   resource_labels_.cluster = cluster_zone.cluster;
   resource_labels_.zone = cluster_zone.zone;
 }

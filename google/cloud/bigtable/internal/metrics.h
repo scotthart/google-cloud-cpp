@@ -93,8 +93,7 @@ class Metric {
   virtual void PreCall(opentelemetry::context::Context const&, PreCallParams) {}
   virtual void PostCall(
       opentelemetry::context::Context const&,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&,
+      grpc::ClientContext const&,
       PostCallParams) {}
   virtual void OnDone(opentelemetry::context::Context const&, OnDoneParams) {}
   virtual void ElementRequest(opentelemetry::context::Context const&,
@@ -114,9 +113,7 @@ class AttemptLatency : public Metric {
                PreCallParams p) override;
   void PostCall(
       opentelemetry::context::Context const& context,
-      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&
-          trailing_metadata,
+      grpc::ClientContext const&  client_context,
       PostCallParams p) override;
   std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                 DataLabels data_labels) const override;
@@ -137,9 +134,7 @@ class OperationLatency : public Metric {
                PreCallParams p) override;
   void PostCall(
       opentelemetry::context::Context const& context,
-      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&
-          trailing_metadata,
+      grpc::ClientContext const&  client_context,
       PostCallParams p) override;
 
   void OnDone(opentelemetry::context::Context const& context,
@@ -163,9 +158,7 @@ class RetryCount : public Metric {
   void PreCall(opentelemetry::context::Context const&, PreCallParams) override;
   void PostCall(
       opentelemetry::context::Context const& context,
-      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&
-          trailing_metadata,
+      grpc::ClientContext const&  client_context,
       PostCallParams p) override;
   std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
                                 DataLabels data_labels) const override;
@@ -185,9 +178,7 @@ class FirstResponseLatency : public Metric {
                PreCallParams p) override;
   void PostCall(
       opentelemetry::context::Context const& context,
-      std::multimap<grpc::string_ref, grpc::string_ref> const& initial_metadata,
-      std::multimap<grpc::string_ref, grpc::string_ref> const&
-          trailing_metadata,
+      grpc::ClientContext const&  client_context,
       PostCallParams p) override;
   void ElementDelivery(opentelemetry::context::Context const& context,
                        ElementDeliveryParams p) override;
