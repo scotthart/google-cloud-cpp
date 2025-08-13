@@ -27,6 +27,14 @@ absl::optional<PartialResultSet> PartialResultSetResume::Read(
   bool resumption = false;
   do {
     absl::optional<PartialResultSet> result = child_->Read(resume_token);
+    if (!result.has_value()) {
+      std::cout << "PartialResultSetResume::Read" << ": no result after Read" << std::endl;
+    } else if (result.has_value() && !result->result.has_precommit_token()) {
+      std::cout << "PartialResultSetResume::Read" << ": no PrecommitToken after Read" << std::endl;
+    } else {
+      std::cout << "PartialResultSetResume::Read" << ": PrecommitToken=" << result->result.precommit_token().DebugString() << std::endl;
+    }
+
     if (result) {
       // Let the caller know if we recreated the PartialResultSetReader using
       // the resume_token so that they might discard any previous results that

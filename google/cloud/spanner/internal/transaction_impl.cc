@@ -24,15 +24,23 @@ TransactionImpl::~TransactionImpl() = default;
 void TransactionImpl::UpdatePrecommitToken(
     absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken>
         token) {
+  std::cout << __func__ << std::endl;
   if (!token.has_value()) return;
   if (!precommit_token_.has_value()) {
+    std::cout << __func__ << ": txn precommit_token_ empty; use ctx token="
+              << token->DebugString() << std::endl;
     precommit_token_ = std::move(token);
     return;
   }
 
   if (token->seq_num() > precommit_token_->seq_num()) {
+    std::cout << __func__ << ": update: token->seq_num=" << token->seq_num()
+              << "; precommit_token_->seqnum()=" << precommit_token_->seq_num()
+              << "; token=" << token->DebugString() << std::endl;
     precommit_token_ = std::move(token);
     return;
+  } else if (token->seq_num() == precommit_token_->seq_num()) {
+    std::cout << __func__ << ": no update seq_num equal; token=" << token->DebugString() << std::endl;
   }
 }
 

@@ -63,6 +63,7 @@ class PartialResultSetResume : public PartialResultSetReader {
   std::unique_ptr<spanner::BackoffPolicy> backoff_policy_prototype_;
   std::unique_ptr<PartialResultSetReader> child_;
   absl::optional<Status> last_status_;
+  absl::optional<google::spanner::v1::MultiplexedSessionPrecommitToken> precommit_token_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

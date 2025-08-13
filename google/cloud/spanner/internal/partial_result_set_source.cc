@@ -167,6 +167,8 @@ Status PartialResultSetSource::ReadFromStream() {
     stats_ = std::move(*result_set->result.mutable_stats());
   }
   if (result_set->result.has_precommit_token()) {
+    std::cout << "PartialResultSetSource::ReadFromStream" << ": PrecommitToken="
+              << result_set->result.precommit_token().DebugString() << std::endl;
     precommit_token_ = std::move(*result_set->result.mutable_precommit_token());
   }
 

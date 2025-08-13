@@ -76,6 +76,7 @@ RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
                        std::vector<std::string> columns, Options opts) {
+  std::cout << "*************************************************" << std::endl;
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
   internal::OptionsSpan span(std::move(opts));
@@ -130,6 +131,7 @@ RowStream Client::ExecuteQuery(
 
 RowStream Client::ExecuteQuery(Transaction transaction, SqlStatement statement,
                                Options opts) {
+  std::cout << "*************************************************" << std::endl;
   opts = internal::MergeOptions(std::move(opts), opts_);
   auto directed_read_option = ExtractOpt<DirectedReadOption>(opts);
   internal::OptionsSpan span(std::move(opts));
@@ -194,6 +196,7 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
                                        SqlStatement statement, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
+  std::cout << "*************************************************" << std::endl;
   return conn_->ExecuteDml({std::move(transaction), std::move(statement),
                             QueryOptions(internal::CurrentOptions()),
                             absl::nullopt, false, DirectedReadOption::Type{}});
@@ -220,6 +223,7 @@ StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
     Transaction transaction, std::vector<SqlStatement> statements,
     Options opts) {
+  std::cout << "*************************************************" << std::endl;
   internal::CheckExpectedOptions<RequestOptionList>(opts, __func__);
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), opts_));
   return conn_->ExecuteBatchDml({std::move(transaction), std::move(statements),

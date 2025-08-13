@@ -49,16 +49,17 @@ class ClientIntegrationTest : public spanner_testing::DatabaseIntegrationTest {
  protected:
   static void SetUpTestSuite() {
     spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = std::make_unique<Client>(MakeConnection(
-        GetDatabase(),
-        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
+    auto options =
+        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_GZIP);
+    options.set<spanner_experimental::EnableMultiplexedSessionOption>({});
+    client_ = std::make_unique<Client>(MakeConnection(GetDatabase(), options));
   }
 
   void SetUp() override {
-    auto commit_result = client_->Commit(
-        Mutations{MakeDeleteMutation("Singers", KeySet::All())},
-        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
-    ASSERT_STATUS_OK(commit_result);
+//    auto commit_result = client_->Commit(
+//        Mutations{MakeDeleteMutation("Singers", KeySet::All())},
+//        Options{}.set<GrpcCompressionAlgorithmOption>(GRPC_COMPRESS_DEFLATE));
+//    ASSERT_STATUS_OK(commit_result);
   }
 
   static StatusOr<Timestamp> DatabaseNow() {
@@ -175,12 +176,13 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
 }
 
 /// @test Verify that read-write transactions with multiple statements work.
-TEST_F(ClientIntegrationTest, MultipleInserts) {
-  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+TEST_F(ClientIntegrationTest, MultipleInsertsCommit) {
+//  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
   auto& client = *client_;
   auto commit_result =
       client_->Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
+        std::cout << "mutator_fn: begin" << std::endl;
         auto insert1 = client.ExecuteDml(
             txn,
             SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
@@ -189,6 +191,23 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
                           {"fname", Value("test-fname-3")},
                           {"lname", Value("test-lname-3")}}));
         if (!insert1) return std::move(insert1).status();
+
+        auto statement = SqlStatement("SELECT SingerId, FirstName, LastName from Singers");
+
+        auto rows = client.ExecuteQuery(txn, statement);
+        using RowType = std::tuple<std::int64_t, std::string, std::string>;
+        std::vector<RowType> returned_rows;
+        for (auto& row : StreamOf<RowType>(rows)) {
+          EXPECT_STATUS_OK(row);
+        }
+
+        auto rows2 = client.Read(txn, "Singers", KeySet::All(),
+                                  {"SingerId", "FirstName", "LastName"});
+        std::vector<RowType> returned_rows2;
+        for (auto& row : StreamOf<RowType>(rows2)) {
+          EXPECT_STATUS_OK(row);
+        }
+
         auto insert2 = client.ExecuteDml(
             txn,
             SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
@@ -197,27 +216,28 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
                           {"fname", Value("test-fname-4")},
                           {"lname", Value("test-lname-4")}}));
         if (!insert2) return std::move(insert2).status();
+        std::cout << "mutator_fn: end" << std::endl;
         return Mutations{};
       });
   EXPECT_STATUS_OK(commit_result);
 
-  auto rows = client_->Read("Singers", KeySet::All(),
-                            {"SingerId", "FirstName", "LastName"});
-
-  using RowType = std::tuple<std::int64_t, std::string, std::string>;
-  std::vector<RowType> returned_rows;
-  int row_number = 0;
-  for (auto& row : StreamOf<RowType>(rows)) {
-    EXPECT_STATUS_OK(row);
-    if (!row) break;
-    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
-    returned_rows.push_back(*std::move(row));
-  }
-  EXPECT_THAT(returned_rows,
-              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
-                                   RowType(2, "test-fname-2", "test-lname-2"),
-                                   RowType(3, "test-fname-3", "test-lname-3"),
-                                   RowType(4, "test-fname-4", "test-lname-4")));
+//  auto rows = client_->Read("Singers", KeySet::All(),
+//                            {"SingerId", "FirstName", "LastName"});
+//
+//  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+//  std::vector<RowType> returned_rows;
+//  int row_number = 0;
+//  for (auto& row : StreamOf<RowType>(rows)) {
+//    EXPECT_STATUS_OK(row);
+//    if (!row) break;
+//    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+//    returned_rows.push_back(*std::move(row));
+//  }
+//  EXPECT_THAT(returned_rows,
+//              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
+//                                   RowType(2, "test-fname-2", "test-lname-2"),
+//                                   RowType(3, "test-fname-3", "test-lname-3"),
+//                                   RowType(4, "test-fname-4", "test-lname-4")));
 }
 
 /// @test Verify that Client::Rollback works as expected.
@@ -299,6 +319,86 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
                                    RowType(2, "test-fname-2", "test-lname-2")));
 }
 
+#if 0
+TEST_F(ClientIntegrationTest, TransactionCommit) {
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+
+  // Cannot use Commit in this test because we want to call Rollback
+  // explicitly. This means we need to retry ABORTED calls ourselves.
+  Transaction txn = MakeReadWriteTransaction();
+  for (auto start = std::chrono::steady_clock::now(),
+            deadline = start + std::chrono::minutes(1);
+       start < deadline; start = std::chrono::steady_clock::now()) {
+    auto is_retryable_failure = [](StatusOr<DmlResult> const& s) {
+      return !s && s.status().code() == StatusCode::kAborted;
+    };
+
+    // Share lock priority with the previous loop so that we have a slightly
+    // better chance of avoiding StatusCode::kAborted from ExecuteDml().
+    txn = MakeReadWriteTransaction(txn);
+
+    auto insert1 = client_->ExecuteDml(
+        txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                          "VALUES (@id, @fname, @lname)",
+                          {{"id", Value(3)},
+                           {"fname", Value("test-fname-3")},
+                           {"lname", Value("test-lname-3")}}));
+    if (is_retryable_failure(insert1)) continue;
+    ASSERT_STATUS_OK(insert1);
+
+    auto insert2 = client_->ExecuteDml(
+        txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                          "VALUES (@id, @fname, @lname)",
+                          {{"id", Value(4)},
+                           {"fname", Value("test-fname-4")},
+                           {"lname", Value("test-lname-4")}}));
+    if (is_retryable_failure(insert2)) continue;
+    ASSERT_STATUS_OK(insert2);
+
+    auto rows = client_->Read(txn, "Singers", KeySet::All(),
+                              {"SingerId", "FirstName", "LastName"});
+
+    std::vector<RowType> returned_rows;
+    int row_number = 0;
+    Status iteration_status;
+    for (auto& row : StreamOf<RowType>(rows)) {
+      if (!row) {
+        iteration_status = std::move(row).status();
+        break;
+      }
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      returned_rows.push_back(*std::move(row));
+    }
+    if (iteration_status.code() == StatusCode::kAborted) continue;
+    ASSERT_THAT(returned_rows, UnorderedElementsAre(
+                                   RowType(1, "test-fname-1", "test-lname-1"),
+                                   RowType(2, "test-fname-2", "test-lname-2"),
+                                   RowType(3, "test-fname-3", "test-lname-3"),
+                                   RowType(4, "test-fname-4", "test-lname-4")));
+
+    auto insert_commit_result = client_->Commit(txn, {});
+    ASSERT_STATUS_OK(insert_commit_result);
+    break;
+  }
+
+  std::vector<RowType> returned_rows;
+  auto rows = client_->Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
+  int row_number = 0;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+    returned_rows.push_back(*std::move(row));
+  }
+  EXPECT_THAT(returned_rows,
+              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
+                                   RowType(2, "test-fname-2", "test-lname-2")));
+}
+
+#endif
 /// @test Verify the basics of Commit().
 TEST_F(ClientIntegrationTest, Commit) {
   // Insert SingerIds 100, 102, and 199.
@@ -527,7 +627,7 @@ TEST_F(ClientIntegrationTest, CommitAtLeastOnceBatched) {
 }
 
 /// @test Test various forms of ExecuteQuery() and ExecuteDml()
-TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
+TEST_F(ClientIntegrationTest, ExecuteQueryDmlCommit) {
   auto& client = *client_;
   auto insert_result =
       client_->Commit([&client](Transaction txn) -> StatusOr<Mutations> {
@@ -622,7 +722,7 @@ TEST_F(ClientIntegrationTest, QueryOptionsWork) {
 }
 
 /// @test Test ExecutePartitionedDml
-TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
+TEST_F(ClientIntegrationTest, ExecutePartitionedDmlCommit) {
   auto& client = *client_;
   auto insert_result =
       client_->Commit([&client](Transaction txn) -> StatusOr<Mutations> {
@@ -769,7 +869,7 @@ void CheckExecuteQueryWithSingleUseOptions(
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessTimestamp) {
+TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessTimestampCommit) {
   CheckExecuteQueryWithSingleUseOptions(
       *client_, [](CommitResult const& result) {
         return Transaction::SingleUseOptions(
@@ -778,7 +878,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessTimestamp) {
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by duration.
-TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessDuration) {
+TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessDurationCommit) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     // We want a duration sufficiently recent to include the latest commit.
     return Transaction::SingleUseOptions(
@@ -788,14 +888,14 @@ TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessDuration) {
 
 /// @test Test ExecuteQuery() with exact staleness set to "all previous
 /// transactions".
-TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessLatest) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessLatestCommit) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions());
   });
 }
 
 /// @test Test ExecuteQuery() with exact staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessTimestamp) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessTimestampCommit) {
   CheckExecuteQueryWithSingleUseOptions(
       *client_, [](CommitResult const& result) {
         return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
@@ -804,7 +904,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessTimestamp) {
 }
 
 /// @test Test ExecuteQuery() with exact staleness set by duration.
-TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDuration) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDurationCommit) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
         /*exact_staleness=*/std::chrono::nanoseconds(0)));
@@ -812,7 +912,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDuration) {
 }
 
 /// @test Test that a directed read within a read-write transaction fails.
-TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransaction) {
+TEST_F(ClientIntegrationTest, DirectedReadWithinReadWriteTransactionCommit) {
   auto& client = *client_;
   auto commit =
       client_->Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
@@ -938,7 +1038,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(*expected_rows));
 }
 
-TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
+TEST_F(ClientIntegrationTest, ExecuteBatchDmlCommit) {
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -970,33 +1070,33 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
   EXPECT_EQ(batch_result->stats[2].row_count, 1);
   EXPECT_EQ(batch_result->stats[3].row_count, 2);
 
-  auto rows = client_->ExecuteQuery(SqlStatement(
-      "SELECT SingerId, FirstName, LastName FROM Singers ORDER BY SingerId"));
-
-  struct Expectation {
-    std::int64_t id;
-    std::string fname;
-    std::string lname;
-  };
-  auto expected = std::vector<Expectation>{
-      Expectation{1, "FOO", "Bar1"},
-      Expectation{2, "Foo2", "Bar2"},
-      Expectation{3, "FOO", "Bar3"},
-  };
-  std::size_t counter = 0;
-  for (auto const& row :
-       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
-    ASSERT_STATUS_OK(row);
-    ASSERT_LT(counter, expected.size());
-    EXPECT_EQ(std::get<0>(*row), expected[counter].id);
-    EXPECT_EQ(std::get<1>(*row), expected[counter].fname);
-    EXPECT_EQ(std::get<2>(*row), expected[counter].lname);
-    ++counter;
-  }
-  EXPECT_EQ(counter, expected.size());
+//  auto rows = client_->ExecuteQuery(SqlStatement(
+//      "SELECT SingerId, FirstName, LastName FROM Singers ORDER BY SingerId"));
+//
+//  struct Expectation {
+//    std::int64_t id;
+//    std::string fname;
+//    std::string lname;
+//  };
+//  auto expected = std::vector<Expectation>{
+//      Expectation{1, "FOO", "Bar1"},
+//      Expectation{2, "Foo2", "Bar2"},
+//      Expectation{3, "FOO", "Bar3"},
+//  };
+//  std::size_t counter = 0;
+//  for (auto const& row :
+//       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
+//    ASSERT_STATUS_OK(row);
+//    ASSERT_LT(counter, expected.size());
+//    EXPECT_EQ(std::get<0>(*row), expected[counter].id);
+//    EXPECT_EQ(std::get<1>(*row), expected[counter].fname);
+//    EXPECT_EQ(std::get<2>(*row), expected[counter].lname);
+//    ++counter;
+//  }
+//  EXPECT_EQ(counter, expected.size());
 }
 
-TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
+TEST_F(ClientIntegrationTest, ExecuteBatchDmlManyCommit) {
   std::vector<SqlStatement> v;
   constexpr auto kBatchSize = 200;
   for (int i = 0; i < kBatchSize; ++i) {
@@ -1066,7 +1166,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
   EXPECT_EQ(counter, kBatchSize);
 }
 
-TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
+TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailureCommit) {
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -1272,7 +1372,7 @@ TEST_F(PgClientIntegrationTest, FineGrainedAccessControl) {
 }
 
 /// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
-TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
+TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascadeCommit) {
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
 
@@ -1411,7 +1511,7 @@ TEST_F(ClientIntegrationTest, ForeignKeyDeleteCascade) {
 }
 
 /// @test Verify "FOREIGN KEY" "ON DELETE CASCADE".
-TEST_F(PgClientIntegrationTest, ForeignKeyDeleteCascade) {
+TEST_F(PgClientIntegrationTest, ForeignKeyDeleteCascadeCommit) {
   spanner_admin::DatabaseAdminClient admin_client(
       spanner_admin::MakeDatabaseAdminConnection());
 

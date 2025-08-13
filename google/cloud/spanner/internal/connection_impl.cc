@@ -140,6 +140,7 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
   absl::optional<PartialResultSet> Read(
       absl::optional<std::string> const&) override {
+    std::cout << "DefaultPartialResultSetReader::Read" << std::endl;
     struct Visitor {
       Status& final_status;
 
@@ -364,6 +365,7 @@ ConnectionImpl::ConnectionImpl(
                                     background_threads_->cq(), opts_)) {}
 
 spanner::RowStream ConnectionImpl::Read(ReadParams params) {
+  std::cout << "ConnectionImpl::Read" << std::endl;
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
@@ -386,6 +388,7 @@ StatusOr<std::vector<spanner::ReadPartition>> ConnectionImpl::PartitionRead(
 }
 
 spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
+  std::cout << "ConnectionImpl::ExecuteQuery" << std::endl;
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
@@ -396,6 +399,7 @@ spanner::RowStream ConnectionImpl::ExecuteQuery(SqlParams params) {
 }
 
 StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDml(SqlParams params) {
+  std::cout << "ConnectionImpl::ExecuteDml" << std::endl;
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
@@ -463,6 +467,7 @@ StatusOr<std::vector<spanner::QueryPartition>> ConnectionImpl::PartitionQuery(
 
 StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
     ExecuteBatchDmlParams params) {
+  std::cout << "ConnectionImpl::ExecuteBatchDml" << std::endl;
   return Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
@@ -502,11 +507,14 @@ spanner::BatchedCommitResultStream ConnectionImpl::BatchWrite(
  */
 Status ConnectionImpl::PrepareSession(SessionHolder& session,
                                       Session::Mode mode) {
+  std::cout << __func__ << std::endl;
   if (!session) {
     StatusOr<SessionHolder> session_or;
     if (opts_.has<spanner_experimental::EnableMultiplexedSessionOption>()) {
+      std::cout << __func__ << ": session_pool_->Multiplexed" << std::endl;
       session_or = session_pool_->Multiplexed(mode);
     } else {
+      std::cout << __func__ << ": session_pool_->Allocate" << std::endl;
       session_or = session_pool_->Allocate(mode);
     }
 
@@ -541,6 +549,7 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
     SessionHolder& session, google::spanner::v1::TransactionOptions options,
     std::string request_tag, TransactionContext& ctx,
     absl::optional<google::spanner::v1::Mutation> mutation, char const* func) {
+  std::cout << __func__ << std::endl;
   google::spanner::v1::BeginTransactionRequest begin;
   begin.set_session(session->session_name());
   *begin.mutable_options() = std::move(options);
@@ -572,6 +581,8 @@ StatusOr<google::spanner::v1::Transaction> ConnectionImpl::BeginTransaction(
   }
 
   if (response->has_precommit_token()) {
+    std::cout << "ConnectionImpl::BeginTransaction: response->has_precommit_token()="
+                 << response->precommit_token().DebugString() << std::endl;
     ctx.precommit_token = response->precommit_token();
   }
   return *response;
@@ -588,6 +599,7 @@ spanner::RowStream ConnectionImpl::ReadImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, ReadParams params) {
+    std::cout << "ConnectionImpl::ReadImpl" << std::endl;
   if (!selector.ok()) {
     return MakeStatusOnlyResult<spanner::RowStream>(selector.status());
   }
@@ -653,6 +665,14 @@ spanner::RowStream ConnectionImpl::ReadImpl(
         factory, Idempotency::kIdempotent, RetryPolicyPrototype()->clone(),
         BackoffPolicyPrototype()->clone());
     auto reader = PartialResultSetSource::Create(std::move(rpc));
+    if (!(*reader)->PrecommitToken().has_value()) {
+      std::cout << "ConnectionImpl::ReadImpl" << ": no PrecommitToken after Create" << std::endl;
+    } else {
+      std::cout << "ConnectionImpl::ReadImpl" << ": Create PrecommitToken=" << (*reader)->PrecommitToken()->DebugString() << std::endl;
+    }
+    if (reader.ok()) {
+      ctx.precommit_token = (*reader)->PrecommitToken();
+    }
     if (selector->has_begin()) {
       if (reader.ok()) {
         auto metadata = (*reader)->Metadata();
@@ -774,6 +794,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     std::function<StatusOr<std::unique_ptr<spanner::ResultSourceInterface>>(
         google::spanner::v1::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
+  std::cout << "ConnectionImpl::ExecuteSqlImpl" << std::endl;
   if (!selector.ok()) {
     return selector.status();
   }
@@ -814,10 +835,17 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
               }),
               params.directed_read_option);
 
+  std::cout << __func__ << ": pre-loop" << std::endl;
   for (;;) {
+    std::cout << __func__ << ": pre-lambda" << std::endl;
     auto reader = retry_resume_fn(request);
+    std::cout << __func__ << ": post-lambda" << std::endl;
     if (reader.ok()) {
       ctx.precommit_token = (*reader)->PrecommitToken();
+      if (ctx.precommit_token) {
+        std::cout << __func__ << ": ctx.precommit_token set from reader"
+                  << std::endl;
+      }
     }
     if (selector->has_begin()) {
       if (reader.ok()) {
@@ -852,6 +880,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  std::cout << "ConnectionImpl::CommonQueryImpl" << std::endl;
   if (!selector.ok()) {
     return MakeStatusOnlyResult<ResultType>(selector.status());
   }
@@ -912,6 +941,7 @@ spanner::RowStream ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
     TransactionContext& ctx, SqlParams params) {
+  std::cout << "ConnectionImpl::ExecuteQueryImpl" << std::endl;
   return CommonQueryImpl<spanner::RowStream>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
@@ -932,14 +962,26 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  std::cout << "ConnectionImpl::CommonDmlImpl" << std::endl;
   if (!selector.ok()) {
     return selector.status();
   }
+  if (selector->has_begin()) {
+    std::cout << __func__ << ": selector=has_begin" << std::endl;
+  } else if (selector->has_id()) {
+    std::cout << __func__ << ": selector=id" << selector->id() << std::endl;
+  } else if (selector->has_single_use()) {
+    std::cout << __func__ << ": selector=has_single_use" << std::endl;
+  } else {
+    std::cout << __func__ << ": selector=WTF" << std::endl;
+  }
   auto function_name = __func__;
   auto prepare_status = PrepareSession(session);
+
   if (!prepare_status.ok()) {
     return prepare_status;
   }
+  std::cout << __func__ << ": prepare_status=Ok" << std::endl;
   // Capture a copy of of these to ensure the `shared_ptr<>` remains valid
   // through the lifetime of the lambda. Note that the local variables are a
   // reference to avoid increasing refcounts twice, but the capture is by value.
@@ -959,8 +1001,16 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
         [stub, route_to_leader](
             grpc::ClientContext& context, Options const& options,
             google::spanner::v1::ExecuteSqlRequest const& request) {
+          std::cout << "CommonDmlImpl::retry_resume_fn: enter" << std::endl;
           if (route_to_leader) RouteToLeader(context);
-          return stub->ExecuteSql(context, options, request);
+          std::cout << "CommonDmlImpl::retry_resume_fn: pre-stub" << std::endl;
+          auto r = stub->ExecuteSql(context, options, request);
+          std::cout << "CommonDmlImpl::retry_resume_fn: post-stub" << std::endl;
+          if (r.ok() && r->has_precommit_token()) {
+            std::cout << "CommonDmlImpl::retry_resume_fn: precommit_token={"
+                      << r->precommit_token().DebugString() << "}" << std::endl;
+          }
+          return r;
         },
         *current, request, function_name);
     if (!response) {
@@ -978,6 +1028,7 @@ StatusOr<spanner::DmlResult> ConnectionImpl::ExecuteDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& s,
     TransactionContext& ctx, SqlParams params) {
+  std::cout << "ConnectionImpl::ExecuteDmlImpl" << std::endl;
   return CommonDmlImpl<spanner::DmlResult>(
       session, s, ctx, std::move(params),
       google::spanner::v1::ExecuteSqlRequest::NORMAL);
@@ -1082,6 +1133,7 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, ExecuteBatchDmlParams params) {
+  std::cout << "ConnectionImpl::ExecuteBatchDmlImpl" << std::endl;
   if (!selector.ok()) {
     return selector.status();
   }
@@ -1120,6 +1172,8 @@ StatusOr<spanner::BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
         },
         current, request, __func__);
     if (response.ok() && response->has_precommit_token()) {
+      std::cout << "ConnectionImpl::ExecuteBatchDmlImpl" << ": response->has_precommit_token()="
+                << response->precommit_token().DebugString() << std::endl;
       ctx.precommit_token = response->precommit_token();
     }
     if (selector->has_begin()) {
@@ -1204,6 +1258,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session,
     StatusOr<google::spanner::v1::TransactionSelector>& selector,
     TransactionContext& ctx, CommitParams params) {
+  std::cout << "ConnectionImpl::CommitImpl" << std::endl;
   if (!selector.ok()) {
     // Fail the commit if the transaction has been invalidated.
     return selector.status();
@@ -1235,13 +1290,21 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
 
   switch (selector->selector_case()) {
     case google::spanner::v1::TransactionSelector::kSingleUse: {
+      std::cout << __func__ << ": kSingleUse" << std::endl;
       *request.mutable_single_use_transaction() = selector->single_use();
       break;
     }
     case google::spanner::v1::TransactionSelector::kBegin: {
-      auto begin =
-          BeginTransaction(session, selector->begin(), std::string(), ctx,
-                           GetRandomElement(request.mutations()), __func__);
+      std::cout << __func__ << ": kBegin" << std::endl;
+      StatusOr<google::spanner::v1::Transaction> begin;
+      if (session->is_multiplexed()) {
+        begin =
+            BeginTransaction(session, selector->begin(), std::string(), ctx,
+                             GetRandomElement(request.mutations()), __func__);
+      } else {
+        begin = BeginTransaction(session, selector->begin(), std::string(), ctx,
+                                 absl::nullopt, __func__);
+      }
       if (!begin.ok()) {
         selector = begin.status();  // invalidate the transaction
         return begin.status();
@@ -1251,6 +1314,7 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
       break;
     }
     case google::spanner::v1::TransactionSelector::kId: {
+      std::cout << __func__ << ": kId=" << selector->id() << std::endl;
       request.set_transaction_id(selector->id());
       break;
     }
@@ -1259,6 +1323,10 @@ StatusOr<spanner::CommitResult> ConnectionImpl::CommitImpl(
                                      GCP_ERROR_INFO());
   }
 
+  std::cout << __func__
+            << ": has a selector->id()=" << selector->id()
+            << "; has ctx.precommit_token=" << ctx.precommit_token->DebugString()
+            << std::endl;
   auto stub = GetStubBasedOnSessionMode(*session, ctx);
   auto const& current = internal::CurrentOptions();
 

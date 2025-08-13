@@ -101,6 +101,7 @@ class TransactionImpl {
                       StatusOr<google::spanner::v1::TransactionSelector>&,
                       TransactionContext&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
+    std::cout << __func__ << std::endl;
     TransactionContext ctx{route_to_leader_, tag_, 0, absl::nullopt,
                            absl::nullopt};
     {
@@ -109,9 +110,18 @@ class TransactionImpl {
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       ctx.stub = stub_;
       ctx.precommit_token = precommit_token_;
+      if (ctx.precommit_token) {
+        std::cout << __func__ << ": from txn ctx.precommit_token->seqnum="
+                  << ctx.precommit_token->seq_num() << std::endl;
+      }
       if (state_ == State::kDone) {
         lock.unlock();
+        std::cout << __func__ << ": kDone call functor" << std::endl;
         auto result = f(session_, selector_, ctx);
+        if (ctx.precommit_token) {
+          std::cout << __func__ << ": kDone ctx.precommit_token->seqnum="
+                    << ctx.precommit_token->seq_num() << std::endl;
+        }
         UpdatePrecommitToken(ctx.precommit_token);
         return result;
       }
@@ -121,11 +131,16 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
+      std::cout << __func__ << ": kBegin call functor" << std::endl;
       auto r = f(session_, selector_, ctx);
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
         stub_ = ctx.stub;
+        if (ctx.precommit_token) {
+          std::cout << __func__ << ": kBegin ctx.precommit_token->seqnum="
+                    << ctx.precommit_token->seq_num() << std::endl;
+        }
         UpdatePrecommitToken(ctx.precommit_token);
         state_ =
             selector_ && selector_->has_begin() ? State::kBegin : State::kDone;
