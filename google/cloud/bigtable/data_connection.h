@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/query.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/row_key_sample.h"
 #include "google/cloud/bigtable/row_reader.h"
@@ -143,6 +144,14 @@ class DataConnection {
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
+
+  //  virtual StatusOr<PreparedQuery> PrepareQuery() {}
+  //
+  //  virtual future<StatusOr<PreparedQuery>> AsyncPrepareQuery();
+  //
+  //  virtual RowStream ExecuteQuery();
+  //
+  //  virtual RowStream AsyncExecuteQuery();
 };
 
 /**

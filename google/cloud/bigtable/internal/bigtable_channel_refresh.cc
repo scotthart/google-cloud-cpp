@@ -149,6 +149,27 @@ BigtableChannelRefresh::AsyncReadModifyWriteRow(
                                          std::move(options), request);
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableChannelRefresh::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return child_->AsyncPrepareQuery(cq, std::move(context), std::move(options),
+                                   request);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+BigtableChannelRefresh::AsyncExecuteQuery(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  return child_->AsyncExecuteQuery(cq, std::move(context), std::move(options),
+                                   request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

@@ -131,6 +131,21 @@ class BigtableChannelRefresh : public BigtableStub {
       google::cloud::internal::ImmutableOptions,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
+  future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+  AsyncPrepareQuery(
+      google::cloud::CompletionQueue& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::PrepareQueryRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::bigtable::v2::ExecuteQueryResponse>>
+  AsyncExecuteQuery(
+      google::cloud::CompletionQueue const& cq,
+      std::shared_ptr<grpc::ClientContext> context,
+      google::cloud::internal::ImmutableOptions options,
+      google::bigtable::v2::ExecuteQueryRequest const& request) override;
+
  private:
   std::shared_ptr<BigtableStub> child_;
   std::shared_ptr<ConnectionRefreshState> refresh_state_;

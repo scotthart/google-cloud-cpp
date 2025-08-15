@@ -110,6 +110,8 @@ add_library(
     app_profile_config.h
     async_row_reader.h
     cell.h
+    client.cc
+    client.h
     client_options.cc
     client_options.h
     cluster_config.cc
@@ -226,6 +228,8 @@ add_library(
     options.h
     polling_policy.cc
     polling_policy.h
+    query.cc
+    query.h
     read_modify_write_rule.h
     resource_names.cc
     resource_names.h
