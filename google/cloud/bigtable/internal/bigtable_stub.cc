@@ -245,6 +245,42 @@ DefaultBigtableStub::AsyncReadModifyWriteRow(
       request, std::move(context));
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+DefaultBigtableStub::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    google::cloud::internal::ImmutableOptions,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return internal::MakeUnaryRpcImpl<google::bigtable::v2::PrepareQueryRequest,
+                                    google::bigtable::v2::PrepareQueryResponse>(
+      cq,
+      [this](grpc::ClientContext* context,
+             google::bigtable::v2::PrepareQueryRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncPrepareQuery(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+DefaultBigtableStub::AsyncExecuteQuery(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  return google::cloud::internal::MakeStreamingReadRpc<
+      google::bigtable::v2::ExecuteQueryRequest,
+      google::bigtable::v2::ExecuteQueryResponse>(
+      cq, std::move(context), std::move(options), request,
+      [this](grpc::ClientContext* context,
+             google::bigtable::v2::ExecuteQueryRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncExecuteQuery(context, request, cq);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud

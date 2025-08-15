@@ -248,6 +248,38 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
   return internal::EndSpan(std::move(context), std::move(span), std::move(f));
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableTracingStub::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto f = child_->AsyncPrepareQuery(cq, context, std::move(options), request);
+  return internal::EndSpan(std::move(context), std::move(span), std::move(f));
+}
+
+std::unique_ptr<
+    internal::AsyncStreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
+BigtableTracingStub::AsyncExecuteQuery(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  auto span =
+      internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ExecuteQuery");
+  internal::OTelScope scope(span);
+  internal::InjectTraceContext(*context, *propagator_);
+  auto stream =
+      child_->AsyncExecuteQuery(cq, context, std::move(options), request);
+  return std::make_unique<internal::AsyncStreamingReadRpcTracing<
+      google::bigtable::v2::ExecuteQueryResponse>>(
+      std::move(context), std::move(stream), std::move(span));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<BigtableStub> MakeBigtableTracingStub(

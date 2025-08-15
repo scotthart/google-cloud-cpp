@@ -579,7 +579,9 @@ service {
     "MutateRows",
     "ReadModifyWriteRow",
     "ReadRows",
-    "SampleRowKeys"
+    "SampleRowKeys",
+    "PrepareQuery",
+    "ExecuteQuery"
   ]
   omit_repo_metadata: true
 }

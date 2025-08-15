@@ -319,6 +319,47 @@ BigtableLogging::AsyncReadModifyWriteRow(
       tracing_options_);
 }
 
+future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>
+BigtableLogging::AsyncPrepareQuery(
+    google::cloud::CompletionQueue& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::PrepareQueryRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::shared_ptr<grpc::ClientContext> context,
+             google::cloud::internal::ImmutableOptions options,
+             google::bigtable::v2::PrepareQueryRequest const& request) {
+        return child_->AsyncPrepareQuery(cq, std::move(context),
+                                         std::move(options), request);
+      },
+      cq, std::move(context), std::move(options), request, __func__,
+      tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    google::bigtable::v2::ExecuteQueryResponse>>
+BigtableLogging::AsyncExecuteQuery(
+    google::cloud::CompletionQueue const& cq,
+    std::shared_ptr<grpc::ClientContext> context,
+    google::cloud::internal::ImmutableOptions options,
+    google::bigtable::v2::ExecuteQueryRequest const& request) {
+  using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
+      google::bigtable::v2::ExecuteQueryResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  google::cloud::internal::LogRequest(
+      __func__, request_id,
+      google::cloud::internal::DebugString(request, tracing_options_));
+  auto stream = child_->AsyncExecuteQuery(cq, std::move(context),
+                                          std::move(options), request);
+  if (stream_logging_) {
+    stream = std::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 }  // namespace cloud
