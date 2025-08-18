@@ -129,6 +129,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 DefaultBigtableStub::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::ExecuteQueryRequest const& request) {
+  std::cout << __func__ << ": query=" << request.query() << std::endl;
   auto stream = grpc_stub_->ExecuteQuery(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ExecuteQueryResponse>>(std::move(context),

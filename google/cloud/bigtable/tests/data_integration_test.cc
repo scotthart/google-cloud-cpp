@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/client.h"
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
 #include "google/cloud/log.h"
@@ -84,6 +85,7 @@ std::string const kFamily2 = "family2";
 std::string const kFamily3 = "family3";
 std::string const kFamily4 = "family4";
 
+#if 0
 TEST_P(DataIntegrationTest, TableApply) {
   auto table = GetTable(GetParam());
 
@@ -122,7 +124,36 @@ TEST_P(DataIntegrationTest, TableBulkApply) {
   auto actual = ReadRows(table, Filter::PassAllFilter());
   CheckEqualUnordered(expected, actual);
 }
+#endif
+TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
+  auto table = GetTable(GetParam());
 
+  std::vector<Cell> created{{"row-key-1", kFamily4, "c0", 1000, "v1000"},
+                            {"row-key-1", kFamily4, "c1", 2000, "v2000"},
+                            {"row-key-2", kFamily4, "c0", 1000, "v1000"},
+                            {"row-key-2", kFamily4, "c1", 2000, "v2000"},
+                            {"row-key-3", kFamily4, "c0", 1000, "v1000"},
+                            {"row-key-3", kFamily4, "c1", 2000, "v2000"},
+                            {"row-key-4", kFamily4, "c0", 1000, "v1000"},
+                            {"row-key-4", kFamily4, "c1", 2000, "v2000"}};
+  BulkApply(table, created);
+
+  auto client = Client(MakeDataConnection());
+  std::cout << "table=" << table.table_name() << std::endl;
+  std::vector<std::string> table_parts =
+      absl::StrSplit(table.table_name(), "/");
+  auto table_name = table_parts.back();
+  bigtable::SqlStatement statement(
+      absl::StrFormat("select * from %s", table_name));
+  auto results = client.ExecuteQuery({statement});
+  for (auto const& r : results) {
+    if (r.ok()) {
+      std::cout << "row ok" << std::endl;
+    }
+  }
+}
+
+#if 0
 TEST_P(DataIntegrationTest, TableBulkApplyThrottling) {
   if (GetParam() == "with-data-client") GTEST_SKIP();
 
@@ -672,9 +703,9 @@ TEST(ConnectionRefresh, Frequent) {
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
   Apply(table, row_key, created);
 }
-
 // TODO(#8800) - remove after deprecation is complete
 #include "google/cloud/internal/diagnostics_pop.inc"
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

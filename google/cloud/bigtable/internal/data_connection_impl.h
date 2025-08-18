@@ -101,6 +101,8 @@ class DataConnectionImpl : public bigtable::DataConnection {
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override;
 
+  bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
+
  private:
   void AsyncReadRowsHelper(std::string const& table_name,
                            std::function<future<bool>(bigtable::Row)> on_row,

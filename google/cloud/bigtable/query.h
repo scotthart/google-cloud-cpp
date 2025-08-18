@@ -15,7 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
 
+#include "google/cloud/bigtable/retry_policy.h"
+#include "google/cloud/backoff_policy.h"
+#include "google/cloud/idempotency.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/bigtable/v2/bigtable.pb.h>
@@ -947,8 +951,6 @@ class ResultSourceInterface {
   virtual StatusOr<bigtable::QueryRow> NextRow() = 0;
   virtual absl::optional<google::bigtable::v2::ResultSetMetadata>
   Metadata() = 0;
-  //  virtual absl::optional<google::spanner::v1::ResultSetStats> Stats() const
-  //  = 0;
 };
 
 class RowStream {
@@ -983,6 +985,138 @@ class RowStream {
  private:
   std::unique_ptr<ResultSourceInterface> source_;
 };
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable
+
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct PartialResultSet {
+  // TODO(sdhart): consider refactoring individual metadata and result fields
+  //  into variant
+  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata;
+  absl::optional<google::bigtable::v2::PartialResultSet> results;
+  bool resumption;
+};
+
+class PartialResultSetReader {
+ public:
+  virtual ~PartialResultSetReader() = default;
+  virtual void TryCancel() = 0;
+  virtual absl::optional<PartialResultSet> Read(
+      absl::optional<std::string> const& resume_token) = 0;
+  virtual Status Finish() = 0;
+};
+
+using PartialResultSetReaderFactory =
+    std::function<std::unique_ptr<PartialResultSetReader>(std::string)>;
+
+class PartialResultSetResume : public PartialResultSetReader {
+ public:
+  PartialResultSetResume(
+      PartialResultSetReaderFactory factory,
+      google::cloud::Idempotency idempotency,
+      std::unique_ptr<bigtable::DataRetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy)
+      : factory_(std::move(factory)),
+        idempotency_(idempotency),
+        retry_policy_prototype_(std::move(retry_policy)),
+        backoff_policy_prototype_(std::move(backoff_policy)),
+        child_(factory_(std::string{})) {}
+
+  ~PartialResultSetResume() override = default;
+
+  void TryCancel() override;
+  absl::optional<PartialResultSet> Read(
+      absl::optional<std::string> const& resume_token) override;
+  Status Finish() override;
+
+ private:
+  PartialResultSetReaderFactory factory_;
+  google::cloud::Idempotency idempotency_;
+  std::unique_ptr<bigtable::DataRetryPolicy> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  std::unique_ptr<PartialResultSetReader> child_;
+  absl::optional<Status> last_status_;
+};
+
+class PartialResultSourceInterface : public bigtable::ResultSourceInterface {};
+
+class PartialResultSetSource : public PartialResultSourceInterface {
+ public:
+  /// Factory method to create a PartialResultSetSource.
+  static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
+      std::unique_ptr<PartialResultSetReader> reader);
+
+  ~PartialResultSetSource() override;
+
+  StatusOr<bigtable::QueryRow> NextRow() override;
+
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return metadata_;
+  }
+
+ private:
+  explicit PartialResultSetSource(
+      std::unique_ptr<PartialResultSetReader> reader);
+
+  Status ReadFromStream();
+
+  Status ReadResultsFromStream(google::bigtable::v2::PartialResultSet&);
+
+  std::string read_buffer_;
+
+  Options options_;
+  std::unique_ptr<PartialResultSetReader> reader_;
+
+  // The `PartialResultSet.metadata` we received in the first response, and
+  // the column names it contained (which will be shared between rows).
+  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
+  std::shared_ptr<std::vector<std::string>> columns_;
+
+  std::deque<bigtable::QueryRow> pending_rows_;
+  // `Row`s ready to be returned by `NextRow()`.
+  std::deque<bigtable::QueryRow> rows_;
+
+  // When engaged, the token we can use to resume the stream immediately after
+  // any data in (or previously in) `rows_`. When disengaged, we have already
+  // delivered data that would be replayed, so resumption is disabled until we
+  // see a new token.
+  absl::optional<std::string> resume_token_ = "";
+
+  // `Value`s that could be combined into `rows_` when we have enough to fill
+  // an entire row, plus a token that would resume the stream after such rows.
+  google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;
+
+  // Should the space used by `values_` get larger than this limit, we will
+  // move complete rows into `rows_` and disable resumption until we see a
+  // new token. During this time, an error in the stream will be returned by
+  // `NextRow()`. No individual row in a result set can exceed 100 MiB, so we
+  // set the default limit to twice that.
+  std::size_t values_space_limit_ = 2 * 100 * (std::size_t{1} << 20);
+
+  // `*values_.rbegin()` exists, but it is incomplete. The rest of the value
+  // will be sent in subsequent `PartialResultSet` messages.
+  bool values_back_incomplete_ = false;
+
+  // The state of our PartialResultSetReader.
+  enum : char {
+    // `Read()` has yet to return nullopt.
+    kReading,
+    // `Read()` has returned nullopt, but we are yet to call `Finish()`.
+    kEndOfStream,
+    // `Finish()` has been called, which means `NextRow()` has returned
+    // either an empty row or an error status.
+    kFinished,
+  } state_ = kReading;
+};
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
+
+namespace bigtable {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Represents a potentially parameterized SQL statement.

@@ -45,8 +45,26 @@ std::vector<bigtable::FailedMutation> MakeFailedMutations(Status const& status,
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
+
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+namespace {
+class StatusOnlyResultSetSource : public ResultSourceInterface {
+ public:
+  explicit StatusOnlyResultSetSource(Status status)
+      : status_(std::move(status)) {}
+
+  StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+
+ private:
+  Status status_;
+};
+
+}  // namespace
 
 DataConnection::~DataConnection() = default;
 
@@ -154,6 +172,11 @@ future<StatusOr<std::pair<bool, Row>>> DataConnection::AsyncReadRow(
     std::string const&, std::string, Filter) {
   return make_ready_future<StatusOr<std::pair<bool, Row>>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+RowStream DataConnection::ExecuteQuery(bigtable::ExecuteQueryParams p) {
+  return RowStream(std::make_unique<StatusOnlyResultSetSource>(
+      Status(StatusCode::kUnimplemented, "not implemented")));
 }
 
 std::shared_ptr<DataConnection> MakeDataConnection(Options options) {

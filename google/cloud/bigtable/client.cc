@@ -13,11 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/client.h"
+#include "google/cloud/options.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+RowStream Client::ExecuteQuery(SqlStatement statement, Options opts) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  return conn_->ExecuteQuery({std::move(statement)});
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

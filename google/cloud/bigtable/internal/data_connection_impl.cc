@@ -76,6 +76,78 @@ bigtable::RowReader ReadRowsHelper(
   return MakeRowReader(std::move(impl));
 }
 
+class DefaultPartialResultSetReader
+    : public bigtable_internal::PartialResultSetReader {
+ public:
+  DefaultPartialResultSetReader(std::shared_ptr<grpc::ClientContext> context,
+                                std::unique_ptr<internal::StreamingReadRpc<
+                                    google::bigtable::v2::ExecuteQueryResponse>>
+                                    reader)
+      : context_(std::move(context)), reader_(std::move(reader)) {}
+
+  ~DefaultPartialResultSetReader() override = default;
+
+  void TryCancel() override { context_->TryCancel(); }
+
+  absl::optional<bigtable_internal::PartialResultSet> Read(
+      absl::optional<std::string> const&) override {
+    struct Visitor {
+      Status& final_status;
+
+      absl::optional<bigtable_internal::PartialResultSet> operator()(Status s) {
+        final_status = std::move(s);
+        return absl::nullopt;
+      }
+      absl::optional<bigtable_internal::PartialResultSet> operator()(
+          google::bigtable::v2::ExecuteQueryResponse result) {
+        absl::optional<google::bigtable::v2::ResultSetMetadata> metadata =
+            absl::nullopt;
+        absl::optional<google::bigtable::v2::PartialResultSet> results =
+            absl::nullopt;
+        if (result.has_metadata()) {
+          metadata = std::move(result.metadata());
+        } else if (result.has_results()) {
+          results = std::move(result.results());
+        }
+        return bigtable_internal::PartialResultSet{std::move(metadata),
+                                                   std::move(results), false};
+      }
+    };
+    return absl::visit(Visitor{final_status_}, reader_->Read());
+  }
+
+  Status Finish() override { return final_status_; }
+
+ private:
+  std::shared_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<
+      internal::StreamingReadRpc<google::bigtable::v2::ExecuteQueryResponse>>
+      reader_;
+  Status final_status_;
+};
+
+class StatusOnlyResultSetSource : public bigtable::ResultSourceInterface {
+ public:
+  explicit StatusOnlyResultSetSource(google::cloud::Status status)
+      : status_(std::move(status)) {}
+  ~StatusOnlyResultSetSource() override = default;
+
+  StatusOr<bigtable::QueryRow> NextRow() override { return status_; }
+  absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+
+ private:
+  google::cloud::Status status_;
+};
+
+// Helper function to build and wrap a `StatusOnlyResultSetSource`.
+template <typename ResultType>
+ResultType MakeStatusOnlyResult(Status status) {
+  return ResultType(
+      std::make_unique<StatusOnlyResultSetSource>(std::move(status)));
+}
+
 }  // namespace
 
 bigtable::Row TransformReadModifyWriteRowResponse(
@@ -622,6 +694,126 @@ DataConnectionImpl::AsyncReadRow(std::string const& table_name,
       std::move(operation_context));
   return handler->GetFuture();
 }
+
+bigtable::RowStream DataConnectionImpl::ExecuteQuery(
+    bigtable::ExecuteQueryParams p) {
+  auto current = google::cloud::internal::SaveCurrentOptions();
+  auto operation_context = std::make_shared<OperationContext>();
+
+  auto retry_resume_fn =
+      [stub = stub_, retry_policy_prototype = retry_policy(*current),
+       backoff_policy_prototype = backoff_policy(*current)](
+          google::bigtable::v2::ExecuteQueryRequest& request) mutable
+      -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
+    auto factory = [stub, request](std::string const& resume_token) mutable {
+      if (!resume_token.empty()) request.set_resume_token(resume_token);
+      auto context = std::make_shared<grpc::ClientContext>();
+      auto const& options = internal::CurrentOptions();
+      internal::ConfigureContext(*context, options);
+      auto stream = stub->ExecuteQuery(context, options, request);
+      std::unique_ptr<PartialResultSetReader> reader =
+          std::make_unique<DefaultPartialResultSetReader>(std::move(context),
+                                                          std::move(stream));
+      //      if (tracing_enabled) {
+      //        reader =
+      //        std::make_unique<LoggingResultSetReader>(std::move(reader),
+      //                                                          tracing_options);
+      //      }
+      return reader;
+    };
+    auto rpc = std::make_unique<PartialResultSetResume>(
+        std::move(factory), Idempotency::kIdempotent,
+        retry_policy_prototype->clone(), backoff_policy_prototype->clone());
+
+    return PartialResultSetSource::Create(std::move(rpc));
+  };
+
+  //  StatusOr<ResultType> response =
+  //      ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
+  //                                 query_mode, std::move(retry_resume_fn));
+
+  google::bigtable::v2::ExecuteQueryRequest request;
+  request.set_instance_name(
+      "projects/cloud-cpp-testing-resources/instances/test-instance");
+  request.set_query(p.sql_statement.sql());
+  //  request.set_session(session->session_name());
+  //  *request.mutable_transaction() = *selector;
+  //  auto sql_statement = ToProto(std::move(params.statement));
+  //  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  //  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  //  *request.mutable_param_types() =
+  //      std::move(*sql_statement.mutable_param_types());
+  //  request.set_seqno(ctx.seqno);
+  //  request.set_query_mode(query_mode);
+  //  if (params.partition_token) {
+  //    request.set_partition_token(*std::move(params.partition_token));
+  //    if (params.partition_data_boost) {
+  //      request.set_data_boost_enabled(true);
+  //    }
+  //  }
+  //  if (params.query_options.optimizer_version()) {
+  //    request.mutable_query_options()->set_optimizer_version(
+  //        *params.query_options.optimizer_version());
+  //  }
+  //  if (params.query_options.optimizer_statistics_package()) {
+  //    request.mutable_query_options()->set_optimizer_statistics_package(
+  //        *params.query_options.optimizer_statistics_package());
+  //  }
+  //  request.mutable_request_options()->set_priority(
+  //      ProtoRequestPriority(params.query_options.request_priority()));
+  //  if (params.query_options.request_tag().has_value()) {
+  //    request.mutable_request_options()->set_request_tag(
+  //        *params.query_options.request_tag());
+  //  }
+  //  request.mutable_request_options()->set_transaction_tag(ctx.tag);
+  //  absl::visit(DirectedReadVisitor([&request] {
+  //                return request.mutable_directed_read_options();
+  //              }),
+  //              params.directed_read_option);
+  //
+  auto response = retry_resume_fn(request);
+
+  //  for (;;) {
+  //    auto reader = retry_resume_fn(request);
+  //    if (reader.ok()) {
+  //      ctx.precommit_token = (*reader)->PrecommitToken();
+  //    }
+  //    if (selector->has_begin()) {
+  //      if (reader.ok()) {
+  //        auto metadata = (*reader)->Metadata();
+  //        if (!metadata || !metadata->has_transaction()) {
+  //          selector = MissingTransactionStatus(__func__);
+  //          return selector.status();
+  //        }
+  //        selector->set_id(metadata->transaction().id());
+  //      } else {
+  //        auto begin = BeginTransaction(session, selector->begin(),
+  //                                      request.request_options().request_tag(),
+  //                                      ctx, __func__);
+  //        if (begin.ok()) {
+  //          selector->set_id(begin->id());
+  //          *request.mutable_transaction() = *selector;
+  //          continue;
+  //        }
+  //        selector = begin.status();  // invalidate the transaction
+  //      }
+  //    }
+  //    if (!reader.ok()) {
+  //      return std::move(reader).status();
+  //    }
+  //    return ResultType(std::move(*reader));
+  //  }
+
+  if (!response) {
+    auto status = std::move(response).status();
+    std::cout << __func__ << ": status=" << status << std::endl;
+    //    if (IsSessionNotFound(status)) session->set_bad();
+    return MakeStatusOnlyResult<bigtable::RowStream>(std::move(status));
+  }
+  std::cout << __func__ << ": return RowStream" << std::endl;
+  return bigtable::RowStream(*std::move(response));
+  //  return bigtable::RowStream{};
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

@@ -53,6 +53,12 @@ struct ReadRowsParams {
   bool reverse = false;
 };
 
+struct PrepareQueryParams {};
+
+struct ExecuteQueryParams {
+  SqlStatement sql_statement;
+};
+
 /**
  * A connection to the Cloud Bigtable Data API.
  *
@@ -144,6 +150,8 @@ class DataConnection {
 
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
+
+  virtual RowStream ExecuteQuery(bigtable::ExecuteQueryParams p);
 
   //  virtual StatusOr<PreparedQuery> PrepareQuery() {}
   //

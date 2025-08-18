@@ -116,8 +116,8 @@ class Client {
    */
   explicit Client(std::shared_ptr<DataConnection> conn, Options opts = {})
       : conn_(std::move(conn)),
-        opts_(google::cloud::internal::MergeOptions(std::move(opts),
-                                                    conn_->options())) {}
+        options_(google::cloud::internal::MergeOptions(std::move(opts),
+                                                       conn_->options())) {}
 
   /// No default construction.
   Client() = delete;
@@ -138,15 +138,15 @@ class Client {
   friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
   ///@}
 
-  StatusOr<PreparedQuery> PrepareQuery();
-  future<StatusOr<PreparedQuery>> AsyncPrepareQuery();
+  //  StatusOr<PreparedQuery> PrepareQuery();
+  //  future<StatusOr<PreparedQuery>> AsyncPrepareQuery();
 
   RowStream ExecuteQuery(SqlStatement statement, Options opts = {});
-  RowStream ExecuteQuery(BoundQuery statement, Options opts = {});
+  //  RowStream ExecuteQuery(BoundQuery statement, Options opts = {});
 
  private:
   std::shared_ptr<DataConnection> conn_;
-  Options opts_;
+  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
