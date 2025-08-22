@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/query.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #include <algorithm>
 #include <thread>
@@ -23,14 +24,157 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::ostream& operator<<(std::ostream& os, Value const& v) {
-  // TODO(sdhart): implement this
+
+// A helper to escape all double quotes in the given string `s`. For example,
+// if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
+// wrap `s` itself in double quotes.
+std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
+  for (auto const& c : s) {
+    if (c == '"') os << "\\";
+    os << c;
+  }
   return os;
 }
 
+// An enum to tell StreamHelper() whether a value is being printed as a scalar
+// or as part of an aggregate type (i.e., a vector or tuple). Some types may
+// format themselves differently in each case.
+enum class StreamMode { kScalar, kAggregate };
+
+std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
+                           google::bigtable::v2::Value const& v,
+                           google::bigtable::v2::Type const& t,
+                           StreamMode mode) {
+  if (v.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
+    return os << "NULL";
+  }
+
+  if (t.has_bool_type()) {
+    return os << (v.bool_value() ? "true" : "false");
+  } else if (t.has_string_type()) {
+      switch (mode) {
+        case StreamMode::kScalar:
+          return os << v.string_value();
+        case StreamMode::kAggregate:
+          os << '"';
+          EscapeQuotes(os, v.string_value());
+          return os << '"';
+      }
+      return os;  // Unreachable, but quiets warning.
+  } else if (t.has_bytes_type()) {
+    return os << v.bytes_value();
+  }
+#if 0
+  switch (t.code()) {
+    case google::spanner::v1::TypeCode::BOOL:
+      return os << v.bool_value();
+
+    case google::spanner::v1::TypeCode::INT64:
+      return os
+             << spanner_internal::FromProto(t, v).get<std::int64_t>().value();
+
+    case google::spanner::v1::TypeCode::FLOAT32:
+      return os << spanner_internal::FromProto(t, v).get<float>().value();
+
+    case google::spanner::v1::TypeCode::FLOAT64:
+      return os << spanner_internal::FromProto(t, v).get<double>().value();
+
+    case google::spanner::v1::TypeCode::STRING:
+      switch (mode) {
+        case StreamMode::kScalar:
+          return os << v.string_value();
+        case StreamMode::kAggregate:
+          os << '"';
+          EscapeQuotes(os, v.string_value());
+          return os << '"';
+      }
+      return os;  // Unreachable, but quiets warning.
+
+    case google::spanner::v1::TypeCode::BYTES:
+      return os << spanner_internal::BytesFromBase64(v.string_value()).value();
+
+    case google::spanner::v1::TypeCode::JSON:
+    case google::spanner::v1::TypeCode::TIMESTAMP:
+    case google::spanner::v1::TypeCode::NUMERIC:
+    case google::spanner::v1::TypeCode::INTERVAL:
+      return os << v.string_value();
+
+    case google::spanner::v1::TypeCode::DATE:
+      return os
+             << spanner_internal::FromProto(t, v).get<absl::CivilDay>().value();
+
+    case google::spanner::v1::TypeCode::ENUM:
+      if (auto const* p = google::protobuf::DescriptorPool::generated_pool()) {
+        if (auto const* d = p->FindEnumTypeByName(t.proto_type_fqn())) {
+          auto number = std::stoi(v.string_value());
+          if (std::to_string(number) == v.string_value()) {
+            if (auto const* vd = d->FindValueByNumber(number)) {
+              return os << vd->full_name();
+            }
+          }
+        }
+      }
+      return os << t.proto_type_fqn() << ".{" << v.string_value() << "}";
+
+    case google::spanner::v1::TypeCode::PROTO:
+      if (auto const* p = google::protobuf::DescriptorPool::generated_pool()) {
+        if (auto const* d = p->FindMessageTypeByName(t.proto_type_fqn())) {
+          if (auto bytes = internal::Base64DecodeToBytes(v.string_value())) {
+            auto* f = google::protobuf::MessageFactory::generated_factory();
+            if (auto const* pt = f->GetPrototype(d)) {
+              std::unique_ptr<google::protobuf::Message> m(pt->New());
+              m->ParseFromString(std::string(bytes->begin(), bytes->end()));
+              return os << internal::DebugString(*m, TracingOptions{});
+            }
+          }
+        }
+      }
+      return os << t.proto_type_fqn() << " { <unknown> }";
+
+    case google::spanner::v1::TypeCode::ARRAY: {
+      char const* delimiter = "";
+      os << '[';
+      for (auto const& e : v.list_value().values()) {
+        os << delimiter;
+        StreamHelper(os, e, t.array_element_type(), StreamMode::kAggregate);
+        delimiter = ", ";
+      }
+      return os << ']';
+    }
+
+    case google::spanner::v1::TypeCode::STRUCT: {
+      char const* delimiter = "";
+      os << '(';
+      for (int i = 0; i < v.list_value().values_size(); ++i) {
+        os << delimiter;
+        if (!t.struct_type().fields(i).name().empty()) {
+          os << '"';
+          EscapeQuotes(os, t.struct_type().fields(i).name());
+          os << '"' << ": ";
+        }
+        StreamHelper(os, v.list_value().values(i),
+                     t.struct_type().fields(i).type(), StreamMode::kAggregate);
+        delimiter = ", ";
+      }
+      return os << ')';
+    }
+
+    default:
+      return os << "Error: unknown value type code " << t.code();
+  }
+#endif
+  return os;
+}
+
+
+
 bool operator==(Value const& a, Value const& b) {
-  // TODO(sdhart): implement this
+//  return Equal(a.type_, a.value_, b.type_, b.value_);
   return true;
+}
+
+std::ostream& operator<<(std::ostream& os, Value const& v) {
+  return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
 QueryRow::QueryRow()
@@ -62,6 +206,24 @@ StatusOr<Value> QueryRow::get(std::string const& name) const {
 
 bool operator==(QueryRow const& a, QueryRow const& b) {
   return a.values_ == b.values_ && *a.columns_ == *b.columns_;
+}
+
+std::ostream& operator<<(std::ostream& os, QueryRow const& row) {
+  std::cout << __func__
+            << ": row.columns_->size()=" << row.columns_->size()
+            << "; row.values_.size()=" << row.values_.size()
+            << std::endl;
+  for (std::size_t i = 0; i < row.columns_->size(); ++i) {
+    std::string column_name = row.columns_->at(i);
+    auto value = row.values_.at(i);
+    std::cout << __func__ << ": " << value.DebugString() << std::endl;
+//    os << "{" << column_name << ": ";
+//    auto value = row.values_.at(i);
+//    os << value << "}" << std::endl;
+    os << "{" << column_name << ": "
+        << row.values_.at(i) << "}";
+  }
+  return os;
 }
 
 RowStreamIterator::RowStreamIterator() = default;
@@ -130,11 +292,198 @@ std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt) {
   return os;
 }
 
+using ::google::cloud::internal::Base64Decoder;
+
+// Prints the bytes in the form B"...", where printable bytes are output
+// normally, double quotes are backslash escaped, and non-printable characters
+// are printed as a 3-digit octal escape sequence.
+std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
+  os << R"(B")";
+  for (auto const byte : Base64Decoder(bytes.base64_rep_)) {
+    if (byte == '"') {
+      os << R"(\")";
+    } else if (std::isprint(byte)) {
+      os << byte;
+    } else {
+      // This uses snprintf rather than iomanip so we don't mess up the
+      // formatting on `os` for other streaming operations.
+      std::array<char, sizeof(R"(\000)")> buf;
+      auto n = std::snprintf(buf.data(), buf.size(), R"(\%03o)", byte);
+      if (n == static_cast<int>(buf.size() - 1)) {
+        os << buf.data();
+      } else {
+        os << R"(\?)";
+      }
+    }
+  }
+  // Can't use raw string literal here because of a doxygen bug.
+  return os << "\"";
+}
+
+
+
+bool Value::TypeProtoIs(bool, google::bigtable::v2::Type const& type) {
+  return type.has_bool_type();
+}
+
+bool Value::TypeProtoIs(std::int64_t, google::bigtable::v2::Type const& type) {
+  return type.has_int64_type();
+}
+
+bool Value::TypeProtoIs(float, google::bigtable::v2::Type const& type) {
+  return type.has_float32_type();
+}
+
+bool Value::TypeProtoIs(double, google::bigtable::v2::Type const& type) {
+  return type.has_float64_type();
+}
+
+bool Value::TypeProtoIs(std::string const&,
+                        google::bigtable::v2::Type const& type) {
+  return type.has_string_type();
+}
+
+bool Value::TypeProtoIs(Bytes const&, google::bigtable::v2::Type const& type) {
+  return type.has_bytes_type();
+}
+
+StatusOr<bool> Value::GetValue(bool, google::bigtable::v2::Value const& pv,
+                               google::bigtable::v2::Type const&) {
+  if (!pv.has_bool_value()) {
+    return internal::UnknownError("missing BOOL", GCP_ERROR_INFO());
+  }
+  return pv.bool_value();
+}
+
+StatusOr<std::int64_t> Value::GetValue(std::int64_t,
+                                       google::bigtable::v2::Value const& pv,
+                                       google::bigtable::v2::Type const&) {
+  if (!pv.has_string_value()) {
+    return internal::UnknownError("missing INT64", GCP_ERROR_INFO());
+  }
+  auto const& s = pv.string_value();
+  char* end = nullptr;
+  errno = 0;
+  std::int64_t x = {std::strtoll(s.c_str(), &end, 10)};
+  if (errno != 0) {
+    return internal::UnknownError(
+        google::cloud::internal::strerror(errno) + ": \"" + s + "\"",
+        GCP_ERROR_INFO());
+  }
+  if (end == s.c_str()) {
+    return internal::UnknownError("No numeric conversion: \"" + s + "\"",
+                                  GCP_ERROR_INFO());
+  }
+  if (*end != '\0') {
+    return internal::UnknownError("Trailing data: \"" + s + "\"",
+                                  GCP_ERROR_INFO());
+  }
+  return x;
+}
+
+StatusOr<float> Value::GetValue(float, google::bigtable::v2::Value const& pv,
+                                google::bigtable::v2::Type const&) {
+  if (pv.has_float_value()) {
+    // A narrowing conversion, but that's OK.  If the value originated
+    // as a float, then the conversion through double is required to
+    // produce the same value (and we already assume that a double value
+    // if preserved over the wire).  If the value originated as a double
+    // then we're simply doing the requested narrowing.
+    return static_cast<float>(pv.float_value());
+  }
+  if (!pv.has_string_value()) {
+    return internal::UnknownError("missing FLOAT32", GCP_ERROR_INFO());
+  }
+  std::string const& s = pv.string_value();
+  auto const inf = std::numeric_limits<float>::infinity();
+  if (s == "-Infinity") return -inf;
+  if (s == "Infinity") return inf;
+  if (s == "NaN") return std::nanf("");
+  return internal::UnknownError("bad FLOAT32 data: \"" + s + "\"",
+                                GCP_ERROR_INFO());
+}
+
+StatusOr<double> Value::GetValue(double, google::bigtable::v2::Value const& pv,
+                                 google::bigtable::v2::Type const&) {
+  if (pv.has_float_value()) {
+    return pv.float_value();
+  }
+  if (!pv.has_string_value()) {
+    return internal::UnknownError("missing FLOAT64", GCP_ERROR_INFO());
+  }
+  std::string const& s = pv.string_value();
+  auto const inf = std::numeric_limits<double>::infinity();
+  if (s == "-Infinity") return -inf;
+  if (s == "Infinity") return inf;
+  if (s == "NaN") return std::nan("");
+  return internal::UnknownError("bad FLOAT64 data: \"" + s + "\"",
+                                GCP_ERROR_INFO());
+}
+
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::bigtable::v2::Value const& pv,
+                                      google::bigtable::v2::Type const&) {
+  if (!pv.has_string_value()) {
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
+  }
+  return pv.string_value();
+}
+
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::bigtable::v2::Value&& pv,
+                                      google::bigtable::v2::Type const&) {
+  if (!pv.has_string_value()) {
+    return internal::UnknownError("missing STRING", GCP_ERROR_INFO());
+  }
+  return std::move(*pv.mutable_string_value());
+}
+
+StatusOr<Bytes> Value::GetValue(google::cloud::bigtable::Bytes const&,
+                                google::bigtable::v2::Value const& pv,
+                                    google::bigtable::v2::Type const&) {
+  if (!pv.has_bytes_value()) {
+    return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
+  }
+  auto decoded = bigtable_internal::BytesFromBase64(pv.string_value());
+  if (!decoded) return decoded.status();
+  return *decoded;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+struct BytesInternals {
+  static bigtable::Bytes Create(std::string rep) {
+    bigtable::Bytes bytes;
+    bytes.base64_rep_ = std::move(rep);
+    return bytes;
+  }
+
+  static std::string GetRep(bigtable::Bytes&& bytes) {
+    return std::move(bytes.base64_rep_);
+  }
+};
+
+// Construction from a base64-encoded US-ASCII `std::string`.
+StatusOr<bigtable::Bytes> BytesFromBase64(std::string input) {
+  auto status = google::cloud::internal::ValidateBase64String(input);
+  if (!status.ok()) return status;
+  return BytesInternals::Create(std::move(input));
+}
+
+// Conversion to a base64-encoded US-ASCII `std::string`.
+std::string BytesToBase64(bigtable::Bytes b) {
+  return BytesInternals::GetRep(std::move(b));
+}
+
+bigtable::QueryRow RowFriend::MakeRow(
+      std::vector<bigtable::Value> values,
+      std::shared_ptr<std::vector<std::string> const> columns) {
+  return bigtable::QueryRow(std::move(values), std::move(columns));
+}
 
 void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
 
@@ -234,14 +583,18 @@ PartialResultSetSource::~PartialResultSetSource() {
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
+  std::cout << __func__ << std::endl;
   while (rows_.empty()) {
+    std::cout << __func__ << ": rows_.empty()" << std::endl;
     if (state_ == kFinished) return bigtable::QueryRow();
     internal::OptionsSpan span(options_);
     auto status = ReadFromStream();
     if (!status.ok()) return status;
   }
+  std::cout << __func__ << ": rows_.pop_front()" << std::endl;
   auto row = std::move(rows_.front());
   rows_.pop_front();
+  std::cout << __func__ << ": row=" << row << std::endl;
   return row;
 }
 
@@ -358,15 +711,34 @@ message ProtoRowsBatch {
 }
 */
 
+/*
+  int values_pos = 0;
+  std::vector<spanner::Value> values;
+  values.reserve(n_columns);
+  for (; n_rows != 0; --n_rows) {
+    for (auto const& field : metadata_->row_type().fields()) {
+      auto& value = *values_.Mutable(values_pos++);
+      values.push_back(FromProto(field.type(), std::move(value)));
+    }
+    rows_.push_back(RowFriend::MakeRow(std::move(values), columns_));
+    values.clear();
+  }
+
+ */
 std::vector<bigtable::QueryRow> ConvertToQueryRows(
     google::bigtable::v2::ResultSetMetadata const& metadata,
     google::bigtable::v2::ProtoRows proto_rows) {
-  return {};
+  std::vector<bigtable::QueryRow> rows;
+
+
+  return rows;
 }
 
 Status PartialResultSetSource::ReadResultsFromStream(
     google::bigtable::v2::PartialResultSet& results) {
-  std::cout << __func__ << std::endl;
+  std::cout << __func__
+            << ": results=\n" << results.DebugString()
+            << std::endl;
   if (results.reset()) {
     rows_.clear();
     read_buffer_.clear();
@@ -390,10 +762,39 @@ Status PartialResultSetSource::ReadResultsFromStream(
     google::bigtable::v2::ProtoRows proto_rows;
     if (proto_rows.ParseFromString(read_buffer_)) {
       read_buffer_.clear();
-      std::vector<bigtable::QueryRow> query_rows =
-          ConvertToQueryRows(*metadata_, std::move(proto_rows));
-      pending_rows_.insert(pending_rows_.end(), query_rows.begin(),
-                           query_rows.end());
+      std::cout << __func__ << ": proto_rows=\n" << proto_rows.DebugString() << std::endl;
+
+      // read every N Values from ProtoRows into a Row
+      auto columns_per_row = metadata_->proto_schema().columns().size();
+      std::vector<bigtable::Value> values;
+      values.reserve(columns_per_row);
+      // TODO(sdhart): can protos_rows.values().size() %
+      //   metadata_->proto_schema().columns().size() != 0?
+      auto proto_value = proto_rows.values().begin();
+
+      std::cout << __func__
+                << ": columns_per_row=" << columns_per_row << std::endl;
+      std::cout << __func__
+                << ": proto_rows.values().size()=" << proto_rows.values().size() << std::endl;
+
+      while (proto_value != proto_rows.values().end()) {
+        for (auto const& column : metadata_->proto_schema().columns()) {
+
+          auto value = FromProto(column.type(), *proto_value);
+          values.push_back(std::move(value));
+          ++proto_value;
+        }
+        pending_rows_.push_back(RowFriend::MakeRow(std::move(values), columns_));
+        values.clear();
+      }
+
+//      std::vector<bigtable::QueryRow> query_rows =
+//          ConvertToQueryRows(*metadata_, std::move(proto_rows));
+//      pending_rows_.insert(pending_rows_.end(), query_rows.begin(),
+//                           query_rows.end());
+      std::cout << __func__
+                << ": pending_rows_.size()=" << pending_rows_.size()
+                << std::endl;
     }
   }
 
@@ -401,6 +802,10 @@ Status PartialResultSetSource::ReadResultsFromStream(
     rows_.insert(rows_.end(), pending_rows_.begin(), pending_rows_.end());
     pending_rows_.clear();
     resume_token_ = results.resume_token();
+    std::cout << __func__
+              << ": rows_.size()=" << rows_.size()
+              << "; resume_token_=" << *resume_token_
+              << std::endl;
   }
 
   return {};
@@ -435,7 +840,8 @@ Status PartialResultSetSource::ReadFromStream() {
   }
 
   if (result_set->metadata.has_value()) {
-    std::cout << __func__ << ": result_set->metadata.has_value()" << std::endl;
+    std::cout << __func__ << ": result_set->metadata.has_value()=\n"
+              << result_set->metadata->DebugString() << std::endl;
     // If we get metadata more than once, log it, but use the first one.
     if (metadata_) {
       GCP_LOG(WARNING) << "PartialResultSetSource: Additional metadata";

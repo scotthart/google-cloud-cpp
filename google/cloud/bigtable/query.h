@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/idempotency.h"
+#include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -94,11 +95,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct ValueInternals;
+struct BytesInternals;
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+/**
+ * A representation of the Spanner BYTES type: variable-length binary data.
+ *
+ * A `Bytes` value can be constructed from, and converted to any sequence of
+ * octets. `Bytes` values can be compared for equality.
+ */
+class Bytes {
+ public:
+  /// An empty sequence.
+  Bytes() = default;
+
+  /// @name Construction from a sequence of octets.
+  ///@{
+  template <typename InputIt>
+  Bytes(InputIt first, InputIt last) {
+    google::cloud::internal::Base64Encoder encoder;
+    while (first != last) encoder.PushBack(*first++);
+    base64_rep_ = std::move(encoder).FlushAndPad();
+  }
+  template <typename Container>
+  explicit Bytes(Container const& c) : Bytes(std::begin(c), std::end(c)) {}
+  ///@}
+
+  /// Conversion to a sequence of octets.  The `Container` must support
+  /// construction from a range specified as a pair of input iterators.
+  template <typename Container>
+  Container get() const {
+    google::cloud::internal::Base64Decoder decoder(base64_rep_);
+    return Container(decoder.begin(), decoder.end());
+  }
+
+  /// @name Relational operators
+  ///@{
+  friend bool operator==(Bytes const& a, Bytes const& b) {
+    return a.base64_rep_ == b.base64_rep_;
+  }
+  friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
+  ///@}
+
+  /**
+   * Outputs string representation of the Bytes to the provided stream.
+   *
+   * @warning This is intended for debugging and human consumption only, not
+   *     machine consumption, as the output format may change without notice.
+   */
+  friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
+
+ private:
+  friend struct bigtable_internal::BytesInternals;
+
+  std::string base64_rep_;  // valid base64 representation
+};
 
 class Value {
  public:
@@ -126,7 +181,7 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
   //  /// @copydoc Value(bool)
-  //  explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
   //  /// @copydoc Value(bool)
   //  explicit Value(Json v) : Value(PrivateConstructor{}, std::move(v)) {}
   //  /// @copydoc Value(bool)
@@ -251,7 +306,7 @@ class Value {
     if (!TypeProtoIs(T{}, type_))
       return google::cloud::internal::UnknownError("wrong type",
                                                    GCP_ERROR_INFO());
-    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+    if (value_.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
       if (IsOptional<T>::value) return T{};
       return google::cloud::internal::UnknownError("null value",
                                                    GCP_ERROR_INFO());
@@ -265,7 +320,7 @@ class Value {
     if (!TypeProtoIs(T{}, type_))
       return google::cloud::internal::UnknownError("wrong type",
                                                    GCP_ERROR_INFO());
-    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+    if (value_.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
       if (IsOptional<T>::value) return T{};
       return google::cloud::internal::UnknownError("null value",
                                                    GCP_ERROR_INFO());
@@ -296,6 +351,14 @@ class Value {
    */
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
+  std::string DebugString() const {
+    return std::string{"Value(type_="}
+           + type_.DebugString()
+           + "; value_="
+           + value_.DebugString()
+           + ")";
+  }
+
  private:
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
@@ -319,9 +382,10 @@ class Value {
   //  static bool TypeProtoIs(CommitTimestamp, google::bigtable::v2::Type
   //  const&); static bool TypeProtoIs(absl::CivilDay,
   //  google::bigtable::v2::Type const&); static bool TypeProtoIs(Interval,
-  //  google::bigtable::v2::Type const&); static bool TypeProtoIs(std::string
-  //  const&, google::bigtable::v2::Type const&); static bool TypeProtoIs(Bytes
-  //  const&, google::bigtable::v2::Type const&); static bool TypeProtoIs(Json
+  //  google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(std::string const&, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(Bytes const&, google::bigtable::v2::Type const&);
+  // static bool TypeProtoIs(Json
   //  const&, google::bigtable::v2::Type const&); static bool TypeProtoIs(JsonB
   //  const&, google::bigtable::v2::Type const&); static bool
   //  TypeProtoIs(Numeric const&, google::bigtable::v2::Type const&); static
@@ -384,7 +448,7 @@ class Value {
   static google::bigtable::v2::Type MakeTypeProto(float);
   static google::bigtable::v2::Type MakeTypeProto(double);
   static google::bigtable::v2::Type MakeTypeProto(std::string const&);
-  //  static google::bigtable::v2::Type MakeTypeProto(Bytes const&);
+  static google::bigtable::v2::Type MakeTypeProto(Bytes const&);
   //  static google::bigtable::v2::Type MakeTypeProto(Json const&);
   //  static google::bigtable::v2::Type MakeTypeProto(JsonB const&);
   //  static google::bigtable::v2::Type MakeTypeProto(Numeric const&);
@@ -462,53 +526,55 @@ class Value {
 
   // Encodes the argument as a protobuf according to the rules described in
   // https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/type.proto
-  static google::protobuf::Value MakeValueProto(bool b);
-  static google::protobuf::Value MakeValueProto(std::int64_t i);
-  static google::protobuf::Value MakeValueProto(float f);
-  static google::protobuf::Value MakeValueProto(double d);
-  static google::protobuf::Value MakeValueProto(std::string s);
-  //  static google::protobuf::Value MakeValueProto(Bytes b);
-  //  static google::protobuf::Value MakeValueProto(Json j);
-  //  static google::protobuf::Value MakeValueProto(JsonB j);
-  //  static google::protobuf::Value MakeValueProto(Numeric n);
-  //  static google::protobuf::Value MakeValueProto(PgNumeric n);
-  //  static google::protobuf::Value MakeValueProto(PgOid n);
-  //  static google::protobuf::Value MakeValueProto(Timestamp ts);
-  //  static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
-  //  static google::protobuf::Value MakeValueProto(absl::CivilDay d);
-  //  static google::protobuf::Value MakeValueProto(Interval intvl);
+  static google::bigtable::v2::Value MakeValueProto(bool b);
+  static google::bigtable::v2::Value MakeValueProto(std::int64_t i);
+  static google::bigtable::v2::Value MakeValueProto(float f);
+  static google::bigtable::v2::Value MakeValueProto(double d);
+  static google::bigtable::v2::Value MakeValueProto(std::string s);
+  static google::bigtable::v2::Value MakeValueProto(Bytes b);
+  //  static google::bigtable::v2::Value MakeValueProto(Json j);
+  //  static google::bigtable::v2::Value MakeValueProto(JsonB j);
+  //  static google::bigtable::v2::Value MakeValueProto(Numeric n);
+  //  static google::bigtable::v2::Value MakeValueProto(PgNumeric n);
+  //  static google::bigtable::v2::Value MakeValueProto(PgOid n);
+  //  static google::bigtable::v2::Value MakeValueProto(Timestamp ts);
+  //  static google::bigtable::v2::Value MakeValueProto(CommitTimestamp ts);
+  //  static google::bigtable::v2::Value MakeValueProto(absl::CivilDay d);
+  //  static google::bigtable::v2::Value MakeValueProto(Interval intvl);
   //  template <typename E>
-  //  static google::protobuf::Value MakeValueProto(ProtoEnum<E> e) {
+  //  static google::bigtable::v2::Value MakeValueProto(ProtoEnum<E> e) {
   //    return MakeValueProto(std::int64_t{E{e}});
   //  }
   //  template <typename M>
-  //  static google::protobuf::Value MakeValueProto(ProtoMessage<M> m) {
+  //  static google::bigtable::v2::Value MakeValueProto(ProtoMessage<M> m) {
   //    internal::Base64Encoder encoder;
   //    for (auto c : std::string{m}) encoder.PushBack(c);
   //    return MakeValueProto(std::move(encoder).FlushAndPad());
   //  }
-  static google::protobuf::Value MakeValueProto(int i);
-  static google::protobuf::Value MakeValueProto(char const* s);
+  static google::bigtable::v2::Value MakeValueProto(int i);
+  static google::bigtable::v2::Value MakeValueProto(char const* s);
   template <typename T>
-  static google::protobuf::Value MakeValueProto(absl::optional<T> opt) {
+  static google::bigtable::v2::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
-    google::protobuf::Value v;
-    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
+    google::bigtable::v2::Value v;
+//    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
     return v;
   }
   template <typename T>
-  static google::protobuf::Value MakeValueProto(std::vector<T> vec) {
-    google::protobuf::Value v;
-    auto& list = *v.mutable_list_value();
+  static google::bigtable::v2::Value MakeValueProto(std::vector<T> vec) {
+    google::bigtable::v2::Value v;
+    auto& list = *v.mutable_array_value();
+//    auto& list = *v.mutable_list_value();
     for (auto&& e : vec) {
       *list.add_values() = MakeValueProto(std::move(e));
     }
     return v;
   }
   template <typename... Ts>
-  static google::protobuf::Value MakeValueProto(std::tuple<Ts...> tup) {
-    google::protobuf::Value v;
-    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
+  static google::bigtable::v2::Value MakeValueProto(std::tuple<Ts...> tup) {
+    google::bigtable::v2::Value v;
+    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_array_value());
+//    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
     return v;
   }
 
@@ -530,59 +596,59 @@ class Value {
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
   // first argument type is the tag, its value is ignored.
-  static StatusOr<bool> GetValue(bool, google::protobuf::Value const&,
+  static StatusOr<bool> GetValue(bool, google::bigtable::v2::Value const&,
                                  google::bigtable::v2::Type const&);
   static StatusOr<std::int64_t> GetValue(std::int64_t,
-                                         google::protobuf::Value const&,
+                                         google::bigtable::v2::Value const&,
                                          google::bigtable::v2::Type const&);
-  static StatusOr<float> GetValue(float, google::protobuf::Value const&,
+  static StatusOr<float> GetValue(float, google::bigtable::v2::Value const&,
                                   google::bigtable::v2::Type const&);
-  static StatusOr<double> GetValue(double, google::protobuf::Value const&,
+  static StatusOr<double> GetValue(double, google::bigtable::v2::Value const&,
                                    google::bigtable::v2::Type const&);
   static StatusOr<std::string> GetValue(std::string const&,
-                                        google::protobuf::Value const&,
+                                        google::bigtable::v2::Value const&,
                                         google::bigtable::v2::Type const&);
   static StatusOr<std::string> GetValue(std::string const&,
-                                        google::protobuf::Value&&,
+                                        google::bigtable::v2::Value&&,
                                         google::bigtable::v2::Type const&);
-  //  static StatusOr<Bytes> GetValue(Bytes const&, google::protobuf::Value
-  //  const&,
-  //                                  google::bigtable::v2::Type const&);
-  //  static StatusOr<Json> GetValue(Json const&, google::protobuf::Value
+  static StatusOr<Bytes> GetValue(google::cloud::bigtable::Bytes const&,
+                                  google::bigtable::v2::Value const&,
+                                    google::bigtable::v2::Type const&);
+  //  static StatusOr<Json> GetValue(Json const&, google::bigtable::v2::Value
   //  const&,
   //                                 google::bigtable::v2::Type const&);
-  //  static StatusOr<JsonB> GetValue(JsonB const&, google::protobuf::Value
+  //  static StatusOr<JsonB> GetValue(JsonB const&, google::bigtable::v2::Value
   //  const&,
   //                                  google::bigtable::v2::Type const&);
   //  static StatusOr<Numeric> GetValue(Numeric const&,
-  //                                    google::protobuf::Value const&,
+  //                                    google::bigtable::v2::Value const&,
   //                                    google::bigtable::v2::Type const&);
   //  static StatusOr<PgNumeric> GetValue(PgNumeric const&,
-  //                                      google::protobuf::Value const&,
+  //                                      google::bigtable::v2::Value const&,
   //                                      google::bigtable::v2::Type const&);
-  //  static StatusOr<PgOid> GetValue(PgOid const&, google::protobuf::Value
+  //  static StatusOr<PgOid> GetValue(PgOid const&, google::bigtable::v2::Value
   //  const&,
   //                                  google::bigtable::v2::Type const&);
-  //  static StatusOr<Timestamp> GetValue(Timestamp, google::protobuf::Value
+  //  static StatusOr<Timestamp> GetValue(Timestamp, google::bigtable::v2::Value
   //  const&,
   //                                      google::bigtable::v2::Type const&);
   //  static StatusOr<CommitTimestamp> GetValue(CommitTimestamp,
-  //                                            google::protobuf::Value const&,
+  //                                            google::bigtable::v2::Value const&,
   //                                            google::bigtable::v2::Type
   //                                            const&);
   //  static StatusOr<absl::CivilDay> GetValue(absl::CivilDay,
-  //                                           google::protobuf::Value const&,
+  //                                           google::bigtable::v2::Value const&,
   //                                           google::bigtable::v2::Type
   //                                           const&);
-  //  static StatusOr<Interval> GetValue(Interval, google::protobuf::Value
+  //  static StatusOr<Interval> GetValue(Interval, google::bigtable::v2::Value
   //  const&,
   //                                     google::bigtable::v2::Type const&);
   //  template <typename E>
   //  static StatusOr<ProtoEnum<E>> GetValue(ProtoEnum<E>,
-  //                                         google::protobuf::Value const& pv,
+  //                                         google::bigtable::v2::Value const& pv,
   //                                         google::bigtable::v2::Type const&
   //                                         pt) {
-  //    if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+  //    if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
   //      return internal::UnknownError("missing ENUM", GCP_ERROR_INFO());
   //    }
   //    auto value = GetValue(std::int64_t{}, pv, pt);
@@ -595,10 +661,10 @@ class Value {
   //  }
   //  template <typename M>
   //  static StatusOr<ProtoMessage<M>> GetValue(ProtoMessage<M>,
-  //                                            google::protobuf::Value const&
+  //                                            google::bigtable::v2::Value const&
   //                                            pv, google::bigtable::v2::Type
   //                                            const&) {
-  //    if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+  //    if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
   //      return internal::UnknownError("missing PROTO", GCP_ERROR_INFO());
   //    }
   //    auto bytes = internal::Base64DecodeToBytes(pv.string_value());
@@ -608,7 +674,7 @@ class Value {
   template <typename T, typename V>
   static StatusOr<absl::optional<T>> GetValue(
       absl::optional<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-    if (pv.kind_case() == google::protobuf::Value::kNullValue) {
+    if (pv.kind_case() == google::bigtable::v2::Value::KIND_NOT_SET) {
       return absl::optional<T>{};
     }
     auto value = GetValue(T{}, std::forward<V>(pv), pt);
@@ -618,7 +684,7 @@ class Value {
   //  template <typename T, typename V>
   //  static StatusOr<std::vector<T>> GetValue(
   //      std::vector<T> const&, V&& pv, google::bigtable::v2::Type const& pt) {
-  //    if (pv.kind_case() != google::protobuf::Value::kListValue) {
+  //    if (pv.kind_case() != google::bigtable::v2::Value::kListValue) {
   //      return internal::UnknownError("missing ARRAY", GCP_ERROR_INFO());
   //    }
   //    std::vector<T> v;
@@ -635,7 +701,7 @@ class Value {
   //  static StatusOr<std::tuple<Ts...>> GetValue(
   //      std::tuple<Ts...> const&, V&& pv, google::bigtable::v2::Type const&
   //      pt) {
-  //    if (pv.kind_case() != google::protobuf::Value::kListValue) {
+  //    if (pv.kind_case() != google::bigtable::v2::Value::kListValue) {
   //      return internal::UnknownError("missing STRUCT", GCP_ERROR_INFO());
   //    }
   //    std::tuple<Ts...> tup;
@@ -685,13 +751,15 @@ class Value {
   // different syntax and different names for mutable and non-mutable
   // functions. To make GetValue(vector<T>, ...) (above) work, we need split
   // the different protobuf syntaxes into overloaded functions.
-  static google::protobuf::Value const& GetProtoListValueElement(
-      google::protobuf::Value const& pv, int pos) {
-    return pv.list_value().values(pos);
+  static google::bigtable::v2::Value const& GetProtoListValueElement(
+      google::bigtable::v2::Value const& pv, int pos) {
+    return pv.array_value().values(pos);
+//    return pv.list_value().values(pos);
   }
-  static google::protobuf::Value&& GetProtoListValueElement(
-      google::protobuf::Value&& pv, int pos) {
-    return std::move(*pv.mutable_list_value()->mutable_values(pos));
+  static google::bigtable::v2::Value&& GetProtoListValueElement(
+      google::bigtable::v2::Value&& pv, int pos) {
+    return std::move(*pv.mutable_array_value()->mutable_values(pos));
+//    return std::move(*pv.mutable_list_value()->mutable_values(pos));
   }
 
   // A private templated constructor that is called by all the public
@@ -705,13 +773,13 @@ class Value {
   Value(PrivateConstructor, T&& t)
       : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
-  Value(google::bigtable::v2::Type t, google::protobuf::Value v)
+  Value(google::bigtable::v2::Type t, google::bigtable::v2::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
   friend struct bigtable_internal::ValueInternals;
 
   google::bigtable::v2::Type type_;
-  google::protobuf::Value value_;
+  google::bigtable::v2::Value value_;
 };
 
 /**
@@ -732,24 +800,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+StatusOr<bigtable::Bytes> BytesFromBase64(std::string input);
+std::string BytesToBase64(bigtable::Bytes b);
+
 struct ValueInternals {
   static bigtable::Value FromProto(google::bigtable::v2::Type t,
-                                   google::protobuf::Value v) {
+                                   google::bigtable::v2::Value v) {
     return bigtable::Value(std::move(t), std::move(v));
   }
 
-  static std::pair<google::bigtable::v2::Type, google::protobuf::Value> ToProto(
+  static std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> ToProto(
       bigtable::Value v) {
     return std::make_pair(std::move(v.type_), std::move(v.value_));
   }
 };
 
 inline bigtable::Value FromProto(google::bigtable::v2::Type t,
-                                 google::protobuf::Value v) {
+                                 google::bigtable::v2::Value v) {
   return ValueInternals::FromProto(std::move(t), std::move(v));
 }
 
-inline std::pair<google::bigtable::v2::Type, google::protobuf::Value> ToProto(
+inline std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> ToProto(
     bigtable::Value v) {
   return ValueInternals::ToProto(std::move(v));
 }
@@ -871,6 +942,8 @@ class QueryRow {
   }
   ///@}
 
+  friend std::ostream& operator<<(std::ostream& os, QueryRow const& row);
+
  private:
   friend struct bigtable_internal::RowFriend;
   struct ExtractValue {
@@ -944,6 +1017,173 @@ class RowStreamIterator {
   value_type row_{QueryRow{}};
   Source source_;  // nullptr means "end"
 };
+
+
+template <typename Tuple>
+class TupleStreamIterator {
+ public:
+  /// @name Iterator type aliases
+  ///@{
+  using iterator_category = std::input_iterator_tag;
+  using value_type = StatusOr<Tuple>;
+  using difference_type = std::ptrdiff_t;
+  using pointer = value_type*;
+  using reference = value_type&;
+  using const_pointer = value_type const*;
+  using const_reference = value_type const&;
+  ///@}
+
+  /// Default constructs an "end" iterator.
+  TupleStreamIterator() = default;
+
+  /// Creates an iterator that wraps the given `RowStreamIterator` range.
+  TupleStreamIterator(RowStreamIterator begin, RowStreamIterator end)
+      : it_(std::move(begin)), end_(std::move(end)) {
+    ParseTuple();
+  }
+
+  reference operator*() { return tup_; }
+  pointer operator->() { return &tup_; }
+
+  const_reference operator*() const { return tup_; }
+  const_pointer operator->() const { return &tup_; }
+
+  TupleStreamIterator& operator++() {
+    if (!tup_ok_) {
+      it_ = end_;
+      return *this;
+    }
+    ++it_;
+    ParseTuple();
+    return *this;
+  }
+
+  TupleStreamIterator operator++(int) {
+    auto const old = *this;
+    ++*this;
+    return old;
+  }
+
+  friend bool operator==(TupleStreamIterator const& a,
+                         TupleStreamIterator const& b) {
+    return a.it_ == b.it_;
+  }
+
+  friend bool operator!=(TupleStreamIterator const& a,
+                         TupleStreamIterator const& b) {
+    return !(a == b);
+  }
+
+ private:
+  void ParseTuple() {
+    if (it_ == end_) return;
+    tup_ = *it_ ? std::move(*it_)->template get<Tuple>() : it_->status();
+    tup_ok_ = tup_.ok();
+  }
+
+  bool tup_ok_{false};
+  value_type tup_;
+  RowStreamIterator it_;
+  RowStreamIterator end_;
+};
+
+/**
+ * A `TupleStream<Tuple>` defines a range that parses `Tuple` objects from the
+ * given range of `RowStreamIterator`s.
+ *
+ * Users create instances using the `StreamOf<T>(range)` non-member factory
+ * function (defined below). The following is a typical usage of this class in
+ * a range-for loop.
+ *
+ * @code
+ * auto row_range = ...
+ * using RowType = std::tuple<std::int64_t, std::string, bool>;
+ * for (auto const& row : StreamOf<RowType>(row_range)) {
+ *   if (!row) {
+ *     // Handle error;
+ *   }
+ *   std::int64_t x = std::get<0>(*row);
+ *   ...
+ * }
+ * @endcode
+ *
+ * @note The term "stream" in this name refers to the general nature
+ *     of the data source, and is not intended to suggest any similarity to
+ *     C++'s I/O streams library. Syntactically, this class is a "range"
+ *     defined by two "iterator" objects of type `TupleStreamIterator<Tuple>`.
+ *
+ * @tparam Tuple the std::tuple<...> to parse each `Row` into.
+ */
+template <typename Tuple>
+class TupleStream {
+ public:
+  using iterator = TupleStreamIterator<Tuple>;
+  static_assert(bigtable_internal::IsTuple<Tuple>::value,
+                "TupleStream<T> requires a std::tuple parameter");
+
+  iterator begin() const { return begin_; }
+  iterator end() const { return end_; }
+
+ private:
+  template <typename T, typename RowRange>
+  friend TupleStream<T> StreamOf(RowRange&& range);
+
+  template <typename It>
+  explicit TupleStream(It&& start, It&& end)
+      : begin_(std::forward<It>(start), std::forward<It>(end)) {}
+
+  iterator begin_;
+  iterator end_;
+};
+
+/**
+ * A factory that creates a `TupleStream<Tuple>` by wrapping the given @p
+ * range. The `RowRange` must be a range defined by `RowStreamIterator`
+ * objects.
+ *
+ * @snippet samples.cc stream-of
+ *
+ * @note Ownership of the @p range is not transferred, so it must outlive the
+ *     returned `TupleStream`.
+ *
+ * @tparam RowRange must be a range defined by `RowStreamIterator`s.
+ */
+template <typename Tuple, typename RowRange>
+TupleStream<Tuple> StreamOf(RowRange&& range) {
+  static_assert(std::is_lvalue_reference<decltype(range)>::value,
+                "range must be an lvalue since it must outlive StreamOf");
+  return TupleStream<Tuple>(std::begin(std::forward<RowRange>(range)),
+                            std::end(std::forward<RowRange>(range)));
+}
+
+/**
+ * Returns the only row from a range that contains exactly one row.
+ *
+ * An error is returned if the given range does not contain exactly one row.
+ * This is a convenience function that may be useful when the caller knows that
+ * a range should contain exactly one row, such as when `LIMIT 1` is used in an
+ * SQL query, or when a read is performed on a guaranteed unique key such that
+ * only a single row could possibly match. In cases where the caller does not
+ * know how many rows may be returned, they should instead consume the range in
+ * a loop.
+ *
+ * @snippet samples.cc get-singular-row
+ */
+template <typename RowRange>
+auto GetSingularRow(RowRange range) -> std::decay_t<decltype(*range.begin())> {
+  auto const e = range.end();
+  auto it = range.begin();
+  if (it == e) {
+    return google::cloud::internal::InvalidArgumentError("no rows", GCP_ERROR_INFO());
+  }
+  auto row = std::move(*it);
+  if (++it != e) {
+    return google::cloud::internal::InvalidArgumentError("too many rows", GCP_ERROR_INFO());
+  }
+  return row;
+}
+
+
 
 class ResultSourceInterface {
  public:

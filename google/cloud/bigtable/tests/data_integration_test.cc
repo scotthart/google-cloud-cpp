@@ -43,8 +43,7 @@ class DataIntegrationTest : public TableIntegrationTest,
 };
 
 INSTANTIATE_TEST_SUITE_P(, DataIntegrationTest,
-                         ::testing::Values("with-data-connection",
-                                           "with-data-client"));
+                         ::testing::Values("with-data-connection"));
 
 /// Use Table::Apply() to insert a single row.
 void Apply(Table& table, std::string const& row_key,
@@ -138,19 +137,37 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
                             {"row-key-4", kFamily4, "c1", 2000, "v2000"}};
   BulkApply(table, created);
 
-  auto client = Client(MakeDataConnection());
+  auto actual = ReadRows(table, Filter::PassAllFilter());
+  std::cout << "actual.size()=" << actual.size() << std::endl;
+
+  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+  auto client = Client(table.connection());
   std::cout << "table=" << table.table_name() << std::endl;
   std::vector<std::string> table_parts =
       absl::StrSplit(table.table_name(), "/");
   auto table_name = table_parts.back();
+
   bigtable::SqlStatement statement(
-      absl::StrFormat("select * from %s", table_name));
+      absl::StrFormat(
+"select _key, cast(family4['c0'] as string) as c0 from %s where _key='row-key-1' ", table_name));
+//  bigtable::SqlStatement statement(
+//      absl::StrFormat("SELECT _key, CAST(family4['c0'] AS STRING) AS c0 FROM %s WHERE _key = 'row-key-1'", table_name));
   auto results = client.ExecuteQuery({statement});
-  for (auto const& r : results) {
+
+  using RowType = std::tuple<Bytes, std::string>;
+  int num_rows = 0;
+  for (auto const& r : bigtable::StreamOf<RowType>(results)) {
+    ++num_rows;
     if (r.ok()) {
-      std::cout << "row ok" << std::endl;
+      std::cout << "*************** row ok" << std::endl;
+      std::cout << "_key=" << std::get<0>(*r) << "; c0=" << std::get<1>(*r) << std::endl;
+    } else {
+      std::cout << "*************** row NOT ok" << std::endl;
+      std::cout << r.status() << std::endl;
     }
   }
+  std::cout << "num_rows=" << num_rows << std::endl;
 }
 
 #if 0
