@@ -140,7 +140,7 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
   auto actual = ReadRows(table, Filter::PassAllFilter());
   std::cout << "actual.size()=" << actual.size() << std::endl;
 
-  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+//  std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
   auto client = Client(table.connection());
   std::cout << "table=" << table.table_name() << std::endl;
@@ -148,14 +148,15 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
       absl::StrSplit(table.table_name(), "/");
   auto table_name = table_parts.back();
 
-  bigtable::SqlStatement statement(
-      absl::StrFormat(
-"select _key, cast(family4['c0'] as string) as c0 from %s where _key='row-key-1' ", table_name));
 //  bigtable::SqlStatement statement(
-//      absl::StrFormat("SELECT _key, CAST(family4['c0'] AS STRING) AS c0 FROM %s WHERE _key = 'row-key-1'", table_name));
+//      absl::StrFormat(
+//"select _key, cast(family4['c0'] as string) as c0 from `%s`(with_history => true) where _key='row-key-1' ", table_name));
+  bigtable::SqlStatement statement(
+      absl::StrFormat("SELECT _key, CAST(family4['c0'] AS array<struct<timestamp, string>>) AS c0 FROM `%s`(with_history => true) WHERE _key = 'row-key-1'", table_name));
   auto results = client.ExecuteQuery({statement});
 
-  using RowType = std::tuple<Bytes, std::string>;
+//  using RowType = std::tuple<Bytes, std::string>;
+  using RowType = std::tuple<Bytes, std::vector<std::pair<Timestamp, std::string>>>;
   int num_rows = 0;
   for (auto const& r : bigtable::StreamOf<RowType>(results)) {
     ++num_rows;
