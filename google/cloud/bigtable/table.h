@@ -1001,7 +1001,8 @@ class Table {
   }
 
   std::shared_ptr<DataConnection> connection() const {
-    return connection_;;
+    return connection_;
+    ;
   }
 
  private:

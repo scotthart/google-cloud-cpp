@@ -138,11 +138,15 @@ class Client {
   friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
   ///@}
 
-  //  StatusOr<PreparedQuery> PrepareQuery();
-  //  future<StatusOr<PreparedQuery>> AsyncPrepareQuery();
+  StatusOr<PreparedQuery> PrepareQuery(SqlStatement statement,
+                                       Options opts = {});
+  future<StatusOr<PreparedQuery>> AsyncPrepareQuery(SqlStatement statement,
+                                                    Options opts = {});
+
+  RowStream ExecuteQuery(PreparedQuery query, Options opts = {});
+  RowStream ExecuteQuery(BoundQuery query, Options opts = {});
 
   RowStream ExecuteQuery(SqlStatement statement, Options opts = {});
-  //  RowStream ExecuteQuery(BoundQuery statement, Options opts = {});
 
  private:
   std::shared_ptr<DataConnection> conn_;

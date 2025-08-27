@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CONNECTION_H
 
 #include "google/cloud/bigtable/filters.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
@@ -53,10 +54,14 @@ struct ReadRowsParams {
   bool reverse = false;
 };
 
-struct PrepareQueryParams {};
+struct PrepareQueryParams {
+  bigtable::InstanceResource instance;
+  SqlStatement sql_statement;
+};
 
 struct ExecuteQueryParams {
-  SqlStatement sql_statement;
+  bigtable::InstanceResource instance;
+  absl::variant<SqlStatement, PreparedQuery, BoundQuery> query;
 };
 
 /**
@@ -151,15 +156,10 @@ class DataConnection {
   virtual future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
       std::string const& table_name, std::string row_key, Filter filter);
 
+  virtual StatusOr<PreparedQuery> PrepareQuery(bigtable::PrepareQueryParams p);
+  virtual future<StatusOr<PreparedQuery>> AsyncPrepareQuery(
+      bigtable::PrepareQueryParams p);
   virtual RowStream ExecuteQuery(bigtable::ExecuteQueryParams p);
-
-  //  virtual StatusOr<PreparedQuery> PrepareQuery() {}
-  //
-  //  virtual future<StatusOr<PreparedQuery>> AsyncPrepareQuery();
-  //
-  //  virtual RowStream ExecuteQuery();
-  //
-  //  virtual RowStream AsyncExecuteQuery();
 };
 
 /**

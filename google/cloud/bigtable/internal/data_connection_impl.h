@@ -101,6 +101,11 @@ class DataConnectionImpl : public bigtable::DataConnection {
       std::string const& table_name, std::string row_key,
       bigtable::Filter filter) override;
 
+  StatusOr<bigtable::PreparedQuery> PrepareQuery(
+      bigtable::PrepareQueryParams p) override;
+  future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
+      bigtable::PrepareQueryParams p) override;
+
   bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
  private:

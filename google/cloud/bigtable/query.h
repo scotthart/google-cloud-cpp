@@ -352,11 +352,8 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
   std::string DebugString() const {
-    return std::string{"Value(type_="}
-           + type_.DebugString()
-           + "; value_="
-           + value_.DebugString()
-           + ")";
+    return std::string{"Value(type_="} + type_.DebugString() +
+           "; value_=" + value_.DebugString() + ")";
   }
 
  private:
@@ -383,7 +380,8 @@ class Value {
   //  const&); static bool TypeProtoIs(absl::CivilDay,
   //  google::bigtable::v2::Type const&); static bool TypeProtoIs(Interval,
   //  google::bigtable::v2::Type const&);
-  static bool TypeProtoIs(std::string const&, google::bigtable::v2::Type const&);
+  static bool TypeProtoIs(std::string const&,
+                          google::bigtable::v2::Type const&);
   static bool TypeProtoIs(Bytes const&, google::bigtable::v2::Type const&);
   // static bool TypeProtoIs(Json
   //  const&, google::bigtable::v2::Type const&); static bool TypeProtoIs(JsonB
@@ -557,14 +555,14 @@ class Value {
   static google::bigtable::v2::Value MakeValueProto(absl::optional<T> opt) {
     if (opt.has_value()) return MakeValueProto(*std::move(opt));
     google::bigtable::v2::Value v;
-//    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
+    //    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
     return v;
   }
   template <typename T>
   static google::bigtable::v2::Value MakeValueProto(std::vector<T> vec) {
     google::bigtable::v2::Value v;
     auto& list = *v.mutable_array_value();
-//    auto& list = *v.mutable_list_value();
+    //    auto& list = *v.mutable_list_value();
     for (auto&& e : vec) {
       *list.add_values() = MakeValueProto(std::move(e));
     }
@@ -573,8 +571,10 @@ class Value {
   template <typename... Ts>
   static google::bigtable::v2::Value MakeValueProto(std::tuple<Ts...> tup) {
     google::bigtable::v2::Value v;
-    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_array_value());
-//    bigtable_internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
+    bigtable_internal::ForEach(tup, AddStructValues{},
+                               *v.mutable_array_value());
+    //    bigtable_internal::ForEach(tup, AddStructValues{},
+    //    *v.mutable_list_value());
     return v;
   }
 
@@ -613,7 +613,7 @@ class Value {
                                         google::bigtable::v2::Type const&);
   static StatusOr<Bytes> GetValue(google::cloud::bigtable::Bytes const&,
                                   google::bigtable::v2::Value const&,
-                                    google::bigtable::v2::Type const&);
+                                  google::bigtable::v2::Type const&);
   //  static StatusOr<Json> GetValue(Json const&, google::bigtable::v2::Value
   //  const&,
   //                                 google::bigtable::v2::Type const&);
@@ -633,11 +633,13 @@ class Value {
   //  const&,
   //                                      google::bigtable::v2::Type const&);
   //  static StatusOr<CommitTimestamp> GetValue(CommitTimestamp,
-  //                                            google::bigtable::v2::Value const&,
+  //                                            google::bigtable::v2::Value
+  //                                            const&,
   //                                            google::bigtable::v2::Type
   //                                            const&);
   //  static StatusOr<absl::CivilDay> GetValue(absl::CivilDay,
-  //                                           google::bigtable::v2::Value const&,
+  //                                           google::bigtable::v2::Value
+  //                                           const&,
   //                                           google::bigtable::v2::Type
   //                                           const&);
   //  static StatusOr<Interval> GetValue(Interval, google::bigtable::v2::Value
@@ -645,9 +647,9 @@ class Value {
   //                                     google::bigtable::v2::Type const&);
   //  template <typename E>
   //  static StatusOr<ProtoEnum<E>> GetValue(ProtoEnum<E>,
-  //                                         google::bigtable::v2::Value const& pv,
-  //                                         google::bigtable::v2::Type const&
-  //                                         pt) {
+  //                                         google::bigtable::v2::Value const&
+  //                                         pv, google::bigtable::v2::Type
+  //                                         const& pt) {
   //    if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
   //      return internal::UnknownError("missing ENUM", GCP_ERROR_INFO());
   //    }
@@ -661,8 +663,9 @@ class Value {
   //  }
   //  template <typename M>
   //  static StatusOr<ProtoMessage<M>> GetValue(ProtoMessage<M>,
-  //                                            google::bigtable::v2::Value const&
-  //                                            pv, google::bigtable::v2::Type
+  //                                            google::bigtable::v2::Value
+  //                                            const& pv,
+  //                                            google::bigtable::v2::Type
   //                                            const&) {
   //    if (pv.kind_case() != google::bigtable::v2::Value::kStringValue) {
   //      return internal::UnknownError("missing PROTO", GCP_ERROR_INFO());
@@ -754,12 +757,12 @@ class Value {
   static google::bigtable::v2::Value const& GetProtoListValueElement(
       google::bigtable::v2::Value const& pv, int pos) {
     return pv.array_value().values(pos);
-//    return pv.list_value().values(pos);
+    //    return pv.list_value().values(pos);
   }
   static google::bigtable::v2::Value&& GetProtoListValueElement(
       google::bigtable::v2::Value&& pv, int pos) {
     return std::move(*pv.mutable_array_value()->mutable_values(pos));
-//    return std::move(*pv.mutable_list_value()->mutable_values(pos));
+    //    return std::move(*pv.mutable_list_value()->mutable_values(pos));
   }
 
   // A private templated constructor that is called by all the public
@@ -809,9 +812,11 @@ struct ValueInternals {
     return bigtable::Value(std::move(t), std::move(v));
   }
 
-  static std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> ToProto(
-      bigtable::Value v) {
-    return std::make_pair(std::move(v.type_), std::move(v.value_));
+  static std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value>
+  ToProto(bigtable::Value v) {
+    auto value = std::move(v.value_);
+    *value.mutable_type() = v.type_;
+    return std::make_pair(std::move(v.type_), std::move(value));
   }
 };
 
@@ -820,8 +825,8 @@ inline bigtable::Value FromProto(google::bigtable::v2::Type t,
   return ValueInternals::FromProto(std::move(t), std::move(v));
 }
 
-inline std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value> ToProto(
-    bigtable::Value v) {
+inline std::pair<google::bigtable::v2::Type, google::bigtable::v2::Value>
+ToProto(bigtable::Value v) {
   return ValueInternals::ToProto(std::move(v));
 }
 
@@ -1018,7 +1023,6 @@ class RowStreamIterator {
   Source source_;  // nullptr means "end"
 };
 
-
 template <typename Tuple>
 class TupleStreamIterator {
  public:
@@ -1174,16 +1178,16 @@ auto GetSingularRow(RowRange range) -> std::decay_t<decltype(*range.begin())> {
   auto const e = range.end();
   auto it = range.begin();
   if (it == e) {
-    return google::cloud::internal::InvalidArgumentError("no rows", GCP_ERROR_INFO());
+    return google::cloud::internal::InvalidArgumentError("no rows",
+                                                         GCP_ERROR_INFO());
   }
   auto row = std::move(*it);
   if (++it != e) {
-    return google::cloud::internal::InvalidArgumentError("too many rows", GCP_ERROR_INFO());
+    return google::cloud::internal::InvalidArgumentError("too many rows",
+                                                         GCP_ERROR_INFO());
   }
   return row;
 }
-
-
 
 class ResultSourceInterface {
  public:
@@ -1287,7 +1291,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
-      std::unique_ptr<PartialResultSetReader> reader);
+      std::unique_ptr<PartialResultSetReader> reader,
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata);
 
   ~PartialResultSetSource() override;
 
@@ -1299,7 +1304,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
  private:
   explicit PartialResultSetSource(
-      std::unique_ptr<PartialResultSetReader> reader);
+      std::unique_ptr<PartialResultSetReader> reader,
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata);
 
   Status ReadFromStream();
 
@@ -1312,7 +1318,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
 
   // The `PartialResultSet.metadata` we received in the first response, and
   // the column names it contained (which will be shared between rows).
-  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_;
+  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_ =
+      absl::nullopt;
   std::shared_ptr<std::vector<std::string>> columns_;
 
   std::deque<bigtable::QueryRow> pending_rows_;
@@ -1439,14 +1446,38 @@ class SqlStatement {
 
 class BoundQuery {
  public:
+  std::string const& serialized_query() const {
+    return response_.prepared_query();
+  }
+
+  google::bigtable::v2::ResultSetMetadata const& metadata() const {
+    return response_.metadata();
+  }
+
  private:
+  google::bigtable::v2::PrepareQueryResponse response_;
 };
 
 class PreparedQuery {
  public:
+  explicit PreparedQuery(SqlStatement statement,
+                         google::bigtable::v2::PrepareQueryResponse response)
+      : statement_(std::move(statement)), response_(std::move(response)) {}
+
   StatusOr<BoundQuery> Bind() { return BoundQuery{}; }
+  std::string const& serialized_query() const {
+    return response_.prepared_query();
+  }
+
+  google::bigtable::v2::ResultSetMetadata const& metadata() const {
+    return response_.metadata();
+  }
+
+  SqlStatement const& statement() const { return statement_; }
 
  private:
+  SqlStatement statement_;
+  google::bigtable::v2::PrepareQueryResponse response_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

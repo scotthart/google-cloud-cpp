@@ -24,7 +24,6 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-
 // A helper to escape all double quotes in the given string `s`. For example,
 // if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
 // wrap `s` itself in double quotes.
@@ -52,15 +51,15 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   if (t.has_bool_type()) {
     return os << (v.bool_value() ? "true" : "false");
   } else if (t.has_string_type()) {
-      switch (mode) {
-        case StreamMode::kScalar:
-          return os << v.string_value();
-        case StreamMode::kAggregate:
-          os << '"';
-          EscapeQuotes(os, v.string_value());
-          return os << '"';
-      }
-      return os;  // Unreachable, but quiets warning.
+    switch (mode) {
+      case StreamMode::kScalar:
+        return os << v.string_value();
+      case StreamMode::kAggregate:
+        os << '"';
+        EscapeQuotes(os, v.string_value());
+        return os << '"';
+    }
+    return os;  // Unreachable, but quiets warning.
   } else if (t.has_bytes_type()) {
     return os << v.bytes_value();
   }
@@ -166,11 +165,101 @@ std::ostream& StreamHelper(std::ostream& os,  // NOLINT(misc-no-recursion)
   return os;
 }
 
-
-
 bool operator==(Value const& a, Value const& b) {
-//  return Equal(a.type_, a.value_, b.type_, b.value_);
+  //  return Equal(a.type_, a.value_, b.type_, b.value_);
   return true;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(bool) {
+  google::bigtable::v2::Type t;
+  *t.mutable_bool_type() = {};
+  //  t.set_code(google::bigtable::v2::TypeCode::BOOL);
+  return t;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(std::int64_t) {
+  google::bigtable::v2::Type t;
+  *t.mutable_int64_type() = {};
+  //  t.set_code(google::bigtable::v2::TypeCode::INT64);
+  return t;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(float) {
+  google::bigtable::v2::Type t;
+  *t.mutable_float32_type() = {};
+  //  t.set_code(google::bigtable::v2::TypeCode::FLOAT32);
+  return t;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(double) {
+  google::bigtable::v2::Type t;
+  *t.mutable_float64_type() = {};
+  //  t.set_code(google::bigtable::v2::TypeCode::FLOAT64);
+  return t;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(std::string const&) {
+  google::bigtable::v2::Type t;
+  *t.mutable_string_type() = {};
+  //  t.set_code(google::bigtable::v2::TypeCode::STRING);
+  return t;
+}
+
+google::bigtable::v2::Type Value::MakeTypeProto(Bytes const&) {
+  google::bigtable::v2::Type t;
+  *t.mutable_bytes_type() = google::bigtable::v2::Type::Bytes{};
+  //  t.set_code(google::bigtable::v2::TypeCode::BYTES);
+  return t;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(bool b) {
+  google::bigtable::v2::Value v;
+  v.set_bool_value(b);
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(std::int64_t i) {
+  google::bigtable::v2::Value v;
+  v.set_string_value(std::to_string(i));
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(float f) {
+  google::bigtable::v2::Value v;
+  if (std::isnan(f)) {
+    v.set_string_value("NaN");
+  } else if (std::isinf(f)) {
+    v.set_string_value(f < 0 ? "-Infinity" : "Infinity");
+  } else {
+    // A widening conversion (i.e., a floating-point promotion), but
+    // that's OK as the standard guarantees that the value is unchanged.
+    v.set_float_value(f);
+  }
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(double d) {
+  google::bigtable::v2::Value v;
+  if (std::isnan(d)) {
+    v.set_string_value("NaN");
+  } else if (std::isinf(d)) {
+    v.set_string_value(d < 0 ? "-Infinity" : "Infinity");
+  } else {
+    v.set_float_value(d);
+  }
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(std::string s) {
+  google::bigtable::v2::Value v;
+  v.set_string_value(std::move(s));
+  return v;
+}
+
+google::bigtable::v2::Value Value::MakeValueProto(Bytes bytes) {
+  google::bigtable::v2::Value v;
+  v.set_bytes_value(bigtable_internal::BytesToBase64(std::move(bytes)));
+  return v;
 }
 
 std::ostream& operator<<(std::ostream& os, Value const& v) {
@@ -209,19 +298,16 @@ bool operator==(QueryRow const& a, QueryRow const& b) {
 }
 
 std::ostream& operator<<(std::ostream& os, QueryRow const& row) {
-  std::cout << __func__
-            << ": row.columns_->size()=" << row.columns_->size()
-            << "; row.values_.size()=" << row.values_.size()
-            << std::endl;
+  std::cout << __func__ << ": row.columns_->size()=" << row.columns_->size()
+            << "; row.values_.size()=" << row.values_.size() << std::endl;
   for (std::size_t i = 0; i < row.columns_->size(); ++i) {
     std::string column_name = row.columns_->at(i);
     auto value = row.values_.at(i);
     std::cout << __func__ << ": " << value.DebugString() << std::endl;
-//    os << "{" << column_name << ": ";
-//    auto value = row.values_.at(i);
-//    os << value << "}" << std::endl;
-    os << "{" << column_name << ": "
-        << row.values_.at(i) << "}";
+    //    os << "{" << column_name << ": ";
+    //    auto value = row.values_.at(i);
+    //    os << value << "}" << std::endl;
+    os << "{" << column_name << ": " << row.values_.at(i) << "}";
   }
   return os;
 }
@@ -319,8 +405,6 @@ std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
   // Can't use raw string literal here because of a doxygen bug.
   return os << "\"";
 }
-
-
 
 bool Value::TypeProtoIs(bool, google::bigtable::v2::Type const& type) {
   return type.has_bool_type();
@@ -440,7 +524,7 @@ StatusOr<std::string> Value::GetValue(std::string const&,
 
 StatusOr<Bytes> Value::GetValue(google::cloud::bigtable::Bytes const&,
                                 google::bigtable::v2::Value const& pv,
-                                    google::bigtable::v2::Type const&) {
+                                google::bigtable::v2::Type const&) {
   if (!pv.has_bytes_value()) {
     return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
   }
@@ -480,8 +564,9 @@ std::string BytesToBase64(bigtable::Bytes b) {
 }
 
 bigtable::QueryRow RowFriend::MakeRow(
-      std::vector<bigtable::Value> values,
-      std::shared_ptr<std::vector<std::string> const> columns) {
+    std::vector<bigtable::Value> values,
+    std::shared_ptr<std::vector<std::string> const> columns) {
+  std::cout << __func__ << std::endl;
   return bigtable::QueryRow(std::move(values), std::move(columns));
 }
 
@@ -529,10 +614,12 @@ Status PartialResultSetResume::Finish() {
 }
 
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
-PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
+PartialResultSetSource::Create(
+    std::unique_ptr<PartialResultSetReader> reader,
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata) {
   std::cout << __func__ << std::endl;
   std::unique_ptr<PartialResultSetSource> source(
-      new PartialResultSetSource(std::move(reader)));
+      new PartialResultSetSource(std::move(reader), std::move(metadata)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
@@ -553,8 +640,19 @@ PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
 }
 
 PartialResultSetSource::PartialResultSetSource(
-    std::unique_ptr<PartialResultSetReader> reader)
-    : options_(internal::CurrentOptions()), reader_(std::move(reader)) {
+    std::unique_ptr<PartialResultSetReader> reader,
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata)
+    : options_(internal::CurrentOptions()),
+      reader_(std::move(reader)),
+      metadata_(std::move(metadata)) {
+  if (metadata_.has_value()) {
+    columns_ = std::make_shared<std::vector<std::string>>();
+    columns_->reserve(metadata_->proto_schema().columns_size());
+    for (auto const& c : metadata_->proto_schema().columns()) {
+      columns_->push_back(c.name());
+    }
+  }
+
   //  if (options_.has<spanner::StreamingResumabilityBufferSizeOption>()) {
   //    values_space_limit_ =
   //        options_.get<spanner::StreamingResumabilityBufferSizeOption>();
@@ -730,15 +828,12 @@ std::vector<bigtable::QueryRow> ConvertToQueryRows(
     google::bigtable::v2::ProtoRows proto_rows) {
   std::vector<bigtable::QueryRow> rows;
 
-
   return rows;
 }
 
 Status PartialResultSetSource::ReadResultsFromStream(
     google::bigtable::v2::PartialResultSet& results) {
-  std::cout << __func__
-            << ": results=\n" << results.DebugString()
-            << std::endl;
+  std::cout << __func__ << ": results=\n" << results.DebugString() << std::endl;
   if (results.reset()) {
     rows_.clear();
     read_buffer_.clear();
@@ -762,38 +857,48 @@ Status PartialResultSetSource::ReadResultsFromStream(
     google::bigtable::v2::ProtoRows proto_rows;
     if (proto_rows.ParseFromString(read_buffer_)) {
       read_buffer_.clear();
-      std::cout << __func__ << ": proto_rows=\n" << proto_rows.DebugString() << std::endl;
+      std::cout << __func__ << ": proto_rows=\n"
+                << proto_rows.DebugString() << std::endl;
 
       // read every N Values from ProtoRows into a Row
       auto columns_per_row = metadata_->proto_schema().columns().size();
-      std::vector<bigtable::Value> values;
-      values.reserve(columns_per_row);
       // TODO(sdhart): can protos_rows.values().size() %
       //   metadata_->proto_schema().columns().size() != 0?
       auto proto_value = proto_rows.values().begin();
 
+      std::cout << __func__ << ": columns_per_row=" << columns_per_row
+                << std::endl;
       std::cout << __func__
-                << ": columns_per_row=" << columns_per_row << std::endl;
-      std::cout << __func__
-                << ": proto_rows.values().size()=" << proto_rows.values().size() << std::endl;
+                << ": proto_rows.values().size()=" << proto_rows.values().size()
+                << std::endl;
+      std::cout << __func__ << ": metadata_->proto_schema().columns()="
+                << metadata_->proto_schema().columns().size() << std::endl;
 
+      std::vector<bigtable::Value> values;
+      values.reserve(columns_per_row);
+
+      int i = 0;
       while (proto_value != proto_rows.values().end()) {
+        std::cout << __func__ << ": i=" << i++ << std::endl;
         for (auto const& column : metadata_->proto_schema().columns()) {
-
           auto value = FromProto(column.type(), *proto_value);
           values.push_back(std::move(value));
           ++proto_value;
         }
-        pending_rows_.push_back(RowFriend::MakeRow(std::move(values), columns_));
+        std::cout << __func__ << ": PRE pending_rows_.push_back; values.size()="
+                  << values.size() << "; columns_.size()=" << columns_->size()
+                  << std::endl;
+        pending_rows_.push_back(
+            RowFriend::MakeRow(std::move(values), columns_));
+        std::cout << __func__ << ": POST pending_rows_.push_back" << std::endl;
         values.clear();
       }
 
-//      std::vector<bigtable::QueryRow> query_rows =
-//          ConvertToQueryRows(*metadata_, std::move(proto_rows));
-//      pending_rows_.insert(pending_rows_.end(), query_rows.begin(),
-//                           query_rows.end());
-      std::cout << __func__
-                << ": pending_rows_.size()=" << pending_rows_.size()
+      //      std::vector<bigtable::QueryRow> query_rows =
+      //          ConvertToQueryRows(*metadata_, std::move(proto_rows));
+      //      pending_rows_.insert(pending_rows_.end(), query_rows.begin(),
+      //                           query_rows.end());
+      std::cout << __func__ << ": pending_rows_.size()=" << pending_rows_.size()
                 << std::endl;
     }
   }
@@ -802,10 +907,8 @@ Status PartialResultSetSource::ReadResultsFromStream(
     rows_.insert(rows_.end(), pending_rows_.begin(), pending_rows_.end());
     pending_rows_.clear();
     resume_token_ = results.resume_token();
-    std::cout << __func__
-              << ": rows_.size()=" << rows_.size()
-              << "; resume_token_=" << *resume_token_
-              << std::endl;
+    std::cout << __func__ << ": rows_.size()=" << rows_.size()
+              << "; resume_token_=" << *resume_token_ << std::endl;
   }
 
   return {};

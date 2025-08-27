@@ -20,10 +20,46 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+StatusOr<PreparedQuery> Client::PrepareQuery(SqlStatement statement,
+                                             Options opts) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+  return conn_->PrepareQuery({std::move(instance), std::move(statement)});
+}
+
+future<StatusOr<PreparedQuery>> Client::AsyncPrepareQuery(
+    SqlStatement statement, Options opts) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+  return conn_->AsyncPrepareQuery({std::move(instance), std::move(statement)});
+}
+
+RowStream Client::ExecuteQuery(PreparedQuery query, Options opts) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+  return conn_->ExecuteQuery({std::move(instance), std::move(query)});
+}
+
+RowStream Client::ExecuteQuery(BoundQuery query, Options opts) {
+  google::cloud::internal::OptionsSpan span(
+      google::cloud::internal::MergeOptions(std::move(opts), options_));
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+  return conn_->ExecuteQuery({std::move(instance), std::move(query)});
+}
+
 RowStream Client::ExecuteQuery(SqlStatement statement, Options opts) {
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(std::move(opts), options_));
-  return conn_->ExecuteQuery({std::move(statement)});
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+  return conn_->ExecuteQuery({std::move(instance), std::move(statement)});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
