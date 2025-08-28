@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/idempotency.h"
 #include "google/cloud/internal/base64_transforms.h"
 #include "google/cloud/internal/make_status.h"
@@ -1360,10 +1361,17 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   } state_ = kReading;
 };
 
-class QueryPlan {
+class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
  public:
-  explicit QueryPlan(google::bigtable::v2::PrepareQueryResponse response)
-      : response_(std::move(response)) {}
+  static std::shared_ptr<QueryPlan> Create(
+      CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response) {
+    auto plan = std::shared_ptr<QueryPlan>(
+        new QueryPlan(std::move(cq), std::move(response)));
+    plan->Initialize();
+    return plan;
+  }
+
+  ~QueryPlan() { refresh_timer_.cancel(); }
 
   std::string const& prepared_query() const {
     std::lock_guard<std::mutex> lock(mu_);
@@ -1389,8 +1397,48 @@ class QueryPlan {
   }
 
  private:
-  google::bigtable::v2::PrepareQueryResponse response_;
+  QueryPlan(CompletionQueue cq,
+            google::bigtable::v2::PrepareQueryResponse response)
+      : cq_(std::move(cq)), response_(std::move(response)) {}
+
+  void Initialize() { ScheduleRefresh(); }
+
+  void ScheduleRefresh() {
+    auto refresh_deadline =
+        std::chrono::system_clock::time_point(
+            std::chrono::seconds(response_.valid_until().seconds()) +
+            std::chrono::nanoseconds(response_.valid_until().nanos())) -
+        std::chrono::seconds(120);
+
+    std::weak_ptr<QueryPlan> plan = shared_from_this();
+    refresh_timer_ =
+        cq_.MakeDeadlineTimer(refresh_deadline)
+            .then([plan](future<StatusOr<std::chrono::system_clock::time_point>>
+                             result) {
+              if (result.get().ok()) {
+                if (auto p = plan.lock()) {
+                  p->RefreshQueryPlan();
+                }
+              }
+            });
+  }
+  void RefreshQueryPlan() {
+    // If we're refreshing due to an error and not timer expiration, cancel the
+    // timer.
+    if (refresh_timer_.valid()) {
+      refresh_timer_.cancel();
+    }
+
+    // do refresh and update response_
+
+    // schedule next refresh
+    ScheduleRefresh();
+  }
+
+  CompletionQueue cq_;
+  future<void> refresh_timer_;
   mutable std::mutex mu_;
+  google::bigtable::v2::PrepareQueryResponse response_;  // GUARDED_BY(mu_)
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -1523,12 +1571,13 @@ class BoundQuery {
 
 class PreparedQuery {
  public:
-  explicit PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
-                         google::bigtable::v2::PrepareQueryResponse response)
+  PreparedQuery(CompletionQueue cq, InstanceResource instance,
+                SqlStatement sql_statement,
+                google::bigtable::v2::PrepareQueryResponse response)
       : instance_(std::move(instance)),
         sql_statement_(std::move(sql_statement)),
-        query_plan_(std::make_shared<bigtable_internal::QueryPlan>(
-            std::move(response))) {}
+        query_plan_(bigtable_internal::QueryPlan::Create(
+            std::move(cq), std::move(response))) {}
 
   /// Copy and move.
   PreparedQuery(PreparedQuery const&) = default;

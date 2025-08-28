@@ -723,8 +723,9 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
       *current, request, __func__);
   operation_context->OnDone(sor.status());
   if (!sor) return std::move(sor).status();
-  return bigtable::PreparedQuery(
-      params.instance, std::move(params.sql_statement), *std::move(sor));
+  return bigtable::PreparedQuery(background_->cq(), params.instance,
+                                 std::move(params.sql_statement),
+                                 *std::move(sor));
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
