@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
 
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/idempotency.h"
@@ -1359,6 +1360,39 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   } state_ = kReading;
 };
 
+class QueryPlan {
+ public:
+  explicit QueryPlan(google::bigtable::v2::PrepareQueryResponse response)
+      : response_(std::move(response)) {}
+
+  std::string const& prepared_query() const {
+    std::lock_guard<std::mutex> lock(mu_);
+    auto valid_until = std::chrono::system_clock::time_point(
+        std::chrono::seconds(response_.valid_until().seconds()) +
+        std::chrono::nanoseconds(response_.valid_until().nanos()));
+    if (valid_until > std::chrono::system_clock::now()) {
+      return response_.prepared_query();
+    }
+    return "refresh unimplemented";
+  }
+
+  google::bigtable::v2::ResultSetMetadata const& metadata() const {
+    std::lock_guard<std::mutex> lock(mu_);
+    auto valid_until = std::chrono::system_clock::time_point(
+        std::chrono::seconds(response_.valid_until().seconds()) +
+        std::chrono::nanoseconds(response_.valid_until().nanos()));
+    if (valid_until > std::chrono::system_clock::now()) {
+      return response_.metadata();
+    }
+    // implement refresh
+    return {};
+  }
+
+ private:
+  google::bigtable::v2::PrepareQueryResponse response_;
+  mutable std::mutex mu_;
+};
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
 
@@ -1444,40 +1478,80 @@ class SqlStatement {
   ParamType params_;
 };
 
+class PreparedQuery;
+
+/**
+ * Move only type representing a PrepareQuery with its parameters.
+ *
+ * Created by calling PreparedQuery::BindParameters
+ */
 class BoundQuery {
  public:
-  std::string const& serialized_query() const {
-    return response_.prepared_query();
+  /// Copy and move.
+  BoundQuery(BoundQuery const&) = delete;
+  BoundQuery(BoundQuery&&) = default;
+  BoundQuery& operator=(BoundQuery const&) = delete;
+  BoundQuery& operator=(BoundQuery&&) = default;
+
+  std::string const& prepared_query() const {
+    return query_plan_->prepared_query();
   }
 
   google::bigtable::v2::ResultSetMetadata const& metadata() const {
-    return response_.metadata();
+    return query_plan_->metadata();
   }
 
+  SqlStatement::ParamType const& parameters() const { return parameters_; }
+
+  SqlStatement::ParamType& mutable_parameters() { return parameters_; }
+
+  InstanceResource const& instance() const { return instance_; }
+
  private:
-  google::bigtable::v2::PrepareQueryResponse response_;
+  friend class PreparedQuery;
+  BoundQuery(InstanceResource instance,
+             std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
+             SqlStatement::ParamType parameters)
+      : instance_(std::move(instance)),
+        query_plan_(std::move(query_plan)),
+        parameters_(std::move(parameters)) {}
+
+  InstanceResource instance_;
+  std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
+  SqlStatement::ParamType parameters_;
 };
 
 class PreparedQuery {
  public:
-  explicit PreparedQuery(SqlStatement statement,
+  explicit PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
                          google::bigtable::v2::PrepareQueryResponse response)
-      : statement_(std::move(statement)), response_(std::move(response)) {}
+      : instance_(std::move(instance)),
+        sql_statement_(std::move(sql_statement)),
+        query_plan_(std::make_shared<bigtable_internal::QueryPlan>(
+            std::move(response))) {}
 
-  StatusOr<BoundQuery> Bind() { return BoundQuery{}; }
-  std::string const& serialized_query() const {
-    return response_.prepared_query();
+  /// Copy and move.
+  PreparedQuery(PreparedQuery const&) = default;
+  PreparedQuery(PreparedQuery&&) = default;
+  PreparedQuery& operator=(PreparedQuery const&) = default;
+  PreparedQuery& operator=(PreparedQuery&&) = default;
+
+  BoundQuery BindParameters(SqlStatement::ParamType params) {
+    SqlStatement::ParamType parameters{sql_statement_.params()};
+    for (auto& p : params) {
+      parameters[p.first] = std::move(p.second);
+    }
+    return BoundQuery(instance_, query_plan_, std::move(parameters));
   }
 
-  google::bigtable::v2::ResultSetMetadata const& metadata() const {
-    return response_.metadata();
-  }
+  InstanceResource const& instance() const { return instance_; }
 
-  SqlStatement const& statement() const { return statement_; }
+  SqlStatement const& sql_statement() const { return sql_statement_; }
 
  private:
-  SqlStatement statement_;
-  google::bigtable::v2::PrepareQueryResponse response_;
+  InstanceResource instance_;
+  SqlStatement sql_statement_;
+  std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

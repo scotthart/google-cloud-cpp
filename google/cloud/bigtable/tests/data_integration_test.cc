@@ -148,6 +148,9 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
       absl::StrSplit(table.table_name(), "/");
   auto table_name = table_parts.back();
 
+  InstanceResource instance(Project("cloud-cpp-testing-resources"),
+                            "test-instance");
+
   SqlStatement::ParamType params = {{"key", Value(Bytes("row-key-1"))}};
   bigtable::SqlStatement statement(
       absl::StrFormat("select _key, cast(family4['c0'] as string) as c0 from "
@@ -159,30 +162,39 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
   //      AS " "c0 FROM `%s`(with_history => true) WHERE _key = 'row-key-1'",
   //      table_name));
 
-  auto prepared_query = client.PrepareQuery(statement);
+  auto prepared_query = client.PrepareQuery(instance, statement);
   if (!prepared_query.ok()) {
     std::cout << prepared_query.status() << std::endl;
   } else {
-    std::cout << "prepared_query=" << prepared_query->serialized_query()
-              << std::endl;
-    auto results = client.ExecuteQuery(*prepared_query);
+    auto execute_query = [&](bigtable::BoundQuery bound_query) {
+      //      std::cout << "prepared_query=" <<
+      //      prepared_query.serialized_query()
+      //                << std::endl;
+      auto results = client.ExecuteQuery(std::move(bound_query));
 
-    using RowType = std::tuple<Bytes, std::string>;
-    //  using RowType =
-    //      std::tuple<Bytes, std::vector<std::pair<Timestamp, std::string>>>;
-    int num_rows = 0;
-    for (auto const& r : bigtable::StreamOf<RowType>(results)) {
-      ++num_rows;
-      if (r.ok()) {
-        std::cout << "*************** row ok" << std::endl;
-        std::cout << "_key=" << std::get<0>(*r) << "; c0=" << std::get<1>(*r)
-                  << std::endl;
-      } else {
-        std::cout << "*************** row NOT ok" << std::endl;
-        std::cout << r.status() << std::endl;
+      using RowType = std::tuple<Bytes, std::string>;
+      //  using RowType =
+      //      std::tuple<Bytes, std::vector<std::pair<Timestamp, std::string>>>;
+      int num_rows = 0;
+      for (auto const& r : bigtable::StreamOf<RowType>(results)) {
+        ++num_rows;
+        if (r.ok()) {
+          std::cout << "*************** row ok" << std::endl;
+          std::cout << "_key=" << std::get<0>(*r) << "; c0=" << std::get<1>(*r)
+                    << std::endl;
+        } else {
+          std::cout << "*************** row NOT ok" << std::endl;
+          std::cout << r.status() << std::endl;
+        }
       }
-    }
-    std::cout << "num_rows=" << num_rows << std::endl;
+      std::cout << "num_rows=" << num_rows << std::endl;
+    };
+
+    auto b1 = prepared_query->BindParameters({});
+    execute_query(std::move(b1));
+    auto b2 =
+        prepared_query->BindParameters({{"key", Value(Bytes("row-key-2"))}});
+    execute_query(std::move(b2));
   }
 }
 

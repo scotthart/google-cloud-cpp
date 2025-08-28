@@ -723,8 +723,8 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
       *current, request, __func__);
   operation_context->OnDone(sor.status());
   if (!sor) return std::move(sor).status();
-  return bigtable::PreparedQuery(std::move(params.sql_statement),
-                                 *std::move(sor));
+  return bigtable::PreparedQuery(
+      params.instance, std::move(params.sql_statement), *std::move(sor));
 }
 
 future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
@@ -734,44 +734,28 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
 }
 
 bigtable::RowStream DataConnectionImpl::ExecuteQuery(
-    bigtable::ExecuteQueryParams p) {
+    bigtable::ExecuteQueryParams params) {
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto operation_context = std::make_shared<OperationContext>();
 
-  //  StatusOr<ResultType> response =
-  //      ExecuteSqlImpl<ResultType>(session, selector, ctx, std::move(params),
-  //                                 query_mode, std::move(retry_resume_fn));
-
   google::bigtable::v2::ExecuteQueryRequest request;
-  request.set_instance_name(p.instance.FullName());
-  absl::optional<google::bigtable::v2::ResultSetMetadata> metadata;
+  request.set_instance_name(params.instance.FullName());
+  google::bigtable::v2::ResultSetMetadata metadata = params.query.metadata();
 
-  if (absl::holds_alternative<bigtable::SqlStatement>(p.query)) {
-    auto sql_statement = std::move(absl::get<bigtable::SqlStatement>(p.query));
-    request.set_query(sql_statement.sql());
-    metadata = absl::nullopt;
-  } else if (absl::holds_alternative<bigtable::PreparedQuery>(p.query)) {
-    auto prepared_query =
-        std::move(absl::get<bigtable::PreparedQuery>(p.query));
-    request.set_prepared_query(prepared_query.serialized_query());
-    metadata = prepared_query.metadata();
-    for (auto const& p : prepared_query.statement().params()) {
-      request.mutable_params()->insert(
-          std::make_pair(p.first, ValueInternals::ToProto(p.second).second));
-    }
-    std::cout << __func__ << ": request.params()=\n"
-              << request.DebugString() << std::endl;
-
-  } else {
-    auto bound_query = std::move(absl::get<bigtable::BoundQuery>(p.query));
-    request.set_prepared_query(bound_query.serialized_query());
-    metadata = bound_query.metadata();
+  request.set_prepared_query(params.query.prepared_query());
+  for (auto& p : params.query.mutable_parameters()) {
+    request.mutable_params()->insert(
+        std::make_pair(std::move(p.first),
+                       ValueInternals::ToProto(std::move(p.second)).second));
   }
+  std::cout << __func__ << ": request.params()=\n"
+            << request.DebugString() << std::endl;
 
   auto retry_resume_fn =
       [stub = stub_, retry_policy_prototype = retry_policy(*current),
-       backoff_policy_prototype = backoff_policy(*current),
-       metadata](google::bigtable::v2::ExecuteQueryRequest& request) mutable
+       backoff_policy_prototype = backoff_policy(*current)](
+          google::bigtable::v2::ExecuteQueryRequest& request,
+          google::bigtable::v2::ResultSetMetadata metadata) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     auto factory = [stub, request](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
@@ -796,42 +780,9 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
     return PartialResultSetSource::Create(std::move(rpc), std::move(metadata));
   };
 
-  //  request.set_session(session->session_name());
-  //  *request.mutable_transaction() = *selector;
-  //  auto sql_statement = ToProto(std::move(params.statement));
-  //  request.set_sql(std::move(*sql_statement.mutable_sql()));
-  //  *request.mutable_params() = std::move(*sql_statement.mutable_params());
-  //  *request.mutable_param_types() =
-  //      std::move(*sql_statement.mutable_param_types());
-  //  request.set_seqno(ctx.seqno);
-  //  request.set_query_mode(query_mode);
-  //  if (params.partition_token) {
-  //    request.set_partition_token(*std::move(params.partition_token));
-  //    if (params.partition_data_boost) {
-  //      request.set_data_boost_enabled(true);
-  //    }
-  //  }
-  //  if (params.query_options.optimizer_version()) {
-  //    request.mutable_query_options()->set_optimizer_version(
-  //        *params.query_options.optimizer_version());
-  //  }
-  //  if (params.query_options.optimizer_statistics_package()) {
-  //    request.mutable_query_options()->set_optimizer_statistics_package(
-  //        *params.query_options.optimizer_statistics_package());
-  //  }
-  //  request.mutable_request_options()->set_priority(
-  //      ProtoRequestPriority(params.query_options.request_priority()));
-  //  if (params.query_options.request_tag().has_value()) {
-  //    request.mutable_request_options()->set_request_tag(
-  //        *params.query_options.request_tag());
-  //  }
-  //  request.mutable_request_options()->set_transaction_tag(ctx.tag);
-  //  absl::visit(DirectedReadVisitor([&request] {
-  //                return request.mutable_directed_read_options();
-  //              }),
-  //              params.directed_read_option);
-  //
-  auto response = retry_resume_fn(request);
+  // we can't just fire this off once. We'll need to do this in a loop such
+  // that we can refresh the query plan if it expires.
+  auto response = retry_resume_fn(request, std::move(metadata));
 
   //  for (;;) {
   //    auto reader = retry_resume_fn(request);
