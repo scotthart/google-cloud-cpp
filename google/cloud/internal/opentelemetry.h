@@ -28,6 +28,7 @@
 #include <opentelemetry/trace/span.h>
 #include <opentelemetry/trace/span_context_kv_iterable_view.h>
 #include <opentelemetry/trace/tracer.h>
+#include <opentelemetry/version.h>
 #include <string>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <chrono>
@@ -39,6 +40,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+#define OTEL_VERSION_BITS(x,y,z) ((x)<<16|(y)<<8|(z))
+
+#define OTEL_VERSION_NUM OTEL_VERSION_BITS(OPENTELEMETRY_VERSION_MAJOR, OPENTELEMETRY_VERSION_MINOR, OPENTELEMETRY_VERSION_PATCH)
+
+#define OTEL_AT_LEAST_VERSION(x,y,z) \
+    (OTEL_VERSION_NUM >= OTEL_VERSION_BITS(x,y,z))
 
 /**
  * Returns a [tracer] to use for creating [spans].

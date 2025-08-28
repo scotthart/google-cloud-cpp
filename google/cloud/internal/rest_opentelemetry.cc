@@ -23,7 +23,11 @@
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
 #include <opentelemetry/trace/provider.h>
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+#include <opentelemetry/semconv/incubating/net_attributes.h>
+#else
 #include <opentelemetry/trace/semantic_conventions.h>
+#endif
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -71,13 +75,16 @@ void InjectTraceContext(
 
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanHttp(
     RestRequest const& request, opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   auto span = internal::MakeSpan(
       absl::StrCat("HTTP/", absl::string_view{method.data(), method.size()}),
       {{/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+        opentelemetry::semconv::net::NetTransportValues::kIpTcp},
+#else
+        opentelemetry::trace::SemanticConventions::NetTransportValues::kIpTcp},
+#endif
        {/*sc::kHttpRequestMethod=*/"http.request.method", method},
        {/*sc::kUrlFull=*/"url.full", request.path()}},
       options);

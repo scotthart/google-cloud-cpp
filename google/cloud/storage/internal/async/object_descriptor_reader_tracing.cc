@@ -18,7 +18,7 @@
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include <opentelemetry/trace/semantic_conventions.h>
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 

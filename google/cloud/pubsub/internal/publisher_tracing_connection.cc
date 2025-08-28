@@ -29,7 +29,7 @@
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/propagation/http_trace_context.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

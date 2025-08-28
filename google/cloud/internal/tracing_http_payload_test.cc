@@ -20,7 +20,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {

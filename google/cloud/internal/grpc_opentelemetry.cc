@@ -25,7 +25,12 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+#include <opentelemetry/semconv/incubating/net_attributes.h>
+#include <opentelemetry/semconv/incubating/rpc_attributes.h>
+#else
 #include <opentelemetry/trace/semantic_conventions.h>
+#endif
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -110,17 +115,27 @@ std::pair<std::string, std::string> MakeAttribute(
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
     opentelemetry::nostd::string_view method) {
-  namespace sc = opentelemetry::trace::SemanticConventions;
+//  namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   return internal::MakeSpan(
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
                    absl::string_view{method.data(), method.size()}),
-      {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
-       {sc::kRpcService, service},
-       {sc::kRpcMethod, method},
-       {/*sc::kNetworkTransport=*/"network.transport",
-        sc::NetTransportValues::kIpTcp},
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+      {{opentelemetry::semconv::rpc::kRpcSystem,
+        opentelemetry::semconv::rpc::RpcSystemValues::kGrpc},
+       {opentelemetry::semconv::rpc::kRpcService, service},
+       {opentelemetry::semconv::rpc::kRpcMethod, method},
+       {/*opentelemetry::semconv::net::kNetworkTransport=*/"network.transport",
+        opentelemetry::semconv::net::NetTransportValues::kIpTcp},
+#else
+      {{opentelemetry::trace::SemanticConventions::kRpcSystem,
+        opentelemetry::trace::SemanticConventions::RpcSystemValues::kGrpc},
+       {opentelemetry::trace::SemanticConventions::kRpcService, service},
+       {opentelemetry::trace::SemanticConventions::kRpcMethod, method},
+       {/*opentelemetry::trace::SemanticConventions::kNetworkTransport=*/"network.transport",
+        opentelemetry::trace::SemanticConventions::NetTransportValues::kIpTcp},
+#endif
        {"grpc.version", grpc::Version()}},
       options);
 }

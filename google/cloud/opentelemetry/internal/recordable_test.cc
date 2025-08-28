@@ -20,7 +20,7 @@
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {

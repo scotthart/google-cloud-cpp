@@ -17,7 +17,7 @@
 #include "google/cloud/storage/internal/grpc/monitoring_project.h"
 #include "google/cloud/storage/options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {

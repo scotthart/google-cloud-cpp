@@ -15,7 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/storage/internal/async/writer_connection_tracing.h"
 #include "google/cloud/internal/opentelemetry.h"
-#include <opentelemetry/trace/semantic_conventions.h>
+
 #include <cstdint>
 #include <string>
 #include <utility>

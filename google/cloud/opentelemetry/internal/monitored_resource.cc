@@ -15,12 +15,21 @@
 #include "google/cloud/opentelemetry/internal/monitored_resource.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include "absl/types/variant.h"
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/resource/resource.h>
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+#include <opentelemetry/semconv/incubating/cloud_attributes.h>
+#include <opentelemetry/semconv/incubating/faas_attributes.h>
+#include <opentelemetry/semconv/incubating/host_attributes.h>
+#include <opentelemetry/semconv/incubating/k8s_attributes.h>
+#include <opentelemetry/semconv/incubating/service_attributes.h>
+#else
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
+#endif
 #include <algorithm>
 #include <numeric>
 #include <unordered_map>
@@ -31,7 +40,11 @@ namespace otel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+namespace sc = opentelemetry::semconv;
+#else
 namespace sc = opentelemetry::sdk::resource::SemanticConventions;
+#endif
 
 struct AsStringVisitor {
   template <typename T>
@@ -88,8 +101,14 @@ class MonitoredResourceProvider {
 MonitoredResourceProvider GceInstance() {
   return MonitoredResourceProvider("gce_instance",
                                    {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+                                       {"zone", {{sc::cloud::kCloudAvailabilityZone}}},
+                                       {"instance_id", {{sc::host::kHostId}}},
+
+#else
                                        {"zone", {{sc::kCloudAvailabilityZone}}},
                                        {"instance_id", {{sc::kHostId}}},
+#endif
                                    });
 }
 
@@ -97,11 +116,19 @@ MonitoredResourceProvider K8sContainer() {
   return MonitoredResourceProvider(
       "k8s_container",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"namespace_name", {{sc::k8s::kK8sNamespaceName}}},
+          {"pod_name", {{sc::k8s::kK8sPodName}}},
+          {"container_name", {{sc::k8s::kK8sContainerName}}},
+#else
           {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"cluster_name", {{sc::kK8sClusterName}}},
           {"namespace_name", {{sc::kK8sNamespaceName}}},
           {"pod_name", {{sc::kK8sPodName}}},
           {"container_name", {{sc::kK8sContainerName}}},
+#endif
       });
 }
 
@@ -109,10 +136,17 @@ MonitoredResourceProvider K8sPod() {
   return MonitoredResourceProvider(
       "k8s_pod",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"namespace_name", {{sc::k8s::kK8sNamespaceName}}},
+          {"pod_name", {{sc::k8s::kK8sPodName}}},
+#else
           {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"cluster_name", {{sc::kK8sClusterName}}},
           {"namespace_name", {{sc::kK8sNamespaceName}}},
           {"pod_name", {{sc::kK8sPodName}}},
+#endif
       });
 }
 
@@ -120,9 +154,15 @@ MonitoredResourceProvider K8sNode() {
   return MonitoredResourceProvider(
       "k8s_node",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+          {"node_name", {{sc::k8s::kK8sNodeName}}},
+#else
           {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"cluster_name", {{sc::kK8sClusterName}}},
           {"node_name", {{sc::kK8sNodeName}}},
+#endif
       });
 }
 
@@ -130,8 +170,14 @@ MonitoredResourceProvider K8sCluster() {
   return MonitoredResourceProvider(
       "k8s_cluster",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"cluster_name", {{sc::k8s::kK8sClusterName}}},
+#else
+
           {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"cluster_name", {{sc::kK8sClusterName}}},
+#endif
       });
 }
 
@@ -139,10 +185,17 @@ MonitoredResourceProvider GaeInstance() {
   return MonitoredResourceProvider(
       "gae_instance",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"module_id", {{sc::faas::kFaasName}}},
+          {"version_id", {{sc::faas::kFaasVersion}}},
+          {"instance_id", {{sc::faas::kFaasInstance}}},
+#else
           {"location", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"module_id", {{sc::kFaasName}}},
           {"version_id", {{sc::kFaasVersion}}},
           {"instance_id", {{sc::kFaasInstance}}},
+#endif
       });
 }
 
@@ -150,9 +203,15 @@ MonitoredResourceProvider AwsEc2Instance() {
   return MonitoredResourceProvider(
       "aws_ec2_instance",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"instance_id", {{sc::host::kHostId}}},
+          {"region", {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}}},
+          {"aws_account", {{sc::cloud::kCloudAccountId}}},
+#else
           {"instance_id", {{sc::kHostId}}},
           {"region", {{sc::kCloudAvailabilityZone, sc::kCloudRegion}}},
           {"aws_account", {{sc::kCloudAccountId}}},
+#endif
       });
 }
 
@@ -160,11 +219,19 @@ MonitoredResourceProvider GenericTask() {
   return MonitoredResourceProvider(
       "generic_task",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}, "global"}},
+          {"namespace", {{sc::service::kServiceNamespace}}},
+          {"job", {{sc::service::kServiceName, sc::faas::kFaasName}}},
+          {"task_id", {{sc::service::kServiceInstanceId, sc::faas::kFaasInstance}}},
+#else
           {"location",
            {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
           {"namespace", {{sc::kServiceNamespace}}},
           {"job", {{sc::kServiceName, sc::kFaasName}}},
           {"task_id", {{sc::kServiceInstanceId, sc::kFaasInstance}}},
+#endif
       });
 }
 
@@ -172,10 +239,17 @@ MonitoredResourceProvider GenericNode() {
   return MonitoredResourceProvider(
       "generic_node",
       {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+          {"location",
+           {{sc::cloud::kCloudAvailabilityZone, sc::cloud::kCloudRegion}, "global"}},
+          {"namespace", {{sc::service::kServiceNamespace}}},
+          {"node_id", {{sc::host::kHostId, sc::host::kHostName}}},
+#else
           {"location",
            {{sc::kCloudAvailabilityZone, sc::kCloudRegion}, "global"}},
           {"namespace", {{sc::kServiceNamespace}}},
           {"node_id", {{sc::kHostId, sc::kHostName}}},
+#endif
       });
 }
 
@@ -185,13 +259,28 @@ MonitoredResourceProvider GenericNode() {
 MonitoredResourceProvider MakeProvider(
     opentelemetry::sdk::resource::ResourceAttributes const& attributes) {
   std::string platform;
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+    auto p = attributes.find(sc::cloud::kCloudPlatform);
+#else
   auto p = attributes.find(sc::kCloudPlatform);
+#endif
   if (p != attributes.end()) platform = AsString(p->second);
 
   if (platform == "gcp_compute_engine") {
     return GceInstance();
   }
   if (platform == "gcp_kubernetes_engine") {
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+    if (attributes.find(sc::k8s::kK8sContainerName) != attributes.end()) {
+      return K8sContainer();
+    }
+    if (attributes.find(sc::k8s::kK8sPodName) != attributes.end()) {
+      return K8sPod();
+    }
+    if (attributes.find(sc::k8s::kK8sNodeName) != attributes.end()) {
+      return K8sNode();
+    }
+#else
     if (attributes.find(sc::kK8sContainerName) != attributes.end()) {
       return K8sContainer();
     }
@@ -201,6 +290,7 @@ MonitoredResourceProvider MakeProvider(
     if (attributes.find(sc::kK8sNodeName) != attributes.end()) {
       return K8sNode();
     }
+#endif
     return K8sCluster();
   }
   if (platform == "gcp_app_engine") {
@@ -209,10 +299,17 @@ MonitoredResourceProvider MakeProvider(
   if (platform == "aws_ec2") {
     return AwsEc2Instance();
   }
+#if OTEL_AT_LEAST_VERSION(1,22,0)
+  if ((attributes.find(sc::service::kServiceName) != attributes.end() &&
+       attributes.find(sc::service::kServiceInstanceId) != attributes.end()) ||
+      (attributes.find(sc::faas::kFaasName) != attributes.end() &&
+       attributes.find(sc::faas::kFaasInstance) != attributes.end())) {
+#else
   if ((attributes.find(sc::kServiceName) != attributes.end() &&
        attributes.find(sc::kServiceInstanceId) != attributes.end()) ||
       (attributes.find(sc::kFaasName) != attributes.end() &&
        attributes.find(sc::kFaasInstance) != attributes.end())) {
+#endif
     return GenericTask();
   }
   return GenericNode();

@@ -25,7 +25,7 @@
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {

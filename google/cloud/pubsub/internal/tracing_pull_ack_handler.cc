@@ -20,7 +20,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/context/runtime_context.h>
 #include <opentelemetry/trace/context.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+
 #include <opentelemetry/trace/span.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <cstdint>

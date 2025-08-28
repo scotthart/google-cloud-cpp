@@ -20,7 +20,7 @@
 #include "google/cloud/status_or.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/trace/scope.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+
 #include <opentelemetry/trace/span_startoptions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 

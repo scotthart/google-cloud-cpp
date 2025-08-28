@@ -20,7 +20,7 @@
 #include <opentelemetry/common/attribute_value.h>
 #include <opentelemetry/sdk/metrics/data/metric_data.h>
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+
 #include <cctype>
 
 namespace google {

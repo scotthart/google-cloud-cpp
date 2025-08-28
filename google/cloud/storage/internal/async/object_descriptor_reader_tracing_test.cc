@@ -22,7 +22,7 @@
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock-matchers.h>
 #include <gmock/gmock.h>
-#include <opentelemetry/trace/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {

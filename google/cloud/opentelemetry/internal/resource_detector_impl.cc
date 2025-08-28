@@ -23,7 +23,7 @@
 #include "absl/strings/match.h"
 #include <nlohmann/json.hpp>
 #include <opentelemetry/sdk/resource/resource.h>
-#include <opentelemetry/sdk/resource/semantic_conventions.h>
+
 
 namespace google {
 namespace cloud {
