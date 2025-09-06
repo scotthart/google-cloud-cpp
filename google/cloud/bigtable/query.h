@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_QUERY_H
 
 #include "google/cloud/bigtable/instance_resource.h"
+#include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
@@ -115,14 +116,19 @@ class Bytes {
   /// An empty sequence.
   Bytes() = default;
 
+  Bytes(char const* b) : raw_rep_(std::string{b}) {}
+  Bytes(std::string b) : raw_rep_(std::move(b)) {}
+
   /// @name Construction from a sequence of octets.
   ///@{
   template <typename InputIt>
   Bytes(InputIt first, InputIt last) {
-    google::cloud::internal::Base64Encoder encoder;
-    while (first != last) encoder.PushBack(*first++);
-    base64_rep_ = std::move(encoder).FlushAndPad();
+    //    google::cloud::internal::Base64Encoder encoder;
+    //    while (first != last) encoder.PushBack(*first++);
+    //    base64_rep_ = std::move(encoder).FlushAndPad();
+    while (first != last) raw_rep_.append(first++);
   }
+
   template <typename Container>
   explicit Bytes(Container const& c) : Bytes(std::begin(c), std::end(c)) {}
   ///@}
@@ -131,14 +137,14 @@ class Bytes {
   /// construction from a range specified as a pair of input iterators.
   template <typename Container>
   Container get() const {
-    google::cloud::internal::Base64Decoder decoder(base64_rep_);
+    google::cloud::internal::Base64Decoder decoder(raw_rep_);
     return Container(decoder.begin(), decoder.end());
   }
 
   /// @name Relational operators
   ///@{
   friend bool operator==(Bytes const& a, Bytes const& b) {
-    return a.base64_rep_ == b.base64_rep_;
+    return a.raw_rep_ == b.raw_rep_;
   }
   friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
   ///@}
@@ -154,7 +160,8 @@ class Bytes {
  private:
   friend struct bigtable_internal::BytesInternals;
 
-  std::string base64_rep_;  // valid base64 representation
+  std::string raw_rep_;
+  //  std::string base64_rep_;  // valid base64 representation
 };
 
 class Value {
@@ -1294,7 +1301,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader,
-      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata);
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::shared_ptr<OperationContext> operation_context);
 
   ~PartialResultSetSource() override;
 
@@ -1307,7 +1315,8 @@ class PartialResultSetSource : public PartialResultSourceInterface {
  private:
   explicit PartialResultSetSource(
       std::unique_ptr<PartialResultSetReader> reader,
-      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata);
+      absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+      std::shared_ptr<OperationContext> operation_context);
 
   Status ReadFromStream();
 
@@ -1322,6 +1331,7 @@ class PartialResultSetSource : public PartialResultSourceInterface {
   // the column names it contained (which will be shared between rows).
   absl::optional<google::bigtable::v2::ResultSetMetadata> metadata_ =
       absl::nullopt;
+  std::shared_ptr<OperationContext> operation_context_;
   std::shared_ptr<std::vector<std::string>> columns_;
 
   std::deque<bigtable::QueryRow> pending_rows_;
@@ -1374,6 +1384,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   ~QueryPlan() { refresh_timer_.cancel(); }
 
   std::string const& prepared_query() const {
+    static constexpr auto kUnimplemented = "refresh unimplemented";
     std::lock_guard<std::mutex> lock(mu_);
     auto valid_until = std::chrono::system_clock::time_point(
         std::chrono::seconds(response_.valid_until().seconds()) +
@@ -1381,10 +1392,11 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
     if (valid_until > std::chrono::system_clock::now()) {
       return response_.prepared_query();
     }
-    return "refresh unimplemented";
+    return kUnimplemented;
   }
 
   google::bigtable::v2::ResultSetMetadata const& metadata() const {
+    static google::bigtable::v2::ResultSetMetadata const kEmpty;
     std::lock_guard<std::mutex> lock(mu_);
     auto valid_until = std::chrono::system_clock::time_point(
         std::chrono::seconds(response_.valid_until().seconds()) +
@@ -1393,7 +1405,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
       return response_.metadata();
     }
     // implement refresh
-    return {};
+    return kEmpty;
   }
 
  private:
@@ -1541,19 +1553,17 @@ class BoundQuery {
   BoundQuery& operator=(BoundQuery const&) = delete;
   BoundQuery& operator=(BoundQuery&&) = default;
 
+  /// Accessors
   std::string const& prepared_query() const {
     return query_plan_->prepared_query();
   }
-
   google::bigtable::v2::ResultSetMetadata const& metadata() const {
     return query_plan_->metadata();
   }
-
   SqlStatement::ParamType const& parameters() const { return parameters_; }
-
-  SqlStatement::ParamType& mutable_parameters() { return parameters_; }
-
   InstanceResource const& instance() const { return instance_; }
+
+  google::bigtable::v2::ExecuteQueryRequest ToRequestProto();
 
  private:
   friend class PreparedQuery;

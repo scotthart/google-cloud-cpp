@@ -739,16 +739,17 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
   auto current = google::cloud::internal::SaveCurrentOptions();
   auto operation_context = std::make_shared<OperationContext>();
 
-  google::bigtable::v2::ExecuteQueryRequest request;
-  request.set_instance_name(params.instance.FullName());
   google::bigtable::v2::ResultSetMetadata metadata = params.query.metadata();
-
-  request.set_prepared_query(params.query.prepared_query());
-  for (auto& p : params.query.mutable_parameters()) {
-    request.mutable_params()->insert(
-        std::make_pair(std::move(p.first),
-                       ValueInternals::ToProto(std::move(p.second)).second));
-  }
+  google::bigtable::v2::ExecuteQueryRequest request =
+      params.query.ToRequestProto();
+  //  request.set_instance_name(params.instance.FullName());
+  //
+  //  request.set_prepared_query(params.query.prepared_query());
+  //  for (auto& p : params.query.mutable_parameters()) {
+  //    request.mutable_params()->insert(
+  //        std::make_pair(std::move(p.first),
+  //                       ValueInternals::ToRequestProto(std::move(p.second)).second));
+  //  }
   std::cout << __func__ << ": request.params()=\n"
             << request.DebugString() << std::endl;
 
@@ -756,7 +757,8 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
       [stub = stub_, retry_policy_prototype = retry_policy(*current),
        backoff_policy_prototype = backoff_policy(*current)](
           google::bigtable::v2::ExecuteQueryRequest& request,
-          google::bigtable::v2::ResultSetMetadata metadata) mutable
+          google::bigtable::v2::ResultSetMetadata metadata,
+          std::shared_ptr<OperationContext> operation_context) mutable
       -> StatusOr<std::unique_ptr<PartialResultSourceInterface>> {
     auto factory = [stub, request](std::string const& resume_token) mutable {
       if (!resume_token.empty()) request.set_resume_token(resume_token);
@@ -778,12 +780,14 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         std::move(factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
-    return PartialResultSetSource::Create(std::move(rpc), std::move(metadata));
+    return PartialResultSetSource::Create(std::move(rpc), std::move(metadata),
+                                          std::move(operation_context));
   };
 
   // we can't just fire this off once. We'll need to do this in a loop such
   // that we can refresh the query plan if it expires.
-  auto response = retry_resume_fn(request, std::move(metadata));
+  auto response = retry_resume_fn(request, std::move(metadata),
+                                  std::move(operation_context));
 
   //  for (;;) {
   //    auto reader = retry_resume_fn(request);

@@ -384,6 +384,9 @@ using ::google::cloud::internal::Base64Decoder;
 // normally, double quotes are backslash escaped, and non-printable characters
 // are printed as a 3-digit octal escape sequence.
 std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
+  os << bytes.raw_rep_;
+  return os;
+#if 0
   os << R"(B")";
   for (auto const byte : Base64Decoder(bytes.base64_rep_)) {
     if (byte == '"') {
@@ -404,6 +407,7 @@ std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
   }
   // Can't use raw string literal here because of a doxygen bug.
   return os << "\"";
+#endif
 }
 
 bool Value::TypeProtoIs(bool, google::bigtable::v2::Type const& type) {
@@ -533,6 +537,19 @@ StatusOr<Bytes> Value::GetValue(google::cloud::bigtable::Bytes const&,
   return *decoded;
 }
 
+google::bigtable::v2::ExecuteQueryRequest BoundQuery::ToRequestProto() {
+  google::bigtable::v2::ExecuteQueryRequest request;
+  request.set_instance_name(instance_.FullName());
+  request.set_prepared_query(query_plan_->prepared_query());
+  for (auto& p : parameters_) {
+    request.mutable_params()->insert(std::make_pair(
+        std::move(p.first),
+        bigtable_internal::ValueInternals::ToProto(std::move(p.second))
+            .second));
+  }
+  return request;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
 
@@ -542,12 +559,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 struct BytesInternals {
   static bigtable::Bytes Create(std::string rep) {
     bigtable::Bytes bytes;
-    bytes.base64_rep_ = std::move(rep);
+    bytes.raw_rep_ = std::move(rep);
+    //    bytes.base64_rep_ = std::move(rep);
     return bytes;
   }
 
   static std::string GetRep(bigtable::Bytes&& bytes) {
-    return std::move(bytes.base64_rep_);
+    return std::move(bytes.raw_rep_);
+    //    return std::move(bytes.base64_rep_);
   }
 };
 
@@ -616,10 +635,11 @@ Status PartialResultSetResume::Finish() {
 StatusOr<std::unique_ptr<PartialResultSourceInterface>>
 PartialResultSetSource::Create(
     std::unique_ptr<PartialResultSetReader> reader,
-    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata) {
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::shared_ptr<OperationContext> operation_context) {
   std::cout << __func__ << std::endl;
-  std::unique_ptr<PartialResultSetSource> source(
-      new PartialResultSetSource(std::move(reader), std::move(metadata)));
+  std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
+      std::move(reader), std::move(metadata), std::move(operation_context)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
@@ -641,10 +661,12 @@ PartialResultSetSource::Create(
 
 PartialResultSetSource::PartialResultSetSource(
     std::unique_ptr<PartialResultSetReader> reader,
-    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata)
+    absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
+    std::shared_ptr<OperationContext> operation_context)
     : options_(internal::CurrentOptions()),
       reader_(std::move(reader)),
-      metadata_(std::move(metadata)) {
+      metadata_(std::move(metadata)),
+      operation_context_(std::move(operation_context)) {
   if (metadata_.has_value()) {
     columns_ = std::make_shared<std::vector<std::string>>();
     columns_->reserve(metadata_->proto_schema().columns_size());

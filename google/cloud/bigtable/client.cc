@@ -39,13 +39,13 @@ RowStream Client::ExecuteQuery(PreparedQuery query, Options opts) {
   auto bound_query = query.BindParameters({});
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(std::move(opts), options_));
-  return conn_->ExecuteQuery({query.instance(), std::move(bound_query)});
+  return conn_->ExecuteQuery({std::move(bound_query)});
 }
 
 RowStream Client::ExecuteQuery(BoundQuery&& query, Options opts) {
   google::cloud::internal::OptionsSpan span(
       google::cloud::internal::MergeOptions(std::move(opts), options_));
-  return conn_->ExecuteQuery({query.instance(), std::move(query)});
+  return conn_->ExecuteQuery({std::move(query)});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

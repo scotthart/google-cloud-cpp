@@ -172,19 +172,21 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
       //                << std::endl;
       auto results = client.ExecuteQuery(std::move(bound_query));
 
-      using RowType = std::tuple<Bytes, std::string>;
+      using RowType = std::tuple<Bytes, absl::optional<std::string>>;
       //  using RowType =
       //      std::tuple<Bytes, std::vector<std::pair<Timestamp, std::string>>>;
       int num_rows = 0;
-      for (auto const& r : bigtable::StreamOf<RowType>(results)) {
+      for (auto const& row : bigtable::StreamOf<RowType>(results)) {
         ++num_rows;
-        if (r.ok()) {
+        if (row.ok()) {
+          auto const& r = *row;
           std::cout << "*************** row ok" << std::endl;
-          std::cout << "_key=" << std::get<0>(*r) << "; c0=" << std::get<1>(*r)
+          std::cout << "_key=" << std::get<0>(r)
+                    << "; c0=" << std::get<1>(*row).value_or("NULL")
                     << std::endl;
         } else {
           std::cout << "*************** row NOT ok" << std::endl;
-          std::cout << r.status() << std::endl;
+          std::cout << row.status() << std::endl;
         }
       }
       std::cout << "num_rows=" << num_rows << std::endl;

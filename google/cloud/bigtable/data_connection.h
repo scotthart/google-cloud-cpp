@@ -60,7 +60,6 @@ struct PrepareQueryParams {
 };
 
 struct ExecuteQueryParams {
-  bigtable::InstanceResource instance;
   BoundQuery query;
   //  absl::variant<SqlStatement, PreparedQuery, BoundQuery> query;
 };
