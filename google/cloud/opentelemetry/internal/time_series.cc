@@ -22,6 +22,7 @@
 #include <opentelemetry/sdk/metrics/export/metric_producer.h>
 #include <opentelemetry/sdk/resource/semantic_conventions.h>
 #include <cctype>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -153,7 +154,10 @@ google::api::Metric ToMetric(
 
   google::api::Metric proto;
   proto.set_type(name_formatter(metric_data.instrument_descriptor.name_));
-
+  //  std::cout << __func__
+  //            << ": Metric.type=" << proto.type()
+  //            << "; thread=" << std::this_thread::get_id()
+  //            << std::endl;
   auto& labels = *proto.mutable_labels();
   if (resource) {
     // Copy several well-known labels from the resource into the metric, if they

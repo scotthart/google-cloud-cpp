@@ -30,6 +30,7 @@
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
 #include <string>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -107,6 +108,8 @@ DataConnectionImpl::DataConnectionImpl(
       limiter_(std::move(limiter)),
       options_(internal::MergeOptions(std::move(options),
                                       DataConnection::options())) {
+  std::cout << __func__ << ": thread=" << std::this_thread::get_id()
+            << std::endl;
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   if (options_.get<bigtable::EnableMetricsOption>()) {
     // The client_uid is eventually used in conjunction with other data labels

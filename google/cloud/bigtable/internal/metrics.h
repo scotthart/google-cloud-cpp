@@ -53,7 +53,8 @@ struct DataLabels {
 };
 
 using LabelMap = std::unordered_map<std::string, std::string>;
-LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d);
+LabelMap IntoLabelMap(ResourceLabels const& r, DataLabels const& d,
+                      std::set<std::string> const& filtered_data_labels = {});
 
 absl::optional<google::bigtable::v2::ResponseParams>
 GetResponseParamsFromTrailingMetadata(
@@ -105,6 +106,7 @@ class Metric {
 class OperationLatency : public Metric {
  public:
   explicit OperationLatency(
+      std::string const& instrumentation_scope,
       opentelemetry::nostd::shared_ptr<
           opentelemetry::metrics::MeterProvider> const& provider);
   void PreCall(opentelemetry::context::Context const&,
@@ -123,6 +125,51 @@ class OperationLatency : public Metric {
   opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
       operation_latencies_;
   OperationContext::Clock::time_point operation_start_;
+};
+
+class AttemptLatency : public Metric {
+ public:
+  AttemptLatency(std::string const& instrumentation_scope,
+                 opentelemetry::nostd::shared_ptr<
+                     opentelemetry::metrics::MeterProvider> const& provider);
+  void PreCall(opentelemetry::context::Context const&,
+               PreCallParams const& p) override;
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Histogram<double>>
+      attempt_latencies_;
+  OperationContext::Clock::time_point attempt_start_;
+};
+
+class RetryCount : public Metric {
+ public:
+  RetryCount(std::string const& instrumentation_scope,
+             opentelemetry::nostd::shared_ptr<
+                 opentelemetry::metrics::MeterProvider> const& provider);
+  void PreCall(opentelemetry::context::Context const&,
+               PreCallParams const&) override;
+  void PostCall(opentelemetry::context::Context const& context,
+                grpc::ClientContext const& client_context,
+                PostCallParams const& p) override;
+  void OnDone(opentelemetry::context::Context const& context,
+              OnDoneParams const& p) override;
+  std::unique_ptr<Metric> clone(ResourceLabels resource_labels,
+                                DataLabels data_labels) const override;
+
+ private:
+  ResourceLabels resource_labels_;
+  DataLabels data_labels_;
+  std::uint64_t num_retries_ = 0;
+  opentelemetry::nostd::shared_ptr<
+      opentelemetry::metrics::Counter<std::uint64_t>>
+      retry_count_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

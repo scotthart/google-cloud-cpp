@@ -20,6 +20,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
 #include <memory>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -66,6 +67,12 @@ opentelemetry::sdk::common::ExportResult MonitoringExporter::Export(
 opentelemetry::sdk::common::ExportResult MonitoringExporter::SendRequests(
     std::vector<google::monitoring::v3::CreateTimeSeriesRequest> const&
         requests) {
+  //  std::cout << __func__
+  //  << ": requests.size()=" << requests.size()
+  //  << "; requests.front().time_series.size()=" <<
+  //  requests.front().time_series().size()
+  //  << "; thread=" << std::this_thread::get_id()
+  //  << std::endl;
   auto result = opentelemetry::sdk::common::ExportResult::kSuccess;
   for (auto const& request : requests) {
     auto status = use_service_time_series_
@@ -92,7 +99,8 @@ opentelemetry::sdk::common::ExportResult MonitoringExporter::ExportImpl(
   opentelemetry::sdk::common::ExportResult result =
       opentelemetry::sdk::common::ExportResult::kSuccess;
   if (otel_internal::IsEmptyTimeSeries(data)) {
-    GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data.";
+    GCP_LOG(INFO) << "Cloud Monitoring Export skipped. No data. thread="
+                  << std::this_thread::get_id();
     // Return early to save the littlest bit of processing.
     return result;
   }

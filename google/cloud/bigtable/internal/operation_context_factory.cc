@@ -28,6 +28,7 @@
 #include <opentelemetry/sdk/metrics/meter_context_factory.h>
 #include <opentelemetry/sdk/metrics/meter_provider_factory.h>
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -121,6 +122,8 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
     std::shared_ptr<OperationContext::Clock> clock,
     Options options)  // NOLINT(performance-unnecessary-value-param)
     : client_uid_(std::move(client_uid)), clock_(std::move(clock)) {
+  std::cout << __func__ << "; thread=" << std::this_thread::get_id()
+            << std::endl;
   InitializeProvider(std::move(conn), std::move(options));
 }
 
@@ -133,13 +136,27 @@ MetricsOperationContextFactory::MetricsOperationContextFactory(
 MetricsOperationContextFactory::MetricsOperationContextFactory(
     std::string client_uid, std::shared_ptr<Metric const> const& metric)
     : client_uid_(std::move(client_uid)) {
-  read_row_metrics_.push_back(metric);
-  read_rows_metrics_.push_back(metric);
-  mutate_row_metrics_.push_back(metric);
-  mutate_rows_metrics_.push_back(metric);
-  check_and_mutate_row_metrics_.push_back(metric);
-  sample_row_keys_metrics_.push_back(metric);
-  read_modify_write_row_metrics_.push_back(metric);
+  absl::call_once(read_row_metrics_.once, [this, metric]() {
+    read_row_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(read_rows_metrics_.once, [this, metric]() {
+    read_rows_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(mutate_row_metrics_.once, [this, metric]() {
+    mutate_row_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(mutate_rows_metrics_.once, [this, metric]() {
+    mutate_rows_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(check_and_mutate_row_metrics_.once, [this, metric]() {
+    check_and_mutate_row_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(sample_row_keys_metrics_.once, [this, metric]() {
+    sample_row_keys_metrics_.metrics.push_back(metric);
+  });
+  absl::call_once(read_modify_write_row_metrics_.once, [this, metric]() {
+    read_modify_write_row_metrics_.metrics.push_back(metric);
+  });
 }
 
 void MetricsOperationContextFactory::InitializeProvider(
@@ -214,226 +231,209 @@ void MetricsOperationContextFactory::InitializeProvider(
   context->AddMetricReader(std::move(reader));
   provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
       std::move(context));
+  std::cout << __func__ << ": provider_=" << provider_.get()
+            << "; thread=" << std::this_thread::get_id() << std::endl;
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (read_row_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(read_row_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "ReadRow";
+  absl::call_once(read_row_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(read_row_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"ReadRow",
-                              "true", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              read_row_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(resource_labels, data_labels,
+                                            read_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRows(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (read_rows_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<FirstResponseLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(read_rows_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "ReadRows";
+  absl::call_once(read_rows_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<FirstResponseLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(read_rows_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"ReadRows",
-                              "true", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              read_rows_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(resource_labels, data_labels,
+                                            read_rows_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRow(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (mutate_row_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(mutate_row_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "MutateRow";
+  absl::call_once(mutate_row_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(mutate_row_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"MutateRow",
-                              "false", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "false", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              mutate_row_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, mutate_row_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::MutateRows(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (mutate_rows_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(mutate_rows_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "MutateRows";
+  absl::call_once(mutate_rows_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(mutate_rows_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"MutateRows",
-                              "true", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              mutate_rows_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, mutate_rows_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::CheckAndMutateRow(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (check_and_mutate_row_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(check_and_mutate_row_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "CheckAndMutateRow";
+  absl::call_once(check_and_mutate_row_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(check_and_mutate_row_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"CheckAndMutateRow",
-                              "false", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "false", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(
-        resource_labels, data_labels, check_and_mutate_row_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, check_and_mutate_row_metrics_.metrics,
+      clock_);
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::SampleRowKeys(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (sample_row_keys_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(sample_row_keys_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "SampleRowKeys";
+  absl::call_once(sample_row_keys_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(sample_row_keys_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"SampleRowKeys",
-                              "true", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "true", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(resource_labels, data_labels,
-                                              sample_row_keys_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, sample_row_keys_metrics_.metrics, clock_);
 }
 
 std::shared_ptr<OperationContext>
 MetricsOperationContextFactory::ReadModifyWriteRow(
     std::string const& table_name, std::string const& app_profile) {
-  static bool const kMetricsInitialized = [this]() {
-    if (read_modify_write_row_metrics_.empty()) {
-      std::vector<std::shared_ptr<Metric const>> v;
-      v.emplace_back(std::make_shared<OperationLatency>(provider_));
-      // v.emplace_back(std::make_shared<AttemptLatency>(provider_));
-      // v.emplace_back(std::make_shared<RetryCount>(provider_));
-      // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(provider_));
-      // v.emplace_back(std::make_shared<ServerLatency>(provider_));
-      // v.emplace_back(std::make_shared<ConnectivityErrorCount>(provider_));
-      swap(read_modify_write_row_metrics_, v);
-    }
-    return true;
-  }();
+  auto constexpr kRpc = "ReadModifyWriteRow";
+  absl::call_once(read_modify_write_row_metrics_.once, [this, kRpc]() {
+    std::vector<std::shared_ptr<Metric const>> v;
+    v.emplace_back(std::make_shared<OperationLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<AttemptLatency>(kRpc, provider_));
+    v.emplace_back(std::make_shared<RetryCount>(kRpc, provider_));
+    // v.emplace_back(std::make_shared<ApplicationBlockingLatency>(kRpc,
+    // provider_)); v.emplace_back(std::make_shared<ServerLatency>(kRpc,
+    // provider_));
+    // v.emplace_back(std::make_shared<ConnectivityErrorCount>(kRpc,
+    // provider_));
+    swap(read_modify_write_row_metrics_.metrics, v);
+  });
 
-  if (kMetricsInitialized) {
-    auto resource_labels = ResourceLabelsFromTableName(table_name);
-    DataLabels data_labels = {"ReadModifyWriteRow",
-                              "false", /*=streaming*/
-                              "cpp.Bigtable/" + version_string(),
-                              client_uid_,
-                              app_profile,
-                              "" /*=status*/};
+  auto resource_labels = ResourceLabelsFromTableName(table_name);
+  DataLabels data_labels = {kRpc,
+                            "false", /*=streaming*/
+                            "cpp.Bigtable/" + version_string(),
+                            client_uid_,
+                            app_profile,
+                            "" /*=status*/};
 
-    return std::make_shared<OperationContext>(
-        resource_labels, data_labels, read_modify_write_row_metrics_, clock_);
-  }
-  return std::make_shared<OperationContext>();
+  return std::make_shared<OperationContext>(
+      resource_labels, data_labels, read_modify_write_row_metrics_.metrics,
+      clock_);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS

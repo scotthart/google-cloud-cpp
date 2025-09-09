@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/validate_metadata.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/context/runtime_context.h>
+#include <opentelemetry/metrics/sync_instruments.h>
 
 namespace google {
 namespace cloud {
@@ -36,6 +37,9 @@ using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
 using ::opentelemetry::metrics::Counter;
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+using ::opentelemetry::metrics::Gauge;
+#endif
 using ::opentelemetry::metrics::Histogram;
 using ::opentelemetry::metrics::ObservableInstrument;
 using ::opentelemetry::metrics::UpDownCounter;
@@ -43,6 +47,14 @@ using ::opentelemetry::metrics::UpDownCounter;
 template <typename T>
 class MockHistogram : public opentelemetry::metrics::Histogram<T> {
  public:
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T value), (noexcept, override));
+  MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
+              (T, opentelemetry::common::KeyValueIterable const&),
+              (noexcept, override));
+
+#endif
   MOCK_METHOD(void, Record,  // NOLINT(bugprone-exception-escape)
               (T value, opentelemetry::context::Context const& context),
               (noexcept, override));
@@ -50,6 +62,23 @@ class MockHistogram : public opentelemetry::metrics::Histogram<T> {
               (T value,
                opentelemetry::common::KeyValueIterable const& attributes,
                opentelemetry::context::Context const& context),
+              (noexcept, override));
+};
+
+template <typename T>
+class MockCounter : public opentelemetry::metrics::Counter<T> {
+ public:
+  MOCK_METHOD(void, Add,  // NOLINT(bugprone-exception-escape)
+              (T value), (noexcept, override));
+  MOCK_METHOD(void, Add,  // NOLINT(bugprone-exception-escape)
+              (T value, opentelemetry::context::Context const&),
+              (noexcept, override));
+  MOCK_METHOD(void, Add,  // NOLINT(bugprone-exception-escape)
+              (T value, opentelemetry::common::KeyValueIterable const&),
+              (noexcept, override));
+  MOCK_METHOD(void, Add,  // NOLINT(bugprone-exception-escape)
+              (T value, opentelemetry::common::KeyValueIterable const&,
+               opentelemetry::context::Context const&),
               (noexcept, override));
 };
 
@@ -97,6 +126,22 @@ class MockMeter : public opentelemetry::metrics::Meter {
                opentelemetry::nostd::string_view),
               (noexcept, override));
 
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<int64_t>>,
+              CreateInt64Gauge,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+
+  MOCK_METHOD(opentelemetry::nostd::unique_ptr<Gauge<double>>,
+              CreateDoubleGauge,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+#endif
+
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<ObservableInstrument>,
               CreateInt64ObservableGauge,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
@@ -142,12 +187,29 @@ class MockMeter : public opentelemetry::metrics::Meter {
 
 class MockMeterProvider : public opentelemetry::metrics::MeterProvider {
  public:
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+  MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
+              GetMeter,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::common::KeyValueIterable const*),
+              (noexcept, override));
+
+  MOCK_METHOD(void, RemoveMeter,  // NOLINT(bugprone-exception-escape)
+              (opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view,
+               opentelemetry::nostd::string_view),
+              (noexcept, override));
+
+#else
   MOCK_METHOD(opentelemetry::nostd::shared_ptr<opentelemetry::metrics::Meter>,
               GetMeter,  // NOLINT(bugprone-exception-escape)
               (opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view,
                opentelemetry::nostd::string_view),
               (noexcept, override));
+#endif
 };
 
 TEST(LabelMap, IntoLabelMap) {
@@ -256,15 +318,22 @@ TEST(OperationLatencyTest, FirstAttemptSuccess) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(scope, Eq("bigtable"));
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
       });
 
-  OperationLatency operation_latency(mock_provider);
+  OperationLatency operation_latency("my-instrument-scope", mock_provider);
   ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
                                  ""};
   DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
@@ -322,15 +391,22 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
   opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
       std::make_shared<MockMeterProvider>();
   EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
       .WillOnce([&](opentelemetry::nostd::string_view scope,
                     opentelemetry::nostd::string_view scope_version,
                     opentelemetry::nostd::string_view) mutable {
-        EXPECT_THAT(scope, Eq("bigtable"));
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
         EXPECT_THAT(scope_version, Eq("v1"));
         return mock_meter;
       });
 
-  OperationLatency operation_latency(mock_provider);
+  OperationLatency operation_latency("my-instrument-scope", mock_provider);
   ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
                                  ""};
   DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
@@ -363,6 +439,347 @@ TEST(OperationLatencyTest, ThirdAttemptSuccess) {
                   {clock->Now(), Status{StatusCode::kOk, "ok"}});
 
   clock->AdvanceTime(std::chrono::milliseconds(5));
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(AttemptLatencyTest, NoRetry) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(1.234));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("attempt_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  AttemptLatency attempt_latency("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = attempt_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::microseconds(1234));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(AttemptLatencyTest, ThreeAttempts) {
+  auto mock_histogram = std::make_unique<MockHistogram<double>>();
+  EXPECT_CALL(
+      *mock_histogram,
+      Record(A<double>(), A<opentelemetry::common::KeyValueIterable const&>(),
+             A<opentelemetry::context::Context const&>()))
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(1.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      })
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(2.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      })
+      .WillOnce([](double value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(3.0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("streaming", "my-streaming"),
+                Pair("status", "OK"), Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateDoubleHistogram)
+      .WillOnce([mock = std::move(mock_histogram)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("attempt_latencies"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  AttemptLatency attempt_latency("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = attempt_latency.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::milliseconds(1));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->PreCall(otel_context, {clock->Now(), false});
+  clock->AdvanceTime(std::chrono::milliseconds(2));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clone->PreCall(otel_context, {clock->Now(), false});
+  clock->AdvanceTime(std::chrono::milliseconds(3));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(RetryCountTest, NoRetry) {
+  auto mock_counter = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*mock_counter,
+              Add(A<std::uint64_t>(),
+                  A<opentelemetry::common::KeyValueIterable const&>(),
+                  A<opentelemetry::context::Context const&>()))
+      .WillOnce([](std::uint64_t value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(0));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("status", "OK"),
+                Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateUInt64Counter)
+      .WillOnce([mock = std::move(mock_counter)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("retry_count"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  RetryCount retry_count("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = retry_count.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::microseconds(1234));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
+}
+
+TEST(RetryCountTest, ThreeAttempts) {
+  auto mock_counter = std::make_unique<MockCounter<std::uint64_t>>();
+  EXPECT_CALL(*mock_counter,
+              Add(A<std::uint64_t>(),
+                  A<opentelemetry::common::KeyValueIterable const&>(),
+                  A<opentelemetry::context::Context const&>()))
+      .WillOnce([](std::uint64_t value,
+                   opentelemetry::common::KeyValueIterable const& attributes,
+                   opentelemetry::context::Context const&) {
+        EXPECT_THAT(value, Eq(2));
+        EXPECT_THAT(
+            MakeAttributesMap(attributes),
+            UnorderedElementsAre(
+                Pair("project_id", "my-project-id"),
+                Pair("instance", "my-instance"), Pair("cluster", "my-cluster"),
+                Pair("table", "my-table"), Pair("zone", "my-zone"),
+                Pair("method", "my-method"), Pair("status", "OK"),
+                Pair("client_name", "my-client-name"),
+                Pair("client_uid", "my-client-uid"),
+                Pair("app_profile", "my-app-profile")));
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeter> mock_meter =
+      std::make_shared<MockMeter>();
+  EXPECT_CALL(*mock_meter, CreateUInt64Counter)
+      .WillOnce([mock = std::move(mock_counter)](
+                    opentelemetry::nostd::string_view name,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::nostd::string_view) mutable {
+        EXPECT_THAT(name, Eq("retry_count"));
+        return std::move(mock);
+      });
+
+  opentelemetry::nostd::shared_ptr<MockMeterProvider> mock_provider =
+      std::make_shared<MockMeterProvider>();
+  EXPECT_CALL(*mock_provider, GetMeter)
+#if OPENTELEMETRY_ABI_VERSION_NO >= 2
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view,
+                    opentelemetry::common::KeyValueIterable const*) mutable {
+#else
+      .WillOnce([&](opentelemetry::nostd::string_view scope,
+                    opentelemetry::nostd::string_view scope_version,
+                    opentelemetry::nostd::string_view) mutable {
+#endif
+        EXPECT_THAT(scope, Eq("my-instrument-scope"));
+        EXPECT_THAT(scope_version, Eq("v1"));
+        return mock_meter;
+      });
+
+  RetryCount retry_count("my-instrument-scope", mock_provider);
+  ResourceLabels resource_labels{"my-project-id", "my-instance", "my-table", "",
+                                 ""};
+  DataLabels data_labels{"my-method",     "my-streaming",   "my-client-name",
+                         "my-client-uid", "my-app-profile", ""};
+  auto clone = retry_count.clone(resource_labels, data_labels);
+
+  grpc::ClientContext client_context;
+  SetClusterZone(client_context, "my-cluster", "my-zone");
+
+  auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
+  auto clock = std::make_shared<FakeSteadyClock>();
+
+  clock->SetTime(std::chrono::steady_clock::now());
+  clone->PreCall(otel_context, {clock->Now(), true});
+  clock->AdvanceTime(std::chrono::microseconds(1));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->PreCall(otel_context, {clock->Now(), false});
+  clock->AdvanceTime(std::chrono::microseconds(2));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
+  clone->PreCall(otel_context, {clock->Now(), false});
+  clock->AdvanceTime(std::chrono::microseconds(3));
+  clone->PostCall(otel_context, client_context,
+                  {clock->Now(), Status{StatusCode::kOk, "ok"}});
+  clock->AdvanceTime(std::chrono::milliseconds(100));
   clone->OnDone(otel_context, {clock->Now(), Status{StatusCode::kOk, "ok"}});
 }
 
