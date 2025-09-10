@@ -62,6 +62,7 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
             "--thread-count=1",
             "--test-duration=1s",
             "--table-size=11000",
+            "--enable-metrics=true",
         },
         description);
   }
@@ -72,6 +73,8 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
 Benchmark::Benchmark(BenchmarkOptions options)
     : options_(std::move(options)), key_width_(KeyWidth()) {
   opts_.set<GrpcNumChannelsOption>(options_.thread_count);
+  std::cout << __func__ << ": GrpcNumChannelsOption=" << opts_.get<GrpcNumChannelsOption>() << "\n";
+  std::cout << __func__ << ": thread_count=" << options_.thread_count << "\n";
   if (options_.use_embedded_server) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();
@@ -124,9 +127,11 @@ void Benchmark::DeleteTable() {
   }
 }
 
-Table Benchmark::MakeTable() const {
+Table Benchmark::MakeTable(Options connection_opts) const {
+  auto connection_options =
+      google::cloud::internal::MergeOptions(connection_opts, opts_);
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
-  return Table(MakeDataConnection(opts_),
+  return Table(MakeDataConnection(std::move(connection_options)),
                TableResource(options_.project_id, options_.instance_id,
                              options_.table_id),
                std::move(table_opts));

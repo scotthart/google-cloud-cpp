@@ -44,7 +44,7 @@ DefaultRowReader::DefaultRowReader(
       operation_context_(std::move(operation_context)) {}
 
 void DefaultRowReader::MakeRequest() {
-  response_ = {};
+  response_.Clear();
   processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
@@ -82,7 +82,7 @@ bool DefaultRowReader::NextChunk() {
       last_status_ = *std::move(status);
       operation_context_->PostCall(*client_context_, last_status_);
       called_post_call_ = true;
-      response_ = {};
+      response_.Clear();
       return false;
     }
     if (!response_.last_scanned_row_key().empty()) {
@@ -154,8 +154,11 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
   if (!stream_) MakeRequest();
   while (!parser_->HasNext()) {
     if (NextChunk()) {
+//      parser_->HandleChunk(
+//          std::move(*(response_.mutable_chunks(processed_chunks_count_))),
+//          grpc_status);
       parser_->HandleChunk(
-          std::move(*(response_.mutable_chunks(processed_chunks_count_))),
+          response_.mutable_chunks(processed_chunks_count_),
           grpc_status);
       if (!grpc_status.ok()) {
         auto status = MakeStatusFromRpcError(grpc_status);
