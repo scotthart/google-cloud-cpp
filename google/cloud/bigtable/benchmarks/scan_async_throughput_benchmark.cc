@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
+#include "gperftools/profiler.h"
 #include <chrono>
 #include <future>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include "gperftools/profiler.h"
 
 char const kDescription[] =
     R"""(Measure the throughput of `Table::AsyncReadRows()`.
@@ -89,7 +89,7 @@ int main(int argc, char* argv[]) {
   Benchmark::PrintThroughputResult(std::cout, "scant", "Upload",
                                    *populate_results);
 
-//  ProfilerStart("/tmp/cpu_profile.prof");
+  //  ProfilerStart("/tmp/cpu_profile.prof");
   std::map<std::string, BenchmarkResult> results_by_size;
   for (auto scan_size : kScanSizes) {
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
     Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
     results_by_size[op_name] = std::move(combined);
   }
-//  ProfilerStop();
+  //  ProfilerStop();
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "scant", "BulkApply()", "Latency",

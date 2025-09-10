@@ -112,7 +112,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
 
   if (chunk.reset_row()) {
     cells_.clear();
-    cell_ = {};
+    cell_.Clear();
     if (!cell_first_chunk_) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Reset row with an unfinished cell");
@@ -245,7 +245,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk* chunk,
 
   if (chunk->reset_row()) {
     cells_.clear();
-    cell_ = {};
+    cell_.Clear();
     if (!cell_first_chunk_) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Reset row with an unfinished cell");
@@ -278,11 +278,11 @@ Row ReadRowsParser::Next(grpc::Status& status) {
   }
   row_ready_ = false;
 
-//  if (cells_per_row_hint_ == 0) {
-//    cells_per_row_hint_ = cells_.size();
-//  }
+  //  if (cells_per_row_hint_ == 0) {
+  //    cells_per_row_hint_ = cells_.size();
+  //  }
   Row row(std::move(row_key_), std::move(cells_));
-//  cells_.reserve(cells_per_row_hint_);
+  //  cells_.reserve(cells_per_row_hint_);
   row_key_.clear();
 
   return row;

@@ -73,7 +73,9 @@ google::cloud::StatusOr<BenchmarkOptions> ParseArgs(
 Benchmark::Benchmark(BenchmarkOptions options)
     : options_(std::move(options)), key_width_(KeyWidth()) {
   opts_.set<GrpcNumChannelsOption>(options_.thread_count);
-  std::cout << __func__ << ": GrpcNumChannelsOption=" << opts_.get<GrpcNumChannelsOption>() << "\n";
+  std::cout << __func__
+            << ": GrpcNumChannelsOption=" << opts_.get<GrpcNumChannelsOption>()
+            << "\n";
   std::cout << __func__ << ": thread_count=" << options_.thread_count << "\n";
   if (options_.use_embedded_server) {
     server_ = CreateEmbeddedServer();

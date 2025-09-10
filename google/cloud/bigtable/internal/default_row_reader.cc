@@ -154,12 +154,11 @@ absl::variant<Status, bigtable::Row> DefaultRowReader::AdvanceOrFail() {
   if (!stream_) MakeRequest();
   while (!parser_->HasNext()) {
     if (NextChunk()) {
-//      parser_->HandleChunk(
-//          std::move(*(response_.mutable_chunks(processed_chunks_count_))),
-//          grpc_status);
-      parser_->HandleChunk(
-          response_.mutable_chunks(processed_chunks_count_),
-          grpc_status);
+      //      parser_->HandleChunk(
+      //          std::move(*(response_.mutable_chunks(processed_chunks_count_))),
+      //          grpc_status);
+      parser_->HandleChunk(response_.mutable_chunks(processed_chunks_count_),
+                           grpc_status);
       if (!grpc_status.ok()) {
         auto status = MakeStatusFromRpcError(grpc_status);
         operation_context_->PostCall(*client_context_, status);
