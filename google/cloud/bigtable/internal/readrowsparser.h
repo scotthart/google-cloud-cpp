@@ -65,7 +65,6 @@ class ReadRowsParser {
       google::bigtable::v2::ReadRowsResponse_CellChunk* chunk,
       grpc::Status& status);
 
-
   /// Signal that the input stream reached the end.
   virtual void HandleEndOfStream(grpc::Status& status);
 
@@ -94,6 +93,15 @@ class ReadRowsParser {
     int64_t timestamp;
     CellValueType value;
     std::vector<std::string> labels;
+
+    void Clear() {
+      row.clear();
+      family.clear();
+      column.clear();
+      timestamp = 0;
+      value.clear();
+      labels.clear();
+    }
   };
 
   /// If true, we expect row keys in reverse order.
@@ -114,7 +122,7 @@ class ReadRowsParser {
   /// Parsed cells of a yet unfinished row.
   std::vector<Cell> cells_;
 
-//  std::size_t cells_per_row_hint_ = 0;
+  //  std::size_t cells_per_row_hint_ = 0;
   /// Is the next incoming chunk the first in a cell?
   bool cell_first_chunk_{true};
 
