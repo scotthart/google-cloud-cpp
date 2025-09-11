@@ -69,6 +69,18 @@ class AsyncStreamingReadRpcTracing : public AsyncStreamingReadRpc<Response> {
     });
   }
 
+  future<std::optional<Response*>> Read(bool) override {
+    if (read_count_ == 0) span_->AddEvent("gl-cpp.first-read");
+    return impl_->Read(true).then([this](future<std::optional<Response*>> f) {
+      auto r = f.get();
+      if (r.has_value()) {
+        span_->AddEvent("message", {{"message.type", "RECEIVED"},
+                                    {"message.id", ++read_count_}});
+      }
+      return r;
+    });
+  }
+
   future<Status> Finish() override {
     // It is sufficient to set `span_` as the parent of `finish_span`, because
     // the lower levels do not create any spans.

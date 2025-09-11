@@ -64,6 +64,10 @@ class AsyncStreamingReadRpcTimeout : public AsyncStreamingReadRpc<Response> {
 
   future<std::optional<Response>> Read() override { return state_->Read(); }
 
+  future<std::optional<Response*>> Read(bool) override {
+    return state_->Read(true);
+  }
+
   future<Status> Finish() override { return state_->child->Finish(); }
 
   RpcMetadata GetRequestMetadata() const override {
@@ -115,12 +119,33 @@ class AsyncStreamingReadRpcTimeout : public AsyncStreamingReadRpc<Response> {
     }
 
     future<std::optional<Response>> OnRead(future<bool> watchdog,
-                                           std::optional<Response> read) {
+                                            std::optional<Response> read) {
       watchdog.cancel();
       return watchdog.then(
           [w = WeakFromThis(), read = std::move(read)](auto f) mutable {
             auto expired = f.get();
             if (expired) return std::optional<Response>();
+            return std::move(read);
+          });
+    }
+
+    future<std::optional<Response*>> Read(bool) {
+      auto watchdog = CreateWatchdog(per_read_timeout);
+      return child->Read(true).then(
+          [watchdog = std::move(watchdog), w = WeakFromThis()](auto f) mutable {
+            if (auto self = w.lock())
+              return self->OnRead(std::move(watchdog), f.get());
+            return make_ready_future(std::optional<Response*>());
+          });
+    }
+
+    future<std::optional<Response*>> OnRead(future<bool> watchdog,
+                                            std::optional<Response*> read) {
+      watchdog.cancel();
+      return watchdog.then(
+          [w = WeakFromThis(), read = std::move(read)](auto f) mutable {
+            auto expired = f.get();
+            if (expired) return std::optional<Response*>();
             return std::move(read);
           });
     }

@@ -77,6 +77,16 @@ class AsyncStreamingReadRpc {
    */
   virtual future<std::optional<Response>> Read() = 0;
 
+  virtual future<std::optional<Response*>> Read(bool) {
+    return Read().then([](future<std::optional<Response>> f) {
+      auto opt = f.get();
+      if (!opt.has_value()) return std::optional<Response*>{};
+      thread_local Response resp;
+      resp = std::move(*opt);
+      return std::optional<Response*>(&resp);
+    });
+  }
+
   /**
    * Return the final status of the streaming RPC.
    *
