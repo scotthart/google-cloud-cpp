@@ -64,6 +64,10 @@ class AsyncStreamingReadRpcTimeout : public AsyncStreamingReadRpc<Response> {
 
   future<absl::optional<Response>> Read() override { return state_->Read(); }
 
+  future<absl::optional<Response*>> Read(bool) override {
+    return state_->Read();
+  }
+
   future<Status> Finish() override { return state_->child->Finish(); }
 
   RpcMetadata GetRequestMetadata() const override {

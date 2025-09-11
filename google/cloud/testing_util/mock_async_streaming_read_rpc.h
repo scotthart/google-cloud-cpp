@@ -33,6 +33,7 @@ class MockAsyncStreamingReadRpc
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<bool>, Start, (), (override));
   MOCK_METHOD(future<absl::optional<Response>>, Read, (), (override));
+  MOCK_METHOD(future<absl::optional<Response*>>, Read, (bool), (override));
   MOCK_METHOD(future<Status>, Finish, (), (override));
   MOCK_METHOD(RpcMetadata, GetRequestMetadata, (), (const, override));
 };

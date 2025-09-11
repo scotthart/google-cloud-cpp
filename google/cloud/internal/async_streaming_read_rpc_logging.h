@@ -68,6 +68,22 @@ class AsyncStreamingReadRpcLogging : public AsyncStreamingReadRpc<Response> {
         });
   }
 
+  future<absl::optional<Response*>> Read(bool) override {
+    auto prefix = std::string(__func__) + "(" + request_id_ + ")";
+    auto const& opt = tracing_options_;
+    GCP_LOG(DEBUG) << prefix << " <<";
+    return child_->Read(true).then(
+        [prefix, opt](future<absl::optional<Response*>> f) {
+          auto r = f.get();
+          if (r.has_value()) {
+            GCP_LOG(DEBUG) << prefix << " >> " << DebugString(**r, opt);
+          } else {
+            GCP_LOG(DEBUG) << prefix << " >> [not-set]";
+          }
+          return r;
+        });
+  }
+
   future<Status> Finish() override {
     auto prefix = std::string(__func__) + "(" + request_id_ + ")";
     auto const& opt = tracing_options_;

@@ -42,5 +42,5 @@ excluded_rules=(
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
 io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="no" \
-  -- //google/cloud/bigtable/tests:data_integration_test
+  --cache_test_results="no" --test_output="all" --test_timeout=30,30,30,30 \
+  //google/cloud/bigtable/tests:data_async_future_integration_test

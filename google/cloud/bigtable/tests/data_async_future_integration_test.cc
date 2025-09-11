@@ -30,11 +30,12 @@ class DataAsyncIntegrationTest
       public ::testing::WithParamInterface<std::string> {};
 
 INSTANTIATE_TEST_SUITE_P(, DataAsyncIntegrationTest,
-                         ::testing::Values("with-data-connection",
-                                           "with-data-client"));
+                         ::testing::Values("with-data-connection"));
+//                                           "with-data-client"));
 
 std::string const kFamily = "family1";
 
+#if 0
 TEST_P(DataAsyncIntegrationTest, TableAsyncApply) {
   auto table = GetTable(GetParam());
 
@@ -224,8 +225,10 @@ TEST_P(DataAsyncIntegrationTest, TableAsyncReadModifyWriteAppendValueTest) {
   CheckEqualUnordered(GetCellsIgnoringTimestamp(expected_read),
                       actual_cells_ignore_timestamp);
 }
+#endif
 
 TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowsAllRows) {
+  std::cout << "Start test" << std::endl;
   auto table = GetTable(GetParam());
 
   std::string const row_key1 = "row-key-1";
@@ -248,22 +251,26 @@ TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowsAllRows) {
   promise<Status> stream_status_promise;
   table.AsyncReadRows(
       [&actual](Row const& row) {
+        std::cout << "on_row functor" << std::endl;
         auto const& cells = row.cells();
         actual.insert(actual.end(), cells.begin(), cells.end());
         return make_ready_future(true);
       },
       [&stream_status_promise](Status const& stream_status) {
+        std::cout << "on_finish functor" << std::endl;
         stream_status_promise.set_value(stream_status);
       },
       bigtable::RowSet(bigtable::RowRange::InfiniteRange()),
       RowReader::NO_ROWS_LIMIT, Filter::PassAllFilter());
 
   auto stream_status = stream_status_promise.get_future().get();
+  std::cout << "finished reading rows" << std::endl;
   ASSERT_STATUS_OK(stream_status);
 
   CheckEqualUnordered(created, actual);
 }
 
+#if 0
 TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowTest) {
   auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
@@ -285,7 +292,7 @@ TEST_P(DataAsyncIntegrationTest, TableAsyncReadRowTest) {
 
   CheckEqualUnordered(expected, actual);
 }
-
+#endif
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

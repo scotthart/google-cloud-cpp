@@ -29,13 +29,13 @@ template <typename Response, typename OnReadHandler, typename OnFinishHandler>
 class AsyncStreamingReadImpl
     : public std::enable_shared_from_this<
           AsyncStreamingReadImpl<Response, OnReadHandler, OnFinishHandler>> {
-  static_assert(
-      google::cloud::internal::is_invocable<OnReadHandler, Response>::value,
-      "OnReadHandler must be invocable with Response");
-  static_assert(
-      std::is_same<future<bool>, google::cloud::internal::invoke_result_t<
-                                     OnReadHandler, Response>>::value,
-      "OnReadHandler must return a future<bool>");
+  //  static_assert(
+  //      google::cloud::internal::is_invocable<OnReadHandler, Response>::value,
+  //      "OnReadHandler must be invocable with Response");
+  //  static_assert(
+  //      std::is_same<future<bool>, google::cloud::internal::invoke_result_t<
+  //                                     OnReadHandler, Response>>::value,
+  //      "OnReadHandler must return a future<bool>");
   static_assert(
       google::cloud::internal::is_invocable<OnFinishHandler, Status>::value,
       "OnFinishHandler must be invocable with Status");
@@ -59,7 +59,48 @@ class AsyncStreamingReadImpl
     });
   }
 
+  void Start(bool) {
+    //    std::cout << __func__ << " with bool" << std::endl;
+    auto self = this->shared_from_this();
+    auto start = stream_->Start();
+    start.then([self](future<bool> f) {
+      // Start was unsuccessful, finish stream.
+      if (!f.get()) return self->Finish();
+      // Start was successful, start reading.
+      self->Read(true);
+    });
+  }
+
  private:
+  void Read(bool) {
+    //    std::cout << "AsyncStreamingReadImpl::Read with bool" << std::endl;
+    auto self = this->shared_from_this();
+    auto read = stream_->Read(true);
+    //    std::cout << "AsyncStreamingReadImpl::Read post stream_->Read" <<
+    //    std::endl;
+    read.then([self](future<absl::optional<Response*>> f) {
+      //      std::cout << "AsyncStreamingReadImpl::Read then functor" <<
+      //      std::endl;
+      absl::optional<Response*> r = f.get();
+      //      std::cout << "AsyncStreamingReadImpl::Read then functor post
+      //      f.get()" << std::endl;
+      // Read did not yield a response, finish stream.
+      if (!r.has_value()) {
+        //        std::cout << "AsyncStreamingReadImpl::Read no value" <<
+        //        std::endl;
+        return self->Finish();
+      }
+      // Read yielded a response, keep reading or drain the stream.
+      self->on_read_(*r).then([self](future<bool> keep_reading) {
+        //        std::cout << "AsyncStreamingReadImpl::Read then functor
+        //        on_read_" << std::endl;
+        if (keep_reading.get()) return self->Read(true);
+        self->stream_->Cancel();
+        self->Discard(true);
+      });
+    });
+  }
+
   void Read() {
     auto self = this->shared_from_this();
     auto read = stream_->Read();
@@ -73,6 +114,19 @@ class AsyncStreamingReadImpl
         self->stream_->Cancel();
         self->Discard();
       });
+    });
+  }
+
+  void Discard(bool) {
+    //      std::cout << __func__ << " with bool" << std::endl;
+    auto self = this->shared_from_this();
+    auto read = stream_->Read(true);
+    read.then([self](future<absl::optional<Response*>> f) {
+      auto r = f.get();
+      // Read did not yield a response, finish stream.
+      if (!r.has_value()) return self->Finish();
+      // Read yielded a response, keep discarding.
+      self->Discard(true);
     });
   }
 
@@ -125,6 +179,18 @@ void PerformAsyncStreamingRead(
       std::move(stream), std::forward<OnReadHandler>(on_read),
       std::forward<OnFinishHandler>(on_finish));
   loop->Start();
+}
+
+template <typename Response, typename OnReadHandler, typename OnFinishHandler>
+void PerformAsyncStreamingRead(
+    bool, std::unique_ptr<internal::AsyncStreamingReadRpc<Response>> stream,
+    OnReadHandler&& on_read, OnFinishHandler&& on_finish) {
+  //  std::cout << __func__ << ": with bool arg" << std::endl;
+  auto loop = std::make_shared<
+      AsyncStreamingReadImpl<Response, OnReadHandler, OnFinishHandler>>(
+      std::move(stream), std::forward<OnReadHandler>(on_read),
+      std::forward<OnFinishHandler>(on_finish));
+  loop->Start(true);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

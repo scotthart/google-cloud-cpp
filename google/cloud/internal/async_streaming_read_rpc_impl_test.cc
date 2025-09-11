@@ -41,6 +41,7 @@ struct FakeRequest {
 };
 
 struct FakeResponse {
+  void Clear() {}
   std::string key;
   std::string value;
 };

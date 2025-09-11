@@ -26,6 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace v2 = ::google::bigtable::v2;
 
+#define POINTER
+
 void AsyncRowReader::MakeRequest() {
   status_ = Status();
   v2::ReadRowsRequest request;
@@ -50,12 +52,26 @@ void AsyncRowReader::MakeRequest() {
   operation_context_->PreCall(*client_context_);
 
   auto self = this->shared_from_this();
-  PerformAsyncStreamingRead(
-      stub_->AsyncReadRows(cq_, client_context_, options_, request),
-      [self](v2::ReadRowsResponse r) {
-        return self->OnDataReceived(std::move(r));
+
+#ifdef POINTER
+  PerformAsyncStreamingRead<v2::ReadRowsResponse>(
+      true, stub_->AsyncReadRows(cq_, client_context_, options_, request),
+      [self](v2::ReadRowsResponse* r) {
+        //        std::cout << "on_row passed to PerformAsyncStreamingRead" <<
+        //        std::endl;
+        return self->OnDataReceived(r);
       },
+      [self](Status s) {
+        //        std::cout << "on_finish passed to PerformAsyncStreamingRead"
+        //        << std::endl;
+        self->OnStreamFinished(std::move(s));
+      });
+#else
+  PerformAsyncStreamingRead<v2::ReadRowsResponse>(
+      stub_->AsyncReadRows(cq_, client_context_, options_, request),
+      [self](v2::ReadRowsResponse r) { return self->OnDataReceived(r); },
       [self](Status s) { self->OnStreamFinished(std::move(s)); });
+#endif
 }
 
 void AsyncRowReader::UserWantsRows() {
@@ -140,6 +156,38 @@ void AsyncRowReader::TryGiveRowToUser() {
   });
 }
 
+#ifdef POINTER
+future<bool> AsyncRowReader::OnDataReceived(
+    google::bigtable::v2::ReadRowsResponse* response) {
+  //  std::cout << __func__ << std::endl;
+  // assert(!whole_op_finished_);
+  // assert(!continue_reading_);
+  // assert(status_.ok());
+  status_ = ConsumeResponse(response);
+  // We've processed the response.
+  //
+  // If there were errors (e.g. malformed response from the server), we should
+  // interrupt this stream. Interrupting it will yield lower layers calling
+  // `OnStreamFinished` with a status unrelated to the real reason, so we
+  // store the actual reason in status_ and proceed exactly the
+  // same way as if the stream was broken for other reasons.
+  //
+  // Even if status_ is not OK, we might have consumed some rows,
+  // but, don't give them to the user yet. We want to keep the invariant that
+  // either the user doesn't hold a `future<>` when we're fetching more rows.
+  // Retries (successful or not) will do it. Improving this behavior makes
+  // little sense because parser errors are very unexpected and probably not
+  // retryable anyway.
+
+  if (status_.ok()) {
+    continue_reading_.emplace(promise<bool>());
+    auto res = continue_reading_->get_future();
+    TryGiveRowToUser();
+    return res;
+  }
+  return make_ready_future<bool>(false);
+}
+#else
 future<bool> AsyncRowReader::OnDataReceived(
     google::bigtable::v2::ReadRowsResponse response) {
   // assert(!whole_op_finished_);
@@ -169,6 +217,7 @@ future<bool> AsyncRowReader::OnDataReceived(
   }
   return make_ready_future<bool>(false);
 }
+#endif
 
 void AsyncRowReader::OnStreamFinished(Status status) {
   //  operation_context_->PostCall(*client_context_, status);
@@ -281,7 +330,28 @@ Status AsyncRowReader::DrainParser() {
   }
   return Status();
 }
+#ifdef POINTER
+Status AsyncRowReader::ConsumeResponse(
+    google::bigtable::v2::ReadRowsResponse* response) {
+  //  std::cout << __func__ << std::endl;
+  for (int i = 0; i < response->chunks_size(); ++i) {
+    grpc::Status status;
+    parser_->HandleChunk(response->mutable_chunks(i), status);
+    if (!status.ok()) {
+      return MakeStatusFromRpcError(status);
+    }
+    Status parser_status = DrainParser();
+    if (!parser_status.ok()) {
+      return parser_status;
+    }
+  }
 
+  if (!response->last_scanned_row_key().empty()) {
+    last_read_row_key_ = std::move(*response->mutable_last_scanned_row_key());
+  }
+  return Status();
+}
+#else
 Status AsyncRowReader::ConsumeResponse(
     google::bigtable::v2::ReadRowsResponse response) {
   for (auto& chunk : *response.mutable_chunks()) {
@@ -300,6 +370,7 @@ Status AsyncRowReader::ConsumeResponse(
   }
   return Status();
 }
+#endif
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal

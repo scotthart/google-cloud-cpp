@@ -61,6 +61,11 @@ class AsyncStreamingReadRpcAuth : public AsyncStreamingReadRpc<Response> {
     return state_->stream->Read();
   }
 
+  future<absl::optional<Response*>> Read(bool) override {
+    std::lock_guard<std::mutex> g{state_->mu};
+    return state_->stream->Read(true);
+  }
+
   future<Status> Finish() override { return state_->Finish(); }
 
   RpcMetadata GetRequestMetadata() const override {

@@ -92,12 +92,47 @@ class AsyncStreamingReadRpcImpl : public AsyncStreamingReadRpc<Response> {
       void Cancel() override {}
 
       promise<absl::optional<Response>> p;
-      Response response;
       CallContext call_context;
+      Response response;
     };
+
     auto op = std::make_shared<OnRead>(options_);
     cq_->StartOperation(op,
                         [&](void* tag) { stream_->Read(&op->response, tag); });
+    return op->p.get_future();
+  }
+
+  future<absl::optional<Response*>> Read(bool) override {
+    //  std::cout << "AsyncStreamingReadRpcImpl::" << __func__ << " with bool"
+    //  << std::endl;
+    thread_local Response response;
+
+    struct OnRead : public AsyncGrpcOperation {
+      explicit OnRead(ImmutableOptions o) : call_context(std::move(o)) {}
+      explicit OnRead(ImmutableOptions o, Response* response)
+          : call_context(std::move(o)), response(response) {}
+
+      ~OnRead() override { response->Clear(); }
+
+      bool Notify(bool ok) override {
+        ScopedCallContext scope(call_context);
+        if (!ok) {
+          p.set_value({});
+          return true;
+        }
+        p.set_value(response);
+        return true;
+      }
+      void Cancel() override {}
+
+      promise<absl::optional<Response*>> p;
+      CallContext call_context;
+      Response* response;
+    };
+
+    auto op = std::make_shared<OnRead>(options_, &response);
+    cq_->StartOperation(op,
+                        [&](void* tag) { stream_->Read(op->response, tag); });
     return op->p.get_future();
   }
 
@@ -181,6 +216,9 @@ class AsyncStreamingReadRpcError : public AsyncStreamingReadRpc<Response> {
   future<bool> Start() override { return make_ready_future(false); }
   future<absl::optional<Response>> Read() override {
     return make_ready_future<absl::optional<Response>>(absl::nullopt);
+  }
+  future<absl::optional<Response*>> Read(bool) override {
+    return make_ready_future<absl::optional<Response*>>(absl::nullopt);
   }
   future<Status> Finish() override { return make_ready_future(status_); }
   RpcMetadata GetRequestMetadata() const override { return {}; }

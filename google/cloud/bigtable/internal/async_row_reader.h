@@ -119,8 +119,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   void TryGiveRowToUser();
 
   /// Called when lower layers provide us with a response chunk.
+  future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse* response);
   future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse response);
-
   /// Called when the whole stream finishes.
   void OnStreamFinished(Status status);
 
@@ -131,6 +131,7 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   Status DrainParser();
 
   /// Parse the data from the response.
+  Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse* response);
   Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse response);
 
   std::mutex mu_;

@@ -77,6 +77,13 @@ class AsyncStreamingReadRpc {
    */
   virtual future<absl::optional<Response>> Read() = 0;
 
+  virtual future<absl::optional<Response*>> Read(bool) = 0;
+  //  {
+  //    std::cout << __PRETTY_FUNCTION__ << " oops! calling non-overridden
+  //    method" << std::endl; return
+  //    make_ready_future<absl::optional<Response*>>(absl::nullopt);
+  //  }
+
   /**
    * Return the final status of the streaming RPC.
    *
