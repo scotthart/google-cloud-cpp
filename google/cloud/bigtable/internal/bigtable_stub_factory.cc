@@ -38,12 +38,41 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+std::string ToString(grpc_arg const& arg) {
+  std::string output;
+  output = absl::StrCat("key=", arg.key, "\n");
+  switch (arg.type) {
+    case GRPC_ARG_STRING:
+      absl::StrAppend(&output, "value=", arg.value.string, "\n");
+      break;
+    case GRPC_ARG_INTEGER:
+      absl::StrAppend(&output, "value=", arg.value.integer, "\n");
+      break;
+    case GRPC_ARG_POINTER:
+      absl::StrAppend(&output, "value=pointer\n");
+      break;
+    default:
+      absl::StrAppend(&output, "value=UNKNOWN_TYPE\n");
+  }
+  return output;
+}
+
 std::shared_ptr<grpc::Channel> CreateGrpcChannel(
     internal::GrpcAuthenticationStrategy& auth, Options const& options,
     int channel_id) {
-  auto args = internal::MakeChannelArguments(options);
+  grpc::ChannelArguments args = internal::MakeChannelArguments(options);
   args.SetInt("grpc.channel_id", channel_id);
-  return auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+  //  grpc_channel_args channel_args = args.c_channel_args();
+  //  std::cout << "endpoint=" << options.get<EndpointOption>() << std::endl;
+  //  for (size_t i = 0; i < channel_args.num_args; ++i) {
+  //    grpc_arg a = channel_args.args[i];
+  //    std::cout << ToString(a) << std::endl;
+  //  }
+  auto channel =
+      auth.CreateChannel(options.get<EndpointOption>(), std::move(args));
+  //    std::cout << "channel->GetServiceConfigJSON()=" <<
+  //    channel->GetServiceConfigJSON() << std::endl;
+  return channel;
 }
 
 std::string FeaturesMetadata() {

@@ -220,7 +220,7 @@ future<bool> AsyncRowReader::OnDataReceived(
 #endif
 
 void AsyncRowReader::OnStreamFinished(Status status) {
-  //  operation_context_->PostCall(*client_context_, status);
+  operation_context_->PostCall(*client_context_, status);
   // assert(!continue_reading_);
   if (status_.ok()) {
     status_ = std::move(status);
@@ -259,9 +259,9 @@ void AsyncRowReader::OnStreamFinished(Status status) {
     status_ = Status();
   }
 
-  if (rows_count_ > 0) {
-    operation_context_->PostCall(*client_context_, status_);
-  }
+  //  if (rows_count_ > 0) {
+  //    operation_context_->PostCall(*client_context_, status_);
+  //  }
 
   if (status_.ok()) {
     // We've successfully finished the scan.

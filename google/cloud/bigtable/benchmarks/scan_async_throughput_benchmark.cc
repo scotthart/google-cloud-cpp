@@ -60,7 +60,8 @@ using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;
 using bigtable::benchmarks::kColumnFamily;
 
-constexpr int kScanSizes[] = {100, 1000, 10000, 100000, 1000000};
+constexpr int kScanSizes[] = {100, 1000, 10000, 100000, 1000000, 10000000};
+// constexpr int kScanSizes[] = {10000000};
 
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
@@ -135,22 +136,38 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
   auto table = benchmark.MakeTable(options);
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::uniform_int_distribution<std::int64_t> prng(0,
-                                                   table_size - scan_size - 1);
+  std::uniform_int_distribution<std::int64_t> prng;
+  if (scan_size < table_size) {
+    prng = std::uniform_int_distribution<std::int64_t>(
+        0, table_size - scan_size - 1);
+  } else {
+    prng = std::uniform_int_distribution<std::int64_t>(0, 0);
+  }
+
+  int range_scan = 0;
+  int table_scan = 0;
+  auto make_row_set = [&](std::int64_t table_size, std::int64_t scan_size) {
+    if (scan_size < table_size) {
+      ++range_scan;
+      return bigtable::RowSet{
+          bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)))};
+    }
+    ++table_scan;
+    return bigtable::RowSet{};
+  };
 
   auto test_start = std::chrono::steady_clock::now();
   while (std::chrono::steady_clock::now() < test_start + test_duration) {
-    auto range =
-        bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)));
+    auto row_set = make_row_set(table_size, scan_size);
     std::promise<bool> all_done;
     std::future<bool> all_done_future = all_done.get_future();
 
     auto op = [&all_done, &all_done_future, &table, &scan_size,
-               &range]() -> google::cloud::Status {
+               &row_set]() -> google::cloud::Status {
       table.AsyncReadRows(
           [](auto const&) { return google::cloud::make_ready_future(true); },
           [&all_done](auto const&) { all_done.set_value(true); },
-          bigtable::RowSet(std::move(range)), scan_size,
+          std::move(row_set), scan_size,
           bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0",
                                               "field9"));
       all_done_future.wait();
@@ -161,6 +178,8 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
     result.row_count += scan_size;
   }
 
+  std::cout << "range_scan=" << range_scan << ", table_scan=" << table_scan
+            << std::endl;
   return result;
 }
 

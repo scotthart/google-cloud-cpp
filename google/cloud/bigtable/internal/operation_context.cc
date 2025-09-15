@@ -40,6 +40,22 @@ std::vector<std::shared_ptr<Metric>> CloneMetrics(
 }  // namespace
 #endif
 
+#if 0
+absl::optional<google::bigtable::v2::ResponseParams>
+GetResponseParamsFromTrailingMetadata(
+    grpc::ClientContext const& client_context) {
+  auto metadata = client_context.GetServerTrailingMetadata();
+  auto iter = metadata.find("x-goog-ext-425905942-bin");
+  if (iter == metadata.end()) return absl::nullopt;
+  google::bigtable::v2::ResponseParams p;
+  // The value for this key should always be the same in a response, so we
+  // return the first value we find.
+  std::string value{iter->second.data(), iter->second.size()};
+  if (p.ParseFromString(value)) return p;
+  return absl::nullopt;
+}
+#endif
+
 void OperationContext::ProcessMetadata(
     std::multimap<grpc::string_ref, grpc::string_ref> const& metadata) {
   for (auto const& kv : metadata) {
@@ -82,6 +98,13 @@ void OperationContext::PostCall(grpc::ClientContext const& client_context,
                                 google::cloud::Status const& status) {
   ProcessMetadata(client_context.GetServerInitialMetadata());
   ProcessMetadata(client_context.GetServerTrailingMetadata());
+  //  auto response_params =
+  //  GetResponseParamsFromTrailingMetadata(client_context); if
+  //  (response_params) {
+  //    std::cout << "cluster_id: " << response_params->cluster_id()
+  //              << "; zone_id: " << response_params->zone_id()
+  //              << std::endl;
+  //  }
   auto attempt_end = clock_->Now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   for (auto& m : cloned_metrics_) {
@@ -137,6 +160,13 @@ void OperationContext::PostCall(grpc::ClientContext const& client_context,
                                 google::cloud::Status const&) {
   ProcessMetadata(client_context.GetServerInitialMetadata());
   ProcessMetadata(client_context.GetServerTrailingMetadata());
+  //  auto response_params =
+  //  GetResponseParamsFromTrailingMetadata(client_context); if
+  //  (response_params) {
+  //    std::cout << "cluster_id: " << response_params->cluster_id()
+  //              << "; zone_id: " << response_params->zone_id()
+  //              << std::endl;
+  //  }
 }
 
 void OperationContext::OnDone(Status const&) {}

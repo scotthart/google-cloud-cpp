@@ -187,6 +187,7 @@ std::string Benchmark::MakeRandomKey(
 }
 
 std::string Benchmark::MakeKey(std::int64_t id) const {
+  if (id < 0) id = 0;
   std::ostringstream os;
   os << "user" << std::setw(key_width_) << std::setfill('0') << id;
   return os.str();

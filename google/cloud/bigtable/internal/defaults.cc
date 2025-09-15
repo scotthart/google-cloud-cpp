@@ -145,6 +145,7 @@ Options HandleUniverseDomain(Options opts) {
 }
 
 Options DefaultOptions(Options opts) {
+  std::cout << __func__ << std::endl;
   using ::google::cloud::internal::GetEnv;
   auto ud = GetEnv("GOOGLE_CLOUD_UNIVERSE_DOMAIN");
   if (ud && !ud->empty()) {
