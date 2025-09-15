@@ -22,5 +22,6 @@ bigtable_benchmark_programs = [
     "mutation_batcher_throughput_benchmark.cc",
     "read_sync_vs_async_benchmark.cc",
     "scan_async_throughput_benchmark.cc",
+    "scan_grpc_throughput_benchmark.cc",
     "scan_throughput_benchmark.cc",
 ]
