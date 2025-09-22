@@ -15,15 +15,20 @@
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
+#ifdef PROFILE
+#include "google/cloud/internal/getenv.h"
 #include "gperftools/profiler.h"
-#include <google/bigtable/v2/bigtable.grpc.pb.h>
+#endif
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
+#include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/client_context.h>
 #include <chrono>
 #include <future>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+
+#define SYNC 1
 
 char const kDescription[] = R"""(Measure the throughput of `Table::ReadRows()`.
 
@@ -64,12 +69,87 @@ using bigtable::benchmarks::BenchmarkResult;
 using bigtable::benchmarks::FormatDuration;
 using bigtable::benchmarks::kColumnFamily;
 
+std::string ToString(grpc_arg const& arg) {
+  std::string output;
+  output = absl::StrCat("{{", arg.key, "}, {");
+  switch (arg.type) {
+    case GRPC_ARG_STRING:
+      absl::StrAppend(&output, arg.value.string, "}},");
+      break;
+    case GRPC_ARG_INTEGER:
+      absl::StrAppend(&output, arg.value.integer, "}},");
+      break;
+    case GRPC_ARG_POINTER:
+      absl::StrAppend(&output, "some pointer}},");
+      break;
+    default:
+      absl::StrAppend(&output, "UNKNOWN_ARG_TYPE}},");
+  }
+  return output;
+}
+
 constexpr int kScanSizes[] = {100, 1000, 10000, 100000, 1000000};
+
+auto constexpr kDataEndpoint = "bigtable.googleapis.com";
+
+class GrpcClient {
+ public:
+  GrpcClient() {
+    auto options =
+        google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
+            google::cloud::MakeGoogleDefaultCredentials());
+    options = google::cloud::bigtable::internal::DefaultDataOptions(options);
+    // potentially create background threads
+    auto auth_strategy =
+        google::cloud::internal::CreateAuthenticationStrategy({}, options);
+    grpc::ChannelArguments channel_args =
+        google::cloud::internal::MakeChannelArguments(options);
+
+    std::cout << "GrpcClient Channel Args:\n";
+    grpc_channel_args args = channel_args.c_channel_args();
+    for (size_t i = 0; i < args.num_args; ++i) {
+      grpc_arg a = args.args[i];
+      std::cout << ToString(a) << std::endl;
+    }
+
+    auto data_channel =
+        auth_strategy->CreateChannel(kDataEndpoint, channel_args);
+    data_stub_ =
+        google::bigtable::v2::Bigtable::NewStub(std::move(data_channel));
+  }
+
+  std::unique_ptr<
+      ::grpc::ClientReaderInterface<::google::bigtable::v2::ReadRowsResponse>>
+  ReadRows(grpc::ClientContext* context,
+           google::bigtable::v2::ReadRowsRequest const& request) {
+    return data_stub_->ReadRows(context, request);
+  }
+
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<
+      ::google::bigtable::v2::ReadRowsResponse>>
+  AsyncReadRows(grpc::ClientContext* context, grpc::CompletionQueue* cq,
+                google::bigtable::v2::ReadRowsRequest const& request) {
+    return data_stub_->AsyncReadRows(context, request, cq, (void*)1);
+  }
+
+  google::bigtable::v2::ReadRowsRequest request;
+  google::bigtable::v2::ReadRowsResponse response;
+
+ private:
+  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> data_stub_;
+};
+
+enum class Mode { kSync, kAsync };
 
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::int64_t table_size, std::int64_t scan_size,
-                             std::chrono::seconds test_duration);
+                             google::cloud::internal::DefaultPRNG& generator,
+                             std::uniform_int_distribution<std::int64_t> prng,
+                             std::int64_t scan_size,
+                             std::chrono::seconds test_duration,
+                             std::string const& table_name,
+                             GrpcClient& grpc_client, Mode mode);
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
@@ -88,19 +168,36 @@ int main(int argc, char* argv[]) {
   Benchmark benchmark(*options);
 
   // Create and populate the table for the benchmark.
-  benchmark.CreateTable();
+  auto table_id = benchmark.CreateTable();
+  std::string table_name =
+      absl::StrFormat("projects/%s/instances/%s/tables/%s", options->project_id,
+                      options->instance_id, table_id);
+  std::cout << "benchmark.CreateTable()=" << table_name << std::endl;
   auto populate_results = benchmark.PopulateTable();
   Benchmark::PrintThroughputResult(std::cout, "scant", "Upload",
                                    *populate_results);
 
-  //  ProfilerStart("/tmp/cpu_profile.prof");
-  std::map<std::string, BenchmarkResult> results_by_size;
+  GrpcClient grpc_client;
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+
+#ifdef PROFILE
+  auto profile_data_path = google::cloud::internal::GetEnv("PROFILER_PATH");
+  if (profile_data_path) {
+    profile_data_path = absl::StrCat(*profile_data_path, ".sync");
+    ProfilerStart(profile_data_path->c_str());
+  }
+  auto profiler_start = std::chrono::steady_clock::now();
+#endif  // PROFILE
+  std::map<std::string, BenchmarkResult> sync_results_by_size;
   for (auto scan_size : kScanSizes) {
+    std::uniform_int_distribution<std::int64_t> prng(
+        0, options->table_size - scan_size - 1);
+
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
-    auto combined =
-        RunBenchmark(benchmark, options->table_size, scan_size,
-                     options->test_duration);
+    auto combined = RunBenchmark(benchmark, generator, prng, scan_size,
+                                 options->test_duration, table_name,
+                                 grpc_client, Mode::kSync);
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
@@ -109,171 +206,185 @@ int main(int argc, char* argv[]) {
               << ", Rows=" << combined.row_count << "\n";
     auto op_name = "Scan(" + std::to_string(scan_size) + ")";
     Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
-    results_by_size[op_name] = std::move(combined);
+    sync_results_by_size[op_name] = std::move(combined);
   }
-  //  ProfilerStop();
+#ifdef PROFILE
+  auto profiler_stop = std::chrono::steady_clock::now();
+  if (profile_data_path) {
+    ProfilerStop();
+    std::cout << "Steady clock sync profiling duration="
+              << FormatDuration(profiler_stop - profiler_start) << "\n";
+  }
+
+  profile_data_path = google::cloud::internal::GetEnv("PROFILER_PATH");
+  if (profile_data_path) {
+    profile_data_path = absl::StrCat(*profile_data_path, ".async");
+    ProfilerStart(profile_data_path->c_str());
+  }
+  profiler_start = std::chrono::steady_clock::now();
+#endif  // PROFILE
+  std::map<std::string, BenchmarkResult> async_results_by_size;
+  for (auto scan_size : kScanSizes) {
+    std::uniform_int_distribution<std::int64_t> prng(
+        0, options->table_size - scan_size - 1);
+
+    std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
+    auto start = std::chrono::steady_clock::now();
+    auto combined = RunBenchmark(benchmark, generator, prng, scan_size,
+                                 options->test_duration, table_name,
+                                 grpc_client, Mode::kAsync);
+    using std::chrono::duration_cast;
+    combined.elapsed = duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - start);
+    std::cout << " DONE. Elapsed=" << FormatDuration(combined.elapsed)
+              << ", Ops=" << combined.operations.size()
+              << ", Rows=" << combined.row_count << "\n";
+    auto op_name = "AsyncScan(" + std::to_string(scan_size) + ")";
+    Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
+    async_results_by_size[op_name] = std::move(combined);
+  }
+#ifdef PROFILE
+  profiler_stop = std::chrono::steady_clock::now();
+  if (profile_data_path) {
+    ProfilerStop();
+    std::cout << "Steady clock async profiling duration="
+              << FormatDuration(profiler_stop - profiler_start) << "\n";
+  }
+#endif  // PROFILE
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "scant", "BulkApply()", "Latency",
                            *populate_results);
-  for (auto& kv : results_by_size) {
+  for (auto& kv : sync_results_by_size) {
+    benchmark.PrintResultCsv(std::cout, "scant", kv.first, "IterationTime",
+                             kv.second);
+  }
+  for (auto& kv : async_results_by_size) {
     benchmark.PrintResultCsv(std::cout, "scant", kv.first, "IterationTime",
                              kv.second);
   }
 
   benchmark.DeleteTable();
-
   return 0;
 }
 
 namespace {
 
-auto constexpr kDataEndpoint = "bigtable.googleapis.com";
-auto constexpr kTableAdminEndpoint = "bigtableadmin.googleapis.com";
-
-
-class GrpcClient {
- public:
-  GrpcClient() {
-    grpc::ChannelArguments channel_args;
-    channel_args.SetMaxReceiveMessageSize(268435456);
-    channel_args.SetMaxSendMessageSize(268435456);
-    channel_args.SetInt("grpc.keepalive_time_ms", 30000);
-    channel_args.SetInt("grpc.keepalive_timeout_ms", 10000);
-
-
-   background_threads_ =
-      google::cloud::internal::MakeBackgroundThreadsFactory(google::cloud::Options{})();
-
-   auto options = google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
-       google::cloud::MakeGoogleDefaultCredentials());
-    auto auth_strategy = google::cloud::internal::CreateAuthenticationStrategy(
-        background_threads_->cq(), options);
-    assert(auth_strategy != nullptr);
-
-    auto data_channel = auth_strategy->CreateChannel(kDataEndpoint, channel_args);
-    assert(data_channel != nullptr);
-    auto table_channel = auth_strategy->CreateChannel(kTableAdminEndpoint, channel_args);
-    assert(table_channel != nullptr);
-
-
-
-    data_stub_ = google::bigtable::v2::Bigtable::NewStub(std::move(data_channel));
-    assert(data_stub_ != nullptr);
-    table_stub_ = google::bigtable::admin::v2::BigtableTableAdmin::NewStub(std::move(table_channel));
-    assert(table_stub_ != nullptr);
-  }
-
-  std::unique_ptr<
-      ::grpc::ClientReaderInterface<::google::bigtable::v2::ReadRowsResponse>>
-  ReadRows(grpc::ClientContext* context, google::bigtable::v2::ReadRowsRequest const& request) {
-    return data_stub_->ReadRows(context, request);
-  }
-
-  grpc::Status GetTable(google::bigtable::admin::v2::GetTableRequest const& request,
-                       google::bigtable::admin::v2::Table* response) {
-    std::cout << __PRETTY_FUNCTION__  << std::endl;
-    grpc::ClientContext context;
-    context.set_authority(kTableAdminEndpoint);
-    auto status = table_stub_->GetTable(&context, request, response);
-    std::cout << __PRETTY_FUNCTION__ << ": POST CALL" << std::endl;
-    return status;
-  }
-
- private:
-  std::unique_ptr<google::cloud::BackgroundThreads> background_threads_;
-//  std::shared_ptr<grpc::ClientContext> context_;
-  std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> data_stub_;
-  std::unique_ptr<google::bigtable::admin::v2::BigtableTableAdmin::StubInterface> table_stub_;
-};
-
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::int64_t table_size, std::int64_t scan_size,
-                             std::chrono::seconds test_duration) {
+                             google::cloud::internal::DefaultPRNG& generator,
+                             std::uniform_int_distribution<std::int64_t> prng,
+                             std::int64_t scan_size,
+                             std::chrono::seconds test_duration,
+                             std::string const& table_name, GrpcClient& client,
+                             Mode mode) {
   BenchmarkResult result = {};
-
-  //  auto options =
-  //  google::cloud::Options{}.set<bigtable::EnableMetricsOption>(
-  //      enable_metrics);
-  auto table = benchmark.MakeTable();
-  std::string table_name = table.table_name();
-
-  std::cout << "table_name=" << table_name << std::endl;
-
-  GrpcClient client;
-#if 0
-  {
-    google::bigtable::admin::v2::GetTableRequest request;
-    request.set_name(table_name);
-    google::bigtable::admin::v2::Table response;
-    auto status = client.GetTable(request, &response);
-    if (status.error_code() != grpc::StatusCode::OK) {
-      std::cout << "status.error_code()=" << status.error_code() << std::endl;
-      std::cout << "status.error_message()=" << status.error_message() << std::endl;
-      std::exit(1);
-    }
-    std::cout << "table=\n" << response.DebugString() << std::endl;
-  }
-#endif
-
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::uniform_int_distribution<std::int64_t> prng(0,
-                                                   table_size - scan_size - 1);
-
-  google::bigtable::v2::ReadRowsRequest request;
-  google::bigtable::v2::ReadRowsResponse response;
 
   auto test_start = std::chrono::steady_clock::now();
   while (std::chrono::steady_clock::now() < test_start + test_duration) {
     auto range =
         bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)));
-
     long count = 0;  // NOLINT(google-runtime-int)
-                     //    auto op = [&count, &table, &scan_size, &range]() ->
-                     //    google::cloud::Status {
-                     //      auto reader =
-    //          table.ReadRows(bigtable::RowSet(std::move(range)), scan_size,
-    //                         bigtable::Filter::ColumnRangeClosed(
-    //                             kColumnFamily, "field0", "field9"));
-    //      for (auto& row : reader) {
-    //        if (!row) {
-    //          return row.status();
-    //        }
-    //        ++count;
-    //      }
-    //      return google::cloud::Status{};
-    //    };
 
-    auto op = [&count, &client, &scan_size, &range, &table_name,
-    &request, &response]() -> google::cloud::Status {
-      bigtable::RowSet row_set(std::move(range));
-      request.Clear();
-      request.set_table_name(table_name);
-      *request.mutable_rows() = std::move(row_set).as_proto();
-      *request.mutable_filter() = bigtable::Filter::ColumnRangeClosed(
-                                 kColumnFamily, "field0", "field9").as_proto();
-      request.set_rows_limit(scan_size);
+    if (mode == Mode::kSync) {
+      auto op = [&count, &client, &scan_size, &range,
+                 &table_name]() -> google::cloud::Status {
+        bigtable::RowSet row_set(std::move(range));
+        client.request.Clear();
+        client.request.set_table_name(table_name);
+        *client.request.mutable_rows() = std::move(row_set).as_proto();
+        *client.request.mutable_filter() =
+            bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0",
+                                                "field9")
+                .as_proto();
+        client.request.set_rows_limit(scan_size);
 
-      grpc::ClientContext context;
-      context.set_authority(kDataEndpoint);
-      auto stream = client.ReadRows(&context, request);
+        grpc::ClientContext context;
+        context.set_authority(kDataEndpoint);
+        auto stream = client.ReadRows(&context, client.request);
 
-      response.Clear();
-      while (stream->Read(&response)) {
-        std::cout << "chunks_size=" << response.chunks_size() << std::endl;
-        for (auto i = 0; i < response.chunks_size(); ++i) {
-          auto const& chunk = response.chunks(i);
-          if (chunk.has_commit_row() && chunk.commit_row()) {
-            ++count;
+        client.response.Clear();
+        bool keep_reading = true;
+        while (keep_reading) {
+          keep_reading = stream->Read(&client.response);
+          for (auto i = 0; i < client.response.chunks_size(); ++i) {
+            auto const& chunk = client.response.chunks(i);
+            if (chunk.has_commit_row() && chunk.commit_row()) {
+              ++count;
+            }
+          }
+          client.response.Clear();
+        }
+
+        return {};
+      };
+      result.operations.push_back(Benchmark::TimeOperation(op));
+    } else {
+      auto op = [&count, &client, &scan_size, &range,
+                 &table_name]() -> google::cloud::Status {
+        bigtable::RowSet row_set(std::move(range));
+        client.request.Clear();
+        client.request.set_table_name(table_name);
+        *client.request.mutable_rows() = std::move(row_set).as_proto();
+        *client.request.mutable_filter() =
+            bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0",
+                                                "field9")
+                .as_proto();
+        client.request.set_rows_limit(scan_size);
+
+        grpc::ClientContext context;
+        context.set_authority(kDataEndpoint);
+
+        grpc::CompletionQueue cq;
+
+        auto reader = client.AsyncReadRows(&context, &cq, client.request);
+        client.response.Clear();
+        void* read_tag = (void*)2;
+        reader->Read(&client.response, read_tag);
+
+        void* got_tag;
+        bool ok = false;
+
+        while (cq.Next(&got_tag, &ok)) {
+          if (got_tag == (void*)1) {
+            // Initial tag, AsyncReadRows is ready.
+            continue;
+          }
+          if (got_tag == read_tag) {
+            if (ok) {
+              for (auto const& chunk : client.response.chunks()) {
+                if (!chunk.row_key().empty()) {
+                  count++;
+                }
+              }
+              reader->Read(&client.response, read_tag);
+            } else {
+              // Stream is done.
+              break;
+            }
           }
         }
-        response.Clear();
-      }
-      return {};
-    };
 
-    result.operations.push_back(Benchmark::TimeOperation(op));
-//    std::cout << "count=" << count << std::endl;
+        grpc::Status status;
+        void* finish_tag = (void*)3;
+        reader->Finish(&status, finish_tag);
+        while (cq.Next(&got_tag, &ok) && got_tag != finish_tag) {
+        }
+
+        cq.Shutdown();
+        while (cq.Next(&got_tag, &ok)) {
+        }
+
+        if (!status.ok()) {
+          std::cerr << "RPC failed: " << status.error_message() << std::endl;
+          std::exit(1);
+        }
+
+        return {};
+      };
+      result.operations.push_back(Benchmark::TimeOperation(op));
+    }
+
+    //    std::cout << "count=" << count << std::endl;
     result.row_count += count;
   }
   return result;

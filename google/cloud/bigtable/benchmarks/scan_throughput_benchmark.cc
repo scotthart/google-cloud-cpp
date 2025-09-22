@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
+#ifdef PROFILE
+#include "google/cloud/internal/getenv.h"
 #include "gperftools/profiler.h"
+#endif
 #include <chrono>
 #include <future>
 #include <iomanip>
@@ -63,9 +66,11 @@ constexpr int kScanSizes[] = {100, 1000, 10000, 100000, 1000000};
 
 /// Run an iteration of the test.
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::int64_t table_size, std::int64_t scan_size,
+                             google::cloud::internal::DefaultPRNG& generator,
+                             std::uniform_int_distribution<std::int64_t> prng,
+                             std::int64_t scan_size,
                              std::chrono::seconds test_duration,
-                             bool enable_metrics);
+                             google::cloud::bigtable::Table& table);
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
@@ -88,14 +93,27 @@ int main(int argc, char* argv[]) {
   Benchmark::PrintThroughputResult(std::cout, "scant", "Upload",
                                    *populate_results);
 
-  //  ProfilerStart("/tmp/cpu_profile.prof");
+  // Create the clients here so that we don't repeatedly incur connection setup
+  // costs while running all the scans.
+  auto table = benchmark.MakeTable(
+      google::cloud::Options{}.set<bigtable::EnableMetricsOption>(
+          options->enable_metrics));
+
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+
+#ifdef PROFILE
+  auto profile_data_path = google::cloud::internal::GetEnv("PROFILER_PATH");
+  if (profile_data_path) ProfilerStart(profile_data_path->c_str());
+  auto profiler_start = std::chrono::steady_clock::now();
+#endif  // PROFILE
   std::map<std::string, BenchmarkResult> results_by_size;
   for (auto scan_size : kScanSizes) {
+    std::uniform_int_distribution<std::int64_t> prng(
+        0, options->table_size - scan_size - 1);
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
-    auto combined =
-        RunBenchmark(benchmark, options->table_size, scan_size,
-                     options->test_duration, options->enable_metrics);
+    auto combined = RunBenchmark(benchmark, generator, prng, scan_size,
+                                 options->test_duration, table);
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
@@ -106,7 +124,14 @@ int main(int argc, char* argv[]) {
     Benchmark::PrintLatencyResult(std::cout, "scant", op_name, combined);
     results_by_size[op_name] = std::move(combined);
   }
-  //  ProfilerStop();
+#ifdef PROFILE
+  auto profiler_stop = std::chrono::steady_clock::now();
+  if (profile_data_path) {
+    ProfilerStop();
+    std::cout << "Steady clock profiling duration="
+              << FormatDuration(profiler_stop - profiler_start) << "\n";
+  }
+#endif  // PROFILE
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "scant", "BulkApply()", "Latency",
@@ -117,37 +142,28 @@ int main(int argc, char* argv[]) {
   }
 
   benchmark.DeleteTable();
-
   return 0;
 }
 
 namespace {
 
 BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
-                             std::int64_t table_size, std::int64_t scan_size,
+                             google::cloud::internal::DefaultPRNG& generator,
+                             std::uniform_int_distribution<std::int64_t> prng,
+                             std::int64_t scan_size,
                              std::chrono::seconds test_duration,
-                             bool enable_metrics) {
+                             google::cloud::bigtable::Table& table) {
   BenchmarkResult result = {};
-
-  auto options = google::cloud::Options{}.set<bigtable::EnableMetricsOption>(
-      enable_metrics);
-  auto table = benchmark.MakeTable(options);
-
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::uniform_int_distribution<std::int64_t> prng(0,
-                                                   table_size - scan_size - 1);
-
   auto test_start = std::chrono::steady_clock::now();
   while (std::chrono::steady_clock::now() < test_start + test_duration) {
-    auto range =
-        bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)));
-
+    auto row_set = bigtable::RowSet{
+        bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)))};
     long count = 0;  // NOLINT(google-runtime-int)
-    auto op = [&count, &table, &scan_size, &range]() -> google::cloud::Status {
-      auto reader =
-          table.ReadRows(bigtable::RowSet(std::move(range)), scan_size,
-                         bigtable::Filter::ColumnRangeClosed(
-                             kColumnFamily, "field0", "field9"));
+
+    auto op = [&count, &table, scan_size, &row_set]() -> google::cloud::Status {
+      auto reader = table.ReadRows(std::move(row_set), scan_size,
+                                   bigtable::Filter::ColumnRangeClosed(
+                                       kColumnFamily, "field0", "field9"));
       for (auto& row : reader) {
         if (!row) {
           return row.status();
