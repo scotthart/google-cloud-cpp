@@ -3,13 +3,13 @@
 @page pubsub-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
-the library.  There are also functions to configure this behavior in code. The
+the library. There are also functions to configure this behavior in code. The
 environment variables are convenient when troubleshooting problems.
 
 @section pubsub-env-endpoint Endpoint Overrides
 
-`PUBSUB_EMULATOR_HOST=host:port`: tells the library to connect to the
-specified emulator rather than the default endpoint. Intended for testing only.
+<!-- inject-endpoint-env-vars-start -->
+<!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
 

@@ -43,6 +43,39 @@ Status DeprecatedServiceTracingStub::Noop(
                            child_->Noop(context, options, request));
 }
 
+StatusOr<google::cloud::location::Location> DeprecatedServiceTracingStub::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.deprecated.v1.DeprecatedService", "GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetLocation(context, options, request));
+}
+
+StatusOr<google::iam::v1::Policy> DeprecatedServiceTracingStub::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.deprecated.v1.DeprecatedService", "GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->GetIamPolicy(context, options, request));
+}
+
+StatusOr<google::longrunning::ListOperationsResponse> DeprecatedServiceTracingStub::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto span = internal::MakeSpanGrpc("google.test.deprecated.v1.DeprecatedService", "ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  internal::InjectTraceContext(context, *propagator_);
+  return internal::EndSpan(context, *span,
+                           child_->ListOperations(context, options, request));
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 std::shared_ptr<DeprecatedServiceStub> MakeDeprecatedServiceTracingStub(

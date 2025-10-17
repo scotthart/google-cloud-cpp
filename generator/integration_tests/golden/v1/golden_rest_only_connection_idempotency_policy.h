@@ -22,6 +22,9 @@
 #include "google/cloud/idempotency.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test2.pb.h>
+#include <google/cloud/location/locations.pb.h>
+#include <google/iam/v1/iam_policy.pb.h>
+#include <google/longrunning/operations.pb.h>
 #include <memory>
 
 namespace google {
@@ -38,6 +41,15 @@ class GoldenRestOnlyConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency
   Noop(google::protobuf::Empty const& request);
+
+  virtual google::cloud::Idempotency
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual google::cloud::Idempotency
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency
+  ListOperations(google::longrunning::ListOperationsRequest request);
 };
 
 std::unique_ptr<GoldenRestOnlyConnectionIdempotencyPolicy>

@@ -37,6 +37,18 @@ Idempotency GoldenRestOnlyConnectionIdempotencyPolicy::Noop(google::protobuf::Em
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency GoldenRestOnlyConnectionIdempotencyPolicy::GetLocation(google::cloud::location::GetLocationRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GoldenRestOnlyConnectionIdempotencyPolicy::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency GoldenRestOnlyConnectionIdempotencyPolicy::ListOperations(google::longrunning::ListOperationsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<GoldenRestOnlyConnectionIdempotencyPolicy>
     MakeDefaultGoldenRestOnlyConnectionIdempotencyPolicy() {
   return std::make_unique<GoldenRestOnlyConnectionIdempotencyPolicy>();

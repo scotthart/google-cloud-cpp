@@ -18,6 +18,7 @@
 
 #include "generator/integration_tests/golden/v1/internal/golden_rest_only_tracing_connection.h"
 #include "google/cloud/internal/opentelemetry.h"
+#include "google/cloud/internal/traced_stream_range.h"
 #include <memory>
 #include <utility>
 
@@ -37,6 +38,29 @@ GoldenRestOnlyTracingConnection::Noop(google::protobuf::Empty const& request) {
   auto span = internal::MakeSpan("golden_v1::GoldenRestOnlyConnection::Noop");
   auto scope = opentelemetry::trace::Scope(span);
   return internal::EndSpan(*span, child_->Noop(request));
+}
+
+StatusOr<google::cloud::location::Location>
+GoldenRestOnlyTracingConnection::GetLocation(google::cloud::location::GetLocationRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenRestOnlyConnection::GetLocation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLocation(request));
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenRestOnlyTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenRestOnlyConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
+}
+
+StreamRange<google::longrunning::Operation>
+GoldenRestOnlyTracingConnection::ListOperations(google::longrunning::ListOperationsRequest request) {
+  auto span = internal::MakeSpan("golden_v1::GoldenRestOnlyConnection::ListOperations");
+  internal::OTelScope scope(span);
+  auto sr = child_->ListOperations(std::move(request));
+  return internal::MakeTracedStreamRange<google::longrunning::Operation>(
+        std::move(span), std::move(sr));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

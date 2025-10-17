@@ -45,6 +45,18 @@ class GoldenRestOnlyRestLogging : public GoldenRestOnlyRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       Options const& options, google::protobuf::Empty const& request) override;
 
+  StatusOr<google::cloud::location::Location> GetLocation(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      google::cloud::rest_internal::RestContext& rest_context,
+      Options const& options, google::longrunning::ListOperationsRequest const& request) override;
+
  private:
   std::shared_ptr<GoldenRestOnlyRestStub> child_;
   TracingOptions tracing_options_;

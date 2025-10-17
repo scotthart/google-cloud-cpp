@@ -43,6 +43,15 @@ class DeprecatedServiceTracingConnection
   Status
   Noop(google::test::deprecated::v1::DeprecatedServiceRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
  private:
   std::shared_ptr<golden_v1::DeprecatedServiceConnection> child_;
 };

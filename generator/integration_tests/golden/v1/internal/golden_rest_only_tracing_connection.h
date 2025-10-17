@@ -43,6 +43,15 @@ class GoldenRestOnlyTracingConnection
   Status
   Noop(google::protobuf::Empty const& request) override;
 
+  StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request) override;
+
  private:
   std::shared_ptr<golden_v1::GoldenRestOnlyConnection> child_;
 };

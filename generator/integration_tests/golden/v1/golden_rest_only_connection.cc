@@ -24,6 +24,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -39,6 +40,24 @@ Status
 GoldenRestOnlyConnection::Noop(
     google::protobuf::Empty const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::location::Location>
+GoldenRestOnlyConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenRestOnlyConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation> GoldenRestOnlyConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

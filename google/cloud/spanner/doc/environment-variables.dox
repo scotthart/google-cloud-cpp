@@ -3,30 +3,15 @@
 @page spanner-env Environment Variables
 
 A number of environment variables can be used to configure the behavior of
-the library.  There are also functions to configure this behavior in code. The
+the library. There are also functions to configure this behavior in code. The
 environment variables are convenient when troubleshooting problems.
 
 @section spanner-env-endpoint Endpoint Overrides
 
-`GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=...`: changes the default endpoint
-(spanner.googleapis.com) for the library. Intended for testing only.
-
-`SPANNER_EMULATOR_HOST=host:port`: tells the library to connect to the
-specified emulator rather than the default endpoint. Intended for testing only.
+<!-- inject-endpoint-env-vars-start -->
+<!-- inject-endpoint-env-vars-end -->
 
 @see google::cloud::EndpointOption
-
-@section spanner-env-defaults Default behaviors
-
-`SPANNER_OPTIMIZER_VERSION=n`: sets the default query optimizer version to use
-in `Client::ExecuteQuery()` calls.
-
-@see google::cloud::spanner::QueryOptimizerVersionOption
-
-`SPANNER_OPTIMIZER_STATISTICS_PACKAGE=...`: specifies a statistics package
-for the query optimizer to use when compiling a SQL query.
-
-@see google::cloud::spanner::QueryOptimizerStatisticsPackageOption
 
 @section spanner-env-logging Logging
 
@@ -52,17 +37,9 @@ environment variable.
 @see google::cloud::LogBackend
 @see google::cloud::LogSink
 
-@section spanner-env-other Other Environment Variables
+@section spanner-env-project Setting the Default Project
 
 `GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
 configure the GCP project. This has no effect in the library.
-
-`GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=...` is used in examples and
-integration tests to, well, configure the spanner instance. This has no effect
-in the library.
-
-`GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=...`: is used in examples and
-integration tests to set the service account for testing IAM operations. This
-has no effect in the library.
 
 */

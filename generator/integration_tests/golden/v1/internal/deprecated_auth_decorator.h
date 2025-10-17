@@ -43,6 +43,21 @@ class DeprecatedServiceAuth : public DeprecatedServiceStub {
       Options const& options,
       google::test::deprecated::v1::DeprecatedServiceRequest const& request) override;
 
+  StatusOr<google::cloud::location::Location> GetLocation(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::cloud::location::GetLocationRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::longrunning::ListOperationsResponse> ListOperations(
+      grpc::ClientContext& context,
+      Options const& options,
+      google::longrunning::ListOperationsRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<DeprecatedServiceStub> child_;

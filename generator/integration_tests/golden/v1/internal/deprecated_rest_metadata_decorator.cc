@@ -47,6 +47,30 @@ DeprecatedServiceRestMetadata::Noop(
   return child_->Noop(rest_context, options, request);
 }
 
+StatusOr<google::cloud::location::Location>
+DeprecatedServiceRestMetadata::GetLocation(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::cloud::location::GetLocationRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetLocation(rest_context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy>
+DeprecatedServiceRestMetadata::GetIamPolicy(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->GetIamPolicy(rest_context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+DeprecatedServiceRestMetadata::ListOperations(
+    rest_internal::RestContext& rest_context,
+    Options const& options, google::longrunning::ListOperationsRequest const& request) {
+  SetMetadata(rest_context, options);
+  return child_->ListOperations(rest_context, options, request);
+}
+
 void DeprecatedServiceRestMetadata::SetMetadata(
       rest_internal::RestContext& rest_context,
       Options const& options, std::vector<std::string> const& params) {

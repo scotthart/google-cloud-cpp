@@ -1,5 +1,4 @@
 /*!
-
 @page pubsub-override-retry Override Retry, Backoff, and Idempotency Policies
 
 When it is safe to do so, the library automatically retries requests that fail
@@ -27,7 +26,7 @@ have per-client names.
 The `*RetryPolicyOption` controls:
 
 - Which errors are to be treated as transient errors.
-- How long will the library will keep retrying transient errors.
+- How long the library will keep retrying transient errors.
 
 You can provide your own class for this option. The library also provides two
 built-in policies:
@@ -36,18 +35,15 @@ built-in policies:
   of transient errors.
 - `*LimitedTimeRetryPolicy`: stops retrying after a specified time.
 
-@see google::cloud::pubsub::RetryPolicyOption
-@see google::cloud::pubsub::RetryPolicy
-@see google::cloud::pubsub::LimitedTimeRetryPolicy
-@see google::cloud::pubsub::LimitedErrorCountRetryPolicy
-@see google::cloud::pubsub::SchemaServiceRetryPolicyOption
-@see google::cloud::pubsub::SchemaServiceRetryPolicy
-@see google::cloud::pubsub::SchemaServiceLimitedTimeRetryPolicy
-@see google::cloud::pubsub::SchemaServiceLimitedErrorCountRetryPolicy
+Note that a library may have more than one version of these classes. Their name
+match the `*Client` and `*Connection` object they are intended to be used
+with. Some `*Client` objects treat different error codes as transient errors.
+In most cases, only [kUnavailable](@ref google::cloud::StatusCode) is treated
+as a transient error.
 
 @section pubsub-override-retry-backoff-policy Controlling the backoff algorithm
 
-The `*BackoffPolicyOption controls how long the client library will wait
+The `*BackoffPolicyOption` controls how long the client library will wait
 before retrying a request that failed with a transient error. You can provide
 your own class for this option.
 
@@ -59,36 +55,19 @@ backoff time for an RPC is chosen at random, but never exceeds the current
 backoff. The current backoff is doubled after each failure, but never exceeds
 (or is "truncated") if it reaches a prescribed maximum.
 
-@see google::cloud::pubsub::BackoffPolicyOption
-@see google::cloud::pubsub::SchemaServiceBackoffPolicyOption
-
 @section pubsub-override-retry-idempotency-policy Controlling which operations are retryable
 
-[`SchemaServiceClient`] supports the
-[`SchemaServiceConnectionIdempotencyPolicyOption`] to control which requests are
-[idempotent], and therefore retryable.  In all other cases the Pub/Sub library
-retries the operations.
+The `*IdempotencyPolicyOption` controls which requests are retryable, as some
+requests are never safe to retry.
 
-For `SchemaServiceClient` only one built-in idempotency policy is provided by
-the library: [`SchemaServiceConnectionIdempotencyPolicy`].
-
-[`SchemaServiceClient`]: @ref google::cloud::pubsub::SchemaServiceClient
-[`SchemaServiceConnectionIdempotencyPolicyOption`]: @ref google::cloud::pubsub::SchemaServiceConnectionIdempotencyPolicyOption
-[`SchemaServiceConnectionIdempotencyPolicy`]: @ref google::cloud::pubsub::SchemaServiceConnectionIdempotencyPolicy
+Only one built-in idempotency policy is provided by the library. The name
+matches the name of the client it is intended for. For example, `FooBarClient`
+will use `FooBarIdempotencyPolicy`. This policy is very conservative.
 
 @section pubsub-override-retry-example Example
 
-For example, this will override the retry policies for `pubsub::Publisher`:
-
-@snippet samples.cc publisher-retry-settings
-
-While this will override the retry policies for `pubusb::Subscriber`:
-
-@snippet samples.cc subscriber-retry-settings
-
-Follow these links to find examples for other classes:
-
-- [\c SchemaServiceClient](@ref pubsub::SchemaServiceClient-retry-snippet)
+<!-- inject-retry-snippet-start -->
+<!-- inject-retry-snippet-end -->
 
 @section pubsub-override-retry-more-information More Information
 
@@ -97,18 +76,8 @@ Follow these links to find examples for other classes:
 @see google::cloud::ExponentialBackoffPolicy
 
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
-[idempotent]: https://en.wikipedia.org/wiki/Idempotence
 
 */
 
-/*! @page pubsub::SchemaServiceClient-retry-snippet Override pubsub::SchemaServiceClient Retry Policies
-
-This shows how to override the retry policies for pubsub::SchemaServiceClient:
-
-@snippet google/cloud/pubsub/samples/schema_client_samples.cc set-retry-policy
-
-Assuming you have created a custom idempotency policy. Such as:
-
-@snippet google/cloud/pubsub/samples/schema_client_samples.cc custom-idempotency-policy
-
-*/
+// <!-- inject-retry-pages-start -->
+// <!-- inject-retry-pages-end -->

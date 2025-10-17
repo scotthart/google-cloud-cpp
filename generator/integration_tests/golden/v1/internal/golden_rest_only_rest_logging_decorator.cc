@@ -48,6 +48,48 @@ GoldenRestOnlyRestLogging::Noop(
       rest_context, options, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::location::Location>
+GoldenRestOnlyRestLogging::GetLocation(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::cloud::location::GetLocationRequest const& request) {
+        return child_->GetLocation(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy>
+GoldenRestOnlyRestLogging::GetIamPolicy(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+GoldenRestOnlyRestLogging::ListOperations(
+    rest_internal::RestContext& rest_context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](rest_internal::RestContext& rest_context,
+             Options const& options,
+             google::longrunning::ListOperationsRequest const& request) {
+        return child_->ListOperations(rest_context, options, request);
+      },
+      rest_context, options, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud

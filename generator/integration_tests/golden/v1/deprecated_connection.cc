@@ -26,6 +26,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include <memory>
 #include <utility>
@@ -41,6 +42,24 @@ Status
 DeprecatedServiceConnection::Noop(
     google::test::deprecated::v1::DeprecatedServiceRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::location::Location>
+DeprecatedServiceConnection::GetLocation(
+    google::cloud::location::GetLocationRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy>
+DeprecatedServiceConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation> DeprecatedServiceConnection::ListOperations(
+    google::longrunning::ListOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
 }
 
 std::shared_ptr<DeprecatedServiceConnection> MakeDeprecatedServiceConnection(

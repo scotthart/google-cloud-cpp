@@ -43,6 +43,45 @@ DefaultDeprecatedServiceStub::Noop(
     return google::cloud::Status();
 }
 
+StatusOr<google::cloud::location::Location>
+DefaultDeprecatedServiceStub::GetLocation(
+  grpc::ClientContext& context, Options const&,
+  google::cloud::location::GetLocationRequest const& request) {
+    google::cloud::location::Location response;
+    auto status =
+        locations_stub_->GetLocation(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
+StatusOr<google::iam::v1::Policy>
+DefaultDeprecatedServiceStub::GetIamPolicy(
+  grpc::ClientContext& context, Options const&,
+  google::iam::v1::GetIamPolicyRequest const& request) {
+    google::iam::v1::Policy response;
+    auto status =
+        iampolicy_stub_->GetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
+StatusOr<google::longrunning::ListOperationsResponse>
+DefaultDeprecatedServiceStub::ListOperations(
+  grpc::ClientContext& context, Options const&,
+  google::longrunning::ListOperationsRequest const& request) {
+    google::longrunning::ListOperationsResponse response;
+    auto status =
+        operations_stub_->ListOperations(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud

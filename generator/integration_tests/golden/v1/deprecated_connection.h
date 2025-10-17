@@ -25,6 +25,7 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <generator/integration_tests/test_deprecated.pb.h>
 #include <memory>
@@ -176,6 +177,15 @@ class DeprecatedServiceConnection {
 
   virtual Status
   Noop(google::test::deprecated::v1::DeprecatedServiceRequest const& request);
+
+  virtual StatusOr<google::cloud::location::Location>
+  GetLocation(google::cloud::location::GetLocationRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy>
+  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListOperations(google::longrunning::ListOperationsRequest request);
 };
 
 /**

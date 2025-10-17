@@ -40,6 +40,33 @@ Status DeprecatedServiceAuth::Noop(
   return child_->Noop(context, options, request);
 }
 
+StatusOr<google::cloud::location::Location> DeprecatedServiceAuth::GetLocation(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::cloud::location::GetLocationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetLocation(context, options, request);
+}
+
+StatusOr<google::iam::v1::Policy> DeprecatedServiceAuth::GetIamPolicy(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, options, request);
+}
+
+StatusOr<google::longrunning::ListOperationsResponse> DeprecatedServiceAuth::ListOperations(
+    grpc::ClientContext& context,
+    Options const& options,
+    google::longrunning::ListOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListOperations(context, options, request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_v1_internal
 }  // namespace cloud
