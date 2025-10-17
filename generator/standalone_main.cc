@@ -231,6 +231,14 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     if (generate_scaffold) {
       GenerateScaffold(scaffold_vars, generator_args.scaffold_templates_path,
                        generator_args.output_path, service);
+    } else {
+      if (!service.omit_client() &&
+          !absl::StrContains(service.product_path(), "google/cloud/compute")) {
+        GenerateScaffold(
+            scaffold_vars, generator_args.scaffold_templates_path,
+            generator_args.output_path, service,
+            google::cloud::generator_internal::ScaffoldFiles::kDocDir);
+      }
     }
     if (!service.omit_repo_metadata()) {
       GenerateMetadata(scaffold_vars, generator_args.output_path, service,
