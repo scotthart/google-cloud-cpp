@@ -39,6 +39,7 @@ readonly EXPECTED=(
   "override-authentication.dox"
   "override-endpoint.dox"
   "override-retry-policies.dox"
+  "override-universe-domain.dox"
 )
 for file in "${EXPECTED[@]}"; do
   if [[ ! -r "${DOCDIR}/${file}" ]]; then

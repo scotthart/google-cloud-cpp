@@ -549,6 +549,7 @@ which should give you a taste of the $title$ C++ client library API.
   policies.
 - @ref $library$-env - describes environment variables that can configure the
   behavior of the library.
+- @ref $library$-override-universe-domain - describes how to override the default universe domain.
 
 )""";
 
