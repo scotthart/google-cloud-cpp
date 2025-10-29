@@ -370,6 +370,8 @@ std::shared_ptr<Credentials> MakeExternalAccountCredentials(
 std::shared_ptr<Credentials> MakeApiKeyCredentials(std::string api_key,
                                                    Options opts = {});
 
+std::shared_ptr<Credentials> MakeComputeEngineCredentials(Options opts = {});
+
 /**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
