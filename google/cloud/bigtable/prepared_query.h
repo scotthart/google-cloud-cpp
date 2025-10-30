@@ -58,9 +58,17 @@ class PreparedQuery {
     // For now, the refresh function has no effect, and we simply return a new
     // prepared query response.
     query_plan_ = bigtable_internal::QueryPlan::Create(
-        std::move(cq), std::move(response),
-        [] { return google::bigtable::v2::PrepareQueryResponse{}; });
+        std::move(cq), std::move(response), [] {
+          return make_ready_future(
+              StatusOr<google::bigtable::v2::PrepareQueryResponse>{});
+        });
   }
+
+  PreparedQuery(InstanceResource instance, SqlStatement sql_statement,
+                std::shared_ptr<bigtable_internal::QueryPlan> query_plan)
+      : instance_(std::move(instance)),
+        sql_statement_(std::move(sql_statement)),
+        query_plan_(std::move(query_plan)) {}
 
  private:
   InstanceResource instance_;

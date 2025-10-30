@@ -31,45 +31,62 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
  public:
   // Typically, a lambda capturing the original PrepareQueryRequest and
   // DataConnection pointer necessary to call the PrepareQuery RPC.
-  using RefreshFn = std::function<google::bigtable::v2::PrepareQueryResponse()>;
+  using RefreshFn = std::function<
+      future<StatusOr<google::bigtable::v2::PrepareQueryResponse>>()>;
 
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
       CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
       RefreshFn fn);
 
+  // Invalidates the current QueryPlan and triggers a refresh.
+  void Invalidate(Status status);
+
   // Accessor for the prepared_query field in response_.
-  StatusOr<std::string> prepared_query() const;
+  // Triggers a refresh if needed.
+  StatusOr<std::string> prepared_query();
 
   // Accessor for the metadata field in  response_.
-  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata() const;
+  // Triggers a refresh if needed.
+  StatusOr<google::bigtable::v2::ResultSetMetadata> metadata();
 
  private:
   QueryPlan(CompletionQueue cq,
             google::bigtable::v2::PrepareQueryResponse response, RefreshFn fn)
       : cq_(std::move(cq)),
         response_(std::move(response)),
-        fn_(std::move(fn)) {}
-  static bool IsExpired();
+        refresh_fn_(std::move(fn)) {}
+
+  bool IsRefreshing(std::unique_lock<std::mutex> const&) const;
 
   // Performs the first call to ScheduleRefresh and any other initialization not
   // possible in the constructor.
-  void Initialize() {}
+  void Initialize();
 
   // Calls MakeDeadlineTimer on the CompletionQueue with a continuation lambda
   // capturing a std::weak_ptr to this that calls RefreshQueryPlan.
-  void ScheduleRefresh() {}
+  void ScheduleRefresh(std::unique_lock<std::mutex> const&);
 
   // Performs the synchronization around calling RefreshFn and updating
   // response_.
-  void RefreshQueryPlan() {}
+  void RefreshQueryPlan();
+
+  void SetBeginState();
+
+  enum class RefreshState {
+    kBegin,    // waiting for a future thread to refresh response_
+    kPending,  // waiting for an active thread to refresh response_
+    kDone,     // response_ has been refreshed
+  };
+  RefreshState state_ = RefreshState::kDone;
 
   CompletionQueue cq_;
   future<void> refresh_timer_;
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  google::bigtable::v2::PrepareQueryResponse response_;  // GUARDED_BY(mu_)
-  RefreshFn fn_;
+  StatusOr<google::bigtable::v2::PrepareQueryResponse>
+      response_;  // GUARDED_BY(mu_)
+  RefreshFn refresh_fn_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
