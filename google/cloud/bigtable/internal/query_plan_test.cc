@@ -13,14 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/query_plan.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/time_utils.h"
+#include "google/cloud/testing_util/fake_clock.h"
+#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
-#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <future>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -28,13 +33,17 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::ToProtoTimestamp;
+using ::google::cloud::testing_util::FakeCompletionQueueImpl;
+using ::google::cloud::testing_util::FakeSystemClock;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::util::TimeUtil;
 
-TEST(QueryPlanTest, Accessors) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  CompletionQueue cq(mock_cq);
+TEST(QueryPlanTest, ResponseDataWithOriginalValidQueryPlan) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  CompletionQueue cq(fake_cq_impl);
+
   google::bigtable::v2::PrepareQueryResponse response;
   response.set_prepared_query("test-query");
   auto constexpr kResultMetadataText = R"pb(
@@ -53,16 +62,272 @@ TEST(QueryPlanTest, Accessors) {
       TimeUtil::GetCurrentTime() + TimeUtil::SecondsToDuration(300);
 
   auto plan = QueryPlan::Create(cq, response, [] {
-    return google::bigtable::v2::PrepareQueryResponse{};
+    return make_ready_future(
+        make_status_or(google::bigtable::v2::PrepareQueryResponse{}));
   });
 
-  auto prepared_query = plan->prepared_query();
-  ASSERT_STATUS_OK(prepared_query);
-  EXPECT_EQ(*prepared_query, "test-query");
-  auto actual_metadata = plan->metadata();
-  ASSERT_STATUS_OK(actual_metadata);
-  EXPECT_THAT(*actual_metadata, IsProtoEqual(metadata));
+  auto response_data = plan->response();
+  ASSERT_STATUS_OK(response_data);
+  EXPECT_EQ(response_data->prepared_query(), "test-query");
+  EXPECT_THAT(response_data->metadata(), IsProtoEqual(metadata));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
 }
+
+TEST(QueryPlanTest, RefreshExpiredPlan) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  auto refresh_fn = [&]() {
+    return make_ready_future(make_status_or(refresh_response));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  fake_clock->AdvanceTime(std::chrono::seconds(500));
+  fake_cq_impl->SimulateCompletion(true);
+
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, FailedRefreshExpiredPlan) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  auto failed_refresh = internal::InternalError("oops!");
+  auto refresh_fn = [&]() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(failed_refresh));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  fake_clock->AdvanceTime(std::chrono::seconds(500));
+  fake_cq_impl->SimulateCompletion(true);
+
+  data = query_plan->response();
+  EXPECT_THAT(data.status(), StatusIs(StatusCode::kInternal, "oops!"));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, RefreshInvalidatedPlan) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  auto refresh_fn = [&]() {
+    return make_ready_future(make_status_or(refresh_response));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  auto invalid_status = internal::InternalError("oops!");
+  query_plan->Invalidate(invalid_status, data->prepared_query());
+
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, FailedRefreshInvalidatedPlan) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  auto failed_refresh = internal::InternalError("oops again!");
+  auto refresh_fn = [&]() {
+    return make_ready_future(
+        StatusOr<google::bigtable::v2::PrepareQueryResponse>(failed_refresh));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  auto invalid_status = internal::InternalError("oops!");
+  query_plan->Invalidate(invalid_status, data->prepared_query());
+
+  data = query_plan->response();
+  EXPECT_THAT(data.status(), StatusIs(StatusCode::kInternal, "oops again!"));
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+#if 0
+TEST(QueryPlanTest, ReturnExistingPlanWhileRefreshing) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  promise<void> wait_to_respond;
+  auto f = std::make_shared<future<void>>(wait_to_respond.get_future());
+  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  auto refresh_fn = [&]() {
+    f->get();
+    return make_ready_future(make_status_or(refresh_response));
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> while_refreshing;
+  std::async(std::launch::async, [&]() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    while_refreshing = query_plan->response();
+    wait_to_respond.set_value();
+  }).get();
+
+  fake_clock->AdvanceTime(std::chrono::seconds(500));
+  fake_cq_impl->SimulateCompletion(true);
+
+  ASSERT_STATUS_OK(while_refreshing);
+  EXPECT_EQ(while_refreshing->prepared_query(), "original-query-plan");
+
+  data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, WaitForNewPlanWhileRefreshing) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  promise<void> wait_to_respond;
+  auto f = std::make_shared<future<void>>(wait_to_respond.get_future());
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> refresh_response;
+  refresh_response = internal::InternalError("oops!");
+  auto refresh_fn = [&]() {
+    if (!refresh_response.ok()) {
+      std::cout << "refresh returning error" << std::endl;
+      return make_ready_future(refresh_response);
+    }
+    std::cout << "refresh waiting" << std::endl;
+    f->get();
+    std::cout << "refresh returning success" << std::endl;
+    return make_ready_future(refresh_response);
+  };
+
+  google::bigtable::v2::PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+  *response.mutable_valid_until() =
+      ToProtoTimestamp(now + std::chrono::seconds(600));
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  fake_clock->AdvanceTime(std::chrono::seconds(500));
+  fake_cq_impl->SimulateCompletion(true);
+
+  data = query_plan->response();
+  EXPECT_THAT(data, StatusIs(StatusCode::kInternal, "oops!"));
+#if 0
+  std::cout << "EXPECT_THAT error" << std::endl;
+
+
+  std::cout << "launch thread" << std::endl;
+  StatusOr<QueryPlan::ResponseData> while_refreshing;
+  std::async(std::launch::async, [&]() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    refresh_response = google::bigtable::v2::PrepareQueryResponse{};
+    refresh_response->set_prepared_query("refreshed-query-plan");
+
+    wait_to_respond.set_value();
+    while_refreshing = query_plan->response_data();
+
+  }).get();
+  data = query_plan->response_data();
+
+  ASSERT_STATUS_OK(while_refreshing);
+  EXPECT_EQ(while_refreshing->prepared_query, "refreshed-query-plan");
+
+
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+#endif
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
