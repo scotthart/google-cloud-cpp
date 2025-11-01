@@ -112,9 +112,11 @@ std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
 
 void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
   {
-    std::unique_lock<std::mutex> lock(mu_);
+    std::unique_lock<std::mutex> lock_1(mu_);
+    ++waiting_threads_;
     std::cout << __func__ << ": state_=" << state_ << std::endl;
-    cond_.wait(lock, [this] { return state_ != RefreshState::kPending; });
+    cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
+    --waiting_threads_;
     if (state_ == RefreshState::kDone) return;
     if (mode == RefreshMode::kInvalidated) response_ = std::move(error);
     state_ = RefreshState::kPending;
@@ -124,16 +126,28 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
   //  std::endl;
   bool done = false;
   {
-    std::unique_lock<std::mutex> lock(mu_);
+    std::unique_lock<std::mutex> lock_2(mu_);
     std::cout << __func__ << ": assign response_" << std::endl;
     response_ = std::move(response);
-    done = true;
-    state_ = RefreshState::kDone;
     if (response_.ok()) {
+      state_ = RefreshState::kDone;
+      done = true;
       // If we have to refresh an invalidated query plan, cancel any existing
       // timer before starting a new one.
       refresh_timer_.cancel();
-      ScheduleRefresh(lock);
+      ScheduleRefresh(lock_2);
+    } else {
+      // If there are no waiting threads that could call the refresh_fn, then
+      // we need to accept that the refresh is in a failed state and wait for
+      // some new event that would start this refresh process anew.
+      //
+      // If there are waiting threads, then we want to try again to get a
+      // refreshed query plan, but we want to avoid a stampede of refresh RPCs
+      // so we only notify one of the waiting threads.
+      if (waiting_threads_ == 0) {
+        state_ = RefreshState::kDone;
+        done = true;
+      }
     }
   }
   if (done) {

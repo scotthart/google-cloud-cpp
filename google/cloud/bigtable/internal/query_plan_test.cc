@@ -201,27 +201,30 @@ TEST(QueryPlanTest, WaitForNewPlanWhileRefreshing) {
 
   data = query_plan->response_data();
   EXPECT_THAT(data, StatusIs(StatusCode::kInternal, "oops!"));
+#if 0
+  std::cout << "EXPECT_THAT error" << std::endl;
 
-  //  refresh_response = google::bigtable::v2::PrepareQueryResponse{};
-  //  refresh_response->set_prepared_query("refreshed-query-plan");
-  //  std::cout << "launch thread" << std::endl;
-  //  StatusOr<QueryPlan::ResponseData> while_refreshing;
-  //  std::async(std::launch::async, [&]() {
-  //    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-  //    wait_to_respond.set_value();
-  //    while_refreshing = query_plan->response_data();
-  //
-  //  }).get();
-  //
-  //
-  //  data = query_plan->response_data();
-  //  ASSERT_STATUS_OK(while_refreshing);
-  //  EXPECT_EQ(while_refreshing->prepared_query, "refreshed-query-plan");
 
-  //  data = query_plan->response_data();
-  //  ASSERT_STATUS_OK(data);
-  //  EXPECT_EQ(data->prepared_query, "refreshed-query-plan");
+  std::cout << "launch thread" << std::endl;
+  StatusOr<QueryPlan::ResponseData> while_refreshing;
+  std::async(std::launch::async, [&]() {
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    refresh_response = google::bigtable::v2::PrepareQueryResponse{};
+    refresh_response->set_prepared_query("refreshed-query-plan");
 
+    wait_to_respond.set_value();
+    while_refreshing = query_plan->response_data();
+
+  }).get();
+  data = query_plan->response_data();
+
+  ASSERT_STATUS_OK(while_refreshing);
+  EXPECT_EQ(while_refreshing->prepared_query, "refreshed-query-plan");
+
+
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query, "refreshed-query-plan");
+#endif
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
 }
