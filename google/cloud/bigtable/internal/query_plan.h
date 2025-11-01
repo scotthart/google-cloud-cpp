@@ -89,6 +89,11 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
 
   void ExpiredRefresh();
 
+  // State machine where the only valid transitions are:
+  //   kDone -> kBegin
+  //   kBegin -> kPending
+  //   kPending -> kDone
+  // When refreshing the same previous query plan.
   enum class RefreshState {
     kBegin,    // waiting for a future thread to refresh response_
     kPending,  // waiting for an active thread to refresh response_
