@@ -28,8 +28,9 @@ auto constexpr kRefreshDeadlineOffsetMs = 1000;
 }  // namespace
 
 std::shared_ptr<QueryPlan> QueryPlan::Create(
-    CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
-    RefreshFn fn, std::shared_ptr<Clock> clock) {
+    CompletionQueue cq,
+    StatusOr<google::bigtable::v2::PrepareQueryResponse> response, RefreshFn fn,
+    std::shared_ptr<Clock> clock) {
   std::cout << __func__ << std::endl;
   auto plan = std::shared_ptr<QueryPlan>(new QueryPlan(
       std::move(cq), std::move(clock), std::move(fn), std::move(response)));
@@ -40,7 +41,7 @@ std::shared_ptr<QueryPlan> QueryPlan::Create(
 void QueryPlan::Initialize() {
   std::cout << __func__ << std::endl;
   std::unique_lock<std::mutex> lock(mu_);
-  ScheduleRefresh(lock);
+  if (state_ == RefreshState::kDone) ScheduleRefresh(lock);
 }
 
 // ScheduleRefresh should only be called after updating response_.

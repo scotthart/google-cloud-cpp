@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::google::cloud::testing_util::FakeSystemClock;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::IsEmpty;
 
 TEST(QueryPlanTest, ResponseDataWithOriginalValidQueryPlan) {
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
@@ -196,6 +197,35 @@ TEST(QueryPlanTest, FailedRefreshInvalidatedPlan) {
   data = query_plan->response();
   EXPECT_THAT(data.status(), StatusIs(StatusCode::kInternal, "oops again!"));
 
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
+TEST(QueryPlanTest, CreateFailedPlanAndRefresh) {
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  auto refresh_fn = [&]() {
+    return make_ready_future(make_status_or(refresh_response));
+  };
+
+  StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
+      Status(StatusCode::kResourceExhausted, "I'm tired boss");
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  EXPECT_THAT(*fake_cq_impl, IsEmpty());
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+
+  EXPECT_EQ(fake_cq_impl->size(), 1);
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
 }

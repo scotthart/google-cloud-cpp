@@ -39,7 +39,8 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
 
   // Calls the constructor and then Initialize.
   static std::shared_ptr<QueryPlan> Create(
-      CompletionQueue cq, google::bigtable::v2::PrepareQueryResponse response,
+      CompletionQueue cq,
+      StatusOr<google::bigtable::v2::PrepareQueryResponse> response,
       RefreshFn fn, std::shared_ptr<Clock> clock = std::make_shared<Clock>());
 
   // Invalidates the current QueryPlan and triggers a refresh.
@@ -57,8 +58,9 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
 
  private:
   QueryPlan(CompletionQueue cq, std::shared_ptr<Clock> clock, RefreshFn fn,
-            google::bigtable::v2::PrepareQueryResponse response)
-      : cq_(std::move(cq)),
+            StatusOr<google::bigtable::v2::PrepareQueryResponse> response)
+      : state_(response.ok() ? RefreshState::kDone : RefreshState::kBegin),
+        cq_(std::move(cq)),
         clock_(std::move(clock)),
         refresh_fn_(std::move(fn)),
         response_(std::move(response)) {}
@@ -92,7 +94,7 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   };
   friend std::ostream& operator<<(std::ostream& os,
                                   QueryPlan::RefreshState state);
-  RefreshState state_ = RefreshState::kDone;
+  RefreshState state_;
 
   CompletionQueue cq_;
   std::shared_ptr<Clock> clock_;
