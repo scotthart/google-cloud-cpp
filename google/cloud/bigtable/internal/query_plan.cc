@@ -85,7 +85,7 @@ void QueryPlan::ExpiredRefresh() {
       state_ = RefreshState::kBegin;
     }
   }
-  RefreshQueryPlan(RefreshMode::kExpired);
+  RefreshQueryPlan();
 }
 
 void QueryPlan::Invalidate(Status status,
@@ -120,7 +120,7 @@ std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
   return os << "unknown";
 }
 
-void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
+void QueryPlan::RefreshQueryPlan() {
   {
     std::unique_lock<std::mutex> lock_1(mu_);
     std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
@@ -181,7 +181,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
       return response_;
     }
     lock.unlock();
-    RefreshQueryPlan(RefreshMode::kAlreadyRefreshing);
+    RefreshQueryPlan();
     lock.lock();
   }
 

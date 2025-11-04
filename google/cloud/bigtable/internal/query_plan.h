@@ -73,12 +73,9 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   // capturing a std::weak_ptr to this that calls RefreshQueryPlan.
   void ScheduleRefresh(std::unique_lock<std::mutex> const&);
 
-  enum class RefreshMode { kExpired, kInvalidated, kAlreadyRefreshing };
   // Performs the synchronization around calling RefreshFn and updating
   // response_.
-  //  void RefreshQueryPlan();
-
-  void RefreshQueryPlan(RefreshMode mode, Status error = {});
+  void RefreshQueryPlan();
 
   void ExpiredRefresh();
 

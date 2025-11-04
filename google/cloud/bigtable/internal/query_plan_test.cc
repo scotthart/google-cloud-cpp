@@ -332,26 +332,30 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanTransientFailures) {
   fake_cq_impl->SimulateCompletion(false);
 }
 
-#if 0
-TEST(QueryPlanTest, ReturnExistingPlanWhileRefreshing) {
+TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanAfterFailedRefresh) {
+  using google::bigtable::v2::PrepareQueryResponse;
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
   auto fake_clock = std::make_shared<FakeSystemClock>();
   auto now = std::chrono::system_clock::now();
   fake_clock->SetTime(now);
 
-  promise<void> wait_to_respond;
-  auto f = std::make_shared<future<void>>(wait_to_respond.get_future());
-  google::bigtable::v2::PrepareQueryResponse refresh_response;
+  constexpr int kNumFailingThreads = 100;
+  PrepareQueryResponse refresh_response;
   refresh_response.set_prepared_query("refreshed-query-plan");
+  int calls_to_refresh_fn = 0;
+  std::mutex mu;
   auto refresh_fn = [&]() {
-    f->get();
+    std::lock_guard<std::mutex> lock(mu);
+    ++calls_to_refresh_fn;
+    if (calls_to_refresh_fn <= kNumFailingThreads) {
+      return make_ready_future(StatusOr<PrepareQueryResponse>(
+          Status(StatusCode::kUnavailable, "hello?")));
+    }
     return make_ready_future(make_status_or(refresh_response));
   };
 
-  google::bigtable::v2::PrepareQueryResponse response;
+  PrepareQueryResponse response;
   response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(600));
 
   auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
                                       refresh_fn, fake_clock);
@@ -360,93 +364,73 @@ TEST(QueryPlanTest, ReturnExistingPlanWhileRefreshing) {
   ASSERT_STATUS_OK(data);
   EXPECT_EQ(data->prepared_query(), "original-query-plan");
 
-  StatusOr<google::bigtable::v2::PrepareQueryResponse> while_refreshing;
-  std::async(std::launch::async, [&]() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    while_refreshing = query_plan->response();
-    wait_to_respond.set_value();
-  }).get();
+  std::vector<std::thread> failing_threads(kNumFailingThreads);
+  std::array<StatusOr<PrepareQueryResponse>, kNumFailingThreads>
+      failed_responses;
 
-  fake_clock->AdvanceTime(std::chrono::seconds(500));
-  fake_cq_impl->SimulateCompletion(true);
+  auto fail_barrier = std::make_shared<absl::Barrier>(kNumFailingThreads + 1);
+  auto fail_thread_fn =
+      [fail_barrier, query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+        fail_barrier->Block();
+        *thread_data = query_plan->response();
+      };
 
-  ASSERT_STATUS_OK(while_refreshing);
-  EXPECT_EQ(while_refreshing->prepared_query(), "original-query-plan");
+  for (int i = 0; i < kNumFailingThreads; ++i) {
+    failed_responses[i] = StatusOr<PrepareQueryResponse>(
+        Status(StatusCode::kNotFound, "not found"));
+    failing_threads.emplace_back(fail_thread_fn, &(failed_responses[i]));
+  }
 
-  data = query_plan->response();
-  ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
+  auto invalid_status = internal::InternalError("oops!");
+  query_plan->Invalidate(invalid_status, data->prepared_query());
+  fail_barrier->Block();
 
-  // Cancel all pending operations, satisfying any remaining futures.
-  fake_cq_impl->SimulateCompletion(false);
-}
+  for (auto& t : failing_threads) {
+    if (t.joinable()) t.join();
+  }
 
-TEST(QueryPlanTest, WaitForNewPlanWhileRefreshing) {
-  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
-  auto fake_clock = std::make_shared<FakeSystemClock>();
-  auto now = std::chrono::system_clock::now();
-  fake_clock->SetTime(now);
+  EXPECT_EQ(calls_to_refresh_fn, kNumFailingThreads);
+  for (auto const& r : failed_responses) {
+    EXPECT_THAT(r.status(), StatusIs(StatusCode::kUnavailable, "hello?"));
+  }
 
-  promise<void> wait_to_respond;
-  auto f = std::make_shared<future<void>>(wait_to_respond.get_future());
-  StatusOr<google::bigtable::v2::PrepareQueryResponse> refresh_response;
-  refresh_response = internal::InternalError("oops!");
-  auto refresh_fn = [&]() {
-    if (!refresh_response.ok()) {
-      std::cout << "refresh returning error" << std::endl;
-      return make_ready_future(refresh_response);
-    }
-    std::cout << "refresh waiting" << std::endl;
-    f->get();
-    std::cout << "refresh returning success" << std::endl;
-    return make_ready_future(refresh_response);
+  // At this point, all the previous threads have run to completion and the
+  // QueryPlan is left with a failed Status, not a valid response_. The state_
+  // of QueryPlan is RefreshState::kBegin, so the first thread to call
+  // response() should trigger a new refresh with the other threads waiting for
+  // it to complete.
+  constexpr int kNumThreads = 1000;
+  std::vector<std::thread> threads(kNumThreads);
+  std::array<StatusOr<PrepareQueryResponse>, kNumThreads> data_responses;
+
+  auto barrier = std::make_shared<absl::Barrier>(kNumThreads + 1);
+  auto thread_fn = [barrier,
+                    query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+    barrier->Block();
+    *thread_data = query_plan->response();
   };
 
-  google::bigtable::v2::PrepareQueryResponse response;
-  response.set_prepared_query("original-query-plan");
-  *response.mutable_valid_until() =
-      ToProtoTimestamp(now + std::chrono::seconds(600));
+  for (int i = 0; i < kNumThreads; ++i) {
+    data_responses[i] = StatusOr<PrepareQueryResponse>(
+        Status(StatusCode::kNotFound, "not found"));
+    threads.emplace_back(thread_fn, &(data_responses[i]));
+  }
 
-  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
-                                      refresh_fn, fake_clock);
+  barrier->Block();
 
-  auto data = query_plan->response();
-  ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+  for (auto& t : threads) {
+    if (t.joinable()) t.join();
+  }
 
-  fake_clock->AdvanceTime(std::chrono::seconds(500));
-  fake_cq_impl->SimulateCompletion(true);
+  EXPECT_EQ(calls_to_refresh_fn, kNumFailingThreads + 1);
+  for (auto const& r : data_responses) {
+    ASSERT_STATUS_OK(r);
+    EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
+  }
 
-  data = query_plan->response();
-  EXPECT_THAT(data, StatusIs(StatusCode::kInternal, "oops!"));
-#if 0
-  std::cout << "EXPECT_THAT error" << std::endl;
-
-
-  std::cout << "launch thread" << std::endl;
-  StatusOr<QueryPlan::ResponseData> while_refreshing;
-  std::async(std::launch::async, [&]() {
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
-    refresh_response = google::bigtable::v2::PrepareQueryResponse{};
-    refresh_response->set_prepared_query("refreshed-query-plan");
-
-    wait_to_respond.set_value();
-    while_refreshing = query_plan->response_data();
-
-  }).get();
-  data = query_plan->response_data();
-
-  ASSERT_STATUS_OK(while_refreshing);
-  EXPECT_EQ(while_refreshing->prepared_query, "refreshed-query-plan");
-
-
-  ASSERT_STATUS_OK(data);
-  EXPECT_EQ(data->prepared_query(), "refreshed-query-plan");
-#endif
   // Cancel all pending operations, satisfying any remaining futures.
   fake_cq_impl->SimulateCompletion(false);
 }
-#endif
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
