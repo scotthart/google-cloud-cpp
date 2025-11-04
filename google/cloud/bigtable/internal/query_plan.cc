@@ -51,7 +51,7 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
   // We want to start the refresh process before the query plan expires.
   auto refresh_deadline =
       internal::ToChronoTimePoint(response_->valid_until()) -
-      std::chrono::seconds(kRefreshDeadlineOffsetMs);
+      std::chrono::milliseconds(kRefreshDeadlineOffsetMs);
   absl::Time t = absl::FromChrono(refresh_deadline);
   absl::TimeZone nyc;
   absl::LoadTimeZone("America/New_York", &nyc);
@@ -103,7 +103,6 @@ void QueryPlan::Invalidate(Status status,
       state_ = RefreshState::kBegin;
     }
   }
-  //  RefreshQueryPlan(RefreshMode::kInvalidated, std::move(status));
 }
 
 std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
@@ -128,7 +127,6 @@ void QueryPlan::RefreshQueryPlan() {
               << "; state_=" << state_ << std::endl;
     cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
     if (state_ == RefreshState::kDone) return;
-    //    if (mode == RefreshMode::kInvalidated) response_ = std::move(error);
     state_ = RefreshState::kPending;
     std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
               << "; state_=" << state_ << std::endl;
@@ -148,7 +146,7 @@ void QueryPlan::RefreshQueryPlan() {
       done = true;
       // If we have to refresh an invalidated query plan, cancel any existing
       // timer before starting a new one.
-      refresh_timer_.cancel();
+      if (refresh_timer_.valid()) refresh_timer_.cancel();
       ScheduleRefresh(lock_2);
     } else {
       // If there are no waiting threads that could call the refresh_fn, then
