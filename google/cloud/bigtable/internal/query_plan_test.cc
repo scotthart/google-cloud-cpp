@@ -262,6 +262,76 @@ TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlan) {
   fake_cq_impl->SimulateCompletion(false);
 }
 
+TEST(QueryPlanMultithreadedTest, RefreshInvalidatedPlanTransientFailures) {
+  using google::bigtable::v2::PrepareQueryResponse;
+  auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
+  auto fake_clock = std::make_shared<FakeSystemClock>();
+  auto now = std::chrono::system_clock::now();
+  fake_clock->SetTime(now);
+
+  PrepareQueryResponse refresh_response;
+  refresh_response.set_prepared_query("refreshed-query-plan");
+  int calls_to_refresh_fn = 0;
+  std::mutex mu;
+  auto refresh_fn = [&]() {
+    std::lock_guard<std::mutex> lock(mu);
+    ++calls_to_refresh_fn;
+    if (calls_to_refresh_fn <= 3) {
+      return make_ready_future(StatusOr<PrepareQueryResponse>(
+          Status(StatusCode::kUnavailable, "hello?")));
+    }
+    return make_ready_future(make_status_or(refresh_response));
+  };
+
+  PrepareQueryResponse response;
+  response.set_prepared_query("original-query-plan");
+
+  auto query_plan = QueryPlan::Create(CompletionQueue(fake_cq_impl), response,
+                                      refresh_fn, fake_clock);
+
+  auto data = query_plan->response();
+  ASSERT_STATUS_OK(data);
+  EXPECT_EQ(data->prepared_query(), "original-query-plan");
+
+  constexpr int kNumThreads = 1000;
+  std::vector<std::thread> threads(kNumThreads);
+  std::array<StatusOr<PrepareQueryResponse>, kNumThreads> data_responses;
+
+  auto barrier = std::make_shared<absl::Barrier>(kNumThreads + 1);
+  auto thread_fn = [barrier,
+                    query_plan](StatusOr<PrepareQueryResponse>* thread_data) {
+    barrier->Block();
+    *thread_data = query_plan->response();
+    while (!thread_data->ok()) {
+      std::this_thread::yield();
+      *thread_data = query_plan->response();
+    }
+  };
+
+  for (int i = 0; i < kNumThreads; ++i) {
+    data_responses[i] = StatusOr<PrepareQueryResponse>(
+        Status(StatusCode::kNotFound, "not found"));
+    threads.emplace_back(thread_fn, &(data_responses[i]));
+  }
+
+  auto invalid_status = internal::InternalError("oops!");
+  query_plan->Invalidate(invalid_status, data->prepared_query());
+  barrier->Block();
+
+  for (auto& t : threads) {
+    if (t.joinable()) t.join();
+  }
+
+  EXPECT_EQ(calls_to_refresh_fn, 4);
+  for (auto const& r : data_responses) {
+    ASSERT_STATUS_OK(r);
+    EXPECT_EQ(r->prepared_query(), "refreshed-query-plan");
+  }
+
+  // Cancel all pending operations, satisfying any remaining futures.
+  fake_cq_impl->SimulateCompletion(false);
+}
+
 #if 0
 TEST(QueryPlanTest, ReturnExistingPlanWhileRefreshing) {
   auto fake_cq_impl = std::make_shared<FakeCompletionQueueImpl>();
