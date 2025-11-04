@@ -336,11 +336,23 @@ std::string FormatCommentBlock(std::string const& comment,
   if (offset >= line_length) GCP_LOG(FATAL) << "line_length is too small";
   auto comment_width = line_length - offset;
 
+  std::cout << __func__ << ": comment=" << comment << std::endl;
   std::vector<std::string> lines;
   std::size_t start_pos = 0;
   while (start_pos != std::string::npos) {
     std::size_t boundary = start_pos + comment_width;
     std::size_t end_pos = boundary;
+    std::cout << __func__ << ": loop start_pos =" << start_pos
+        << "; boundary=" << boundary << "; end_pos=" << end_pos << std::endl;
+
+    // Find the first newline (if any)
+    auto newline = comment.find("\n", start_pos, boundary);
+    std::cout << __func__ << ": newline=" << newline << std::endl;
+    if (newline != std::string::npos) {
+      std::cout << __func__ << ": found newline" << std::endl;
+      boundary = newline;
+      end_pos = boundary;
+    }
     if (boundary < comment.length()) {
       // Look backward from the boundary for the last word
       end_pos = comment.rfind(' ', boundary);
@@ -350,7 +362,12 @@ std::string FormatCommentBlock(std::string const& comment,
       }
     }
     lines.push_back(comment.substr(start_pos, end_pos - start_pos));
-    start_pos = comment.find_first_not_of(' ', end_pos);
+    if (newline != std::string::npos) {
+      std::cout << __func__ << ": found newline" << std::endl;
+      start_pos = boundary + 1;
+    } else {
+      start_pos = comment.find_first_not_of(' ', end_pos);
+    }
   }
 
   std::string indent(indent_level * indent_width, ' ');

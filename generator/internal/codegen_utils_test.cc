@@ -418,6 +418,8 @@ auto constexpr kContainsMarkdownBulletedLongUrlComment =
     "internal)](https://cloud.google.com/compute/docs/reference/rest/v1/"
     "addresses) For more information, see Reserving a static external IP "
     "address.";
+auto constexpr kContainsNewlineCharacters =
+    "\nThis\n\nis a\nmulti-line comment\n";
 
 using FormatCommentBlockDeathTest = FormatCommentBlockTest;
 
@@ -485,7 +487,15 @@ wordthatiswaytoolong)"""},
 // internal)](https://cloud.google.com/compute/docs/reference/rest/v1/globalAddresses)
 // * [Regional (external and
 // internal)](https://cloud.google.com/compute/docs/reference/rest/v1/addresses)
-// For more information, see Reserving a static external IP address.)"""}));
+// For more information, see Reserving a static external IP address.)"""},
+        FormatCommentBlockTestParams{kContainsNewlineCharacters, 1, "// ", 2, 80, R"""(
+  //
+  // This
+  //
+  // is a
+  // multi-line comment
+  //
+)"""}));
 
 struct FormatCommentKeyValueListTestParams {
   std::vector<std::pair<std::string, std::string>> comment;

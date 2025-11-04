@@ -691,7 +691,7 @@ TEST_F(DiscoveryResourceTest, JsonToProtobufService) {
   auto constexpr kResourceJson = R"""({
     "methods": {
       "get": {
-        "description": "Description for the get method.",
+        "description": "Multi-line\n\nDescription for\nthe\nget\nmethod.",
         "scopes": [
           "https://www.googleapis.com/auth/cloud-platform"
         ],
@@ -754,7 +754,12 @@ service MyResources {
     option (google.cloud.operation_service) = "ZoneOperations";
   }
 
-  // Description for the get method.
+  // Multi-line
+  //
+  // Description for
+  // the
+  // get
+  // method.
   // https://cloud.google.com/$product_name$/docs/reference/rest/$version$/myResources/get
   rpc GetMyResource(GetMyResourceRequest) returns (MyResource) {
     option (google.api.http) = {
