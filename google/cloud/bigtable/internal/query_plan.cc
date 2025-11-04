@@ -90,17 +90,19 @@ void QueryPlan::ExpiredRefresh() {
 
 void QueryPlan::Invalidate(Status status,
                            std::string const& invalid_query_plan_id) {
-  std::cout << __func__ << std::endl;
   {
     std::unique_lock<std::mutex> lock(mu_);
+    std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
+              << std::endl;
     // We want to avoid a late arrival causing a refresh of an already refreshed
     // query plan, so we track what the previous plan id was.
     if (!IsRefreshing(lock) && old_query_plan_id_ != invalid_query_plan_id) {
       old_query_plan_id_ = invalid_query_plan_id;
+      response_ = std::move(status);
       state_ = RefreshState::kBegin;
     }
   }
-  RefreshQueryPlan(RefreshMode::kInvalidated, std::move(status));
+  //  RefreshQueryPlan(RefreshMode::kInvalidated, std::move(status));
 }
 
 std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
@@ -121,19 +123,14 @@ std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
 void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
   {
     std::unique_lock<std::mutex> lock_1(mu_);
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-    assert(waiting_threads_ >= 0);
-#endif
-    ++waiting_threads_;
-    std::cout << __func__ << ": state_=" << state_ << std::endl;
+    std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
+              << "; state_=" << state_ << std::endl;
     cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
-    --waiting_threads_;
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-    assert(waiting_threads_ >= 0);
-#endif
     if (state_ == RefreshState::kDone) return;
-    if (mode == RefreshMode::kInvalidated) response_ = std::move(error);
+    //    if (mode == RefreshMode::kInvalidated) response_ = std::move(error);
     state_ = RefreshState::kPending;
+    std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
+              << "; state_=" << state_ << std::endl;
   }
   auto response = refresh_fn_().get();
   //  std::cout << __func__ << ": id=" << response->prepared_query() <<
@@ -145,6 +142,8 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
     response_ = std::move(response);
     if (response_.ok()) {
       state_ = RefreshState::kDone;
+      std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
+                << "; state_=" << state_ << std::endl;
       done = true;
       // If we have to refresh an invalidated query plan, cancel any existing
       // timer before starting a new one.
@@ -158,15 +157,9 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
       // If there are waiting threads, then we want to try again to get a
       // refreshed query plan, but we want to avoid a stampede of refresh RPCs
       // so we only notify one of the waiting threads.
-#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_QUERY_PLAN_REFRESH_ASSERT
-      assert(waiting_threads_ >= 0);
-#endif
-      if (waiting_threads_ == 0) {
-        state_ = RefreshState::kDone;
-        done = true;
-      } else {
-        state_ = RefreshState::kBegin;
-      }
+      state_ = RefreshState::kBegin;
+      std::cout << __func__ << ": thread_id=" << std::this_thread::get_id()
+                << "; state_=" << state_ << std::endl;
     }
   }
   if (done) {
@@ -179,8 +172,10 @@ void QueryPlan::RefreshQueryPlan(RefreshMode mode, Status error) {
 }
 
 StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
-  std::cout << __func__ << std::endl;
   std::unique_lock<std::mutex> lock(mu_);
+  std::cout << __func__
+            << ": called by thread_id=" << std::this_thread::get_id()
+            << std::endl;
   if (IsRefreshing(lock)) {
     if (response_.ok()) {
       return response_;

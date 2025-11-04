@@ -103,9 +103,6 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   future<void> refresh_timer_;
   mutable std::mutex mu_;
   std::condition_variable cond_;
-  // waiting_threads_ is only a snapshot, but it helps us reduce the number of
-  // RPCs in flight to refresh the same query plan.
-  int waiting_threads_ = 0;
   std::string old_query_plan_id_;
   StatusOr<google::bigtable::v2::PrepareQueryResponse>
       response_;  // GUARDED_BY(mu_)
