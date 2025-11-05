@@ -151,7 +151,7 @@ TEST_P(DataIntegrationTest, TableBulkApplyAndQuery) {
   InstanceResource instance(Project("cloud-cpp-testing-resources"),
                             "test-instance");
 
-  SqlStatement::ParamType params = {{"key", Value(Bytes("row-key-1"))}};
+  SqlStatement::ParamType params = {{"key", Parameter(Bytes())}};
   bigtable::SqlStatement statement(
       absl::StrFormat("select _key, cast(family4['c0'] as string) as c0 from "
                       "`%s` where _key=@key ",

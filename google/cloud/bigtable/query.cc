@@ -170,6 +170,12 @@ bool operator==(Value const& a, Value const& b) {
   return true;
 }
 
+bool operator==(Parameter const& a, Parameter const& b) {
+
+  return true;
+}
+
+
 google::bigtable::v2::Type Value::MakeTypeProto(bool) {
   google::bigtable::v2::Type t;
   *t.mutable_bool_type() = {};
@@ -266,6 +272,11 @@ std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
+std::ostream& operator<<(std::ostream& os, Parameter const& v) {
+  return StreamHelper(os, v.value_.value_, v.value_.type_, StreamMode::kScalar);
+}
+
+
 QueryRow::QueryRow()
     : QueryRow({}, std::make_shared<std::vector<std::string>>()) {}
 
@@ -360,7 +371,7 @@ std::vector<std::string> SqlStatement::ParameterNames() const {
   return keys;
 }
 
-google::cloud::StatusOr<Value> SqlStatement::GetParameter(
+google::cloud::StatusOr<Parameter> SqlStatement::GetParameter(
     std::string const& parameter_name) const {
   auto iter = params_.find(parameter_name);
   if (iter != params_.end()) {

@@ -706,7 +706,9 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   request.set_query(params.sql_statement.sql());
   for (auto const& p : params.sql_statement.params()) {
     request.mutable_param_types()->insert(
-        std::make_pair(p.first, ValueInternals::ToProto(p.second).first));
+        std::make_pair(p.first,
+                       p.second.type()));
+//                       ValueInternals::ToProto(p.second).first));
   }
 
   auto sor = google::cloud::internal::RetryLoop(

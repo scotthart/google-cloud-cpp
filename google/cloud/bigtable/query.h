@@ -164,6 +164,7 @@ class Bytes {
   //  std::string base64_rep_;  // valid base64 representation
 };
 
+class Parameter;
 class Value {
  public:
   /**
@@ -366,6 +367,9 @@ class Value {
   }
 
  private:
+  friend class Parameter;
+  friend std::ostream& operator<<(std::ostream& os, Parameter const& v);
+
   // Metafunction that returns true if `T` is an `absl::optional<U>`
   template <typename T>
   struct IsOptional : std::false_type {};
@@ -805,6 +809,31 @@ template <typename T>
 Value MakeNullValue() {
   return Value(absl::optional<T>{});
 }
+
+class Parameter {
+ public:
+  // Is implicit construction a good idea?
+  explicit Parameter(Value value) : value_(std::move(value)) {}
+  explicit Parameter(Bytes v) : value_(Value(v)) {}
+
+  // Copy and move.
+  Parameter(Parameter const&) = default;
+  Parameter(Parameter&&) = default;
+  Parameter& operator=(Parameter const&) = default;
+  Parameter& operator=(Parameter&&) = default;
+
+  google::bigtable::v2::Type const& type() const {
+    return value_.type_;
+  }
+
+  friend bool operator==(Parameter const& a, Parameter const& b);
+  friend bool operator!=(Parameter const& a, Parameter const& b) { return !(a == b); }
+
+  friend std::ostream& operator<<(std::ostream& os, Parameter const& v);
+
+ private:
+  Value value_;
+};
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
@@ -1477,7 +1506,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SqlStatement {
  public:
   /// Type alias for parameter collection.
-  using ParamType = std::unordered_map<std::string, Value>;
+  using ParamType = std::unordered_map<std::string, Parameter>;
 
   SqlStatement() = default;
   /// Constructs a SqlStatement without parameters.
@@ -1515,7 +1544,7 @@ class SqlStatement {
    * @param parameter_name name of requested parameter.
    * @return `StatusCode::kNotFound` returned for invalid names.
    */
-  google::cloud::StatusOr<Value> GetParameter(
+  google::cloud::StatusOr<Parameter> GetParameter(
       std::string const& parameter_name) const;
 
   friend bool operator==(SqlStatement const& a, SqlStatement const& b) {
@@ -1560,7 +1589,9 @@ class BoundQuery {
   google::bigtable::v2::ResultSetMetadata const& metadata() const {
     return query_plan_->metadata();
   }
-  SqlStatement::ParamType const& parameters() const { return parameters_; }
+  std::unordered_map<std::string, Value> const& parameters() const {
+    return parameters_;
+  }
   InstanceResource const& instance() const { return instance_; }
 
   google::bigtable::v2::ExecuteQueryRequest ToRequestProto();
@@ -1569,14 +1600,14 @@ class BoundQuery {
   friend class PreparedQuery;
   BoundQuery(InstanceResource instance,
              std::shared_ptr<bigtable_internal::QueryPlan> query_plan,
-             SqlStatement::ParamType parameters)
+             std::unordered_map<std::string, Value> parameters)
       : instance_(std::move(instance)),
         query_plan_(std::move(query_plan)),
         parameters_(std::move(parameters)) {}
 
   InstanceResource instance_;
   std::shared_ptr<bigtable_internal::QueryPlan> query_plan_;
-  SqlStatement::ParamType parameters_;
+  std::unordered_map<std::string, Value> parameters_;
 };
 
 class PreparedQuery {
@@ -1595,12 +1626,13 @@ class PreparedQuery {
   PreparedQuery& operator=(PreparedQuery const&) = default;
   PreparedQuery& operator=(PreparedQuery&&) = default;
 
-  BoundQuery BindParameters(SqlStatement::ParamType params) {
-    SqlStatement::ParamType parameters{sql_statement_.params()};
-    for (auto& p : params) {
-      parameters[p.first] = std::move(p.second);
-    }
-    return BoundQuery(instance_, query_plan_, std::move(parameters));
+  BoundQuery BindParameters(std::unordered_map<std::string, Value> params) {
+//    std::unordered_map<std::string, Value> parameters;
+////    SqlStatement::ParamType parameters{sql_statement_.params()};
+//    for (auto& p : params) {
+//      parameters[p.first] = std::move(p.second);
+//    }
+    return BoundQuery(instance_, query_plan_, std::move(params));
   }
 
   InstanceResource const& instance() const { return instance_; }
