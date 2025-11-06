@@ -26,6 +26,7 @@ void PartialResultSetResume::TryCancel() { reader_->TryCancel(); }
 bool PartialResultSetResume::Read(
     absl::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
+  std::cout << "PartialResultSetResume::" << __func__ << std::endl;
   bool resumption = false;
   do {
     if (reader_->Read(resume_token, result)) {
@@ -36,8 +37,12 @@ bool PartialResultSetResume::Read(
       return true;
     }
     auto status = Finish();
+    std::cout << "PartialResultSetResume::" << __func__ << ": status=" << status
+              << std::endl;
     if (status.ok()) return false;
     if (!resume_token) {
+      std::cout << "PartialResultSetResume::" << __func__ << ": !resume_token"
+                << std::endl;
       // Our caller has requested that we not try to resume the stream,
       // probably because they have already delivered previous results that
       // would otherwise be replayed.
@@ -45,6 +50,13 @@ bool PartialResultSetResume::Read(
     }
     if (idempotency_ == google::cloud::Idempotency::kNonIdempotent ||
         !retry_policy_->OnFailure(status)) {
+      std::cout << "PartialResultSetResume::" << __func__
+                << ": !retry_policy_->OnFailure(status)"
+                << "; last_status_="
+                << (last_status_
+                        ? *last_status_
+                        : Status{StatusCode::kInternal, "last_status_ not set"})
+                << std::endl;
       if (retry_policy_->IsExhausted()) break;
       return false;
     }
@@ -53,6 +65,8 @@ bool PartialResultSetResume::Read(
     last_status_.reset();
     reader_ = factory_(*resume_token);
   } while (!retry_policy_->IsExhausted());
+  std::cout << "PartialResultSetResume::" << __func__
+            << ": retry policy exhausted" << std::endl;
   if (last_status_) {
     last_status_ = internal::RetryLoopError(*last_status_, __func__,
                                             retry_policy_->IsExhausted());

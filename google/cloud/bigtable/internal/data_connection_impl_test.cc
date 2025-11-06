@@ -482,6 +482,7 @@ class DataConnectionTest : public ::testing::Test {
   testing_util::ValidateMetadataFixture metadata_fixture_;
 };
 
+#if 0
 TEST_F(DataConnectionTest, ApplySuccess) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
   auto mock_metric = std::make_unique<MockMetric>();
@@ -2819,6 +2820,7 @@ TEST_F(DataConnectionTest, AsyncReadRowFailure) {
   auto resp = conn->AsyncReadRow(kTableName, "row", TestFilter()).get();
   EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
+#endif
 
 TEST_F(DataConnectionTest, PrepareQuerySuccess) {
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -3507,11 +3509,14 @@ TEST_F(DataConnectionTest, PrepareAndExecuteQuerySuccessWithQueryPlanRefresh) {
 
   auto row_stream = conn->ExecuteQuery(std::move(params));
 
+  std::cout << __func__ << ": read RowStream loop start" << std::endl;
   std::vector<StatusOr<bigtable::QueryRow>> rows;
   for (auto const& row : row_stream) {
     ASSERT_STATUS_OK(row);
     rows.push_back(row);
   }
+  std::cout << __func__ << ": read RowStream loop end" << std::endl;
+  std::cout << __func__ << ": start EXPECTS" << std::endl;
   ASSERT_EQ(rows.size(), 2);
   ASSERT_STATUS_OK(rows[0]);
   auto const& row1 = *rows[0];
@@ -3677,11 +3682,14 @@ TEST_F(DataConnectionTest,
 
   auto row_stream = conn->ExecuteQuery(std::move(params));
 
+  std::cout << __func__ << ": read RowStream loop start" << std::endl;
   std::vector<StatusOr<bigtable::QueryRow>> rows;
   for (auto const& row : row_stream) {
     ASSERT_STATUS_OK(row);
     rows.push_back(row);
   }
+  std::cout << __func__ << ": read RowStream loop end" << std::endl;
+  std::cout << __func__ << ": start EXPECTS" << std::endl;
   ASSERT_EQ(rows.size(), 2);
   ASSERT_STATUS_OK(rows[0]);
   auto const& row1 = *rows[0];

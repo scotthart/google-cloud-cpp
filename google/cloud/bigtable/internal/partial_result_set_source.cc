@@ -45,16 +45,22 @@ PartialResultSetSource::Create(
     absl::optional<google::bigtable::v2::ResultSetMetadata> metadata,
     std::shared_ptr<OperationContext> operation_context,
     std::unique_ptr<PartialResultSetReader> reader) {
+  std::cout << __func__ << std::endl;
   std::unique_ptr<PartialResultSetSource> source(new PartialResultSetSource(
       std::move(metadata), std::move(operation_context), std::move(reader)));
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
 
+  //  std::cout << __func__ << ": status=" << status << std::endl;
+  //  std::cout << __func__ << ": source IsExhausted="
+  //            << (source->IsRetryPolicyExhausted() ? "true" : "false")
+  //            << std::endl;
   // If the initial read finished the stream, and `Finish()` failed, then
   // creating the `PartialResultSetSource` should fail with the same error.
   if (source->state_ == State::kFinished && !status.ok()) return status;
 
+  std::cout << __func__ << ": return source" << std::endl;
   return {std::move(source)};
 }
 
@@ -66,6 +72,7 @@ PartialResultSetSource::PartialResultSetSource(
       reader_(std::move(reader)),
       operation_context_(std::move(operation_context)),
       metadata_(std::move(metadata)) {
+  std::cout << __func__ << ": constructor" << std::endl;
   if (metadata_.has_value()) {
     columns_ = std::make_shared<std::vector<std::string>>();
     columns_->reserve(metadata_->proto_schema().columns_size());
@@ -76,6 +83,7 @@ PartialResultSetSource::PartialResultSetSource(
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
+  std::cout << __func__ << std::endl;
   internal::OptionsSpan span(options_);
   if (state_ == State::kReading) {
     // Finish() can deadlock if there is still data in the streaming RPC,
@@ -95,10 +103,14 @@ PartialResultSetSource::~PartialResultSetSource() {
     state_ = State::kFinished;
   }
 
+  std::cout << __func__ << ": operation_context_->OnDone(last_status_)"
+            << std::endl;
   operation_context_->OnDone(last_status_);
+  std::cout << __func__ << ": exiting" << std::endl;
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   operation_context_->ElementRequest(reader_->context());
   while (rows_.empty()) {
     if (state_ == State::kFinished) {
@@ -119,6 +131,7 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   if (state_ == State::kFinished) {
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());

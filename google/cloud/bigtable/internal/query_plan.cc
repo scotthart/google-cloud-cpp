@@ -79,6 +79,8 @@ void QueryPlan::Invalidate(Status status,
                            std::string const& invalid_query_plan_id) {
   {
     std::unique_lock<std::mutex> lock(mu_);
+    std::cout << __func__ << ": status=" << status
+              << "; invalid_id=" << invalid_query_plan_id << std::endl;
     // We want to avoid a late arrival causing a refresh of an already refreshed
     // query plan, so we track what the previous plan id was.
     if (!IsRefreshing(lock) && old_query_plan_id_ != invalid_query_plan_id) {
@@ -92,6 +94,7 @@ void QueryPlan::Invalidate(Status status,
 void QueryPlan::RefreshQueryPlan() {
   {
     std::unique_lock<std::mutex> lock_1(mu_);
+    std::cout << __func__ << std::endl;
     cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
     if (state_ == RefreshState::kDone) return;
     state_ = RefreshState::kPending;
@@ -128,6 +131,7 @@ void QueryPlan::RefreshQueryPlan() {
 
 StatusOr<google::bigtable::v2::PrepareQueryResponse> QueryPlan::response() {
   std::unique_lock<std::mutex> lock(mu_);
+  std::cout << __func__ << std::endl;
   if (IsRefreshing(lock)) {
     if (response_.ok()) {
       return response_;

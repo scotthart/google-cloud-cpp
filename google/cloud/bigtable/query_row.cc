@@ -81,6 +81,7 @@ RowStreamIterator& RowStreamIterator::operator++() {
     source_ = nullptr;  // Last row was an error; become "end"
     return *this;
   }
+  std::cout << __func__ << std::endl;
   row_ = source_();
   row_ok_ = row_.ok();
   if (row_ && row_->size() == 0) {

@@ -30,11 +30,13 @@ namespace {
 std::vector<std::shared_ptr<Metric>> CloneMetrics(
     ResourceLabels const& resource_labels, DataLabels const& data_labels,
     std::vector<std::shared_ptr<Metric const>> const& metrics) {
+  std::cout << __func__ << std::endl;
   std::vector<std::shared_ptr<Metric>> v;
   v.reserve(metrics.size());
   for (auto const& m : metrics) {
     v.emplace_back(m->clone(resource_labels, data_labels));
   }
+  std::cout << __func__ << ": v.size()=" << v.size() << std::endl;
   return v;
 }
 }  // namespace

@@ -55,7 +55,9 @@ class DataLimitedErrorCountRetryPolicy : public DataRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit DataLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {
+    std::cout << __PRETTY_FUNCTION__ << ": this=" << this << std::endl;
+  }
 
   DataLimitedErrorCountRetryPolicy(
       DataLimitedErrorCountRetryPolicy&& rhs) noexcept
@@ -66,7 +68,11 @@ class DataLimitedErrorCountRetryPolicy : public DataRetryPolicy {
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool OnFailure(Status const& s) override {
+    std::cout << __PRETTY_FUNCTION__ << ": status=" << s << "; this=" << this
+              << std::endl;
+    return impl_.OnFailure(s);
+  }
   bool IsExhausted() const override { return impl_.IsExhausted(); }
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
@@ -134,7 +140,11 @@ class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
     return impl_.maximum_duration();
   }
 
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool OnFailure(Status const& s) override {
+    std::cout << __PRETTY_FUNCTION__ << ": status=" << s << "; this=" << this
+              << std::endl;
+    return impl_.OnFailure(s);
+  }
   bool IsExhausted() const override { return impl_.IsExhausted(); }
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
@@ -181,7 +191,9 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
    *     @p maximum_failures == 0.
    */
   explicit QueryPlanRefreshLimitedErrorCountRetryPolicy(int maximum_failures)
-      : impl_(maximum_failures) {}
+      : impl_(maximum_failures) {
+    std::cout << __PRETTY_FUNCTION__ << ": this=" << this << std::endl;
+  }
 
   QueryPlanRefreshLimitedErrorCountRetryPolicy(
       QueryPlanRefreshLimitedErrorCountRetryPolicy&& rhs) noexcept
@@ -192,7 +204,11 @@ class QueryPlanRefreshLimitedErrorCountRetryPolicy : public DataRetryPolicy {
 
   int maximum_failures() const { return impl_.maximum_failures(); }
 
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool OnFailure(Status const& s) override {
+    std::cout << __PRETTY_FUNCTION__ << ": status=" << s << "; this=" << this
+              << std::endl;
+    return impl_.OnFailure(s);
+  }
   bool IsExhausted() const override { return impl_.IsExhausted(); }
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
@@ -265,7 +281,11 @@ class QueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
     return impl_.maximum_duration();
   }
 
-  bool OnFailure(Status const& s) override { return impl_.OnFailure(s); }
+  bool OnFailure(Status const& s) override {
+    std::cout << __PRETTY_FUNCTION__ << ": status=" << s << "; this=" << this
+              << std::endl;
+    return impl_.OnFailure(s);
+  }
   bool IsExhausted() const override { return impl_.IsExhausted(); }
   bool IsPermanentFailure(Status const& s) const override {
     return impl_.IsPermanentFailure(s);
