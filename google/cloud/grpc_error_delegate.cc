@@ -69,13 +69,19 @@ google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
 // Unpacks the ErrorInfo from the Status proto, if one exists.
 absl::optional<google::rpc::ErrorInfo> GetErrorInfoProto(
     google::rpc::Status const& proto) {
+  std::cout << __func__ << ": proto=" << proto.DebugString() << std::endl;
   // While in theory there _could_ be multiple ErrorInfo protos in this
   // repeated field, we're told that there will be at most one, and our
   // user-facing APIs should only expose one. So if we find one, we're done.
   google::rpc::ErrorInfo error_info;
   for (google::protobuf::Any const& any : proto.details()) {
-    if (any.UnpackTo(&error_info)) return error_info;
+    if (any.UnpackTo(&error_info)) {
+      std::cout << __func__ << ": error_info=" << error_info.DebugString()
+                << std::endl;
+      return error_info;
+    }
   }
+  std::cout << __func__ << ": failed to unpack ErrorInfo" << std::endl;
   return absl::nullopt;
 }
 
@@ -109,6 +115,10 @@ absl::optional<internal::RetryInfo> GetRetryInfo(
 google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
   // Fast path for "OK" statuses, which cannot have messages or payloads.
   if (status.ok()) return Status{};
+  //  std::cout << __func__ << ": gRPC status ="
+  //            << status.error_code()
+  //            << "; msg=" << status.error_message()
+  //            << std::endl;
   auto const e = status.error_details();
   if (!e.empty()) {
     google::rpc::Status proto;
@@ -117,7 +127,12 @@ google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status) {
           status.error_code(),
           status.error_message() + " (discarded invalid error_details)");
     }
-    return MakeStatusFromRpcError(proto);
+    //    std::cout << __func__ << ": proto=" << proto.DebugString() <<
+    //    std::endl;
+    auto cpp_status = MakeStatusFromRpcError(proto);
+    //    std::cout << __func__ << ": cpp_status=" << cpp_status << std::endl;
+    return cpp_status;
+    //    return MakeStatusFromRpcError(proto);
   }
   return MakeStatusFromRpcError(status.error_code(), status.error_message());
 }

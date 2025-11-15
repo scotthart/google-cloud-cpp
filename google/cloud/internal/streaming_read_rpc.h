@@ -94,7 +94,13 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
   void Cancel() override { context_->TryCancel(); }
 
   absl::optional<Status> Read(ResponseType* response) override {
-    if (stream_->Read(response)) return absl::nullopt;
+    if (stream_->Read(response)) {
+      std::cout << "StreamingReadRpcImpl::" << __func__
+                << ": stream_->Read(response) TRUE" << std::endl;
+      return absl::nullopt;
+    }
+    std::cout << "StreamingReadRpcImpl::" << __func__
+              << ": stream_->Read(response) FALSE" << std::endl;
     return Finish();
   }
 
@@ -107,6 +113,8 @@ class StreamingReadRpcImpl : public StreamingReadRpc<ResponseType> {
  private:
   Status Finish() {
     auto status = MakeStatusFromRpcError(stream_->Finish());
+    std::cout << "StreamingReadRpcImpl::" << __func__ << ": status=" << status
+              << std::endl;
     finished_ = true;
     return status;
   }

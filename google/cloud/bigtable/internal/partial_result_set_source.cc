@@ -51,6 +51,8 @@ PartialResultSetSource::Create(
 
   // Do an initial read from the stream to determine the fate of the factory.
   auto status = source->ReadFromStream();
+  std::cout << "PartialResultSetSource::" << __func__
+            << ": initial read status=" << status << std::endl;
 
   // Any error during parsing will be returned.
   if (!status.ok()) {
@@ -101,6 +103,7 @@ PartialResultSetSource::~PartialResultSetSource() {
 }
 
 StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   operation_context_->ElementRequest(reader_->context());
   while (rows_.empty()) {
     if (state_ == State::kFinished) {
@@ -121,6 +124,7 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   if (state_ == State::kFinished) {
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
@@ -156,6 +160,7 @@ Status PartialResultSetSource::ReadFromStream() {
 
 Status PartialResultSetSource::ProcessDataFromStream(
     google::bigtable::v2::PartialResultSet& result) {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   // If the `reset` is true then all the data buffered since the last
   // resume_token should be discarded.
   if (result.reset()) {
@@ -169,6 +174,10 @@ Status PartialResultSetSource::ProcessDataFromStream(
   }
 
   if (result.has_proto_rows_batch()) {
+    std::cout
+        << "PartialResultSetSource::" << __func__
+        << ": StrAppend(&read_buffer_, result.proto_rows_batch().batch_data())"
+        << std::endl;
     absl::StrAppend(&read_buffer_, result.proto_rows_batch().batch_data());
   }
 
@@ -193,9 +202,14 @@ Status PartialResultSetSource::ProcessDataFromStream(
     }
   }
 
+  std::cout << "PartialResultSetSource::" << __func__
+            << ": read_buffer_.size()=" << read_buffer_.size() << std::endl;
+
   // Buffered rows in buffered_rows_ are ready to be committed into rows_
   // once the resume_token is received.
   if (!result.resume_token().empty()) {
+    std::cout << "PartialResultSetSource::" << __func__
+              << ": has resume_token; read_buffer_.clear()" << std::endl;
     rows_.insert(rows_.end(), buffered_rows_.begin(), buffered_rows_.end());
     buffered_rows_.clear();
     read_buffer_.clear();
@@ -205,6 +219,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
 }
 
 Status PartialResultSetSource::BufferProtoRows() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   if (metadata_.has_value()) {
     auto const& proto_schema = metadata_->proto_schema();
     auto const columns_size = proto_schema.columns_size();

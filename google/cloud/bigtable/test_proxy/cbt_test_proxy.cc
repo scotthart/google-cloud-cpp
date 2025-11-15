@@ -374,6 +374,7 @@ grpc::Status CbtTestProxy::ExecuteQuery(
   // Call prepare query
   auto instance = MakeInstanceResource(request_proto.instance_name());
   bigtable::SqlStatement sql_statement{request_proto.query()};
+  std::cout << "Proxy::" << __func__ << ": client.PrepareQuery" << std::endl;
   auto prepared_query =
       client.PrepareQuery(*std::move(instance), sql_statement);
   if (!prepared_query.ok()) {
@@ -389,12 +390,22 @@ grpc::Status CbtTestProxy::ExecuteQuery(
     params.insert(std::make_pair(param.first, std::move(value)));
   }
   auto bound_query = prepared_query->BindParameters(params);
+  auto initial_query_metadata = prepared_query->response()->metadata();
 
+  std::cout << "Proxy::" << __func__ << ": initial_query_metadata="
+            << initial_query_metadata.DebugString() << std::endl;
+
+  std::cout << "Proxy::" << __func__ << ": client.ExecuteQuery" << std::endl;
   RowStream result = client.ExecuteQuery(std::move(bound_query), {});
+
+  std::cout << "Proxy::" << __func__ << ": process response" << std::endl;
 
   Status status;
   std::vector<google::bigtable::testproxy::SqlRow> proxy_rows;
+  std::cout << "Proxy::" << __func__ << ": pre for loop" << std::endl;
   for (auto& row : result) {
+    std::cout << "Proxy::" << __func__ << ": row.status()=" << row.status()
+              << std::endl;
     if (!row.ok()) {
       status = row.status();
       break;
@@ -405,8 +416,12 @@ grpc::Status CbtTestProxy::ExecuteQuery(
     }
     proxy_rows.push_back(std::move(proxy_row));
   }
+  std::cout << "Proxy::" << __func__ << ": post for loop" << std::endl;
+  std::cout << "Proxy::" << __func__ << ": status=" << status << std::endl;
 
   if (status.ok()) {
+    std::cout << "Proxy::" << __func__
+              << ": proxy_rows.size()=" << proxy_rows.size() << std::endl;
     for (auto& p : proxy_rows) {
       *response->add_rows() = std::move(p);
     }
