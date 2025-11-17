@@ -236,6 +236,7 @@ Options DefaultOptions(Options opts) {
 }
 
 Options DefaultDataOptions(Options opts) {
+  std::cout << __func__ << std::endl;
   using ::google::cloud::internal::GetEnv;
   auto user_project = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
   if (user_project && !user_project->empty()) {
@@ -246,6 +247,7 @@ Options DefaultDataOptions(Options opts) {
     opts.set<OpenTelemetryTracingOption>(true);
   }
   if (!opts.has<bigtable::DataRetryPolicyOption>()) {
+    std::cout << __func__ << ": opts.set<bigtable::DataRetryPolicyOption>" << std::endl;
     opts.set<bigtable::DataRetryPolicyOption>(
         bigtable::DataLimitedTimeRetryPolicy(
             kBigtableLimits.maximum_retry_period)
@@ -258,6 +260,7 @@ Options DefaultDataOptions(Options opts) {
             .clone());
   }
   if (!opts.has<bigtable::DataBackoffPolicyOption>()) {
+    std::cout << __func__ << ": opts.set<bigtable::DataBackoffPolicyOption>" << std::endl;
     opts.set<bigtable::DataBackoffPolicyOption>(
         ExponentialBackoffPolicy(kBigtableLimits.initial_delay / 2,
                                  kBigtableLimits.maximum_delay, kBackoffScaling)

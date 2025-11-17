@@ -129,6 +129,10 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 DefaultBigtableStub::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const&,
     google::bigtable::v2::ExecuteQueryRequest const& request) {
+//  auto req = request;
+//  req.mutable_params()->begin()->second.set_bytes_value("test-key-for-apply");
+  std::cout << __func__ << ": request=" << request.DebugString() << std::endl;
+//  std::cout << __func__ << ": req=" << req.DebugString() << std::endl;
   auto stream = grpc_stub_->ExecuteQuery(context.get(), request);
   return std::make_unique<google::cloud::internal::StreamingReadRpcImpl<
       google::bigtable::v2::ExecuteQueryResponse>>(std::move(context),

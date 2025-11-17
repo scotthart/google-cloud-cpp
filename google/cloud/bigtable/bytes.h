@@ -44,11 +44,15 @@ class Bytes {
   /// An empty sequence.
   Bytes() = default;
 
+  /// Strips the null-terminator character from input bytes.
+  explicit Bytes(const char* bytes) : bytes_(bytes) {}
+
   /// @name Construction from a sequence of octets.
   ///@{
   template <typename InputIt>
   Bytes(InputIt first, InputIt last) {
     bytes_ = std::string(first, last);
+    std::cout << __func__ << ": bytes_=" << bytes_ << std::endl;
   }
   template <typename Container>
   explicit Bytes(Container const& c) : Bytes(std::begin(c), std::end(c)) {}

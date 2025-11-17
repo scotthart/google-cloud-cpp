@@ -734,10 +734,13 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
   for (auto const& p : params.sql_statement.params()) {
     (*request.mutable_param_types())[p.first] = p.second.type();
   }
+
+  std::cout << __func__ << ": request=\n" << request.DebugString() << std::endl;
+
   std::cout << __func__ << ": operation_context_factory_->PrepareQuery"
             << std::endl;
   auto operation_context = operation_context_factory_->PrepareQuery(
-      instance_full_name, app_profile_id(*current));
+      params.instance.FullName(), app_profile_id(*current));
   std::cout << __func__ << ": google::cloud::internal::RetryLoop" << std::endl;
   auto response = google::cloud::internal::RetryLoop(
       retry_policy(*current), backoff_policy(*current),
@@ -756,13 +759,18 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
     return std::move(response).status();
   }
   auto const* func = __func__;
-  std::cout << __func__ << ": define retry_fn" << std::endl;
+  std::cout << __func__ << ": define retry_fn with current=" << current.get()
+            << std::endl;
 
-  auto refresh_fn = [this, request, current, func]() mutable {
+  auto refresh_fn = [this, request, func]() mutable {
+    auto current = google::cloud::internal::SaveCurrentOptions();
+    std::cout << "refresh_fn: current=" << current.get() << std::endl;
     auto retry = retry_policy(*current);
     auto backoff = backoff_policy(*current);
     auto operation_context = operation_context_factory_->PrepareQuery(
         request.instance_name(), app_profile_id(*current));
+    std::cout << "refresh_fn: operation_context=" << operation_context.get()
+              << std::endl;
     return google::cloud::internal::AsyncRetryLoop(
                std::move(retry), std::move(backoff), Idempotency::kIdempotent,
                background_->cq(),
@@ -786,6 +794,7 @@ StatusOr<bigtable::PreparedQuery> DataConnectionImpl::PrepareQuery(
           StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
               f.get();
           operation_context->OnDone(response.status());
+          std::cout << "refresh_fn: return response" << std::endl;
           return response;
         });
   };
@@ -801,6 +810,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
     bigtable::PrepareQueryParams const& params) {
   std::cout << __func__ << std::endl;
   auto current = google::cloud::internal::SaveCurrentOptions();
+  std::cout << __func__ << ": current=" << current.get() << std::endl;
   google::bigtable::v2::PrepareQueryRequest request;
   auto instance_full_name = params.instance.FullName();
   request.set_instance_name(instance_full_name);
@@ -843,11 +853,18 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
           return std::move(response).status();
         }
 
-        auto refresh_fn = [this, request, current, func]() mutable {
+        std::cout << __func__
+                  << ": define retry_fn with current=" << current.get()
+                  << std::endl;
+        auto refresh_fn = [this, request, func]() mutable {
+          auto current = google::cloud::internal::SaveCurrentOptions();
+          std::cout << "refresh_fn: current=" << current.get() << std::endl;
           auto retry = retry_policy(*current);
           auto backoff = backoff_policy(*current);
           auto operation_context = operation_context_factory_->PrepareQuery(
               request.instance_name(), app_profile_id(*current));
+          std::cout << "refresh_fn: operation_context="
+                    << operation_context.get() << std::endl;
           return google::cloud::internal::AsyncRetryLoop(
                      std::move(retry), std::move(backoff),
                      Idempotency::kIdempotent, background_->cq(),
@@ -872,6 +889,7 @@ future<StatusOr<bigtable::PreparedQuery>> DataConnectionImpl::AsyncPrepareQuery(
                 StatusOr<google::bigtable::v2::PrepareQueryResponse> response =
                     f.get();
                 operation_context->OnDone(response.status());
+                std::cout << "refresh_fn: return response" << std::endl;
                 return response;
               });
         };
@@ -891,6 +909,15 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
   google::bigtable::v2::ExecuteQueryRequest request =
       params.bound_query.ToRequestProto();
   request.set_app_profile_id(app_profile_id(*current));
+
+  std::cout << __func__ << ": request=\n" << request.DebugString() << std::endl;
+
+  for (auto const& p : request.params()) {
+    std::cout << __func__
+              << ": p.first=" << p.first
+              << "; p.second.bytes_value()='" << p.second.bytes_value()
+              << "'" << std::endl;
+  }
 
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
@@ -974,6 +1001,13 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
     if (query_plan_data.ok()) {
       request.set_prepared_query(query_plan_data->prepared_query());
       std::cout << __func__ << ": call retry_resume_fn" << std::endl;
+  for (auto const& p : request.params()) {
+    std::cout << __func__
+              << ": p.first=" << p.first
+              << "; p.second.bytes_value()='" << p.second.bytes_value()
+              << "'" << std::endl;
+  }
+
       auto source = retry_resume_fn(
           request, query_plan_data->metadata(), retry_policy(*current),
           backoff_policy(*current), operation_context);
@@ -985,7 +1019,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
 
       if (SafeGrpcRetryAllowingQueryPlanRefresh::IsQueryPlanExpired(
               source.status())) {
-        std::cout << __func__ << ": query plan expired" << std::endl;
+        std::cout << __func__ << ": query plan expired status" << std::endl;
         query_plan->Invalidate(source.status(),
                                query_plan_data->prepared_query());
       }

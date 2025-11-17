@@ -94,6 +94,8 @@ class QueryPlan : public std::enable_shared_from_this<QueryPlan> {
   };
   RefreshState state_;
 
+  friend std::ostream& operator<<(std::ostream& os, RefreshState state);
+
   CompletionQueue cq_;
   std::shared_ptr<Clock> clock_;
   RefreshFn refresh_fn_;

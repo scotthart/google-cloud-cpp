@@ -25,6 +25,21 @@ namespace {
 auto constexpr kRefreshDeadlineOffsetMs = std::chrono::milliseconds(1000);
 }  // namespace
 
+std::ostream& operator<<(std::ostream& os, QueryPlan::RefreshState state) {
+  switch (state) {
+    case QueryPlan::RefreshState::kBegin:
+      os << "kBegin";
+      break;
+    case QueryPlan::RefreshState::kPending:
+      os << "kPending";
+      break;
+    case QueryPlan::RefreshState::kDone:
+      os << "kDone";
+      break;
+  }
+  return os;
+}
+
 std::shared_ptr<QueryPlan> QueryPlan::Create(
     CompletionQueue cq,
     StatusOr<google::bigtable::v2::PrepareQueryResponse> response, RefreshFn fn,
@@ -43,6 +58,7 @@ void QueryPlan::Initialize() {
 // ScheduleRefresh should only be called after updating response_.
 void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
   if (!response_.ok()) return;
+  std::cout << __func__ << ": response_.ok()" << std::endl;
   // We want to start the refresh process before the query plan expires.
   auto refresh_deadline =
       internal::ToChronoTimePoint(response_->valid_until()) -
@@ -53,9 +69,12 @@ void QueryPlan::ScheduleRefresh(std::unique_lock<std::mutex> const&) {
           .then([plan](future<StatusOr<std::chrono::system_clock::time_point>>
                            result) {
             if (result.get().ok()) {
+              std::cout << "refresh_timer_: result.get().ok()" << std::endl;
               if (auto p = plan.lock()) {
                 p->ExpiredRefresh();
               }
+            } else {
+              std::cout << "refresh_time_: NOT result.get().ok()" << std::endl;
             }
           });
 }
@@ -67,9 +86,11 @@ bool QueryPlan::IsRefreshing(std::unique_lock<std::mutex> const&) const {
 void QueryPlan::ExpiredRefresh() {
   {
     std::unique_lock<std::mutex> lock(mu_);
+    std::cout << __func__ << std::endl;
     if (!(IsRefreshing(lock))) {
       if (response_.ok()) old_query_plan_id_ = response_->prepared_query();
       state_ = RefreshState::kBegin;
+      std::cout << __func__ << ": state_=" << state_ << std::endl;
     }
   }
   RefreshQueryPlan();
@@ -94,7 +115,7 @@ void QueryPlan::Invalidate(Status status,
 void QueryPlan::RefreshQueryPlan() {
   {
     std::unique_lock<std::mutex> lock_1(mu_);
-    std::cout << __func__ << std::endl;
+    std::cout << __func__ << ": enter state_=" << state_ << std::endl;
     cond_.wait(lock_1, [this] { return state_ != RefreshState::kPending; });
     if (state_ == RefreshState::kDone) return;
     state_ = RefreshState::kPending;

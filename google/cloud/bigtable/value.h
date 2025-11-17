@@ -292,6 +292,7 @@ class Value {
 
   bool is_null() const;
 
+
   // Equality operators are part of the interface, even if not implemented.
   friend bool operator==(Value const& a, Value const& b);
   friend bool operator!=(Value const& a, Value const& b) { return !(a == b); }
@@ -309,6 +310,9 @@ class Value {
    * @endcode
    */
   friend std::ostream& operator<<(std::ostream& os, Value const& v);
+
+  google::bigtable::v2::Type const& type() const { return  type_;}
+  google::bigtable::v2::Value const& value() const { return value_; }
 
  private:
   // Metafunction that returns true if `T` is an `absl::optional<U>`

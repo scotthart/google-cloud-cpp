@@ -479,7 +479,10 @@ google::bigtable::v2::Value Value::MakeValueProto(char const* s) {
 }
 google::bigtable::v2::Value Value::MakeValueProto(Bytes const& b) {
   google::bigtable::v2::Value v;
+  auto foo = b.get<std::string>();
+  std::cout << __func__ << ": foo=" << foo << std::endl;
   v.set_bytes_value(b.get<std::string>());
+  std::cout << __func__ << ": v=" << v.bytes_value() << std::endl;
   return v;
 }
 google::bigtable::v2::Value Value::MakeValueProto(Timestamp const& t) {
@@ -567,6 +570,7 @@ StatusOr<Bytes> Value::GetValue(Bytes const&,
   if (pv.kind_case() != google::bigtable::v2::Value::kBytesValue) {
     return internal::UnknownError("missing BYTES", GCP_ERROR_INFO());
   }
+  std::cout << __func__ << ": pv.bytes_value()=" << pv.bytes_value() << std::endl;
   return Bytes(AsString(pv.bytes_value()));
 }
 StatusOr<Timestamp> Value::GetValue(Timestamp const&,
