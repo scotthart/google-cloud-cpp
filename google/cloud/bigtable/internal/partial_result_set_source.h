@@ -85,6 +85,7 @@ class PartialResultSetSource : public bigtable::ResultSourceInterface {
   // any data in (or previously in) `rows_`. When disengaged, we have already
   // delivered data that would be replayed, so resumption is disabled until we
   // see a new token.
+//  absl::optional<std::string> resume_token_ = absl::nullopt;
   absl::optional<std::string> resume_token_ = "";
 
   Status last_status_;

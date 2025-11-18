@@ -54,6 +54,7 @@ PartialResultSetSource::Create(
 
   // Any error during parsing will be returned.
   if (!status.ok()) {
+    std::cout << "PartialResultSetSource::" << __func__ << ": status=" << status << std::endl;
     return status;
   }
 
@@ -97,6 +98,7 @@ PartialResultSetSource::~PartialResultSetSource() {
     state_ = State::kFinished;
   }
 
+  std::cout << __func__ << ": calling OnDone" << std::endl;
   operation_context_->OnDone(last_status_);
 }
 
@@ -121,6 +123,7 @@ StatusOr<bigtable::QueryRow> PartialResultSetSource::NextRow() {
 }
 
 Status PartialResultSetSource::ReadFromStream() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   if (state_ == State::kFinished) {
     return internal::InternalError("PartialResultSetSource already finished",
                                    GCP_ERROR_INFO());
@@ -140,8 +143,10 @@ Status PartialResultSetSource::ReadFromStream() {
   // The resume_token_ member holds the token from the previous
   // PartialResultSet. It's empty on the first call.
   if (reader_->Read(resume_token_, result_set)) {
+    std::cout << "PartialResultSetSource::" << __func__ << ": Read() TRUE" << std::endl;
     return ProcessDataFromStream(result_set.result);
   }
+  std::cout << "PartialResultSetSource::" << __func__ << ": Read() FALSE" << std::endl;
   state_ = State::kFinished;
   // buffered_rows_ and read_buffer_ are expected to be empty because the last
   // successful read would have had a sentinel resume_token, causing
@@ -156,6 +161,7 @@ Status PartialResultSetSource::ReadFromStream() {
 
 Status PartialResultSetSource::ProcessDataFromStream(
     google::bigtable::v2::PartialResultSet& result) {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   // If the `reset` is true then all the data buffered since the last
   // resume_token should be discarded.
   if (result.reset()) {
@@ -205,6 +211,7 @@ Status PartialResultSetSource::ProcessDataFromStream(
 }
 
 Status PartialResultSetSource::BufferProtoRows() {
+  std::cout << "PartialResultSetSource::" << __func__ << std::endl;
   if (metadata_.has_value()) {
     auto const& proto_schema = metadata_->proto_schema();
     auto const columns_size = proto_schema.columns_size();

@@ -91,6 +91,7 @@ void OperationContext::PostCall(grpc::ClientContext const& client_context,
 }
 
 void OperationContext::OnDone(Status const& s) {
+  std::cout << "OperationContext::" << __func__ << std::endl;
   auto operation_end = clock_->Now();
   auto otel_context = opentelemetry::context::RuntimeContext::GetCurrent();
   for (auto& m : cloned_metrics_) {

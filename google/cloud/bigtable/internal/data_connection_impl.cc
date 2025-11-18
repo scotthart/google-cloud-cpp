@@ -111,10 +111,6 @@ bool IsStatusMetadataIndicatingRetryPolicyExhausted(Status const& status) {
                                                 "retry-policy-exhausted"));
 }
 
-bool IsStatusIndicatingInternalError(Status const& status) {
-  return status.code() == StatusCode::kInternal;
-}
-
 class DefaultPartialResultSetReader
     : public bigtable_internal::PartialResultSetReader {
  public:
@@ -136,11 +132,15 @@ class DefaultPartialResultSetReader
 
   bool Read(absl::optional<std::string> const&,
             bigtable_internal::UnownedPartialResultSet& result_set) override {
+    int loop_counter = 0;
     while (true) {
+      std::cout << "DefaultPartialResultSetReader::" << __func__
+                << ": loop=" << loop_counter++ << std::endl;
       google::bigtable::v2::ExecuteQueryResponse response;
       absl::optional<google::cloud::Status> status = reader_->Read(&response);
 
       if (status.has_value()) {
+        std::cout << "DefaultPartialResultSetReader::" << __func__ << ": status=" << *status << std::endl;
         // Stream has ended or an error occurred.
         operation_context_->PostCall(*context_, status.value());
         final_status_ = *std::move(status);
@@ -149,6 +149,7 @@ class DefaultPartialResultSetReader
 
       // Message successfully read into response.
       if (response.has_results()) {
+        std::cout << "DefaultPartialResultSetReader::" << __func__ << ": response.has_results()" << std::endl;
         result_set.result = std::move(*response.mutable_results());
         result_set.resumption = false;
         return true;
@@ -157,6 +158,7 @@ class DefaultPartialResultSetReader
       // Throw an error when there is a schema difference between
       // ExecuteQueryResponse and PrepareQueryResponse.
       if (response.has_metadata()) {
+        std::cout << "DefaultPartialResultSetReader::" << __func__ << ": response.has_metadata()" << std::endl;
         std::string initial_metadata_str;
         std::string response_metadata_str;
         bool metadata_matched =
@@ -169,9 +171,11 @@ class DefaultPartialResultSetReader
           operation_context_->PostCall(*context_, final_status_);
           return false;
         }
+        std::cout << "DefaultPartialResultSetReader::" << __func__ << ": continue" << std::endl;
         continue;
       }
 
+      std::cout << "DefaultPartialResultSetReader::" << __func__ << ": response EMPTY" << std::endl;
       final_status_ = internal::InternalError(
           "Empty ExecuteQueryResponse received from stream", GCP_ERROR_INFO());
       operation_context_->PostCall(*context_, final_status_);
@@ -181,7 +185,9 @@ class DefaultPartialResultSetReader
 
   grpc::ClientContext const& context() const override { return *context_; }
 
-  Status Finish() override { return final_status_; }
+  Status Finish() override {
+    std::cout << "DefaultPartialResultSetReader::" << __func__ << ": final_status_=" << final_status_ << std::endl;
+    return final_status_; }
 
  private:
   std::shared_ptr<grpc::ClientContext> context_;
@@ -912,7 +918,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
           std::unique_ptr<BackoffPolicy> backoff_policy_prototype,
           std::shared_ptr<OperationContext> const& operation_context) mutable
       -> StatusOr<std::unique_ptr<bigtable::ResultSourceInterface>> {
-    auto factory =
+    auto reader_factory =
         [stub, request, tracing_enabled, tracing_options, operation_context,
          initial_metadata = metadata](std::string const& resume_token) mutable {
           if (!resume_token.empty()) request.set_resume_token(resume_token);
@@ -933,9 +939,10 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         };
 
     auto resume = std::make_unique<PartialResultSetResume>(
-        std::move(factory), Idempotency::kIdempotent,
+        std::move(reader_factory), Idempotency::kIdempotent,
         retry_policy_prototype->clone(), backoff_policy_prototype->clone());
 
+    std::cout << "retry_resume_fn: calling PartialResultSetSource::Create" << std::endl;
     return PartialResultSetSource::Create(std::move(metadata),
                                           operation_context, std::move(resume));
   };
@@ -965,11 +972,6 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
         return bigtable::RowStream(*std::move(source));
       }
       last_status = source.status();
-
-      if (IsStatusIndicatingInternalError(source.status())) {
-        return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
-            std::move(last_status)));
-      }
 
       if (QueryPlanRefreshRetry::IsQueryPlanExpired(source.status())) {
         query_plan->Invalidate(source.status(),

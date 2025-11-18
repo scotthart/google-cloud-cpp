@@ -26,6 +26,9 @@ void PartialResultSetResume::TryCancel() { reader_->TryCancel(); }
 bool PartialResultSetResume::Read(
     absl::optional<std::string> const& resume_token,
     UnownedPartialResultSet& result) {
+  std::cout << "PartialResultSetResume::" << __func__
+            << ": resume_token=" << (resume_token ? *resume_token : "nullptr")
+            <<  std::endl;
   bool resumption = false;
   do {
     if (reader_->Read(resume_token, result)) {
@@ -33,6 +36,8 @@ bool PartialResultSetResume::Read(
       // the resume_token so that they might discard any previous results that
       // will be contained in the new stream.
       if (resumption) result.resumption = true;
+      std::cout << "PartialResultSetResume::" << __func__
+          << ": result.resumption TRUE" << std::endl;
       return true;
     }
     auto status = Finish();
@@ -51,6 +56,8 @@ bool PartialResultSetResume::Read(
     std::this_thread::sleep_for(backoff_policy_->OnCompletion());
     resumption = true;
     last_status_.reset();
+    std::cout << "PartialResultSetResume::" << __func__
+        << ": create reader from factory with resume_token" << std::endl;
     reader_ = factory_(*resume_token);
   } while (!retry_policy_->IsExhausted());
   if (last_status_) {
@@ -67,9 +74,11 @@ grpc::ClientContext const& PartialResultSetResume::context() const {
 Status PartialResultSetResume::Finish() {
   // Finish() can be called only once, so cache the last result.
   if (last_status_.has_value()) {
+    std::cout << "PartialResultSetResume::" << __func__ << ": Resume last_status_=" << *last_status_ << std::endl;
     return *last_status_;
   }
   last_status_ = reader_->Finish();
+  std::cout << "PartialResultSetResume::" << __func__ << ": Reader last_status_=" << *last_status_ << std::endl;
   return *last_status_;
 }
 
