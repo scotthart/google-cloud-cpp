@@ -48,7 +48,7 @@ struct SafeGrpcRetry {
   }
 };
 
-struct QueryPlanRefreshRetry {
+struct ExecuteQueryPlanRefreshRetry {
   static bool IsQueryPlanExpired(Status const& s);
   static bool IsOk(Status const& status) { return status.ok(); }
   static bool IsTransientFailure(Status const& status) {
@@ -56,6 +56,27 @@ struct QueryPlanRefreshRetry {
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
            google::cloud::internal::IsTransientInternalError(status) ||
            IsQueryPlanExpired(status);
+  }
+  static bool IsPermanentFailure(Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+
+  // TODO(#2344) - remove ::grpc::Status version.
+  static bool IsOk(grpc::Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(grpc::Status const& status) {
+    return IsTransientFailure(MakeStatusFromRpcError(status));
+  }
+  static bool IsPermanentFailure(grpc::Status const& status) {
+    return !IsOk(status) && !IsTransientFailure(status);
+  }
+};
+
+struct QueryPlanRefreshFunctionRetry {
+  static bool IsOk(Status const& status) { return status.ok(); }
+  static bool IsTransientFailure(Status const& status) {
+    auto const code = status.code();
+    return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
+           code == StatusCode::kInternal;
   }
   static bool IsPermanentFailure(Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);

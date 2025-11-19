@@ -192,7 +192,11 @@ struct BulkApplyThrottlingOption {
  * to automatically refresh expired or invalid query plans encountered during
  * execution.
  */
-struct QueryPlanRefreshRetryPolicyOption {
+struct ExecuteQueryPlanRefreshRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+struct QueryPlanRefreshFunctionRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };
 
