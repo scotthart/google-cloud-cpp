@@ -196,6 +196,9 @@ struct ExecuteQueryPlanRefreshRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };
 
+/**
+ * Option to configure the retry policy used for query plan refresh attempts.
+ */
 struct QueryPlanRefreshFunctionRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };

@@ -994,12 +994,8 @@ class PlanRefreshingExecuteQuery : public bigtable::ResultSourceInterface {
 
   absl::optional<google::bigtable::v2::ResultSetMetadata> Metadata() override {
     std::cout << "PlanRefreshingExecuteQuery::" << __func__ << std::endl;
-    if (!source_.has_value()) {
-      UpdateSource();
-    } else if (!source_->ok()) {
-      UpdateSource();
-    }
-    return absl::nullopt;
+    if (!source_.has_value()) return absl::nullopt;
+    return (**source_)->Metadata();
   }
 
  private:
@@ -1108,7 +1104,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
   auto const tracing_enabled = RpcStreamTracingEnabled();
   auto const& tracing_options = RpcTracingOptions();
 
-  auto retry_resume_fn =
+  auto source_fn =
       [stub = stub_, tracing_enabled, tracing_options](
           google::bigtable::v2::ExecuteQueryRequest& request,
           google::bigtable::v2::ResultSetMetadata metadata,
@@ -1142,7 +1138,7 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
 
     auto source = PartialResultSetSource::Create(
         std::move(metadata), operation_context, std::move(resume));
-    std::cout << "retry_resume_fn" << ": source.status()=" << source.status()
+    std::cout << "source_fn" << ": source.status()=" << source.status()
               << std::endl;
     return source;
   };
@@ -1150,74 +1146,13 @@ bigtable::RowStream DataConnectionImpl::ExecuteQuery(
   auto operation_context = operation_context_factory_->ExecuteQuery(
       request.instance_name(), app_profile_id(*current));
 
-  auto query_plan = params.bound_query.query_plan_;
-  //  auto query_plan_retry_policy =
-  //  execute_query_plan_refresh_retry_policy(*current); auto
-  //  query_plan_backoff_policy = backoff_policy(*current);
-
   auto frobber = PlanRefreshingExecuteQuery::Create(
-      std::move(request), std::move(retry_resume_fn), std::move(query_plan),
-      std::move(operation_context), backoff_policy(*current),
-      retry_policy(*current), execute_query_plan_refresh_retry_policy(*current),
-      current);
+      std::move(request), std::move(source_fn),
+      std::move(params.bound_query.query_plan_), std::move(operation_context),
+      backoff_policy(*current), retry_policy(*current),
+      execute_query_plan_refresh_retry_policy(*current), current);
 
   return bigtable::RowStream(std::move(frobber));
-#if 0
-  Status last_status;
-  // TODO(sdhart): OperationContext needs to be plumbed through the QueryPlan
-  // refresh_fn so that it's shared with the ExecuteQuery attempts.
-  int loop_count = 0;
-  while (!query_plan_retry_policy->IsExhausted()) {
-    std::cout << __func__ << ": loop_count=" << loop_count++ << std::endl;
-    // Snapshot query_plan data.
-    // This access could cause a query plan refresh to occur.
-    StatusOr<google::bigtable::v2::PrepareQueryResponse> query_plan_data =
-        query_plan->response();
-
-    if (query_plan_data.ok()) {
-      request.set_prepared_query(query_plan_data->prepared_query());
-      std::cout << __func__ << ": call retry_resume_fn ******" << std::endl;
-      std::cout << __func__ << ": current metadata="
-                << query_plan_data->metadata().DebugString() << std::endl;
-      auto source = retry_resume_fn(
-          request, query_plan_data->metadata(), retry_policy(*current),
-          backoff_policy(*current), operation_context);
-      if (source.ok()) {
-        std::cout << __func__ << ": return RowStream" << std::endl;
-        return bigtable::RowStream(*std::move(source));
-      }
-      last_status = source.status();
-
-      if (ExecuteQueryPlanRefreshRetry::IsQueryPlanExpired(source.status())) {
-        std::cout << __func__ << ": call Invalidate" << std::endl;
-        query_plan->Invalidate(source.status(),
-                               query_plan_data->prepared_query());
-      }
-      if (IsStatusMetadataIndicatingRetryPolicyExhausted(source.status())) {
-        std::cout << __func__
-                  << ": status metadata indicates retry policy exhausted"
-                  << std::endl;
-        return bigtable::RowStream(std::make_unique<StatusOnlyResultSetSource>(
-            std::move(last_status)));
-      }
-    } else {
-      last_status = query_plan_data.status();
-    }
-
-    std::cout << __func__ << ": last_status=" << last_status << std::endl;
-    auto delay =
-        internal::Backoff(last_status, __func__, *query_plan_retry_policy,
-                          *query_plan_backoff_policy, Idempotency::kIdempotent,
-                          false /* enable_server_retries */);
-    if (!delay) break;
-    std::this_thread::sleep_for(*delay);
-  }
-  std::cout << __func__ << ": refresh query plan retry policy exhausted"
-            << std::endl;
-  return bigtable::RowStream(
-      std::make_unique<StatusOnlyResultSetSource>(internal::RetryLoopError(
-          last_status, __func__, query_plan_retry_policy->IsExhausted())));
-#endif
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

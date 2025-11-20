@@ -48,6 +48,8 @@ struct SafeGrpcRetry {
   }
 };
 
+// These retry traits are specific to how we retry the combination of
+// ExecuteQuery with QueryPlan refresh iterations.
 struct ExecuteQueryPlanRefreshRetry {
   static bool IsQueryPlanExpired(Status const& s);
   static bool IsOk(Status const& status) { return status.ok(); }
@@ -71,6 +73,8 @@ struct ExecuteQueryPlanRefreshRetry {
   }
 };
 
+// These retry traits are specific to the internal QueryPlan refresh attempts
+// that are made automatically by the client library.
 struct QueryPlanRefreshFunctionRetry {
   static bool IsOk(Status const& status) { return status.ok(); }
   static bool IsTransientFailure(Status const& status) {

@@ -156,7 +156,8 @@ class DataLimitedTimeRetryPolicy : public DataRetryPolicy {
 namespace experimental {
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery` to
+ * retry query execution that may involve query plan refreshes based on
  * counting errors.
  *
  * This policy stops retrying if:
@@ -217,7 +218,8 @@ class ExecuteQueryPlanRefreshLimitedErrorCountRetryPolicy
 };
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery` to
+ * retry query execution that may involve query plan refreshes based on
  * elapsed time.
  *
  * This policy stops retrying if:
@@ -290,8 +292,8 @@ class ExecuteQueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
 };
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
- * counting errors.
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery`
+ * attempts to refresh a query plan based on counting errors.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -300,10 +302,7 @@ class ExecuteQueryPlanRefreshLimitedTimeRetryPolicy : public DataRetryPolicy {
  * In this class the following status codes are treated as transient errors:
  * - [`kAborted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
- * - [`kInternal`](@ref google::cloud::StatusCode) if the error message
- *   indicates this was caused by a connection reset.
- * - [`kFailedPrecondition`](@ref google::cloud::StatusCode) if the error
- *   message indicates this was caused by a an expired prepared query.
+ * - [`kInternal`](@ref google::cloud::StatusCode)
  */
 class QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy
     : public DataRetryPolicy {
@@ -351,8 +350,8 @@ class QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy
 };
 
 /**
- * A retry policy used in `bigtable::DataConnection::ExecuteQuery` based on
- * elapsed time.
+ * A retry policy only used in `bigtable::DataConnection::ExecuteQuery`
+ * attempts to refresh a query plan based on elapsed time.
  *
  * This policy stops retrying if:
  * - An RPC returns a non-transient error.
@@ -361,10 +360,8 @@ class QueryPlanRefreshFunctionLimitedErrorCountRetryPolicy
  * In this class the following status codes are treated as transient errors:
  * - [`kAborted`](@ref google::cloud::StatusCode)
  * - [`kUnavailable`](@ref google::cloud::StatusCode)
- * - [`kInternal`](@ref google::cloud::StatusCode) if the error message
- *   indicates this was caused by a connection reset.
- * - [`kFailedPrecondition`](@ref google::cloud::StatusCode) if the error
- *   message indicates this was caused by a an expired prepared query.
+ * - [`kInternal`](@ref google::cloud::StatusCode)
+ *
  */
 class QueryPlanRefreshFunctionLimitedTimeRetryPolicy : public DataRetryPolicy {
  public:
