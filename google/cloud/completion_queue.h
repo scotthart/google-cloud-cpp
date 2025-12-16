@@ -23,6 +23,7 @@
 #include "google/cloud/version.h"
 #include <chrono>
 #include <type_traits>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -50,7 +51,9 @@ class CompletionQueue {
  public:
   CompletionQueue();
   explicit CompletionQueue(std::shared_ptr<internal::CompletionQueueImpl> impl)
-      : impl_(std::move(impl)) {}
+      : impl_(std::move(impl)) {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+  }
 
   /**
    * Run the completion queue event loop.
@@ -61,10 +64,15 @@ class CompletionQueue {
   void Run() { impl_->Run(); }
 
   /// Terminate the completion queue event loop.
-  void Shutdown() { impl_->Shutdown(); }
+  void Shutdown() {
+    std::cout << "******" << __PRETTY_FUNCTION__
+              << "; thread=" << std::this_thread::get_id() << std::endl;
+    impl_->Shutdown(); }
 
   /// Cancel all pending operations.
-  void CancelAll() { impl_->CancelAll(); }
+  void CancelAll() {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+    impl_->CancelAll(); }
 
   /**
    * Create a timer that fires at @p deadline.
@@ -274,6 +282,10 @@ class CompletionQueue {
       std::shared_ptr<grpc::Channel> channel,
       std::chrono::system_clock::time_point deadline);
 
+  grpc::CompletionQueue* cq() {
+    return impl_->cq();
+  }
+
  private:
   friend std::shared_ptr<internal::CompletionQueueImpl>
   internal::GetCompletionQueueImpl(CompletionQueue const& cq);
@@ -298,6 +310,7 @@ template <typename Request, typename Response>
 future<StatusOr<Response>> MakeUnaryRpcImpl(
     CompletionQueue& cq, GrpcAsyncCall<Request, Response> async_call,
     Request const& request, std::shared_ptr<grpc::ClientContext> context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto op =
       std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
   auto impl = GetCompletionQueueImpl(cq);

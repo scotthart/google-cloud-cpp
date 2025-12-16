@@ -26,17 +26,20 @@ GrpcChannelCredentialsAuthentication::CreateChannel(
 }
 
 bool GrpcChannelCredentialsAuthentication::RequiresConfigureContext() const {
+    std::cout << __PRETTY_FUNCTION__ << ": returning false" << std::endl;
   return false;
 }
 
 Status GrpcChannelCredentialsAuthentication::ConfigureContext(
     grpc::ClientContext&) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return Status{};
 }
 
 future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
 GrpcChannelCredentialsAuthentication::AsyncConfigureContext(
     std::shared_ptr<grpc::ClientContext> context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return make_ready_future(make_status_or(std::move(context)));
 }
 

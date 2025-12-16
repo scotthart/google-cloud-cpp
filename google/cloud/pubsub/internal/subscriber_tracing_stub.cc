@@ -95,6 +95,7 @@ Status SubscriberTracingStub::DeleteSubscription(
 StatusOr<google::pubsub::v1::PullResponse> SubscriberTracingStub::Pull(
     grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PullRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto span = internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "Pull");
   auto scope = opentelemetry::trace::Scope(span);
   internal::InjectTraceContext(context, *propagator_);
@@ -108,6 +109,7 @@ std::unique_ptr<
 SubscriberTracingStub::AsyncStreamingPull(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto span =
       internal::MakeSpanGrpc("google.pubsub.v1.Subscriber", "StreamingPull");
   internal::OTelScope scope(span);

@@ -31,18 +31,28 @@ std::shared_ptr<GrpcAsyncAccessTokenCache> GrpcAsyncAccessTokenCache::Create(
 StatusOr<AccessToken> GrpcAsyncAccessTokenCache::GetAccessToken(
     std::chrono::system_clock::time_point now) {
   std::unique_lock<std::mutex> lk(mu_);
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (now + kUseSlack > token_.expiration) return Refresh(std::move(lk));
   auto tmp = token_;
   if (now + kRefreshSlack >= token_.expiration) StartRefresh(std::move(lk));
+  std::cout << __PRETTY_FUNCTION__ << ": return token" << std::endl;
   return tmp;
 }
 
 future<StatusOr<AccessToken>> GrpcAsyncAccessTokenCache::AsyncGetAccessToken(
     std::chrono::system_clock::time_point now) {
   std::unique_lock<std::mutex> lk(mu_);
-  if (now + kUseSlack > token_.expiration) return AsyncRefresh(std::move(lk));
+
+  if (now + kUseSlack > token_.expiration) {
+    std::cout << __PRETTY_FUNCTION__ << ": now + kUseSlack > token_.expiration" << std::endl;
+    return AsyncRefresh(std::move(lk));
+  }
   auto tmp = token_;
-  if (now + kRefreshSlack >= token_.expiration) StartRefresh(std::move(lk));
+  if (now + kRefreshSlack >= token_.expiration) {
+    std::cout << __PRETTY_FUNCTION__ << ": now + kRefreshSlack >= token_.expiration" << std::endl;
+    StartRefresh(std::move(lk));
+  }
+  std::cout << __PRETTY_FUNCTION__ << ": return token" << std::endl;
   return make_ready_future(make_status_or(tmp));
 }
 
@@ -52,11 +62,13 @@ GrpcAsyncAccessTokenCache::GrpcAsyncAccessTokenCache(
 
 StatusOr<AccessToken> GrpcAsyncAccessTokenCache::Refresh(
     std::unique_lock<std::mutex> lk) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return AsyncRefresh(std::move(lk)).get();
 }
 
 future<StatusOr<AccessToken>> GrpcAsyncAccessTokenCache::AsyncRefresh(
     std::unique_lock<std::mutex> lk) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   waiting_.emplace_back();
   auto result = waiting_.back().get_future();
   StartRefresh(std::move(lk));
@@ -64,6 +76,8 @@ future<StatusOr<AccessToken>> GrpcAsyncAccessTokenCache::AsyncRefresh(
 }
 
 void GrpcAsyncAccessTokenCache::StartRefresh(std::unique_lock<std::mutex> lk) {
+  std::cout << "********************************************" << std::endl;
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   if (refreshing_) return;
   refreshing_ = true;
   auto w = WeakFromThis();
@@ -75,6 +89,8 @@ void GrpcAsyncAccessTokenCache::StartRefresh(std::unique_lock<std::mutex> lk) {
 
 void GrpcAsyncAccessTokenCache::OnRefresh(future<StatusOr<AccessToken>> f) {
   std::unique_lock<std::mutex> lk(mu_);
+  std::cout << "********************************************" << std::endl;
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   refreshing_ = false;
   std::vector<WaiterType> waiting;
   waiting.swap(waiting_);
@@ -90,9 +106,17 @@ void GrpcAsyncAccessTokenCache::OnRefresh(future<StatusOr<AccessToken>> f) {
   struct SetStatus {
     WaiterType p;
     StatusOr<AccessToken> value;
-    void operator()() { p.set_value(std::move(value)); }
+    void operator()() {
+      std::cout << __PRETTY_FUNCTION__ << ": waiter running " << std::endl;
+      p.set_value(std::move(value)); }
   };
-  for (auto& p : waiting) cq_.RunAsync(SetStatus{std::move(p), value});
+  std::cout << __PRETTY_FUNCTION__ << ": run waiters now" << std::endl;
+  for (auto& p : waiting) {
+    SetStatus{std::move(p), value}();
+  }
+
+//  std::cout << __PRETTY_FUNCTION__ << ": run waiters on cq" << std::endl;
+//  for (auto& p : waiting) cq_.RunAsync(SetStatus{std::move(p), value});
 }
 
 }  // namespace internal

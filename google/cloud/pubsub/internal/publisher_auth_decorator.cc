@@ -50,6 +50,7 @@ StatusOr<google::pubsub::v1::Topic> PublisherAuth::UpdateTopic(
 StatusOr<google::pubsub::v1::PublishResponse> PublisherAuth::Publish(
     grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PublishRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Publish(context, options, request);
@@ -136,6 +137,7 @@ PublisherAuth::AsyncPublish(google::cloud::CompletionQueue& cq,
                             std::shared_ptr<grpc::ClientContext> context,
                             google::cloud::internal::ImmutableOptions options,
                             google::pubsub::v1::PublishRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child = child_, options = std::move(options),
              request](future<StatusOr<std::shared_ptr<grpc::ClientContext>>>

@@ -66,6 +66,7 @@ CreateDefaultSubscriberStub(  // NOLINTNEXTLINE(performance-unnecessary-value-pa
 
 std::shared_ptr<SubscriberStub> MakeRoundRobinSubscriberStub(
     google::cloud::CompletionQueue cq, Options const& options) {
+  std::cout << __PRETTY_FUNCTION__ << ": cq=" << cq.cq() << std::endl;
   return CreateDecoratedStubs(
       std::move(cq),
       options,  // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -90,6 +91,7 @@ std::shared_ptr<SubscriberStub> MakeTestSubscriberStub(
 std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BaseSubscriberStubFactory const& base_factory) {
+  std::cout << __PRETTY_FUNCTION__ <<": cq=" << cq.cq() << std::endl;
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
   auto child_factory = [base_factory, &auth, options](int id) {
@@ -99,12 +101,15 @@ std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
 
   auto stub = CreateRoundRobinSubscriberStub(options, std::move(child_factory));
   if (auth->RequiresConfigureContext()) {
+    std::cout << __PRETTY_FUNCTION__ << ": add SubscriberAuth decorator" << std::endl;
     stub = std::make_shared<SubscriberAuth>(std::move(auth), std::move(stub));
   }
+  std::cout << __PRETTY_FUNCTION__ << ": add SubscriberMetadata decorator" << std::endl;
   stub = std::make_shared<SubscriberMetadata>(
       std::move(stub), std::multimap<std::string, std::string>{},
       internal::HandCraftedLibClientHeader());
   if (internal::Contains(options.get<LoggingComponentsOption>(), "rpc")) {
+    std::cout << __PRETTY_FUNCTION__ << ": add SubscriberLogging decorator" << std::endl;
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<SubscriberLogging>(
         std::move(stub), options.get<GrpcTracingOptionsOption>(),
@@ -112,8 +117,10 @@ std::shared_ptr<SubscriberStub> CreateDecoratedStubs(
   }
 
   if (internal::TracingEnabled(options)) {
+    std::cout << __PRETTY_FUNCTION__ << ": add SubscriberTracingStub" << std::endl;
     stub = MakeSubscriberTracingStub(std::move(stub));
   }
+  std::cout << __PRETTY_FUNCTION__ << ": return stub" << std::endl;
   return stub;
 }
 

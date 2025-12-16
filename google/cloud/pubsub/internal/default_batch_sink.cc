@@ -48,6 +48,7 @@ DefaultBatchSink::DefaultBatchSink(std::shared_ptr<PublisherStub> stub,
 
 future<StatusOr<google::pubsub::v1::PublishResponse>>
 DefaultBatchSink::AsyncPublish(google::pubsub::v1::PublishRequest request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return internal::AsyncRetryLoop(
       options_->get<pubsub::RetryPolicyOption>()->clone(),
       options_->get<pubsub::BackoffPolicyOption>()->clone(),

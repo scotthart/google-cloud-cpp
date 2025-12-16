@@ -116,6 +116,7 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(
 
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     std::string const& location, Topic topic, Options opts) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  PublisherOptionList>(opts, __func__);

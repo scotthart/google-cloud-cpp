@@ -23,6 +23,7 @@
 #include <deque>
 #include <mutex>
 #include <unordered_map>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -37,7 +38,10 @@ class DefaultCompletionQueueImpl final
       public std::enable_shared_from_this<DefaultCompletionQueueImpl> {
  public:
   DefaultCompletionQueueImpl();
-  ~DefaultCompletionQueueImpl() override = default;
+  ~DefaultCompletionQueueImpl() override {
+    std::cout << __PRETTY_FUNCTION__ << ": this=" << this
+    << "; thread=" << std::this_thread::get_id() << std::endl;
+  }
 
   /// Run the event loop until Shutdown() is called.
   void Run() override;

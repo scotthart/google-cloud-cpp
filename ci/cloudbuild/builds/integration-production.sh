@@ -27,7 +27,7 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
+#io::run bazel test "${args[@]}" --test_tag_filters=-integration-test "${BAZEL_TARGETS[@]}"
 
 excluded_rules=(
   "-//examples:grpc_credential_types"
@@ -39,8 +39,14 @@ excluded_rules=(
   "-//google/cloud/storagecontrol:v2_samples_storage_control_anywhere_cache_samples"
 )
 
+#   --test_filter="*.PublishPullAck" --test_output=all \
+#   --test_filter="*.BlockingPull" --test_output=all \
+# --test_timeout=20 \
+# --action_env=TSAN_OPTIONS
 io::log_h2 "Running the integration tests against prod"
 mapfile -t integration_args < <(integration::bazel_args)
-io::run bazel test "${args[@]}" "${integration_args[@]}" \
-  --cache_test_results="auto" --test_tag_filters="integration-test,-ud-only" \
-  -- "${BAZEL_TARGETS[@]}" "${excluded_rules[@]}"
+export TSAN_OPTIONS="detect_deadlocks=1"
+io::run bazel test -c dbg "${args[@]}" "${integration_args[@]}" \
+  --test_filter="*.BlockingPull" --test_output=all \
+   --test_timeout=20 \
+  //google/cloud/pubsub/integration_tests:subscriber_integration_test

@@ -41,11 +41,11 @@ namespace {
 
 std::shared_ptr<pubsub::SubscriberConnection> ConnectionFromDecoratedStub(
     std::shared_ptr<pubsub_internal::SubscriberStub> stub,
-    Options const& opts) {
+    Options const& opts, std::shared_ptr<BackgroundThreads> background) {
   auto tracing_enabled = google::cloud::internal::TracingEnabled(opts);
   std::shared_ptr<SubscriberConnection> connection =
       std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
-          opts, std::move(stub));
+          opts, std::move(stub), std::move(background));
   if (tracing_enabled) {
     connection =
         pubsub_internal::MakeSubscriberTracingConnection(std::move(connection));
@@ -82,6 +82,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     std::string const& location, Subscription subscription, Options opts) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  SubscriberOptionList>(opts, __func__);
@@ -92,7 +93,8 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto stub =
       pubsub_internal::MakeRoundRobinSubscriberStub(background->cq(), opts);
-  return ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
+  return ConnectionFromDecoratedStub(std::move(stub), std::move(opts),
+                                     std::move(background));
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
@@ -126,7 +128,8 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
   auto stub = pubsub_internal::MakeTestSubscriberStub(background->cq(), opts,
                                                       std::move(stubs));
   opts.set<pubsub::SubscriptionOption>(std::move(subscription));
-  return pubsub::ConnectionFromDecoratedStub(std::move(stub), std::move(opts));
+  return pubsub::ConnectionFromDecoratedStub(std::move(stub), std::move(opts),
+                                             std::move(background));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -93,6 +93,7 @@ Status DefaultSubscriberStub::DeleteSubscription(
 StatusOr<google::pubsub::v1::PullResponse> DefaultSubscriberStub::Pull(
     grpc::ClientContext& context, Options const&,
     google::pubsub::v1::PullRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   google::pubsub::v1::PullResponse response;
   auto status = grpc_stub_->Pull(&context, request, &response);
   if (!status.ok()) {
@@ -108,6 +109,7 @@ DefaultSubscriberStub::AsyncStreamingPull(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return google::cloud::internal::MakeStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>(

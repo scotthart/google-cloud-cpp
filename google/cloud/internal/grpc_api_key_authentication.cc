@@ -28,10 +28,13 @@ std::shared_ptr<grpc::Channel> GrpcApiKeyAuthentication::CreateChannel(
                                    arguments);
 }
 
-bool GrpcApiKeyAuthentication::RequiresConfigureContext() const { return true; }
+bool GrpcApiKeyAuthentication::RequiresConfigureContext() const {
+    std::cout << __PRETTY_FUNCTION__ << ": returning true" << std::endl;
+  return true; }
 
 Status GrpcApiKeyAuthentication::ConfigureContext(
     grpc::ClientContext& context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   context.AddMetadata("x-goog-api-key", api_key_);
   return Status{};
 }
@@ -39,6 +42,7 @@ Status GrpcApiKeyAuthentication::ConfigureContext(
 future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
 GrpcApiKeyAuthentication::AsyncConfigureContext(
     std::shared_ptr<grpc::ClientContext> context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   context->AddMetadata("x-goog-api-key", api_key_);
   return make_ready_future(make_status_or(std::move(context)));
 }

@@ -46,6 +46,7 @@ class AsyncStreamingReadWriteRpcAuth
   void Cancel() override { state_->Cancel(); }
 
   future<bool> Start() override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     using Result = StatusOr<std::shared_ptr<grpc::ClientContext>>;
     auto weak = std::weak_ptr<SharedState>(state_);
     return auth_->AsyncConfigureContext(state_->ReleaseInitialContext())

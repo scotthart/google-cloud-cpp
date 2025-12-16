@@ -29,6 +29,7 @@ using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
 
 AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
                                   CompletionQueue cq, Options const& options) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto stub = MakeMinimalIamCredentialsStub(
       CreateAuthenticationStrategy(*config.base_credentials(), std::move(cq),
                                    options),
@@ -43,11 +44,13 @@ AsyncAccessTokenSource MakeSource(ImpersonateServiceAccountConfig const& config,
   request.mutable_lifetime()->set_seconds(config.lifetime().count());
 
   return [stub, request](CompletionQueue& cq) {
+    std::cout << "AsyncAccessTokenSourceFn" << std::endl;
     return stub
         ->AsyncGenerateAccessToken(cq, std::make_shared<grpc::ClientContext>(),
                                    request)
         .then([](future<StatusOr<GenerateAccessTokenResponse>> f)
                   -> StatusOr<AccessToken> {
+          std::cout << "AsyncAccessTokenSourceFn THEN" << std::endl;
           auto response = f.get();
           if (!response) return std::move(response).status();
           auto expiration = ToChronoTimePoint(response->expire_time());
@@ -91,26 +94,33 @@ std::shared_ptr<grpc::Channel> GrpcImpersonateServiceAccount::CreateChannel(
 }
 
 bool GrpcImpersonateServiceAccount::RequiresConfigureContext() const {
+  std::cout << __PRETTY_FUNCTION__ << ": returning true" << std::endl;
   return true;
 }
 
 Status GrpcImpersonateServiceAccount::ConfigureContext(
     grpc::ClientContext& context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto token = cache_->GetAccessToken();
+  std::cout << __PRETTY_FUNCTION__ << ": got token" << std::endl;
   if (!token) return std::move(token).status();
+  std::cout << __PRETTY_FUNCTION__ << ": set credentials" << std::endl;
   context.set_credentials(UpdateCallCredentials(std::move(token->token)));
+  std::cout << __PRETTY_FUNCTION__ << ": return status" << std::endl;
   return Status{};
 }
 
 future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
 GrpcImpersonateServiceAccount::AsyncConfigureContext(
     std::shared_ptr<grpc::ClientContext> context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   struct Capture {
     std::weak_ptr<GrpcImpersonateServiceAccount> w;
     std::shared_ptr<grpc::ClientContext> context;
 
     StatusOr<std::shared_ptr<grpc::ClientContext>> operator()(
         future<StatusOr<AccessToken>> f) {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       auto self = w.lock();
       if (!self)
         return internal::UnknownError("lost reference", GCP_ERROR_INFO());

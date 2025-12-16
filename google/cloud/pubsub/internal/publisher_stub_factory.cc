@@ -57,6 +57,7 @@ std::shared_ptr<grpc::Channel> CreateGrpcChannel(
 
 std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
     google::cloud::CompletionQueue cq, Options const& options) {
+  std::cout << __PRETTY_FUNCTION__ << ": cq=" << cq.cq() << std::endl;
   return CreateDecoratedStubs(
       std::move(cq),
       options,  // NOLINTNEXTLINE(performance-unnecessary-value-param)
@@ -70,6 +71,7 @@ std::shared_ptr<PublisherStub> MakeRoundRobinPublisherStub(
 std::shared_ptr<PublisherStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
     BasePublisherStubFactory const& base_factory) {
+  std::cout << __PRETTY_FUNCTION__ << ": cq=" << cq.cq() << std::endl;
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       std::move(cq), options);
   auto child_factory = [base_factory, &auth, options](int id) {
@@ -79,6 +81,7 @@ std::shared_ptr<PublisherStub> CreateDecoratedStubs(
 
   auto stub = CreateRoundRobinPublisherStub(options, std::move(child_factory));
   if (auth->RequiresConfigureContext()) {
+    std::cout << __PRETTY_FUNCTION__ << ": add PublisherAuth decorator" << std::endl;
     stub = std::make_shared<pubsub_internal::PublisherAuth>(std::move(auth),
                                                             std::move(stub));
   }

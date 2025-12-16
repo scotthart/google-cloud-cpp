@@ -107,6 +107,7 @@ class SubscriberTracingConnection : public pubsub::SubscriberConnection {
   };
 
   StatusOr<pubsub::PullResponse> Pull() override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     auto span = StartPullSpan();
 
     auto scope = opentelemetry::trace::Scope(span);

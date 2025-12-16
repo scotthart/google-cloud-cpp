@@ -51,7 +51,7 @@ function integration::bazel_args() {
 
   # Integration tests are inherently flaky. Make up to three attempts to get the
   # test passing.
-  args+=(--flaky_test_attempts=3)
+  #  args+=(--flaky_test_attempts=3)
 
   args+=(
     # Common settings
@@ -302,7 +302,7 @@ function integration::ctest_with_emulators() {
   mapfile -t ctest_args < <(ctest::common_args)
   # Integration tests are inherently flaky. Make up to three attempts to get the
   # test passing.
-  ctest_args+=(--repeat until-pass:3)
+  #ctest_args+=(--repeat until-pass:3)
 
   io::log_h2 "Running Pub/Sub integration tests (with emulator)"
   "google/cloud/pubsub/ci/${EMULATOR_SCRIPT}" \

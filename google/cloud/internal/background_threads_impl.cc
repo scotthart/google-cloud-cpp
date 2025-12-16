@@ -26,6 +26,7 @@ namespace internal {
 AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
     std::size_t thread_count)
     : pool_(thread_count == 0 ? 1 : thread_count) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   std::generate_n(pool_.begin(), pool_.size(), [this] {
     promise<void> started;
     auto thread = std::thread(
@@ -41,10 +42,12 @@ AutomaticallyCreatedBackgroundThreads::AutomaticallyCreatedBackgroundThreads(
 
 AutomaticallyCreatedBackgroundThreads::
     ~AutomaticallyCreatedBackgroundThreads() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   Shutdown();
 }
 
 void AutomaticallyCreatedBackgroundThreads::Shutdown() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   cq_.Shutdown();
   for (auto& t : pool_) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

@@ -141,6 +141,9 @@ class SubscriberIntegrationTest
 };
 
 void TestRoundtrip(pubsub::Publisher publisher, pubsub::Subscriber subscriber) {
+  std::cout << "********************" << std::endl;
+  std::cout << "START PUBLISHING" << std::endl;
+  std::cout << "********************" << std::endl;
   std::mutex mu;
   std::map<std::string, int> ids;
   for (auto const* data : {"message-0", "message-1", "message-2"}) {
@@ -176,6 +179,9 @@ void TestRoundtrip(pubsub::Publisher publisher, pubsub::Subscriber subscriber) {
     std::move(h).ack();
   };
 
+  std::cout << "********************" << std::endl;
+  std::cout << "START PULLING" << std::endl;
+  std::cout << "********************" << std::endl;
   auto result = subscriber.Subscribe(handler);
   // Wait until there are no more ids pending, then cancel the subscription and
   // get its status.
@@ -262,8 +268,17 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
     callback_cv.wait(lk, [&] { return received_ids.size() >= count; });
   };
 
+  std::cout << "ENTER TEST CASE" << std::endl;
+  std::string iam_service_account =
+      "pubsub-impersonate-test-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com";
+  ASSERT_THAT(iam_service_account, Not(IsEmpty()));
+  auto google_default_credentials = MakeGoogleDefaultCredentials();
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeImpersonateServiceAccountCredentials(
+          google_default_credentials, iam_service_account));
+
   auto publisher = Publisher(MakePublisherConnection(
-      topic_, Options{}.set<GrpcBackgroundThreadPoolSizeOption>(2)));
+      topic_, options.set<GrpcBackgroundThreadPoolSizeOption>(2)));
 
   internal::AutomaticallyCreatedBackgroundThreads background(4);
   auto stub = pubsub_internal::MakeRoundRobinSubscriberStub(
@@ -346,8 +361,18 @@ TEST_F(SubscriberIntegrationTest, StreamingSubscriptionBatchSource) {
 }
 
 TEST_F(SubscriberIntegrationTest, PublishPullAck) {
-  auto publisher = Publisher(MakePublisherConnection(topic_));
-  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_));
+  std::cout << "ENTER TEST CASE" << std::endl;
+  std::string iam_service_account =
+      "pubsub-impersonate-test-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com";
+  ASSERT_THAT(iam_service_account, Not(IsEmpty()));
+  auto google_default_credentials = MakeGoogleDefaultCredentials();
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeImpersonateServiceAccountCredentials(
+          google_default_credentials, iam_service_account));
+
+//  Options options;
+  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto subscriber = Subscriber(MakeSubscriberConnection(subscription_, options));
   ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
 }
 
@@ -530,10 +555,35 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
 }
 
 TEST_F(SubscriberIntegrationTest, BlockingPull) {
-  auto publisher = Publisher(MakePublisherConnection(topic_));
-  auto subscriber =
-      Subscriber(MakeSubscriberConnection(exactly_once_subscription_));
+  std::cout << "ENTER TEST CASE" << std::endl;
+  std::string iam_service_account =
+      "pubsub-impersonate-test-sa@cloud-cpp-testing-resources.iam.gserviceaccount.com";
+  ASSERT_THAT(iam_service_account, Not(IsEmpty()));
 
+//  std::string sa = google::cloud::internal::GetEnv(
+//                               "PUBSUB_IMPERSONATE_SA")
+//                               .value_or("");
+
+//  ASSERT_THAT(sa, Not(IsEmpty()));
+
+
+  auto google_default_credentials = MakeGoogleDefaultCredentials();
+//  auto sa_credentials = MakeServiceAccountCredentials(sa);
+//  auto options =
+//      Options{}.set<UnifiedCredentialsOption>(sa_credentials);
+//  auto options =
+//      Options{}.set<UnifiedCredentialsOption>(google_default_credentials);
+  auto options =
+      Options{}.set<UnifiedCredentialsOption>(MakeImpersonateServiceAccountCredentials(
+          google_default_credentials, iam_service_account));
+
+  auto publisher = Publisher(MakePublisherConnection(topic_, options));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(exactly_once_subscription_, options));
+
+  std::cout << "********************" << std::endl;
+  std::cout << "START PUBLISHING" << std::endl;
+  std::cout << "********************" << std::endl;
   std::set<std::string> ids;
   for (auto const* data : {"message-0", "message-1", "message-2"}) {
     auto response =
@@ -543,6 +593,9 @@ TEST_F(SubscriberIntegrationTest, BlockingPull) {
   }
   EXPECT_THAT(ids, Not(IsEmpty()));
 
+  std::cout << "********************" << std::endl;
+  std::cout << "START PULLING" << std::endl;
+  std::cout << "********************" << std::endl;
   auto const count = 2 * ids.size();
   for (std::size_t i = 0; i != count && !ids.empty(); ++i) {
     auto response = subscriber.Pull();

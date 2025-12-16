@@ -21,7 +21,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 CompletionQueue::CompletionQueue()
-    : impl_(new internal::DefaultCompletionQueueImpl) {}
+    : impl_(new internal::DefaultCompletionQueueImpl) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 future<Status> CompletionQueue::AsyncWaitConnectionReady(
     std::shared_ptr<grpc::Channel> channel,

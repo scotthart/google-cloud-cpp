@@ -62,14 +62,18 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
              // NOLINTNEXTLINE(performance-unnecessary-value-param)
              std::shared_ptr<grpc::ClientContext> context,
              Request const& request, grpc::CompletionQueue* cq, void* tag) {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     promise_ = promise<StatusOr<Response>>([context] { context->TryCancel(); });
     auto rpc = async_call(context.get(), request, cq);
     rpc->Finish(&response_, &status_, tag);
   }
 
-  void Cancel() override {}
+  void Cancel() override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
+  }
 
   bool Notify(bool ok) override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     ScopedCallContext scope(call_context_);
     if (!ok) {
       // `Finish()` always returns `true` for unary RPCs, so the only time we

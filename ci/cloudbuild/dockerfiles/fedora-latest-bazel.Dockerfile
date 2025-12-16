@@ -22,6 +22,8 @@ RUN dnf install -y clang diffutils findutils gcc-c++ git jq lcov libcxx-devel \
         libcxxabi-devel libasan libubsan libtsan llvm patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
+RUN dnf install -y clang gdb
+
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip

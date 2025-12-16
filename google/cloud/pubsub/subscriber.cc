@@ -23,7 +23,9 @@ Subscriber::Subscriber(std::shared_ptr<SubscriberConnection> connection,
                        Options opts)
     : connection_(std::move(connection)),
       options_(
-          internal::MergeOptions(std::move(opts), connection_->options())) {}
+          internal::MergeOptions(std::move(opts), connection_->options())) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+}
 
 future<Status> Subscriber::Subscribe(ApplicationCallback cb, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

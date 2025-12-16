@@ -18,6 +18,7 @@
 #include "google/cloud/internal/throw_delegate.h"
 #include <grpcpp/alarm.h>
 #include <sstream>
+#include <thread>
 
 // There is no way to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
@@ -171,7 +172,16 @@ DefaultCompletionQueueImpl::DefaultCompletionQueueImpl()
           // Capturing `this` here is safe because the lifetime of copies of
           // this member do not outlive `StartOperation`.
           std::shared_ptr<void>(reinterpret_cast<void*>(this),
-                                [this](void*) { cq_.Shutdown(); })) {}
+                                [this](void*) {
+                                  std::cout << "**** shutdown_guard_ executing"
+                                            << ": grpc::cq_ = " << cq_.cq()
+                                            << "; thread=" << std::this_thread::get_id()
+                                            << std::endl;
+                                  cq_.Shutdown(); })) {
+  std::cout << __PRETTY_FUNCTION__ << ": grpc::cq_ = " << cq_.cq()
+            << "; thread=" << std::this_thread::get_id()
+            << std::endl;
+}
 
 void DefaultCompletionQueueImpl::Run() {
   class ThreadPoolCount {
@@ -209,11 +219,16 @@ void DefaultCompletionQueueImpl::Run() {
 
 void DefaultCompletionQueueImpl::Shutdown() {
   std::lock_guard<std::mutex> lk(mu_);
+  std::cout << "******" << __PRETTY_FUNCTION__
+            << "(calls shutdown_guard_.reset()): grpc::cq_ = " << cq_.cq()
+            << "; thread=" << std::this_thread::get_id()
+            << std::endl;
   shutdown_ = true;
   shutdown_guard_.reset();
 }
 
 void DefaultCompletionQueueImpl::CancelAll() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   // Cancel all operations. We need to make a copy of the operations because
   // canceling them may trigger a recursive call that needs the lock. And we
   // need the lock because canceling might trigger calls that invalidate the
@@ -255,6 +270,7 @@ void DefaultCompletionQueueImpl::RunAsync(
 void DefaultCompletionQueueImpl::StartOperation(
     std::shared_ptr<AsyncGrpcOperation> op,
     absl::FunctionRef<void(void*)> start) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   StartOperation(std::unique_lock<std::mutex>(mu_), std::move(op),
                  std::move(start));
 }
@@ -264,8 +280,12 @@ grpc::CompletionQueue* DefaultCompletionQueueImpl::cq() { return &cq_; }
 void DefaultCompletionQueueImpl::StartOperation(
     std::unique_lock<std::mutex> lk, std::shared_ptr<AsyncGrpcOperation> op,
     absl::FunctionRef<void(void*)> start) {
+  std::cout << __PRETTY_FUNCTION__
+            << ": grpc::cq_ = " << cq_.cq()
+            << std::endl;
   void* tag = op.get();
   if (shutdown_) {
+    std::cout << __PRETTY_FUNCTION__ << ": shutdown_" << std::endl;
     lk.unlock();
     op->Notify(/*ok=*/false);
     return;
@@ -281,6 +301,7 @@ void DefaultCompletionQueueImpl::StartOperation(
     auto shutdown_guard = shutdown_guard_;
     lk.unlock();
 
+    std::cout << __PRETTY_FUNCTION__ << ": start(tag)" << std::endl;
     start(tag);
     return;
   }

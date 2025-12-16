@@ -72,6 +72,7 @@ class BlockingPublisherTracingConnection
       : child_(std::move(child)) {}
 
   StatusOr<std::string> Publish(PublishParams p) override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     auto span = StartPublishSpan(p.topic, p.message);
     auto scope = opentelemetry::trace::Scope(span);
     return EndPublishSpan(std::move(span), child_->Publish(std::move(p)));

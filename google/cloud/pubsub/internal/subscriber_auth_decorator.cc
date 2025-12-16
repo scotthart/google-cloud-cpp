@@ -76,8 +76,10 @@ Status SubscriberAuth::DeleteSubscription(
 StatusOr<google::pubsub::v1::PullResponse> SubscriberAuth::Pull(
     grpc::ClientContext& context, Options const& options,
     google::pubsub::v1::PullRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
+  std::cout << __PRETTY_FUNCTION__ << ": call child_->Pull" << std::endl;
   return child_->Pull(context, options, request);
 }
 
@@ -91,9 +93,10 @@ SubscriberAuth::AsyncStreamingPull(
   using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;
-
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto call = [child = child_, cq, options = std::move(options)](
                   std::shared_ptr<grpc::ClientContext> ctx) {
+    std::cout << __PRETTY_FUNCTION__ << ": call child_->AsyncStreamingPull" << std::endl;
     return child->AsyncStreamingPull(cq, std::move(ctx), options);
   };
   return std::make_unique<StreamAuth>(

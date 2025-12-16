@@ -33,11 +33,13 @@ std::shared_ptr<grpc::Channel> GrpcComputeEngineAuthentication::CreateChannel(
 }
 
 bool GrpcComputeEngineAuthentication::RequiresConfigureContext() const {
+  std::cout << __PRETTY_FUNCTION__ << ": returning true" << std::endl;
   return true;
 }
 
 Status GrpcComputeEngineAuthentication::ConfigureContext(
     grpc::ClientContext& context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   context.set_credentials(credentials_);
   return Status{};
 }
@@ -45,6 +47,7 @@ Status GrpcComputeEngineAuthentication::ConfigureContext(
 future<StatusOr<std::shared_ptr<grpc::ClientContext>>>
 GrpcComputeEngineAuthentication::AsyncConfigureContext(
     std::shared_ptr<grpc::ClientContext> context) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   context->set_credentials(credentials_);
   return make_ready_future(make_status_or(std::move(context)));
 }

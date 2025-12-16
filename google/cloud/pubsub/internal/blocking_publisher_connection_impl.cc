@@ -34,6 +34,7 @@ BlockingPublisherConnectionImpl::BlockingPublisherConnectionImpl(
 
 StatusOr<std::string> BlockingPublisherConnectionImpl::Publish(
     PublishParams p) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto const& current = internal::CurrentOptions();
   google::pubsub::v1::PublishRequest request;
   request.set_topic(p.topic.FullName());

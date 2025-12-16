@@ -96,29 +96,36 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
         : cq(std::move(c)), options(std::move(o)) {}
 
     void visit(ErrorCredentialsConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcErrorCredentialsAuthentication>(cfg);
     }
     void visit(InsecureCredentialsConfig const&) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::InsecureChannelCredentials());
     }
     void visit(GoogleDefaultCredentialsConfig const&) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcChannelCredentialsAuthentication>(
           grpc::GoogleDefaultCredentials());
     }
     void visit(AccessTokenConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcAccessTokenAuthentication>(
           cfg.access_token(), std::move(options));
     }
     void visit(ImpersonateServiceAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << ": cq=" << cq.cq() << std::endl;
       result = GrpcImpersonateServiceAccount::Create(std::move(cq), cfg,
                                                      std::move(options));
     }
     void visit(ServiceAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcServiceAccountAuthentication>(
           cfg.json_object(), std::move(options));
     }
     void visit(ExternalAccountConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       grpc::SslCredentialsOptions ssl_options;
       auto cainfo = LoadCAInfo(options);
       if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
@@ -128,9 +135,11 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
               GrpcExternalAccountCredentials(cfg)));
     }
     void visit(ApiKeyConfig const& cfg) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcApiKeyAuthentication>(cfg.api_key());
     }
     void visit(ComputeEngineCredentialsConfig const&) override {
+      std::cout << __PRETTY_FUNCTION__ << std::endl;
       result = std::make_unique<GrpcComputeEngineAuthentication>(options);
     }
 

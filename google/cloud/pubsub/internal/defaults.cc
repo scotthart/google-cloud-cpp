@@ -58,6 +58,7 @@ Options DefaultCommonOptions(std::string const& location, Options opts) {
   if (!opts.has<GrpcNumChannelsOption>()) {
     opts.set<GrpcNumChannelsOption>(static_cast<int>(DefaultThreadCount()));
   }
+
   if (!opts.has<pubsub::RetryPolicyOption>()) {
     opts.set<pubsub::RetryPolicyOption>(
         pubsub::LimitedTimeRetryPolicy(std::chrono::seconds(60)).clone());
@@ -71,7 +72,8 @@ Options DefaultCommonOptions(std::string const& location, Options opts) {
   if (opts.get<GrpcBackgroundThreadPoolSizeOption>() == 0) {
     opts.set<GrpcBackgroundThreadPoolSizeOption>(DefaultThreadCount());
   }
-
+  std::cout << __PRETTY_FUNCTION__ << ": ThreadPoolSize=" <<
+      opts.get<GrpcBackgroundThreadPoolSizeOption>() << std::endl;
   // Enforce Constraints
   auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
   num_channels = (std::max)(num_channels, 1);

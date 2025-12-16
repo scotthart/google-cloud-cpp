@@ -29,15 +29,17 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberConnectionImpl::SubscriberConnectionImpl(
-    Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub)
+    Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub,
+    std::shared_ptr<BackgroundThreads> background)
     : opts_(std::move(opts)),
       stub_(std::move(stub)),
-      background_(internal::MakeBackgroundThreadsFactory(opts_)()),
+      background_(std::move(background)),
       generator_(internal::MakeDefaultPRNG()) {}
 
 SubscriberConnectionImpl::~SubscriberConnectionImpl() = default;
 
 future<Status> SubscriberConnectionImpl::Subscribe(SubscribeParams p) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return CreateSubscriptionSession(google::cloud::internal::CurrentOptions(),
                                    stub_, background_->cq(), MakeClientId(),
                                    std::move(p.callback));
@@ -45,12 +47,14 @@ future<Status> SubscriberConnectionImpl::Subscribe(SubscribeParams p) {
 
 future<Status> SubscriberConnectionImpl::ExactlyOnceSubscribe(
     ExactlyOnceSubscribeParams p) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   return CreateSubscriptionSession(google::cloud::internal::CurrentOptions(),
                                    stub_, background_->cq(), MakeClientId(),
                                    std::move(p.callback));
 }
 
 StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto const& current = internal::CurrentOptions();
   auto subscription = current.get<pubsub::SubscriptionOption>();
 

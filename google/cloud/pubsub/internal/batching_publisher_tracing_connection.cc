@@ -36,6 +36,7 @@ class BatchingPublisherTracingConnection : public pubsub::PublisherConnection {
   ~BatchingPublisherTracingConnection() override = default;
 
   future<StatusOr<std::string>> Publish(PublishParams p) override {
+    std::cout << __PRETTY_FUNCTION__ << std::endl;
     namespace sc = opentelemetry::trace::SemanticConventions;
     auto span = internal::MakeSpan(
         "publisher batching",
