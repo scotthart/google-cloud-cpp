@@ -110,13 +110,13 @@ void GrpcAsyncAccessTokenCache::OnRefresh(future<StatusOr<AccessToken>> f) {
       std::cout << __PRETTY_FUNCTION__ << ": waiter running " << std::endl;
       p.set_value(std::move(value)); }
   };
-  std::cout << __PRETTY_FUNCTION__ << ": run waiters now" << std::endl;
-  for (auto& p : waiting) {
-    SetStatus{std::move(p), value}();
-  }
+//  std::cout << __PRETTY_FUNCTION__ << ": run waiters now" << std::endl;
+//  for (auto& p : waiting) {
+//    SetStatus{std::move(p), value}();
+//  }
 
-//  std::cout << __PRETTY_FUNCTION__ << ": run waiters on cq" << std::endl;
-//  for (auto& p : waiting) cq_.RunAsync(SetStatus{std::move(p), value});
+  std::cout << __PRETTY_FUNCTION__ << ": run waiters on cq" << std::endl;
+  for (auto& p : waiting) cq_.RunAsync(SetStatus{std::move(p), value});
 }
 
 }  // namespace internal
