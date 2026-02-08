@@ -6,7 +6,7 @@
     "license": "Apache-2.0",
     "supports": "!uwp",
     "$TODO": "move `gtest` and `benchmark` to dev-dependencies",
-    "builtin-baseline": "6d9ed568117dd958c543b3ab8d3ed692965cac34",
+    "builtin-baseline": "3895230f38e498525f2560a281223d12066fa74a",
     "dependencies": [
       {"name": "abseil", "version>=": "20250814.1"},
       {
@@ -37,7 +37,8 @@
       { "name": "opentelemetry-cpp", "version": "1.23.0"},
       { "name": "protobuf", "version": "6.33.4" },
       { "name": "grpc", "version": "1.76.0" },
-      { "name": "gtest", "version": "1.12.0" }
+      { "name": "gtest", "version": "1.17.0" },
+      {"name": "nlohmann-json", "version": "3.12.0"}
     ],
   "configuration": {
     "overlay-ports" : [ "overlay-ports"]
