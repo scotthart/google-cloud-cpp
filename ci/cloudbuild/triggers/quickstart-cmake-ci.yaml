@@ -22,7 +22,7 @@ includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 name: quickstart-cmake-ci
 substitutions:
   _BUILD_NAME: quickstart-cmake
-  _DISTRO: ubuntu-22.04
+  _DISTRO: ubuntu-24.04
   _TRIGGER_TYPE: ci
 tags:
 - ci
