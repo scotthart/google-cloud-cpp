@@ -22,7 +22,7 @@ ARG NCPU=4
 # ```bash
 RUN dnf makecache && \
     dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
-        patch unzip tar wget zip
+        patch unzip tar wget zip glibc-debuginfo
 # ```
 
 # Fedora:40 includes packages, with recent enough versions, for most of the
