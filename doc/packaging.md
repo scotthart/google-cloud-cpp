@@ -235,7 +235,8 @@ Install the minimal development tools:
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake curl findutils gcc-c++ git make ninja-build \
-        patch unzip tar wget zip glibc-debuginfo
+        patch unzip tar wget zip dnf-utils
+sudo dnf makecache && sudo dnf debuginfo-install -y glibc
 ```
 
 Fedora:40 includes packages, with recent enough versions, for most of the direct
