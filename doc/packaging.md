@@ -1056,7 +1056,9 @@ sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which \
-        autoconf automake libtool binutils glibc-debuginfo
+        autoconf automake libtool binutils dnf-utils
+sudo dnf makecache && sudo dnf debuginfo-install -y glibc
+
 ```
 
 Set some useful environment variables.

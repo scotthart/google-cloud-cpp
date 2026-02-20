@@ -27,7 +27,9 @@ RUN dnf makecache && \
     dnf makecache && \
     dnf install -y cmake findutils gcc-c++ git make openssl-devel \
         patch zlib-devel libcurl-devel c-ares-devel tar wget which \
-        autoconf automake libtool binutils glibc-debuginfo
+        autoconf automake libtool binutils dnf-utils
+RUN dnf makecache && dnf debuginfo-install -y glibc
+
 # ```
 
 # Set some useful environment variables.
