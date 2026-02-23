@@ -1893,8 +1893,7 @@ class GkeHubClient {
   /// Updates a fleet namespace.
   ///
   /// @param scope_namespace  Required. A namespace with fields updated. The 'name' field in this
-  ///  namespace is used to identify the resource to update. Given 'updated'
-  ///  prefix to follow go/proto-best-practices-checkers#keyword_conflict
+  ///  namespace is used to identify the resource to update.
   /// @param update_mask  Required. The fields to be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
