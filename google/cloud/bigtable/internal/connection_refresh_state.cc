@@ -140,6 +140,7 @@ void ScheduleStubRefresh(
             auto client_context = std::make_shared<grpc::ClientContext>();
             google::cloud::internal::ImmutableOptions options;
             google::bigtable::v2::PingAndWarmRequest request;
+            request.set_name("");
             // This RPC call does not set a deadline
             // like AsyncWaitConnectionReady does.
             stub->AsyncPingAndWarm(cq, client_context, std::move(options),

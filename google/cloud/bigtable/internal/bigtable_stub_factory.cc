@@ -98,12 +98,29 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
       }
     };
     auto channel = CreateGrpcChannel(*auth, options, id);
+#if 0
     if (prime_channel) {
+
       (void)channel->GetState(true);
     }
     ScheduleChannelRefresh(cq_impl, refresh_state, channel,
                            std::move(connection_status_fn));
     wrapper->set_channel(stub_factory(std::move(channel)));
+#endif
+    auto stub = stub_factory(std::move(channel));
+    if (prime_channel) {
+      // CompletionQueue cq(cq_impl);
+      // auto client_context = std::make_shared<grpc::ClientContext>();
+      grpc::ClientContext client_context;
+      google::bigtable::v2::PingAndWarmRequest request;
+      request.set_name("");
+      stub->PingAndWarm(client_context, {}, std::move(request));
+    }
+
+    ScheduleStubRefresh(cq_impl, refresh_state, stub,
+                        std::move(connection_status_fn));
+
+    wrapper->set_channel(std::move(stub));
     return wrapper;
   };
 
