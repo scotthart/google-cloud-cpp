@@ -45,6 +45,12 @@ class DataConnectionImpl : public bigtable::DataConnection {
                      std::shared_ptr<MutateRowsLimiter> limiter,
                      Options options);
 
+  DataConnectionImpl(absl::optional<bigtable::InstanceResource> instance,
+                     std::unique_ptr<BackgroundThreads> background,
+                     std::shared_ptr<BigtableStub> stub,
+                     std::shared_ptr<MutateRowsLimiter> limiter,
+                     Options options);
+
   // This constructor is used for testing.
   DataConnectionImpl(
       std::unique_ptr<BackgroundThreads> background,
@@ -110,6 +116,10 @@ class DataConnectionImpl : public bigtable::DataConnection {
       bigtable::PrepareQueryParams const& p) override;
   bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p) override;
 
+  // absl::optional<bigtable::InstanceResource> instance() override {
+  //   return instance_;
+  // }
+
  private:
   void AsyncReadRowsHelper(std::string const& table_name,
                            std::function<future<bool>(bigtable::Row)> on_row,
@@ -119,6 +129,7 @@ class DataConnectionImpl : public bigtable::DataConnection {
                            internal::ImmutableOptions const& current,
                            std::shared_ptr<OperationContext> operation_context);
 
+  absl::optional<bigtable::InstanceResource> instance_ = absl::nullopt;
   std::unique_ptr<BackgroundThreads> background_;
   std::shared_ptr<BigtableStub> stub_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;

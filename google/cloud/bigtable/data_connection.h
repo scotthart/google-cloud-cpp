@@ -162,6 +162,9 @@ class DataConnection {
   virtual future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
       bigtable::PrepareQueryParams const& p);
   virtual bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p);
+
+  // virtual absl::optional<InstanceResource> instance() { return absl::nullopt;
+  // }
 };
 
 /**
@@ -191,6 +194,83 @@ class DataConnection {
  *     function.
  */
 std::shared_ptr<DataConnection> MakeDataConnection(Options options = {});
+
+#if 0
+class InstanceDataConnection {
+ public:
+  InstanceResource instance() const { return *connection_->instance(); }
+  Options options() const { return connection_->options(); }
+
+  Status Apply(std::string const& table_name, SingleRowMutation mut);
+
+  future<Status> AsyncApply(std::string const& table_name,
+                            SingleRowMutation mut);
+
+  std::vector<FailedMutation> BulkApply(std::string const& table_name,
+                                        BulkMutation mut);
+
+  future<std::vector<FailedMutation>> AsyncBulkApply(
+      std::string const& table_name, BulkMutation mut);
+
+  /// Prefer to use `ReadRowsFull()` in mocks.
+  RowReader ReadRows(std::string const& table_name, RowSet row_set,
+                     std::int64_t rows_limit, Filter filter);
+
+  RowReader ReadRowsFull(ReadRowsParams params);
+
+  StatusOr<std::pair<bool, Row>> ReadRow(std::string const& table_name,
+                                         std::string row_key, Filter filter);
+
+  StatusOr<MutationBranch> CheckAndMutateRow(
+      std::string const& table_name, std::string row_key, Filter filter,
+      std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
+
+  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
+      std::string const& table_name, std::string row_key, Filter filter,
+      std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
+
+  StatusOr<std::vector<RowKeySample>> SampleRows(std::string const& table_name);
+
+  future<StatusOr<std::vector<RowKeySample>>> AsyncSampleRows(
+      std::string const& table_name);
+
+  StatusOr<Row> ReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request);
+
+  future<StatusOr<Row>> AsyncReadModifyWriteRow(
+      google::bigtable::v2::ReadModifyWriteRowRequest request);
+
+  void AsyncReadRows(std::string const& table_name,
+                     std::function<future<bool>(Row)> on_row,
+                     std::function<void(Status)> on_finish, RowSet row_set,
+                     std::int64_t rows_limit, Filter filter);
+
+  future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(
+      std::string const& table_name, std::string row_key, Filter filter);
+
+  StatusOr<bigtable::PreparedQuery> PrepareQuery(
+      bigtable::PrepareQueryParams const& p);
+  future<StatusOr<bigtable::PreparedQuery>> AsyncPrepareQuery(
+      bigtable::PrepareQueryParams const& p);
+  bigtable::RowStream ExecuteQuery(bigtable::ExecuteQueryParams p);
+
+ private:
+  friend std::shared_ptr<InstanceDataConnection> MakeInstanceDataConnection(
+      InstanceResource instance, Options options);
+
+  InstanceDataConnection(InstanceResource instance,
+    std::shared_ptr<DataConnection> connection) :
+    instance_(std::move(instance)), connection_(std::move(connection)) {}
+
+  InstanceResource instance_;
+  std::shared_ptr<DataConnection> connection_;
+};
+
+std::shared_ptr<InstanceDataConnection> MakeInstanceDataConnection(
+    InstanceResource instance, Options options = {});
+#endif
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

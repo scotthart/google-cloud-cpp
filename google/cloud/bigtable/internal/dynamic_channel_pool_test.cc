@@ -36,10 +36,10 @@ TEST(ChannelUsageTest, SetChannel) {
   auto mock = std::make_shared<MockBigtableStub>();
   auto channel = std::make_shared<ChannelUsage<BigtableStub>>();
   EXPECT_THAT(channel->AcquireStub(), Eq(nullptr));
-  channel->set_channel(mock);
+  channel->set_stub(mock);
   EXPECT_THAT(channel->AcquireStub(), Eq(mock));
   auto mock2 = std::make_shared<MockBigtableStub>();
-  channel->set_channel(mock2);
+  channel->set_stub(mock2);
   EXPECT_THAT(channel->AcquireStub(), Eq(mock));
 }
 
@@ -139,6 +139,7 @@ TEST(DynamicChannelPoolTest, GetChannelRandomTwoLeastUsed) {
                 [&]() { return stub_factory_fn(id++, false); });
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
+      // bigtable::InstanceResource(Project("my-project"), "my-instance"),
       CompletionQueue(fake_cq_impl), channels, refresh_state, stub_factory_fn,
       sizing_policy);
 

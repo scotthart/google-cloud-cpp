@@ -243,6 +243,38 @@ DataConnectionImpl::DataConnectionImpl(
 }
 
 DataConnectionImpl::DataConnectionImpl(
+    absl::optional<bigtable::InstanceResource> instance,
+    std::unique_ptr<BackgroundThreads> background,
+    std::shared_ptr<BigtableStub> stub,
+    std::shared_ptr<MutateRowsLimiter> limiter, Options options)
+    : instance_(std::move(instance)),
+      background_(std::move(background)),
+      stub_(std::move(stub)),
+      limiter_(std::move(limiter)),
+      options_(internal::MergeOptions(std::move(options),
+                                      DataConnection::options())) {
+#ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+  if (options_.get<bigtable::EnableMetricsOption>()) {
+    // The client_uid is eventually used in conjunction with other data labels
+    // to identify metric data points. This pseudorandom string is used to aid
+    // in disambiguation.
+    auto gen = internal::MakeDefaultPRNG();
+    std::string client_uid =
+        internal::Sample(gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
+    operation_context_factory_ =
+        std::make_unique<MetricsOperationContextFactory>(std::move(client_uid),
+                                                         options_);
+  } else {
+    operation_context_factory_ =
+        std::make_unique<SimpleOperationContextFactory>();
+  }
+#else
+  operation_context_factory_ =
+      std::make_unique<SimpleOperationContextFactory>();
+#endif
+}
+
+DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<BackgroundThreads> background,
     std::shared_ptr<BigtableStub> stub,
     std::unique_ptr<OperationContextFactory> operation_context_factory,

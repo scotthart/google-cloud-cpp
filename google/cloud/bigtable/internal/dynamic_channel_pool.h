@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_DYNAMIC_CHANNEL_POOL_H
 
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/completion_queue.h"
@@ -74,9 +75,9 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
   // A channel can only be set if the current value is nullptr. This mutator
   // exists only so that we can obtain a std::weak_ptr to the ChannelUsage
   // object that will eventually hold the channel.
-  ChannelUsage& set_channel(std::shared_ptr<T> channel) {
+  ChannelUsage& set_stub(std::shared_ptr<T> stub) {
     std::unique_lock<std::mutex> lk(mu_);
-    if (!stub_) stub_ = std::move(channel);
+    if (!stub_) stub_ = std::move(stub);
     return *this;
   }
 
@@ -119,6 +120,7 @@ class DynamicChannelPool
       std::uint32_t id, bool prime_channel)>;
 
   static std::shared_ptr<DynamicChannelPool> Create(
+      // bigtable::InstanceResource instance,
       CompletionQueue cq,
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
@@ -127,6 +129,7 @@ class DynamicChannelPool
           {}) {
     std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
+        // std::move(instance),
         std::move(cq), std::move(initial_channels), std::move(refresh_state),
         std::move(stub_factory_fn), std::move(sizing_policy)));
     std::cout << __PRETTY_FUNCTION__ << ": return pool" << std::endl;
@@ -278,12 +281,14 @@ class DynamicChannelPool
 
  private:
   DynamicChannelPool(
+      // bigtable::InstanceResource instance,
       CompletionQueue cq,
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
       bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
-      : cq_(std::move(cq)),
+      :  // instance_(std::move(instance)),
+        cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
         channels_(std::move(initial_wrapped_channels)),
@@ -474,6 +479,7 @@ class DynamicChannelPool
   }
 
   mutable std::mutex mu_;
+  // bigtable::InstanceResource instance_;
   CompletionQueue cq_;
   google::cloud::internal::DefaultPRNG rng_;
   std::shared_ptr<ConnectionRefreshState> refresh_state_;

@@ -77,6 +77,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
 }
 
 std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
+    // bigtable::InstanceResource instance,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
     Options const& options, BaseBigtableStubFactory stub_factory,
@@ -105,7 +106,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     }
     ScheduleChannelRefresh(cq_impl, refresh_state, channel,
                            std::move(connection_status_fn));
-    wrapper->set_channel(stub_factory(std::move(channel)));
+    wrapper->set_stub(stub_factory(std::move(channel)));
 #endif
     auto stub = stub_factory(std::move(channel));
     if (prime_channel) {
@@ -120,7 +121,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     ScheduleStubRefresh(cq_impl, refresh_state, stub,
                         std::move(connection_status_fn));
 
-    wrapper->set_channel(std::move(stub));
+    wrapper->set_stub(std::move(stub));
     return wrapper;
   };
 
@@ -134,6 +135,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
 
   return std::make_shared<BigtableRandomTwoLeastUsed>(
       DynamicChannelPool<BigtableStub>::Create(
+          // std::move(instance),
           CompletionQueue(std::move(cq_impl)), std::move(children),
           std::move(refresh_state),
           std::move(refreshing_channel_stub_factory)));
@@ -155,9 +157,8 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
       options.get<bigtable::experimental::ChannelPoolTypeOption>() ==
           bigtable::experimental::ChannelPoolType::kDynamic) {
     stub = CreateBigtableStubRandomTwoLeastUsed(
-        auth, std::move(cq_impl), options, stub_factory,
-        //        std::move(refreshing_channel_stub_factory),
-        std::move(refresh));
+        //        *std::move(instance),
+        auth, std::move(cq_impl), options, stub_factory, std::move(refresh));
   } else {
     auto refreshing_channel_stub_factory = [stub_factory, cq_impl, refresh,
                                             &auth, options](int id) {
@@ -202,6 +203,18 @@ std::shared_ptr<BigtableStub> CreateBigtableStub(
             google::bigtable::v2::Bigtable::NewStub(std::move(c)));
       });
 }
+
+// std::shared_ptr<BigtableStub> CreateBigtableStub(
+//     absl::optional<bigtable::InstanceResource> instance,
+//     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+//     CompletionQueue const& cq, Options const& options) {
+//   return CreateDecoratedStubs(
+//       std::move(instance), std::move(auth), cq, options,
+//       [](std::shared_ptr<grpc::Channel> c) {
+//         return std::make_shared<DefaultBigtableStub>(
+//             google::bigtable::v2::Bigtable::NewStub(std::move(c)));
+//       });
+// }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
