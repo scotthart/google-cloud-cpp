@@ -124,7 +124,7 @@ class SessionServiceClient {
   /// The agent processes continuous multimodal inputs (e.g., text, audio) and
   /// generates real-time multimodal output streams.
   ///
-  /// --- Client Request Stream ---
+  /// - Client Request Stream -
   /// The client streams requests in the following order:
   ///
   /// 1.  Initialization:
@@ -148,7 +148,7 @@ class SessionServiceClient {
   ///     or [GoAway][google.cloud.ces.v1.BidiSessionServerMessage.go_away] from
   ///     the agent.
   ///
-  /// --- Server Response Stream ---
+  /// - Server Response Stream -
   /// For each interaction turn, the agent streams messages in the following
   /// sequence:
   ///
@@ -172,7 +172,7 @@ class SessionServiceClient {
   ///     [DiagnosticInfo][google.cloud.ces.v1.SessionOutput.diagnostic_info]
   ///     with execution details.
   ///
-  /// --- Audio Best Practices ---
+  /// - Audio Best Practices -
   /// 1.  Streaming:
   ///     Stream [audio data][google.cloud.ces.v1.SessionInput.audio]
   ///     **CONTINUOUSLY**, even during silence. Recommended chunk size: 40-120ms
