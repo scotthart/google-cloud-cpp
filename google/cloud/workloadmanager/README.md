@@ -20,7 +20,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/workloadmanager/v1/ EDIT HERE _client.h"
+#include "google/cloud/workloadmanager/v1/workload_manager_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -33,10 +33,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace workloadmanager = ::google::cloud::workloadmanager_v1;
-  auto client = workloadmanager::ServiceClient(
-      workloadmanager::MakeServiceConnection());  // EDIT HERE
+  auto client = workloadmanager::WorkloadManagerClient(
+      workloadmanager::MakeWorkloadManagerConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListEvaluations(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
