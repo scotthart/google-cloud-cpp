@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/vectorsearch/v1/ EDIT HERE _client.h"
+#include "google/cloud/vectorsearch/v1/vector_search_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace vectorsearch = ::google::cloud::vectorsearch_v1;
-  auto client = vectorsearch::ServiceClient(
-      vectorsearch::MakeServiceConnection());  // EDIT HERE
+  auto client = vectorsearch::VectorSearchServiceClient(
+      vectorsearch::MakeVectorSearchServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListCollections(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
