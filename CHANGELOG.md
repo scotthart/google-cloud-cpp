@@ -16,7 +16,7 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Gemini Enterprise for Customer Experience API](google/cloud/ces/README.md)
 - [Vision AI API](/google/cloud/visionai/README.md)
-- [Workload Manager](/google/cloud/workloadmanager/README.md)]
+- [Workload Manager](/google/cloud/workloadmanager/README.md)
 
 ## v3.2.0 - 2026-02
 
