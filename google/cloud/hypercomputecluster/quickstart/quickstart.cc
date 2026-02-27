@@ -13,7 +13,7 @@
 // limitations under the License.
 
 //! [all]
-#include "google/cloud/hypercomputecluster/v1/ EDIT HERE _client.h"
+#include "google/cloud/hypercomputecluster/v1/hypercompute_cluster_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -26,10 +26,10 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace hypercomputecluster = ::google::cloud::hypercomputecluster_v1;
-  auto client = hypercomputecluster::ServiceClient(
-      hypercomputecluster::MakeServiceConnection());  // EDIT HERE
+  auto client = hypercomputecluster::HypercomputeClusterClient(
+      hypercomputecluster::MakeHypercomputeClusterConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListClusters(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

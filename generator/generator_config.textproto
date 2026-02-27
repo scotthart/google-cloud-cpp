@@ -2664,7 +2664,7 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
-# Hyper Compute Cluster
+# Hypercompute Cluster
 service {
   service_proto_path: "google/cloud/hypercomputecluster/v1/hypercompute_cluster.proto"
   product_path: "google/cloud/hypercomputecluster/v1"
