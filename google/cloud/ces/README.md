@@ -16,7 +16,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/ces/v1/ EDIT HERE _client.h"
+#include "google/cloud/ces/v1/agent_client.h"
 #include "google/cloud/location.h"
 #include <iostream>
 
@@ -29,9 +29,9 @@ int main(int argc, char* argv[]) try {
   auto const location = google::cloud::Location(argv[1], argv[2]);
 
   namespace ces = ::google::cloud::ces_v1;
-  auto client = ces::ServiceClient(ces::MakeServiceConnection());  // EDIT HERE
+  auto client = ces::AgentServiceClient(ces::MakeAgentServiceConnection());
 
-  for (auto r : client.List /*EDIT HERE*/ (location.FullName())) {
+  for (auto r : client.ListApps(location.FullName())) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
