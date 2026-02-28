@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/clock.h"
@@ -117,11 +118,11 @@ class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
   using StubFactoryFn = std::function<std::shared_ptr<ChannelUsage<T>>(
-      std::uint32_t id, bool prime_channel)>;
+      std::uint32_t id, std::string const& instance_name,
+      StubManager::Priming priming)>;
 
   static std::shared_ptr<DynamicChannelPool> Create(
-      // bigtable::InstanceResource instance,
-      CompletionQueue cq,
+      std::string const& instance_name, CompletionQueue cq,
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
@@ -129,9 +130,9 @@ class DynamicChannelPool
           {}) {
     std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
-        // std::move(instance),
-        std::move(cq), std::move(initial_channels), std::move(refresh_state),
-        std::move(stub_factory_fn), std::move(sizing_policy)));
+        std::move(instance_name), std::move(cq), std::move(initial_channels),
+        std::move(refresh_state), std::move(stub_factory_fn),
+        std::move(sizing_policy)));
     std::cout << __PRETTY_FUNCTION__ << ": return pool" << std::endl;
     return pool;
   }
@@ -272,7 +273,9 @@ class DynamicChannelPool
     // We have no usable channels in the entire pool; this is bad.
     // Create a channel immediately to unblock application.
     std::cout << __PRETTY_FUNCTION__ << ": NO USABLE CHANNELS" << std::endl;
-    channels_.push_back(stub_factory_fn_(next_channel_id_++, true));
+    channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
+                                         StubManager::Priming::kNoPriming));
+    // TODO(sdhart): This swap may not be necessary, investigate.
     std::swap(channels_.front(), channels_.back());
     // Schedule repopulating the pool.
     ScheduleAddChannel(lk);
@@ -281,13 +284,12 @@ class DynamicChannelPool
 
  private:
   DynamicChannelPool(
-      // bigtable::InstanceResource instance,
-      CompletionQueue cq,
+      std::string const& instance_name, CompletionQueue cq,
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
       bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy)
-      :  // instance_(std::move(instance)),
+      : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
         stub_factory_fn_(std::move(stub_factory_fn)),
@@ -350,7 +352,8 @@ class DynamicChannelPool
     std::vector<std::shared_ptr<ChannelUsage<T>>> new_stubs;
     new_stubs.reserve(new_channel_ids.size());
     for (auto const& id : new_channel_ids) {
-      new_stubs.push_back(stub_factory_fn_(id, true));
+      new_stubs.push_back(stub_factory_fn_(
+          id, instance_name_, StubManager::Priming::kSynchronousPriming));
     }
     std::unique_lock<std::mutex> lk(mu_);
     channels_.insert(channels_.end(),
@@ -479,7 +482,7 @@ class DynamicChannelPool
   }
 
   mutable std::mutex mu_;
-  // bigtable::InstanceResource instance_;
+  std::string instance_name_;
   CompletionQueue cq_;
   google::cloud::internal::DefaultPRNG rng_;
   std::shared_ptr<ConnectionRefreshState> refresh_state_;

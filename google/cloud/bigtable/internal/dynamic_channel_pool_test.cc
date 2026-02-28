@@ -125,23 +125,28 @@ TEST(DynamicChannelPoolTest, GetChannelRandomTwoLeastUsed) {
       fake_cq_impl, std::chrono::milliseconds(1),
       std::chrono::milliseconds(10));
 
-  auto stub_factory_fn =
-      [](int, bool) -> std::shared_ptr<ChannelUsage<BigtableStub>> {
+  auto stub_factory_fn = [](int, std::string const& instance_name,
+                            StubManager::Priming priming)
+      -> std::shared_ptr<ChannelUsage<BigtableStub>> {
     auto mock = std::make_shared<MockBigtableStub>();
     return std::make_shared<ChannelUsage<BigtableStub>>(mock);
   };
 
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
   bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy;
 
   std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels(10);
   int id = 0;
-  std::generate(channels.begin(), channels.end(),
-                [&]() { return stub_factory_fn(id++, false); });
+  std::generate(channels.begin(), channels.end(), [&]() {
+    return stub_factory_fn(id++, instance_name,
+                           StubManager::Priming::kNoPriming);
+  });
 
   auto pool = DynamicChannelPool<BigtableStub>::Create(
-      // bigtable::InstanceResource(Project("my-project"), "my-instance"),
-      CompletionQueue(fake_cq_impl), channels, refresh_state, stub_factory_fn,
-      sizing_policy);
+      instance_name, CompletionQueue(fake_cq_impl), channels, refresh_state,
+      stub_factory_fn, sizing_policy);
 
   auto selected_stub = pool->GetChannelRandomTwoLeastUsed();
 }

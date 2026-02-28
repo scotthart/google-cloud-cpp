@@ -110,7 +110,7 @@ void ScheduleChannelRefresh(
 void ScheduleStubRefresh(
     std::shared_ptr<internal::CompletionQueueImpl> const& cq_impl,
     std::shared_ptr<ConnectionRefreshState> const& state,
-    std::shared_ptr<BigtableStub> const& stub,
+    std::shared_ptr<BigtableStub> const& stub, std::string const& instance_name,
     std::function<void(Status const&)> connection_status_fn) {
   if (!connection_status_fn) {
     connection_status_fn = LogFailedConnectionRefresh;
@@ -124,7 +124,7 @@ void ScheduleStubRefresh(
   using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
   auto timer_future =
       cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
-          .then([weak_stub, weak_cq_impl, state,
+          .then([weak_stub, weak_cq_impl, state, instance_name,
                  connection_status_fn =
                      std::move(connection_status_fn)](TimerFuture fut) {
             if (!fut.get()) {
@@ -140,24 +140,26 @@ void ScheduleStubRefresh(
             auto client_context = std::make_shared<grpc::ClientContext>();
             google::cloud::internal::ImmutableOptions options;
             google::bigtable::v2::PingAndWarmRequest request;
-            request.set_name("");
-            // This RPC call does not set a deadline
-            // like AsyncWaitConnectionReady does.
+            request.set_name(instance_name);
+            // Use the client_context to set a deadline similar to
+            // AsyncWaitConnectionReady.
+            client_context->set_deadline(std::chrono::system_clock::now() +
+                                         kConnectionReadyTimeout);
             stub->AsyncPingAndWarm(cq, client_context, std::move(options),
                                    request)
                 .then(
-                    [weak_stub, weak_cq_impl, state,
+                    [weak_stub, weak_cq_impl, state, instance_name,
                      connection_status_fn = std::move(connection_status_fn)](
                         future<
                             StatusOr<google::bigtable::v2::PingAndWarmResponse>>
                             fut) {
                       auto response = fut.get();
-                      // do something with response
+                      connection_status_fn(response.status());
                       auto stub = weak_stub.lock();
                       if (!stub) return;
                       auto cq_impl = weak_cq_impl.lock();
                       if (!cq_impl) return;
-                      ScheduleStubRefresh(cq_impl, state, stub,
+                      ScheduleStubRefresh(cq_impl, state, stub, instance_name,
                                           std::move(connection_status_fn));
                     });
           });

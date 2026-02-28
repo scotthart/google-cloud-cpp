@@ -124,6 +124,7 @@ void TableAdminTestEnvironment::TearDown() {
 void TableIntegrationTest::SetUp() {
   std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto options = Options{}
+                     .set<experimental::InstanceChannelAffinityOption>({})
                      .set<experimental::ChannelPoolTypeOption>(
                          experimental::ChannelPoolType::kDynamic)
                      .set<GrpcNumChannelsOption>(10);

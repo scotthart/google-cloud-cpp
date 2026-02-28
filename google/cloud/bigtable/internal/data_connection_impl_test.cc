@@ -267,7 +267,8 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
         std::make_shared<NoopMutateRowsLimiter>()) {
   auto background = internal::MakeBackgroundThreadsFactory()();
   return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(stub), std::move(limiter), Options{});
+      std::move(background), std::make_unique<StubManager>(std::move(stub)),
+      std::move(limiter), Options{});
 }
 
 std::shared_ptr<DataConnectionImpl> TestConnection(
@@ -277,7 +278,7 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
     std::shared_ptr<MutateRowsLimiter> limiter =
         std::make_shared<NoopMutateRowsLimiter>()) {
   return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(stub),
+      std::move(background), std::make_unique<StubManager>(std::move(stub)),
       std::move(operation_context_factory), std::move(limiter), Options{});
 }
 
@@ -288,7 +289,7 @@ std::shared_ptr<DataConnectionImpl> TestConnection(
         std::make_shared<NoopMutateRowsLimiter>()) {
   auto background = internal::MakeBackgroundThreadsFactory()();
   return std::make_shared<DataConnectionImpl>(
-      std::move(background), std::move(stub),
+      std::move(background), std::make_unique<StubManager>(std::move(stub)),
       std::move(operation_context_factory), std::move(limiter), Options{});
 }
 

@@ -93,7 +93,7 @@ void ScheduleChannelRefresh(
 void ScheduleStubRefresh(
     std::shared_ptr<internal::CompletionQueueImpl> const& cq,
     std::shared_ptr<ConnectionRefreshState> const& state,
-    std::shared_ptr<BigtableStub> const& stub,
+    std::shared_ptr<BigtableStub> const& stub, std::string const& instance_name,
     std::function<void(Status const&)> connection_status_fn = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

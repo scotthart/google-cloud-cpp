@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/internal/bigtable_stub.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
+#include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #include "google/cloud/options.h"
@@ -47,6 +48,7 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     // bigtable::InstanceResource instance,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     std::shared_ptr<internal::CompletionQueueImpl> cq_impl,
+    std::string const& instance_name, StubManager::Priming priming,
     Options const& options, BaseBigtableStubFactory stub_factory,
     //    std::function<std::shared_ptr<BigtableStub>(int)>
     //        refreshing_channel_stub_factory,
@@ -58,6 +60,12 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
     CompletionQueue const& cq, Options const& options,
     BaseBigtableStubFactory const& stub_factory);
 
+std::shared_ptr<BigtableStub> CreateDecoratedStubs(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, std::string const& instance_name,
+    StubManager::Priming priming, Options const& options,
+    BaseBigtableStubFactory const& stub_factory);
+
 // std::shared_ptr<BigtableStub> CreateDecoratedStubs(
 //     absl::optional<bigtable::InstanceResource> instance,
 //     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
@@ -65,9 +73,20 @@ std::shared_ptr<BigtableStub> CreateDecoratedStubs(
 //     BaseBigtableStubFactory const& stub_factory);
 
 /// Default function used by `DataConnectionImpl`.
+/// No instance affinity, uses legacy grpc::GetState to refresh.
 std::shared_ptr<BigtableStub> CreateBigtableStub(
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
     CompletionQueue const& cq, Options const& options);
+
+/// Creates a stub with instance affinity using PingAndWarm priming.
+std::shared_ptr<BigtableStub> CreateBigtableStub(
+    std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
+    CompletionQueue const& cq, std::string const& instance_name,
+    StubManager::Priming priming, Options const& options);
+
+absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>
+CreateBigtableAffinityStubs(std::vector<bigtable::InstanceResource> instances,
+                            StubManager::StubCreationFn stub_creation_fn);
 
 // std::shared_ptr<BigtableStub> CreateBigtableStub(
 //     absl::optional<bigtable::InstanceResource> instance,

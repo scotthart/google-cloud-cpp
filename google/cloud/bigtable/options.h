@@ -39,6 +39,7 @@
  */
 
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/instance_resource.h"
 #include "google/cloud/bigtable/retry_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
@@ -158,6 +159,20 @@ struct MaxConnectionRefreshOption {
 };
 
 namespace experimental {
+
+/**
+ *  If set, a dynamic channel pool is created for each instance that requests
+ *  are destined. Instances specified as part of this Option have dynamic
+ *  channel pools created and primed as part of DataConnection construction. If
+ *  no Instances are specified, then dynamic channel pool creation is deferred
+ *  until the first request sent, increasing time to first byte latency.
+ *
+ * @note This option must be supplied to `MakeDataConnection()` in order to take
+ * effect.
+ */
+struct InstanceChannelAffinityOption {
+  using Type = std::vector<InstanceResource>;
+};
 
 /**
  * If set, the client will throttle mutations in batch write jobs.
