@@ -81,6 +81,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
 
   google::bigtable::admin::v2::Backup b;
   *b.mutable_expire_time() = ToProtoTimestamp(expire_time);
+  b.set_source_table(table_name);
   auto backup = table_admin_
                     ->CreateBackup(bigtable::ClusterName(
                                        project_id(), instance_id(), cluster_id),
@@ -91,7 +92,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   EXPECT_EQ(backup->name(), backup_name);
 
   // List backups to verify new backup has been created
-  auto backups = table_admin_->ListBackups(table_name);
+  auto backups = table_admin_->ListBackups(cluster_name);
   std::vector<google::bigtable::admin::v2::Backup> backups_list;
   for (auto& b : backups) {
     ASSERT_STATUS_OK(b);
@@ -121,7 +122,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
               IsProtoEqual(ToProtoTimestamp(expire_time)));
 
   // Delete table
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_name));
 
   // Verify the delete
   google::bigtable::admin::v2::ListTablesRequest list_request;
@@ -140,7 +141,7 @@ TEST_F(AdminBackupIntegrationTest, CreateListGetUpdateRestoreDeleteBackup) {
   restore_request.set_parent(
       bigtable::InstanceName(project_id(), instance_id()));
   restore_request.set_backup(backup_name);
-  restore_request.set_table_id(table_name);
+  restore_request.set_table_id(table_id);
   auto table = table_admin_->RestoreTable(restore_request).get();
   EXPECT_STATUS_OK(table);
 
