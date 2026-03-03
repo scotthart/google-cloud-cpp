@@ -22,6 +22,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <string_view>
 
 namespace google {
 namespace cloud {
@@ -41,11 +42,6 @@ class StubManager {
   using StubCreationFn = std::function<std::shared_ptr<BigtableStub>(
       std::string_view instance_name, Priming priming)>;
 
-  enum class Mode {
-    kNoAffinity,
-    kInstanceAffinity,
-  };
-
   explicit StubManager(std::shared_ptr<BigtableStub> stub);
 
   StubManager(absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>
@@ -56,7 +52,6 @@ class StubManager {
 
  private:
   std::mutex mu_;
-  Mode const mode_;
   StubCreationFn stub_creation_fn_;
   std::shared_ptr<BigtableStub> stub_;
   absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>

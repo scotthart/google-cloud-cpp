@@ -21,19 +21,18 @@ namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StubManager::StubManager(std::shared_ptr<BigtableStub> stub)
-    : mode_(Mode::kNoAffinity), stub_(std::move(stub)) {}
+    : stub_(std::move(stub)) {}
 
 StubManager::StubManager(
     absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>
         affinity_stubs,
     StubCreationFn stub_creation_fn)
-    : mode_(Mode::kInstanceAffinity),
-      stub_creation_fn_(std::move(stub_creation_fn)),
+    : stub_creation_fn_(std::move(stub_creation_fn)),
       affinity_stubs_(std::move(affinity_stubs)) {}
 
 std::shared_ptr<BigtableStub> StubManager::GetStub(
     std::string_view instance_name) {
-  if (mode_ == Mode::kNoAffinity) return stub_;
+  if (stub_) return stub_;
 
   std::scoped_lock lk(mu_);
   if (auto iter = affinity_stubs_.find(instance_name);
