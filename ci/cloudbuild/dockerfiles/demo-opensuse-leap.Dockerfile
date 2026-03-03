@@ -27,16 +27,15 @@ ARG NCPU=4
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y automake cmake curl \
-        gcc8 gcc8-c++ git gzip libtool make patch tar wget
+        gcc9 gcc9-c++ git gzip libtool make patch tar wget
 # ```
 
 # Install some of the dependencies for `google-cloud-cpp`.
 
 # ```bash
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-        libcurl-devel libopenssl-devel nlohmann_json-devel \
-        grpc-devel libprotobuf-devel
+    zypper install --allow-downgrade -y \
+        libcurl-devel libopenssl-devel nlohmann_json-devel
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -52,19 +51,52 @@ ENV PATH=/usr/local/bin:${PATH}
 
 # Use the following environment variables to configure the compiler used by
 # CMake.
-ENV CC=gcc-8
-ENV CXX=g++-8
+ENV CC=gcc-9
+ENV CXX=g++-9
+
+# #### Abseil
+
+# ```bash
+WORKDIR /var/tmp/build/abseil-cpp
+RUN curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### Protobuf
+
+# ```bash
+WORKDIR /var/tmp/build/protobuf
+RUN curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig && \
+    ln -s /usr/local/bin/protoc /usr/bin/protoc
+# ```
 
 # #### opentelemetry-cpp
-
-# The project has a dependency on the OpenTelemetry library.
 
 # ```bash
 WORKDIR /var/tmp/build/opentelemetry-cpp
 RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
@@ -72,6 +104,58 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### c-ares
+
+# ```bash
+WORKDIR /var/tmp/build/c-ares
+RUN curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig
+# ```
+
+# #### RE2
+
+# ```bash
+WORKDIR /var/tmp/build/re2
+RUN curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out --target install && \
+    ldconfig
+# ```
+
+# #### gRPC
+
+# ```bash
+WORKDIR /var/tmp/build/grpc
+RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -91,5 +175,5 @@ RUN curl -fsSL https://github.com/mozilla/sccache/releases/download/v0.10.0/scca
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
-
 ENV DEMO_CORD_WORKAROUND=OFF
+RUN echo 'root:cloudcxx' | chpasswd

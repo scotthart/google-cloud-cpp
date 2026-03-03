@@ -332,16 +332,15 @@ use GCC 8 or higher to compile `google-cloud-cpp`.
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y automake cmake curl \
-        gcc8 gcc8-c++ git gzip libtool make patch tar wget
+        gcc9 gcc9-c++ git gzip libtool make patch tar wget
 ```
 
 Install some of the dependencies for `google-cloud-cpp`.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install --allow-downgrade -y abseil-cpp-devel c-ares-devel \
-        libcurl-devel libopenssl-devel nlohmann_json-devel \
-        grpc-devel libprotobuf-devel
+sudo zypper install --allow-downgrade -y \
+        libcurl-devel libopenssl-devel nlohmann_json-devel
 ```
 
 The following steps will install libraries and tools in `/usr/local`. openSUSE
@@ -356,18 +355,51 @@ export PATH=/usr/local/bin:${PATH}
 ```
 
 Use the following environment variables to configure the compiler used by CMake.
-export CC=gcc-8 export CXX=g++-8
+export CC=gcc-9 export CXX=g++-9
+
+#### Abseil
+
+```bash
+mkdir -p $HOME/Downloads/abseil-cpp && cd $HOME/Downloads/abseil-cpp
+curl -fsSL https://github.com/abseil/abseil-cpp/archive/20250814.2.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+      -DCMAKE_BUILD_TYPE=Debug \
+      -DCMAKE_CXX_STANDARD=17 \
+      -DABSL_BUILD_TESTING=OFF \
+      -DBUILD_SHARED_LIBS=yes \
+      -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### Protobuf
+
+```bash
+mkdir -p $HOME/Downloads/protobuf && cd $HOME/Downloads/protobuf
+curl -fsSL https://github.com/protocolbuffers/protobuf/archive/v33.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -Dprotobuf_BUILD_TESTS=OFF \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig && \
+    ln -s /usr/local/bin/protoc /usr/bin/protoc
+```
 
 #### opentelemetry-cpp
-
-The project has a dependency on the OpenTelemetry library.
 
 ```bash
 mkdir -p $HOME/Downloads/opentelemetry-cpp && cd $HOME/Downloads/opentelemetry-cpp
 curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
-        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_BUILD_TYPE=Debug \
         -DCMAKE_CXX_STANDARD=17 \
         -DBUILD_SHARED_LIBS=yes \
         -DWITH_EXAMPLES=OFF \
@@ -375,6 +407,58 @@ curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24.0.t
         -DBUILD_TESTING=OFF \
         -DOPENTELEMETRY_INSTALL=ON \
         -DOPENTELEMETRY_ABI_VERSION_NO=2 \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### c-ares
+
+```bash
+mkdir -p $HOME/Downloads/c-ares && cd $HOME/Downloads/c-ares
+curl -fsSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=yes \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### RE2
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -fsSL https://github.com/google/re2/archive/2025-07-22.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Debug \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install && \
+sudo ldconfig
+```
+
+#### gRPC
+
+```bash
+mkdir -p $HOME/Downloads/grpc && cd $HOME/Downloads/grpc
+curl -fsSL https://github.com/grpc/grpc/archive/v1.71.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DCMAKE_CXX_STANDARD=17 \
+        -DBUILD_SHARED_LIBS=yes \
+        -DgRPC_INSTALL=ON \
+        -DgRPC_BUILD_TESTS=OFF \
+        -DgRPC_ABSL_PROVIDER=package \
+        -DgRPC_CARES_PROVIDER=package \
+        -DgRPC_PROTOBUF_PROVIDER=package \
+        -DgRPC_RE2_PROVIDER=package \
+        -DgRPC_SSL_PROVIDER=package \
+        -DgRPC_ZLIB_PROVIDER=package \
+        -DgRPC_OPENTELEMETRY_PROVIDER=package \
         -S . -B cmake-out && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
