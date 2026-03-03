@@ -91,5 +91,6 @@
   "ignoreDeps": [
     "boringssl",
     "com_google_googleapis"
+    "googleapis"
   ]
 }
