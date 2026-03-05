@@ -117,7 +117,7 @@ void ScheduleStubRefresh(
       cq.MakeRelativeTimer(state->RandomizedRefreshDelay())
           .then([weak_stub, weak_cq_impl, state, instance_name,
                  connection_status_fn =
-                     std::move(connection_status_fn)](TimerFuture fut) {
+                     std::move(connection_status_fn)](TimerFuture fut) mutable {
             if (!fut.get()) {
               // Timer cancelled.
               return;
@@ -143,7 +143,7 @@ void ScheduleStubRefresh(
                      connection_status_fn = std::move(connection_status_fn)](
                         future<
                             StatusOr<google::bigtable::v2::PingAndWarmResponse>>
-                            fut) {
+                            fut) mutable {
                       auto response = fut.get();
                       connection_status_fn(response.status());
                       auto stub = weak_stub.lock();
