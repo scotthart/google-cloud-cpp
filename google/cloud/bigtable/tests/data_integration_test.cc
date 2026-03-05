@@ -486,6 +486,8 @@ TEST_P(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   auto actual_ignore_timestamp = GetCellsIgnoringTimestamp(row->cells());
 
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
+
+  std::this_thread::sleep_for(std::chrono::seconds(10));
 }
 
 TEST_P(DataIntegrationTest, TableCellValueInt64Test) {

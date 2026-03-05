@@ -49,14 +49,14 @@ class StubManager {
   };
 
   explicit StubManager(std::shared_ptr<BigtableStub> stub)
-      : mode_(Mode::kNoAffinity), stub_(stub) {}
+      : mode_(Mode::kNoAffinity), stub_(std::move(stub)) {}
 
   StubManager(absl::flat_hash_map<std::string, std::shared_ptr<BigtableStub>>
                   affinity_stubs,
               StubCreationFn stub_creation_fn)
       : mode_(Mode::kInstanceAffinity),
         stub_creation_fn_(std::move(stub_creation_fn)),
-        affinity_stubs_(affinity_stubs) {}
+        affinity_stubs_(std::move(affinity_stubs)) {}
 
   std::shared_ptr<BigtableStub> GetStub(absl::string_view instance_name) {
     if (mode_ == Mode::kNoAffinity) return stub_;

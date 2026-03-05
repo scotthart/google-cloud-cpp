@@ -66,6 +66,7 @@ std::string FeaturesMetadata() {
 std::shared_ptr<BigtableStub> CreateBigtableStubRoundRobin(
     Options const& options, std::function<std::shared_ptr<BigtableStub>(int)>
                                 refreshing_channel_stub_factory) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   std::vector<std::shared_ptr<BigtableStub>> children(
       (std::max)(1, options.get<GrpcNumChannelsOption>()));
   int id = 0;
@@ -92,6 +93,8 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
       -> std::shared_ptr<ChannelUsage<BigtableStub>> {
     auto wrapper = std::make_shared<ChannelUsage<BigtableStub>>();
     auto connection_status_fn = [weak = wrapper->MakeWeak()](Status const& s) {
+      std::cout << "----------> CALLED connection_status_fn thread="
+                << std::this_thread::get_id() << std::endl;
       if (auto self = weak.lock()) {
         self->set_last_refresh_status(s);
       }

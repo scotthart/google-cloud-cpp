@@ -127,6 +127,10 @@ void TableIntegrationTest::SetUp() {
                      .set<experimental::InstanceChannelAffinityOption>({})
                      .set<experimental::ChannelPoolTypeOption>(
                          experimental::ChannelPoolType::kDynamic)
+                     .set<bigtable::MinConnectionRefreshOption>(
+                         std::chrono::milliseconds(1))
+                     .set<bigtable::MaxConnectionRefreshOption>(
+                         std::chrono::milliseconds(2))
                      .set<GrpcNumChannelsOption>(10);
   data_connection_ = MakeDataConnection(options);
   data_client_ = bigtable::MakeDataClient(TableTestEnvironment::project_id(),

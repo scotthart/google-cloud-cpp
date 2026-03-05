@@ -112,6 +112,8 @@ void ScheduleStubRefresh(
     std::shared_ptr<ConnectionRefreshState> const& state,
     std::shared_ptr<BigtableStub> const& stub, std::string const& instance_name,
     std::function<void(Status const&)> connection_status_fn) {
+  std::cout << __func__ << ": thread=" << std::this_thread::get_id()
+            << std::endl;
   if (!connection_status_fn) {
     connection_status_fn = LogFailedConnectionRefresh;
   }
@@ -127,7 +129,11 @@ void ScheduleStubRefresh(
           .then([weak_stub, weak_cq_impl, state, instance_name,
                  connection_status_fn =
                      std::move(connection_status_fn)](TimerFuture fut) {
+            std::cout << "cq.MakeRelativeTimer.then: thread="
+                      << std::this_thread::get_id() << std::endl;
             if (!fut.get()) {
+              std::cout << "cq.MakeRelativeTimer.then: timer cancelled thread="
+                        << std::this_thread::get_id() << std::endl;
               // Timer cancelled.
               return;
             }
@@ -145,6 +151,9 @@ void ScheduleStubRefresh(
             // AsyncWaitConnectionReady.
             client_context->set_deadline(std::chrono::system_clock::now() +
                                          kConnectionReadyTimeout);
+            std::cout
+                << "cq.MakeRelativeTimer.then: stub->AsyncPingAndWarm thread="
+                << std::this_thread::get_id() << std::endl;
             stub->AsyncPingAndWarm(cq, client_context, std::move(options),
                                    request)
                 .then(
@@ -153,7 +162,12 @@ void ScheduleStubRefresh(
                         future<
                             StatusOr<google::bigtable::v2::PingAndWarmResponse>>
                             fut) {
+                      std::cout << "AsyncPingAndWarm.then: thread="
+                                << std::this_thread::get_id() << std::endl;
                       auto response = fut.get();
+                      std::cout << "------------> CALLING connection_status_fn"
+                                << ": thread=" << std::this_thread::get_id()
+                                << std::endl;
                       connection_status_fn(response.status());
                       auto stub = weak_stub.lock();
                       if (!stub) return;
