@@ -41,6 +41,17 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
                                                      std::make_shared<Clock>())
       : stub_(std::move(stub)), clock_(std::move(clock)) {}
 
+  // This constructor is only used in testing.
+  ChannelUsage(std::shared_ptr<T> stub, std::shared_ptr<Clock> clock,
+               int initial_outstanding_rpcs)
+      : stub_(std::move(stub)),
+        clock_(std::move(clock)),
+        outstanding_rpcs_(initial_outstanding_rpcs) {
+    std::cout << __func__
+              << ": initial_outstanding_rpcs=" << initial_outstanding_rpcs
+              << std::endl;
+  }
+
   // Computes the weighted average of outstanding RPCs on the channel over the
   // past 60 seconds.
   StatusOr<int> average_outstanding_rpcs() {
@@ -48,8 +59,9 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
     auto constexpr kWindowDuration = std::chrono::seconds(kWindowSeconds);
     std::scoped_lock lk(mu_);
     if (!last_refresh_status_.ok()) return last_refresh_status_;
-    // If there are no measurements then the stub has never been used.
-    if (measurements_.empty()) return 0;
+    // If there are no measurements then the stub has never been used. In real
+    // use this will be 0. In testing we sometimes set an initial value.
+    if (measurements_.empty()) return outstanding_rpcs_;
     auto now = clock_->Now();
     auto last_time = now;
     auto window_start = now - kWindowDuration;
@@ -114,6 +126,8 @@ class ChannelUsage : public std::enable_shared_from_this<ChannelUsage<T>> {
 
   std::shared_ptr<T> AcquireStub() {
     std::scoped_lock lk(mu_);
+    std::cout << __func__ << ": outstanding_rpcs_=" << outstanding_rpcs_
+              << std::endl;
     ++outstanding_rpcs_;
     auto time = clock_->Now();
     measurements_.emplace_back(outstanding_rpcs_, time);
