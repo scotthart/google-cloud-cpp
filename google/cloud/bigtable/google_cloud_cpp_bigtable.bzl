@@ -79,6 +79,7 @@ google_cloud_cpp_bigtable_hdrs = [
     "internal/bigtable_stub_factory.h",
     "internal/bigtable_tracing_stub.h",
     "internal/bulk_mutator.h",
+    "internal/channel_usage.h",
     "internal/client_options_defaults.h",
     "internal/common_client.h",
     "internal/connection_refresh_state.h",

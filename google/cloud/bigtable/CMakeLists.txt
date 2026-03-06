@@ -165,6 +165,7 @@ add_library(
     internal/bigtable_tracing_stub.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
+    internal/channel_usage.h
     internal/client_options_defaults.h
     internal/common_client.h
     internal/connection_refresh_state.cc
@@ -444,6 +445,7 @@ if (BUILD_TESTING)
         internal/bigtable_channel_refresh_test.cc
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
+        internal/channel_usage_test.cc
         internal/connection_refresh_state_test.cc
         internal/convert_policies_test.cc
         internal/crc32c_test.cc
