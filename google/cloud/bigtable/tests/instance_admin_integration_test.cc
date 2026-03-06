@@ -123,11 +123,13 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
   auto const id_2 = RandomInstanceId(generator_);
   auto const name_1 = bigtable::InstanceName(project_id_, id_1);
   auto const name_2 = bigtable::InstanceName(project_id_, id_2);
+  auto location_a = Location(Project(project_id_), zone_a_);
+  auto location_b = Location(Project(project_id_), zone_b_);
 
   auto config_1 = IntegrationTestConfig(
-      id_1, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
+      id_1, location_a.FullName(), bigtable::InstanceConfig::PRODUCTION, 3);
   auto config_2 = IntegrationTestConfig(
-      id_2, zone_b_, bigtable::InstanceConfig::PRODUCTION, 3);
+      id_2, location_b.FullName(), bigtable::InstanceConfig::PRODUCTION, 3);
 
   auto create_request_1 = config_1.as_proto();
   create_request_1.set_parent(Project(project_id_).FullName());
@@ -163,7 +165,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
-  auto config = IntegrationTestConfig(instance_id, zone_a_,
+  auto location = Location(Project(project_id_), zone_a_);
+  auto config = IntegrationTestConfig(instance_id, location.FullName(),
                                       bigtable::InstanceConfig::PRODUCTION, 3);
   auto create_request = config.as_proto();
   create_request.set_parent(Project(project_id_).FullName());
@@ -268,7 +271,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   // Create instance
-  auto config = IntegrationTestConfig(instance_id, zone_a_);
+  auto location = Location(Project(project_id_), zone_a_);
+  auto config = IntegrationTestConfig(instance_id, location.FullName());
   auto create_request = config.as_proto();
   create_request.set_parent(Project(project_id_).FullName());
   auto instance = instance_admin_->CreateInstance(create_request).get();
@@ -328,9 +332,11 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   auto const cluster_id = instance_id + "-cl2";
   auto const cluster_name =
       bigtable::ClusterName(project_id_, instance_id, cluster_id);
+  auto location_a = Location(Project(project_id_), zone_a_);
+  auto location_b = Location(Project(project_id_), zone_b_);
 
   // Create instance prerequisites for cluster operations
-  auto config = IntegrationTestConfig(instance_id, zone_a_,
+  auto config = IntegrationTestConfig(instance_id, location_a.FullName(),
                                       bigtable::InstanceConfig::PRODUCTION, 3);
   auto create_request = config.as_proto();
   create_request.set_parent(Project(project_id_).FullName());
@@ -338,8 +344,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   ASSERT_STATUS_OK(instance);
 
   // Create cluster
-  auto cluster_config =
-      bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
+  auto cluster_config = bigtable::ClusterConfig(location_b.FullName(), 3,
+                                                bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_
           ->CreateCluster(instance_name, cluster_id, cluster_config.as_proto())
@@ -387,8 +393,9 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
   auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = InstanceName(project_id_, instance_id);
 
+  auto location = Location(Project(project_id_), zone_a_);
   // create instance prerequisites for cluster operations
-  auto config = IntegrationTestConfig(instance_id, zone_a_,
+  auto config = IntegrationTestConfig(instance_id, location.FullName(),
                                       bigtable::InstanceConfig::PRODUCTION, 3);
   auto create_request = config.as_proto();
   create_request.set_parent(Project(project_id_).FullName());
@@ -436,7 +443,8 @@ TEST_F(InstanceAdminIntegrationTest,
   auto const zone_b = Location(project.FullName(), zone_b_);
 
   // Create instance
-  auto config = IntegrationTestConfig(instance_id, zone_a_);
+  auto location = Location(Project(project_id_), zone_a_);
+  auto config = IntegrationTestConfig(instance_id, location.FullName());
   auto create_request = config.as_proto();
   create_request.set_parent(project.FullName());
   auto instance = instance_admin->CreateInstance(create_request).get();
@@ -508,8 +516,9 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
 
   // CompletionQueue `cq` is not being `Run()`, so this should never finish.
   auto const instance_id = RandomInstanceId(generator_);
+  auto location = Location(Project(project_id_), zone_a_);
   auto create_request =
-      IntegrationTestConfig(instance_id, zone_a_,
+      IntegrationTestConfig(instance_id, location.FullName(),
                             bigtable::InstanceConfig::PRODUCTION, 3)
           .as_proto();
   create_request.set_parent(Project(project_id_).FullName());
