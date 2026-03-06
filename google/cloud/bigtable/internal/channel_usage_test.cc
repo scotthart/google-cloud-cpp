@@ -42,7 +42,6 @@ TEST(ChannelUsageTest, SetChannel) {
 }
 
 TEST(ChannelUsageTest, InstantOutstandingRpcs) {
-  //  auto clock = std::make_shared<testing_util::FakeSteadyClock>();
   auto mock = std::make_shared<MockBigtableStub>();
   auto channel = std::make_shared<ChannelUsage<BigtableStub>>(mock);
 
@@ -84,6 +83,8 @@ TEST(ChannelUsageTest, AverageOutstandingRpcs) {
   clock->SetTime(start);
 
   for (int i = 0; i < 10; ++i) (void)channel->AcquireStub();
+  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(10));
+
   clock->AdvanceTime(std::chrono::seconds(1));
   // sum=10 total_weight=1
   EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(10));
@@ -113,7 +114,11 @@ TEST(ChannelUsageTest, AverageOutstandingRpcs) {
 
   clock->AdvanceTime(std::chrono::seconds(60));
   // All measurements have aged out.
-  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(0));
+  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(100));
+
+  clock->AdvanceTime(std::chrono::seconds(3600));
+  // All measurements have aged out.
+  EXPECT_THAT(channel->average_outstanding_rpcs(), IsOkAndHolds(100));
 }
 
 TEST(ChannelUsageTest, MakeWeak) {
