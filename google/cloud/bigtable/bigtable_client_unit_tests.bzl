@@ -44,6 +44,7 @@ bigtable_client_unit_tests = [
     "internal/bigtable_channel_refresh_test.cc",
     "internal/bigtable_stub_factory_test.cc",
     "internal/bulk_mutator_test.cc",
+    "internal/channel_usage_test.cc",
     "internal/connection_refresh_state_test.cc",
     "internal/convert_policies_test.cc",
     "internal/crc32c_test.cc",
