@@ -18,9 +18,11 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/location/locations.pb.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/location.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -39,6 +41,8 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsSupersetOf;
 using ::testing::Not;
+
+using ::google::cloud::bigtable::testing::TableTestEnvironment;
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
@@ -252,7 +256,7 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
 TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   // WaitForConsistencyCheck() only makes sense on a replicated table, we need
   // to create an instance with at least 2 clusters to test it.
-  auto const id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
+  auto const id = TableTestEnvironment::RandomInstanceId();
   auto const random_table_id = RandomTableId();
 
   // Create a bigtable::InstanceAdmin and a bigtable::TableAdmin to create the
@@ -270,12 +274,14 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   // they must be in different zones. Also, the display name cannot be longer
   // than 30 characters.
   auto display_name = ("IT " + id).substr(0, 30);
-  auto cluster_config_1 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
-                              3, bigtable::ClusterConfig::HDD);
-  auto cluster_config_2 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
-                              3, bigtable::ClusterConfig::HDD);
+  auto location_1 = Location(Project(TableTestEnvironment::project_id()),
+                             TableTestEnvironment::zone_a());
+  auto location_2 = Location(Project(TableTestEnvironment::project_id()),
+                             TableTestEnvironment::zone_b());
+  auto cluster_config_1 = bigtable::ClusterConfig(location_1.FullName(), 3,
+                                                  bigtable::ClusterConfig::HDD);
+  auto cluster_config_2 = bigtable::ClusterConfig(location_2.FullName(), 3,
+                                                  bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
       id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
