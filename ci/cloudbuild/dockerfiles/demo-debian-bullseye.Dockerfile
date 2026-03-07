@@ -22,10 +22,14 @@ ARG NCPU=4
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y apt-transport-https apt-utils \
-        automake build-essential ca-certificates curl git \
+        automake build-essential ca-certificates clang curl git \
         gcc g++ libc-ares-dev libc-ares2 libcurl4-openssl-dev \
         libssl-dev m4 make ninja-build pkg-config tar wget zlib1g-dev libc6-dbg
 # ```
+
+ENV CXX=clang++
+ENV CC=clang
+
 
 # #### Install CMake v3.22
 WORKDIR /var/tmp/build/cmake
