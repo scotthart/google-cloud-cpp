@@ -151,10 +151,16 @@ class DynamicChannelPool
   // This method is for use in testing only.
   //
   // This method acquires a lock on the mutex member variable and executes fn.
-  void InstrumentDrainingChannels(
+  void InstrumentDrainingChannelsLocking(
       std::function<void(std::vector<std::shared_ptr<ChannelUsage<T>>>&)> fn) {
     std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     std::scoped_lock lk(mu_);
+    fn(draining_channels_);
+  }
+
+  void InstrumentDrainingChannelsNonLocking(
+      std::function<void(std::vector<std::shared_ptr<ChannelUsage<T>>>&)> fn) {
+    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     fn(draining_channels_);
   }
 
@@ -255,6 +261,8 @@ class DynamicChannelPool
   }
 
  private:
+  friend class DynamicChannelPoolTestWrapper;
+
   DynamicChannelPool(
       std::string const& instance_name, CompletionQueue cq,
       std::vector<std::shared_ptr<ChannelUsage<T>>> initial_wrapped_channels,

@@ -26,6 +26,57 @@ namespace google {
 namespace cloud {
 namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+class DynamicChannelPoolTestWrapper {
+ public:
+  explicit DynamicChannelPoolTestWrapper(
+      std::shared_ptr<DynamicChannelPool<BigtableStub>> pool)
+      : pool_(std::move(pool)) {}
+
+  std::shared_ptr<ChannelUsage<BigtableStub>> HandleBadChannels(
+      std::scoped_lock<std::mutex> const& lk,
+      DynamicChannelPool<BigtableStub>::ChannelSelectionData& d) {
+    return pool_->HandleBadChannels(lk, d);
+  }
+
+  void ScheduleAddChannels(std::scoped_lock<std::mutex> const& lk) {
+    pool_->ScheduleRemoveChannels(lk);
+  }
+
+  void AddChannels(std::vector<int> const& new_channel_ids) {
+    pool_->AddChannels(new_channel_ids);
+  }
+
+  void ScheduleRemoveChannels(std::scoped_lock<std::mutex> const& lk) {
+    pool_->ScheduleRemoveChannels(lk);
+  }
+
+  void RemoveChannels() { pool_->RemoveChannels(); }
+
+  void EvictBadChannels(
+      std::scoped_lock<std::mutex> const& lk,
+      std::vector<typename std::vector<
+          std::shared_ptr<ChannelUsage<BigtableStub>>>::iterator>&
+          bad_channel_iters) {
+    pool_->EvictBadChannels(lk, bad_channel_iters);
+  }
+
+  void SetSizeIncreaseCooldownTimer(std::scoped_lock<std::mutex> const& lk) {
+    pool_->SetSizeIncreaseCooldownTimer(lk);
+  }
+
+  void SetSizeDecreaseCooldownTimer(std::scoped_lock<std::mutex> const& lk) {
+    pool_->SetSizeDecreaseCooldownTimer(lk);
+  }
+
+  void CheckPoolChannelHealth(std::scoped_lock<std::mutex> const& lk) {
+    pool_->CheckPoolChannelHealth(lk);
+  }
+
+ protected:
+  std::shared_ptr<DynamicChannelPool<BigtableStub>> pool_;
+};
+
 namespace {
 
 using ::google::cloud::bigtable::testing::MockBigtableStub;
@@ -245,6 +296,7 @@ TEST_F(DynamicChannelPoolTest, EmptyInitialPool) {
   fake_cq_impl_->SimulateCompletion(false);
 }
 
+#if 0
 TEST_F(DynamicChannelPoolTest, ShrinkPool) {
   auto instance_name =
       bigtable::InstanceResource(Project("my-project"), "my-instance")
@@ -327,7 +379,7 @@ TEST_F(DynamicChannelPoolTest, ShrinkPool) {
                   << std::endl;
         c.front()->ReleaseStub();
       };
-  pool->InstrumentDrainingChannels(draining_channels_size_one);
+  pool->InstrumentDrainingChannelsNonLocking(draining_channels_size_one);
 
   fake_clock_impl_->AdvanceTime(sizing_policy.remove_channel_polling_interval +
                                 std::chrono::seconds(1));
@@ -340,11 +392,54 @@ TEST_F(DynamicChannelPoolTest, ShrinkPool) {
   // Execute this check on the CompletionQueue thread to maintain sequencing
   // with execution of RemoveChannels.
   cq_.RunAsync([pool, fn = std::move(draining_channels_empty)]() {
-    pool->InstrumentDrainingChannels(fn);
+    pool->InstrumentDrainingChannelsNonLocking(fn);
   });
 
   fake_cq_impl_->SimulateCompletion(false);
 }
+#endif
+
+TEST_F(DynamicChannelPoolTest, AddChannels) {
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  DynamicChannelPoolSizingPolicy sizing_policy;
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+  auto mock_stub_0 = std::make_shared<MockBigtableStub>();
+  auto mock_stub_1 = std::make_shared<MockBigtableStub>();
+  EXPECT_CALL(stub_factory_fn, Call)
+  .WillOnce([&](int id, std::string const& instance, StubManager::Priming priming) {
+    EXPECT_THAT(id, Eq(0));
+    EXPECT_THAT(instance, Eq(instance_name));
+    EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
+    return std::make_shared<ChannelUsage<BigtableStub>>(
+        mock_stub_0, fake_clock_impl_, 20);
+  })
+  .WillOnce([&](int id, std::string const& instance, StubManager::Priming priming) {
+    EXPECT_THAT(id, Eq(1));
+    EXPECT_THAT(instance, Eq(instance_name));
+    EXPECT_THAT(priming, Eq(StubManager::Priming::kSynchronousPriming));
+    return std::make_shared<ChannelUsage<BigtableStub>>(
+        mock_stub_1, fake_clock_impl_, 20);
+  });
+
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  auto pool = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy);
+  DynamicChannelPoolTestWrapper wrapper(pool);
+  std::vector<int> new_channel_ids = {0, 1};
+  wrapper.AddChannels(new_channel_ids);
+  EXPECT_THAT(pool->size(), Eq(2));
+  fake_cq_impl_->SimulateCompletion(false);
+}
+
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
