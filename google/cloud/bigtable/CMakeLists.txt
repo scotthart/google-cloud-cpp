@@ -184,6 +184,7 @@ add_library(
     internal/default_row_reader.h
     internal/defaults.cc
     internal/defaults.h
+    internal/dynamic_channel_pool.h
     internal/endpoint_options.h
     internal/google_bytes_traits.cc
     internal/google_bytes_traits.h
@@ -453,6 +454,7 @@ if (BUILD_TESTING)
         internal/data_tracing_connection_test.cc
         internal/default_row_reader_test.cc
         internal/defaults_test.cc
+        internal/dynamic_channel_pool_test.cc
         internal/google_bytes_traits_test.cc
         internal/logging_result_set_reader_test.cc
         internal/metrics_test.cc
