@@ -425,9 +425,8 @@ TEST_F(DynamicChannelPoolTest, ScheduleRemoveChannelsNotAlreadyPending) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.remove_channel_polling_interval)
                            .count()));
-        return cq_.MakeRelativeTimer(std::chrono::nanoseconds(0));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       });
-
   {
     auto lk = wrapper.CreateLock();
     wrapper.ScheduleRemoveChannels(lk);
