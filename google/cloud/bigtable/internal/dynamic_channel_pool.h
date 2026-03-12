@@ -50,9 +50,12 @@ struct DynamicChannelPoolSizingPolicy {
       std::chrono::seconds(120);
 
   struct DiscreteChannels {
+    explicit DiscreteChannels(int number = 0) : number(number) {}
     int number;
   };
   struct PercentageOfPoolSize {
+    explicit PercentageOfPoolSize(double percentage = 0.0)
+        : percentage(percentage) {}
     double percentage;
   };
   absl::variant<DiscreteChannels, PercentageOfPoolSize>
@@ -368,7 +371,9 @@ class DynamicChannelPool
   // Determines the number of channels to add and reserves the channel ids to
   // be used. Lastly, it calls CompletionQueue::RunAsync with a callback that
   // executes AddChannels with the reserved ids.
-  void ScheduleAddChannels(std::scoped_lock<std::mutex> const&) {
+  void ScheduleAddChannels(
+      std::scoped_lock<std::mutex> const&,
+      std::function<void(std::vector<int> const&)> const& test_fn = nullptr) {
     std::size_t num_channels_to_add;
     // If we're undersized due to bad channels, get us back to the minimum size.
     if (channels_.size() < sizing_policy_.minimum_channel_pool_size) {
@@ -385,6 +390,8 @@ class DynamicChannelPool
     for (std::size_t i = 0; i < num_channels_to_add; ++i) {
       new_channel_ids.push_back(next_channel_id_++);
     }
+
+    if (test_fn) test_fn(new_channel_ids);
 
     std::weak_ptr<DynamicChannelPool<T>> foo = this->shared_from_this();
     cq_.RunAsync([new_channel_ids = std::move(new_channel_ids),
