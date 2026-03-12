@@ -224,9 +224,9 @@ class DynamicChannelPool
 
     if (test_fn) test_fn(new_channel_ids);
 
-    std::weak_ptr<DynamicChannelPool<T>> foo = this->shared_from_this();
+    std::weak_ptr<DynamicChannelPool<T>> weak_self = this->shared_from_this();
     cq_.RunAsync([new_channel_ids = std::move(new_channel_ids),
-                  weak = std::move(foo)]() {
+                  weak = std::move(weak_self)]() {
       if (auto self = weak.lock()) {
         self->AddChannels(new_channel_ids);
       }
@@ -276,7 +276,7 @@ class DynamicChannelPool
     std::scoped_lock lk(mu_);
     std::sort(draining_channels_.begin(), draining_channels_.end(),
               [](std::shared_ptr<ChannelUsage<T>> const& a,
-                 std::shared_ptr<ChannelUsage<T>> b) {
+                 std::shared_ptr<ChannelUsage<T>> const& b) {
                 auto rpcs_a = a->instant_outstanding_rpcs();
                 auto rpcs_b = b->instant_outstanding_rpcs();
                 if (!rpcs_a.ok()) return false;
