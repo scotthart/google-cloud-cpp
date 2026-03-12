@@ -16,7 +16,7 @@ FROM opensuse/leap:15
 ARG NCPU=4
 
 RUN zypper refresh && \
-    zypper install --allow-downgrade -y automake cmake curl gcc gcc-c++ \
+    zypper install --allow-downgrade -y automake cmake curl gcc8 gcc8-c++ \
         git gzip libtool make ninja patch tar wget \
         c-ares-devel libcurl-devel libopenssl-devel libcrc32c-devel
 
