@@ -524,7 +524,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsSomeChannelsDrained) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.remove_channel_polling_interval)
                            .count()));
-        return cq_.MakeRelativeTimer(std::chrono::nanoseconds(0));
+        // Set a timer that will NOT finish before it is cancelled by the test.
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       });
 
   wrapper.RemoveChannels();
