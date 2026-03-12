@@ -357,12 +357,13 @@ class DynamicChannelPool
     std::size_t pool_size;
     explicit ChannelAddVisitor(std::size_t pool_size) : pool_size(pool_size) {}
     std::size_t operator()(
-        typename DynamicChannelPoolSizingPolicy::DiscreteChannels const& c) {
+        typename DynamicChannelPoolSizingPolicy::DiscreteChannels const& c)
+        const {
       return c.number;
     }
     std::size_t operator()(
-        typename DynamicChannelPoolSizingPolicy::PercentageOfPoolSize const&
-            c) {
+        typename DynamicChannelPoolSizingPolicy::PercentageOfPoolSize const& c)
+        const {
       return static_cast<std::size_t>(
           std::floor(static_cast<double>(pool_size) * c.percentage));
     }
@@ -393,9 +394,9 @@ class DynamicChannelPool
 
     if (test_fn) test_fn(new_channel_ids);
 
-    std::weak_ptr<DynamicChannelPool<T>> foo = this->shared_from_this();
+    std::weak_ptr<DynamicChannelPool<T>> weak_self = this->shared_from_this();
     cq_.RunAsync([new_channel_ids = std::move(new_channel_ids),
-                  weak = std::move(foo)]() {
+                  weak = std::move(weak_self)]() {
       if (auto self = weak.lock()) {
         self->AddChannels(new_channel_ids);
       }
@@ -448,7 +449,7 @@ class DynamicChannelPool
     std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
     std::sort(draining_channels_.begin(), draining_channels_.end(),
               [](std::shared_ptr<ChannelUsage<T>> const& a,
-                 std::shared_ptr<ChannelUsage<T>> b) {
+                 std::shared_ptr<ChannelUsage<T>> const& b) {
                 auto rpcs_a = a->instant_outstanding_rpcs();
                 auto rpcs_b = b->instant_outstanding_rpcs();
                 if (!rpcs_a.ok()) return false;

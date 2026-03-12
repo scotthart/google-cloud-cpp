@@ -41,7 +41,7 @@ class DynamicChannelPoolTestWrapper {
 
   void ScheduleAddChannels(
       std::scoped_lock<std::mutex> const& lk,
-      std::function<void(std::vector<int> const&)> test_fn) {
+      std::function<void(std::vector<int> const&)> const& test_fn) {
     pool_->ScheduleAddChannels(lk, test_fn);
   }
 
@@ -741,7 +741,8 @@ TEST_F(DynamicChannelPoolTest, RemoveChannelsSomeChannelsDrained) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.remove_channel_polling_interval)
                            .count()));
-        return cq_.MakeRelativeTimer(std::chrono::nanoseconds(0));
+        // Set a timer that will NOT finish before it is cancelled by the test.
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       });
 
   wrapper.RemoveChannels();
