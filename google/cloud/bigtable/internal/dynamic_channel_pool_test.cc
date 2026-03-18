@@ -777,7 +777,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.pool_size_decrease_cooldown_interval)
                            .count()));
-        // return make_ready_future(StatusOr(std::chrono::system_clock::now()));
         return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       })
       // HandleBadChannels will call ScheduleRemoveChannels.
@@ -797,7 +796,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&) {
-        std::cout << "CheckAndMutateRow" << std::endl;
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -823,9 +821,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOneBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
@@ -865,7 +860,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.pool_size_decrease_cooldown_interval)
                            .count()));
-        // return make_ready_future(StatusOr(std::chrono::system_clock::now()));
         return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       })
       // HandleBadChannels will call ScheduleRemoveChannels.
@@ -881,7 +875,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&) {
-        std::cout << "CheckAndMutateRow" << std::endl;
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -909,9 +902,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsTwoChannelsOtherOneBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
@@ -951,7 +941,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.pool_size_decrease_cooldown_interval)
                            .count()));
-        // return make_ready_future(StatusOr(std::chrono::system_clock::now()));
         return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       })
       // HandleBadChannels will call ScheduleRemoveChannels.
@@ -967,7 +956,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
   EXPECT_CALL(*mock_stub_0, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&) {
-        std::cout << "CheckAndMutateRow" << std::endl;
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -1001,9 +989,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsThreeChannelsOneBad) {
       stub_factory_fn.AsStdFunction(), sizing_policy);
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
-
-  // ScheduleAddChannels will NOT be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(0);
 
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
@@ -1043,7 +1028,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
                     Eq(std::chrono::nanoseconds(
                            sizing_policy.pool_size_decrease_cooldown_interval)
                            .count()));
-        // return make_ready_future(StatusOr(std::chrono::system_clock::now()));
         return cq_.MakeRelativeTimer(std::chrono::seconds(600));
       })
       // HandleBadChannels will call ScheduleRemoveChannels.
@@ -1059,7 +1043,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_CALL(*mock_stub, CheckAndMutateRow)
       .WillOnce([](grpc::ClientContext&, Options const&,
                    google::bigtable::v2::CheckAndMutateRowRequest const&) {
-        std::cout << "CheckAndMutateRow" << std::endl;
         google::bigtable::v2::CheckAndMutateRowResponse response;
         response.set_predicate_matched(true);
         return response;
@@ -1104,9 +1087,6 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   DynamicChannelPoolTestWrapper wrapper(pool);
   auto draining_channels = wrapper.SetDrainingChannels({});
 
-  // ScheduleAddChannels will be called.
-  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
-
   std::shared_ptr<ChannelUsage<BigtableStub>> selected_stub;
   {
     auto lock = wrapper.CreateLock();
@@ -1122,6 +1102,141 @@ TEST_F(DynamicChannelPoolTest, HandleBadChannelsAllChannelsBad) {
   EXPECT_THAT(pool->size(), Eq(1));
 
   fake_cq_impl_->SimulateCompletion(false);
+}
+
+TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsIncrease) {
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  DynamicChannelPoolSizingPolicy sizing_policy;
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      // Pool creation should set the pool size increase cooldown timer.
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      })
+      // Pool creation should set the pool size increase cooldown timer.
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      });
+
+  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
+      std::make_shared<MockBigtableStub>(), 30));
+
+  {
+    sizing_policy.minimum_channel_pool_size = 1;
+    sizing_policy.maximum_channel_pool_size = 1;
+    auto pool = DynamicChannelPool<BigtableStub>::Create(
+        instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+        stub_factory_fn.AsStdFunction(), sizing_policy);
+    DynamicChannelPoolTestWrapper wrapper(pool);
+
+    // ScheduleAddChannels will NOT be called as the pool has max channels.
+    EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(0);
+    auto lock = wrapper.CreateLock();
+    wrapper.CheckPoolChannelHealth(lock);
+    EXPECT_THAT(wrapper.num_pending_channels(), Eq(0));
+  }
+  {
+    sizing_policy.minimum_channel_pool_size = 2;
+    sizing_policy.maximum_channel_pool_size = 10;
+    auto pool = DynamicChannelPool<BigtableStub>::Create(
+        instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+        stub_factory_fn.AsStdFunction(), sizing_policy);
+    DynamicChannelPoolTestWrapper wrapper(pool);
+
+    // ScheduleAddChannels will be called.
+    EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(1);
+    auto lock = wrapper.CreateLock();
+    wrapper.CheckPoolChannelHealth(lock);
+    EXPECT_THAT(wrapper.num_pending_channels(), Eq(1));
+  }
+}
+
+TEST_F(DynamicChannelPoolTest, CheckChannelPoolHealthNeedsDecrease) {
+  auto instance_name =
+      bigtable::InstanceResource(Project("my-project"), "my-instance")
+          .FullName();
+  auto refresh_state = std::make_shared<ConnectionRefreshState>(
+      fake_cq_impl_, std::chrono::milliseconds(1),
+      std::chrono::milliseconds(10));
+  std::vector<std::shared_ptr<ChannelUsage<BigtableStub>>> channels;
+  DynamicChannelPoolSizingPolicy sizing_policy;
+
+  MockFunction<StatusOr<std::shared_ptr<ChannelUsage<BigtableStub>>>(
+      std::uint32_t, std::string const&, StubManager::Priming)>
+      stub_factory_fn;
+
+  EXPECT_CALL(*mock_cq_impl_, MakeRelativeTimer)
+      // Pool creation should set the pool size increase cooldown timer.
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return make_ready_future(StatusOr(std::chrono::system_clock::now()));
+      })
+      // ScheduleRemoveChannels should start polling.
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.remove_channel_polling_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      })
+      // ScheduleRemoveChannels should set the pool size increase cooldown
+      // timer.
+      .WillOnce([&](std::chrono::nanoseconds ns) {
+        EXPECT_THAT(ns.count(),
+                    Eq(std::chrono::nanoseconds(
+                           sizing_policy.pool_size_decrease_cooldown_interval)
+                           .count()));
+        return cq_.MakeRelativeTimer(std::chrono::seconds(600));
+      });
+
+  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
+      std::make_shared<MockBigtableStub>(), 2));
+  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
+      std::make_shared<MockBigtableStub>(), 2));
+  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
+      std::make_shared<MockBigtableStub>(), 2));
+  channels.push_back(std::make_shared<ChannelUsage<BigtableStub>>(
+      std::make_shared<MockBigtableStub>(), 2));
+
+  sizing_policy.minimum_channel_pool_size = 2;
+  sizing_policy.maximum_channel_pool_size = 10;
+  sizing_policy.minimum_average_outstanding_rpcs_per_channel = 5;
+  auto pool = DynamicChannelPool<BigtableStub>::Create(
+      instance_name, CompletionQueue(mock_cq_impl_), channels, refresh_state,
+      stub_factory_fn.AsStdFunction(), sizing_policy);
+  DynamicChannelPoolTestWrapper wrapper(pool);
+
+  // ScheduleAddChannels will NOT be called.
+  EXPECT_CALL(*mock_cq_impl_, RunAsync).Times(0);
+
+  {
+    auto lock = wrapper.CreateLock();
+    wrapper.CheckPoolChannelHealth(lock);
+  }
+
+  EXPECT_THAT(wrapper.num_pending_channels(), Eq(0));
+  EXPECT_THAT(pool->size(), Eq(3));
 }
 
 }  // namespace

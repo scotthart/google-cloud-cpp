@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/internal/stub_manager.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/completion_queue.h"
-#include "google/cloud/internal/clock.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/version.h"
 #include <cmath>
@@ -96,6 +95,8 @@ template <typename T>
 class DynamicChannelPool
     : public std::enable_shared_from_this<DynamicChannelPool<T>> {
  public:
+  // This function should only return an error status if priming is attempted
+  // and it is unsuccessful.
   using StubFactoryFn =
       std::function<StatusOr<std::shared_ptr<ChannelUsage<T>>>(
           std::uint32_t id, std::string const& instance_name,
@@ -142,24 +143,7 @@ class DynamicChannelPool
     return channels_.empty();
   }
 
-  // This method is for use in testing only.
-  //
-  // This method acquires a lock on the mutex member variable and executes fn.
-  void InstrumentDrainingChannelsLocking(
-      std::function<void(std::vector<std::shared_ptr<ChannelUsage<T>>>&)> fn) {
-    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
-    std::scoped_lock lk(mu_);
-    fn(draining_channels_);
-  }
-
-  void InstrumentDrainingChannelsNonLocking(
-      std::function<void(std::vector<std::shared_ptr<ChannelUsage<T>>>&)> fn) {
-    std::cout << __PRETTY_FUNCTION__ << ": enter" << std::endl;
-    fn(draining_channels_);
-  }
-
-  // If the pool is not under a pool resize cooldown, call
-  // CheckPoolChannelHealth.
+  // Calls CheckPoolChannelHealth before picking a channel.
   //
   // Pick two random channels from channels_ and return the channel with the
   // lower number of outstanding_rpcs. This is the "quick" path.
@@ -183,19 +167,6 @@ class DynamicChannelPool
     // }
 
     CheckPoolChannelHealth(lk);
-#if 0
-    // // TODO(sdhart): simplify this
-    if (!pool_size_increase_cooldown_timer_.valid() ||
-        !pool_size_decrease_cooldown_timer_.valid()) {
-      CheckPoolChannelHealth(lk);
-    } else if (pool_size_increase_cooldown_timer_.is_ready()) {
-      (void)pool_size_increase_cooldown_timer_.get();
-      CheckPoolChannelHealth(lk);
-    } else if (pool_size_decrease_cooldown_timer_.is_ready()) {
-      (void)pool_size_decrease_cooldown_timer_.get();
-      CheckPoolChannelHealth(lk);
-    }
-#endif
 
     //    std::cout << __PRETTY_FUNCTION__ << ": finished
     //    CheckPoolChannelHealth"
@@ -211,27 +182,15 @@ class DynamicChannelPool
     }
     std::shuffle(d.iterators.begin(), d.iterators.end(), rng_);
     d.shuffle_iter = d.iterators.begin();
-    // typename std::vector<std::shared_ptr<ChannelUsage<T>>>::iterator
-    //     channel_1_iter;
-    // typename std::vector<std::shared_ptr<ChannelUsage<T>>>::iterator
-    //     channel_2_iter;
-    // StatusOr<int> channel_1_rpcs = Status{StatusCode::kNotFound, ""};
-    // StatusOr<int> channel_2_rpcs = Status{StatusCode::kNotFound, ""};
-    // typename std::vector<
-    //     typename
-    //     std::vector<std::shared_ptr<ChannelUsage<T>>>::iterator>::iterator
-    //     shuffle_iter = iterators.begin();
 
     if (d.shuffle_iter != d.iterators.end()) {
       d.channel_1_iter = *d.shuffle_iter;
-      // d.channel_1_rpcs = (*d.channel_1_iter)->average_outstanding_rpcs();
       d.channel_1_rpcs = (*d.channel_1_iter)->instant_outstanding_rpcs();
       ++d.shuffle_iter;
     }
 
     if (d.shuffle_iter != d.iterators.end()) {
       d.channel_2_iter = *d.shuffle_iter;
-      // d.channel_1_rpcs = (*d.channel_1_iter)->average_outstanding_rpcs();
       d.channel_2_rpcs = (*d.channel_2_iter)->instant_outstanding_rpcs();
     }
 
@@ -252,6 +211,7 @@ class DynamicChannelPool
                                                    : *d.channel_2_iter;
     }
     if (d.iterators.size() == 1 && d.channel_1_rpcs.ok()) {
+      // Pool contains exactly 1 good channel.
       std::cout << __PRETTY_FUNCTION__
                 << ": pool size is 1, returning OK channel" << std::endl;
       return *d.channel_1_iter;
@@ -259,11 +219,15 @@ class DynamicChannelPool
     if (d.iterators.empty()) {
       std::cout << __PRETTY_FUNCTION__
                 << ": pool is empty, create and return channel" << std::endl;
-      channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
-                                            StubManager::Priming::kNoPriming));
+
+      // Pool is empty, create a channel immediately and return it. While the
+      // return value is a StatusOr<T>, it will only ever contain an error if
+      // priming is attempted.
+      channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
+                                           StubManager::Priming::kNoPriming)
+                              .value());
       return channels_.front();
     }
-
     return HandleBadChannels(lk, d);
   }
 
@@ -307,17 +271,16 @@ class DynamicChannelPool
         bad_channel_iters.push_back(iter);
         while (shuffle_iter != iterators.end() && !rpcs.ok()) {
           iter = *shuffle_iter;
-          // rpcs = (*iter)->average_outstanding_rpcs();
           rpcs = (*iter)->instant_outstanding_rpcs();
-          if (!rpcs.ok()) {
-            bad_channel_iters.push_back(iter);
-          }
+          if (!rpcs.ok()) bad_channel_iters.push_back(iter);
           ++shuffle_iter;
         }
       }
     }
   };
 
+  // We have one or more bad channels. Spending time finding a good channel
+  // will be cheaper than trying to use a bad channel in the long run.
   std::shared_ptr<ChannelUsage<T>> HandleBadChannels(
       std::scoped_lock<std::mutex> const& lk, ChannelSelectionData& d) {
     // We have one or more bad channels. Spending time finding a good channel
@@ -343,65 +306,34 @@ class DynamicChannelPool
               << ": bad_channel_iters.size()=" << bad_channel_iters.size()
               << std::endl;
 
-    // if (!d.channel_1_rpcs.ok()) {
-    //   std::cout << __func__ << ": channel_1 status=" <<
-    //   d.channel_1_rpcs.status() << std::endl;
-    //   bad_channel_iters.push_back(d.channel_1_iter);
-    //   while (d.shuffle_iter != d.iterators.end() && !d.channel_1_rpcs.ok()) {
-    //     d.channel_1_iter = *d.shuffle_iter;
-    //     d.channel_1_rpcs = (*d.channel_1_iter)->average_outstanding_rpcs();
-    //     if (!d.channel_1_rpcs.ok()) {
-    //       bad_channel_iters.push_back(d.channel_1_iter);
-    //     }
-    //     ++d.shuffle_iter;
-    //   }
-    // }
-
-    // if (!d.channel_2_rpcs.ok()) {
-    //   std::cout << __func__ << ": channel_2 status=" <<
-    //   d.channel_2_rpcs.status() << std::endl;
-    //   bad_channel_iters.push_back(d.channel_2_iter);
-    //   while (d.shuffle_iter != d.iterators.end() && !d.channel_2_rpcs.ok()) {
-    //     d.channel_2_iter = *d.shuffle_iter;
-    //     d.channel_2_rpcs = (*d.channel_2_iter)->average_outstanding_rpcs();
-    //     if (!d.channel_2_rpcs.ok()) {
-    //       bad_channel_iters.push_back(d.channel_2_iter);
-    //     }
-    //     ++d.shuffle_iter;
-    //   }
-    // }
-
-    EvictBadChannels(lk, bad_channel_iters);
+    std::shared_ptr<ChannelUsage<T>> channel;
+    if (d.channel_1_rpcs.ok() || d.channel_2_rpcs.ok()) {
+      if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
+        channel = *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
+                                                        : *d.channel_2_iter;
+      } else if (d.channel_1_rpcs.ok()) {
+        channel = *d.channel_1_iter;
+      } else if (d.channel_2_rpcs.ok()) {
+        channel = *d.channel_2_iter;
+      }
+      // Wait until we no longer need valid iterators to call EvictBadChannels.
+      EvictBadChannels(lk, bad_channel_iters);
+    } else {
+      // Call EvictBadChannels before we channels_.push_back to avoid
+      // invalidating bad_channel_iters if there is a realloc of the vector.
+      EvictBadChannels(lk, bad_channel_iters);
+      // We have no usable channels in the entire pool; this is bad.
+      // Create a channel immediately to unblock application. While the
+      // return value is a StatusOr<T>, it will only ever contain an error if
+      // priming is attempted.
+      channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
+                                           StubManager::Priming::kNoPriming)
+                              .value());
+      std::swap(channels_.front(), channels_.back());
+      channel = channels_.front();
+    }
     ScheduleRemoveChannels(lk);
-
-    if (d.channel_1_rpcs.ok() && d.channel_2_rpcs.ok()) {
-      std::cout << __PRETTY_FUNCTION__ << ": 2 ok channels" << std::endl;
-      return *d.channel_1_rpcs < *d.channel_2_rpcs ? *d.channel_1_iter
-                                                   : *d.channel_2_iter;
-    }
-    if (d.channel_1_rpcs.ok()) {
-      std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_1 ok" << std::endl;
-      // Schedule repopulating the pool.
-      ScheduleAddChannels(lk);
-      return *d.channel_1_iter;
-    }
-    if (d.channel_2_rpcs.ok()) {
-      std::cout << __PRETTY_FUNCTION__ << ": ONLY channel_2 ok" << std::endl;
-      // Schedule repopulating the pool.
-      ScheduleAddChannels(lk);
-      return *d.channel_2_iter;
-    }
-
-    // We have no usable channels in the entire pool; this is bad.
-    // Create a channel immediately to unblock application.
-    std::cout << __PRETTY_FUNCTION__ << ": NO USABLE CHANNELS" << std::endl;
-    channels_.push_back(*stub_factory_fn_(next_channel_id_++, instance_name_,
-                                          StubManager::Priming::kNoPriming));
-    // TODO(sdhart): This swap may not be necessary, investigate.
-    std::swap(channels_.front(), channels_.back());
-    // Schedule repopulating the pool.
-    ScheduleAddChannels(lk);
-    return channels_.front();
+    return channel;
   }
 
   struct ChannelAddVisitor {
@@ -525,10 +457,6 @@ class DynamicChannelPool
                 << std::endl;
       draining_channels_.pop_back();
     }
-    // TODO(sdhart): If iterators becomes a member variable perhaps add logic to
-    // call
-    //  shrink_to_fit on iterators_ if there's a large
-    // difference between iterators_.capacity and channels_.size
   }
 
   void EvictBadChannels(
@@ -560,21 +488,20 @@ class DynamicChannelPool
               << std::endl;
   }
 
-  // void SetSizeIncreaseCooldownTimer(std::scoped_lock<std::mutex> const&) {
-  //   pool_size_increase_cooldown_timer_ = cq_.MakeRelativeTimer(
-  //       sizing_policy_.pool_size_increase_cooldown_interval);
-  // }
-
   void SetSizeDecreaseCooldownTimer(std::scoped_lock<std::mutex> const&) {
     pool_size_decrease_cooldown_timer_ = cq_.MakeRelativeTimer(
         sizing_policy_.pool_size_decrease_cooldown_interval);
   }
 
-  // Computes the average_rpcs_pre_channel across all channels in the pool,
-  // excluding any channels that are awaiting removal in draining_channels_.
+  // Computes the average RPCs per channel across all channels in the pool,
+  // by summing the outstanding_rpc from each channel and dividing by the
+  // number of active channels plus the num_pending_channels_.
+  // Any channels that are awaiting removal in draining_channels_ are excluded
+  // from this calculation.
   // The computed average is compared to the thresholds in the sizing policy
-  // and calls either ScheduleRemoveChannels or ScheduleAddChannels as
-  // appropriate. If either is called the resize_cooldown_timer is also set.
+  // and calls either ScheduleRemoveChannel or ScheduleAddChannel as
+  // appropriate. If ScheduleRemoveChannel is called the resize_cooldown_timer
+  // is also set.
   void CheckPoolChannelHealth(std::scoped_lock<std::mutex> const& lk) {
     int average_rpcs_per_channel =
         channels_.empty()
@@ -592,12 +519,21 @@ class DynamicChannelPool
               << sizing_policy_.minimum_channel_pool_size
               << "; average_rpcs_per_channel=" << average_rpcs_per_channel
               << std::endl;
-    // TODO(sdhart): do we need to check if we're over max pool size here?
-    if ((!pool_size_decrease_cooldown_timer_.valid() ||
-         pool_size_decrease_cooldown_timer_.is_ready())
+    if (channels_.size() < sizing_policy_.minimum_channel_pool_size ||
+        (average_rpcs_per_channel >
+             sizing_policy_.maximum_average_outstanding_rpcs_per_channel &&
+         channels_.size() < sizing_policy_.maximum_channel_pool_size)) {
+      // Channel/stub creation is expensive, instead of making the current RPC
+      // wait on this, use an existing channel right now, and schedule a channel
+      // to be added.
+      ScheduleAddChannels(lk);
+      return;
+    }
 
-        && average_rpcs_per_channel <
-               sizing_policy_.minimum_average_outstanding_rpcs_per_channel &&
+    if ((!pool_size_decrease_cooldown_timer_.valid() ||
+         pool_size_decrease_cooldown_timer_.is_ready()) &&
+        average_rpcs_per_channel <
+            sizing_policy_.minimum_average_outstanding_rpcs_per_channel &&
         channels_.size() > sizing_policy_.minimum_channel_pool_size) {
       if (pool_size_decrease_cooldown_timer_.is_ready()) {
         pool_size_decrease_cooldown_timer_.get();
@@ -610,22 +546,7 @@ class DynamicChannelPool
       channels_.pop_back();
       ScheduleRemoveChannels(lk);
       SetSizeDecreaseCooldownTimer(lk);
-      return;
     }
-    // TODO(sdhart): do we need to check if we're under min pool size here?
-    if (average_rpcs_per_channel >
-            sizing_policy_.maximum_average_outstanding_rpcs_per_channel &&
-        channels_.size() < sizing_policy_.maximum_channel_pool_size) {
-      std::cout << __PRETTY_FUNCTION__ << ": add channel" << std::endl;
-      // Channel/stub creation is expensive, instead of making the current RPC
-      // wait on this, use an existing channel right now, and schedule a channel
-      // to be added.
-      ScheduleAddChannels(lk);
-      // SetSizeIncreaseCooldownTimer(lk);
-      return;
-    }
-
-    std::cout << __PRETTY_FUNCTION__ << ": no resizing needed" << std::endl;
   }
 
   mutable std::mutex mu_;
