@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_REGIONAL_ACCESS_BOUNDARY_TOKEN_MANAGER_H
 
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/internal/async_rest_retry_loop.h"
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
 #include "google/cloud/internal/rest_pure_completion_queue_impl.h"
@@ -87,13 +88,67 @@ class RegionalAccessBoundaryTokenManager
 
   bool IsTokenValid(std::chrono::system_clock::time_point tp) const;
 
-  StatusOr<Token> GetServiceAccountToken(
-      std::string_view sa_email, std::chrono::system_clock::time_point tp,
-      std::string_view endpoint);
+  template <typename Request>
+  StatusOr<Token> GetAllowedLocationsToken(
+      Request const& request, std::chrono::system_clock::time_point tp,
+      std::string_view endpoint) {
+    // If the endpoint does not need a token, return immediately.
+    if (!DoesEndpointRequireToken(endpoint)) return Token{};
 
-  void RefreshToken(std::string_view iam_path_suffix);
+    std::scoped_lock lock(mu_);
+    // check to see if we're near expiry and if so, start refresh process
+    if (tp > expire_time_ - TtlGracePeriod()) {
+      RefreshToken(request);
+    }
+    if (IsTokenValid(tp)) return token_;
+    RefreshToken(request);
+    return Token{};
+  }
+
+  template <typename Request>
+  void RefreshToken(Request const& request) {
+    std::scoped_lock lock(mu_);
+    if (failed_lookup_cooldown_.valid() &&
+        !failed_lookup_cooldown_.is_ready()) {
+      return;
+    }
+    auto fn = [iam_stub = iam_stub_](
+                  rest_internal::RestPureCompletionQueue&,
+                  std::unique_ptr<rest_internal::RestContext>,
+                  google::cloud::internal::ImmutableOptions,
+                  Request const& request) -> future<StatusOr<Token>> {
+      auto response = iam_stub->AllowedLocations(request);
+      if (!response)
+        return make_ready_future(StatusOr<Token>(std::move(response).status()));
+      return make_ready_future(
+          StatusOr<Token>{Token{response->encoded_locations}});
+    };
+
+    auto r = rest_internal::AsyncRestRetryLoop(
+                 retry_policy_->clone(), backoff_policy_->clone(),
+                 Idempotency::kIdempotent, cq_, fn,
+                 google::cloud::internal::ImmutableOptions{}, request, __func__)
+                 .then([weak = weak_from_this()](auto f) -> void {
+                   auto new_token = f.get();
+                   auto manager = weak.lock();
+                   if (!manager) return;
+                   if (new_token.ok()) {
+                     manager->token_ = *new_token;
+                     manager->expire_time_ =
+                         manager->clock_->Now() + TokenTtl();
+                   } else {
+                     manager->token_ = Token{};
+                     manager->failed_lookup_cooldown_ =
+                         manager->cq_.MakeRelativeTimer(FailedLookupCooldown());
+                   }
+                 });
+  }
 
  private:
+  static std::chrono::seconds TtlGracePeriod();
+  static std::chrono::seconds TokenTtl();
+  static std::chrono::seconds FailedLookupCooldown();
+
   std::mutex mu_;
   rest_internal::RestPureCompletionQueue cq_;
   std::shared_ptr<Clock> clock_;

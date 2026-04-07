@@ -39,8 +39,17 @@ struct GenerateAccessTokenRequest {
   std::vector<std::string> delegates;
 };
 
-struct AllowedLocationsRequest {
-  std::string path;
+struct ServiceAccountAllowedLocationsRequest {
+  std::string service_account_email;
+};
+
+struct WorkloadIdentityAllowedLocationsRequest {
+  std::string project_id;
+  std::string pool_id;
+};
+
+struct WorkforceIdentityAllowedLocationsRequest {
+  std::string pool_id;
 };
 
 struct AllowedLocationsResponse {
@@ -69,9 +78,11 @@ class MinimalIamCredentialsRest {
       GenerateAccessTokenRequest const& request) = 0;
 
   virtual StatusOr<AllowedLocationsResponse> AllowedLocations(
-      AllowedLocationsRequest const& request) {
-    return StatusOr<AllowedLocationsResponse>{};
-  }
+      ServiceAccountAllowedLocationsRequest const& request) = 0;
+  virtual StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkloadIdentityAllowedLocationsRequest const& request) = 0;
+  virtual StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkforceIdentityAllowedLocationsRequest const& request) = 0;
 
   virtual StatusOr<std::string> universe_domain(
       Options const& options) const = 0;
@@ -97,7 +108,11 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
       GenerateAccessTokenRequest const& request) override;
 
   StatusOr<AllowedLocationsResponse> AllowedLocations(
-      AllowedLocationsRequest const& request) override;
+      ServiceAccountAllowedLocationsRequest const& request) override;
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkloadIdentityAllowedLocationsRequest const& request) override;
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkforceIdentityAllowedLocationsRequest const& request) override;
 
   StatusOr<std::string> universe_domain(Options const& options) const override {
     return credentials_->universe_domain(options);
@@ -105,7 +120,7 @@ class MinimalIamCredentialsRestStub : public MinimalIamCredentialsRest {
 
  private:
   std::string MakeRequestPath(GenerateAccessTokenRequest const& request) const;
-  std::string MakeRequestPath(AllowedLocationsRequest const& request) const;
+  StatusOr<AllowedLocationsResponse> AllowedLocationsHelper(std::string path);
 
   std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;
@@ -122,6 +137,13 @@ class MinimalIamCredentialsRestLogging : public MinimalIamCredentialsRest {
 
   StatusOr<google::cloud::AccessToken> GenerateAccessToken(
       GenerateAccessTokenRequest const& request) override;
+
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      ServiceAccountAllowedLocationsRequest const& request) override;
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkloadIdentityAllowedLocationsRequest const& request) override;
+  StatusOr<AllowedLocationsResponse> AllowedLocations(
+      WorkforceIdentityAllowedLocationsRequest const& request) override;
 
   StatusOr<std::string> universe_domain(Options const& options) const override {
     return child_->universe_domain(options);

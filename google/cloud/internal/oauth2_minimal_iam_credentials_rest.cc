@@ -55,14 +55,11 @@ MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
 StatusOr<google::cloud::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_headers = credentials_->AuthenticationHeaders(
-      std::chrono::system_clock::now(),
-      IamCredentialsEndpoint(universe_domain(Options{})));
-  if (!auth_headers) return std::move(auth_headers).status();
+  auto authorization_header =
+      credentials_->Authorization(std::chrono::system_clock::now());
+  if (!authorization_header) return std::move(authorization_header).status();
   rest_internal::RestRequest rest_request;
-  for (auto const& auth_header : *auth_headers) {
-    rest_request.AddHeader(auth_header);
-  }
+  rest_request.AddHeader(*std::move(authorization_header));
   rest_request.AddHeader("Content-Type", "application/json");
   rest_request.SetPath(MakeRequestPath(request));
   nlohmann::json payload{
@@ -91,23 +88,17 @@ std::string MinimalIamCredentialsRestStub::MakeRequestPath(
 }
 
 StatusOr<AllowedLocationsResponse>
-MinimalIamCredentialsRestStub::AllowedLocations(
-    AllowedLocationsRequest const& request) {
-  auto auth_headers = credentials_->AuthenticationHeaders(
-      std::chrono::system_clock::now(),
-      IamCredentialsEndpoint(universe_domain(Options{})));
-  if (!auth_headers) return std::move(auth_headers).status();
+MinimalIamCredentialsRestStub::AllowedLocationsHelper(std::string path) {
+  auto authorization_header =
+      credentials_->Authorization(std::chrono::system_clock::now());
+  if (!authorization_header) return std::move(authorization_header).status();
   rest_internal::RestRequest rest_request;
-  for (auto const& auth_header : *auth_headers) {
-    rest_request.AddHeader(auth_header);
-  }
-  rest_request.AddHeader("Content-Type", "application/json");
-  rest_request.SetPath(MakeRequestPath(request));
-  nlohmann::json payload{};
+  rest_request.AddHeader(*std::move(authorization_header));
+  rest_request.SetPath(std::move(path));
 
   auto client = client_factory_(options_);
   rest_internal::RestContext context;
-  auto response = client->Post(context, rest_request, {payload.dump()});
+  auto response = client->Get(context, rest_request);
   if (!response) return std::move(response).status();
   return ParseAllowedLocationsResponse(
       **response,
@@ -117,10 +108,32 @@ MinimalIamCredentialsRestStub::AllowedLocations(
            {"path", rest_request.path()}}));
 }
 
-std::string MinimalIamCredentialsRestStub::MakeRequestPath(
-    AllowedLocationsRequest const& request) const {
-  return absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
-                      "/v1/", request.path);
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    ServiceAccountAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/projects/-/serviceAccounts/",
+                           request.service_account_email, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    WorkloadIdentityAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/projects/", request.project_id,
+                           "/locations/global/workloadIdentityPools/",
+                           request.pool_id, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestStub::AllowedLocations(
+    WorkforceIdentityAllowedLocationsRequest const& request) {
+  auto path = absl::StrCat(IamCredentialsEndpoint(universe_domain(Options{})),
+                           "/v1/locations/global/workforcePools/",
+                           request.pool_id, "/allowedLocations");
+  return AllowedLocationsHelper(std::move(path));
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
@@ -145,6 +158,53 @@ MinimalIamCredentialsRestLogging::GenerateAccessToken(
                 << "() >> response={access_token=[censored], expiration="
                 << google::cloud::internal::FormatRfc3339(response->expiration)
                 << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    ServiceAccountAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {service_account_email="
+                << request.service_account_email << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    WorkloadIdentityAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {project_id=" << request.project_id
+                << ", pool_id=" << request.pool_id << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
+  return response;
+}
+
+StatusOr<AllowedLocationsResponse>
+MinimalIamCredentialsRestLogging::AllowedLocations(
+    WorkforceIdentityAllowedLocationsRequest const& request) {
+  GCP_LOG(INFO) << __func__ << "() << {pool_id=" << request.pool_id << "}";
+  auto response = child_->AllowedLocations(request);
+  if (!response) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
+    return response;
+  }
+  GCP_LOG(INFO) << __func__ << "() >> response={locations="
+                << absl::StrJoin(response->locations, ",")
+                << ", encoded_locations=" << response->encoded_locations << "}";
   return response;
 }
 
