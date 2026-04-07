@@ -146,11 +146,22 @@ ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,
     std::shared_ptr<MinimalIamCredentialsRest> stub)
-    : stub_(std::move(stub)), request_(MakeRequest(config)) {}
+    : stub_(std::move(stub)),
+      access_token_request_(MakeRequest(config)),
+      allowed_locations_request_({config.target_service_account()}) {}
 
 StatusOr<AccessToken> ImpersonateServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point /*tp*/) {
-  return stub_->GenerateAccessToken(request_);
+  return stub_->GenerateAccessToken(access_token_request_);
+}
+
+StatusOr<rest_internal::HttpHeader>
+ImpersonateServiceAccountCredentials::AllowedLocations(
+    std::chrono::system_clock::time_point tp, std::string_view endpoint) {
+  auto header = rab_token_manager_->GetAllowedLocationsHeader(
+      allowed_locations_request_, tp, endpoint);
+  if (!header.ok()) return std::move(header.status());
+  return *header;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

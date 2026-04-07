@@ -19,7 +19,7 @@
 #include "google/cloud/internal/async_rest_retry_loop.h"
 #include "google/cloud/internal/clock.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
-#include "google/cloud/internal/rest_pure_completion_queue_impl.h"
+#include "google/cloud/internal/rest_pure_background_threads_impl.h"
 #include "google/cloud/internal/retry_policy_impl.h"
 // #include "google/cloud/access_token.h"
 #include "google/cloud/internal/http_header.h"
@@ -62,12 +62,12 @@ class RegionalAccessBoundaryTokenManager
  public:
   using Clock = ::google::cloud::internal::SystemClock;
 
-  struct Token {
-    Token() = default;
-    explicit Token(std::string token) : token(std::move(token)) {}
-    bool empty() const { return token.empty(); }
-    std::string token;
-  };
+  // struct Token {
+  //   Token() = default;
+  //   explicit Token(std::string token) : token(std::move(token)) {}
+  //   bool empty() const { return token.empty(); }
+  //   std::string token;
+  // };
 
   struct RetryTraits {
     static bool IsPermanentFailure(Status const& s) {
@@ -79,8 +79,16 @@ class RegionalAccessBoundaryTokenManager
   struct TokenRefreshRequest {};
 
   RegionalAccessBoundaryTokenManager(
+      std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+      std::unique_ptr<rest_internal::RestPureBackgroundThreads> background,
+      std::shared_ptr<Clock> clock = std::make_shared<Clock>());
+
+  explicit RegionalAccessBoundaryTokenManager(
+      std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+      std::shared_ptr<Clock> clock = std::make_shared<Clock>());
+
+  RegionalAccessBoundaryTokenManager(
       std::shared_ptr<oauth2_internal::Credentials> credentials,
-      rest_internal::RestPureCompletionQueue cq,
       HttpClientFactory client_factory,
       std::shared_ptr<Clock> clock = std::make_shared<Clock>());
 
@@ -89,20 +97,23 @@ class RegionalAccessBoundaryTokenManager
   bool IsTokenValid(std::chrono::system_clock::time_point tp) const;
 
   template <typename Request>
-  StatusOr<Token> GetAllowedLocationsToken(
+  StatusOr<rest_internal::HttpHeader> GetAllowedLocationsHeader(
       Request const& request, std::chrono::system_clock::time_point tp,
       std::string_view endpoint) {
     // If the endpoint does not need a token, return immediately.
-    if (!DoesEndpointRequireToken(endpoint)) return Token{};
+    if (!DoesEndpointRequireToken(endpoint)) return rest_internal::HttpHeader{};
 
     std::scoped_lock lock(mu_);
     // check to see if we're near expiry and if so, start refresh process
     if (tp > expire_time_ - TtlGracePeriod()) {
       RefreshToken(request);
     }
-    if (IsTokenValid(tp)) return token_;
+    if (IsTokenValid(tp)) {
+      return rest_internal::HttpHeader{"x-allowed-locations",
+                                       allowed_locations_.encoded_locations};
+    }
     RefreshToken(request);
-    return Token{};
+    return rest_internal::HttpHeader{};
   }
 
   template <typename Request>
@@ -116,30 +127,32 @@ class RegionalAccessBoundaryTokenManager
                   rest_internal::RestPureCompletionQueue&,
                   std::unique_ptr<rest_internal::RestContext>,
                   google::cloud::internal::ImmutableOptions,
-                  Request const& request) -> future<StatusOr<Token>> {
+                  Request const& request)
+        -> future<StatusOr<AllowedLocationsResponse>> {
       auto response = iam_stub->AllowedLocations(request);
-      if (!response)
-        return make_ready_future(StatusOr<Token>(std::move(response).status()));
-      return make_ready_future(
-          StatusOr<Token>{Token{response->encoded_locations}});
+      if (!response) {
+        return make_ready_future(
+            StatusOr<AllowedLocationsResponse>(std::move(response).status()));
+      }
+      return make_ready_future(StatusOr<AllowedLocationsResponse>{*response});
     };
 
     auto r = rest_internal::AsyncRestRetryLoop(
                  retry_policy_->clone(), backoff_policy_->clone(),
-                 Idempotency::kIdempotent, cq_, fn,
+                 Idempotency::kIdempotent, background_->cq(), fn,
                  google::cloud::internal::ImmutableOptions{}, request, __func__)
                  .then([weak = weak_from_this()](auto f) -> void {
-                   auto new_token = f.get();
-                   auto manager = weak.lock();
-                   if (!manager) return;
-                   if (new_token.ok()) {
-                     manager->token_ = *new_token;
-                     manager->expire_time_ =
-                         manager->clock_->Now() + TokenTtl();
+                   auto allowed_locations = f.get();
+                   auto self = weak.lock();
+                   if (!self) return;
+                   if (allowed_locations.ok()) {
+                     self->allowed_locations_ = *allowed_locations;
+                     self->expire_time_ = self->clock_->Now() + TokenTtl();
                    } else {
-                     manager->token_ = Token{};
-                     manager->failed_lookup_cooldown_ =
-                         manager->cq_.MakeRelativeTimer(FailedLookupCooldown());
+                     self->allowed_locations_ = AllowedLocationsResponse{};
+                     self->failed_lookup_cooldown_ =
+                         self->background_->cq().MakeRelativeTimer(
+                             FailedLookupCooldown());
                    }
                  });
   }
@@ -150,7 +163,7 @@ class RegionalAccessBoundaryTokenManager
   static std::chrono::seconds FailedLookupCooldown();
 
   std::mutex mu_;
-  rest_internal::RestPureCompletionQueue cq_;
+  std::unique_ptr<rest_internal::RestPureBackgroundThreads> background_;
   std::shared_ptr<Clock> clock_;
   std::unique_ptr<internal::LimitedTimeRetryPolicy<RetryTraits>> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
@@ -158,7 +171,7 @@ class RegionalAccessBoundaryTokenManager
 
   future<StatusOr<std::chrono::system_clock::time_point>>
       failed_lookup_cooldown_;
-  Token token_;
+  AllowedLocationsResponse allowed_locations_;
   std::chrono::system_clock::time_point expire_time_;
 };
 

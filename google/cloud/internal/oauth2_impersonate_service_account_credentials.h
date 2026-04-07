@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
+#include "google/cloud/internal/oauth2_regional_access_boundary_token_manager.h"
 #include "google/cloud/version.h"
 #include <memory>
 #include <string>
@@ -66,9 +67,15 @@ class ImpersonateServiceAccountCredentials
     return stub_->universe_domain(options);
   }
 
+  StatusOr<rest_internal::HttpHeader> AllowedLocations(
+      std::chrono::system_clock::time_point tp,
+      std::string_view endpoint) override;
+
  private:
   std::shared_ptr<MinimalIamCredentialsRest> stub_;
-  GenerateAccessTokenRequest request_;
+  GenerateAccessTokenRequest access_token_request_;
+  ServiceAccountAllowedLocationsRequest allowed_locations_request_;
+  std::shared_ptr<RegionalAccessBoundaryTokenManager> rab_token_manager_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

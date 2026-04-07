@@ -36,18 +36,36 @@ auto constexpr kBackoffScaling = 2.0;
 }  // namespace
 
 RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
-    std::shared_ptr<oauth2_internal::Credentials> credentials,
-    rest_internal::RestPureCompletionQueue cq, HttpClientFactory client_factory,
+    std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+    std::unique_ptr<rest_internal::RestPureBackgroundThreads> background,
     std::shared_ptr<Clock> clock)
-    : cq_(std::move(cq)),
+    : background_(std::move(background)),
       clock_(std::move(clock)),
       retry_policy_(std::make_unique<internal::LimitedTimeRetryPolicy<
                         RegionalAccessBoundaryTokenManager::RetryTraits>>(
           kMaximumRetryDuration)),
       backoff_policy_(std::make_unique<ExponentialBackoffPolicy>(
           kInitialBackoffDelay, kMaximumBackoffDelay, kBackoffScaling)),
-      iam_stub_(MakeMinimalIamCredentialsRestStub(std::move(credentials), {},
-                                                  std::move(client_factory))) {}
+      iam_stub_(std::move(iam_stub)) {}
+
+RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
+    std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
+    std::shared_ptr<Clock> clock)
+    : RegionalAccessBoundaryTokenManager(
+          std::move(iam_stub),
+          std::make_unique<
+              rest_internal::RestPureAutomaticallyCreatedBackgroundThreads>(),
+          std::move(clock)) {}
+
+RegionalAccessBoundaryTokenManager::RegionalAccessBoundaryTokenManager(
+    std::shared_ptr<oauth2_internal::Credentials> credentials,
+    HttpClientFactory client_factory, std::shared_ptr<Clock> clock)
+    : RegionalAccessBoundaryTokenManager(
+          MakeMinimalIamCredentialsRestStub(std::move(credentials), {},
+                                            std::move(client_factory)),
+          std::make_unique<
+              rest_internal::RestPureAutomaticallyCreatedBackgroundThreads>(),
+          std::move(clock)) {}
 
 bool RegionalAccessBoundaryTokenManager::DoesEndpointRequireToken(
     std::string_view endpoint) {
@@ -58,7 +76,7 @@ bool RegionalAccessBoundaryTokenManager::DoesEndpointRequireToken(
 
 bool RegionalAccessBoundaryTokenManager::IsTokenValid(
     std::chrono::system_clock::time_point tp) const {
-  return !token_.empty() && tp < expire_time_;
+  return !allowed_locations_.encoded_locations.empty() && tp < expire_time_;
 }
 
 std::chrono::seconds RegionalAccessBoundaryTokenManager::TtlGracePeriod() {

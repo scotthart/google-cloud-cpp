@@ -248,7 +248,9 @@ struct DisableSelfSignedJWTOption {
  * [service account keys]:
  * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  */
-class ServiceAccountCredentials : public oauth2_internal::Credentials {
+class ServiceAccountCredentials
+    : public oauth2_internal::Credentials,
+      public std::enable_shared_from_this<ServiceAccountCredentials> {
  public:
   /**
    * Creates an instance of ServiceAccountCredentials.

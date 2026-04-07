@@ -372,11 +372,17 @@ StatusOr<std::string> ServiceAccountCredentials::project_id(
 
 StatusOr<rest_internal::HttpHeader> ServiceAccountCredentials::AllowedLocations(
     std::chrono::system_clock::time_point tp, std::string_view endpoint) {
-  auto token = rab_token_manager_->GetAllowedLocationsToken(
+  // rab_token_manager_ is initialized on first use as it cannot be done in the
+  // constructor as it needs to call shared_from_this().
+  if (!rab_token_manager_) {
+    rab_token_manager_ = std::make_shared<RegionalAccessBoundaryTokenManager>(
+        MakeMinimalIamCredentialsRestStub(shared_from_this(), {},
+                                          client_factory_));
+  }
+  auto header = rab_token_manager_->GetAllowedLocationsHeader(
       ServiceAccountAllowedLocationsRequest{info_.client_email}, tp, endpoint);
-  if (!token.ok()) return std::move(token.status());
-  if (token->empty()) return rest_internal::HttpHeader{};
-  return rest_internal::HttpHeader{"x-allowed-locations", token->token};
+  if (!header.ok()) return std::move(header.status());
+  return *header;
 }
 
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
