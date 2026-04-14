@@ -1,4 +1,4 @@
-// Copyright 2024 Google LLC
+// Copyright 2026 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,27 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/oauth2_api_key_credentials.h"
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RUN_ASYNC_BASE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RUN_ASYNC_BASE_H
+
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
-namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
 
-ApiKeyCredentials::ApiKeyCredentials(std::string api_key)
-    : api_key_(std::move(api_key)) {}
+// Type erase the callables in RunAsync()
+struct RunAsyncBase {
+  virtual ~RunAsyncBase() = default;
+  virtual void exec() = 0;
+};
 
-StatusOr<AccessToken> ApiKeyCredentials::GetToken(
-    std::chrono::system_clock::time_point tp) {
-  return AccessToken{std::string{}, tp};
-}
-
-StatusOr<rest_internal::HttpHeader> ApiKeyCredentials::Authorization(
-    std::chrono::system_clock::time_point) {
-  return rest_internal::HttpHeader{"x-goog-api-key", api_key_};
-}
-
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace oauth2_internal
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_RUN_ASYNC_BASE_H

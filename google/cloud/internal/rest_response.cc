@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/internal/rest_parse_json_error.h"
+#include "absl/strings/str_join.h"
 
 namespace google {
 namespace cloud {
@@ -156,15 +157,18 @@ Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   if (payload.empty()) {
     // If there's no payload, create one to make sure the original http status
     // code received is available.
-    ErrorInfo error_info{
-        {}, {}, {{"http_status_code", std::to_string(http_status_code)}}};
-    return Status(
-        status_code,
-        "Received HTTP status code: " + std::to_string(http_status_code),
-        std::move(error_info));
+    auto code = std::to_string(http_status_code);
+    ErrorInfo error_info{{}, {}, {{"http_status_code", code}}};
+    return Status(status_code, "Received HTTP status code: " + std::move(code),
+                  std::move(error_info));
   }
   auto p =
       ParseJsonError(static_cast<int>(http_status_code), std::move(payload));
+  auto metadata = absl::StrJoin(
+      p.second.metadata().begin(), p.second.metadata().end(), ", ",
+      [](std::string* out, std::pair<std::string, std::string> const& p) {
+        *out = p.first + "=" + p.second;
+      });
   return Status(status_code, std::move(p.first), std::move(p.second));
 }
 
