@@ -24,14 +24,11 @@
 #include "google/cloud/internal/retry_policy_impl.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
-// #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/strings/match.h"
 #include <chrono>
-// #include <cstdint>
 #include <string>
-// #include <vector>
 
 namespace google {
 namespace cloud {
@@ -72,18 +69,14 @@ class RegionalAccessBoundaryTokenManager
       Options options);
 
   static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
+      std::shared_ptr<Credentials> child,
       std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options);
 
-  // Used for testing.
-  static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
-      std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options,
-      std::function<std::unique_ptr<BackoffPolicy>()>
-          failed_lookup_backoff_policy_fn,
-      std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
-      AllowedLocationsResponse allowed_locations = AllowedLocationsResponse{});
+  static std::chrono::seconds TtlGracePeriod();
+  static std::chrono::seconds TokenTtl();
 
-  static bool DoesEndpointRequireToken(std::string_view endpoint);
-
+  // Decorator overrides from Credentials that simply call the same method on
+  // child_.
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       absl::optional<std::string> const& signing_service_account,
       std::string const& string_to_sign) const override;
@@ -96,13 +89,15 @@ class RegionalAccessBoundaryTokenManager
   StatusOr<std::string> project_id(Options const&) const override;
   StatusOr<rest_internal::HttpHeader> Authorization(
       std::chrono::system_clock::time_point tp) override;
-  StatusOr<rest_internal::HttpHeader> AllowedLocations(
-      std::chrono::system_clock::time_point tp,
-      std::string_view endpoint) override;
   StatusOr<AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
   Credentials::AllowedLocationsRequestType AllowedLocationsRequest()
       const override;
+
+  // Decorator override that has an implementation.
+  StatusOr<rest_internal::HttpHeader> AllowedLocations(
+      std::chrono::system_clock::time_point tp,
+      std::string_view endpoint) override;
 
   template <typename Request>
   StatusOr<rest_internal::HttpHeader> GetAllowedLocationsHeader(
@@ -125,6 +120,15 @@ class RegionalAccessBoundaryTokenManager
     return rest_internal::HttpHeader{};
   }
 
+  // Used for testing.
+  static std::shared_ptr<RegionalAccessBoundaryTokenManager> Create(
+      std::shared_ptr<Credentials> child,
+      std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options,
+      std::function<std::unique_ptr<BackoffPolicy>()>
+          failed_lookup_backoff_policy_fn,
+      std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
+      AllowedLocationsResponse allowed_locations = AllowedLocationsResponse{});
+
   // Snapshot read useful only in testing.
   bool IsOnCooldown() const {
     std::scoped_lock lock(mu_);
@@ -138,9 +142,6 @@ class RegionalAccessBoundaryTokenManager
     return refresh_in_progress_;
   }
 
-  static std::chrono::seconds TtlGracePeriod();
-  static std::chrono::seconds TokenTtl();
-
  private:
   class RefreshTokenRetryPolicy : public ::google::cloud::RetryPolicy {
    public:
@@ -149,15 +150,8 @@ class RegionalAccessBoundaryTokenManager
 
   class RefreshTokenLimitedTimeRetryPolicy;
 
-  // RegionalAccessBoundaryTokenManager(
-  //     std::shared_ptr<MinimalIamCredentialsRest> iam_stub,
-  //     std::unique_ptr<rest_internal::RestPureBackgroundThreads> background,
-  //     Options options,
-  //     std::function<std::unique_ptr<BackoffPolicy>()>
-  //         failed_lookup_backoff_policy_fn,
-  //     std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
-  //     AllowedLocationsResponse allowed_locations =
-  //     AllowedLocationsResponse{});
+  static bool DoesEndpointRequireToken(std::string_view endpoint);
+  static std::unique_ptr<BackoffPolicy> FailedLookupBackoffPolicy();
 
   RegionalAccessBoundaryTokenManager(
       std::shared_ptr<Credentials> child,
@@ -168,8 +162,6 @@ class RegionalAccessBoundaryTokenManager
           failed_lookup_backoff_policy_fn,
       std::shared_ptr<Clock> clock = std::make_shared<Clock>(),
       AllowedLocationsResponse allowed_locations = AllowedLocationsResponse{});
-
-  static std::unique_ptr<BackoffPolicy> FailedLookupBackoffPolicy();
 
   bool IsTokenValid(std::scoped_lock<std::mutex> const&,
                     std::chrono::system_clock::time_point tp) const;

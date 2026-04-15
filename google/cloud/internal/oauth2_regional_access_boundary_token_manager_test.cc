@@ -29,9 +29,34 @@ namespace {
 
 using ::google::cloud::testing_util::IsOkAndHolds;
 using ::testing::A;
+using ::testing::Eq;
 using ::testing::IsEmpty;
 using ::testing::MockFunction;
 using ::testing::Return;
+
+class MockCredentials : public Credentials {
+ public:
+  MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
+              (absl::optional<std::string> const&, std::string const&),
+              (const, override));
+  MOCK_METHOD(std::string, AccountEmail, (), (const, override));
+  MOCK_METHOD(std::string, KeyId, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, universe_domain, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, universe_domain,
+              (google::cloud::Options const&), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (), (const, override));
+  MOCK_METHOD(StatusOr<std::string>, project_id, (Options const&),
+              (const, override));
+  MOCK_METHOD(StatusOr<rest_internal::HttpHeader>, Authorization,
+              (std::chrono::system_clock::time_point), (override));
+  MOCK_METHOD(StatusOr<rest_internal::HttpHeader>, AllowedLocations,
+              (std::chrono::system_clock::time_point, std::string_view),
+              (override));
+  MOCK_METHOD(StatusOr<AccessToken>, GetToken,
+              (std::chrono::system_clock::time_point), (override));
+  MOCK_METHOD(AllowedLocationsRequestType, AllowedLocationsRequest, (),
+              (const, override));
+};
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
@@ -44,28 +69,6 @@ class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
   MOCK_METHOD(StatusOr<AllowedLocationsResponse>, AllowedLocations,
               (WorkforceIdentityAllowedLocationsRequest const&), (override));
   MOCK_METHOD(StatusOr<std::string>, universe_domain, (Options const& options),
-              (override, const));
-};
-
-class MockRestPureCompletionQueueImpl
-    : public rest_internal::RestPureCompletionQueueInterface {
- public:
-  MOCK_METHOD(void, Run, (), (override));
-  MOCK_METHOD(void, Shutdown, (), (override));
-  MOCK_METHOD(void, CancelAll, (), (override));
-  MOCK_METHOD(future<StatusOr<std::chrono::system_clock::time_point>>,
-              MakeDeadlineTimer,
-              (std::chrono::system_clock::time_point deadline), (override));
-  MOCK_METHOD(future<StatusOr<std::chrono::system_clock::time_point>>,
-              MakeRelativeTimer, (std::chrono::nanoseconds), (override));
-  MOCK_METHOD(void, RunAsync, (std::unique_ptr<internal::RunAsyncBase>),
-              (override));
-};
-
-class MockRestPureBackgroundThreads
-    : public rest_internal::RestPureBackgroundThreads {
- public:
-  MOCK_METHOD(rest_internal::RestPureCompletionQueue, cq, (),
               (override, const));
 };
 
@@ -99,16 +102,19 @@ TEST(RegionalAccessBoundaryTokenManagerRetryTraitsTest, RetryTraits) {
 class RegionalAccessBoundaryTokenManagerTest : public ::testing::Test {
  protected:
   RegionalAccessBoundaryTokenManagerTest()
-      : mock_iam_stub_(std::make_shared<MockMinimalIamCredentialsRest>()),
+      : mock_credentials_(std::make_shared<MockCredentials>()),
+        mock_iam_stub_(std::make_shared<MockMinimalIamCredentialsRest>()),
         fake_clock_(std::make_shared<testing_util::FakeSystemClock>()) {}
 
+  std::shared_ptr<MockCredentials> mock_credentials_;
   std::shared_ptr<MockMinimalIamCredentialsRest> mock_iam_stub_;
   std::shared_ptr<testing_util::FakeSystemClock> fake_clock_;
 };
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderNonApplicableEndpoints) {
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
+                                                            mock_iam_stub_, {});
 
   ServiceAccountAllowedLocationsRequest request;
   auto header = manager->GetAllowedLocationsHeader(
@@ -136,8 +142,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   allowed_locations.encoded_locations = "encoded-location";
 
   auto manager = RegionalAccessBoundaryTokenManager::Create(
-      mock_iam_stub_, {}, backoff_fn.AsStdFunction(), fake_clock_,
-      allowed_locations);
+      mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction(),
+      fake_clock_, allowed_locations);
 
   fake_clock_->AdvanceTime(std::chrono::seconds(1));
 
@@ -198,7 +204,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
         return response;
       });
 
-  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_iam_stub_, {});
+  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
+                                                            mock_iam_stub_, {});
 
   ServiceAccountAllowedLocationsRequest request;
   auto header = manager->GetAllowedLocationsHeader(
@@ -242,7 +249,7 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   });
 
   auto manager = RegionalAccessBoundaryTokenManager::Create(
-      mock_iam_stub_, {}, backoff_fn.AsStdFunction());
+      mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction());
 
   ServiceAccountAllowedLocationsRequest request;
   auto header = manager->GetAllowedLocationsHeader(
@@ -278,6 +285,53 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
       request, std::chrono::system_clock::now(), "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(rest_internal::HttpHeader{
                           "x-allowed-locations", response.encoded_locations}));
+}
+
+TEST_F(RegionalAccessBoundaryTokenManagerTest, DecoratorMethodPassThrough) {
+  auto now = std::chrono::system_clock::now();
+  auto options = Options{}.set<UserProjectOption>("my-user-project");
+
+  EXPECT_CALL(*mock_credentials_, SignBlob(Eq("sa"), Eq("string")))
+      .WillOnce(Return(StatusOr<std::vector<std::uint8_t>>({42})));
+  EXPECT_CALL(*mock_credentials_, AccountEmail).WillOnce(Return("my-email"));
+  EXPECT_CALL(*mock_credentials_, KeyId).WillOnce(Return("my-keyid"));
+  EXPECT_CALL(*mock_credentials_, universe_domain())
+      .WillOnce(Return(StatusOr<std::string>("my-ud")));
+  EXPECT_CALL(*mock_credentials_,
+              universe_domain(A<google::cloud::Options const&>()))
+      .WillOnce([](Options const& opts) -> StatusOr<std::string> {
+        EXPECT_EQ(opts.get<UserProjectOption>(), "my-user-project");
+        return std::string{"my-ud"};
+      });
+  EXPECT_CALL(*mock_credentials_, project_id())
+      .WillOnce(Return(StatusOr<std::string>("my-project")));
+  EXPECT_CALL(*mock_credentials_,
+              project_id(A<google::cloud::Options const&>()))
+      .WillOnce([](Options const& opts) -> StatusOr<std::string> {
+        EXPECT_EQ(opts.get<UserProjectOption>(), "my-user-project");
+        return std::string{"my-project"};
+      });
+  EXPECT_CALL(*mock_credentials_, Authorization(Eq(now)))
+      .WillOnce(Return(StatusOr<rest_internal::HttpHeader>{}));
+  EXPECT_CALL(*mock_credentials_, GetToken(Eq(now)))
+      .WillOnce(Return(StatusOr<AccessToken>{}));
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillOnce(
+          Return(Credentials::AllowedLocationsRequestType{std::monostate{}}));
+
+  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
+                                                            mock_iam_stub_, {});
+
+  (void)manager->SignBlob("sa", "string");
+  (void)manager->AccountEmail();
+  (void)manager->KeyId();
+  (void)manager->universe_domain();
+  (void)manager->universe_domain(options);
+  (void)manager->project_id();
+  (void)manager->project_id(options);
+  (void)manager->Authorization(now);
+  (void)manager->GetToken(now);
+  (void)manager->AllowedLocationsRequest();
 }
 
 }  // namespace

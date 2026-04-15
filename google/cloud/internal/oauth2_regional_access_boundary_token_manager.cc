@@ -38,7 +38,8 @@ auto constexpr kFailedLookupBackoffScaling = 1.75;
 
 bool RegionalAccessBoundaryTokenManager::RetryTraits::IsPermanentFailure(
     Status const& s) {
-  // Http status codes 500, 502, 503, and 504 are mapped to kUnavailable.
+  // Http status codes 500, 502, 503, and 504 are mapped to kUnavailable, and
+  // some others that we don't mind retrying.
   return s.code() != StatusCode::kUnavailable;
 }
 
@@ -97,10 +98,11 @@ RegionalAccessBoundaryTokenManager::Create(std::shared_ptr<Credentials> child,
 
 std::shared_ptr<RegionalAccessBoundaryTokenManager>
 RegionalAccessBoundaryTokenManager::Create(
+    std::shared_ptr<Credentials> child,
     std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options) {
   return std::shared_ptr<RegionalAccessBoundaryTokenManager>(
       new RegionalAccessBoundaryTokenManager(
-          nullptr, std::move(iam_stub),
+          std::move(child), std::move(iam_stub),
           std::make_unique<
               rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(),
           std::move(options), FailedLookupBackoffPolicy,
@@ -109,13 +111,14 @@ RegionalAccessBoundaryTokenManager::Create(
 
 std::shared_ptr<RegionalAccessBoundaryTokenManager>
 RegionalAccessBoundaryTokenManager::Create(
+    std::shared_ptr<Credentials> child,
     std::shared_ptr<MinimalIamCredentialsRest> iam_stub, Options options,
     std::function<std::unique_ptr<BackoffPolicy>()>
         failed_lookup_backoff_policy_fn,
     std::shared_ptr<Clock> clock, AllowedLocationsResponse allowed_locations) {
   return std::shared_ptr<RegionalAccessBoundaryTokenManager>(
       new RegionalAccessBoundaryTokenManager(
-          nullptr, std::move(iam_stub),
+          std::move(child), std::move(iam_stub),
           std::make_unique<
               rest_internal::AutomaticallyCreatedRestPureBackgroundThreads>(),
           std::move(options), std::move(failed_lookup_backoff_policy_fn),
@@ -175,6 +178,34 @@ std::chrono::seconds RegionalAccessBoundaryTokenManager::TokenTtl() {
   return kTokenTtl;
 }
 
+StatusOr<rest_internal::HttpHeader>
+RegionalAccessBoundaryTokenManager::AllowedLocations(
+    std::chrono::system_clock::time_point tp, std::string_view endpoint) {
+  auto request = child_->AllowedLocationsRequest();
+  struct Visitor {
+    StatusOr<rest_internal::HttpHeader> operator()(std::monostate) const {
+      return rest_internal::HttpHeader{};
+    }
+    StatusOr<rest_internal::HttpHeader> operator()(
+        ServiceAccountAllowedLocationsRequest const& r) const {
+      return m.GetAllowedLocationsHeader(r, tp, endpoint);
+    }
+    StatusOr<rest_internal::HttpHeader> operator()(
+        WorkforceIdentityAllowedLocationsRequest const& r) const {
+      return m.GetAllowedLocationsHeader(r, tp, endpoint);
+    }
+    StatusOr<rest_internal::HttpHeader> operator()(
+        WorkloadIdentityAllowedLocationsRequest const& r) const {
+      return m.GetAllowedLocationsHeader(r, tp, endpoint);
+    }
+
+    RegionalAccessBoundaryTokenManager& m;
+    std::chrono::system_clock::time_point tp;
+    std::string_view endpoint;
+  };
+  return std::visit(Visitor{*this, tp, endpoint}, request);
+}
+
 StatusOr<std::vector<std::uint8_t>>
 RegionalAccessBoundaryTokenManager::SignBlob(
     absl::optional<std::string> const& signing_service_account,
@@ -205,42 +236,14 @@ StatusOr<std::string> RegionalAccessBoundaryTokenManager::project_id() const {
 }
 
 StatusOr<std::string> RegionalAccessBoundaryTokenManager::project_id(
-    Options const&) const {
-  return child_->project_id();
+    Options const& options) const {
+  return child_->project_id(options);
 }
 
 StatusOr<rest_internal::HttpHeader>
 RegionalAccessBoundaryTokenManager::Authorization(
     std::chrono::system_clock::time_point tp) {
   return child_->Authorization(tp);
-}
-
-StatusOr<rest_internal::HttpHeader>
-RegionalAccessBoundaryTokenManager::AllowedLocations(
-    std::chrono::system_clock::time_point tp, std::string_view endpoint) {
-  auto request = child_->AllowedLocationsRequest();
-  struct Visitor {
-    StatusOr<rest_internal::HttpHeader> operator()(std::monostate) const {
-      return rest_internal::HttpHeader{};
-    }
-    StatusOr<rest_internal::HttpHeader> operator()(
-        ServiceAccountAllowedLocationsRequest const& r) const {
-      return m.GetAllowedLocationsHeader(r, tp, endpoint);
-    }
-    StatusOr<rest_internal::HttpHeader> operator()(
-        WorkforceIdentityAllowedLocationsRequest const& r) const {
-      return m.GetAllowedLocationsHeader(r, tp, endpoint);
-    }
-    StatusOr<rest_internal::HttpHeader> operator()(
-        WorkloadIdentityAllowedLocationsRequest const& r) const {
-      return m.GetAllowedLocationsHeader(r, tp, endpoint);
-    }
-
-    RegionalAccessBoundaryTokenManager& m;
-    std::chrono::system_clock::time_point tp;
-    std::string_view endpoint;
-  };
-  return std::visit(Visitor{*this, tp, endpoint}, request);
 }
 
 StatusOr<AccessToken> RegionalAccessBoundaryTokenManager::GetToken(
