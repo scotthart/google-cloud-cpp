@@ -183,7 +183,14 @@ ExternalAccountCredentials::ExternalAccountCredentials(
 
 StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
+  if (info_.token_source) {
+    std::cout << __PRETTY_FUNCTION__ << ": valid token_source" << std::endl;
+  } else {
+    std::cout << __PRETTY_FUNCTION__ << ": INvalid token_source" << std::endl;
+  }
   auto subject_token = (info_.token_source)(client_factory_, options_);
+  std::cout << __PRETTY_FUNCTION__ << ": made subject token call" << std::endl;
   if (!subject_token) return std::move(subject_token).status();
 
   auto form_data = std::vector<std::pair<std::string, std::string>>{
@@ -194,15 +201,17 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
       {"subject_token_type", info_.subject_token_type},
       {"subject_token", subject_token->token},
   };
-
+  std::cout << __PRETTY_FUNCTION__ << ": checking for workforce" << std::endl;
   // Workforce Identity is handled at the org level and requires the userProject
   // header. Workload Identity is handled at the project level and doesn't
   // require the header.
-  if (info_.IsWorkforceIdentityFederation()) {
+  if (info_.IsWorkforceIdentityFederation() &&
+      info_.workforce_pool_user_project.has_value()) {
     form_data.emplace_back(
         "options", absl::StrCat(R"({"userProject": ")",
                                 *info_.workforce_pool_user_project, R"("})"));
   }
+  std::cout << __PRETTY_FUNCTION__ << ": checked for workforce" << std::endl;
 
   auto request =
       rest_internal::RestRequest(info_.token_url)
@@ -260,20 +269,24 @@ StatusOr<AccessToken> ExternalAccountCredentials::GetToken(
 
 Credentials::AllowedLocationsRequestType
 ExternalAccountCredentials::AllowedLocationsRequest() const {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   Credentials::AllowedLocationsRequestType request = std::monostate{};
   // TODO(#16079): Remove conditional and else clause when GA.
 #ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
   if (info_.IsWorkforceIdentityFederation()) {
+    std::cout << __PRETTY_FUNCTION__ << ": workforce" << std::endl;
     auto wif = std::get<WorkforceIdentityFederationInfo>(
         info_.identity_federation_info);
     request = WorkforceIdentityAllowedLocationsRequest{wif.pool_id};
   } else if (info_.IsWorkloadIdentityFederation()) {
+    std::cout << __PRETTY_FUNCTION__ << ": workload" << std::endl;
     auto wif = std::get<WorkloadIdentityFederationInfo>(
         info_.identity_federation_info);
     request =
         WorkloadIdentityAllowedLocationsRequest{wif.project_id, wif.pool_id};
   }
 #endif
+  std::cout << __PRETTY_FUNCTION__ << ": monostate" << std::endl;
   return request;
 }
 

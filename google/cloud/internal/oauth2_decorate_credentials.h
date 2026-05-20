@@ -42,7 +42,7 @@ std::shared_ptr<oauth2_internal::Credentials> WithLogging(
 std::shared_ptr<oauth2_internal::Credentials> WithCaching(
     std::shared_ptr<oauth2_internal::Credentials> impl);
 
-/// Add regional access boundary decorator to the credentials
+/// Add regional access boundary decorator to the credentials.
 std::shared_ptr<oauth2_internal::Credentials> WithRegionalAccessBoundary(
     std::shared_ptr<oauth2_internal::Credentials> impl,
     HttpClientFactory client_factory, Options options);

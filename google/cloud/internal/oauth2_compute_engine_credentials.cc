@@ -213,6 +213,7 @@ StatusOr<AccessToken> ComputeEngineCredentials::GetToken(
 
 std::string ComputeEngineCredentials::AccountEmail() const {
   std::lock_guard<std::mutex> lock(service_account_mu_);
+  std::cout << __func__ << std::endl;
   // Force a refresh on the account info.
   RetrieveServiceAccountInfo(lock);
   return service_account_email_;
@@ -241,6 +242,7 @@ StatusOr<std::string> ComputeEngineCredentials::project_id(
 
 Credentials::AllowedLocationsRequestType
 ComputeEngineCredentials::AllowedLocationsRequest() const {
+  std::cout << __func__ << std::endl;
   // TODO(#16079): Remove conditional and else clause when GA.
 #ifdef GOOGLE_CLOUD_CPP_TESTING_ENABLE_RAB
   return ServiceAccountAllowedLocationsRequest{AccountEmail()};

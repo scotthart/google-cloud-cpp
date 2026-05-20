@@ -31,9 +31,12 @@ std::shared_ptr<oauth2_internal::Credentials> Decorate(
   impl = WithLogging(std::move(impl), opts, "cached");
   if (!std::holds_alternative<std::monostate>(
           impl->AllowedLocationsRequest())) {
+    std::cout << __func__ << ": decorate with RAB" << std::endl;
     impl = WithRegionalAccessBoundary(std::move(impl),
                                       std::move(client_factory), opts);
     impl = WithLogging(std::move(impl), opts, "rab");
+  } else {
+    std::cout << __func__ << ": NOT decorate with RAB" << std::endl;
   }
   return impl;
 }

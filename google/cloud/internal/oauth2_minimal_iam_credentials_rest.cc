@@ -89,6 +89,7 @@ std::string MinimalIamCredentialsRestStub::MakeRequestPath(
 
 StatusOr<AllowedLocationsResponse>
 MinimalIamCredentialsRestStub::AllowedLocationsHelper(std::string path) {
+  std::cout << __PRETTY_FUNCTION__ << std::endl;
   auto authorization_header =
       credentials_->Authorization(std::chrono::system_clock::now());
   if (!authorization_header) return std::move(authorization_header).status();

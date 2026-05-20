@@ -133,10 +133,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
         result = MakeErrorCredentials(std::move(info).status());
         return;
       }
-      result = Decorate(
+      auto creds =
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-              *std::move(info), client_factory_, cfg.options()),
-          std::move(client_factory_), cfg.options());
+              *std::move(info), client_factory_, cfg.options());
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
     void visit(ApiKeyConfig const& cfg) override {
@@ -145,11 +146,11 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ComputeEngineCredentialsConfig const& cfg) override {
-      result = Decorate(
-          std::make_shared<
-              google::cloud::oauth2_internal::ComputeEngineCredentials>(
-              cfg.options(), client_factory_),
-          std::move(client_factory_), cfg.options());
+      auto creds = std::make_shared<
+          google::cloud::oauth2_internal::ComputeEngineCredentials>(
+          cfg.options(), client_factory_);
+      result =
+          Decorate(std::move(creds), std::move(client_factory_), cfg.options());
     }
 
    private:

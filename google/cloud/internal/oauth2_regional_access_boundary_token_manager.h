@@ -186,6 +186,7 @@ class RegionalAccessBoundaryTokenManager
                                options = options_]() mutable {
       auto refresh_attempt_fn = [stub](rest_internal::RestContext&,
                                        Options const&, Request const& request) {
+        std::cout << "RAB::RefreshToken: stub->AllowedLocations" << std::endl;
         return stub->AllowedLocations(request);
       };
 

@@ -27,6 +27,8 @@ RUN dnf makecache && \
         openssl-devel patch python python3 \
         python-pip tar unzip w3m wget which zip zlib-devel
 
+RUN dnf makecache && dnf install -y gdb
+
 # Install the Python modules needed to run the storage emulator
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install --upgrade pip

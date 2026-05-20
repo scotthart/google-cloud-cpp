@@ -137,6 +137,9 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   MockFunction<std::unique_ptr<BackoffPolicy>()> backoff_fn;
   EXPECT_CALL(backoff_fn, Call).Times(0);
 
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(WorkforceIdentityAllowedLocationsRequest{}));
+
   AllowedLocationsResponse allowed_locations;
   allowed_locations.locations = {"location1"};
   allowed_locations.encoded_locations = "encoded-location";
@@ -147,9 +150,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 
   fake_clock_->AdvanceTime(std::chrono::seconds(1));
 
-  ServiceAccountAllowedLocationsRequest request;
-  auto header = manager->GetAllowedLocationsHeader(request, fake_clock_->Now(),
-                                                   "service.googleapis.com");
+  auto header =
+      manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
   EXPECT_THAT(header,
               IsOkAndHolds(rest_internal::HttpHeader{
                   "x-allowed-locations", allowed_locations.encoded_locations}));
@@ -161,9 +163,9 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   // Refresh is called due to soft expiry, but current token is still returned.
   EXPECT_CALL(
       *mock_iam_stub_,
-      AllowedLocations(A<ServiceAccountAllowedLocationsRequest const&>()))
+      AllowedLocations(A<WorkforceIdentityAllowedLocationsRequest const&>()))
       .WillOnce([&, f = sync_threads.get_future()](
-                    ServiceAccountAllowedLocationsRequest const&) mutable {
+                    WorkforceIdentityAllowedLocationsRequest const&) mutable {
         f.get();
         return refreshed_allowed_locations;
       });
@@ -172,8 +174,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
       RegionalAccessBoundaryTokenManager::TokenTtl() -
       RegionalAccessBoundaryTokenManager::TtlGracePeriod());
 
-  header = manager->GetAllowedLocationsHeader(request, fake_clock_->Now(),
-                                              "service.googleapis.com");
+  header =
+      manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
   EXPECT_THAT(header,
               IsOkAndHolds(rest_internal::HttpHeader{
                   "x-allowed-locations", allowed_locations.encoded_locations}));
@@ -182,8 +184,8 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 
   // Give background thread a chance to call AllowedLocations.
   std::this_thread::sleep_for(std::chrono::seconds(2));
-  header = manager->GetAllowedLocationsHeader(request, fake_clock_->Now(),
-                                              "service.googleapis.com");
+  header =
+      manager->AllowedLocations(fake_clock_->Now(), "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(rest_internal::HttpHeader{
                           "x-allowed-locations",
                           refreshed_allowed_locations.encoded_locations}));
@@ -191,39 +193,44 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderNoInitialValidTokenWithRetry) {
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(WorkloadIdentityAllowedLocationsRequest{}));
+
   AllowedLocationsResponse response;
   response.locations = {"location1"};
   response.encoded_locations = "encoded-location";
   EXPECT_CALL(
       *mock_iam_stub_,
-      AllowedLocations(A<ServiceAccountAllowedLocationsRequest const&>()))
-      .WillOnce([&](ServiceAccountAllowedLocationsRequest const&) {
+      AllowedLocations(A<WorkloadIdentityAllowedLocationsRequest const&>()))
+      .WillOnce([&](WorkloadIdentityAllowedLocationsRequest const&) {
         return internal::UnavailableError("unavailable");
       })
-      .WillOnce([&](ServiceAccountAllowedLocationsRequest const&) {
+      .WillOnce([&](WorkloadIdentityAllowedLocationsRequest const&) {
         return response;
       });
 
   auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
                                                             mock_iam_stub_, {});
 
-  ServiceAccountAllowedLocationsRequest request;
-  auto header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                          "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
   // Give the background thread a chance to run the future::then callback
   // and update the token.
   std::this_thread::sleep_for(std::chrono::seconds(2));
 
-  header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(rest_internal::HttpHeader{
                           "x-allowed-locations", response.encoded_locations}));
 }
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest,
        GetAllowedLocationsHeaderPermanentFailureAndRecovery) {
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(ServiceAccountAllowedLocationsRequest{}));
+
   AllowedLocationsResponse response;
   response.locations = {"location1"};
   response.encoded_locations = "encoded-location";
@@ -251,40 +258,72 @@ TEST_F(RegionalAccessBoundaryTokenManagerTest,
   auto manager = RegionalAccessBoundaryTokenManager::Create(
       mock_credentials_, mock_iam_stub_, {}, backoff_fn.AsStdFunction());
 
-  ServiceAccountAllowedLocationsRequest request;
-  auto header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                          "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
   // Give the background thread a chance to run and update the token.
   std::this_thread::sleep_for(std::chrono::seconds(2));
 
-  header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
   // Permanent error encountered; verify cooldown has been set.
   EXPECT_TRUE(manager->IsOnCooldown());
 
   // With no valid token and active cooldown, no call to AllowedLocations on the
   // iam stub should occur.
-  header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
   // With the mock backoff returning a short failure cooldown, let it expire.
   std::this_thread::sleep_for(std::chrono::seconds(1));
 
-  header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 
   // Give the background thread a chance to run and update the token.
   std::this_thread::sleep_for(std::chrono::seconds(2));
 
-  header = manager->GetAllowedLocationsHeader(
-      request, std::chrono::system_clock::now(), "service.googleapis.com");
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
   EXPECT_THAT(header, IsOkAndHolds(rest_internal::HttpHeader{
                           "x-allowed-locations", response.encoded_locations}));
+}
+
+TEST_F(RegionalAccessBoundaryTokenManagerTest,
+       GetAllowedLocationsMonostateRequest) {
+  EXPECT_CALL(*mock_credentials_, AllowedLocationsRequest)
+      .WillRepeatedly(Return(std::monostate{}));
+
+  EXPECT_CALL(
+      *mock_iam_stub_,
+      AllowedLocations(A<ServiceAccountAllowedLocationsRequest const&>()))
+      .Times(0);
+  EXPECT_CALL(
+      *mock_iam_stub_,
+      AllowedLocations(A<WorkforceIdentityAllowedLocationsRequest const&>()))
+      .Times(0);
+  EXPECT_CALL(
+      *mock_iam_stub_,
+      AllowedLocations(A<WorkloadIdentityAllowedLocationsRequest const&>()))
+      .Times(0);
+
+  auto manager = RegionalAccessBoundaryTokenManager::Create(mock_credentials_,
+                                                            mock_iam_stub_, {});
+  auto header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                          "service.googleapis.com");
+  EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
+
+  // Give the background thread a chance to run the future::then callback
+  // and update the token.
+  std::this_thread::sleep_for(std::chrono::seconds(2));
+
+  header = manager->AllowedLocations(std::chrono::system_clock::now(),
+                                     "service.googleapis.com");
+  EXPECT_THAT(header, IsOkAndHolds(IsEmpty()));
 }
 
 TEST_F(RegionalAccessBoundaryTokenManagerTest, DecoratorMethodPassThrough) {
