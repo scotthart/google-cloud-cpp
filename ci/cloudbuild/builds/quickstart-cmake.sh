@@ -64,5 +64,6 @@ io::run cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
   -DCMAKE_TOOLCHAIN_FILE="${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake" \
+  -DVCPKG_OVERLAY_PORTS="ci/verify_quickstart/vcpkg-overlays" \
   -DFEATURES="${feature_list}"
 io::run cmake --build "${PROJECT_ROOT}/cmake-out/quickstart" --target verify-quickstart-cmake
