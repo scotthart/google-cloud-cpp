@@ -71,9 +71,9 @@ try {
     if (-not $VsInstallPath) {
         throw "Visual Studio installation not found!"
     }
-    $VcVarsPath = Join-Path $VsInstallPath "VC\Auxiliary\Build\vcvarsall.x64.bat"
-    Write-Host "Running vcvarsall.bat: $VcVarsPath"
-    cmd.exe /c "`"$VcVarsPath`" && set" | Foreach-Object {
+    $VcVarsPath = Join-Path $VsInstallPath "VC\Auxiliary\Build\vcvarsall.bat"
+    Write-Host "Running vcvarsall.bat: $VcVarsPath x64"
+    cmd.exe /c "`"$VcVarsPath`" x64 && set" | Foreach-Object {
         if ($_ -match "^(.*?)=(.*)$") {
             Set-Content "env:\$($Matches[1])" $Matches[2]
         }

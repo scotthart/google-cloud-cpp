@@ -83,9 +83,9 @@ try {
         Write-Host "Visual Studio Build Tools installed successfully."
     }
 
-    # 8. Run Sysprep generalization and shutdown
-    Write-Host "Running Sysprep generalization and shutdown..."
-    & $env:SystemRoot\System32\Sysprep\Sysprep.exe /oobe /generalize /shutdown /quiet
+    # 8. Run GCE Sysprep generalization wrapper (this generalizes the VM and shuts it down)
+    Write-Host "Running GCE Sysprep wrapper..."
+    & "C:\Program Files\Google\Compute Engine\sysprep\gcesysprep.bat"
 }
 catch {
     Write-Error "Error occurred during image provisioning: $_"
