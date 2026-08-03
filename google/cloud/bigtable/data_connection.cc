@@ -214,8 +214,7 @@ std::shared_ptr<DataConnection> MakeDataConnection(Options options) {
     std::string client_uid = google::cloud::internal::Sample(
         gen, 16, "abcdefghijklmnopqrstuvwxyz0123456789");
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_GRPC_OTEL_METRICS
-    if (bigtable::internal::IsDirectPath(options) &&
-        options.has<bigtable_internal::InstanceChannelAffinityOption>() &&
+    if (options.has<bigtable_internal::InstanceChannelAffinityOption>() &&
         options.get<experimental::DirectPathMetricsModeOption>() ==
             experimental::DirectPathMetricsMode::kEnabled) {
       bigtable_internal::EnableGrpcMetrics(metric_service_connection, options,

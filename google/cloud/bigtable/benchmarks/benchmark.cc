@@ -128,7 +128,9 @@ void Benchmark::DeleteTable() {
 }
 
 Table Benchmark::MakeTable(Options connection_opts) const {
-  auto connection_options = MergeOptions(std::move(connection_opts), opts_);
+  auto connection_options =
+      MergeOptions(std::move(connection_opts), opts_)
+          .set<bigtable::MetricsPeriodOption>(std::chrono::seconds(5));
   auto table_opts = Options{}.set<AppProfileIdOption>(options_.app_profile_id);
   return Table(
       MakeDataConnection({InstanceResource(Project(options_.project_id),
