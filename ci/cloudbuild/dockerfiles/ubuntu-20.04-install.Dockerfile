@@ -26,8 +26,8 @@ RUN apt-get update && \
         curl \
         gawk \
         git \
-        gcc \
-        g++ \
+        gcc-10 \
+        g++-10 \
         cmake \
         libcurl4-openssl-dev \
         libssl-dev \
@@ -48,6 +48,10 @@ RUN apt-get update && \
         apt-utils \
         ca-certificates \
         apt-transport-https
+
+#RUN apt-get update && \
+#    apt-get --no-install-recommends install -y clang-12
+
 
 # Install Python packages used in the integration tests.
 RUN update-alternatives --install /usr/bin/python python $(which python3) 10
@@ -165,7 +169,7 @@ RUN curl -fsSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.24
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -fsSL https://github.com/grpc/grpc/archive/v1.71.2.tar.gz | \
+RUN curl -fsSL https://github.com/scotthart/grpc/archive/4dd1a0741f50098fa4f87b8a1f7612ec680f6590.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -207,3 +211,6 @@ RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/relea
 
 # Update the ld.conf cache in case any libraries were installed in /usr/local/lib*
 RUN ldconfig /usr/local/lib*
+
+ENV CC=clang
+ENV CXX=clang++

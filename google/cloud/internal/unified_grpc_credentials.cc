@@ -22,6 +22,7 @@
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
 #include <grpcpp/security/credentials.h>
+#include <nlohmann/json.hpp>
 #include <fstream>
 
 namespace {
@@ -153,15 +154,34 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ComputeEngineCredentialsConfig const&) override {
       result = std::make_unique<GrpcComputeEngineAuthentication>(options);
     }
-    void visit(GDCHServiceAccountConfig const&) override {
-      result = std::make_unique<GrpcErrorCredentialsAuthentication>(
-          ErrorCredentialsConfig{
-              UnimplementedError("GDCHServiceAccountCredentials are not yet "
-                                 "supported for gRPC endpoints",
-                                 GCP_ERROR_INFO())});
-      // if file path is specified, read json from it, handle errors
-      // else use json from cfg
-      // create
+    void visit(GDCHServiceAccountConfig const& cfg) override {
+      auto gdch_creds = grpc::GDCHServiceAccountCredentials(cfg.json_object(),
+                                                            cfg.audience());
+      if (!gdch_creds) {
+        result = std::make_unique<GrpcErrorCredentialsAuthentication>(
+            ErrorCredentialsConfig{InternalError(
+                "Error creating grpc::GDCHServiceAccountCredentials ",
+                GCP_ERROR_INFO())});
+        return;
+      }
+
+      std::string ca_cert_path;
+      auto j = nlohmann::json::parse(cfg.json_object());
+      if (!j.is_discarded() && j.is_object()) {
+        ca_cert_path = j.value("ca_cert_path", "");
+      }
+      grpc::SslCredentialsOptions ssl_options;
+      if (!ca_cert_path.empty()) {
+        std::ifstream is(ca_cert_path);
+        ssl_options.pem_root_certs =
+            std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
+      } else {
+        auto cainfo = LoadCAInfo(options);
+        if (cainfo) ssl_options.pem_root_certs = std::move(*cainfo);
+      }
+      result = std::make_unique<GrpcChannelCredentialsAuthentication>(
+          grpc::CompositeChannelCredentials(grpc::SslCredentials(ssl_options),
+                                            gdch_creds));
     }
 
   } visitor(std::move(cq), std::move(options));

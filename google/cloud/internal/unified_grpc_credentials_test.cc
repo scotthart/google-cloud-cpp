@@ -23,6 +23,7 @@
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
+#include "background_threads_impl.h"
 #include <gmock/gmock.h>
 #include <fstream>
 

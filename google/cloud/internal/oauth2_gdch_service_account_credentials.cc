@@ -156,6 +156,8 @@ StatusOr<std::string> GDCHServiceAccountCredentials::MakeJWTAssertion(
 StatusOr<nlohmann::json> GDCHServiceAccountCredentials::CreateRefreshPayload(
     Info const& info, std::chrono::system_clock::time_point now) {
   auto [header, payload] = AssertionComponentsFromInfo(info, now);
+  std::cout << __func__ << ": header=\n" << header << std::endl;
+  std::cout << __func__ << ": claim=\n" << payload << std::endl;
   auto jwt = MakeJWTAssertion(header, payload, info.private_key);
   if (!jwt) return std::move(jwt.status());
   return nlohmann::json{
@@ -252,6 +254,7 @@ StatusOr<AccessToken> GDCHServiceAccountCredentials::GetToken(
   auto payload = CreateRefreshPayload(info_, tp);
   if (!payload) return std::move(payload).status();
   rest_internal::RestContext context;
+  std::cout << __func__ << ":payload=\n" << payload->dump() << std::endl;
   auto response = client->Post(context, request, {payload->dump()});
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));

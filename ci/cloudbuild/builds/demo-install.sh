@@ -28,6 +28,9 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/quickstart.sh
 source module ci/lib/io.sh
 
+export CC=clang
+export CXX=clang
+
 # We cannot use `cmake --install` below. That flag was introduced
 # in CMake == 3.15, and we support CMake >= 3.13.
 
