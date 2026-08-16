@@ -355,6 +355,11 @@ void MetricsOperationContextFactory::InitializeProvider(
   context->AddMetricReader(std::move(reader));
   provider_ = opentelemetry::sdk::metrics::MeterProviderFactory::Create(
       std::move(context));
+  auto metric = std::make_shared<DirectAccessCompatibility>(
+      kBigtableMetricNamePath, provider_);
+  direct_access_compatibility_ = std::shared_ptr<DirectAccessCompatibility>(
+      static_cast<DirectAccessCompatibility*>(
+          metric->clone(client_resource_labels_).release()));
 }
 
 std::shared_ptr<OperationContext> MetricsOperationContextFactory::ReadRow(
