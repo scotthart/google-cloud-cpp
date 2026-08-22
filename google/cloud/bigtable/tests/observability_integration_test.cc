@@ -343,9 +343,9 @@ TEST_F(ObservabilityIntegrationTest, VerifyDirectPathGrpcMetrics) {
   if (expected_location.has_value() && !expected_location->empty()) {
     std::vector<absl::string_view> parts =
         absl::StrSplit(*expected_location, '-');
-    auto region_prefix = parts.size() >= 2
-                             ? absl::StrCat(parts[0], "-", parts[1])
-                             : *expected_location;
+    std::string region_prefix = parts.size() >= 2
+                                    ? absl::StrCat(parts[0], "-", parts[1])
+                                    : *expected_location;
     region_val_matcher = StartsWith(region_prefix);
   }
 
@@ -402,7 +402,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
       Options{}.set<EnableMetricsOption>(true).set<MetricsPeriodOption>(
           std::chrono::seconds(5));
 
-  auto const table_id = TableTestEnvironment::table_id();
+  std::string const table_id = TableTestEnvironment::table_id();
   bool const is_dynamic = google::cloud::internal::GetEnv(
                               "GOOGLE_CLOUD_CPP_BIGTABLE_TESTING_CHANNEL_POOL")
                               .value_or("") == "dynamic";
@@ -413,10 +413,10 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
 
   collector_service_.Clear();
   {
-    auto conn = MakeDataConnection(
+    std::shared_ptr<DataConnection> conn = MakeDataConnection(
         {InstanceResource(Project(project_id()), instance_id())}, options);
-    auto table = Table(std::move(conn),
-                       TableResource(project_id(), instance_id(), table_id));
+    Table table(std::move(conn),
+                TableResource(project_id(), instance_id(), table_id));
 
     std::string const row_key = "observability-rpc-RANDOM_TWO_LEAST_USED";
     std::vector<Cell> expected{{row_key, "family4", "c0", 1000, "v1000"},
@@ -424,7 +424,7 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
 
     // Perform mutations and read calls
     Apply(table, row_key, expected);
-    auto actual = ReadRows(table, Filter::RowKeysRegex(row_key));
+    std::vector<Cell> actual = ReadRows(table, Filter::RowKeysRegex(row_key));
     CheckEqualUnordered(expected, actual);
 
     // Wait for the periodic 5-second exporter background thread to flush
@@ -432,7 +432,8 @@ TEST_F(ObservabilityIntegrationTest, VerifyOutstandingRpcsMetric) {
     std::this_thread::sleep_for(std::chrono::seconds(6));
   }
 
-  auto recorded = collector_service_.recorded_metrics();
+  std::vector<google::monitoring::v3::CreateTimeSeriesRequest> recorded =
+      collector_service_.recorded_metrics();
   ASSERT_THAT(recorded, Not(IsEmpty()));
   EXPECT_THAT(
       recorded,

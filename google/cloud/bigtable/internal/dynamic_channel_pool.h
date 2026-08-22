@@ -67,7 +67,7 @@ class DynamicChannelPool
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
       bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
-      TransportType transport_type = TransportType::kCloudPath) {
+      TransportType transport_type) {
     auto pool = std::shared_ptr<DynamicChannelPool>(new DynamicChannelPool(
         std::move(instance_name), std::move(cq), std::move(initial_channels),
         std::move(refresh_state), std::move(stub_factory_fn),
@@ -162,8 +162,8 @@ class DynamicChannelPool
       channels_.push_back(stub_factory_fn_(next_channel_id_++, instance_name_,
                                            StubManager::Priming::kNoPriming)
                               .value());
-      auto sor = channels_.front()->instant_outstanding_rpcs();
-      return SelectedChannel<T>{channels_.front(), sor ? *sor : 0};
+      StatusOr<int> rpcs = channels_.front()->instant_outstanding_rpcs();
+      return SelectedChannel<T>{channels_.front(), rpcs ? *rpcs : 0};
     }
     return HandleBadChannels(lk, d);
   }
@@ -177,7 +177,7 @@ class DynamicChannelPool
       std::shared_ptr<ConnectionRefreshState> refresh_state,
       StubFactoryFn stub_factory_fn,
       bigtable::experimental::DynamicChannelPoolSizingPolicy sizing_policy,
-      TransportType transport_type = TransportType::kCloudPath)
+      TransportType transport_type)
       : instance_name_(std::move(instance_name)),
         cq_(std::move(cq)),
         refresh_state_(std::move(refresh_state)),
@@ -263,8 +263,8 @@ class DynamicChannelPool
                               .value());
       std::swap(channels_.front(), channels_.back());
       channel = channels_.front();
-      auto sor = channel->instant_outstanding_rpcs();
-      outstanding_rpcs = sor ? *sor : 0;
+      StatusOr<int> rpcs = channel->instant_outstanding_rpcs();
+      outstanding_rpcs = rpcs ? *rpcs : 0;
     }
     ScheduleRemoveChannels(lk);
     return SelectedChannel<T>{std::move(channel), outstanding_rpcs};

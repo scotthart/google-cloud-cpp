@@ -18,7 +18,9 @@
 #include "google/cloud/bigtable/internal/operation_context.h"
 #include "google/cloud/bigtable/version.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
+#include "google/cloud/bigtable/internal/client_schema_metrics.h"
 #include "google/cloud/bigtable/internal/metrics.h"
+#include "google/cloud/bigtable/internal/table_schema_metrics.h"
 #include "google/cloud/monitoring/v3/metric_connection.h"
 #include "absl/base/call_once.h"
 #include <opentelemetry/sdk/metrics/export/periodic_exporting_metric_reader_factory.h>
@@ -159,6 +161,17 @@ class MetricsOperationContextFactory : public OperationContextFactory {
   MetricHolder prepare_query_metrics_;
   MetricHolder execute_query_metrics_;
 };
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
+
+std::vector<std::shared_ptr<Metric>> CloneMetrics(
+    TableResourceLabels const& resource_labels,
+    TableDataLabels const& data_labels,
+    ClientResourceLabels const& client_resource_labels,
+    std::vector<std::shared_ptr<Metric const>> const& metrics);
 
 #endif  // GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
 
