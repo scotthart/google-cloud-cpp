@@ -304,7 +304,7 @@ Status SessionPool::CreateMultiplexedSession(std::unique_lock<std::mutex>& lk) {
 }
 
 Status SessionPool::CreateMultiplexedSessionSync(
-    StubAndChannel stub_and_channel) {
+    StubAndChannel const& stub_and_channel) {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();
@@ -334,7 +334,8 @@ Status SessionPool::CreateMultiplexedSessionSync(
 }
 
 future<StatusOr<google::spanner::v1::Session>>
-SessionPool::CreateMultiplexedSessionAsync(StubAndChannel stub_and_channel) {
+SessionPool::CreateMultiplexedSessionAsync(
+    StubAndChannel const& stub_and_channel) {
   google::spanner::v1::CreateSessionRequest request;
   request.set_database(db_.FullName());
   auto* session = request.mutable_session();

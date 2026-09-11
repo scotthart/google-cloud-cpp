@@ -196,9 +196,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   Status CreateMultiplexedSession(
       std::unique_lock<std::mutex>& lk);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
-  Status CreateMultiplexedSessionSync(StubAndChannel stub_and_channel);
+  Status CreateMultiplexedSessionSync(StubAndChannel const& stub_and_channel);
   future<StatusOr<google::spanner::v1::Session>> CreateMultiplexedSessionAsync(
-      StubAndChannel stub_and_channel);
+      StubAndChannel const& stub_and_channel);
   Status HandleMultiplexedCreateSessionDone(
       StatusOr<google::spanner::v1::Session> response);
   bool HasValidMultiplexedSession(std::unique_lock<std::mutex> const&) const;

@@ -30,7 +30,6 @@ namespace {
 
 using ::testing::Eq;
 using ::testing::Ge;
-using ::testing::Gt;
 using ::testing::MatchesRegex;
 using ::testing::Optional;
 using ::testing::StrEq;
