@@ -25,37 +25,35 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Generates a 16-character zero-padded lowercase hex random ID from a 64-bit random integer.
-/// On POSIX systems, re-generates the ID if a process fork is detected.
-/// On non-POSIX systems (e.g. Windows), generates once per process lifecycle.
+/// Generates a 16-character zero-padded lowercase hex random ID from a 64-bit
+/// random integer. On POSIX systems, re-generates the ID if a process fork is
+/// detected. On non-POSIX systems (e.g. Windows), generates once per process
+/// lifecycle.
 std::string const& ProcessRandomId();
 
 /// Returns the next sequential process-wide client ID (thread-safe).
 std::uint64_t NextClientId();
 
 /// Formats the static 3-field prefix: "<version>.<process_id>.<client_id>."
-std::string FormatSpannerRequestStaticPrefix(
-    std::uint32_t version,
-    std::string_view process_random_id,
-    std::uint64_t client_id);
+std::string FormatSpannerRequestStaticPrefix(std::uint32_t version,
+                                             std::string_view process_random_id,
+                                             std::uint64_t client_id);
 
 /// Formats full request ID using the cached static prefix:
 /// "<static_prefix><channel_id>.<request_index>.<attempt_index>"
-std::string FormatSpannerRequestId(
-    std::string_view static_prefix,
-    std::uint32_t channel_id,
-    std::uint64_t request_index,
-    std::uint32_t attempt_index);
+std::string FormatSpannerRequestId(std::string_view static_prefix,
+                                   std::uint32_t channel_id,
+                                   std::uint64_t request_index,
+                                   std::uint32_t attempt_index);
 
 /// Convenience overload formatting all 6 fields:
 /// "<version>.<process_id>.<client_id>.<channel_id>.<request_index>.<attempt_index>"
-std::string FormatSpannerRequestId(
-    std::uint32_t version,
-    std::string_view process_random_id,
-    std::uint64_t client_id,
-    std::uint32_t channel_id,
-    std::uint64_t request_index,
-    std::uint32_t attempt_index);
+std::string FormatSpannerRequestId(std::uint32_t version,
+                                   std::string_view process_random_id,
+                                   std::uint64_t client_id,
+                                   std::uint32_t channel_id,
+                                   std::uint64_t request_index,
+                                   std::uint32_t attempt_index);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal

@@ -24,8 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SpannerOperationContext::SpannerOperationContext(
     std::shared_ptr<std::string const> static_prefix,
-    std::uint64_t request_index,
-    std::string_view rpc_name)
+    std::uint64_t request_index, std::string_view rpc_name)
     : static_prefix_(std::move(static_prefix)),
       request_index_(request_index),
       rpc_name_(rpc_name) {}
@@ -66,7 +65,8 @@ void SpannerOperationContext::PreCall(grpc::ClientContext& client_context) {
   if (static_prefix_ != nullptr) {
     current_request_id_ = FormatSpannerRequestId(
         *static_prefix_, channel_id_, request_index_, attempt_index_);
-    client_context.AddMetadata("x-goog-spanner-request-id", current_request_id_);
+    client_context.AddMetadata("x-goog-spanner-request-id",
+                               current_request_id_);
   }
 }
 
@@ -99,9 +99,7 @@ std::uint32_t SpannerOperationContext::channel_id() const {
   return channel_id_;
 }
 
-std::string_view SpannerOperationContext::rpc_name() const {
-  return rpc_name_;
-}
+std::string_view SpannerOperationContext::rpc_name() const { return rpc_name_; }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_internal

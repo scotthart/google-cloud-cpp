@@ -42,7 +42,8 @@ class SpannerOperationContextTest : public ::testing::Test {
 };
 
 TEST_F(SpannerOperationContextTest, PreCallSetsRequestIdHeader) {
-  auto static_prefix = std::make_shared<std::string const>("1.0123456789abcdef.1.");
+  auto static_prefix =
+      std::make_shared<std::string const>("1.0123456789abcdef.1.");
   SpannerOperationContext op_context(static_prefix, 42, "ExecuteSql");
 
   EXPECT_THAT(op_context.request_index(), Eq(42ULL));
@@ -79,7 +80,8 @@ TEST_F(SpannerOperationContextTest, PreCallSetsRequestIdHeader) {
 }
 
 TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
-  auto static_prefix = std::make_shared<std::string const>("1.0123456789abcdef.1.");
+  auto static_prefix =
+      std::make_shared<std::string const>("1.0123456789abcdef.1.");
   SpannerOperationContext op_context(static_prefix, 10, "Commit");
   op_context.BindChannel(2);
 
@@ -108,7 +110,8 @@ TEST_F(SpannerOperationContextTest, MoveConstructAndAssign) {
 }
 
 TEST_F(SpannerOperationContextTest, PostCallAndOnDoneHooks) {
-  auto static_prefix = std::make_shared<std::string const>("1.0123456789abcdef.1.");
+  auto static_prefix =
+      std::make_shared<std::string const>("1.0123456789abcdef.1.");
   SpannerOperationContext op_context(static_prefix, 1, "ExecuteSql");
 
   grpc::ClientContext context;

@@ -57,29 +57,26 @@ std::uint64_t NextClientId() {
   return ++counter;
 }
 
-std::string FormatSpannerRequestStaticPrefix(
-    std::uint32_t version,
-    std::string_view process_random_id,
-    std::uint64_t client_id) {
+std::string FormatSpannerRequestStaticPrefix(std::uint32_t version,
+                                             std::string_view process_random_id,
+                                             std::uint64_t client_id) {
   return absl::StrCat(version, ".", process_random_id, ".", client_id, ".");
 }
 
-std::string FormatSpannerRequestId(
-    std::string_view static_prefix,
-    std::uint32_t channel_id,
-    std::uint64_t request_index,
-    std::uint32_t attempt_index) {
+std::string FormatSpannerRequestId(std::string_view static_prefix,
+                                   std::uint32_t channel_id,
+                                   std::uint64_t request_index,
+                                   std::uint32_t attempt_index) {
   return absl::StrCat(static_prefix, channel_id, ".", request_index, ".",
                       attempt_index);
 }
 
-std::string FormatSpannerRequestId(
-    std::uint32_t version,
-    std::string_view process_random_id,
-    std::uint64_t client_id,
-    std::uint32_t channel_id,
-    std::uint64_t request_index,
-    std::uint32_t attempt_index) {
+std::string FormatSpannerRequestId(std::uint32_t version,
+                                   std::string_view process_random_id,
+                                   std::uint64_t client_id,
+                                   std::uint32_t channel_id,
+                                   std::uint64_t request_index,
+                                   std::uint32_t attempt_index) {
   return absl::StrCat(version, ".", process_random_id, ".", client_id, ".",
                       channel_id, ".", request_index, ".", attempt_index);
 }

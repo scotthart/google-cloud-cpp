@@ -25,7 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * An abstract base class for service-specific operation contexts across retries.
+ * An abstract base class for service-specific operation contexts across
+ * retries.
  *
  * This provides lifecycle hooks (`PreCall`, `PostCall`, `OnDone`) for generated
  * stubs and decorators.
@@ -43,6 +44,14 @@ class OperationContext {
 
   // Called when the overall logical operation completes across all attempts.
   virtual void OnDone(Status const& status) = 0;
+};
+
+class NoopOperationContext : public OperationContext {
+ public:
+  ~NoopOperationContext() override = default;
+  void PreCall(grpc::ClientContext&) override {}
+  void PostCall(grpc::ClientContext const&, Status const&) override {}
+  void OnDone(Status const&) override {}
 };
 
 }  // namespace internal

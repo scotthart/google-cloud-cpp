@@ -40,7 +40,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableTracingStub::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
   auto scope = opentelemetry::trace::Scope(span);
@@ -57,7 +57,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableTracingStub::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
@@ -74,7 +74,7 @@ StatusOr<google::bigtable::v2::MutateRowResponse>
 BigtableTracingStub::MutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
   auto scope = opentelemetry::trace::Scope(span);
@@ -89,7 +89,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableTracingStub::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
@@ -106,7 +106,7 @@ StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableTracingStub::CheckAndMutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
   auto scope = opentelemetry::trace::Scope(span);
@@ -120,7 +120,7 @@ StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableTracingStub::PingAndWarm(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PingAndWarm");
   auto scope = opentelemetry::trace::Scope(span);
@@ -134,7 +134,7 @@ StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableTracingStub::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
   auto scope = opentelemetry::trace::Scope(span);
@@ -148,7 +148,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse>
 BigtableTracingStub::PrepareQuery(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");
   auto scope = opentelemetry::trace::Scope(span);
@@ -163,7 +163,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableTracingStub::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ExecuteQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ExecuteQuery");
@@ -180,7 +180,7 @@ StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableTracingStub::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::GetClientConfigurationRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "GetClientConfiguration");
   auto scope = opentelemetry::trace::Scope(span);
@@ -196,7 +196,7 @@ std::unique_ptr<
 BigtableTracingStub::AsyncOpenTable(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "OpenTable");
@@ -216,7 +216,7 @@ std::unique_ptr<
 BigtableTracingStub::AsyncOpenAuthorizedView(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "OpenAuthorizedView");
@@ -236,7 +236,7 @@ std::unique_ptr<
 BigtableTracingStub::AsyncOpenMaterializedView(
     CompletionQueue const& cq, std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "OpenMaterializedView");
@@ -257,7 +257,7 @@ BigtableTracingStub::AsyncReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "ReadRows");
   internal::OTelScope scope(span);
@@ -276,7 +276,7 @@ BigtableTracingStub::AsyncSampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "SampleRowKeys");
@@ -295,7 +295,7 @@ BigtableTracingStub::AsyncMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRow");
@@ -313,7 +313,7 @@ BigtableTracingStub::AsyncMutateRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "MutateRows");
@@ -332,7 +332,7 @@ BigtableTracingStub::AsyncCheckAndMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "CheckAndMutateRow");
@@ -349,7 +349,7 @@ BigtableTracingStub::AsyncPingAndWarm(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PingAndWarm");
@@ -366,7 +366,7 @@ BigtableTracingStub::AsyncReadModifyWriteRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span = internal::MakeSpanGrpc("google.bigtable.v2.Bigtable",
                                      "ReadModifyWriteRow");
@@ -383,7 +383,7 @@ BigtableTracingStub::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   auto span =
       internal::MakeSpanGrpc("google.bigtable.v2.Bigtable", "PrepareQuery");

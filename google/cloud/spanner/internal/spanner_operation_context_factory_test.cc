@@ -71,7 +71,8 @@ TEST(SpannerOperationContextFactoryTest, CounterIsolationAndRpcNames) {
   EXPECT_THAT(bg_refresh.request_index(), Eq(4ULL));
   EXPECT_THAT(bg_refresh.rpc_name(), StrEq("BackgroundRefreshSession"));
 
-  // Next user RPC resumes user counter without interference from background counter
+  // Next user RPC resumes user counter without interference from background
+  // counter
   auto ctx_rollback = factory.Rollback();
   EXPECT_THAT(ctx_rollback.request_index(), Eq(4ULL));
   EXPECT_THAT(ctx_rollback.rpc_name(), StrEq("Rollback"));
@@ -93,7 +94,8 @@ TEST(SpannerOperationContextFactoryTest, HeaderGenerationFromFactory) {
 }
 
 #ifndef _WIN32
-TEST(SpannerOperationContextFactoryTest, ForkDetectsAndRegeneratesStaticPrefix) {
+TEST(SpannerOperationContextFactoryTest,
+     ForkDetectsAndRegeneratesStaticPrefix) {
   auto process_random_id =
       std::make_shared<std::string const>("0123456789abcdef");
   DefaultSpannerOperationContextFactory factory(7, process_random_id);
@@ -133,7 +135,8 @@ TEST(SpannerOperationContextFactoryTest, ForkDetectsAndRegeneratesStaticPrefix) 
 
   std::string const child_request_id(buffer,
                                      static_cast<std::size_t>(bytes_read));
-  EXPECT_THAT(child_request_id, MatchesRegex("^1\\.[0-9a-f]{16}\\.7\\.0\\.2\\.1$"));
+  EXPECT_THAT(child_request_id,
+              MatchesRegex("^1\\.[0-9a-f]{16}\\.7\\.0\\.2\\.1$"));
   EXPECT_NE(child_request_id, "1.0123456789abcdef.7.0.2.1");
 }
 #endif

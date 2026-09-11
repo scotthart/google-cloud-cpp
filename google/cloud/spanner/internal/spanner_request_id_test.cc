@@ -56,8 +56,7 @@ TEST(SpannerRequestIdTest, FormatSpannerRequestStaticPrefix) {
 
 TEST(SpannerRequestIdTest, FormatSpannerRequestIdWithPrefix) {
   std::string const prefix = "1.0123456789abcdef.42.";
-  std::string const request_id =
-      FormatSpannerRequestId(prefix, 1, 100, 2);
+  std::string const request_id = FormatSpannerRequestId(prefix, 1, 100, 2);
   EXPECT_THAT(request_id, Eq("1.0123456789abcdef.42.1.100.2"));
 }
 

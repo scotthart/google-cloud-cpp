@@ -52,7 +52,8 @@ class SpannerOperationContextFactory {
   virtual SpannerOperationContext PartitionRead() = 0;
   virtual SpannerOperationContext BatchWrite() = 0;
 
-  // Background maintenance context factories (use next_background_request_index_)
+  // Background maintenance context factories (use
+  // next_background_request_index_)
   virtual SpannerOperationContext BackgroundCreateSession() = 0;
   virtual SpannerOperationContext BackgroundBatchCreateSessions() = 0;
   virtual SpannerOperationContext BackgroundDeleteSession() = 0;

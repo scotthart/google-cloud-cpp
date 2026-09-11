@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_OPERATION_CONTEXT_H
 
-#include "google/cloud/internal/operation_context.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/operation_context.h"
 #include <cstdint>
 #include <memory>
 #include <mutex>
@@ -29,12 +29,12 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class SpannerOperationContext : public google::cloud::internal::OperationContext {
+class SpannerOperationContext
+    : public google::cloud::internal::OperationContext {
  public:
-  SpannerOperationContext(
-      std::shared_ptr<std::string const> static_prefix,
-      std::uint64_t request_index,
-      std::string_view rpc_name);
+  SpannerOperationContext(std::shared_ptr<std::string const> static_prefix,
+                          std::uint64_t request_index,
+                          std::string_view rpc_name);
 
   // Move operations transfer context state across threads.
   SpannerOperationContext(SpannerOperationContext&& other) noexcept;
@@ -46,14 +46,16 @@ class SpannerOperationContext : public google::cloud::internal::OperationContext
   // Binds the physical gRPC channel index (0..N-1) for subsequent attempts.
   void BindChannel(std::uint32_t channel_id);
 
-  // Advances attempt_index_, formats header, and injects "x-goog-spanner-request-id" into context.
+  // Advances attempt_index_, formats header, and injects
+  // "x-goog-spanner-request-id" into context.
   void PreCall(grpc::ClientContext& client_context) override;
 
   // Called immediately after an attempt returns (hook for metrics / debugging).
   void PostCall(grpc::ClientContext const& client_context,
                 Status const& status) override;
 
-  // Called when the overall logical operation completes (hook for metrics / latencies).
+  // Called when the overall logical operation completes (hook for metrics /
+  // latencies).
   void OnDone(Status const& status) override;
 
   // Returns the active formatted request ID string for the current attempt.

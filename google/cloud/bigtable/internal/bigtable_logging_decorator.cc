@@ -48,7 +48,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableLogging::ReadRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -75,7 +75,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableLogging::SampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -100,7 +100,7 @@ BigtableLogging::SampleRowKeys(
 StatusOr<google::bigtable::v2::MutateRowResponse> BigtableLogging::MutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::MutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -115,7 +115,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableLogging::MutateRows(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -141,7 +141,7 @@ StatusOr<google::bigtable::v2::CheckAndMutateRowResponse>
 BigtableLogging::CheckAndMutateRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -156,7 +156,7 @@ StatusOr<google::bigtable::v2::PingAndWarmResponse>
 BigtableLogging::PingAndWarm(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -171,7 +171,7 @@ StatusOr<google::bigtable::v2::ReadModifyWriteRowResponse>
 BigtableLogging::ReadModifyWriteRow(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -186,7 +186,7 @@ StatusOr<google::bigtable::v2::PrepareQueryResponse>
 BigtableLogging::PrepareQuery(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -202,7 +202,7 @@ std::unique_ptr<google::cloud::internal::StreamingReadRpc<
 BigtableLogging::ExecuteQuery(
     std::shared_ptr<grpc::ClientContext> context, Options const& options,
     google::bigtable::v2::ExecuteQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -228,7 +228,7 @@ StatusOr<google::bigtable::v2::ClientConfiguration>
 BigtableLogging::GetClientConfiguration(
     grpc::ClientContext& context, Options const& options,
     google::bigtable::v2::GetClientConfigurationRequest const& request,
-    google::cloud::bigtable_internal::OperationContext& operation_context) {
+    google::cloud::internal::OperationContext& operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, &operation_context](
           grpc::ClientContext& context, Options const& options,
@@ -246,7 +246,7 @@ BigtableLogging::AsyncOpenTable(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
@@ -271,7 +271,7 @@ BigtableLogging::AsyncOpenAuthorizedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
@@ -296,7 +296,7 @@ BigtableLogging::AsyncOpenMaterializedView(
     google::cloud::CompletionQueue const& cq,
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream =
       ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
@@ -321,7 +321,7 @@ BigtableLogging::AsyncReadRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
       google::bigtable::v2::ReadRowsResponse>;
@@ -347,7 +347,7 @@ BigtableLogging::AsyncSampleRowKeys(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::SampleRowKeysRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
       google::bigtable::v2::SampleRowKeysResponse>;
@@ -372,7 +372,7 @@ BigtableLogging::AsyncMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -395,7 +395,7 @@ BigtableLogging::AsyncMutateRows(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::MutateRowsRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingReadRpcLogging<
       google::bigtable::v2::MutateRowsResponse>;
@@ -420,7 +420,7 @@ BigtableLogging::AsyncCheckAndMutateRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::CheckAndMutateRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -442,7 +442,7 @@ BigtableLogging::AsyncPingAndWarm(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PingAndWarmRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -464,7 +464,7 @@ BigtableLogging::AsyncReadModifyWriteRow(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
@@ -486,7 +486,7 @@ BigtableLogging::AsyncPrepareQuery(
     std::shared_ptr<grpc::ClientContext> context,
     google::cloud::internal::ImmutableOptions options,
     google::bigtable::v2::PrepareQueryRequest const& request,
-    std::shared_ptr<google::cloud::bigtable_internal::OperationContext>
+    std::shared_ptr<google::cloud::internal::OperationContext>
         operation_context) {
   return google::cloud::internal::LogWrapper(
       [this, operation_context = std::move(operation_context)](
