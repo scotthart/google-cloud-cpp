@@ -113,7 +113,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
   // be the fully-qualified logical name (e.g. "<service>/<method>") and that
   // `rpc.service` is deprecated in favor of it.
   // https://opentelemetry.io/docs/specs/semconv/rpc/rpc-spans/
-  auto fully_qualified_method =
+  std::string const fully_qualified_method =
       absl::StrCat(absl::string_view{service.data(), service.size()}, "/",
                    absl::string_view{method.data(), method.size()});
   return internal::MakeSpan(
