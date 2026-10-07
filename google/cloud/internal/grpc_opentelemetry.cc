@@ -16,6 +16,7 @@
 #include "google/cloud/internal/grpc_metadata_view.h"
 #include "google/cloud/internal/grpc_request_metadata.h"
 #include "google/cloud/internal/noexcept_action.h"
+#include "google/cloud/internal/opentelemetry_semantic_convention_compatibility.h"
 #include "google/cloud/internal/trace_propagator.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -24,8 +25,6 @@
 #include <grpcpp/grpcpp.h>
 #include <opentelemetry/context/propagation/global_propagator.h>
 #include <opentelemetry/context/propagation/text_map_propagator.h>
-#include <opentelemetry/semconv/incubating/rpc_attributes.h>
-#include <opentelemetry/semconv/network_attributes.h>
 #include <opentelemetry/trace/span_metadata.h>
 #include <opentelemetry/trace/span_startoptions.h>
 
@@ -121,7 +120,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
       fully_qualified_method,
       {{sc::rpc::kRpcSystemName, sc::rpc::RpcSystemNameValues::kGrpc},
        {sc::rpc::kRpcMethod, fully_qualified_method},
-       {/*sc::kNetworkTransport=*/"network.transport",
+       {sc::network::kNetworkTransport,
         sc::network::NetworkTransportValues::kTcp},
        {"grpc.version", grpc::Version()}},
       options);
