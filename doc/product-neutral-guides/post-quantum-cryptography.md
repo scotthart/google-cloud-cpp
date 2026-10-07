@@ -60,7 +60,7 @@ To restrict a gRPC client to classical TLS key exchange groups, configure custom
 TLS channel credentials using `grpc::experimental::TlsChannelCredentialsOptions`
 and pass them via `google::cloud::GrpcCredentialOption`:
 
-```c
+```cpp
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include <grpcpp/grpcpp.h>
