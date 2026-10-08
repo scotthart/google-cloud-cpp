@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/spanner/v1/mutation.pb.h"
-#include <google/protobuf/timestamp.pb.h>
 #include <string>
 #include <vector>
 
@@ -411,12 +410,24 @@ inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
 
 /**
  * A helper class to construct queue "send" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 using SendMutationBuilder = spanner_internal::SendMutationBuilder;
 
 /**
  * Creates a "send" mutation to enqueue a message with @p key and @p payload
  * into @p queue for immediate delivery.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 inline Mutation MakeSendMutation(std::string queue, Key key, Value payload) {
   return SendMutationBuilder(std::move(queue), std::move(key),
@@ -427,6 +438,12 @@ inline Mutation MakeSendMutation(std::string queue, Key key, Value payload) {
 /**
  * Creates a "send" mutation to enqueue a message with @p key and @p payload
  * into @p queue scheduled for @p deliver_time.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 inline Mutation MakeSendMutation(std::string queue, Key key, Value payload,
                                  Timestamp deliver_time) {
@@ -438,11 +455,23 @@ inline Mutation MakeSendMutation(std::string queue, Key key, Value payload,
 
 /**
  * A helper class to construct queue "ack" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 using AckMutationBuilder = spanner_internal::AckMutationBuilder;
 
 /**
  * Creates an "ack" mutation to acknowledge the message with @p key in @p queue.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 inline Mutation MakeAckMutation(std::string queue, Key key) {
   return AckMutationBuilder(std::move(queue), std::move(key)).Build();
@@ -451,6 +480,12 @@ inline Mutation MakeAckMutation(std::string queue, Key key) {
 /**
  * Creates an "ack" mutation to acknowledge the message with @p key in @p queue,
  * optionally ignoring `NOT_FOUND` errors according to @p ignore_not_found.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
  */
 inline Mutation MakeAckMutation(std::string queue, Key key,
                                 bool ignore_not_found) {

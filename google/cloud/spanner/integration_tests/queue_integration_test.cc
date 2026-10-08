@@ -22,6 +22,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/types/optional.h"
 #include "google/spanner/admin/database/v1/spanner_database_admin.pb.h"
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -38,6 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::IsOkAndHolds;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
@@ -55,7 +57,7 @@ class QueueIntegrationTest
 
     std::string const project_id =
         internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id.empty());
+    ASSERT_THAT(project_id, Not(IsEmpty()));
 
     internal::DefaultPRNG generator = internal::MakeDefaultPRNG();
     StatusOr<std::string> instance_id = spanner_testing::PickRandomInstance(
@@ -67,7 +69,7 @@ class QueueIntegrationTest
 
     std::string const database_id =
         spanner_testing::RandomDatabaseName(generator);
-    db_ = new Database(project_id, *instance_id, database_id);
+    db_.emplace(project_id, *instance_id, database_id);
 
     spanner_admin::DatabaseAdminClient admin_client(
         spanner_admin::MakeDatabaseAdminConnection());
@@ -98,8 +100,7 @@ class QueueIntegrationTest
     if (!database.ok() &&
         (database.status().code() == StatusCode::kInvalidArgument ||
          database.status().code() == StatusCode::kUnimplemented)) {
-      delete db_;
-      db_ = nullptr;
+      db_.reset();
       GTEST_SKIP() << "Spanner Queues DDL not enabled on target endpoint: "
                    << database.status();
     }
@@ -107,30 +108,49 @@ class QueueIntegrationTest
   }
 
   static void TearDownTestSuite() {
-    if (db_ != nullptr) {
+    if (db_.has_value()) {
       spanner_admin::DatabaseAdminClient admin_client(
           spanner_admin::MakeDatabaseAdminConnection());
       Status drop_status = admin_client.DropDatabase(db_->FullName());
       EXPECT_THAT(drop_status, IsOk());
-      delete db_;
-      db_ = nullptr;
+      db_.reset();
     }
     ::google::cloud::testing_util::IntegrationTest::TearDownTestSuite();
   }
 
   void SetUp() override {
-    if (db_ == nullptr) {
+    if (!db_.has_value()) {
       GTEST_SKIP() << "QueueIntegrationTest suite was skipped";
     }
+  }
+
+  void TearDown() override {
+    if (db_.has_value()) {
+      Client client(MakeConnection(*db_));
+      RowStream rows =
+          client.ExecuteQuery(SqlStatement("SELECT id FROM testqueue"));
+      Mutations cleanup;
+      for (StatusOr<std::tuple<std::int64_t>> const& row :
+           StreamOf<std::tuple<std::int64_t>>(rows)) {
+        if (row.ok()) {
+          cleanup.push_back(
+              MakeAckMutation("testqueue", MakeKey(std::get<0>(*row)), true));
+        }
+      }
+      if (!cleanup.empty()) {
+        (void)client.Commit(std::move(cleanup));
+      }
+    }
+    ::google::cloud::testing_util::IntegrationTest::TearDown();
   }
 
   static Database const& GetDatabase() { return *db_; }
 
  private:
-  static Database* db_;
+  static absl::optional<Database> db_;
 };
 
-Database* QueueIntegrationTest::db_ = nullptr;
+absl::optional<Database> QueueIntegrationTest::db_;
 
 TEST_F(QueueIntegrationTest, SendAndAckMutations) {
   Client client(MakeConnection(GetDatabase()));
@@ -156,7 +176,7 @@ TEST_F(QueueIntegrationTest, SendAndAckMutations) {
   std::vector<std::pair<std::int64_t, Bytes>> read_rows;
   RowStream query_rows = client.ExecuteQuery(
       SqlStatement("SELECT id, payload FROM testqueue ORDER BY id"));
-  for (auto const& row :
+  for (StatusOr<std::tuple<std::int64_t, Bytes>> const& row :
        StreamOf<std::tuple<std::int64_t, Bytes>>(query_rows)) {
     ASSERT_THAT(row, IsOk());
     read_rows.emplace_back(std::get<0>(*row), std::get<1>(*row));
@@ -174,7 +194,8 @@ TEST_F(QueueIntegrationTest, SendAndAckMutations) {
   std::vector<std::int64_t> remaining_ids;
   RowStream remaining_stream =
       client.ExecuteQuery(SqlStatement("SELECT id FROM testqueue"));
-  for (auto const& row : StreamOf<std::tuple<std::int64_t>>(remaining_stream)) {
+  for (StatusOr<std::tuple<std::int64_t>> const& row :
+       StreamOf<std::tuple<std::int64_t>>(remaining_stream)) {
     ASSERT_THAT(row, IsOk());
     remaining_ids.push_back(std::get<0>(*row));
   }
@@ -217,9 +238,6 @@ TEST_F(QueueIntegrationTest, EndToEndTransactionalWorkflow) {
   if (!receive_it->ok() &&
       (receive_it->status().code() == StatusCode::kInvalidArgument ||
        receive_it->status().code() == StatusCode::kUnimplemented)) {
-    (void)client.Commit(Mutations{
-        MakeAckMutation("testqueue", MakeKey(kTaskId), true),
-    });
     GTEST_SKIP()
         << "Spanner Queue consumer TVF not enabled on target endpoint: "
         << receive_it->status();
@@ -237,7 +255,7 @@ TEST_F(QueueIntegrationTest, EndToEndTransactionalWorkflow) {
   RowStream renew_stream = client.ExecuteQuery(
       SqlStatement("SELECT * FROM spanner.renewlease_testqueue([@lease_token])",
                    {{"lease_token", Value(lease_token)}}));
-  for (auto const& row : renew_stream) {
+  for (StatusOr<Row> const& row : renew_stream) {
     ASSERT_THAT(row, IsOk());
   }
 
@@ -259,8 +277,7 @@ TEST_F(QueueIntegrationTest, EndToEndTransactionalWorkflow) {
   auto task_it = verify_task.begin();
   ASSERT_TRUE(task_it != verify_task.end());
   ASSERT_THAT(*task_it, IsOk());
-  EXPECT_THAT((*task_it)->get<std::string>(0), IsOk());
-  EXPECT_EQ(*(*task_it)->get<std::string>(0), "done");
+  EXPECT_THAT((*task_it)->get<std::string>(0), IsOkAndHolds("done"));
 }
 
 }  // namespace

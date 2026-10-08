@@ -28,7 +28,8 @@ SendMutationBuilder::SendMutationBuilder(std::string queue, spanner::Key key,
   google::spanner::v1::Mutation::Send& send = *m_.proto().mutable_send();
   send.set_queue(std::move(queue));
   google::protobuf::ListValue& key_proto = *send.mutable_key();
-  for (auto& k : key) {
+  key_proto.mutable_values()->Reserve(static_cast<int>(key.size()));
+  for (spanner::Value& k : key) {
     *key_proto.add_values() = spanner_internal::ToProto(std::move(k)).second;
   }
   *send.mutable_payload() =
@@ -37,9 +38,8 @@ SendMutationBuilder::SendMutationBuilder(std::string queue, spanner::Key key,
 
 SendMutationBuilder& SendMutationBuilder::SetDeliverTime(
     spanner::Timestamp deliver_time) & {
-  StatusOr<google::protobuf::Timestamp> ts =
-      deliver_time.get<google::protobuf::Timestamp>();
-  *m_.proto().mutable_send()->mutable_deliver_time() = *std::move(ts);
+  *m_.proto().mutable_send()->mutable_deliver_time() =
+      deliver_time.get<google::protobuf::Timestamp>().value();
   return *this;
 }
 
@@ -47,7 +47,8 @@ AckMutationBuilder::AckMutationBuilder(std::string queue, spanner::Key key) {
   google::spanner::v1::Mutation::Ack& ack = *m_.proto().mutable_ack();
   ack.set_queue(std::move(queue));
   google::protobuf::ListValue& key_proto = *ack.mutable_key();
-  for (auto& k : key) {
+  key_proto.mutable_values()->Reserve(static_cast<int>(key.size()));
+  for (spanner::Value& k : key) {
     *key_proto.add_values() = spanner_internal::ToProto(std::move(k)).second;
   }
 }
