@@ -133,13 +133,13 @@ class DataConnectionImpl : public bigtable::DataConnection {
                            internal::ImmutableOptions const& current,
                            std::shared_ptr<OperationContext> operation_context);
 
-  std::unique_ptr<BackgroundThreads> background_;
-  std::unique_ptr<StubManager> stub_manager_;
+  Options options_;
+  std::shared_ptr<MutateRowsLimiter> limiter_;
   std::shared_ptr<::google::cloud::monitoring_v3::MetricServiceConnection>
       metric_service_connection_;
   std::unique_ptr<OperationContextFactory> operation_context_factory_;
-  std::shared_ptr<MutateRowsLimiter> limiter_;
-  Options options_;
+  std::unique_ptr<BackgroundThreads> background_;
+  std::unique_ptr<StubManager> stub_manager_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -224,11 +224,11 @@ DataConnectionImpl::DataConnectionImpl(
     std::unique_ptr<StubManager> stub_manager,
     std::unique_ptr<OperationContextFactory> operation_context_factory,
     std::shared_ptr<MutateRowsLimiter> limiter, Options options)
-    : background_(std::move(background)),
-      stub_manager_(std::move(stub_manager)),
-      operation_context_factory_(std::move(operation_context_factory)),
+    : options_(MergeOptions(std::move(options), DataConnection::options())),
       limiter_(std::move(limiter)),
-      options_(MergeOptions(std::move(options), DataConnection::options())) {}
+      operation_context_factory_(std::move(operation_context_factory)),
+      background_(std::move(background)),
+      stub_manager_(std::move(stub_manager)) {}
 
 DataConnectionImpl::~DataConnectionImpl() = default;
 

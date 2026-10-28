@@ -32,6 +32,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/unified_grpc_credentials.h"
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
@@ -202,10 +203,12 @@ std::shared_ptr<bigtable::DataConnection> MakeInstanceAffinityDataConnection(
 }
 
 Options MakeDirectPathOptions(Options options) {
-  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-      bigtable::internal::DefaultDirectPathDataEndpoint());
-  options.set<EndpointOption>(
-      bigtable::internal::DefaultDirectPathDataEndpoint());
+  std::optional<std::string> const emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  std::string const endpoint =
+      emulator.value_or(bigtable::internal::DefaultDirectPathDataEndpoint());
+  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(endpoint);
+  options.set<EndpointOption>(endpoint);
   options.set<AuthorityOption>(
       bigtable::internal::DefaultDirectPathAuthority());
   options.set<bigtable::experimental::DirectPathModeOption>(
@@ -214,9 +217,11 @@ Options MakeDirectPathOptions(Options options) {
 }
 
 Options MakeCloudPathOptions(Options options) {
-  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-      "bigtable.googleapis.com");
-  options.set<EndpointOption>("bigtable.googleapis.com");
+  std::optional<std::string> const emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  std::string const endpoint = emulator.value_or("bigtable.googleapis.com");
+  options.set<::google::cloud::bigtable_internal::DataEndpointOption>(endpoint);
+  options.set<EndpointOption>(endpoint);
   options.set<AuthorityOption>("bigtable.googleapis.com");
   options.set<bigtable::experimental::DirectPathModeOption>(
       bigtable::experimental::DirectPathMode::kDisabled);
@@ -283,14 +288,10 @@ MakeSpeculativeDirectPathDataConnection(
           components.background->cq());
 
   // Step 3a: If DirectPath probing succeeds, use DirectPath stubs, discard the
-  // fallback CloudPath future asynchronously, and record successful metrics.
+  // fallback CloudPath future, and record successful metrics.
   if (probe_result.ok() && probe_result->success) {
     std::unique_ptr<bigtable_internal::StubManager> stub_manager =
         directpath_future.get();
-    std::move(cloudpath_future)
-        .then([](future<std::unique_ptr<bigtable_internal::StubManager>> f) {
-          (void)f.get();
-        });
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
     if (components.direct_access_compatibility != nullptr) {
       components.direct_access_compatibility->Record(
@@ -306,19 +307,17 @@ MakeSpeculativeDirectPathDataConnection(
   }
 
   // Step 3b: If DirectPath probing fails, fall back to the CloudPath
-  // StubManager, discard the unused DirectPath future asynchronously, and run
-  // environmental diagnostics asynchronously to diagnose and record metrics for
-  // the failure reason.
+  // StubManager, discard the unused DirectPath future, and run environmental
+  // diagnostics asynchronously to diagnose and record metrics for the failure
+  // reason.
   std::unique_ptr<bigtable_internal::StubManager> stub_manager =
       cloudpath_future.get();
-  std::move(directpath_future)
-      .then([](future<std::unique_ptr<bigtable_internal::StubManager>> f) {
-        (void)f.get();
-      });
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  bigtable_internal::DirectPathDiagnostics::RunAsync(
-      components.background->cq(), directpath_options,
-      components.direct_access_compatibility);
+  if (components.direct_access_compatibility != nullptr) {
+    bigtable_internal::DirectPathDiagnostics::RunAsync(
+        components.background->cq(), directpath_options,
+        std::move(components.direct_access_compatibility));
+  }
 #endif
   return std::make_shared<bigtable_internal::DataConnectionImpl>(
       std::move(components.background), std::move(stub_manager),
@@ -377,9 +376,11 @@ std::shared_ptr<bigtable::DataConnection> MakeBlockingDirectPathDataConnection(
   auto stub_manager = create_stub_manager(cloudpath_options);
 
 #ifdef GOOGLE_CLOUD_CPP_BIGTABLE_WITH_OTEL_METRICS
-  bigtable_internal::DirectPathDiagnostics::RunAsync(
-      components.background->cq(), directpath_options,
-      components.direct_access_compatibility);
+  if (components.direct_access_compatibility != nullptr) {
+    bigtable_internal::DirectPathDiagnostics::RunAsync(
+        components.background->cq(), directpath_options,
+        std::move(components.direct_access_compatibility));
+  }
 #endif
   return std::make_shared<bigtable_internal::DataConnectionImpl>(
       std::move(components.background), std::move(stub_manager),

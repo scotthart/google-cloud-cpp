@@ -132,12 +132,19 @@ StatusOr<DirectPathProbeResult> DirectPathProber::Probe(
     }
 
     Options probe_options = options;
-    probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
-        bigtable::internal::DefaultDirectPathDataEndpoint());
-    probe_options.set<EndpointOption>(
-        bigtable::internal::DefaultDirectPathDataEndpoint());
-    probe_options.set<AuthorityOption>(
-        bigtable::internal::DefaultDirectPathAuthority());
+    if (!probe_options
+             .has<::google::cloud::bigtable_internal::DataEndpointOption>()) {
+      probe_options.set<::google::cloud::bigtable_internal::DataEndpointOption>(
+          bigtable::internal::DefaultDirectPathDataEndpoint());
+    }
+    if (!probe_options.has<EndpointOption>()) {
+      probe_options.set<EndpointOption>(
+          bigtable::internal::DefaultDirectPathDataEndpoint());
+    }
+    if (!probe_options.has<AuthorityOption>()) {
+      probe_options.set<AuthorityOption>(
+          bigtable::internal::DefaultDirectPathAuthority());
+    }
     probe_options.set<bigtable::experimental::DirectPathModeOption>(
         bigtable::experimental::DirectPathMode::kEnabled);
     probe_options.set<GrpcNumChannelsOption>(1);

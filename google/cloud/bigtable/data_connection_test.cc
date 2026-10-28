@@ -45,6 +45,8 @@ Options TestOptions() {
       // Stay on this machine. Don't make a connection to the actual service.
       .set<EndpointOption>("localhost:1")
       .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+      // Disable metrics by default unless explicitly under test.
+      .set<EnableMetricsOption>(false)
       // Disable channel refreshing, which is not under test.
       .set<MaxConnectionRefreshOption>(ms(0))
       // Create the minimum number of stubs.
@@ -106,6 +108,9 @@ TEST(MakeDataConnection, WithInstances) {
 TEST(MakeDataConnection, TestingOtelCollectorEnvVar) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
                                       "1");
+  testing_util::ScopedEnvironment metric_ep(
+      "GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT", "localhost:1");
+  testing_util::ScopedEnvironment metadata_host("GCE_METADATA_ROOT", "://");
   auto conn = MakeDataConnection(TestOptions().set<EnableMetricsOption>(true));
   EXPECT_NE(conn, nullptr);
 }
@@ -113,6 +118,9 @@ TEST(MakeDataConnection, TestingOtelCollectorEnvVar) {
 TEST(MakeDataConnection, DirectPathMetricsModeOptionDisabled) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
                                       "1");
+  testing_util::ScopedEnvironment metric_ep(
+      "GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT", "localhost:1");
+  testing_util::ScopedEnvironment metadata_host("GCE_METADATA_ROOT", "://");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
   auto conn = MakeDataConnection(
       {instance_a}, TestOptions()
@@ -125,6 +133,11 @@ TEST(MakeDataConnection, DirectPathMetricsModeOptionDisabled) {
 TEST(MakeDataConnection, DirectPathMetricsModeOptionEnabled) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
                                       "1");
+  testing_util::ScopedEnvironment metric_ep(
+      "GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT", "localhost:1");
+  testing_util::ScopedEnvironment metadata_host("GCE_METADATA_ROOT", "://");
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           "localhost:1");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
   auto conn = MakeDataConnection(
       {instance_a}, TestOptions()
@@ -139,6 +152,9 @@ TEST(MakeDataConnection, DirectPathMetricsModeOptionEnabled) {
 TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
   testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TESTING_OTEL_COLLECTOR",
                                       "1");
+  testing_util::ScopedEnvironment metric_ep(
+      "GOOGLE_CLOUD_CPP_METRIC_SERVICE_ENDPOINT", "localhost:1");
+  testing_util::ScopedEnvironment metadata_host("GCE_METADATA_ROOT", "://");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
   auto conn = MakeDataConnection(
       {instance_a}, TestOptions()
@@ -151,6 +167,8 @@ TEST(MakeDataConnection, DirectPathModeOptionDisabledNoGrpcMetrics) {
 }
 
 TEST(MakeDataConnection, DirectPathInitializationModeBlocking) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           "localhost:1");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
   auto conn = MakeDataConnection(
       {instance_a},
@@ -163,6 +181,8 @@ TEST(MakeDataConnection, DirectPathInitializationModeBlocking) {
 }
 
 TEST(MakeDataConnection, DirectPathInitializationModeSpeculative) {
+  testing_util::ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST",
+                                           "localhost:1");
   InstanceResource instance_a{Project("my-project"), "instance-a"};
   auto conn = MakeDataConnection(
       {instance_a}, TestOptions()

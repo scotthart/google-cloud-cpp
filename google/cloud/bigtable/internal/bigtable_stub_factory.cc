@@ -145,7 +145,10 @@ std::shared_ptr<BigtableStub> CreateBigtableStubRandomTwoLeastUsed(
     auto channel = CreateGrpcChannel(*auth, options, id);
     auto stub = stub_factory(std::move(channel));
     if (priming == StubManager::Priming::kSynchronousPriming) {
+      auto constexpr kPingAndWarmTimeout = std::chrono::seconds(10);
       grpc::ClientContext client_context;
+      client_context.set_deadline(std::chrono::system_clock::now() +
+                                  kPingAndWarmTimeout);
       google::bigtable::v2::PingAndWarmRequest request;
       request.set_name(std::string{instance_name});
       OperationContext op_ctx;
